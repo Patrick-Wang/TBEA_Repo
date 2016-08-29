@@ -1,9 +1,16 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="basic.ts" />
+/// <reference path="../../unitedSelector.ts"/>
+///<reference path="../../messageBox.ts"/>
+///<reference path="../../companySelector.ts"/>
+///<reference path="../route/route.ts"/>
 var framework;
 (function (framework) {
     var basic;

@@ -1,3 +1,6 @@
+/// <reference path="util.ts" />
+/// <reference path="jqgrid/jqassist.ts" />
+///<reference path="dateSelector.ts"/>
 var mkt_contract_analysis;
 (function (mkt_contract_analysis) {
     var ContractZb;
@@ -19,20 +22,38 @@ var mkt_contract_analysis;
         }
         JQGridAssistantFactory.createContractTable4Industry = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("行业", "t0", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("当月情况", "t1", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("合同数量", "t11")).append(new JQTable.Node("合同金额(万元)", "t12")).append(new JQTable.Node("占月度签约总额比例", "t13")),
-                new JQTable.Node("年度累计", "t2", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("合同数量", "t21")).append(new JQTable.Node("合同金额(万元)", "t22")).append(new JQTable.Node("占年度签约总额比例", "t23")),
-                new JQTable.Node("去年同期累计", "t3", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("合同数量", "t31")).append(new JQTable.Node("合同金额(万元)", "t32")).append(new JQTable.Node("占年度签约总额比例", "t33")),
-                new JQTable.Node("同比", "t4", false, 1 /* Right */, 0, undefined, undefined, false)
+                new JQTable.Node("行业", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("当月情况", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("合同数量", "t11"))
+                    .append(new JQTable.Node("合同金额(万元)", "t12"))
+                    .append(new JQTable.Node("占月度签约总额比例", "t13")),
+                new JQTable.Node("年度累计", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("合同数量", "t21"))
+                    .append(new JQTable.Node("合同金额(万元)", "t22"))
+                    .append(new JQTable.Node("占年度签约总额比例", "t23")),
+                new JQTable.Node("去年同期累计", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("合同数量", "t31"))
+                    .append(new JQTable.Node("合同金额(万元)", "t32"))
+                    .append(new JQTable.Node("占年度签约总额比例", "t33")),
+                new JQTable.Node("同比", "t4", false, JQTable.TextAlign.Right, 0, undefined, undefined, false)
             ], gridName);
         };
         JQGridAssistantFactory.createContractTable4Companys = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("项目公司", "t0", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("当月情况", "t1", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("合同数量", "t11")).append(new JQTable.Node("合同金额(万元)", "t12")).append(new JQTable.Node("占月度签约总额比例", "t13")),
-                new JQTable.Node("年度累计", "t2", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("合同数量", "t21")).append(new JQTable.Node("合同金额(万元)", "t22")).append(new JQTable.Node("占年度签约总额比例", "t23")),
-                new JQTable.Node("去年同期累计", "t3", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("合同数量", "t31")).append(new JQTable.Node("合同金额(万元)", "t32")).append(new JQTable.Node("占年度签约总额比例", "t33")),
-                new JQTable.Node("同比", "t4", false, 1 /* Right */, 0, undefined, undefined, false)
+                new JQTable.Node("项目公司", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("当月情况", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("合同数量", "t11"))
+                    .append(new JQTable.Node("合同金额(万元)", "t12"))
+                    .append(new JQTable.Node("占月度签约总额比例", "t13")),
+                new JQTable.Node("年度累计", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("合同数量", "t21"))
+                    .append(new JQTable.Node("合同金额(万元)", "t22"))
+                    .append(new JQTable.Node("占年度签约总额比例", "t23")),
+                new JQTable.Node("去年同期累计", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("合同数量", "t31"))
+                    .append(new JQTable.Node("合同金额(万元)", "t32"))
+                    .append(new JQTable.Node("占年度签约总额比例", "t33")),
+                new JQTable.Node("同比", "t4", false, JQTable.TextAlign.Right, 0, undefined, undefined, false)
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -49,13 +70,19 @@ var mkt_contract_analysis;
             this.TableId = TableId;
             this.childTableId = TableId + "_jqgrid_1234";
             this.mDs = new Util.DateSelector({ year: year - 1, month: 1 }, { year: year, month: month }, dateId);
+            //请求数据
             this.mDataSet = new Util.Ajax("mkt_contract_analysis_update.do", false);
             this.onType_TypeSelected();
+            //if (this.mCompanyName == "股份公司") {
+            //    this.onCompanySelected();
+            //}
+            //this.updateUI();
         };
         View.prototype.onType_TypeSelected = function () {
             this.mAnalysisType = $("#analysisType").val();
         };
         View.prototype.onCompanySelected = function () {
+            //this.mCompanyName = $("#comp_category").val();
         };
         View.prototype.exportExcel = function () {
             var dt = this.mDs.getDate();
@@ -65,7 +92,8 @@ var mkt_contract_analysis;
         View.prototype.formatData = function (rowData, integerList, percentList) {
             var outputData = [];
             var formaterChain = new Util.FormatPercentHandler([], percentList.toArray());
-            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray())).next(new Util.FormatCurrencyHandler());
+            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray()))
+                .next(new Util.FormatCurrencyHandler());
             var row = [];
             for (var j = 0; j < rowData.length; ++j) {
                 row = [].concat(rowData[j]);
@@ -91,7 +119,8 @@ var mkt_contract_analysis;
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
             var dt = this.mDs.getDate();
-            this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: dt.year, month: dt.month, type: this.mAnalysisType }).then(function (data) {
+            this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: dt.year, month: dt.month, type: this.mAnalysisType })
+                .then(function (data) {
                 var rowBidData = data;
                 if (_this.mAnalysisType == "contract_industry") {
                     _this.updateTable(_this.TableId, _this.childTableId, JQGridAssistantFactory.createContractTable4Industry(_this.childTableId), rowBidData);
@@ -105,20 +134,25 @@ var mkt_contract_analysis;
             var data = [];
             var integerList = new std.vector();
             var percentList = new std.vector();
-            integerList.push(1 /* htsl */);
-            integerList.push(4 /* ndsl */);
-            integerList.push(7 /* qnhtsl */);
-            percentList.push(3 /* dyzydbl */);
-            percentList.push(6 /* ndzbl */);
-            percentList.push(9 /* qnzndbl */);
-            percentList.push(10 /* htzz */);
+            integerList.push(ContractZb.htsl);
+            integerList.push(ContractZb.ndsl);
+            integerList.push(ContractZb.qnhtsl);
+            percentList.push(ContractZb.dyzydbl);
+            percentList.push(ContractZb.ndzbl);
+            percentList.push(ContractZb.qnzndbl);
+            percentList.push(ContractZb.htzz);
             data = this.formatData(rawData, integerList, percentList);
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
+                //cellsubmit: 'clientArray',
+                //cellEdit: true,
                 editurl: 'clientArray',
                 height: '100%',
                 width: $(document).width() - 60,
@@ -126,7 +160,7 @@ var mkt_contract_analysis;
                 autoScroll: true,
                 pager: '#pager',
                 rowNum: 20,
-                viewrecords: true
+                viewrecords: true //是否显示行数 
             }));
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");

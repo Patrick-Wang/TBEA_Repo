@@ -1,3 +1,4 @@
+/// <reference path="../util.ts" />
 var Util;
 (function (Util) {
     var CompanySelectorZzy = (function () {
@@ -6,7 +7,10 @@ var Util;
             this.companyId = mCtrlId + "Id";
             this.tableId = mCtrlId + "Table";
             $("#" + this.mCtrlId).append('<table id="' + this.tableId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
-            $("#" + this.tableId + " tr").append('<td>' + '<select id="' + this.companyId + '" style="width: 100px;"></select>' + '</td><td><div style="width:5px;"></div></td>');
+            $("#" + this.tableId + " tr").append('<td>' +
+                '<select id="' + this.companyId +
+                '" style="width: 100px;"></select>' +
+                '</td><td><div style="width:5px;"></div></td>');
             var Sel = $("#" + this.companyId);
             if (dwxxs.length >= 1) {
                 for (var i = 0; i < dwxxs.length; i++) {
@@ -35,6 +39,7 @@ var Util;
                 header: false,
                 minWidth: 150,
                 height: '100%',
+                // noneSelectedText: "请选择月份",
                 selectedList: 1
             });
         }

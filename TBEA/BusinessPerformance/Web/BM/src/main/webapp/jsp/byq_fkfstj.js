@@ -1,14 +1,18 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var byq_fkfstj;
 (function (byq_fkfstj) {
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createSubNode = function (parent) {
-            return parent.append(new JQTable.Node("笔数", "bs", true, 1 /* Right */, 70)).append(new JQTable.Node("金额", "je", true, 1 /* Right */, 80));
+            return parent
+                .append(new JQTable.Node("笔数", "bs", true, JQTable.TextAlign.Right, 70))
+                .append(new JQTable.Node("金额", "je", true, JQTable.TextAlign.Right, 80));
         };
         JQGridAssistantFactory.createFdwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */, 70),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("非电网合同订单总量", "fdwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("无预付款合同", "wyfkht")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("预付款<10%合同", "yfkxy10")),
@@ -21,7 +25,7 @@ var byq_fkfstj;
         };
         JQGridAssistantFactory.createGwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */, 70),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("国网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:4:2:1", "3421")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:4:2.5:0.5", "342505")),
@@ -35,7 +39,7 @@ var byq_fkfstj;
         };
         JQGridAssistantFactory.createNwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */, 70),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:3:3:1", "3331")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("1:4:4:0.5:0.5", "1440505")),
@@ -49,7 +53,7 @@ var byq_fkfstj;
     })();
     var View = (function () {
         function View() {
-            this.mComp = 95 /* SBGS */;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             return new View();
@@ -77,34 +81,38 @@ var byq_fkfstj;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then(function (data) {
                 var fktjData = data;
                 var rowData = [
                     ["沈变"],
                     ["衡变"],
                     ["新变"],
-                    ["合计"]
-                ];
+                    ["合计"]];
                 _this.updateTable(_this.fdwTableId, _this.fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(_this.fdwTableId + "_jqgrid_1234"), rowData, fktjData[0]);
                 rowData = [
                     ["沈变"],
                     ["衡变"],
                     ["新变"],
-                    ["合计"]
-                ];
+                    ["合计"]];
                 _this.updateTable(_this.gwTableId, _this.gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(_this.gwTableId + "_jqgrid_1234"), rowData, fktjData[1]);
                 rowData = [
                     ["沈变"],
                     ["衡变"],
                     ["新变"],
-                    ["合计"]
-                ];
+                    ["合计"]];
                 _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rowData, fktjData[2]);
                 $('h1').text("变压器 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
                 document.title = "变压器 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
-                _this.updateEchart(_this.echartIdFDW, "非电网合同订单总量", [{ value: parseFloat(fktjData[0][0][1]).toFixed(2), name: '沈变' }, { value: parseFloat(fktjData[0][1][1]).toFixed(2), name: '衡变' }, { value: parseFloat(fktjData[0][2][1]).toFixed(2), name: '新变' }]);
-                _this.updateEchart(_this.echartIdGW, "国网合同订单总量", [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '沈变' }, { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '衡变' }, { value: parseFloat(fktjData[1][2][1]).toFixed(2), name: '新变' }]);
-                _this.updateEchart(_this.echartIdNW, "南网合同订单总量", [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '沈变' }, { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '衡变' }, { value: parseFloat(fktjData[2][2][1]).toFixed(2), name: '新变' }]);
+                _this.updateEchart(_this.echartIdFDW, "非电网合同订单总量", [{ value: parseFloat(fktjData[0][0][1]).toFixed(2), name: '沈变' },
+                    { value: parseFloat(fktjData[0][1][1]).toFixed(2), name: '衡变' },
+                    { value: parseFloat(fktjData[0][2][1]).toFixed(2), name: '新变' }]);
+                _this.updateEchart(_this.echartIdGW, "国网合同订单总量", [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '沈变' },
+                    { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '衡变' },
+                    { value: parseFloat(fktjData[1][2][1]).toFixed(2), name: '新变' }]);
+                _this.updateEchart(_this.echartIdNW, "南网合同订单总量", [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '沈变' },
+                    { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '衡变' },
+                    { value: parseFloat(fktjData[2][2][1]).toFixed(2), name: '新变' }]);
             });
         };
         View.prototype.updateEchart = function (chartId, tileTex, data) {
@@ -133,7 +141,7 @@ var byq_fkfstj;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 series: [
@@ -167,17 +175,20 @@ var byq_fkfstj;
             parent.empty();
             parent.append("<table id='" + childName + "'></table>");
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;

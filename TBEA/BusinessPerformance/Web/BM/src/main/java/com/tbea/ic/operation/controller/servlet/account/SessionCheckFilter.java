@@ -43,7 +43,9 @@ public class SessionCheckFilter implements Filter {
 					&& url.indexOf("/yszkrb/yszk_update.do") < 0
 					&& url.indexOf("/Validate/validate.do") < 0
 					&& url.indexOf("/futures/show.do") < 0
-					&& url.indexOf("/futures/update.do") < 0) {
+					&& url.indexOf("/futures/update.do") < 0
+					&& url.indexOf("/jcycljg/show.do") < 0
+					&& url.indexOf("/jcycljg/update.do") < 0) {
 				HttpSession session = httpRequest.getSession(false);
 				if (!SessionManager.isOnline(session)) {
 					String requestType = httpRequest

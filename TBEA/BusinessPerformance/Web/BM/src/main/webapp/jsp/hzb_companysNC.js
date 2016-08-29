@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var hzb_companysNC;
 (function (hzb_companysNC) {
     var ZtId;
@@ -16,13 +18,13 @@ var hzb_companysNC;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("指标", "zb", true, 0 /* Left */),
-                new JQTable.Node("当月实际", "dysj", true, 0 /* Left */),
-                new JQTable.Node("去年同期", "qntq", true, 0 /* Left */),
-                new JQTable.Node("同比增幅", "tbzf", true, 0 /* Left */),
-                new JQTable.Node("年度累计", "ndlj", true, 0 /* Left */),
-                new JQTable.Node("去年同期累计", "qnndlj", true, 0 /* Left */),
-                new JQTable.Node("同比增幅", "ndtbzf", true, 0 /* Left */)
+                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("当月实际", "dysj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("去年同期", "qntq", true, JQTable.TextAlign.Left),
+                new JQTable.Node("同比增幅", "tbzf", true, JQTable.TextAlign.Left),
+                new JQTable.Node("年度累计", "ndlj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("去年同期累计", "qnndlj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("同比增幅", "ndtbzf", true, JQTable.TextAlign.Left)
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -55,7 +57,8 @@ var hzb_companysNC;
             var _this = this;
             var date = this.mDateSelector.getDate();
             var compType = this.mCompanySelector.getCompany();
-            this.mDataSet.get({ year: date.year, month: date.month, companyId: compType }).then(function (dataArray) {
+            this.mDataSet.get({ year: date.year, month: date.month, companyId: compType })
+                .then(function (dataArray) {
                 _this.mData = dataArray;
                 _this.updateTextandTitle(date);
                 _this.updateTable();
@@ -67,8 +70,8 @@ var hzb_companysNC;
         };
         View.prototype.initPercentList = function () {
             var precentList = new std.vector();
-            precentList.push(3 /* dytbzf */);
-            precentList.push(6 /* ndtbzf */);
+            precentList.push(ZtId.dytbzf);
+            precentList.push(ZtId.ndtbzf);
             return precentList;
         };
         View.prototype.updateTable = function () {
@@ -86,11 +89,16 @@ var hzb_companysNC;
             var outputData = [];
             Util.formatData(outputData, this.mData, this.initPercentList(), []);
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(outputData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: outputData.length > 23 ? 500 : '100%',
                 width: 1300,
                 shrinkToFit: true,

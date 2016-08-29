@@ -97,7 +97,7 @@ body {
 .func_span {
 	text-align: center;
 	margin-bottom: 0;
-	display: table-cell;
+	display: block;
 	vertical-align: middle;
 	word-break: break-all;
 }

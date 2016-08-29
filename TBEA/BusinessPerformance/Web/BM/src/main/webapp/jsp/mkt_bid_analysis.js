@@ -1,3 +1,5 @@
+/// <reference path="util.ts" />
+/// <reference path="jqgrid/jqassist.ts" />
 var mkt_bid_analysis;
 (function (mkt_bid_analysis) {
     var Bid4IndustryZb;
@@ -24,18 +26,41 @@ var mkt_bid_analysis;
         }
         JQGridAssistantFactory.createBidTable4Industry = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("行业", "t0", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("当月情况", "t1", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("投标数量", "t11")).append(new JQTable.Node("投标金额(万元)", "t12")).append(new JQTable.Node("中标金额(万元)", "t13")).append(new JQTable.Node("占月度投标总额比例", "t14")),
-                new JQTable.Node("年度累计", "t2", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("投标数量", "t21")).append(new JQTable.Node("投标金额(万元)", "t22")).append(new JQTable.Node("中标金额(万元)", "t23")).append(new JQTable.Node("中标率", "t24")).append(new JQTable.Node("占年度投标总额比例", "t25")),
-                new JQTable.Node("去年同期累计", "t3", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("投标数量", "t31")).append(new JQTable.Node("投标金额(万元)", "t32")).append(new JQTable.Node("中标金额(万元)", "t33")).append(new JQTable.Node("中标率", "t34")).append(new JQTable.Node("占年度投标总额比例", "t35")),
-                new JQTable.Node("投标额同比增长幅度", "t4", false, 1 /* Right */, 0, undefined, undefined, false)
+                new JQTable.Node("行业", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("当月情况", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("投标数量", "t11"))
+                    .append(new JQTable.Node("投标金额(万元)", "t12"))
+                    .append(new JQTable.Node("中标金额(万元)", "t13"))
+                    .append(new JQTable.Node("占月度投标总额比例", "t14")),
+                new JQTable.Node("年度累计", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("投标数量", "t21"))
+                    .append(new JQTable.Node("投标金额(万元)", "t22"))
+                    .append(new JQTable.Node("中标金额(万元)", "t23"))
+                    .append(new JQTable.Node("中标率", "t24"))
+                    .append(new JQTable.Node("占年度投标总额比例", "t25")),
+                new JQTable.Node("去年同期累计", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("投标数量", "t31"))
+                    .append(new JQTable.Node("投标金额(万元)", "t32"))
+                    .append(new JQTable.Node("中标金额(万元)", "t33"))
+                    .append(new JQTable.Node("中标率", "t34"))
+                    .append(new JQTable.Node("占年度投标总额比例", "t35")),
+                new JQTable.Node("投标额同比增长幅度", "t4", false, JQTable.TextAlign.Right, 0, undefined, undefined, false)
             ], gridName);
         };
         JQGridAssistantFactory.createBidTable4Companys = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("项目公司", "t0", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("当月情况", "t1", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("投标数量", "t11")).append(new JQTable.Node("投标金额(万元)", "t12")).append(new JQTable.Node("中标金额(万元)", "t13")).append(new JQTable.Node("占月度投标总额比例", "t14")),
-                new JQTable.Node("年度累计", "t2", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("投标数量", "t21")).append(new JQTable.Node("投标金额(万元)", "t22")).append(new JQTable.Node("中标金额(万元)", "t23")).append(new JQTable.Node("中标率", "t24")).append(new JQTable.Node("占年度投标总额比例", "t25")),
+                new JQTable.Node("项目公司", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("当月情况", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("投标数量", "t11"))
+                    .append(new JQTable.Node("投标金额(万元)", "t12"))
+                    .append(new JQTable.Node("中标金额(万元)", "t13"))
+                    .append(new JQTable.Node("占月度投标总额比例", "t14")),
+                new JQTable.Node("年度累计", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("投标数量", "t21"))
+                    .append(new JQTable.Node("投标金额(万元)", "t22"))
+                    .append(new JQTable.Node("中标金额(万元)", "t23"))
+                    .append(new JQTable.Node("中标率", "t24"))
+                    .append(new JQTable.Node("占年度投标总额比例", "t25")),
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -63,13 +88,31 @@ var mkt_bid_analysis;
             this.TableId = TableId;
             this.childTableId = TableId + "_jqgrid_1234";
             this.mDs = new Util.DateSelector({ year: year - 1, month: 1 }, { year: year, month: month }, dateId);
+            //请求数据
             this.mDataSet = new Util.Ajax("mkt_bid_analysis_update.do", false);
             this.onType_TypeSelected();
+            //if (this.mCompanyName == "股份公司") {
+            //    this.onCompanySelected();
+            //} 
+            //                else {
+            //                for (var i in company) {
+            //                    if (company[i].length == 1) {
+            //                        if (this.mCompanyName == company[i][0]) {
+            //                            this.mSelCompanys = company[i];
+            //                        }
+            //                    }
+            //
+            //                }
+            //            }
+            //this.updateUI();
         };
         View.prototype.onType_TypeSelected = function () {
+            //this.mAnalysisType = company[$("#analysisType").val()];
             this.mAnalysisType = $("#analysisType").val();
         };
         View.prototype.onCompanySelected = function () {
+            //this.mCompanyName = $("#comp_category").val();
+            //this.mSelCompanys = company[$("#comp_category").val()];
         };
         View.prototype.exportExcel = function () {
             var dt = this.mDs.getDate();
@@ -91,7 +134,8 @@ var mkt_bid_analysis;
             parent.empty();
             parent.append("<table id='" + this.childTableId + "'></table>" + "<div id='pager'></div>");
             var dt = this.mDs.getDate();
-            this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: dt.year, month: dt.month, type: this.mAnalysisType }).then(function (data) {
+            this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: dt.year, month: dt.month, type: this.mAnalysisType })
+                .then(function (data) {
                 var rowBidData = data;
                 if (_this.mAnalysisType == "bid_industry") {
                     _this.updateTable(_this.TableId, _this.childTableId, JQGridAssistantFactory.createBidTable4Industry(_this.childTableId), rowBidData);
@@ -104,7 +148,8 @@ var mkt_bid_analysis;
         View.prototype.formatData = function (rowData, integerList, percentList) {
             var outputData = [];
             var formaterChain = new Util.FormatPercentHandler([], percentList.toArray());
-            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray())).next(new Util.FormatCurrencyHandler());
+            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray()))
+                .next(new Util.FormatCurrencyHandler());
             var row = [];
             for (var j = 0; j < rowData.length; ++j) {
                 row = [].concat(rowData[j]);
@@ -120,34 +165,39 @@ var mkt_bid_analysis;
             if (this.mAnalysisType == "bid_industry") {
                 var integerList = new std.vector();
                 var percentList = new std.vector();
-                integerList.push(1 /* dytbsl */);
-                integerList.push(5 /* ndsl */);
-                integerList.push(10 /* qntbsl */);
-                percentList.push(4 /* dyzydbl */);
-                percentList.push(8 /* ndzbl */);
-                percentList.push(9 /* ndtbbl */);
-                percentList.push(13 /* qnzbl */);
-                percentList.push(14 /* qnzndbl */);
-                percentList.push(15 /* tbzz */);
+                integerList.push(Bid4IndustryZb.dytbsl);
+                integerList.push(Bid4IndustryZb.ndsl);
+                integerList.push(Bid4IndustryZb.qntbsl);
+                percentList.push(Bid4IndustryZb.dyzydbl);
+                percentList.push(Bid4IndustryZb.ndzbl);
+                percentList.push(Bid4IndustryZb.ndtbbl);
+                percentList.push(Bid4IndustryZb.qnzbl);
+                percentList.push(Bid4IndustryZb.qnzndbl);
+                percentList.push(Bid4IndustryZb.tbzz);
                 data = this.formatData(rawData, integerList, percentList);
             }
             else if (this.mAnalysisType == "bid_company") {
                 var integerList = new std.vector();
                 var percentList = new std.vector();
-                integerList.push(1 /* dytbsl */);
-                integerList.push(5 /* ndsl */);
-                integerList.push(10 /* qntbsl */);
-                percentList.push(4 /* dyzydbl */);
-                percentList.push(8 /* ndzbl */);
-                percentList.push(9 /* ndtbbl */);
+                integerList.push(Bid4IndustryZb.dytbsl);
+                integerList.push(Bid4IndustryZb.ndsl);
+                integerList.push(Bid4IndustryZb.qntbsl);
+                percentList.push(Bid4IndustryZb.dyzydbl);
+                percentList.push(Bid4IndustryZb.ndzbl);
+                percentList.push(Bid4IndustryZb.ndtbbl);
                 data = this.formatData(rawData, integerList, percentList);
             }
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
+                //cellsubmit: 'clientArray',
+                //cellEdit: true,
                 editurl: 'clientArray',
                 height: '100%',
                 width: $(document).width() - 60,
@@ -155,7 +205,7 @@ var mkt_bid_analysis;
                 autoScroll: true,
                 pager: '#pager',
                 rowNum: 20,
-                viewrecords: true
+                viewrecords: true //是否显示行数 
             }));
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");

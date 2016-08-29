@@ -1,3 +1,6 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+/// <reference path="dateSelector.ts" />
 var template;
 (function (template) {
     var JQGridAssistantFactory = (function () {
@@ -13,7 +16,8 @@ var template;
         JQGridAssistantFactory.createHierarchyTable = function (gridName) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("A", "a"),
-                new JQTable.Node("B", "b").append(new JQTable.Node("C", "c"))
+                new JQTable.Node("B", "b")
+                    .append(new JQTable.Node("C", "c"))
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -32,7 +36,8 @@ var template;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ year: 0, month: 0, day: 0, companyId: 0 }).then(function (data) {
+            this.mDataSet.get({ year: 0, month: 0, day: 0, companyId: 0 })
+                .then(function (data) {
                 _this.updateTitle();
                 _this.updateTable("");
             });
@@ -49,17 +54,20 @@ var template;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.instance = new View();

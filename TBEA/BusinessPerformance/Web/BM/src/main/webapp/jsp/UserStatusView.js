@@ -1,3 +1,6 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+/// <reference path="dateSelector.ts" />
 var userStatus;
 (function (userStatus) {
     var JQGridAssistantFactory = (function () {
@@ -6,7 +9,7 @@ var userStatus;
         JQGridAssistantFactory.createFlatTable = function (gridName, title) {
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
-                nodes.push(new JQTable.Node(title[i], "_" + i, true, 0 /* Left */));
+                nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left));
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
@@ -34,11 +37,7 @@ var userStatus;
         View.prototype.updateTable = function (tableId) {
             var name = tableId + "_jqgrid";
             var tableAssist = JQGridAssistantFactory.createFlatTable(name, [
-                "用户名",
-                "SID",
-                "登录时间",
-                "最近访问时间"
-            ]);
+                "用户名", "SID", "登录时间", "最近访问时间"]);
             var summary = "● 在线户数 : " + this.mData.active_user_count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp";
             if (undefined != this.mData.latest_active_user) {
                 summary += "● 最近访问用户 : " + this.mData.latest_active_user + "&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;";
@@ -60,15 +59,20 @@ var userStatus;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : true,
+                //  cellsubmit: 'clientArray',
+                //  cellEdit: true,
                 width: 1000,
                 height: '100%',
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.instance = new View();

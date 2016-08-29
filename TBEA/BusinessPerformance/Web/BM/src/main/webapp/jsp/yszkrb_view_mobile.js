@@ -1,3 +1,5 @@
+/// <reference path="util.ts" />
+/// <reference path="jqgrid/jqassist.ts" />
 var yszkrb_view;
 (function (yszkrb_view) {
     var YSZKColumnId;
@@ -22,7 +24,7 @@ var yszkrb_view;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("单位", "t0", true, 0 /* Left */),
+                new JQTable.Node("单位", "t0", true, JQTable.TextAlign.Left),
                 new JQTable.Node("集团下达月度资金回笼指标", "t1"),
                 new JQTable.Node("各单位自行制定的回款计划", "t2"),
                 new JQTable.Node("今日回款", "t3"),
@@ -30,7 +32,10 @@ var yszkrb_view;
                 new JQTable.Node("资金回笼指标完成", "t5"),
                 new JQTable.Node("回款计划完成率", "t6"),
                 new JQTable.Node("已回款中可降应收的回款金额", "t7"),
-                new JQTable.Node("目前-月底回款计划", "t8").append(new JQTable.Node("确保办出", "t81")).append(new JQTable.Node("争取办出", "t82")).append(new JQTable.Node("两者合计", "t83")),
+                new JQTable.Node("目前-月底回款计划", "t8")
+                    .append(new JQTable.Node("确保办出", "t81"))
+                    .append(new JQTable.Node("争取办出", "t82"))
+                    .append(new JQTable.Node("两者合计", "t83")),
                 new JQTable.Node("全月确保", "t9"),
                 new JQTable.Node("预计全月计划完成率", "t10"),
                 new JQTable.Node("截止月底应收账款账面余额", "t11")
@@ -54,10 +59,16 @@ var yszkrb_view;
             this.mDay = day;
             $("#date").val(year + "/" + month + "/" + day);
             $("#date").datepicker({
+                //            numberOfMonths:1,//显示几个月  
+                //            showButtonPanel:true,//是否显示按钮面板  
                 dateFormat: 'yy/mm/dd',
+                //            clearText:"清除",//清除日期的按钮名称  
+                //            closeText:"关闭",//关闭选择框的按钮名称  
                 yearSuffix: '年',
                 showMonthAfterYear: true,
                 defaultDate: year + "/" + month + "/" + day,
+                //            minDate:'2011-03-05',//最小日期  
+                //maxDate: year + "-" + month + "-" + day,//最大日期  
                 monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
@@ -69,23 +80,28 @@ var yszkrb_view;
                     _this.mDay = d.getDate();
                 }
             });
-            $("#ui-datepicker-div").css('font-size', '0.8em');
+            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
             this.updateUI();
         };
+        //        public exportExcelYSDialy() {
+        //            $("#exportYSDialy")[0].action = "yszk_view_export.do?" + Util.Ajax.toUrlParam({year:this.mYear,month:this.mMonth,day:this.mDay});
+        //            $("#exportYSDialy")[0].submit();
+        //        }
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay }).then(function (dataArray) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
+                .then(function (dataArray) {
                 _this.mData = dataArray;
                 $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报");
                 document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报";
-                _this.updateTable();
+                _this.updateTable(); //update data for table
             });
         };
         View.prototype.initPercentList = function () {
             var precentList = new std.vector();
-            precentList.push(4 /* HLZBWC */);
-            precentList.push(5 /* HLJHWCL */);
-            precentList.push(11 /* JHWCL */);
+            precentList.push(YSZKColumnId.HLZBWC);
+            precentList.push(YSZKColumnId.HLJHWCL);
+            precentList.push(YSZKColumnId.JHWCL);
             return precentList;
         };
         View.prototype.updateTable = function () {

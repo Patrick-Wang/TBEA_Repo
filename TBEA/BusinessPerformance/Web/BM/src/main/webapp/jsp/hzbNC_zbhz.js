@@ -1,3 +1,7 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 var hzbNC_zbhz;
 (function (hzbNC_zbhz) {
     var ZtId;
@@ -16,13 +20,13 @@ var hzbNC_zbhz;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("指标", "zb", true, 0 /* Left */),
-                new JQTable.Node("当月实际", "dysj", true, 0 /* Left */),
-                new JQTable.Node("去年同期", "qntq", true, 0 /* Left */),
-                new JQTable.Node("同比增幅", "tbzf", true, 0 /* Left */),
-                new JQTable.Node("年度累计", "ndlj", true, 0 /* Left */),
-                new JQTable.Node("去年同期累计", "qnndlj", true, 0 /* Left */),
-                new JQTable.Node("同比增幅", "ndtbzf", true, 0 /* Left */)
+                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("当月实际", "dysj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("去年同期", "qntq", true, JQTable.TextAlign.Left),
+                new JQTable.Node("同比增幅", "tbzf", true, JQTable.TextAlign.Left),
+                new JQTable.Node("年度累计", "ndlj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("去年同期累计", "qnndlj", true, JQTable.TextAlign.Left),
+                new JQTable.Node("同比增幅", "ndtbzf", true, JQTable.TextAlign.Left)
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -43,11 +47,13 @@ var hzbNC_zbhz;
             this.mTableId = tableId;
             this.mDs = new Util.DateSelector({ year: year - 3, month: 1 }, { year: year, month: month }, dateId);
             this.updateTable();
+            //this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
             var date = this.mDs.getDate();
-            this.mDataSet.get({ month: date.month, year: date.year, type: this.mType }).then(function (dataArray) {
+            this.mDataSet.get({ month: date.month, year: date.year, type: this.mType })
+                .then(function (dataArray) {
                 _this.mData = dataArray;
                 $('h1').text(date.year + "年" + date.month + "月公司整体财务指标完成情况(万元)");
                 document.title = date.year + "年" + date.month + "月公司整体财务指标完成情况(万元)";
@@ -56,8 +62,8 @@ var hzbNC_zbhz;
         };
         View.prototype.initPercentList = function () {
             var precentList = new std.vector();
-            precentList.push(3 /* dytbzf */);
-            precentList.push(6 /* ndtbzf */);
+            precentList.push(ZtId.dytbzf);
+            precentList.push(ZtId.ndtbzf);
             return precentList;
         };
         View.prototype.updateTable = function () {
@@ -72,12 +78,18 @@ var hzbNC_zbhz;
             }
             var outputData = [];
             Util.formatData(outputData, this.mData, this.initPercentList(), []);
+            //data = this.formatZtData();
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(outputData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: outputData.length > 23 ? 500 : '100%',
                 width: 1330,
                 shrinkToFit: true,

@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var xl_fkfstj;
 (function (xl_fkfstj) {
     var JQGridAssistantFactory = (function () {
@@ -6,16 +8,20 @@ var xl_fkfstj;
         JQGridAssistantFactory.createSubNode = function (parent, fixedWidth) {
             if (fixedWidth === void 0) { fixedWidth = true; }
             if (fixedWidth) {
-                return parent.append(new JQTable.Node("笔数", "bs", true, 1 /* Right */, 70)).append(new JQTable.Node("金额", "je", true, 1 /* Right */, 80));
+                return parent
+                    .append(new JQTable.Node("笔数", "bs", true, JQTable.TextAlign.Right, 70))
+                    .append(new JQTable.Node("金额", "je", true, JQTable.TextAlign.Right, 80));
             }
             else {
-                return parent.append(new JQTable.Node("笔数", "bs")).append(new JQTable.Node("金额", "je"));
+                return parent
+                    .append(new JQTable.Node("笔数", "bs"))
+                    .append(new JQTable.Node("金额", "je"));
             }
         };
         JQGridAssistantFactory.createFdwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */, 70),
-                new JQTable.Node("", "title1", true, 0 /* Left */, 70),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
+                new JQTable.Node("", "title1", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("订单总量", "ddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("无预付款合同", "wyfkht")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("预付款<10%合同", "yfkxy10")),
@@ -31,7 +37,7 @@ var xl_fkfstj;
         };
         JQGridAssistantFactory.createGwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */, 70),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left, 70),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("国网合同订单总量", "gwhtddzl")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("3:06:0:01", "306001")),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("0:09:0:01", "009001")),
@@ -47,7 +53,7 @@ var xl_fkfstj;
         };
         JQGridAssistantFactory.createNwTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("", "title", true, 0 /* Left */),
+                new JQTable.Node("", "title", true, JQTable.TextAlign.Left),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("南网合同订单总量", "gwhtddzl"), false),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("1:6:2:1", "1621"), false),
                 JQGridAssistantFactory.createSubNode(new JQTable.Node("1:2:6:1", "1261"), false),
@@ -61,7 +67,7 @@ var xl_fkfstj;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("xlfkfstj_update.do");
-            this.mComp = 95 /* SBGS */;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             return new View();
@@ -88,20 +94,19 @@ var xl_fkfstj;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then(function (data) {
                 var fktjData = data;
                 _this.updateFdwTable(_this.fdwTableId, _this.fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(_this.fdwTableId + "_jqgrid_1234"), fktjData[0]);
                 var rawData = [
                     ["集中招标"],
                     ["非集中招标"],
-                    ["合计"]
-                ];
+                    ["合计"]];
                 _this.updateTable(_this.gwTableId, _this.gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(_this.gwTableId + "_jqgrid_1234"), rawData, fktjData[1]);
                 rawData = [
                     ["集中招标"],
                     ["非集中招标"],
-                    ["合计"]
-                ];
+                    ["合计"]];
                 _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rawData, fktjData[2], true);
                 $('h1').text("线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
                 document.title = "线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
@@ -110,13 +115,16 @@ var xl_fkfstj;
                     chartDataFdw.push(parseFloat(fktjData[0][i][1]).toFixed(2));
                 }
                 _this.updatePieEchart(_this.echartIdFDW, "非电网合同订单总量", chartDataFdw);
-                _this.updateEchart(_this.echartIdGW, "国网合同订单总量", [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '集中招标' }, { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '非集中招标' }]);
-                _this.updateEchart(_this.echartIdNW, "南网合同订单总量", [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '集中招标' }, { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '非集中招标' }]);
+                _this.updateEchart(_this.echartIdGW, "国网合同订单总量", [{ value: parseFloat(fktjData[1][0][1]).toFixed(2), name: '集中招标' },
+                    { value: parseFloat(fktjData[1][1][1]).toFixed(2), name: '非集中招标' }]);
+                _this.updateEchart(_this.echartIdNW, "南网合同订单总量", [{ value: parseFloat(fktjData[2][0][1]).toFixed(2), name: '集中招标' },
+                    { value: parseFloat(fktjData[2][1][1]).toFixed(2), name: '非集中招标' }]);
             });
         };
         View.prototype.updatePieEchart = function (chartId, tileTex, data) {
             var chart = echarts.init($("#" + chartId)[0]);
-            var legend = ["火电", "水电", "核电", "风电、光伏", "轨道交通", "石油石化", "煤炭煤化工", "钢铁冶金", "航天军工", "连锁经营", "其他"];
+            var legend = ["火电", "水电", "核电", "风电、光伏",
+                "轨道交通", "石油石化", "煤炭煤化工", "钢铁冶金", "航天军工", "连锁经营", "其他"];
             var dataOut = [];
             var dykhTotal = 0;
             var fdlscTotal = 0;
@@ -158,28 +166,30 @@ var xl_fkfstj;
                 },
                 calculable: false,
                 series: [{
-                    name: "行业占比",
-                    type: 'pie',
-                    minAngle: 2,
-                    radius: [0, 60],
-                    itemStyle: {
-                        normal: {
-                            label: {
-                                position: 'inner'
-                            },
-                            labelLine: {
-                                show: false
+                        name: "行业占比",
+                        type: 'pie',
+                        minAngle: 2,
+                        radius: [0, 60],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    position: 'inner'
+                                },
+                                labelLine: {
+                                    show: false
+                                }
                             }
-                        }
+                        },
+                        data: dataIn
                     },
-                    data: dataIn
-                }, {
-                    name: "行业占比",
-                    type: 'pie',
-                    minAngle: 0.01,
-                    radius: [100, 130],
-                    data: dataOut
-                }]
+                    {
+                        name: "行业占比",
+                        type: 'pie',
+                        minAngle: 0.01,
+                        radius: [100, 130],
+                        data: dataOut
+                    }
+                ]
             };
             chart.setOption(option);
         };
@@ -212,7 +222,7 @@ var xl_fkfstj;
                     orient: "vertical"
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 series: [
@@ -247,17 +257,20 @@ var xl_fkfstj;
             parent.empty();
             parent.append("<table id='" + childName + "'></table>");
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
                 width: 1250,
                 shrinkToFit: shrink,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateFdwTable = function (parentName, childName, tableAssist, rawData) {
@@ -276,8 +289,7 @@ var xl_fkfstj;
                 ["非电力市场", "航天军工"],
                 ["非电力市场", "连锁经营"],
                 ["非电力市场", "其他"],
-                ["合", "计"]
-            ];
+                ["合", "计"]];
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (rawData[i] instanceof Array) {
@@ -297,11 +309,14 @@ var xl_fkfstj;
             parent.empty();
             parent.append("<table id='" + childName + "'></table>");
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',

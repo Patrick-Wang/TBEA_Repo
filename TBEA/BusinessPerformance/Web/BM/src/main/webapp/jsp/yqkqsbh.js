@@ -1,3 +1,5 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var yqkqsbh;
 (function (yqkqsbh) {
     var JQGridAssistantFactory = (function () {
@@ -5,7 +7,7 @@ var yqkqsbh;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("月份", "yf", true, 0 /* Left */),
+                new JQTable.Node("月份", "yf", true, JQTable.TextAlign.Left),
                 new JQTable.Node("逾期一个月以内", "yqygyyn"),
                 new JQTable.Node("逾期1-3月", "yqysy"),
                 new JQTable.Node("逾期3-6月", "yqsly"),
@@ -18,7 +20,7 @@ var yqkqsbh;
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqkbhqs_update.do");
-            this.mComp = 95 /* SBGS */;
+            this.mComp = Util.CompanyType.SBGS;
         }
         View.newInstance = function () {
             return new View();
@@ -39,7 +41,8 @@ var yqkqsbh;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp }).then(function (data) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, companyId: this.mComp })
+                .then(function (data) {
                 _this.mData = data;
                 $('h1').text(_this.mYear + "年  逾期款趋势变化表");
                 document.title = _this.mYear + "年  逾期款趋势变化表";
@@ -54,6 +57,7 @@ var yqkqsbh;
             for (var i = 0; i < legend.length; ++i) {
                 data.push([]);
             }
+            //            var total = [];
             for (var i = 1; i <= this.mMonth; ++i) {
                 month.push(i + "月");
             }
@@ -62,6 +66,14 @@ var yqkqsbh;
                     data[j].push(parseFloat(this.mData[i - 1][j]).toFixed(2));
                 }
             }
+            //            for (var i = 1; i <= this.mMonth; ++i) {
+            //                for (var j = 0; j < legend.length - 1; ++j) {
+            //                    total[i - 1] += parseInt(data[j][i - 1]);
+            //                }
+            //            }
+            //            for (var i = 1; i <= this.mMonth; ++i) {
+            //                data[legend.length - 1].push(total[i - 1] + "");
+            //            }
             var ser = [];
             for (var i = 0; i < legend.length; ++i) {
                 ser.push({
@@ -81,7 +93,7 @@ var yqkqsbh;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -129,15 +141,20 @@ var yqkqsbh;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
                 width: 1000,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;

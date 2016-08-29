@@ -24,7 +24,7 @@ import com.tbea.Connection.DBConnectionManager;
 @Transactional("transactionManager")
 public class FuturesServiceImpl implements FuturesService {
 
-	public final static String NAME = "YsjsServiceImpl";
+	public final static String NAME = "FuturesServiceImpl";
 
 	public final static String USERID = "103";
 

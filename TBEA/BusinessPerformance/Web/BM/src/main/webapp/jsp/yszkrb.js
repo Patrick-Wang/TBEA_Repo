@@ -1,3 +1,6 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
 var yszkrb;
 (function (yszkrb) {
     var JQGridAssistantFactory = (function () {
@@ -5,13 +8,13 @@ var yszkrb;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("集团下达月度资金回笼指标", "t1", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("各单位自行制定的回款计划", "t2", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("今日回款", "t3", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("已回款中可降应收的回款金额", "t4", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("确保办出", "t5", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("争取办出", "t6", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node("截止月底应收账款账面余额", "t7", false, 0 /* Left */, 0, undefined, undefined, false)
+                new JQTable.Node("集团下达月度资金回笼指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("各单位自行制定的回款计划", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("今日回款", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("已回款中可降应收的回款金额", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("确保办出", "t5", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("争取办出", "t6", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("截止月底应收账款账面余额", "t7", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -36,10 +39,15 @@ var yszkrb;
             this.mTableId = tableId;
             $("#date").val(year + "/" + month + "/" + day);
             $("#date").datepicker({
+                //            numberOfMonths:1,//显示几个月  
+                //            showButtonPanel:true,//是否显示按钮面板  
                 dateFormat: 'yy/mm/dd',
+                //            clearText:"清除",//清除日期的按钮名称  
+                //            closeText:"关闭",//关闭选择框的按钮名称  
                 yearSuffix: '年',
                 showMonthAfterYear: true,
                 defaultDate: year + "/" + month + "/" + day,
+                //            minDate:'2011-03-05',//最小日期  
                 maxDate: year + "/" + month + "/" + day,
                 monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
@@ -52,7 +60,8 @@ var yszkrb;
                     _this.mDay = d.getDate();
                 }
             });
-            $("#ui-datepicker-div").css('font-size', '0.8em');
+            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
+            //this.updateTable();
             this.updateUI();
         };
         View.prototype.save = function () {
@@ -84,7 +93,8 @@ var yszkrb;
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay }).then(function (dataArray) {
+            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
+                .then(function (dataArray) {
                 _this.mData = dataArray;
                 $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报");
                 document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报";
@@ -112,11 +122,14 @@ var yszkrb;
             var lastsel = "";
             var lastcell = "";
             $("#" + name).jqGrid(this.mTableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: this.mTableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
@@ -141,6 +154,7 @@ var yszkrb;
                 beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
                     lastsel = iRow;
                     lastcell = iCol;
+                    //                        console.log(iRow +', ' + iCol);
                     $("input").attr("disabled", true);
                 },
                 afterEditCell: function (rowid, cellname, v, iRow, iCol) {
@@ -164,7 +178,9 @@ var yszkrb;
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
                     if ($(e.target).closest("#" + name).length == 0) {
+                        //  $("#" + name).jqGrid('saveRow', lastsel); 
                         $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                        //$("#" + name).resetSelection(); 
                         lastsel = "";
                     }
                 }

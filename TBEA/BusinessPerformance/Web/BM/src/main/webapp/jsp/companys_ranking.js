@@ -1,3 +1,6 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+//利润计划完成率排名,经营性净现金流实际完成排名
 var RANKINGTYPE1;
 (function (RANKINGTYPE1) {
     RANKINGTYPE1[RANKINGTYPE1["GSMC"] = 0] = "GSMC";
@@ -11,6 +14,7 @@ var RANKINGTYPE1;
     RANKINGTYPE1[RANKINGTYPE1["MONTHRANKING"] = 8] = "MONTHRANKING";
 })(RANKINGTYPE1 || (RANKINGTYPE1 = {}));
 ;
+//利润指标年度累计完成同比增长情况排名
 var RANKINGTYPE2;
 (function (RANKINGTYPE2) {
     RANKINGTYPE2[RANKINGTYPE2["GSMC"] = 0] = "GSMC";
@@ -24,6 +28,7 @@ var RANKINGTYPE2;
     RANKINGTYPE2[RANKINGTYPE2["MONTHRANKING"] = 8] = "MONTHRANKING";
 })(RANKINGTYPE2 || (RANKINGTYPE2 = {}));
 ;
+//人均利润，人均收入
 var RANKINGTYPE3;
 (function (RANKINGTYPE3) {
     RANKINGTYPE3[RANKINGTYPE3["GSMC"] = 0] = "GSMC";
@@ -33,6 +38,7 @@ var RANKINGTYPE3;
     RANKINGTYPE3[RANKINGTYPE3["MONTHRANKING"] = 4] = "MONTHRANKING";
 })(RANKINGTYPE3 || (RANKINGTYPE3 = {}));
 ;
+//应收账款占收入排名
 var RANKINGTYPE4;
 (function (RANKINGTYPE4) {
     RANKINGTYPE4[RANKINGTYPE4["GSMC"] = 0] = "GSMC";
@@ -42,6 +48,7 @@ var RANKINGTYPE4;
     RANKINGTYPE4[RANKINGTYPE4["MONTHRANKING"] = 4] = "MONTHRANKING";
 })(RANKINGTYPE4 || (RANKINGTYPE4 = {}));
 ;
+//应收账款加保理
 var RANKINGTYPE5;
 (function (RANKINGTYPE5) {
     RANKINGTYPE5[RANKINGTYPE5["GSMC"] = 0] = "GSMC";
@@ -52,6 +59,7 @@ var RANKINGTYPE5;
     RANKINGTYPE5[RANKINGTYPE5["MONTHRANKING"] = 5] = "MONTHRANKING";
 })(RANKINGTYPE5 || (RANKINGTYPE5 = {}));
 ;
+//存货占比
 var RANKINGTYPE6;
 (function (RANKINGTYPE6) {
     RANKINGTYPE6[RANKINGTYPE6["GSMC"] = 0] = "GSMC";
@@ -61,6 +69,7 @@ var RANKINGTYPE6;
     RANKINGTYPE6[RANKINGTYPE6["MONTHRANKING"] = 4] = "MONTHRANKING";
 })(RANKINGTYPE6 || (RANKINGTYPE6 = {}));
 ;
+//应收账款加存货占比
 var RANKINGTYPE7;
 (function (RANKINGTYPE7) {
     RANKINGTYPE7[RANKINGTYPE7["GSMC"] = 0] = "GSMC";
@@ -79,61 +88,81 @@ var companys_ranking;
         JQGridAssistantFactory.createTable = function (gridName, RankingType) {
             if (RankingType == 1 || RankingType == 9 || RankingType == 11) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("单位名称", "dwmc", true, 0 /* Left */),
-                    new JQTable.Node("年度完成率排名", "yearRanking", true, 0 /* Left */).append(new JQTable.Node("年度计划", "n1")).append(new JQTable.Node("年度累计完成", "n2")).append(new JQTable.Node("计划完成率", "n3")).append(new JQTable.Node("年度排名", "n4", true, 1 /* Right */, 0, undefined, undefined, true, true, "int")),
-                    new JQTable.Node("月度完成率排名", "monthRanking", true, 0 /* Left */).append(new JQTable.Node("月度计划", "y1")).append(new JQTable.Node("月度完成", "y2")).append(new JQTable.Node("月度完成率", "y3")).append(new JQTable.Node("月度排名", "y4", true, 1 /* Right */, 0, undefined, undefined, true, true, "int"))
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("年度完成率排名", "yearRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("年度计划", "n1"))
+                        .append(new JQTable.Node("年度累计完成", "n2"))
+                        .append(new JQTable.Node("计划完成率", "n3"))
+                        .append(new JQTable.Node("年度排名", "n4", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int")),
+                    new JQTable.Node("月度完成率排名", "monthRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("月度计划", "y1"))
+                        .append(new JQTable.Node("月度完成", "y2"))
+                        .append(new JQTable.Node("月度完成率", "y3"))
+                        .append(new JQTable.Node("月度排名", "y4", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int"))
                 ], gridName);
             }
             else if (RankingType == 2) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("单位名称", "dwmc", true, 0 /* Left */),
-                    new JQTable.Node("年度同比增长情况排名", "yearRanking", true, 0 /* Left */).append(new JQTable.Node("年度累计", "n1")).append(new JQTable.Node("去年同期累计", "n2")).append(new JQTable.Node("同比增长", "n3")).append(new JQTable.Node("年度排名", "n4", true, 1 /* Right */, 0, undefined, undefined, true, true, "int")),
-                    new JQTable.Node("月度同比增长情况排名", "monthRanking", true, 0 /* Left */).append(new JQTable.Node("当月完成", "y1")).append(new JQTable.Node("去年同期", "y2")).append(new JQTable.Node("同比增长", "y3")).append(new JQTable.Node("月度排名", "y4", true, 1 /* Right */, 0, undefined, undefined, true, true, "int"))
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("年度同比增长情况排名", "yearRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("年度累计", "n1"))
+                        .append(new JQTable.Node("去年同期累计", "n2"))
+                        .append(new JQTable.Node("同比增长", "n3"))
+                        .append(new JQTable.Node("年度排名", "n4", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int")),
+                    new JQTable.Node("月度同比增长情况排名", "monthRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("当月完成", "y1"))
+                        .append(new JQTable.Node("去年同期", "y2"))
+                        .append(new JQTable.Node("同比增长", "y3"))
+                        .append(new JQTable.Node("月度排名", "y4", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int"))
                 ], gridName);
             }
             else if (RankingType == 3 || RankingType == 4 || RankingType == 13 || RankingType == 14) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("单位名称", "dwmc", true, 0 /* Left */),
-                    new JQTable.Node("年度累计完成排名", "yearRanking", true, 0 /* Left */).append(new JQTable.Node("年度累计完成", "n1")).append(new JQTable.Node("年度排名", "n2", true, 1 /* Right */, 0, undefined, undefined, true, true, "int")),
-                    new JQTable.Node("月度完成", "monthRanking", true, 0 /* Left */).append(new JQTable.Node("月度完成", "y1")).append(new JQTable.Node("月度排名", "y2", true, 1 /* Right */, 0, undefined, undefined, true, true, "int"))
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("年度累计完成排名", "yearRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("年度累计完成", "n1"))
+                        .append(new JQTable.Node("年度排名", "n2", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int")),
+                    new JQTable.Node("月度完成", "monthRanking", true, JQTable.TextAlign.Left)
+                        .append(new JQTable.Node("月度完成", "y1"))
+                        .append(new JQTable.Node("月度排名", "y2", true, JQTable.TextAlign.Right, 0, undefined, undefined, true, true, "int"))
                 ], gridName);
             }
             else if (RankingType == 5) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("单位名称", "dwmc", true, 0 /* Left */),
-                    new JQTable.Node("本月收入（还原至全年）", "income", true, 0 /* Left */),
-                    new JQTable.Node("本月应收账款", "accountReceive", true, 0 /* Left */),
-                    new JQTable.Node("应收账款占收入比重", "accountReceiveRate", true, 0 /* Left */),
-                    new JQTable.Node("月度排名", "monthRanking", true, 0 /* Left */, 0, undefined, undefined, true, true, "int")
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月应收账款", "accountReceive", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("应收账款占收入比重", "accountReceiveRate", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left, 0, undefined, undefined, true, true, "int")
                 ], gridName);
             }
             else if (RankingType == 6) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("单位名称", "dwmc", true, 0 /* Left */),
-                    new JQTable.Node("本月收入（还原至全年）", "income", true, 0 /* Left */),
-                    new JQTable.Node("本月应收账款", "accountReceive", true, 0 /* Left */),
-                    new JQTable.Node("本月保理余额", "factoring", true, 0 /* Left */),
-                    new JQTable.Node("应收账款占收入比重", "accountReceiveRate", true, 0 /* Left */),
-                    new JQTable.Node("月度排名", "monthRanking", true, 0 /* Left */, 0, undefined, undefined, true, true, "int")
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月应收账款", "accountReceive", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月保理余额", "factoring", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("应收账款占收入比重", "accountReceiveRate", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left, 0, undefined, undefined, true, true, "int")
                 ], gridName);
             }
             else if (RankingType == 7) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("单位名称", "dwmc", true, 0 /* Left */),
-                    new JQTable.Node("本月收入（还原至全年）", "income", true, 0 /* Left */),
-                    new JQTable.Node("本月存货", "stock", true, 0 /* Left */),
-                    new JQTable.Node("存货占收入比重", "stockRate", true, 0 /* Left */),
-                    new JQTable.Node("月度排名", "monthRanking", true, 0 /* Left */, 0, undefined, undefined, true, true, "int")
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月存货", "stock", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("存货占收入比重", "stockRate", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left, 0, undefined, undefined, true, true, "int")
                 ], gridName);
             }
             else if (RankingType == 8) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("单位名称", "dwmc", true, 0 /* Left */),
-                    new JQTable.Node("本月收入（还原至全年）", "income", true, 0 /* Left */),
-                    new JQTable.Node("本月应收账款", "accountReceive", true, 0 /* Left */),
-                    new JQTable.Node("本月存货", "stock", true, 0 /* Left */),
-                    new JQTable.Node("（应收账款+存货）占收入比重", "accountReceiveandStockRate", true, 0 /* Left */),
-                    new JQTable.Node("月度排名", "monthRanking", true, 0 /* Left */, 0, undefined, undefined, true, true, "int")
+                    new JQTable.Node("单位名称", "dwmc", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月收入（还原至全年）", "income", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月应收账款", "accountReceive", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("本月存货", "stock", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("（应收账款+存货）占收入比重", "accountReceiveandStockRate", true, JQTable.TextAlign.Left),
+                    new JQTable.Node("月度排名", "monthRanking", true, JQTable.TextAlign.Left, 0, undefined, undefined, true, true, "int")
                 ], gridName);
             }
         };
@@ -159,7 +188,9 @@ var companys_ranking;
         };
         View.prototype.onIndexSelected = function () {
             this.mIndex = $("#ranktype").val();
+            //this.mIndex = $("#indextype  option:selected").text();
         };
+        //导出excel
         View.prototype.exportExcel = function (fName) {
             var date = this.mDs.getDate();
             $("#export")[0].action = "companys_ranking_export.do?" + Util.Ajax.toUrlParam({ year: date.year, month: date.month, rankingType: this.mIndex });
@@ -169,7 +200,8 @@ var companys_ranking;
             var _this = this;
             var date = this.mDs.getDate();
             this.onIndexSelected();
-            this.mDataSet.get({ month: date.month, year: date.year, rankingType: this.mIndex }).then(function (dataArray) {
+            this.mDataSet.get({ month: date.month, year: date.year, rankingType: this.mIndex })
+                .then(function (dataArray) {
                 _this.mData = dataArray;
                 $('h1').text(date.year + "年" + date.month + "月" + "经营单位指标排名情况");
                 document.title = date.year + "年" + date.month + "月" + "经营单位指标排名情况";
@@ -189,10 +221,10 @@ var companys_ranking;
                 }
                 for (var j = 1; j < mdata[i].length; j++) {
                     if (this.mIndex == 1 || this.mIndex == 9 || this.mIndex == 11) {
-                        if (4 /* YEARRANKING */ == j || 8 /* MONTHRANKING */ == j) {
+                        if (RANKINGTYPE1.YEARRANKING == j || RANKINGTYPE1.MONTHRANKING == j) {
                             mdata[i][j] = Util.formatInt(mdata[i][j]);
                         }
-                        else if (3 /* JHWCL */ == j || 7 /* YDWCL */ == j) {
+                        else if (RANKINGTYPE1.JHWCL == j || RANKINGTYPE1.YDWCL == j) {
                             mdata[i][j] = Util.formatPercent(mdata[i][j]);
                         }
                         else {
@@ -200,7 +232,7 @@ var companys_ranking;
                         }
                     }
                     else if (this.mIndex == 3 || this.mIndex == 4 || this.mIndex == 13 || this.mIndex == 14) {
-                        if (2 /* YEARRANKING */ == j || 4 /* MONTHRANKING */ == j) {
+                        if (RANKINGTYPE3.YEARRANKING == j || RANKINGTYPE3.MONTHRANKING == j) {
                             mdata[i][j] = Util.formatInt(mdata[i][j]);
                         }
                         else {
@@ -208,10 +240,10 @@ var companys_ranking;
                         }
                     }
                     else if (this.mIndex == 2) {
-                        if (4 /* YEARRANKING */ == j || 8 /* MONTHRANKING */ == j) {
+                        if (RANKINGTYPE2.YEARRANKING == j || RANKINGTYPE2.MONTHRANKING == j) {
                             mdata[i][j] = Util.formatInt(mdata[i][j]);
                         }
-                        else if (3 /* NDTBZZ */ == j || 7 /* YDTBZZ */ == j) {
+                        else if (RANKINGTYPE2.NDTBZZ == j || RANKINGTYPE2.YDTBZZ == j) {
                             mdata[i][j] = Util.formatPercent(mdata[i][j]);
                         }
                         else {
@@ -219,10 +251,10 @@ var companys_ranking;
                         }
                     }
                     else if (this.mIndex == 5) {
-                        if (4 /* MONTHRANKING */ == j) {
+                        if (RANKINGTYPE4.MONTHRANKING == j) {
                             mdata[i][j] = Util.formatInt(mdata[i][j]);
                         }
-                        else if (3 /* YSZKZSRBZ */ == j) {
+                        else if (RANKINGTYPE4.YSZKZSRBZ == j) {
                             mdata[i][j] = Util.formatPercent(mdata[i][j]);
                         }
                         else {
@@ -230,10 +262,10 @@ var companys_ranking;
                         }
                     }
                     else if (this.mIndex == 6) {
-                        if (5 /* MONTHRANKING */ == j) {
+                        if (RANKINGTYPE5.MONTHRANKING == j) {
                             mdata[i][j] = Util.formatInt(mdata[i][j]);
                         }
-                        else if (4 /* YSZKZSRBZ */ == j) {
+                        else if (RANKINGTYPE5.YSZKZSRBZ == j) {
                             mdata[i][j] = Util.formatPercent(mdata[i][j]);
                         }
                         else {
@@ -241,10 +273,10 @@ var companys_ranking;
                         }
                     }
                     else if (this.mIndex == 7) {
-                        if (4 /* MONTHRANKING */ == j) {
+                        if (RANKINGTYPE6.MONTHRANKING == j) {
                             mdata[i][j] = Util.formatInt(mdata[i][j]);
                         }
-                        else if (3 /* CHZSRBZ */ == j) {
+                        else if (RANKINGTYPE6.CHZSRBZ == j) {
                             mdata[i][j] = Util.formatPercent(mdata[i][j]);
                         }
                         else {
@@ -252,10 +284,10 @@ var companys_ranking;
                         }
                     }
                     else if (this.mIndex == 8) {
-                        if (5 /* MONTHRANKING */ == j) {
+                        if (RANKINGTYPE7.MONTHRANKING == j) {
                             mdata[i][j] = Util.formatInt(mdata[i][j]);
                         }
-                        else if (4 /* YSZKCHZSRBZ */ == j) {
+                        else if (RANKINGTYPE7.YSZKCHZSRBZ == j) {
                             mdata[i][j] = Util.formatPercent(mdata[i][j]);
                         }
                         else {
@@ -288,8 +320,7 @@ var companys_ranking;
                         ["新特能源公司"],
                         ["进出口公司"],
                         ["国际工程公司"],
-                        ["众和公司"]
-                    ];
+                        ["众和公司"]];
                     data = this.formatData(predata);
                 }
                 else {
@@ -301,11 +332,16 @@ var companys_ranking;
             }
             tableAssist = JQGridAssistantFactory.createTable(name, rankingType);
             $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
                 width: 1200,
                 shrinkToFit: true,

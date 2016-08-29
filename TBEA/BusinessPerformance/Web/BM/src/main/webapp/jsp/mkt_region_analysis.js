@@ -1,3 +1,5 @@
+/// <reference path="util.ts" />
+/// <reference path="jqgrid/jqassist.ts" />
 var mkt_region_analysis;
 (function (mkt_region_analysis) {
     var RegionZb;
@@ -21,16 +23,32 @@ var mkt_region_analysis;
         }
         JQGridAssistantFactory.createRegionIndexTable = function (gridName, year, startMonth, endMonth) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("区域", "t0", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + "月市场关键累计指标", "t1", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("投标金额(万元)", "t11")).append(new JQTable.Node("中标金额(万元)", "t12")).append(new JQTable.Node("中标率", "t13")).append(new JQTable.Node("签约金额", "t14"))
+                new JQTable.Node("区域", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + "月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("投标金额(万元)", "t11"))
+                    .append(new JQTable.Node("中标金额(万元)", "t12"))
+                    .append(new JQTable.Node("中标率", "t13"))
+                    .append(new JQTable.Node("签约金额", "t14"))
             ], gridName);
         };
         JQGridAssistantFactory.createIndustryIndexTable = function (gridName, year, startMonth, endMonth) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("行业", "t0", false, 0 /* Left */, 0, undefined, undefined, false),
-                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + "月市场关键累计指标", "t1", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("投标金额(万元)", "t11")).append(new JQTable.Node("中标金额(万元)", "t12")).append(new JQTable.Node("中标率", "t13")).append(new JQTable.Node("签约金额", "t14")),
-                new JQTable.Node((year - 1) + "年" + startMonth + "-" + endMonth + "月市场关键累计指标", "t2", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("投标金额(万元)", "t21")).append(new JQTable.Node("中标金额(万元)", "t22")).append(new JQTable.Node("中标率", "t23")).append(new JQTable.Node("签约金额", "t24")),
-                new JQTable.Node("累计同期对比情况", "t3", false, 0 /* Left */, 0, undefined, undefined, false).append(new JQTable.Node("投标金额同比增长", "t31")).append(new JQTable.Node("中标金额同比增长", "t32")).append(new JQTable.Node("中标率同比提高", "t33")).append(new JQTable.Node("签约金额同比增长", "t34"))
+                new JQTable.Node("行业", "t0", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node(year + "年" + startMonth + "-" + endMonth + "月市场关键累计指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("投标金额(万元)", "t11"))
+                    .append(new JQTable.Node("中标金额(万元)", "t12"))
+                    .append(new JQTable.Node("中标率", "t13"))
+                    .append(new JQTable.Node("签约金额", "t14")),
+                new JQTable.Node((year - 1) + "年" + startMonth + "-" + endMonth + "月市场关键累计指标", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("投标金额(万元)", "t21"))
+                    .append(new JQTable.Node("中标金额(万元)", "t22"))
+                    .append(new JQTable.Node("中标率", "t23"))
+                    .append(new JQTable.Node("签约金额", "t24")),
+                new JQTable.Node("累计同期对比情况", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                    .append(new JQTable.Node("投标金额同比增长", "t31"))
+                    .append(new JQTable.Node("中标金额同比增长", "t32"))
+                    .append(new JQTable.Node("中标率同比提高", "t33"))
+                    .append(new JQTable.Node("签约金额同比增长", "t34"))
             ], gridName);
         };
         return JQGridAssistantFactory;
@@ -47,16 +65,20 @@ var mkt_region_analysis;
             this.TableId = TableId;
             this.childTableId = TableId + "_jqgrid_1234";
             this.mDs = new Util.DateSelector({ year: year - 1, month: 1 }, { year: year, month: month }, dateId);
+            //请求数据
             this.mDataSet = new Util.Ajax("mkt_region_analysis_update.do", false);
             this.onType_TypeSelected();
+            //this.onCompanySelected();
             this.onYearSelected();
             this.onStartMonthSelected();
             this.onEndMonthSelected();
+            //this.updateUI();
         };
         View.prototype.onType_TypeSelected = function () {
             this.mAnalysisType = $("#analysisType").val();
         };
         View.prototype.onCompanySelected = function () {
+            //this.mCompanyName = $("#comp_category").val();
         };
         View.prototype.exportExcel = function () {
             $("#exportBidAnalysisData")[0].action = "mkt_region_analysis_export.do?" + Util.Ajax.toUrlParam({ companyName: JSON.stringify(this.mSelCompanys), year: this.mYear, month: this.mEndMonth, startYear: this.mYear, startMonth: this.mStartMonth, type: this.mAnalysisType });
@@ -74,7 +96,8 @@ var mkt_region_analysis;
         View.prototype.formatData = function (rowData, integerList, percentList) {
             var outputData = [];
             var formaterChain = new Util.FormatPercentHandler([], percentList.toArray());
-            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray())).next(new Util.FormatCurrencyHandler());
+            formaterChain.next(new Util.FormatIntHandler([], integerList.toArray()))
+                .next(new Util.FormatCurrencyHandler());
             var row = [];
             for (var j = 0; j < rowData.length; ++j) {
                 row = [].concat(rowData[j]);
@@ -103,31 +126,48 @@ var mkt_region_analysis;
                 else {
                     this.mSelCompanys.push(this.mCompanyName);
                 }
-                this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: this.mYear, month: this.mEndMonth, startYear: this.mYear, startMonth: this.mStartMonth, type: this.mAnalysisType }).then(function (data) {
+                this.mDataSet.get({ companyName: JSON.stringify(this.mSelCompanys), year: this.mYear, month: this.mEndMonth, startYear: this.mYear, startMonth: this.mStartMonth, type: this.mAnalysisType })
+                    .then(function (data) {
                     var parent = $("#" + _this.TableId);
                     parent.empty();
                     parent.append("<table id='" + _this.childTableId + "'></table>" + "<div id='pager'></div>");
                     if (_this.mAnalysisType == "region_index") {
                         var integerList = new std.vector();
                         var percentList = new std.vector();
-                        percentList.push(3 /* zbl */);
+                        percentList.push(RegionZb.zbl);
                         data = _this.formatData(data, integerList, percentList);
                         _this.updateTable(_this.TableId, _this.childTableId, JQGridAssistantFactory.createRegionIndexTable(_this.childTableId, _this.mYear, _this.mStartMonth, _this.mEndMonth), data);
                     }
                     else if (_this.mAnalysisType == "industry_index") {
                         var integerList = new std.vector();
                         var percentList = new std.vector();
-                        percentList.push(3 /* zbl */);
-                        percentList.push(7 /* qnzbl */);
-                        percentList.push(9 /* tbjetbzf */);
-                        percentList.push(10 /* zbjetbzf */);
-                        percentList.push(11 /* zbltbzf */);
-                        percentList.push(12 /* qyjetbzf */);
+                        percentList.push(RegionZb.zbl);
+                        percentList.push(RegionZb.qnzbl);
+                        percentList.push(RegionZb.tbjetbzf);
+                        percentList.push(RegionZb.zbjetbzf);
+                        percentList.push(RegionZb.zbltbzf);
+                        percentList.push(RegionZb.qyjetbzf);
                         data = _this.formatData(data, integerList, percentList);
                         _this.updateTable(_this.TableId, _this.childTableId, JQGridAssistantFactory.createIndustryIndexTable(_this.childTableId, _this.mYear, _this.mStartMonth, _this.mEndMonth), data);
                     }
                 });
             }
+            //            this.mDataSet.get({ AnalysisType: this.mAnalysisType })
+            //                .then((data: any) => {
+            //                    var fktjData = data;
+            //
+            //                    $('#dataStatus').css("display", "none");
+            //                    if (this.mAnalysisType == "bid_industry") {
+            //                        this.updateTable(
+            //                            this.TableId,
+            //                            this.childTableId,
+            //                            JQGridAssistantFactory.createBidTable4Industry(this.childTableId),
+            //                            fktjData[0]);
+            //                    }else if (this.mAnalysisType == "bid_company"){
+            //                        
+            //                    } 
+            //
+            //                });
         };
         View.prototype.updateTable = function (parentName, childName, tableAssist, rawData) {
             $(rawData).each(function (i, item) {
@@ -136,11 +176,16 @@ var mkt_region_analysis;
                 }
             });
             $("#" + childName).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: tableAssist.getData(rawData),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                // autowidth : false,
+                //cellsubmit: 'clientArray',
+                //cellEdit: true,
                 editurl: 'clientArray',
                 height: '100%',
                 width: $(document).width() - 60,
@@ -148,7 +193,7 @@ var mkt_region_analysis;
                 autoScroll: true,
                 pager: '#pager',
                 rowNum: 20,
-                viewrecords: true
+                viewrecords: true //是否显示行数 
             }));
             if (rawData.length != 0) {
                 $("#assist").css("display", "block");

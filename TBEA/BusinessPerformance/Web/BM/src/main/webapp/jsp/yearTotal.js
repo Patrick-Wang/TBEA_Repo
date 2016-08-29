@@ -1,3 +1,8 @@
+/**
+ * Created by Floyd on 2016/3/28.
+ */
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
 var yearTotal;
 (function (yearTotal) {
     var JQGridAssistantFactory = (function () {
@@ -5,22 +10,22 @@ var yearTotal;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("月度", "yd", true, 2 /* Center */),
-                new JQTable.Node("月度", "yd1", true, 2 /* Center */),
-                new JQTable.Node("5年以上", "wnys", true, 0 /* Left */),
-                new JQTable.Node("4-5年", "sdwn", true, 0 /* Left */),
-                new JQTable.Node("3-4年", "sdsn", true, 0 /* Left */),
-                new JQTable.Node("2-3年", "edsn", true, 0 /* Left */),
-                new JQTable.Node("1-2年", "yden", true, 0 /* Left */),
-                new JQTable.Node("1年以内", "ynyn", true, 0 /* Left */),
-                new JQTable.Node("合计", "hj", true, 0 /* Left */),
+                new JQTable.Node("月度", "yd", true, JQTable.TextAlign.Center),
+                new JQTable.Node("月度", "yd1", true, JQTable.TextAlign.Center),
+                new JQTable.Node("5年以上", "wnys", true, JQTable.TextAlign.Left),
+                new JQTable.Node("4-5年", "sdwn", true, JQTable.TextAlign.Left),
+                new JQTable.Node("3-4年", "sdsn", true, JQTable.TextAlign.Left),
+                new JQTable.Node("2-3年", "edsn", true, JQTable.TextAlign.Left),
+                new JQTable.Node("1-2年", "yden", true, JQTable.TextAlign.Left),
+                new JQTable.Node("1年以内", "ynyn", true, JQTable.TextAlign.Left),
+                new JQTable.Node("合计", "hj", true, JQTable.TextAlign.Left),
             ], gridName);
         };
         return JQGridAssistantFactory;
     })();
     var View = (function () {
         function View() {
-            this.mComp = 54 /* HBGS */;
+            this.mComp = Util.CompanyType.HBGS;
         }
         View.newInstance = function () {
             return new View();
@@ -44,7 +49,8 @@ var yearTotal;
             this.mDataSet.get({
                 year: this.mYear,
                 companyId: this.mComp
-            }).then(function (jsonData) {
+            })
+                .then(function (jsonData) {
                 _this.mTableData = jsonData;
                 document.title = _this.mYear + "年";
                 _this.updateTable(_this.mTableId);

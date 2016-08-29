@@ -1,3 +1,8 @@
+/// <reference path="jqgrid/jqassist.ts" />
+/// <reference path="util.ts" />
+/// <reference path="dateSelector.ts" />
+/// <reference path="companySelector.ts" />
+///<reference path="messageBox.ts"/>
 var entry_template;
 (function (entry_template) {
     var JQGridAssistantFactory = (function () {
@@ -7,7 +12,7 @@ var entry_template;
             var nodes = [];
             for (var i = 0; i < title.length; ++i) {
                 if (i == 0) {
-                    nodes.push(new JQTable.Node(title[i], "_" + i, true, 0 /* Left */));
+                    nodes.push(new JQTable.Node(title[i], "_" + i, true, JQTable.TextAlign.Left));
                 }
                 else {
                     nodes.push(new JQTable.Node(title[i], "_" + i, statusList[i - 1] == Util.ZBStatus.APPROVED));
@@ -30,33 +35,36 @@ var entry_template;
         View.prototype.initInstance = function (opt) {
             this.mOpt = opt;
             switch (this.mOpt.entryType) {
-                case 1 /* YDJDMJH */:
+                case Util.ZBType.YDJDMJH:
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, Util.addMonth({ year: this.mOpt.date.year, month: this.mOpt.date.month }, 3), this.mOpt.dateId, true);
                     break;
-                case 0 /* QNJH */:
+                case Util.ZBType.QNJH:
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, { year: this.mOpt.date.year }, this.mOpt.dateId, true);
                     break;
-                case 2 /* BY20YJ */:
-                case 3 /* BY28YJ */:
-                case 4 /* BYSJ */:
+                case Util.ZBType.BY20YJ:
+                case Util.ZBType.BY28YJ:
+                case Util.ZBType.BYSJ:
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, this.mOpt.date, this.mOpt.dateId);
                     break;
             }
+            // this.mDateSelector.select(this.mOpt.date);
             this.mCompanySelector = new Util.CompanySelector(false, opt.companyId, opt.comps);
             if (opt.comps.length == 1) {
                 this.mCompanySelector.hide();
             }
             this.updateTitle();
+            //this.updateUI();
         };
         View.prototype.updateUI = function () {
             var _this = this;
             $("#nodatatips").css("display", "none");
             $("#entryarea").css("display", "");
             var date = this.mDateSelector.getDate();
-            if (this.mOpt.entryType == 1 /* YDJDMJH */) {
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
                 date = Util.addMonth(date, -2);
             }
-            this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() }).then(function (data) {
+            this.mDataSet.get({ year: date.year, month: date.month, entryType: this.mOpt.entryType, companyId: this.mCompanySelector.getCompany() })
+                .then(function (data) {
                 _this.mStatusList = data.status;
                 _this.mTableData = data.values;
                 _this.updateTitle();
@@ -70,14 +78,16 @@ var entry_template;
             });
         };
         View.prototype.updateApproveStatusFromDeputy = function (year, month, entryType) {
+            //年度计划数经营副总审核状态
             var isShowSubmit_2 = false;
             var isShowapprove_2 = false;
             var approve_2Content = "";
             var submit_2Content = "";
-            if ((0 /* QNJH */ == entryType || 4 /* BYSJ */) && this.mStatusList.length == 1) {
+            //年度计划数据和实际计划数据
+            if ((Util.ZBType.QNJH == entryType || Util.ZBType.BYSJ) && this.mStatusList.length == 1) {
                 if (this.mStatusList[0] == Util.ZBStatus.SUBMITTED_2) {
                     isShowSubmit_2 = true;
-                    if (0 /* QNJH */ == entryType) {
+                    if (Util.ZBType.QNJH == entryType) {
                         submit_2Content = year + "年计划数据";
                     }
                     else {
@@ -86,7 +96,7 @@ var entry_template;
                 }
                 else if (this.mStatusList[0] == Util.ZBStatus.APPROVED_2) {
                     isShowapprove_2 = true;
-                    if (0 /* QNJH */ == entryType) {
+                    if (Util.ZBType.QNJH == entryType) {
                         approve_2Content = year + "年计划数据";
                     }
                     else {
@@ -95,7 +105,9 @@ var entry_template;
                 }
                 this.addContent(isShowapprove_2, isShowSubmit_2, approve_2Content, submit_2Content);
             }
-            if (1 /* YDJDMJH */ == entryType && this.mStatusList.length == 3) {
+            //月度-季度计划数经营副总审核状态
+            if (Util.ZBType.YDJDMJH == entryType && this.mStatusList.length == 3) {
+                //Init MatchArray for Month
                 var MatchArray = this.initMatchArray(entryType, month, year);
                 for (var i = 0; i < this.mStatusList.length; i++) {
                     if (this.mStatusList[i] == Util.ZBStatus.SUBMITTED_2) {
@@ -117,7 +129,8 @@ var entry_template;
                 }
                 this.addContent(isShowapprove_2, isShowSubmit_2, approve_2Content, submit_2Content);
             }
-            if ((2 /* BY20YJ */ == entryType || 3 /* BY28YJ */ == entryType) && this.mStatusList.length > 1) {
+            //20号实际数据和28号实际数据
+            if ((Util.ZBType.BY20YJ == entryType || Util.ZBType.BY28YJ == entryType) && this.mStatusList.length > 1) {
                 var MatchArray = this.initMatchArray(entryType, month, year);
                 if (month == 12) {
                     for (var i = 0; i < this.mStatusList.length; i++) {
@@ -155,7 +168,7 @@ var entry_template;
                         }
                     }
                 }
-                if (2 /* BY20YJ */ == entryType) {
+                if (Util.ZBType.BY20YJ == entryType) {
                     if ("" != approve_2Content && isShowapprove_2) {
                         approve_2Content = approve_2Content.substring(0, approve_2Content.length - 1);
                         approve_2Content += "20号预计数据";
@@ -165,7 +178,7 @@ var entry_template;
                         submit_2Content += "20号预计数据";
                     }
                 }
-                else if (3 /* BY28YJ */ == entryType) {
+                else if (Util.ZBType.BY28YJ == entryType) {
                     if ("" != approve_2Content && isShowapprove_2) {
                         approve_2Content = approve_2Content.substring(0, approve_2Content.length - 1);
                         approve_2Content += "预计数据";
@@ -181,13 +194,13 @@ var entry_template;
         View.prototype.initMatchArray = function (entryType, month, year) {
             var retArray = [];
             switch (entryType) {
-                case 1 /* YDJDMJH */:
+                case Util.ZBType.YDJDMJH:
                     retArray.push(month);
                     retArray.push(month + 1);
                     retArray.push(month + 2);
                     break;
-                case 2 /* BY20YJ */:
-                case 3 /* BY28YJ */:
+                case Util.ZBType.BY20YJ:
+                case Util.ZBType.BY28YJ:
                     if (12 == month) {
                         retArray.push(12);
                         retArray.push(1);
@@ -221,7 +234,7 @@ var entry_template;
         };
         View.prototype.save = function () {
             var date = this.mDateSelector.getDate();
-            if (this.mOpt.entryType == 1 /* YDJDMJH */) {
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
                 date = Util.addMonth(date, -2);
             }
             var allData = this.mTableAssist.getAllData();
@@ -256,7 +269,7 @@ var entry_template;
         };
         View.prototype.submit = function () {
             var date = this.mDateSelector.getDate();
-            if (this.mOpt.entryType == 1 /* YDJDMJH */) {
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
                 date = Util.addMonth(date, -2);
             }
             var allData = this.mTableAssist.getAllData();
@@ -294,7 +307,7 @@ var entry_template;
         };
         View.prototype.submitToDeputy = function () {
             var date = this.mDateSelector.getDate();
-            if (this.mOpt.entryType == 1 /* YDJDMJH */) {
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
                 date = Util.addMonth(date, -2);
             }
             var allData = this.mTableAssist.getAllData();
@@ -335,19 +348,19 @@ var entry_template;
             var date = this.mDateSelector.getDate();
             var compName = this.mCompanySelector.getCompanyName();
             switch (this.mOpt.entryType) {
-                case 0 /* QNJH */:
+                case Util.ZBType.QNJH:
                     header = date.year + "年 " + compName + " 计划数据录入";
                     break;
-                case 1 /* YDJDMJH */:
+                case Util.ZBType.YDJDMJH:
                     header = date.year + "年 " + compName + " 季度-月度计划值录入";
                     break;
-                case 2 /* BY20YJ */:
+                case Util.ZBType.BY20YJ:
                     header = date.year + "年" + date.month + "月 " + compName + " 20日预计值录入";
                     break;
-                case 3 /* BY28YJ */:
+                case Util.ZBType.BY28YJ:
                     header = date.year + "年" + date.month + "月 " + compName + " 28日预计值录入";
                     break;
-                case 4 /* BYSJ */:
+                case Util.ZBType.BYSJ:
                     header = date.year + "年" + date.month + "月 " + compName + " 实际数据录入";
                     break;
             }
@@ -357,11 +370,11 @@ var entry_template;
         View.prototype.createPredict = function (title) {
             var ret = [title[0]];
             var date = this.mDateSelector.getDate();
-            if (this.mOpt.entryType == 1 /* YDJDMJH */) {
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
                 date = Util.addMonth(date, -3);
             }
             var left = date.month % 3;
-            if (this.mOpt.entryType == 1 /* YDJDMJH */ && 0 == left) {
+            if (this.mOpt.entryType == Util.ZBType.YDJDMJH && 0 == left) {
                 if (12 == date.month) {
                     ret.push("1月计划");
                     ret.push("2月计划");
@@ -373,7 +386,8 @@ var entry_template;
                     ret.push((date.month + 3) + "月计划");
                 }
             }
-            else if (this.mOpt.entryType == 2 /* BY20YJ */ || this.mOpt.entryType == 3 /* BY28YJ */) {
+            else if (this.mOpt.entryType == Util.ZBType.BY20YJ ||
+                this.mOpt.entryType == Util.ZBType.BY28YJ) {
                 ret.push(title[1]);
                 if (0 != left) {
                     var leftMonth = 3 - left;
@@ -413,10 +427,10 @@ var entry_template;
             this.enableEntry();
             var titles = null;
             switch (this.mOpt.entryType) {
-                case 0 /* QNJH */:
+                case Util.ZBType.QNJH:
                     titles = ["指标名称", "全年计划"];
                     break;
-                case 1 /* YDJDMJH */:
+                case Util.ZBType.YDJDMJH:
                     if (this.mDateSelector.getDate().month % 3 != 0) {
                         this.disableEntry(tableId);
                         return;
@@ -425,13 +439,13 @@ var entry_template;
                         titles = this.createPredict(["指标名称"]);
                     }
                     break;
-                case 2 /* BY20YJ */:
+                case Util.ZBType.BY20YJ:
                     titles = this.createPredict(["指标名称", "本月20日预计值"]);
                     break;
-                case 3 /* BY28YJ */:
+                case Util.ZBType.BY28YJ:
                     titles = this.createPredict(["指标名称", "本月28日预计值"]);
                     break;
-                case 4 /* BYSJ */:
+                case Util.ZBType.BYSJ:
                     titles = ["指标名称", "本月实际"];
                     break;
             }
@@ -447,11 +461,14 @@ var entry_template;
             var lastsel = "";
             var lastcell = "";
             $("#" + name).jqGrid(this.mTableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
                 data: this.mTableAssist.getDataWithId(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: data.length > 25 ? 550 : '100%',
@@ -460,7 +477,11 @@ var entry_template;
                 autoScroll: true,
                 rowNum: 150,
                 onSelectCell: function (id, nm, tmp, iRow, iCol) {
+                    //                       console.log(iRow +', ' + iCol);
                 },
+                //                    onCellSelect: (ri,ci,tdHtml,e) =>{
+                //                       console.log(ri +', ' + ci);
+                //                    },
                 beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
                     var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
                     if (isNaN(ret)) {
@@ -478,6 +499,7 @@ var entry_template;
                 beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
                     lastsel = iRow;
                     lastcell = iCol;
+                    //                        console.log(iRow +', ' + iCol);
                     $("input").attr("disabled", true);
                 },
                 afterEditCell: function (rowid, cellname, v, iRow, iCol) {
@@ -501,7 +523,9 @@ var entry_template;
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
                     if ($(e.target).closest("#" + name).length == 0) {
+                        //  $("#" + name).jqGrid('saveRow', lastsel); 
                         $("#" + name).jqGrid("saveCell", lastsel, lastcell);
+                        //$("#" + name).resetSelection(); 
                         lastsel = "";
                     }
                 }
