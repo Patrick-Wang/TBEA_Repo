@@ -15,5 +15,7 @@ public interface ByqadwtjjgService {
 
 	List<WaveItem> getByqYdAdwtjjgWaveItems(Date d, Company company);
 
+	List<WaveItem> getWaveItems(Date d);
+
 
 }

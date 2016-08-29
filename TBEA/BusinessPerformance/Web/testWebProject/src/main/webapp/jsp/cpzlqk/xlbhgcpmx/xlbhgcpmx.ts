@@ -44,11 +44,13 @@ module cpzlqk {
             private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             protected isSupported(compType:Util.CompanyType):boolean {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
-                    ||compType == Util.CompanyType.XLC;
+                    ||compType == Util.CompanyType.XLC||compType == Util.CompanyType.XLCY;
             }
 
             onEvent(e:framework.route.Event):any {
                 switch (e.id) {
+                    case Event.ZLFE_IS_COMPANY_SUPPORTED:
+                        return true;
                     case Event.ZLFE_IS_YDJD_SUPPORTED:
                         return false;
                     case Event.ZLFE_SAVE_COMMENT:

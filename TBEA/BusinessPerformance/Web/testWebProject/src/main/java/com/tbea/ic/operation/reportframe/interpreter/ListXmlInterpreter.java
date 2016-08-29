@@ -201,7 +201,10 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	
 	private void insertAdd(Element item, List<Object> objs, int repeat, int insert,
 			int type) throws Exception {
-		String val = item.getFirstChild().getTextContent();
+		String val = "";
+		if (null != item.getFirstChild()){
+			val = item.getFirstChild().getTextContent();
+		}
 		if (type == TypeUtil.INT) {
 			if (val.isEmpty()) {
 				repeatAdd(objs, null, repeat, insert);

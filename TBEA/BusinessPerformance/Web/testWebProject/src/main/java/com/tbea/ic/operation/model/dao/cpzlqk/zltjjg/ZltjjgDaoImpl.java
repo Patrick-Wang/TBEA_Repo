@@ -61,8 +61,12 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 			return null;
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
-		entity.setBhgs(((Long)ret.get(0)[0]).intValue());
-		entity.setZs(((Long)ret.get(0)[1]).intValue());
+		if (ret.get(0)[0] != null){
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+		}
+		if (ret.get(0)[1] != null){
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+		}
 		return entity;
 	}
 
@@ -81,8 +85,12 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 			return null;
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
-		entity.setBhgs(((Long)ret.get(0)[0]).intValue());
-		entity.setZs(((Long)ret.get(0)[1]).intValue());
+		if (ret.get(0)[0] != null){
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+		}
+		if (ret.get(0)[1] != null){
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+		}
 		return entity;
 	}
 
@@ -102,8 +110,12 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 			return null;
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
-		entity.setBhgs(((Long)ret.get(0)[0]).intValue());
-		entity.setZs(((Long)ret.get(0)[1]).intValue());
+		if (ret.get(0)[0] != null){
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+		}
+		if (ret.get(0)[1] != null){
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+		}
 		return entity;
 	}
 
@@ -121,8 +133,12 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 			return null;
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
-		entity.setBhgs(((Long)ret.get(0)[0]).intValue());
-		entity.setZs(((Long)ret.get(0)[1]).intValue());
+		if (ret.get(0)[0] != null){
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+		}
+		if (ret.get(0)[1] != null){
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+		}
 		return entity;
 	}
 
@@ -156,5 +172,131 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 			return null;
 		}
 		return ret.get(0);
+	}
+
+	@Override
+	public ZltjjgEntity getByDate(Date d, int cpid, List<Integer> ids,
+			ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+        
+        Query q = getEntityManager().createQuery(
+        		"select sum(bhgs), sum(zs) " + 
+        		"from ZltjjgEntity where zt = :zt and nf = :nf and yf = :yf and cpid = :cpid and dwid in :dwids");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("cpid", cpid);
+		q.setParameter("dwids", ids);
+		q.setParameter("zt", zt.ordinal());
+		List<Object[]> ret = q.getResultList();
+		if (ret.get(0)[0] == null && ret.get(0)[1] == null){
+			return null;
+		}
+		ZltjjgEntity entity = new ZltjjgEntity();
+		if (ret.get(0)[0] != null){
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+		}
+		if (ret.get(0)[1] != null){
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+		}
+		
+		return entity;
+	}
+
+	@Override
+	public ZltjjgEntity getYearAcc(Date d, int cpid, List<Integer> ids,
+			ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt = :zt and nf = :nf and yf >= 1 and yf <= :yf and cpid = :cpid and dwid in :dwids");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("cpid", cpid);
+		q.setParameter("dwids", ids);
+		q.setParameter("zt", zt.ordinal());
+		List<Object[]> ret = q.getResultList();
+		if (ret.get(0)[0] == null && ret.get(0)[1] == null){
+			return null;
+		}
+		ZltjjgEntity entity = new ZltjjgEntity();
+		if (ret.get(0)[0] != null){
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+		}
+		if (ret.get(0)[1] != null){
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+		}
+		return entity;
+	}
+
+	@Override
+	public ZltjjgEntity getJdAcc(Date d, int cpid, List<Integer> ids, ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt = :zt and nf = :nf and yf >= :jdstart and yf <= :yf and cpid = :cpid and dwid in :dwids");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("cpid", cpid);
+		q.setParameter("dwids", ids);
+		q.setParameter("zt", zt.ordinal());
+		List<Object[]> ret = q.getResultList();
+		if (ret.get(0)[0] == null && ret.get(0)[1] == null){
+			return null;
+		}
+		ZltjjgEntity entity = new ZltjjgEntity();
+		if (ret.get(0)[0] != null){
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+		}
+		if (ret.get(0)[1] != null){
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+		}
+		return entity;
+	}
+
+	@Override
+	public ZltjjgEntity getJdAccQntq(Date d, int cpid, List<Integer> ids,
+			ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+		ec.addYear(-1);
+        Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and cpid = :cpid and dwid in :dwids and zt = :zt");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("cpid", cpid);
+		q.setParameter("dwids", ids);
+		q.setParameter("zt", zt.ordinal());
+		List<Object[]> ret = q.getResultList();
+		if (ret.get(0)[0] == null && ret.get(0)[1] == null){
+			return null;
+		}
+		ZltjjgEntity entity = new ZltjjgEntity();
+		if (ret.get(0)[0] != null){
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+		}
+		if (ret.get(0)[1] != null){
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+		}
+		return entity;
+	}
+
+	@Override
+	public ZltjjgEntity getByDateTotal(Date d, List<Integer> cpids,
+			List<Integer> ids, ZBStatus zt) {
+		EasyCalendar ec = new EasyCalendar(d);
+        Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf = :yf and cpid in :cpid and dwid in :dwids and zt = :zt");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("cpid", cpids);
+		q.setParameter("dwids", ids);
+		q.setParameter("zt", zt.ordinal());
+		List<Object[]> ret = q.getResultList();
+		if (ret.isEmpty() || ret.get(0)[0] == null && ret.get(0)[1] == null){
+			return null;
+		}
+		ZltjjgEntity entity = new ZltjjgEntity();
+		if (ret.get(0)[0] != null){
+			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+		}
+		if (ret.get(0)[1] != null){
+			entity.setZs(((Long)ret.get(0)[1]).intValue());
+		}
+		return entity;
 	}
 }

@@ -44,7 +44,8 @@ module cpzlqk {
                 return plugin.byqadwtjjg;
             }
             protected isSupported(compType:Util.CompanyType):boolean {
-                return compType == Util.CompanyType.BYQCY;
+                return compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS
+                    ||compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             }
 
             onEvent(e:framework.route.Event):any {
@@ -123,12 +124,14 @@ module cpzlqk {
                 }
 
                 this.updateTable();
-                if (this.mCompType !=  Util.CompanyType.BYQCY){
-                    this.$(this.option().ctarea).show();
-                    this.updateEchart();
-                }else{
-                    this.$(this.option().ctarea).hide();
-                }
+                this.$(this.option().ctarea).show();
+                this.updateEchart();
+                //if (this.mCompType !=  Util.CompanyType.BYQCY){
+                //    this.$(this.option().ctarea).show();
+                //    this.updateEchart();
+                //}else{
+                //    this.$(this.option().ctarea).hide();
+                //}
             }
 
             private toCtVal(val:string){
@@ -181,16 +184,31 @@ module cpzlqk {
                 }else{
                     let dy = [];
                     let qntq = [];
-                    for (let i = 0; i < this.mData.tjjg.length; ++i){
-                        if (!(this.mData.tjjg[i][0].replace(/\s/g, "") == "合计") &&
-                            !(this.mData.tjjg[i][1].replace(/\s/g, "") == "合计") &&
-                            this.mData.tjjg[i][1].replace(/\s/g, "").indexOf("35") < 0 &&
-                            this.mData.tjjg[i][1].replace(/\s/g, "").indexOf("电抗器") < 0){
-                            xData.push(this.mData.tjjg[i][1]);
-                            dy.push(this.toCtVal(this.mData.tjjg[i][4]));
-                            qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
-                        }
 
+                    if (this.mCompType == Util.CompanyType.BYQCY){
+                        for (let i = 0; i < this.mData.tjjg.length; ++i){
+                            if ((this.mData.tjjg[i][0].replace(/\s/g, "") == "合计") &&
+                                !(this.mData.tjjg[i][1].replace(/\s/g, "") == "合计") &&
+                                this.mData.tjjg[i][1].replace(/\s/g, "").indexOf("35") < 0 &&
+                                this.mData.tjjg[i][1].replace(/\s/g, "").indexOf("电抗器") < 0){
+                                xData.push(this.mData.tjjg[i][1]);
+                                dy.push(this.toCtVal(this.mData.tjjg[i][4]));
+                                qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
+                            }
+
+                        }
+                    }else{
+                        for (let i = 0; i < this.mData.tjjg.length; ++i){
+                            if (!(this.mData.tjjg[i][0].replace(/\s/g, "") == "合计") &&
+                                !(this.mData.tjjg[i][1].replace(/\s/g, "") == "合计") &&
+                                this.mData.tjjg[i][1].replace(/\s/g, "").indexOf("35") < 0 &&
+                                this.mData.tjjg[i][1].replace(/\s/g, "").indexOf("电抗器") < 0){
+                                xData.push(this.mData.tjjg[i][1]);
+                                dy.push(this.toCtVal(this.mData.tjjg[i][4]));
+                                qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
+                            }
+
+                        }
                     }
                     legend = ["当月", "去年同期"];
                     series.push({
@@ -258,7 +276,7 @@ module cpzlqk {
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeColum(0);
+                //tableAssist.mergeColum(0);
                 tableAssist.mergeTitle();
                 tableAssist.mergeRow(0);
                 this.$(name).jqGrid(

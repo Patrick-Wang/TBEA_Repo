@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.controller.servlet.nwbzlqk.gyzlwt.xlgyzlwt;
+package com.tbea.ic.operation.controller.servlet.nwbzlqk.nbzlwttjqk.pdnbzlwttjqk;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
@@ -24,14 +24,14 @@ import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
-import com.tbea.ic.operation.service.cpzlqk.xlnwbzlztqk.XlnwbzlztqkService;
-import com.tbea.ic.operation.service.cpzlqk.xlnwbzlztqk.XlnwbzlztqkServiceImpl;
+import com.tbea.ic.operation.service.cpzlqk.pdnwbzlztqk.PdnwbzlztqkService;
+import com.tbea.ic.operation.service.cpzlqk.pdnwbzlztqk.PdnwbzlztqkServiceImpl;
 
 @Controller
-@RequestMapping(value = "xlsjzlqk")
-public class XlsjzlqkServlet {
-	@Resource(name=XlnwbzlztqkServiceImpl.NAME)
-	XlnwbzlztqkService xlnwbzlztqkService;
+@RequestMapping(value = "pdnbzlwttjqk")
+public class PdnbzlwttjqkServlet {
+	@Resource(name=PdnwbzlztqkServiceImpl.NAME)
+	PdnwbzlztqkService pdnwbzlztqkService;
 
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -40,35 +40,15 @@ public class XlsjzlqkServlet {
 	public @ResponseBody byte[] getByqnwbzlztqk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		boolean all = Boolean.valueOf(request.getParameter("all"));
-		List<List<String>> result = null;
-		List<WaveItem> wis = null;
-		if (all){
-			
-			if (yjType == YDJDType.JD){
-				result = xlnwbzlztqkService.getJdGyzlwt(d);
-			}else{
-				result = xlnwbzlztqkService.getYdGyzlwt(d); 
-			}
-			wis = xlnwbzlztqkService.getGyzlwtWaveItems(d, yjType);
-		}else{
-			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			
-			if (yjType == YDJDType.JD){
-				result = xlnwbzlztqkService.getJdGyzlwt(d, company);
-			}else{
-				result = xlnwbzlztqkService.getYdGyzlwt(d, company);
-			}
-			wis = xlnwbzlztqkService.getGyzlwtWaveItems(d, yjType, company);
-		}
-		
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		List<List<String>> result = pdnwbzlztqkService.getNbzlwttjqk(d, company);
+
 		RawFormatterHandler handler = new RawEmptyHandler(null, null);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
 		
-		return JSONObject.fromObject(new CpzlqkResp(result, wis)).toString().getBytes("utf-8");
+		return JSONObject.fromObject(new CpzlqkResp(result)).toString().getBytes("utf-8");
 	}
 
 

@@ -202,7 +202,7 @@ th.ui-th-ltr {
 				<%@include file="pdcpycssbhgwtmx/pdcpycssbhgwtmx.jsp"%>
 				<%@include file="byqcpycssbhgxxfb/byqcpycssbhgxxfb.jsp"%>
 				<%@include file="pdcpycssbhgxxfb/pdcpycssbhgxxfb.jsp"%>
-				<%@include file="xlbhgcpmx/xlbhgcpmx.jsp"%>
+				 <%@include file="xlbhgcpmx/xlbhgcpmx.jsp"%>
 			</td>
 		</tr>
 		<tr>

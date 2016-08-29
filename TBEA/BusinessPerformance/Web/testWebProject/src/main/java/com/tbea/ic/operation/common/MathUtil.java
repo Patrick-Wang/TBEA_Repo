@@ -80,6 +80,14 @@ public class MathUtil {
 		return null;
 	}
 	
+	public static Integer toInteger(String val) {
+		try {
+			return Integer.valueOf(val);
+		} catch (Exception e) {
+		}
+		return null;
+	}
+	
 	public static String trimZero(String val){
 		int index = val.lastIndexOf('.');
 		if (index > 0){

@@ -44,4 +44,36 @@ public interface PdnwbzlztqkService {
 	List<List<String>> getYdSczzzlqk(Date d, Company company);
 
 	List<WaveItem> getWaveItemsSczzzlqk(Date d, YDJDType yjType, Company company);
+
+	List<List<String>> getJdYsazzlwt(Date d);
+
+	List<List<String>> getYdYsazzlwt(Date d, Company company);
+
+	List<List<String>> getYdYsazzlwt(Date d);
+
+	List<WaveItem> getWaveItemsYsazzlwt(Date d, YDJDType yjType);
+
+	List<List<String>> getJdYsazzlwt(Date d, Company company);
+
+	List<WaveItem> getWaveItemsYsazzlwt(Date d, YDJDType yjType, Company company);
+
+	List<List<String>> getJdNbzlwtfl(Date d);
+
+	List<List<String>> getYdNbzlwtfl(Date d);
+
+	List<List<String>> getJdNbzlwtfl(Date d, Company company);
+
+	List<List<String>> getYdNbzlwtfl(Date d, Company company);
+
+	List<List<String>> getJdWbzlwtfl(Date d);
+
+	List<List<String>> getYdWbzlwtfl(Date d);
+
+	List<List<String>> getJdWbzlwtfl(Date d, Company company);
+
+	List<List<String>> getYdWbzlwtfl(Date d, Company company);
+
+	List<List<String>> getNbzlwttjqk(Date d, Company company);
+
+	List<List<String>> getWbzlwttjqk(Date d, Company company);
 }

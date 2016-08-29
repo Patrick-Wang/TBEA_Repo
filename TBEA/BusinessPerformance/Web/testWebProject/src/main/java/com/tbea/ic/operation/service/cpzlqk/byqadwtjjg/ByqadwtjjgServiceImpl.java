@@ -134,4 +134,25 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 		}
 		return wis;
 	}
+
+	@Override
+	public List<WaveItem> getWaveItems(Date d) {
+		List<WaveItem> wis = new ArrayList<WaveItem>();
+		EasyCalendar cal = new EasyCalendar();
+		cal.setTime(d);
+		cal.setMonth(1);
+		for (int j = 0; j < 12; ++j){
+			List<List<String>> result = this.getByqadwtjjg(cal.getDate(), YDJDType.YD);
+			//result.size() - 1 因为最后一行是合计
+			for (int i = 0; i < result.size() - 1; ++i){
+				if ("合计".equals(result.get(i).get(0).replaceAll("\\s", "")) && result.get(i).get(1).indexOf("35") < 0){
+					//不包含35千伏以下产品
+					WaveItem item = getWaveItem(wis, result.get(i).get(1));
+					item.getData().add(toCtVal(result.get(i).get(4)));
+				}
+			}
+			cal.addMonth(1);
+		}
+		return wis;
+	}
 }

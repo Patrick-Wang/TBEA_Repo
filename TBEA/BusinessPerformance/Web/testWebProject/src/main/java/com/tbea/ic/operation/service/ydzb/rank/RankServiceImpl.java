@@ -278,7 +278,7 @@ public class RankServiceImpl implements RankService {
 			}
 		}
 		
-		resultTemp.sort(new DoubleArrayComparator().setIndex(2));
+		resultTemp.sort(new DoubleArrayComparator().setIndex(2).desc());
 		
 		for (int i = 0, size = resultTemp.size(); i < size; ++i){
 			resultTemp.get(i)[3] = (double) (size - i);
@@ -311,7 +311,7 @@ public class RankServiceImpl implements RankService {
 			resultTemp.add(results.get(i));
 		}
 		
-		resultTemp.sort(new DoubleArrayComparator().setIndex(3));
+		resultTemp.sort(new DoubleArrayComparator().setIndex(3).desc());
 		
 		for (int i = 0, size = resultTemp.size(); i < size; ++i){
 			resultTemp.get(i)[4] = (double) (size - i);
@@ -341,7 +341,7 @@ public class RankServiceImpl implements RankService {
 			resultTemp.add(results.get(i));
 		}
 		
-		resultTemp.sort(new DoubleArrayComparator().setIndex(2));
+		resultTemp.sort(new DoubleArrayComparator().setIndex(2).desc());
 		
 		for (int i = 0, size = resultTemp.size(); i < size; ++i){
 			resultTemp.get(i)[3] = (double) (size - i);
@@ -376,7 +376,7 @@ public class RankServiceImpl implements RankService {
 			
 		}
 		
-		resultTemp.sort(new DoubleArrayComparator().setIndex(3));
+		resultTemp.sort(new DoubleArrayComparator().setIndex(3).desc());
 		
 		for (int i = 0, size = resultTemp.size(); i < size; ++i){
 			resultTemp.get(i)[4] = (double) (size - i);

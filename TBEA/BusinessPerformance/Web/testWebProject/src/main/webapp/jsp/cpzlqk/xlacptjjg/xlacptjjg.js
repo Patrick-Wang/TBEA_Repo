@@ -49,7 +49,7 @@ var cpzlqk;
             }
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
-                    || compType == Util.CompanyType.XLC;
+                    || compType == Util.CompanyType.XLC || compType == Util.CompanyType.XLCY;
             };
             ShowView.prototype.getId = function () {
                 return plugin.xlacptjjg;
@@ -154,7 +154,7 @@ var cpzlqk;
             };
             ShowView.prototype.updateEchart = function () {
                 var _this = this;
-                var title = "按产品统计结果";
+                var title = "";
                 var legend = [];
                 var echart = this.option().ct;
                 var series = [];

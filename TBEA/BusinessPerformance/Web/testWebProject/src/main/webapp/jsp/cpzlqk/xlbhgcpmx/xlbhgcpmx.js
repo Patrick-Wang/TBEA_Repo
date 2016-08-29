@@ -51,10 +51,12 @@ var cpzlqk;
             }
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
-                    || compType == Util.CompanyType.XLC;
+                    || compType == Util.CompanyType.XLC || compType == Util.CompanyType.XLCY;
             };
             ShowView.prototype.onEvent = function (e) {
                 switch (e.id) {
+                    case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
+                        return true;
                     case cpzlqk.Event.ZLFE_IS_YDJD_SUPPORTED:
                         return false;
                     case cpzlqk.Event.ZLFE_SAVE_COMMENT:

@@ -8,7 +8,7 @@
 	overflow:hidden;
 	opacity: 0.4;
 	background: gray;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 2000;

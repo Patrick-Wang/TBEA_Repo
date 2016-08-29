@@ -20,6 +20,7 @@ import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.pdjdacptjjg.PdJdAcptjjgDao;
@@ -250,6 +251,13 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 	
 	@Override
 	public List<WaveItem> getWaveValues(Date d, Company company) {
+		List<Integer> ids = null;
+		if (company.getType() == CompanyType.PDCY){
+			ids = new ArrayList<Integer>();
+			for (Company comp : company.getSubCompanies()){
+				ids.add(comp.getId());
+			}
+		}
 		List<WaveItem> ret = new ArrayList<WaveItem>();
 		List<String> row = null;
 		EasyCalendar ec = new EasyCalendar(d);
@@ -266,8 +274,13 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 			row = Util.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
-				
-				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+				ZltjjgEntity zltjjg = null;
+				if (ids == null){
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+				}else{
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, ZBStatus.APPROVED);
+				}
+//				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -287,7 +300,13 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 			row = Util.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
-				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+				ZltjjgEntity zltjjg = null;
+				if (ids == null){
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+				}else{
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, ZBStatus.APPROVED);
+				}
+//				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -319,7 +338,16 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 
 	@Override
 	public ZBStatus getStatus(Date d, Company company) {
-		ZltjjgEntity zltjjg = zltjjgDao.getFirstTjjg(d, company);
+		List<PdYdAcptjjgEntity> entities = pdYdAcptjjgDao.getAll();
+		List<PdAcptjEntryEntity> entryEntities = pdYdAcptjjgDao.getEntryEntities(company.getId());
+		Integer cpid = null;
+		for (PdYdAcptjjgEntity entity : entities){
+			if (contains(entryEntities, entity.getId())){
+				cpid = entity.getCpxl().getId();
+				break;
+			}
+		}
+		ZltjjgEntity zltjjg = zltjjgDao.getByDateIgnoreStatus(d, cpid, company);
 		if (zltjjg != null){
 			return ZBStatus.valueOf(zltjjg.getZt());
 		}

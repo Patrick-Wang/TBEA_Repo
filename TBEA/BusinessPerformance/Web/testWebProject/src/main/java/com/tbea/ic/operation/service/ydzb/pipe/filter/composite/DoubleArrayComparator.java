@@ -2,14 +2,20 @@ package com.tbea.ic.operation.service.ydzb.pipe.filter.composite;
 
 import java.util.Comparator;
 
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 
 public class DoubleArrayComparator implements Comparator<Double[]>{
 
 	private int index;
-	
+	boolean asc = true;
 	public int getIndex() {
 		return index;
+	}
+	
+	public DoubleArrayComparator desc(){
+		asc = false;
+		return this;
 	}
 
 	public DoubleArrayComparator setIndex(int index) {
@@ -19,7 +25,32 @@ public class DoubleArrayComparator implements Comparator<Double[]>{
 
 	@Override
 	public int compare(Double[] o1, Double[] o2) {
-		Double val = Util.valueOf(o1[index]) - Util.valueOf(o2[index]);
+//		Double val = 0d;
+//		if (asc){
+//			val = Util.valueOf(o1[index]) - Util.valueOf(o2[index]);
+//		}else{
+//			val = Util.valueOf(o2[index]) - Util.valueOf(o1[index]);
+//		}
+		Double val = MathUtil.minus(o1[index], o2[index]);
+		
+		if (!asc){
+			val = MathUtil.minus(o2[index], o1[index]);
+		}
+			
+		if (val == null){
+			if (o1[index] == o2[index]){
+				return 0;
+			}
+			
+			if (o1[index] == null){
+				return asc ? -1 : 1;
+			}
+			if (o2[index] == null){
+				return asc ? -1 : 1;
+			}
+		}
+			
+			
 		Integer ret = 0;
 		if (Util.isPositive(val)){
 			ret = 1;

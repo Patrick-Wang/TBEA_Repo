@@ -15,5 +15,9 @@ public interface PdadwtjjgService {
 
 	List<WaveItem> getPdYdAdwtjjgWaveItems(Date d, Company company);
 
+	List<WaveItem> getPdYdAdwtjjgWaveItems(Date d);
+
+	List<WaveItem> getWaveItems(Date d);
+
 
 }

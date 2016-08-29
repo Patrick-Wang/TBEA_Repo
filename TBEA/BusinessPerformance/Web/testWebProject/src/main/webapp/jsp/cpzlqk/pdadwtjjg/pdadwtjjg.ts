@@ -184,8 +184,8 @@ module cpzlqk {
                     for (let i = 0; i < this.mData.tjjg.length; ++i){
                         if (!(this.mData.tjjg[i][0].replace(/\s/g, "") == "合计")){
                             xData.push(this.mData.tjjg[i][0]);
-                            dy.push(this.toCtVal(this.mData.tjjg[i][3]));
-                            qntq.push(this.toCtVal(this.mData.tjjg[i][6]));
+                            dy.push(this.toCtVal(this.mData.tjjg[i][4]));
+                            qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
                         }
                     }
                     legend = ["当月", "去年同期"];

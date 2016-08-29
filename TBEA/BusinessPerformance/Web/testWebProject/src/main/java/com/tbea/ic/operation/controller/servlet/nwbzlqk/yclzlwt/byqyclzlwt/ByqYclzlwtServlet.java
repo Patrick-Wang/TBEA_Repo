@@ -51,7 +51,7 @@ public class ByqYclzlwtServlet {
 			}else{
 				result = byqnwbzlztqkService.getYdYclzlwt(d);
 			}
-			wis = byqnwbzlztqkService.getYclzlwtWaveItems(d, yjType);
+			wis = byqnwbzlztqkService.getWaveItemsYclzlwt(d, yjType);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
 			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
@@ -61,7 +61,7 @@ public class ByqYclzlwtServlet {
 			}else{
 				result = byqnwbzlztqkService.getYdYclzlwt(d, company);
 			}
-			wis = byqnwbzlztqkService.getYclzlwtWaveItems(d, yjType, company);
+			wis = byqnwbzlztqkService.getWaveItemsYclzlwt(d, yjType, company);
 		}
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, null);

@@ -8,7 +8,7 @@
 
 	opacity: 0.4;
 	background: gray;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 2000;
@@ -67,8 +67,13 @@
       			} */
     			//$("#background").css("height", '100%');
                 //$("#background").css("width", '100%');
-        		$("#background").css("height", document.body.scrollHeight + "px");
-            	$("#background").css("width", document.body.scrollWidth + "px");
+        		if (navigator.appName != "Microsoft Internet Explorer"){
+        			$("#background").css("height", document.body.scrollHeight + "px");
+                	$("#background").css("width", document.body.scrollWidth + "px");
+        		}else{
+        			$("#background").css("height", '100%');
+                    $("#background").css("width", '100%');
+        		}
             	ajaxbg.show();
         	}).ajaxStop(function () { 
         		ajaxbg.hide(); 
@@ -79,9 +84,12 @@
 
         	$(window).resize(function(){
         		if (navigator.appName != "Microsoft Internet Explorer"){
-        			
+        			$("#background").css("height", document.body.scrollHeight + "px");
+                	$("#background").css("width", document.body.scrollWidth + "px");
+        		}else{
+        			$("#background").css("height", '100%');
+                    $("#background").css("width", '100%');
         		}
-        		$("#background").css("height", document.body.scrollHeight + "px");
-            	$("#background").css("width", document.body.scrollWidth + "px");
+        		
         	})
 </script>

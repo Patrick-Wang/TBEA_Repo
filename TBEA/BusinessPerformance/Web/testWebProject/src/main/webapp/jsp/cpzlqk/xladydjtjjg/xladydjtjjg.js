@@ -51,7 +51,8 @@ var cpzlqk;
                 return plugin.xladydjtjjg;
             };
             ShowView.prototype.isSupported = function (compType) {
-                return compType == Util.CompanyType.XLCY;
+                return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
+                    || compType == Util.CompanyType.XLC || compType == Util.CompanyType.XLCY;
             };
             ShowView.prototype.onEvent = function (e) {
                 switch (e.id) {

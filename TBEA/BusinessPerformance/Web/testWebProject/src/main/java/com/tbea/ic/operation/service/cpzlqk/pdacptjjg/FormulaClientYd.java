@@ -14,6 +14,7 @@ import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.entity.cpzlqk.PdYdAcptjjgEntity;
@@ -28,7 +29,7 @@ class FormulaClientYd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	ZltjjgDao tjjgDao;
 	Company company;
 	Date d;
-	
+	List<Integer> ids;
 	public List<List<String>> getResult(){
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (int i = 0; i < formulaOrder.size(); ++i){
@@ -42,15 +43,30 @@ class FormulaClientYd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 		super();
 		this.pdacptjjgServiceImpl = pdacptjjgServiceImpl;
 		this.tjjgDao = new ZltjjgDaoCacheProxy(tjjgDao,company.getId());
+		if (company.getType() == CompanyType.BYQCY ||
+				company.getType() == CompanyType.XLCY ||
+				company.getType() == CompanyType.PDCY){
+			ids = new ArrayList<Integer>();
+			for (Company comp : company.getSubCompanies()){
+				ids.add(comp.getId());
+			}
+		}
 		this.company = company;
 		this.d = d;
 	}
 
 
 	private Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> getDjTq(Formula formula){
-		ZltjjgEntity tj1 = tjjgDao.getByDate(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
-		ZltjjgEntity tj2 = tjjgDao.getYearAcc(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
+		ZltjjgEntity tj1 = null;
+		ZltjjgEntity tj2 = null;
 
+		if (ids == null){
+			tj1 = tjjgDao.getByDate(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
+			tj2 = tjjgDao.getYearAcc(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
+		}else{
+			tj1 = tjjgDao.getByDate(d, forMap.get(formula).getCpxl().getId(), ids, ZBStatus.APPROVED);
+			tj2 = tjjgDao.getYearAcc(d, forMap.get(formula).getCpxl().getId(), ids, ZBStatus.APPROVED);
+		}
 		return new Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>>(
 				forMap.get(formula).getId(), 
 				new Pair<ZltjjgEntity, ZltjjgEntity>(tj1, tj2));

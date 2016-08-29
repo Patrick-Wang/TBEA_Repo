@@ -174,7 +174,7 @@ var nwbzlqk;
                     var qntq = [];
                     if (this.mCompType == Util.CompanyType.XLCY) {
                         for (var i = 0; i < this.mData.tjjg.length; ++i) {
-                            if (this.mData.tjjg[i][0].replace(/\s/g, "") != "合计") {
+                            if (this.mData.tjjg[i][0].replace(/\s/g, "") == "合计") {
                                 xData.push(this.mData.tjjg[i][0] + "内部");
                                 dy.push(this.toCtVal(this.mData.tjjg[i][1]));
                                 qntq.push(this.toCtVal(this.mData.tjjg[i][4]));
@@ -192,7 +192,7 @@ var nwbzlqk;
                         dy.push(this.toCtVal(this.mData.tjjg[1][1]));
                         qntq.push(this.toCtVal(this.mData.tjjg[1][2]));
                     }
-                    legend = ["当月", "去年同期"];
+                    legend = ["当期", "去年同期"];
                     series.push({
                         name: legend[0],
                         type: 'bar',

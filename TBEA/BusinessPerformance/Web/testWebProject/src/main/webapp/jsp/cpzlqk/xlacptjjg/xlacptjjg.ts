@@ -42,7 +42,7 @@ module cpzlqk {
             private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             protected isSupported(compType:Util.CompanyType):boolean {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
-                    ||compType == Util.CompanyType.XLC;
+                    ||compType == Util.CompanyType.XLC||compType == Util.CompanyType.XLCY;
             }
 
             getId():number {
@@ -155,7 +155,7 @@ module cpzlqk {
             }
 
             private updateEchart():void{
-                let title = "按产品统计结果";
+                let title = "";
                 let legend:Array<string> = [];
                 let echart = this.option().ct;
 

@@ -18,12 +18,14 @@ import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.xlacptjjg.XlAcptjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoImpl;
+import com.tbea.ic.operation.model.entity.cpzlqk.ByqYdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.XlAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
 
@@ -41,6 +43,13 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 	@Override
 	public List<List<String>> getXlacptjjg(Date d, Company company,
 			YDJDType yjType) {
+		List<Integer> ids = null;
+		if (company.getType() == CompanyType.XLCY){
+			ids = new ArrayList<Integer>();
+			for (Company comp : company.getSubCompanies()){
+				ids.add(comp.getId());
+			}
+		}
 		List<XlAcptjjgEntity> entities = xlacptjjgDao.getAll();
 		ZltjjgEntity tjjg = null;
 		ZltjjgEntity tjjg1 = null;
@@ -48,11 +57,21 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
 		for (XlAcptjjgEntity entity : entities){
 			if (yjType == YDJDType.YD){
-				tjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
-				tjjg1 = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+				if (ids == null){
+					tjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+					tjjg1 = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+				}else{
+					tjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), ids, ZBStatus.APPROVED);
+					tjjg1 = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), ids, ZBStatus.APPROVED);
+				}
 			}else{
-				tjjg = tjjgDao.getJdAcc(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
-				tjjg1 = tjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+				if (ids == null){
+					tjjg = tjjgDao.getJdAcc(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+					tjjg1 = tjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+				}else{
+					tjjg = tjjgDao.getJdAcc(d, entity.getCpxl().getId(), ids, ZBStatus.APPROVED);
+					tjjg1 = tjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), ids, ZBStatus.APPROVED);
+				}
 			}
 			result.add(toList(entity, tjjg, tjjg1));
 		}
@@ -140,6 +159,13 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 
 	@Override
 	public List<WaveItem> getWaveValues(Date d, Company company) {
+		List<Integer> ids = null;
+		if (company.getType() == CompanyType.XLCY){
+			ids = new ArrayList<Integer>();
+			for (Company comp : company.getSubCompanies()){
+				ids.add(comp.getId());
+			}
+		}
 		List<WaveItem> ret = new ArrayList<WaveItem>();
 		List<String> row = null;
 		EasyCalendar ec = new EasyCalendar(d);
@@ -152,7 +178,12 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				cpIds.set(0, entity.getCpxl().getId());
-				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpIds, company, ZBStatus.APPROVED);
+				ZltjjgEntity zltjjg = null;
+				if (null == ids){
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpIds, company, ZBStatus.APPROVED);
+				}else{
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpIds, ids, ZBStatus.APPROVED);
+				}
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -183,7 +214,8 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 	
 	@Override
 	public ZBStatus getStatus(Date d, Company company) {
-		ZltjjgEntity zltjjg = zltjjgDao.getFirstTjjg(d, company);
+		List<XlAcptjjgEntity> entities = xlacptjjgDao.getAll();
+		ZltjjgEntity zltjjg = zltjjgDao.getByDateIgnoreStatus(d, entities.get(0).getCpxl().getId(), company);
 		if (zltjjg != null){
 			return ZBStatus.valueOf(zltjjg.getZt());
 		}

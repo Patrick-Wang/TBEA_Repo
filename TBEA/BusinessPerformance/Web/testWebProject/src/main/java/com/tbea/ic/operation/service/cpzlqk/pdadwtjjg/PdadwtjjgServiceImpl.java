@@ -130,4 +130,38 @@ public class PdadwtjjgServiceImpl implements PdadwtjjgService {
 		}
 		return wis;
 	}
+
+	@Override
+	public List<WaveItem> getPdYdAdwtjjgWaveItems(Date d) {
+		List<WaveItem> wis = new ArrayList<WaveItem>();
+		EasyCalendar cal = new EasyCalendar();
+		cal.setTime(d);
+		cal.setMonth(1);
+		for (int j = 0; j < 12; ++j){
+			List<List<String>> result = this.getPdadwtjjg(cal.getDate(), YDJDType.YD);
+			for (int i = 0; i < result.size(); ++i){
+				WaveItem item = getWaveItem(wis, result.get(i).get(0));
+				item.getData().add(toCtVal(result.get(i).get(4)));
+			}
+			cal.addMonth(1);
+		}
+		return wis;
+	}
+
+	@Override
+	public List<WaveItem> getWaveItems(Date d) {
+		List<WaveItem> wis = new ArrayList<WaveItem>();
+		EasyCalendar cal = new EasyCalendar();
+		cal.setTime(d);
+		cal.setMonth(1);
+		for (int j = 0; j < 12; ++j){
+			List<List<String>> result = this.getPdadwtjjg(cal.getDate(), YDJDType.YD);
+			for (int i = 0; i < result.size(); ++i){
+				WaveItem item = getWaveItem(wis, result.get(i).get(0));
+				item.getData().add(toCtVal(result.get(i).get(4)));
+			}
+			cal.addMonth(1);
+		}
+		return wis;
+	}
 }

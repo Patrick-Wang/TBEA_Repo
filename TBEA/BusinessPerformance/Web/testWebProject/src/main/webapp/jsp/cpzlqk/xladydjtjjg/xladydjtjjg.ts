@@ -44,7 +44,8 @@ module cpzlqk {
                 return plugin.xladydjtjjg;
             }
             protected isSupported(compType:Util.CompanyType):boolean {
-                return compType == Util.CompanyType.XLCY;
+                return  compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
+                    ||compType == Util.CompanyType.XLC||compType == Util.CompanyType.XLCY;
             }
 
             onEvent(e:framework.route.Event):any {

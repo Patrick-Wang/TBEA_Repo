@@ -106,6 +106,8 @@ module cpzlqk {
 
             onEvent(e: framework.route.Event): any {
                 switch (e.id){
+                    case Event.ZLFE_IS_COMPANY_SUPPORTED:
+                        return true;
                     case Event.ZLFE_SAVE_COMMENT:
                         let param = {
                             condition:Util.Ajax.toUrlParam({

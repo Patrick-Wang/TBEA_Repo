@@ -5,6 +5,7 @@ import java.util.List;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDao;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.cpzlqk.NbyclzlwtEntity;
 
@@ -64,6 +65,25 @@ public interface NbyclzlwtDao extends AbstractReadWriteDao<NbyclzlwtEntity> {
 	Integer getSczzzlqkxxxxCount(Date d, Company comp, String gs);
 
 	Integer getSczzzlqkxxxxCount(Date date, Date d, Company comp, String gs);
+
+	Integer getYsazzlwtCount(Date date, Date d, Company comp);
+
+	Integer getYsazzlwtCount(Date date, Date d, List<Company> comps);
+
+	Integer getYsazzlwtCount(Date d, Company company);
+
+	Integer getYsazzlwtCount(Date d, List<Company> comps);
+
+	List<String> getSubIssues(List<Company> comps);
+
+	List<String> getSubIssues(Company company);
+
+	Integer getNbzlwtflCount(Date date, Date d,
+			Company comp, String issue);
+
+	Integer getNbzlwtflCount(Date date, Company comp, String issue);
+
+	List<NbyclzlwtEntity> getAll(Date d, Company company);
 
 
 }

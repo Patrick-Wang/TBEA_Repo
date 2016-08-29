@@ -212,14 +212,14 @@ public class ComponentManager implements ComponentLoadedListener {
 
 	public Controller getController(String id) {
 		if (controllerMap.containsKey(id)){
-			return new Controller(controllerMap.get(id).getE(), this);
+			return new Controller((Element) controllerMap.get(id).getE().cloneNode(true), this);
 		}
 		return null;
 	}
 	
 	public Controller getController(String id, Context local) {
 		if (controllerMap.containsKey(id)){
-			return new Controller(controllerMap.get(id).getE(), this, local);
+			return new Controller((Element) controllerMap.get(id).getE().cloneNode(true), this, local);
 		}
 		return null;
 	}
@@ -230,14 +230,14 @@ public class ComponentManager implements ComponentLoadedListener {
 	
 	public Service getService(String id, Context local){
 		if (serviceMap.containsKey(id)){
-			return new Service(serviceMap.get(id).getE(), this, local);
+			return new Service((Element) serviceMap.get(id).getE().cloneNode(true), this, local);
 		}
 		return null;
 	}
 	
 	public Service getService(String id) {
 		if (serviceMap.containsKey(id)){
-			return createService(serviceMap.get(id).getE());
+			return createService((Element) serviceMap.get(id).getE().cloneNode(true));
 		}
 		return null;
 	}

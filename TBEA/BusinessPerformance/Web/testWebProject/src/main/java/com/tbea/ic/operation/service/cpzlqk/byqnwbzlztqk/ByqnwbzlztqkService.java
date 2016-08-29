@@ -37,13 +37,13 @@ public interface ByqnwbzlztqkService {
 
 	List<List<String>> getYdYclzlwt(Date d);
 
-	List<WaveItem> getYclzlwtWaveItems(Date d, YDJDType yjType);
+	List<WaveItem> getWaveItemsYclzlwt(Date d, YDJDType yjType);
 
 	List<List<String>> getJdYclzlwt(Date d, Company company);
 
 	List<List<String>> getYdYclzlwt(Date d, Company company);
 
-	List<WaveItem> getYclzlwtWaveItems(Date d, YDJDType yjType, Company company);
+	List<WaveItem> getWaveItemsYclzlwt(Date d, YDJDType yjType, Company company);
 
 	List<List<String>> getJdSczzzlqk(Date d);
 
@@ -64,5 +64,37 @@ public interface ByqnwbzlztqkService {
 	List<List<String>> getJdSczzzlqkxxxx(Date d, Company company);
 
 	List<List<String>> getYdSczzzlqkxxxx(Date d, Company company);
+
+	List<List<String>> getJdYsazzlwt(Date d);
+
+	List<List<String>> getJdYsazzlwt(Date d, Company company);
+
+	List<WaveItem> getWaveItemsYsazzlwt(Date d, YDJDType yjType, Company company);
+
+	List<WaveItem> getWaveItemsYsazzlwt(Date d, YDJDType yjType);
+
+	List<List<String>> getYdYsazzlwt(Date d);
+
+	List<List<String>> getYdYsazzlwt(Date d, Company company);
+
+	List<List<String>> getJdNbzlwtfl(Date d);
+
+	List<List<String>> getYdNbzlwtfl(Date d);
+
+	List<List<String>> getJdNbzlwtfl(Date d, Company company);
+
+	List<List<String>> getYdNbzlwtfl(Date d, Company company);
+
+	List<List<String>> getJdWbzlwtfl(Date d);
+
+	List<List<String>> getYdWbzlwtfl(Date d);
+
+	List<List<String>> getJdWbzlwtfl(Date d, Company company);
+
+	List<List<String>> getYdWbzlwtfl(Date d, Company company);
+
+	List<List<String>> getNbzlwttjqk(Date d, Company company);
+
+	List<List<String>> getWbzlwttjqk(Date d, Company company);
 
 }

@@ -54,25 +54,11 @@ public class ByqadwtjjgServlet {
 		
 		if (all){
 			List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType);
-			List<WaveItem> waveItems = new ArrayList<WaveItem>();
-			List<String> waveX = new ArrayList<String>();
-
-			WaveItem item = null;
-			for (int i = 0; i < result.size(); ++i){
-				if (waveX.isEmpty() || !waveX.contains(result.get(i).get(0))){
-					waveX.add(result.get(i).get(0));
-				}
-				
-				item = WaveItem.find(waveItems, result.get(i).get(1));
-				if (null != item){
-					item.getData().add(result.get(i).get(4));
-				}else{
-					item = new WaveItem(result.get(i).get(1), new ArrayList<String>());
-					waveItems.add(item); 
-					item.getData().add(result.get(i).get(4));
-				}
+			List<WaveItem> waveItems = null;
+			if (yjType == YDJDType.YD){
+				waveItems = byqadwtjjgService.getWaveItems(d);
 			}
-			resp = new CpzlqkResp(result, waveItems, waveX);
+			resp = new CpzlqkResp(result, waveItems);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
 			Company company = companyManager.getVirtualCYOrg().getCompany(comp);

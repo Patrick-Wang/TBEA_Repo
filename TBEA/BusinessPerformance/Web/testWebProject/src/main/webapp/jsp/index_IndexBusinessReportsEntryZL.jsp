@@ -20,7 +20,7 @@
 <!-- 						src="../images/charts/bar2.png"> <span><strong>财务-产品大类毛利表录入</strong></span></a> -->
 <!-- 				</li> -->
 				<li><a href="../cpzlqk/entry.do" target="_blank"><img
-						src="../images/charts/bar7.png"> <span><strong>质量管报录入</strong></span></a>
+						src="../images/charts/bar7.png"> <span><strong>产品一次送试录入</strong></span></a>
 				</li>
 				
 			</ul>

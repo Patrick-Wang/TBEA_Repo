@@ -56,7 +56,7 @@ var cpzlqk;
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
                     || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
-                    || compType == Util.CompanyType.PDCY;
+                    || compType == Util.CompanyType.XBXBGS || compType == Util.CompanyType.PDCY;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../pdcpycssbhgwtmx/export.do?" + Util.Ajax.toUrlParam({
@@ -111,6 +111,8 @@ var cpzlqk;
             };
             ShowView.prototype.onEvent = function (e) {
                 switch (e.id) {
+                    case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
+                        return true;
                     case cpzlqk.Event.ZLFE_SAVE_COMMENT:
                         var param = {
                             condition: Util.Ajax.toUrlParam({

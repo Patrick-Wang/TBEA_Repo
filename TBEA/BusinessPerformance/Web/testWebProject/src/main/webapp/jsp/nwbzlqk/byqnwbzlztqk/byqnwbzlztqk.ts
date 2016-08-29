@@ -190,7 +190,7 @@ module nwbzlqk {
                         xData.push( "外部质量问题");
                         dy.push(this.toCtVal(this.mData.tjjg[0][1]));
                         dy.push(this.toCtVal(this.mData.tjjg[0][2]));
-                        dy.push(this.toCtVal(this.mData.tjjg[1][1]));
+                        qntq.push(this.toCtVal(this.mData.tjjg[1][1]));
                         qntq.push(this.toCtVal(this.mData.tjjg[1][2]));
                     }
 

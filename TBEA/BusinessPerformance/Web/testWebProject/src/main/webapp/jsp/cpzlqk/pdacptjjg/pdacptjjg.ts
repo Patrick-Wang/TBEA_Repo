@@ -49,7 +49,7 @@ module cpzlqk {
             protected isSupported(compType:Util.CompanyType):boolean {
                 return compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
                     || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
-                    || compType == Util.CompanyType.PDCY;
+                    || compType == Util.CompanyType.XBXBGS|| compType == Util.CompanyType.PDCY;
             }
             onEvent(e:framework.route.Event):any {
                 switch (e.id) {

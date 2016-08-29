@@ -26,4 +26,17 @@ public interface ZltjjgDao extends AbstractReadWriteDao<ZltjjgEntity> {
 
 	ZltjjgEntity getByDateIgnoreStatus(Date d, Integer cpid, Company company);
 
+	ZltjjgEntity getByDate(Date d, int id, List<Integer> ids, ZBStatus zt);
+
+	ZltjjgEntity getYearAcc(Date d, int id, List<Integer> ids, ZBStatus zt);
+
+	ZltjjgEntity getJdAcc(Date d, int id, List<Integer> ids, ZBStatus zt);
+
+	ZltjjgEntity getJdAccQntq(Date d, int id, List<Integer> ids,
+			ZBStatus zt);
+
+	ZltjjgEntity getByDateTotal(Date date, List<Integer> cpids,
+			List<Integer> ids, ZBStatus zt);
+
+
 }

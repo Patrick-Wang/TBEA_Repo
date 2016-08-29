@@ -59,4 +59,22 @@ public interface WbyclzlwtDao extends AbstractReadWriteDao<WbyclzlwtEntity> {
 	Integer getSczzzlqkxxxxCount(Date d, Company company, String gs);
 
 	Integer getSczzzlqkxxxxCount(Date date, Date d, Company company, String gs);
+
+	Integer getYsazzlwtCount(Date date, Date d, Company company);
+
+	Integer getYsazzlwtCount(Date date, Date d, List<Company> comps);
+
+	Integer getYsazzlwtCount(Date d, Company company);
+
+	Integer getYsazzlwtCount(Date d, List<Company> comps);
+
+	List<String> getSubIssues(List<Company> comps);
+
+	Integer getWbzlwtflCount(Date date, Date date2, Company comp, String issue);
+
+	Integer getWbzlwtflCount(Date date, Company comp, String issue);
+
+	List<String> getSubIssues(Company comp);
+
+	List<WbyclzlwtEntity> getAll(Date d, Company company);
 }

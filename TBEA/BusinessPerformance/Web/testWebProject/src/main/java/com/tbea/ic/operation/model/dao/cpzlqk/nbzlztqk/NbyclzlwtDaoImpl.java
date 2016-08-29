@@ -333,4 +333,101 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 		q.setParameter("gs", gs);
 		return ((Long)q.getResultList().get(0)).intValue();
 	}
+
+	@Override
+	public Integer getYsazzlwtCount(Date date, Date d, Company comp) {
+		Query q = getEntityManager().createQuery("select count(*) from NbyclzlwtEntity where company_name = :comp and " +
+				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
+				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
+				"sub_issue_type in ('安装问题','运输问题')");
+		q.setParameter("comp", comp.getName());
+		q.setParameter("dStart", date);
+		q.setParameter("dEnd", d);
+		return ((Long)q.getResultList().get(0)).intValue();
+	}
+
+	@Override
+	public Integer getYsazzlwtCount(Date date, Date d, List<Company> comps) {
+		Query q = getEntityManager().createQuery("select count(*) from NbyclzlwtEntity where company_name in (" +
+				Util.toNameString(comps) + ") and " +
+				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
+				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
+				"sub_issue_type in ('安装问题','运输问题')");
+		q.setParameter("dStart", date);
+		q.setParameter("dEnd", d);
+		return ((Long)q.getResultList().get(0)).intValue();
+	}
+
+	@Override
+	public Integer getYsazzlwtCount(Date d, Company company) {
+		Query q = getEntityManager().createQuery("select count(*) from NbyclzlwtEntity where company_name = :comp and " +
+				"datediff(mm, issue_happen_date, :date) = 0 and " + 
+				"sub_issue_type in ('安装问题','运输问题')");
+		q.setParameter("comp", company.getName());
+		q.setParameter("date", d);
+		return ((Long)q.getResultList().get(0)).intValue();
+	}
+
+	@Override
+	public Integer getYsazzlwtCount(Date d, List<Company> comps) {
+		Query q = getEntityManager().createQuery("select count(*) from NbyclzlwtEntity where company_name in (" +
+				Util.toNameString(comps) + ") and " +
+				"datediff(mm, issue_happen_date, :date) = 0 and " + 
+				"sub_issue_type in ('安装问题','运输问题')");
+		q.setParameter("date", d);
+		return ((Long)q.getResultList().get(0)).intValue();
+	}
+
+	@Override
+	public List<String> getSubIssues(List<Company> comps) {
+		Query q = getEntityManager().createQuery(
+				"select sub_issue_type from NbyclzlwtEntity where company_name in (" +
+				Util.toNameString(comps) + ") " +
+				"group by sub_issue_type");
+		return q.getResultList();
+	}
+	
+	@Override
+	public List<String> getSubIssues(Company company) {
+		Query q = getEntityManager().createQuery(
+				"select sub_issue_type from NbyclzlwtEntity where company_name = :comp " +
+				"group by sub_issue_type");
+		q.setParameter("comp", company.getName());
+		return q.getResultList();
+	}
+
+	@Override
+	public Integer getNbzlwtflCount(Date date, Date d, Company comp,
+			String issue) {
+		Query q = getEntityManager().createQuery(
+				"select count(*) from NbyclzlwtEntity where company_name = :comp and " +
+				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
+				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
+				"sub_issue_type = :issue ");
+		q.setParameter("comp", comp.getName());
+		q.setParameter("dStart", date);
+		q.setParameter("dEnd", d);
+		q.setParameter("issue", issue);
+		return ((Long)q.getResultList().get(0)).intValue();
+	}
+
+	@Override
+	public Integer getNbzlwtflCount(Date date, Company comp, String issue) {
+		Query q = getEntityManager().createQuery("select count(*) from NbyclzlwtEntity where company_name = :comp and " +
+				"datediff(mm, issue_happen_date, :date) = 0 and " + 
+				"sub_issue_type = :issue");
+		q.setParameter("comp", comp.getName());
+		q.setParameter("date", date);
+		q.setParameter("issue", issue);
+		return ((Long)q.getResultList().get(0)).intValue();
+	}
+
+	@Override
+	public List<NbyclzlwtEntity> getAll(Date d, Company comp) {
+		Query q = getEntityManager().createQuery("from NbyclzlwtEntity where company_name = :comp and " +
+				"datediff(mm, issue_happen_date, :date) = 0 ");
+		q.setParameter("comp", comp.getName());
+		q.setParameter("date", d);
+		return q.getResultList();
+	}
 }

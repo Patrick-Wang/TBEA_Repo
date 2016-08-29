@@ -110,6 +110,8 @@ var cpzlqk;
             };
             ShowView.prototype.onEvent = function (e) {
                 switch (e.id) {
+                    case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
+                        return true;
                     case cpzlqk.Event.ZLFE_SAVE_COMMENT:
                         var param = {
                             condition: Util.Ajax.toUrlParam({

@@ -320,26 +320,26 @@ PRIMARY KEY CLUSTERED
 
 SET IDENTITY_INSERT [dbo].[cpzlqk_adwtjjg_byq] ON
 --sb
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (0, 102, 50, 29, 29,	N'#+(1-6)')
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (1, 1, 50, 29, 0 ,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (2, 1, 50, 29, 1 ,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (3, 1, 50, 29, 2 ,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (4, 1, 50, 29, 3 ,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (5, 1, 50, 29, 57,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (6, 1, 50, 60, 60	,N'#+(7-9)')
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (7, 1, 50, 60, 4	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (8, 1, 50, 60, 5	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (9, 1, 50, 60, 6	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (10, 1, 50, 61, 61	,N'#+(11-12)')
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (11, 1, 50, 61, 7	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (12, 1, 50, 61, 8	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (13, 1, 50, 58, 58	,N'this')
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (14, 1, 50, 32, 32	,N'#+(15-18)')
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (15, 1, 50, 32, 15	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (16, 1, 50, 32, 16	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (17, 1, 50, 32, 17	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (18, 1, 50, 32, 18	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (19, 1, 50, 49, 49	,N'#0+#6+#10+#14')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (0, 1, 50, 29, 29,	N'#+(1-6)')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (1, 1, 50, 29, 0 ,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (2, 1, 50, 29, 1 ,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (3, 1, 50, 29, 2 ,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (4, 1, 50, 29, 3 ,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (5, 1, 50, 29, 57,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (6, 1, 50, 60, 60	,N'#+(7-9)')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (7, 1, 50, 60, 4	,NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (8, 1, 50, 60, 5	,NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (9, 1, 50, 60, 6	,NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (10, 1, 50, 61, 61	,N'#+(11-12)')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (11, 1, 50, 61, 7	,NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (12, 1, 50, 61, 8	,NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (13, 1, 50, 58, 58	,N'this')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (14, 1, 50, 32, 32	,N'#+(15-18)')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (15, 1, 50, 32, 15	,NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (16, 1, 50, 32, 16	,NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (17, 1, 50, 32, 17	,NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (18, 1, 50, 32, 18	,NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (19, 1, 50, 49, 49	,N'#0+#6+#10+#14')
 
 --hb
 INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (20,2,51,29,29,N'#+(21-25)')
@@ -384,12 +384,12 @@ INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul
 INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (58,3,52,32,18,NULL)
 INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (59,3,52,49,49,N'#40+#46+#50+#54')
 --hj
-INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (60,50000,62,29,29,N'#0+#20+#40')
-INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (61,50000,62,60,60,N'#6+#26+#46')
-INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (62,50000,62,61,61,N'#10+#30+#50')
-INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (63,50000,62,58,58,N'#13+#33+#53')
-INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (64,50000,62,32,32,N'#14+#34+#54')
-INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (65,50000,62,49,49,N'#19+#39+#59')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (60,50000,49,29,29,N'#0+#20+#40')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (61,50000,49,60,60,N'#6+#26+#46')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (62,50000,49,61,61,N'#10+#30+#50')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (63,50000,49,58,58,N'#13+#33+#53')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (64,50000,49,32,32,N'#14+#34+#54')
+INSERT [dbo].[cpzlqk_adwtjjg_byq] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (65,50000,49,49,49,N'#19+#39+#59')
 SET IDENTITY_INSERT [dbo].[cpzlqk_adwtjjg_byq] OFF
 
 /***************************************************************************** 按单位统计结果 - 配电
@@ -438,17 +438,26 @@ INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul]
 INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (19, 302, 71, 31, 68,	NULL)
 INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (20, 302, 71, 31, 14, NULL)
 
+--智能电器公司
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (21, 303, 72, 49, 49,	N'#+(22-27)')
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (22, 303, 72, 65, 66,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (23, 303, 72, 65, 10,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (24, 303, 72, 65, 11,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (25, 303, 72, 31, 67,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (26, 303, 72, 31, 68,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (27, 303, 72, 31, 14, NULL)
+
 --天变公司
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (21, 301, 73, 49, 49,	N'#+(22-27)')
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (22, 301, 73, 65, 66,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (23, 301, 73, 65, 10,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (24, 301, 73, 65, 11,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (25, 301, 73, 31, 67,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (26, 301, 73, 31, 68,	NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (27, 301, 73, 31, 14, NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (28, 301, 73, 49, 49,	N'#+(29-34)')
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (29, 301, 73, 65, 66,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (30, 301, 73, 65, 10,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (31, 301, 73, 65, 11,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (32, 301, 73, 31, 67,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (33, 301, 73, 31, 68,	NULL)
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (34, 301, 73, 31, 14, NULL)
 
 --hj
-INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (28,50002,64,49,49,N'#0+#7+#14+#21')
+INSERT [dbo].[cpzlqk_adwtjjg_pd] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (35,50002,49,49,49,N'#0+#7+#14+#21+#28')
 
 SET IDENTITY_INSERT [dbo].[cpzlqk_adwtjjg_pd] OFF
 
@@ -536,7 +545,7 @@ INSERT [dbo].[cpzlqk_adwtjjg_xl] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul]
 INSERT [dbo].[cpzlqk_adwtjjg_xl] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (34, 6, 56, 48, 42	,NULL)
 INSERT [dbo].[cpzlqk_adwtjjg_xl] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (35, 6, 56, 48, 43	,NULL)
 INSERT [dbo].[cpzlqk_adwtjjg_xl] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (36, 6, 56, 48, 44	,NULL)
-INSERT [dbo].[cpzlqk_adwtjjg_xl] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (37, 50001, 63, 49, 49,	N'#0+#1+#9+#13+#21+#25+#33')
+INSERT [dbo].[cpzlqk_adwtjjg_xl] ([id], [dwid], [dwmc], [cpdl], [cpxl], [formul])VALUES (37, 50001, 49, 49, 49,	N'#0+#1+#9+#13+#21+#25+#33')
 SET IDENTITY_INSERT [dbo].[cpzlqk_adwtjjg_xl] OFF                                                       
 /***************************************************************************** 不合格类别 - 变压器      
 id	name

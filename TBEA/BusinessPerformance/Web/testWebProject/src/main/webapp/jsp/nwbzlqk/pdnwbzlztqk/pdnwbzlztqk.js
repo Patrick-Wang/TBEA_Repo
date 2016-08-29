@@ -61,7 +61,7 @@ var nwbzlqk;
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
                     || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
-                    || compType == Util.CompanyType.PDCY;
+                    || compType == Util.CompanyType.XBXBGS || compType == Util.CompanyType.PDCY;
             };
             ShowView.prototype.onEvent = function (e) {
                 switch (e.id) {

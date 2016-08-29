@@ -59,7 +59,6 @@ public class ByqacptjjgServlet {
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		
-		
 		List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, yjType);
 		List<WaveItem> waveItems = null;
 		if (yjType == YDJDType.YD){

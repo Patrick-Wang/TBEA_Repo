@@ -49,7 +49,7 @@ module cpzlqk {
             protected isSupported(compType:Util.CompanyType):boolean {
                 return compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
                     || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
-                    || compType == Util.CompanyType.PDCY;
+                    || compType == Util.CompanyType.XBXBGS|| compType == Util.CompanyType.PDCY;
             }
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../pdcpycssbhgwtmx/export.do?" + Util.Ajax.toUrlParam({
@@ -107,6 +107,8 @@ module cpzlqk {
 
             onEvent(e: framework.route.Event): any {
                 switch (e.id){
+                    case Event.ZLFE_IS_COMPANY_SUPPORTED:
+                        return true;
                     case Event.ZLFE_SAVE_COMMENT:
                         let param = {
                             condition:Util.Ajax.toUrlParam({

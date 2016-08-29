@@ -55,7 +55,8 @@ var cpzlqk;
             };
             EntryView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
-                    || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS;
+                    || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
+                    || compType == Util.CompanyType.XBXBGS;
             };
             EntryView.prototype.option = function () {
                 return this.mOpt;
