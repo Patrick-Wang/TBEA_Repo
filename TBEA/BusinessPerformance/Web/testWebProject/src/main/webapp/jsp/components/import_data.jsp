@@ -83,6 +83,11 @@
 	width: 100%;
 	overflow: hidden;
 }
+	.btn-default{
+		width:72px;
+		height:29px;
+		font-size:12px;
+	}
 </style>
 
 <script type="text/javascript">
@@ -93,14 +98,16 @@
 			.ready(
 					function() {
 						var $ = jQuery, $btn = $('#ctlBtn'), state = 'pending';
-						var comps =  JSON.parse('${nodeData}');
-						compSelctor = new Util.CompanySelector(false, "compid",comps);
-						if (comps.length == 1){
-							compSelctor.hide();
-							$("title").text(compSelctor.getCompanyName() + " " + $("title").text());
-							$("h1").text(compSelctor.getCompanyName() + " " + $("h1").text());
+						var nodeData = '${nodeData}';
+						if (nodeData.length > 0){
+							var comps =  JSON.parse(nodeData);
+							compSelctor = new Util.CompanySelector(false, "compid",comps);
+							if (comps.length == 1){
+								compSelctor.hide();
+								$("title").text(compSelctor.getCompanyName() + " " + $("title").text());
+								$("h1").text(compSelctor.getCompanyName() + " " + $("h1").text());
+							}
 						}
-
 
 						$list = $('#thelist');
 						uploader = WebUploader.create({
@@ -115,7 +122,7 @@
 							pick : '#picker',
 
 							formData : {
-								compId: compSelctor.getCompany()
+								compId: nodeData.length > 0 ? compSelctor.getCompany() : undefined
 							},
 
 							fileVal : 'upfile',

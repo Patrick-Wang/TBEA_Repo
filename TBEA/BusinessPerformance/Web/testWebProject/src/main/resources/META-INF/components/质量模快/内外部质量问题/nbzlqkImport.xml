@@ -1,0 +1,43 @@
+<components>
+ <service id="servNbzlqkEntry" transaction="transactionManager">
+  <merge data="${data}" table="zl_nbyclzlwt">
+   <set>
+    <company_name type="string" ref="0"/>
+    <issue_happen_date type="date" ref="1"/>
+    <product_type type="string" ref="2"/>
+    <production_num type="string" ref="3"/>
+    <production_model type="string" ref="4"/>
+    <issue_type type="string" ref="5"/>
+    <sub_issue_type type="string" ref="6"/>
+    <material_quality_phenomenon type="string" ref="7"/>
+    <detail type="string" ref="8"/>
+    <material_happen_phase type="string" ref="9"/>
+    <material_count type="double" ref="10"/>
+    <measurement_units type="string" ref="11"/>
+    <suppier type="string" ref="12"/>
+    <issue_process type="string" ref="13"/>
+    <responsibility_department type="string" ref="14"/>
+    <material_treatment_measure type="string" ref="15"/>
+    <onsite_treatmen_measure type="string" ref="16"/>
+    <onsite_treatment_result type="string" ref="17"/>
+    <causa_analysis type="string" ref="18"/>
+    <assessment type="string" ref="19"/>
+    <filling_personnel type="string" ref="20"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="nbzlqkImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <callservice id="servNbzlqkEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="nbzlqkImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="nbzlqkImport"/>
+   <map key="title" value="内部质量情况导入"/>
+  </response>
+ </controller>
+</components>

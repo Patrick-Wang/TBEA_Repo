@@ -208,7 +208,7 @@ module nwbzlqk {
                 let title = "外部质量问题分类统计情况";
                 let wtlb = [];
                 for (let i = 0 ;i < this.mData.tjjg.length; ++i){
-                    wtlb.push(this.mData.tjjg[0]);
+                    wtlb.push(this.mData.tjjg[i][0]);
                 }
 
                 let legend:any = {
@@ -240,22 +240,22 @@ module nwbzlqk {
                     for (let i = 0 ;i < this.mData.tjjg.length; ++i){
                         series[0].data.push({
                             name: wtlb[i],
-                            value : this.toCtVal(this.mData.tjjg[7] + "")
+                            value : this.toCtVal(this.mData.tjjg[i][7] + "")
                         });
                         series1[0].data.push({
                             name: wtlb[i],
-                            value : this.toCtVal(this.mData.tjjg[8] + "")
+                            value : this.toCtVal(this.mData.tjjg[i][8] + "")
                         });
                     }
                 }else{
                     for (let i = 0 ;i < this.mData.tjjg.length; ++i){
                         series[0].data.push({
                             name: wtlb[i],
-                            value : this.toCtVal(this.mData.tjjg[1] + "")
+                            value : this.toCtVal(this.mData.tjjg[i][1] + "")
                         });
                         series1[0].data.push({
                             name: wtlb[i],
-                            value : this.toCtVal(this.mData.tjjg[2] + "")
+                            value : this.toCtVal(this.mData.tjjg[i][2] + "")
                         });
                     }
                 }
@@ -302,13 +302,13 @@ module nwbzlqk {
                 let qn = 0;
                 if (this.mCompType == Util.CompanyType.PDCY){
                     for (let i = 0 ;i < this.mData.tjjg.length; ++i){
-                        dq += parseInt(this.toCtVal(this.mData.tjjg[7] + ""));
-                        qn += parseInt(this.toCtVal(this.mData.tjjg[8] + ""));
+                        dq += parseInt(this.toCtVal(this.mData.tjjg[i][7] + ""));
+                        qn += parseInt(this.toCtVal(this.mData.tjjg[i][8] + ""));
                     }
                 }else{
                     for (let i = 0 ;i < this.mData.tjjg.length; ++i){
-                        dq += parseInt(this.toCtVal(this.mData.tjjg[1] + ""));
-                        qn += parseInt(this.toCtVal(this.mData.tjjg[2] + ""));
+                        dq += parseInt(this.toCtVal(this.mData.tjjg[i][1] + ""));
+                        qn += parseInt(this.toCtVal(this.mData.tjjg[i][2] + ""));
                     }
                 }
                 let title = "外部质量问题分类统计情况";
