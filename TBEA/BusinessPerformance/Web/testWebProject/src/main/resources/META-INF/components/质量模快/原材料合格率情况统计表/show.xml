@@ -13,7 +13,8 @@ where
  CLDL.cy=${cy} and
  YCL.nf=${cal.year} and
  YCL.yf=${cal.month} and
- YCL.dwid in ${companies}
+ YCL.dwid in ${companies} and
+ YCL.zt=1
 group by
  CLDL.id</sql>
   <sql id="hjljz" order="ids" by="0" export="true">select
@@ -29,7 +30,8 @@ where
  CLDL.cy=${cy} and
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid in ${companies}
+ YCL.dwid in ${companies} and
+ YCL.zt=1
 group by
  CLDL.id</sql>
  </service>
@@ -47,7 +49,8 @@ where
  CLDL.cy=${cy} and
  YCL.nf=${cal.year} and
  YCL.yf=${cal.month} and
- YCL.dwid=${compId}</sql>
+ YCL.dwid=${compId} and
+ YCL.zt=1</sql>
   <sql id="ljz" order="ids" by="0" export="true">select
  CLDL.id,
  sum(YCL.hgs) as newHgs,
@@ -61,7 +64,8 @@ where
  CLDL.cy=${cy} and
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid=${compId}
+ YCL.dwid=${compId} and
+ YCL.zt=1
 group by
  CLDL.id</sql>
  </service>
@@ -219,7 +223,7 @@ where
     <DefaultMatcher cols="0,1"/>
    </EmptyFormatter>
    <PercentFormatter reservedCount="1">
-    <DefaultMatcher cols="4,7,10,13,16,19"/>
+    <DefaultMatcher cols="4,7,10,13,16,19,22,25"/>
    </PercentFormatter>
    <NumberFormatter reservedCount="0"/>
   </formatter>
@@ -715,8 +719,20 @@ where
   <response type="excel" ref="excelTemplate" name="${cal.format}原材料合格率.xls" serv="serv"/>
  </controller>
  <controller id="yclhglqktjChart">
-  <context key="cy" value="${request.chart.asInt}"/>
+  <context key="clid" value="${request.chart.asInt}"/>
   <callcontroller id="clrYclhglqkParams"/>
+  <if test="${isByqcy}">
+   <context key="cy" value="${0}"/>
+   <list type="int" id="dwids" export="true">1,2,3</list>
+  </if>
+  <if test="${isXlcy}">
+   <context key="cy" value="${1}"/>
+   <list type="int" id="dwids" export="true">4,5,6</list>
+  </if>
+  <if test="${isJydw}">
+   <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
+   <list type="int" id="dwids" export="true">${compId}</list>
+  </if>
   <callservice id="servYclhglqktjChart"/>
   <response type="json">
    <yNames>[&quot;合格数&quot;, &quot;总数&quot;]</yNames>
@@ -787,11 +803,13 @@ from
  zl_yclhglqk_cldl CLDL,
  zl_yclhglqk YCL
 where
- YCL.clid=CLDL.id and
+ YCL.clid = CLDL.id and 
+ YCL.clid=${clid} and
  CLDL.cy=${cy} and
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid=${compId}
+ YCL.dwid in ${dwids} and 
+ YCL.zt=1
 group by
  YCL.nf,
  YCL.yf

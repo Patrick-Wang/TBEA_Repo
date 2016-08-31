@@ -139,7 +139,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		}else{
 			elem.setAttribute("id", "_tb_col_");
 			listInterpreter.accept(component, elem);
-			list = (List) component.removeLocal("id");
+			list = (List) component.removeLocal("_tb_col_");
 		}
 		if (null == list){
 			list = Util.resize(new ArrayList<Object>(),	tb.getIds().size());

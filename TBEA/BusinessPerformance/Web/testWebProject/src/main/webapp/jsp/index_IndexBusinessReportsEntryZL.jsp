@@ -22,7 +22,9 @@
 				<li><a href="../cpzlqk/entry.do" target="_blank"><img
 						src="../images/charts/bar7.png"> <span><strong>产品一次送试录入</strong></span></a>
 				</li>
-				
+				<li><a href="../report/yclhglqktjEntry.do" target="_blank"><img
+						src="../images/charts/bar3.png"> <span><strong>原材料合格率录入</strong></span></a>
+				</li>
 			</ul>
 		</div>
 	</div>

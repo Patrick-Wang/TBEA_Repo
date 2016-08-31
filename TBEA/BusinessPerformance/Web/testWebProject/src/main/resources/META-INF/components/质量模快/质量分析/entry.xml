@@ -40,7 +40,21 @@
      </response>
     </if>
    </if>
-   <if test="${!auth[46]}">
+   <if test="${!auth[46] &amp;&amp; auth[50]}">
+    <if test="${comment.isEmpty}">
+     <response type="json">
+      <comment>${&quot;&quot;}</comment>
+      <readonly>true</readonly>
+     </response>
+    </if>
+    <if test="${!comment.isEmpty}">
+     <response type="json">
+      <comment>${comment[0]}</comment>
+      <readonly>true</readonly>
+     </response>
+    </if>
+   </if>
+   <if test="${!auth[46] &amp;&amp; !auth[50]}">
     <response type="json">
      <deny>deny</deny>
     </response>
@@ -59,7 +73,21 @@
      </response>
     </if>
    </if>
-   <if test="${!auth[48]}">
+   <if test="${!auth[48] &amp;&amp; auth[52]}">
+    <if test="${comment.isEmpty}">
+     <response type="json">
+      <comment>${&quot;&quot;}</comment>
+      <readonly>true</readonly>
+     </response>
+    </if>
+    <if test="${!comment.isEmpty}">
+     <response type="json">
+      <comment>${comment[0]}</comment>
+      <readonly>true</readonly>
+     </response>
+    </if>
+   </if>
+   <if test="${!auth[48] &amp;&amp; !auth[52]}">
     <response type="json">
      <deny>deny</deny>
     </response>
@@ -78,7 +106,21 @@
      </response>
     </if>
    </if>
-   <if test="${!auth[47]}">
+   <if test="${!auth[47] &amp;&amp; auth[51]}">
+    <if test="${comment.isEmpty}">
+     <response type="json">
+      <comment>${&quot;&quot;}</comment>
+      <readonly>true</readonly>
+     </response>
+    </if>
+    <if test="${!comment.isEmpty}">
+     <response type="json">
+      <comment>${comment[0]}</comment>
+      <readonly>true</readonly>
+     </response>
+    </if>
+   </if>
+   <if test="${!auth[47] &amp;&amp; !auth[51]}">
     <response type="json">
      <deny>deny</deny>
     </response>
@@ -97,7 +139,21 @@
      </response>
     </if>
    </if>
-   <if test="${!authCompanies[45].contains[compId]}">
+   <if test="${!authCompanies[45].contains[compId] &amp;&amp; authCompanies[49].contains[compId]}">
+    <if test="${comment.isEmpty}">
+     <response type="json">
+      <comment>${&quot;&quot;}</comment>
+      <readonly>true</readonly>
+     </response>
+    </if>
+    <if test="${!comment.isEmpty}">
+     <response type="json">
+      <comment>${comment[0]}</comment>
+      <readonly>true</readonly>
+     </response>
+    </if>
+   </if>
+   <if test="${!authCompanies[45].contains[compId] &amp;&amp; !authCompanies[49].contains[compId]}">
     <response type="json">
      <deny>deny</deny>
     </response>

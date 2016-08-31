@@ -19,6 +19,12 @@ module nwbzlqk{
         JD
     }
 
+    export interface Comment{
+        comment?:string;
+        readonly?:string;
+        deny?:string;
+    }
+
     export interface CpzlqkResp{
         tjjg : string[][];
         waveItems: WaveItem[];

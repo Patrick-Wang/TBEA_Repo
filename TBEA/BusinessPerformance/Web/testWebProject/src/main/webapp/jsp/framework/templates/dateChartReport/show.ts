@@ -13,6 +13,22 @@ module framework.templates.dateChartReport {
     import IDataNode = Util.IDataNode;
     import DataNode = Util.DataNode;
 
+    String.prototype["getWidth"] = function(fontSize)
+    {
+        var span = document.getElementById("__getwidth");
+        if (span == null) {
+            span = document.createElement("span");
+            span.id = "__getwidth";
+            document.body.appendChild(span);
+            span.style.visibility = "hidden";
+            span.style.whiteSpace = "nowrap";
+        }
+        span.innerText = this;
+        span.style.fontSize = fontSize + "px";
+
+        return span.offsetWidth;
+    }
+
     export let FE_TB_CLICKED:number = framework.route.nextId();
     export let FE_CT_CLICKED:number = framework.route.nextId();
 
@@ -69,6 +85,19 @@ module framework.templates.dateChartReport {
             return undefined;
         }
 
+        private getMaxWidth(opts : any) : number{
+            var max = 0;
+            var tmp = 0;
+            var fontSize = Util.isMSIE() ? 14 : 13;
+            for (var i = 0; i < opts.length; ++i){
+                tmp = $(opts[i]).text().getWidth(fontSize) + 25;
+                if (max < tmp){
+                    max = tmp;
+                }
+            }
+            return max;
+        }
+
         updateChartSelect(){
             let changed = false;
             let chartSelId = this.option().chartSelId;
@@ -90,12 +119,14 @@ module framework.templates.dateChartReport {
 
             if (changed){
                 this.chartSelector = new UnitedSelector(this.findChartNode(ctNodeId), chartSelId);
+                var width = this.getMaxWidth($("#" + chartSelId + " select").children());
+                $("#" + chartSelId + " select").css("width", width);
                 $("#" + chartSelId + " select")
                     .multiselect({
                         multiple: false,
                         header: false,
                         minWidth: 100,
-                        height: '100%',
+                        height: '500px',
                         // noneSelectedText: "请选择月份",
                         selectedList: 1
                     })
@@ -110,12 +141,14 @@ module framework.templates.dateChartReport {
             this.mChartUpdate = new Util.Ajax(this.option().chartUrl, false);
             this.unitedSelector = new UnitedSelector(opt.itemNodes,opt.itemId);
             this.unitedSelector.change(()=>{
+                var width = this.getMaxWidth($("#" + opt.itemId + " select").children());
+                $("#" + opt.itemId + " select").css("width", width);
                 $("#" + opt.itemId + " select")
                     .multiselect({
                         multiple: false,
                         header: false,
                         minWidth: 100,
-                        height: '100%',
+                        height:'100%',
                         // noneSelectedText: "请选择月份",
                         selectedList: 1
                     })
@@ -124,6 +157,8 @@ module framework.templates.dateChartReport {
                     .css("font-size", "12px");
                 this.updateChartSelect();
             });
+            var width = this.getMaxWidth($("#" + opt.itemId + " select").children());
+            $("#" + opt.itemId + " select").css("width", width);
             $("#" + opt.itemId + " select")
                 .multiselect({
                     multiple: false,

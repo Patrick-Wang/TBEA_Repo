@@ -122,8 +122,22 @@ var cpzlqk;
                     $("#comment").hide();
                     break;
                 case cpzlqk.Event.ZLFE_COMMENT_UPDATED:
-                    $("#comment").show();
-                    $("#commentText").val(e.data);
+                    var comment = e.data;
+                    if (comment.deny == "deny") {
+                        $("#comment").hide();
+                    }
+                    else if (comment.readonly == "true") {
+                        $("#saveComment").hide();
+                        $("#comment").show();
+                        $("#commentText").val(comment.comment);
+                        $("#commentText").attr("readonly", "readonly");
+                    }
+                    else {
+                        $("#comment").show();
+                        $("#saveComment").show();
+                        $("#commentText").val(comment.comment);
+                        $("#commentText").removeAttr("readonly");
+                    }
                     break;
             }
             return _super.prototype.onEvent.call(this, e);

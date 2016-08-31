@@ -125,13 +125,21 @@ module nwbzlqk {
                 case Event.ZLFE_SAVE_COMMENT:
                     router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
                     break;
-                case Event.ZLFE_COMMENT_DENY:
-                    $("#comment").hide();
-                    break;
                 case Event.ZLFE_COMMENT_UPDATED:
-                    $("#comment").show();
-                    $("#commentText").val(e.data);
-                    break;
+                    let comment : Comment = e.data;
+                    if (comment.deny == "deny"){
+                        $("#comment").hide();
+                    }else if(comment.readonly == "true"){
+                        $("#saveComment").hide();
+                        $("#comment").show();
+                        $("#commentText").val(comment.comment);
+                        $("#commentText").attr("readonly","readonly");
+                    }else{
+                        $("#comment").show();
+                        $("#saveComment").show();
+                        $("#commentText").val(comment.comment);
+                        $("#commentText").removeAttr("readonly");
+                    }
             }
             return super.onEvent(e);
         }

@@ -43,10 +43,10 @@ public class DoubleArrayComparator implements Comparator<Double[]>{
 			}
 			
 			if (o1[index] == null){
-				return asc ? -1 : 1;
+				return -1;
 			}
 			if (o2[index] == null){
-				return asc ? -1 : 1;
+				return 1;
 			}
 		}
 			

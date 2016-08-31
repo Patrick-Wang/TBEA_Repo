@@ -14,6 +14,12 @@ module cpzlqk{
         contentType: string;
     }
 
+    export interface Comment{
+        comment?:string;
+        readonly?:string;
+        deny?:string;
+    }
+
     export enum YDJDType{
         YD,
         JD

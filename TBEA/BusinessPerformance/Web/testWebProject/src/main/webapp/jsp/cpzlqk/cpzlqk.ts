@@ -128,8 +128,21 @@ module cpzlqk {
                     $("#comment").hide();
                     break;
                 case Event.ZLFE_COMMENT_UPDATED:
-                    $("#comment").show();
-                    $("#commentText").val(e.data);
+                    let comment : Comment = e.data;
+                    if (comment.deny == "deny"){
+                        $("#comment").hide();
+                    }else if(comment.readonly == "true"){
+                        $("#saveComment").hide();
+                        $("#comment").show();
+                        $("#commentText").val(comment.comment);
+                        $("#commentText").attr("readonly","readonly");
+                    }else{
+                        $("#comment").show();
+                        $("#saveComment").show();
+                        $("#commentText").val(comment.comment);
+                        $("#commentText").removeAttr("readonly");
+                    }
+
                     break;
             }
             return super.onEvent(e);

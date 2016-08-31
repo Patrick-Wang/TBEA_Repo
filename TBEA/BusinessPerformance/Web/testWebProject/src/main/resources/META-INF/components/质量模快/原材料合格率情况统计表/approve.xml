@@ -1,0 +1,140 @@
+<components>
+ <service id="servYclhglqktjApproveUpdate" transaction="transactionManager">
+  <sql id="clids">select
+ CLDL.id,
+ CLDL.name,
+ CLDL.dw
+from
+ zl_yclhglqk_cldl CLDL
+where
+ CLDL.cy=${cy}</sql>
+  <list id="ids" type="int" sql="clids" value="0"/>
+  <sql id="dyz" order="ids" by="0" colcount="3">select
+ CLDL.id,
+ YCL.hgs,
+ YCL.zs
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ YCL.nf=${cal.year} and
+ YCL.yf=${cal.month} and
+ YCL.dwid=${compId}</sql>
+  <table id="result" rowIds="ids">
+   <list type="string" sql="clids" value="1"/>
+   <list type="string" sql="clids" value="2"/>
+   <list type="int" sql="dyz" value="1"/>
+   <list type="int" sql="dyz" value="2"/>
+  </table>
+  <context key="result" value="${result}"/>
+ </service>
+ <service id="servYclhglqktjDoApprove" transaction="transactionManager">
+  <merge data="data" table="zl_yclhglqk">
+   <where>
+    <nf type="int" value="${cal.year}"/>
+    <yf type="int" value="${cal.month}"/>
+    <dwid type="int" value="${compId}"/>
+    <clid type="int" ref="0"/>
+   </where>
+   <set>
+    <zt type="int" value="${zt}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="yclhglqktjApproveUpdate">
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
+  <callservice id="servYclhglqktjApproveStatus"/>
+  <callservice id="servYclhglqktjApproveUpdate"/>
+  <formatter id="data">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0, 1, 2"/>
+   </EmptyFormatter>
+   <NumberFormatter reservedCount="0"/>
+  </formatter>
+  <formatterServer id="serv" table="${result.matrix}" acceptNullAs="">
+   <formatter ref="data"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>材料大类</name>
+    </item>
+    <item>
+     <name>单位</name>
+    </item>
+    <item>
+     <name>合格数</name>
+    </item>
+    <item>
+     <name>总数</name>
+    </item>
+   </header>
+   <data>${serv.result}</data>
+   <zt>${zt}</zt>
+  </response>
+ </controller>
+ <controller id="yclhglqktjApprove">
+  <response type="jsp" name="framework/templates/dateReport/approve">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="yclhglqktjApproveUpdate"/>
+   <map key="approveUrl" value="yclhglqktjDoApprove"/>
+   <map key="title" value="原材料合格率"/>
+   <map map="${authMgr[53]}"/>
+   <map key="unapproveUrl" value="yclhglqktjUnApprove"/>
+  </response>
+ </controller>
+ <controller id="yclhglqktjUnApprove">
+  <context key="data" value="${request.data.asJsonArray}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="zt" value="${2}"/>
+  <callservice id="servYclhglqktjDoApprove"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="yclhglqktjDoApprove">
+  <context key="data" value="${request.data.asJsonArray}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="zt" value="${1}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servYclhglqktjDoApprove"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <service id="servYclhglqktjApproveStatus" transaction="transactionManager">
+  <sql id="clids">select
+ CLDL.id,
+ CLDL.name,
+ CLDL.dw
+from
+ zl_yclhglqk_cldl CLDL
+where
+ CLDL.cy=${cy}</sql>
+  <list id="ids" type="int" sql="clids" value="0"/>
+  <sql id="dyz">select
+ top 1
+ YCL.zt
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ YCL.nf=${cal.year} and
+ YCL.yf=${cal.month} and
+ YCL.dwid=${compId}</sql>
+  <if test="${dyz.size &gt; 0}">
+   <context key="zt" value="${dyz[0]}"/>
+  </if>
+  <if test="${dyz.size == 0}">
+   <context key="zt" value="${0}"/>
+  </if>
+ </service>
+</components>

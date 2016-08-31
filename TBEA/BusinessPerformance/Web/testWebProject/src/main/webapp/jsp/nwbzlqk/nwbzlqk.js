@@ -119,13 +119,23 @@ var nwbzlqk;
                 case nwbzlqk.Event.ZLFE_SAVE_COMMENT:
                     router.to(this.mCurrentPlugin).send(nwbzlqk.Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
                     break;
-                case nwbzlqk.Event.ZLFE_COMMENT_DENY:
-                    $("#comment").hide();
-                    break;
                 case nwbzlqk.Event.ZLFE_COMMENT_UPDATED:
-                    $("#comment").show();
-                    $("#commentText").val(e.data);
-                    break;
+                    var comment = e.data;
+                    if (comment.deny == "deny") {
+                        $("#comment").hide();
+                    }
+                    else if (comment.readonly == "true") {
+                        $("#saveComment").hide();
+                        $("#comment").show();
+                        $("#commentText").val(comment.comment);
+                        $("#commentText").attr("readonly", "readonly");
+                    }
+                    else {
+                        $("#comment").show();
+                        $("#saveComment").show();
+                        $("#commentText").val(comment.comment);
+                        $("#commentText").removeAttr("readonly");
+                    }
             }
             return _super.prototype.onEvent.call(this, e);
         };

@@ -102,17 +102,10 @@ module nwbzlqk {
                     companyId:compType,
                     ydjd:this.mYdjdType
                 }),compId:compType}).then((jsonData:any)=>{
-                    if (jsonData.deny == "deny"){
-                        framework.router
-                            .fromEp(this)
-                            .to(framework.basic.endpoint.FRAME_ID)
-                            .send(Event.ZLFE_COMMENT_DENY);
-                    }else {
-                        framework.router
-                            .fromEp(this)
-                            .to(framework.basic.endpoint.FRAME_ID)
-                            .send(Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
-                    }
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(Event.ZLFE_COMMENT_UPDATED, jsonData);
                 });
                 this.mAjax.get({
                         date: date,

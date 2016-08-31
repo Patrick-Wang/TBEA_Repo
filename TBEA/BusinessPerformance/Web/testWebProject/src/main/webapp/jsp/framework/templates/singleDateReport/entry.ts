@@ -115,6 +115,7 @@ module framework.templates.singleDateReport {
             };
             if (this.resp.pager == 'none'){
                 opt.pager = undefined;
+                opt.rowNum = 1000;
             }
             jqTable.jqGrid(this.mTableAssist.decorate(opt));
         }

@@ -79,18 +79,10 @@ var cpzlqk;
                         companyId: compType,
                         ydjd: this.mYdjdType
                     }), compId: compType }).then(function (jsonData) {
-                    if (jsonData.deny == "deny") {
-                        framework.router
-                            .fromEp(_this)
-                            .to(framework.basic.endpoint.FRAME_ID)
-                            .send(cpzlqk.Event.ZLFE_COMMENT_DENY);
-                    }
-                    else {
-                        framework.router
-                            .fromEp(_this)
-                            .to(framework.basic.endpoint.FRAME_ID)
-                            .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData.comment);
-                    }
+                    framework.router
+                        .fromEp(_this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData);
                 });
                 this.mAjax.get({
                     date: date,
