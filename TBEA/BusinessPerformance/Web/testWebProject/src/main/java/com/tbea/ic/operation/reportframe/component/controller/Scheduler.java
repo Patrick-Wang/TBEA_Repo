@@ -4,5 +4,5 @@ import com.tbea.ic.operation.reportframe.component.entity.Context;
 
 
 public interface Scheduler {
-	void onSchedule(Context context, Controller controller);
+	void onSchedule(Context context, Controller controller) throws Exception;
 }

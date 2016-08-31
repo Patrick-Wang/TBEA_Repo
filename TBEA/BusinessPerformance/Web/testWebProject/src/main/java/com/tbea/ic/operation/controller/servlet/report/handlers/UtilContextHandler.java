@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.report.Arrays;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
@@ -57,6 +58,7 @@ public class UtilContextHandler implements ContextHandler {
 		context.put("array", new Arrays());
 		context.put("accFactory", accFac);
 		context.put("compMgr", companyManager);
+		context.put(com.tbea.ic.operation.reportframe.component.Component.CALENDAR, new EasyCalendar());
 	}
 
 }

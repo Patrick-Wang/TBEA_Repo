@@ -14,6 +14,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.DataNode;
@@ -53,13 +56,37 @@ public class ComponentManager implements ComponentLoadedListener {
 	ComponentLoader loader;
 	ComponentStructureBuilder csb = new ComponentStructureBuilder();
 	Scheduler scheduler;
+	public static class ComponentJob implements Job{
+
+		@Override
+		public void execute(JobExecutionContext arg0)
+				throws JobExecutionException {
+			Controller controller = instance.getController(arg0.getJobDetail().getName());
+			if (null != controller){
+				try{
+					instance.scheduler.onSchedule(new Context(), controller);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				
+			}else{
+				QuartzManager.removeJob(arg0.getJobDetail().getName());
+				QuartzManager.startJobs();
+			}
+		}
+	};
+	
+	
 	Map<String, Config> serviceMap = Collections
 			.synchronizedMap(new HashMap<String, Config>());
 	Map<String, Config> controllerMap = Collections
 			.synchronizedMap(new HashMap<String, Config>());
-
+	
+	private static ComponentManager instance;
+	
 	public ComponentManager(Scheduler scheduler) {
  		loader = new ComponentLoader();
+ 		instance = this;
  		loader.addListener(this);
  		loader.addListener(csb);
  		this.scheduler = scheduler;
@@ -201,10 +228,9 @@ public class ComponentManager implements ComponentLoadedListener {
 	public void onController(String id, Element e, String path) {
 		if (null != id) {
 			if (e.hasAttribute("cron")){
-				QuartzManager.addJob(id, 
-						this.scheduler.getClass().getName(), 
+				QuartzManager.removeJob(id);
+				QuartzManager.addJob(id, ComponentJob.class.getName(), 
 						e.getAttribute("cron"));
-				QuartzManager.startJobs();
 			}
 			controllerMap.put(id,  new Config(e, path));
 		}

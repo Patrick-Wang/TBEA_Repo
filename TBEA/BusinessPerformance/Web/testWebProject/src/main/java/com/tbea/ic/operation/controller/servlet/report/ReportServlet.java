@@ -78,19 +78,14 @@ public class ReportServlet implements Scheduler {
 	@Override
 	public void onSchedule(
 			Context context,
-			com.tbea.ic.operation.reportframe.component.controller.Controller controller) {
+			com.tbea.ic.operation.reportframe.component.controller.Controller controller) throws Exception {
 
 			ContextHandlers handlers = new ContextHandlers();
 			handlers.add(tranContext)
 					.add(utilContext)
 					.add(orgsContext)
-					.add(authContext)
 					.add(new DataNodeContextHandler());
 			handlers.onHandle(context);
-			try {
-				controller.run(context);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}		
+			controller.run(context);
 	}
 }

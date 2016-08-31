@@ -46,7 +46,9 @@ CREATE TABLE [dbo].[zl_wbyclzlwt](
 	[onsite_treatment_result] [varchar](500) ,
 	[user_unit] [varchar](50) ,
 	[onsite_after_sales] [varchar](50) ,
-	[after_sales_tel] [varchar](50) 
+	[after_sales_tel] [varchar](50),
+	[source] [varchar](50),
+	[time] [datetime]
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -102,7 +104,9 @@ CREATE TABLE [dbo].[zl_nbyclzlwt](
 	[onsite_treatment_result] [varchar](500) ,
 	[causa_analysis] [varchar](500) ,
 	[assessment] [varchar](500),
-	[filling_personnel] [varchar](50)
+	[filling_personnel] [varchar](50),
+	[source] [varchar](50),
+	[time] [datetime]
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

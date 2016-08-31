@@ -27,7 +27,6 @@ public class RequestContextHandler implements ContextHandler {
 		context.put(Component.REQUEST, new ControllerRequest(request));
 		context.put(Component.SESSION, new ControllerSession(request.getSession()));
 		context.put(Component.RESPONSE, response);
-		context.put(Component.CALENDAR, new EasyCalendar());
 	}
 
 }

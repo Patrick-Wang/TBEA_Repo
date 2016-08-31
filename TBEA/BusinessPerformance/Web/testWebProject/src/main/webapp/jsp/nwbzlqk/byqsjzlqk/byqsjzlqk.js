@@ -166,7 +166,7 @@ var nwbzlqk;
                     var qntq = [];
                     if (this.mCompType == Util.CompanyType.BYQCY) {
                         for (var i = 0; i < this.mData.tjjg.length; ++i) {
-                            if (this.mData.tjjg[i][0].replace(/\s/g, "") != "合计") {
+                            if (this.mData.tjjg[i][0].replace(/\s/g, "") == "合计") {
                                 xData.push(this.mData.tjjg[i][0] + "内部");
                                 dy.push(this.toCtVal(this.mData.tjjg[i][1]));
                                 qntq.push(this.toCtVal(this.mData.tjjg[i][4]));

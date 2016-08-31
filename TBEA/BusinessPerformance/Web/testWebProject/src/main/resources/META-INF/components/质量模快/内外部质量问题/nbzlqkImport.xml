@@ -23,11 +23,15 @@
     <causa_analysis type="string" ref="18"/>
     <assessment type="string" ref="19"/>
     <filling_personnel type="string" ref="20"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
    </set>
   </merge>
  </service>
  <controller id="nbzlqkImport">
   <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
   <callservice id="servNbzlqkEntry"/>
   <response type="json">
    <errorCode>0</errorCode>
@@ -40,4 +44,46 @@
    <map key="title" value="内部质量情况导入"/>
   </response>
  </controller>
+ <service id="servNbzlqkTrans" transaction="transactionManager">
+  <sql>delete from zl_nbyclzlwt where source = ${src}</sql>
+  <callservice id="servNbzlqkEntry"/>
+ </service>
+ <controller id="nbzlqkTransport" cron="0 0 0 3-5 * ?">
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servNbzlqkTransLl"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <service id="servNbzlqkTransLl" transaction="transLl">
+  <context key="src" value="鲁缆数据库收集"/>
+  <sql id="data" export="true">select * from zl_nbyclzlwt</sql>
+  <callservice id="servNbzlqkTrans"/>
+ </service>
+ <service id="servNbzlqkTransXl" transaction="transXl">
+  <context key="src" value="新缆数据库收集"/>
+  <sql id="data" export="true">select * from zl_nbyclzlwt</sql>
+  <callservice id="servNbzlqkTrans"/>
+ </service>
+ <service id="servNbzlqkTransDl" transaction="transDl">
+  <context key="src" value="德缆数据库收集"/>
+  <sql id="data" export="true">select * from zl_nbyclzlwt</sql>
+  <callservice id="servNbzlqkTrans"/>
+ </service>
+ <service id="servNbzlqkTransSb" transaction="transSb">
+  <context key="src" value="沈变数据库收集"/>
+  <sql id="data" export="true">select * from zl_nbyclzlwt</sql>
+  <callservice id="servNbzlqkTrans"/>
+ </service>
+ <service id="servNbzlqkTransHb" transaction="transHb">
+  <context key="src" value="衡变数据库收集"/>
+  <sql id="data" export="true">select * from zl_nbyclzlwt</sql>
+  <callservice id="servNbzlqkTrans"/>
+ </service>
+ <service id="servNbzlqkTransXb" transaction="transXb">
+  <context key="src" value="新变数据库收集"/>
+  <sql id="data" export="true">select * from zl_nbyclzlwt</sql>
+  <callservice id="servNbzlqkTrans"/>
+ </service>
 </components>
