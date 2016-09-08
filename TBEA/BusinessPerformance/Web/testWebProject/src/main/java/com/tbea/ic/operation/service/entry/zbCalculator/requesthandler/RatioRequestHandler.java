@@ -24,9 +24,9 @@ public class RatioRequestHandler extends RequestHandler<Request>{
 		this.baseZb = baseZb.value();
 	}
 
-	void setRatio(ZbInjector injector, Calendar cal, Company comp, ZBStatus status){
+	void setRatio(ZbInjector injector, Calendar cal, Company comp, ZBStatus status, Calendar time){
 		if (null != sub  && null != base && Util.isPositive(base) && Util.isPositive(sub)){
-			injector.inject(destZb, sub / base, cal, comp, status);
+			injector.inject(destZb, sub / base, cal, comp, status, time);
 		} else{
 			injector.remove(destZb, cal, comp);
 		}
@@ -39,7 +39,7 @@ public class RatioRequestHandler extends RequestHandler<Request>{
 		} else if (baseZb.equals(request.getZbId())){
 			base = request.getVal();
 		} else if (destZb.equals(request.getZbId())){
-			setRatio(request.getInjector(), request.getCal(), request.getComp(), request.getStatus());
+			setRatio(request.getInjector(), request.getCal(), request.getComp(), request.getStatus(),  request.getTime());
 			return true;
 		}
 		return false;

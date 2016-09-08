@@ -136,6 +136,10 @@ var nwbzlqk;
                         $("#commentText").val(comment.comment);
                         $("#commentText").removeAttr("readonly");
                     }
+                    break;
+                case nwbzlqk.Event.ZLFE_COMMENT_DENY:
+                    $("#comment").hide();
+                    break;
             }
             return _super.prototype.onEvent.call(this, e);
         };

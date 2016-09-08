@@ -22,7 +22,7 @@ public abstract class ZbInjector {
 		this.shztDao = shztDao;
 	}
 	
-	abstract public void inject(Integer zbId, double val, Calendar cal, Company comp, ZBStatus status);	
+	abstract public void inject(Integer zbId, double val, Calendar cal, Company comp, ZBStatus status, Calendar time);	
 	
 	abstract public void remove(Integer zbId, Calendar cal, Company comp);	
 

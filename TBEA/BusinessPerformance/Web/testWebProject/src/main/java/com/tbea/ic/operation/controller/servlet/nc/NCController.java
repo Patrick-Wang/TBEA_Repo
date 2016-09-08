@@ -18,12 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
@@ -37,6 +39,7 @@ import com.tbea.ic.operation.model.entity.jygk.NCZB;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.nc.NCService;
+import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 
 @Controller
 @RequestMapping(value = "nc")
@@ -100,7 +103,7 @@ public class NCController {
 
 	private void importData(ZBStatus zbStatus, JSONArray jsonArray, Date date,
 			Company comp) {
-
+		Calendar time = null;
 		switch (zbStatus) {
 		case APPROVED:
 			List<Company> compsTmp = new ArrayList<Company>();
@@ -108,13 +111,13 @@ public class NCController {
 			approveService.unapproveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp,
 					date);
 			entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
-					jsonArray);
+					jsonArray, time);
 			approveService.approveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp,
 					date, true);
 			break;
 		case APPROVED_2:
 			entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
-					jsonArray);
+					jsonArray, time);
 			List<Company> compsTmp2 = new ArrayList<Company>();
 			compsTmp2.add(comp);
 			approveService.approveSjZb(Account.KNOWN_ACCOUNT_JYFZ, compsTmp2,
@@ -123,15 +126,15 @@ public class NCController {
 		case NONE:
 		case SAVED:
 			entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
-					jsonArray);
+					jsonArray, time);
 			break;
 		case SUBMITTED:
 			entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
-					jsonArray);
+					jsonArray, time);
 			break;
 		case SUBMITTED_2:
 			entryService.submitToDeputy(date, null, comp.getType(),
-					ZBType.BYSJ, jsonArray);
+					ZBType.BYSJ, jsonArray, time);
 			break;
 		default:
 			break;
@@ -141,6 +144,7 @@ public class NCController {
 	private void importData(ZBStatus zbStatus, JSONArray jsonArray, Date date,
 			Company comp, ZBType type) {
 
+		Calendar time = null;
 		switch (zbStatus) {
 		case APPROVED:
 			List<Company> compsTmp = new ArrayList<Company>();
@@ -148,13 +152,13 @@ public class NCController {
 			approveService.unapproveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp,
 					date);
 			entryService.submitZb(date, null, comp.getType(), type,
-					jsonArray);
+					jsonArray, time);
 			approveService.approveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp,
 					date, true);
 			break;
 		case APPROVED_2:
 			entryService.saveZb(date, null, comp.getType(), type,
-					jsonArray);
+					jsonArray, time);
 			List<Company> compsTmp2 = new ArrayList<Company>();
 			compsTmp2.add(comp);
 			approveService.approveSjZb(Account.KNOWN_ACCOUNT_JYFZ, compsTmp2,
@@ -163,45 +167,77 @@ public class NCController {
 		case NONE:
 		case SAVED:
 			entryService.saveZb(date, null, comp.getType(), type,
-					jsonArray);
+					jsonArray, time);
 			break;
 		case SUBMITTED:
 			entryService.submitZb(date, null, comp.getType(), type,
-					jsonArray);
+					jsonArray, time);
 			break;
 		case SUBMITTED_2:
 			entryService.submitToDeputy(date, null, comp.getType(),
-					type, jsonArray);
+					type, jsonArray, time);
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void importNC2LocalNC(Date d) {
+	private void importNC2LocalNC(Date d, CompanyType compType) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-
+		Logger logger = Logger.getLogger("LOG-NC");
+		logger.debug("importNC2LocalNC " + Util.formatToMonth(d));
 		// 存储NC对应指标
 		// 合并
 		List<String> unitList = new ArrayList<String>();
-		unitList.add("0202AA000000");
-		unitList.add("0303AA000000");
-		unitList.add("0304AA000000");
-		unitList.add("CC15");
-		unitList.add("CC02");
-		unitList.add("CC03");
-		unitList.add("040203AA0000");
-		unitList.add("040202AA0000");
-		unitList.add("CC11");
-		unitList.add("CC10");
-		unitList.add("CC04");
+		logger.debug("connetToNCSystem 510 compType = " + compType);
+		unitList.add(NCCompanyCode.getCode(compType));
+
+		ncService.connetToNCSystem("510", cal, unitList);
+	}
+	
+	private void importNC2LocalNC(Date d) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		Logger logger = Logger.getLogger("LOG-NC");
+		logger.debug("importNC2LocalNC " + Util.formatToMonth(d));
+		// 存储NC对应指标
+		// 合并
+		List<String> unitList = new ArrayList<String>();
+//		unitList.add("0202AA000000");
+//		unitList.add("0303AA000000");
+//		unitList.add("0203AA000000");
+//		unitList.add("CC15");
+//		unitList.add("CC02");
+//		unitList.add("CC03");
+//		unitList.add("040203AA0000");
+//		unitList.add("040202AA0000");
+//		unitList.add("CC11");
+//		unitList.add("CC10");
+//		unitList.add("CC04");
+		logger.debug("connetToNCSystem 510");
+		
+		unitList.add(NCCompanyCode.getCode(CompanyType.SBGS));//CompanyType.SBGS);
+		unitList.add(NCCompanyCode.getCode(CompanyType.LLGS));//CompanyType.LLGS);
+		unitList.add(NCCompanyCode.getCode(CompanyType.DLGS));//CompanyType.DLGS);
+		unitList.add(NCCompanyCode.getCode(CompanyType.HBGS));//CompanyType.HBGS);
+		unitList.add(NCCompanyCode.getCode(CompanyType.XBC));//CompanyType.XBC);
+		unitList.add(NCCompanyCode.getCode(CompanyType.XLC));//CompanyType.XLC);
+		unitList.add(NCCompanyCode.getCode(CompanyType.XNYGS));//CompanyType.XNYGS);
+		unitList.add(NCCompanyCode.getCode(CompanyType.XTNYGS));//CompanyType.XTNYGS);
+		unitList.add(NCCompanyCode.getCode(CompanyType.TCNY));//CompanyType.TCNY);
+		unitList.add(NCCompanyCode.getCode(CompanyType.NDGS));//CompanyType.NDGS);
+		unitList.add(NCCompanyCode.getCode(CompanyType.JCKGS_JYDW));//CompanyType.JCKGS_JYDW);
+		unitList.add(NCCompanyCode.getCode(CompanyType.GJGCGS_GFGS));//CompanyType.GJGCGS_GFGS);
+
 		ncService.connetToNCSystem("510", cal, unitList);
 
-		// 单体
-		List<String> singleList = new ArrayList<String>();
-		singleList.add("060100000000");
-		ncService.connetToNCSystem("0", cal, singleList);
+//		// 单体
+//		List<String> singleList = new ArrayList<String>();
+//		singleList.add("060100000000");
+//		logger.debug("connetToNCSystem 0");
+//		ncService.connetToNCSystem("0", cal, singleList);
+//		logger.debug("connetToNCSystem 0 end");
 	}
 
 	private void importLocalNC2Local(Date d) {
@@ -360,7 +396,12 @@ public class NCController {
 	public void importNC(HttpServletRequest request,
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
-		importNC2LocalNC(d);
+		CompanyType tp = CompanySelection.getCompany(request);
+		if (null == tp){
+			importNC2LocalNC(d);
+		}else{
+			importNC2LocalNC(d, tp);
+		}
 		importLocalNC2Local(d);
 	}
 
@@ -369,6 +410,13 @@ public class NCController {
 			HttpServletResponse response) {
 		Date d = DateSelection.getDate(request);
 		importNC2LocalNC(d);
+	}
+	
+	@RequestMapping(value = "importLocalNC2Local.do", method = RequestMethod.GET)
+	public void importLocalNC2Local(HttpServletRequest request,
+			HttpServletResponse response) {
+		Date d = DateSelection.getDate(request);
+		importLocalNC2Local(d);
 	}
 
 	

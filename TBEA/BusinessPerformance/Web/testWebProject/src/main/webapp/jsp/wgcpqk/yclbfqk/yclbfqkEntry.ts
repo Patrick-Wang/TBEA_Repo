@@ -86,10 +86,10 @@ module wgcpqk {
                         }
                         submitData[i].push(allData[i][j]);
                         submitData[i][index] = submitData[i][index].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][index]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
-                            return;
-                        }
+                        //if ("" == submitData[i][index]) {
+                        //    Util.MessageBox.tip("有空内容 无法提交")
+                        //    return;
+                        //}
                         ++index;
                     }
                 }
@@ -137,7 +137,7 @@ module wgcpqk {
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料废料情况");
             }
 
             private updateTable():void {

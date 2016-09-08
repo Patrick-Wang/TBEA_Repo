@@ -140,6 +140,10 @@ module nwbzlqk {
                         $("#commentText").val(comment.comment);
                         $("#commentText").removeAttr("readonly");
                     }
+                    break;
+                case Event.ZLFE_COMMENT_DENY:
+                    $("#comment").hide();
+                    break;
             }
             return super.onEvent(e);
         }

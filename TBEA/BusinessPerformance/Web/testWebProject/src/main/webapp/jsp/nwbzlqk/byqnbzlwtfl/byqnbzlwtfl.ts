@@ -167,6 +167,7 @@ module nwbzlqk {
 
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+                let pagername = name + "pager"
                 var tableAssist:JQTable.JQGridAssistant;
                 if (this.mCompType == Util.CompanyType.BYQCY){
                     tableAssist = JQGridAssistantFactory.createZtTable(name, this.mYdjdType);
@@ -176,10 +177,8 @@ module nwbzlqk {
 
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeColum(0);
+                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 tableAssist.mergeTitle();
-                tableAssist.mergeRow(0);
                 this.$(name).jqGrid(
                     tableAssist.decorate({
 						datatype: "local",
@@ -187,13 +186,13 @@ module nwbzlqk {
                         multiselect: false,
                         drag: false,
                         resize: false,
-                        height: '100%',
+                        height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
                         width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
-                        rowNum: 1000,
+                        rowNum: this.mData.tjjg.length + 10,
                         viewrecords : true,
-                        caption:"内部质量问题分类统计情况"
+                        pager:'#' + pagername,
                     }));
             }
 

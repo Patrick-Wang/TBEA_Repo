@@ -90,7 +90,7 @@ where
    <map key="updateUrl" value="yclhglqktjEntryUpdate"/>
    <map key="submitUrl" value="yclhglqktjEntrySubmit"/>
    <map key="title" value="原材料合格率"/>
-   <map map="${authMgr[42]}"/>
+   <map map="${authMgr[21]}"/>
   </response>
  </controller>
  <controller id="yclhglqktjEntrySubmit">

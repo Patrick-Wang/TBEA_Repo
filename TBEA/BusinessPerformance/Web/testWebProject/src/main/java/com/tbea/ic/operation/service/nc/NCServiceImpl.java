@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.dao.nc.NCZBDao;
 import com.tbea.ic.operation.model.entity.jygk.NCZB;
+import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 
 @Service
 @Transactional("transactionManager")
@@ -49,22 +51,24 @@ public class NCServiceImpl implements NCService {
 
 	public static Map<String, CompanyType> companyMap = new HashMap<String, CompanyType>();
 	static {
-		companyMap.put("0202AA000000", CompanyType.SBGS);
-		companyMap.put("0303AA000000", CompanyType.LLGS);
-		companyMap.put("CC15", CompanyType.DLGS);
-		companyMap.put("0203AA000000", CompanyType.HBGS);
-		companyMap.put("CC02", CompanyType.XBC);
-		companyMap.put("CC03", CompanyType.XLC);
-		companyMap.put("040203AA0000", CompanyType.XNYGS);
-		companyMap.put("040202AA0000", CompanyType.XTNYGS);
-		companyMap.put("CC11", CompanyType.TCNY);
-		companyMap.put("CC10", CompanyType.NDGS);
-		companyMap.put("060100000000", CompanyType.JCKGS_JYDW);
-		companyMap.put("CC04", CompanyType.GJGCGS_GFGS);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.SBGS), CompanyType.SBGS);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.LLGS), CompanyType.LLGS);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.DLGS), CompanyType.DLGS);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.HBGS), CompanyType.HBGS);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.XBC), CompanyType.XBC);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.XLC), CompanyType.XLC);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.XNYGS), CompanyType.XNYGS);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.XTNYGS), CompanyType.XTNYGS);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.TCNY), CompanyType.TCNY);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.NDGS), CompanyType.NDGS);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.JCKGS_JYDW), CompanyType.JCKGS_JYDW);
+		companyMap.put(NCCompanyCode.getCode(CompanyType.GJGCGS_GFGS), CompanyType.GJGCGS_GFGS);
 	}
 
 	private void mergeNCZB(CompanyType companyType, GSZB zb, int nf, int yf,
 			Object data) {
+		Logger logger = Logger.getLogger("LOG-NC");
+		logger.debug("mergeNCZB " + nf + yf + " GSZB " + zb);
 		Company company = companyManager.getBMDBOrganization().getCompany(
 				companyType);
 		NCZB nczb = null;
@@ -80,6 +84,7 @@ public class NCServiceImpl implements NCService {
 		nczb.setNczbz(CommonMethod.objectToDouble(data));
 		nczb.setDrsj(new Date(System.currentTimeMillis()));
 		nczbDao.merge(nczb);
+		logger.debug("merge end");
 	}
 
 	@Override
@@ -89,12 +94,13 @@ public class NCServiceImpl implements NCService {
 		String dbURL = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=dm01-scan.tbea.com.cn)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=orcl)))";
 		String userName = "iufo";
 		String userPwd = "cwf5e7n9";
-
+		Logger logger = Logger.getLogger("LOG-NC");
 		Connection dbConn = null;
+		logger.debug("connetToNCSystem");
 		try {
 			Class.forName(driverName).newInstance();
-
 			dbConn = DriverManager.getConnection(dbURL, userName, userPwd);
+			logger.debug("nc connected");
 			Statement statement = dbConn
 					.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
 							ResultSet.CONCUR_UPDATABLE);
@@ -150,10 +156,11 @@ public class NCServiceImpl implements NCService {
 				unitCode = String.valueOf(rs.getObject(1));
 				companyType = companyMap.get(unitCode);
 				nf = d.get(Calendar.YEAR);
+				logger.debug("unitCode " + unitCode + "companyType : " + companyType + " ");
+				
 				// Calendar.MONTH获得月份正常情况下为自然月-1,
 				// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
 				yf = d.get(Calendar.MONTH) + 1;
-
 				// 存储NC对应指标
 				mergeNCZB(companyType, GSZB.LRZE1, nf, yf, rs.getObject(2));
 				mergeNCZB(companyType, GSZB.XSSR6, nf, yf, rs.getObject(3));
@@ -183,6 +190,7 @@ public class NCServiceImpl implements NCService {
 				statement = null;
 			}
 		} catch (Exception e) {
+			logger.debug("exception : " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			if (null != dbConn) {
@@ -194,6 +202,8 @@ public class NCServiceImpl implements NCService {
 				dbConn = null;
 			}
 		}
+
+		logger.debug("connetToNCSystem end");
 	}
 
 	@Override

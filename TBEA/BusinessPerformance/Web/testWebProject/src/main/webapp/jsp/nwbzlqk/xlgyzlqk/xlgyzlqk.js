@@ -252,25 +252,24 @@ var nwbzlqk;
                 else {
                     tableAssist = JQGridAssistantFactory.createFdwTable(name, this.mYdjdType);
                 }
+                var pagername = name + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeColum(0);
+                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 tableAssist.mergeTitle();
-                tableAssist.mergeRow(0);
                 this.$(name).jqGrid(tableAssist.decorate({
                     datatype: "local",
                     data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    height: '100%',
+                    height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 1000,
+                    rowNum: this.mData.tjjg.length + 10,
                     viewrecords: true,
-                    caption: "设计工艺问题情况"
+                    pager: '#' + pagername
                 }));
             };
             ShowView.ins = new ShowView();

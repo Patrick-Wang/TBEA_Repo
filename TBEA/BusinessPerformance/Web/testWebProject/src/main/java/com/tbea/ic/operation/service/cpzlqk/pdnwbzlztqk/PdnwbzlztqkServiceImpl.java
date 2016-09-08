@@ -754,7 +754,7 @@ public class PdnwbzlztqkServiceImpl implements PdnwbzlztqkService {
 	private List<String> toList(NbyclzlwtEntity entity) {
 		List<String> list = new ArrayList<String>();
 		list.add(entity.getCompany_name());
-		list.add(Util.formatToMonth(entity.getIssue_happen_date()));
+		list.add(Util.formatToDay(entity.getIssue_happen_date()));
 		list.add(entity.getProduct_type());
 		list.add(entity.getProduction_num());
 		list.add(entity.getProduction_model());
@@ -790,7 +790,7 @@ public class PdnwbzlztqkServiceImpl implements PdnwbzlztqkService {
 	private List<String> toList(WbyclzlwtEntity entity) {
 		List<String> list = new ArrayList<String>();
 		list.add(entity.getCompany_name());
-		list.add(Util.formatToMonth(entity.getIssue_happen_date()));
+		list.add(Util.formatToDay(entity.getIssue_happen_date()));
 		list.add(entity.getProduct_type());
 		list.add(entity.getProduction_num());
 		list.add(entity.getProduction_model());
@@ -803,7 +803,7 @@ public class PdnwbzlztqkServiceImpl implements PdnwbzlztqkService {
 		list.add(entity.getSuppier());
 		list.add(entity.getResponsibility_department());
 		list.add(entity.getFilling_personnel());
-		list.add(Util.formatToMonth(entity.getProduct_delivery_date()));
+		list.add(Util.formatToDay(entity.getProduct_delivery_date()));
 		list.add(entity.getFailure_subject());
 		list.add(entity.getMaterial_treatment_measure());
 		list.add(entity.getOnsite_treatment_measure());

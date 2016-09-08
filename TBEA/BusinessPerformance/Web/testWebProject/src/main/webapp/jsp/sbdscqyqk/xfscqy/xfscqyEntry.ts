@@ -74,10 +74,10 @@ module sbdscqyqk {
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([allData[i][3].replace(new RegExp(' ', 'g'), '')]);
-                    if ("" == submitData[i][3]) {
-                        Util.MessageBox.tip("有空内容 无法提交");
-                        return;
-                    }
+                    //if ("" == submitData[i][3]) {
+                    //    Util.MessageBox.tip("有空内容 无法提交");
+                    //    return;
+                    //}
                 }
                 let tmp = submitData[submitData.length - 1];
                 submitData[submitData.length - 1] = submitData[submitData.length - 2];

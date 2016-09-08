@@ -7,5 +7,5 @@ import com.tbea.ic.operation.common.ZBStatus;
 
 public interface ZbCalculator{
 	public void reset();
-	public void compute(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status);
+	public void compute(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status, Calendar time);
 }

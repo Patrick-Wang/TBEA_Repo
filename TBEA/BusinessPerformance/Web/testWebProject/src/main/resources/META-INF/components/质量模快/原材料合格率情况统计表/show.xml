@@ -748,7 +748,7 @@ where
    <map key="updateUrl" value="yclhglqktjUpdate"/>
    <map key="exportUrl" value="yclhglqktjExport"/>
    <map key="title" value="原材料合格率"/>
-   <map map="${authMgr[43]}"/>
+   <map map="${authMgr[20]}"/>
    <map key="itemChart">[
 {&quot;item&quot;:${orgs.virtualCYOrg.types[1]},&quot;chart&quot;:0},
 {&quot;item&quot;:${orgs.virtualCYOrg.types[2]},&quot;chart&quot;:0},

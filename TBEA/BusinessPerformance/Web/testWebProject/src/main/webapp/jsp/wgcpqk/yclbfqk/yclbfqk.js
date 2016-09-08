@@ -91,7 +91,7 @@ var wgcpqk;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料废料情况");
             };
             ShowView.prototype.updateTable = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));

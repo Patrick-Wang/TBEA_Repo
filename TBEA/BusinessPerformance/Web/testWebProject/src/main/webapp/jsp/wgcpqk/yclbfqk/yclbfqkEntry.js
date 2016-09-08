@@ -29,7 +29,7 @@ var wgcpqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -87,10 +87,10 @@ var wgcpqk;
                         }
                         submitData[i].push(allData[i][j]);
                         submitData[i][index] = submitData[i][index].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][index]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
-                            return;
-                        }
+                        //if ("" == submitData[i][index]) {
+                        //    Util.MessageBox.tip("有空内容 无法提交")
+                        //    return;
+                        //}
                         ++index;
                     }
                 }
@@ -134,7 +134,7 @@ var wgcpqk;
                 framework.router
                     .fromEp(this)
                     .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料报废情况");
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "原材料废料情况");
             };
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
@@ -168,6 +168,6 @@ var wgcpqk;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(framework.basic.EntryPluginView));
+        })(framework.basic.EntryPluginView);
     })(yclbfqkEntry = wgcpqk.yclbfqkEntry || (wgcpqk.yclbfqkEntry = {}));
 })(wgcpqk || (wgcpqk = {}));

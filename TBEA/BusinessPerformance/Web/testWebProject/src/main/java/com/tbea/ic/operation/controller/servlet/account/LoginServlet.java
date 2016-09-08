@@ -181,7 +181,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("XnygbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.XnygbEntry)))
 		.add("NygbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.NygbEntry)))
 		.add("NYzbscqkEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.NYzbscqkEntry)))
-		.add("QualityEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.QualityEntry)))
+		.add("QualityEntry", extAuthServ.hasAuthority(account, AuthType.QualityEntry))
 		.add("QualityApprove", extAuthServ.hasAuthority(account, AuthType.QualityApprove))
 		.add("QualityLookup", extAuthServ.hasAuthority(account, AuthType.QualityLookup))
 		.add("FinanceLookup", extAuthServ.hasAuthority(account, AuthType.FinanceLookup))

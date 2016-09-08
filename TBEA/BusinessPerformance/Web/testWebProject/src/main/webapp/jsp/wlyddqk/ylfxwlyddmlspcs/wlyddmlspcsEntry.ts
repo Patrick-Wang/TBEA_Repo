@@ -88,10 +88,10 @@ module ylfxwlyddmlspcs {
                     for (var j = 0; j < allData[i].length - 2; ++j) {
                         submitData[i].push(allData[i][j + 2]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j]){
-                            Util.MessageBox.tip("有空内容 无法提交")
-                            return;
-                        }
+                        //if ("" == submitData[i][j]){
+                        //    Util.MessageBox.tip("有空内容 无法提交")
+                        //    return;
+                        //}
                     }
                 }
                 this.mAjaxSubmit.post({

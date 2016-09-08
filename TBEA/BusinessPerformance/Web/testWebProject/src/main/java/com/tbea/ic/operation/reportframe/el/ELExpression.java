@@ -53,8 +53,9 @@ public class ELExpression{
 		if (!propName.isEmpty()){
 			if (propName.length() == 1){
 				methodName = "get" + propName.toUpperCase();
+			}else{
+				methodName = "get" + propName.substring(0, 1).toUpperCase() + propName.substring(1);
 			}
-			methodName = "get" + propName.substring(0, 1).toUpperCase() + propName.substring(1);
 		}
 		return methodName;
 	}
@@ -207,32 +208,32 @@ public class ELExpression{
 		return indxs;
 	}
 	
-	private int nextIndexedObject(String exp, int start){
-		int len = exp.length();
-		if (start >= len){
-			return -1;
-		}
-		
-		int iIndex = -1;
-		for (int i = start; i < len; ++i){
-			if (exp.charAt(i) == '.'){
-				return i;
-			}else if (exp.charAt(i) == '['){
-				iIndex = i;
-				break;
-			}
-		}
-		
-		if (iIndex == -1){
-			return len;
-		}else{
-			iIndex = exp.indexOf(']', iIndex);
-			while ((iIndex + 1) < len && exp.charAt(iIndex + 1) == '['){
-				iIndex = exp.indexOf(']', iIndex);
-			}
-			return iIndex + 1;
-		}
-	}
+//	private int nextIndexedObject(String exp, int start){
+//		int len = exp.length();
+//		if (start >= len){
+//			return -1;
+//		}
+//		
+//		int iIndex = -1;
+//		for (int i = start; i < len; ++i){
+//			if (exp.charAt(i) == '.'){
+//				return i;
+//			}else if (exp.charAt(i) == '['){
+//				iIndex = i;
+//				break;
+//			}
+//		}
+//		
+//		if (iIndex == -1){
+//			return len;
+//		}else{
+//			iIndex = exp.indexOf(']', iIndex);
+//			while ((iIndex + 1) < len && exp.charAt(iIndex + 1) == '['){
+//				iIndex = exp.indexOf(']', iIndex);
+//			}
+//			return iIndex + 1;
+//		}
+//	}
 	
 	private Object parseObject(String exp) throws 
 			Exception {

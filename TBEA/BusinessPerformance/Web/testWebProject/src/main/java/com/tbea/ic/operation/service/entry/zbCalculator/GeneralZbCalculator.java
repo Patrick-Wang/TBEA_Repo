@@ -15,9 +15,9 @@ public class GeneralZbCalculator extends AbstractZbCalculator{
 
 	@Override
 	protected void onHandling(Integer zbId, Double val, Calendar cal,
-			Company comp, ZBStatus status) {
+			Company comp, ZBStatus status, Calendar time) {
 		if (null != val){
-			injector.inject(zbId, val, cal, comp, status);
+			injector.inject(zbId, val, cal, comp, status, time);
 		}
 	}
 	

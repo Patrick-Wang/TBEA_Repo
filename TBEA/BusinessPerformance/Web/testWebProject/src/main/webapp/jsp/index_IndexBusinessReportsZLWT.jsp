@@ -8,7 +8,7 @@
 
 <div>
 	<h3>
-		质量管报<a name="zlgb"> </a>
+		质量问题<a name="zlgb"> </a>
 	</h3>
 	<div class="section">
 		<div class="thumb3">

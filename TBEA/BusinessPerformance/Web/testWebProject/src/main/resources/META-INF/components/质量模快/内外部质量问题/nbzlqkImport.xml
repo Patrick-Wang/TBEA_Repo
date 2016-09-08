@@ -48,7 +48,7 @@
   <sql>delete from zl_nbyclzlwt where source = ${src}</sql>
   <callservice id="servNbzlqkEntry"/>
  </service>
- <controller id="nbzlqkTransport" cron="0 0 0 3-5 * ?">
+ <controller id="nbzlqkTransport" cron1="0 0 0 3-5 * ?">
   <context key="time" value="${calendar.current.secondFormat}"/>
   <callservice id="servNbzlqkTransLl"/>
   <response type="json">

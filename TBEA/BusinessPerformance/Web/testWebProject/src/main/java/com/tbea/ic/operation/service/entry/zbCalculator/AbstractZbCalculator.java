@@ -26,11 +26,11 @@ abstract class AbstractZbCalculator implements ZbCalculator{
 		this.handler.reset();
 	}
 
-	abstract protected void onHandling(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status);
+	abstract protected void onHandling(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status, Calendar time);
 	
-	public void compute(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status){
-		if (!this.handler.handle(new Request(zbId, val, cal, comp, status, injector))){
-			onHandling(zbId, val, cal, comp, status);
+	public void compute(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status, Calendar time){
+		if (!this.handler.handle(new Request(zbId, val, cal, comp, status, injector, time))){
+			onHandling(zbId, val, cal, comp, status, time);
 		}
 	}
 }

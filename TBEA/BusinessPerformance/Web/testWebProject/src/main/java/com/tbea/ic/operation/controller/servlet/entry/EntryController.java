@@ -118,7 +118,7 @@ public class EntryController {
 		CompanyType comp = CompanySelection.getCompany(request);
 		String data = request.getParameter("data");
 		Account account = SessionManager.getAccount(request.getSession(false));
-		String ret = "" + entryService.submitZb(date, account, comp, entryType, JSONArray.fromObject(data));
+		String ret = "" + entryService.submitZb(date, account, comp, entryType, JSONArray.fromObject(data), Calendar.getInstance());
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
 	}
@@ -131,7 +131,7 @@ public class EntryController {
 		CompanyType comp = CompanySelection.getCompany(request);
 		String data = request.getParameter("data");
 		Account account = SessionManager.getAccount(request.getSession(false));
-		String ret = "" + entryService.saveZb(date, account, comp, entryType, JSONArray.fromObject(data));
+		String ret = "" + entryService.saveZb(date, account, comp, entryType, JSONArray.fromObject(data), Calendar.getInstance());
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
 	}
@@ -144,7 +144,7 @@ public class EntryController {
 		CompanyType comp = CompanySelection.getCompany(request);
 		String data = request.getParameter("data");
 		Account account = SessionManager.getAccount(request.getSession(false));
-		String ret = "" + entryService.submitToDeputy(date, account, comp, entryType, JSONArray.fromObject(data));
+		String ret = "" + entryService.submitToDeputy(date, account, comp, entryType, JSONArray.fromObject(data), Calendar.getInstance());
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
 	}

@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.entry;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -21,7 +22,7 @@ public interface EntryService {
 			ZBType entryType);
 
 	boolean submitZb(Date date, Account account, CompanyType comp,
-			ZBType entryType, JSONArray data);
+			ZBType entryType, JSONArray data, Calendar time);
 
 	public boolean hasEntryPlanPermission(Account account);
 
@@ -32,11 +33,11 @@ public interface EntryService {
 	List<String[]> getEntryStatus(Date date, ZBType entryType, List<Company> mainCompanies);
 
 	boolean saveZb(Date date, Account account, CompanyType comp,
-			ZBType entryType, JSONArray data);
+			ZBType entryType, JSONArray data, Calendar time);
 	
 	//Add Approvement function for Deputy Manager 
 	boolean submitToDeputy(Date date, Account account, CompanyType comp,
-			ZBType entryType, JSONArray data);
+			ZBType entryType, JSONArray data, Calendar time);
 
 	List<ZBStatus> getZbStatus(Date date, CompanyType comp, ZBType entryType);
 

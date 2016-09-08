@@ -1,7 +1,7 @@
 <Context sessionCookieName="TBEA_JSESSIONID">
 	<Resource name="jdbc/my_test_db" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://localhost:1433; DatabaseName=operating_management"
+		url="jdbc:sqlserver://localhost:1433; DatabaseName=operating_management_test"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/yszk_db" auth="Container" type="javax.sql.DataSource"
@@ -10,4 +10,3 @@
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 </Context>
-

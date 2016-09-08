@@ -33,7 +33,10 @@ CREATE TABLE  [dbo].[ylfxgb_ylfx_wlyddmle_rglr](
 	[nf] [int] not NULL,
 	[yf] [int] not NULL,
 	[dwid] [int] not NULL,
-	[tjfs] [int] not NULL,	-- 11->变压器综合   12->变压器按电压等级分类	13->变压器按产品分类   14->线缆综合	15->线缆按产品分类
+	[tjfs] [int] not NULL,	-- 11->变压器 未履约订单毛利水平测算(转型业务口径)   
+							-- 16->变压器 未履约订单毛利水平测算(制造业)	
+							-- 14->线缆 未履约订单毛利水平测算(转型业务口径)	
+							-- 15->线缆 未履约订单毛利水平测算(制造业)
 	[cpid] [int] not NULL,
 	[cb] [numeric](18, 4) not NULL,
 	[sr] [numeric](18, 4) not NULL,

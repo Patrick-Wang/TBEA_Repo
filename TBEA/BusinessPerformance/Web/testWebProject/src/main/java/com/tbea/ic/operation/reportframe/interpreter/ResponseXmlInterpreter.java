@@ -20,7 +20,6 @@ import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.StringUtil;
-import com.tbea.ic.operation.reportframe.util.TypeUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 

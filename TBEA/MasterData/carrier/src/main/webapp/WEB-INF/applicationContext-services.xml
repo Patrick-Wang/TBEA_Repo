@@ -127,6 +127,8 @@
 		<property name="dataSource" ref="dataSource_psn_jt" />
 	</bean>
 	
+	
+
 	<context:component-scan base-package="com.tbea.ic.carrier.model" />
 	<context:component-scan base-package="com.tbea.ic.carrier.service" />
 </beans>

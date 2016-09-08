@@ -31,7 +31,12 @@ var nwbzlqk;
                     "现场处理措施", "现场处理结果", "原因分析", "考核情况", "填报人"];
                 var nodes = [];
                 for (var i = 0; i < tbs.length; ++i) {
-                    nodes.push(Node.create({ name: tbs[i], align: TextAlign.Center }));
+                    if (i < 1) {
+                        nodes.push(Node.create({ name: tbs[i], align: TextAlign.Center, hidden: true }));
+                    }
+                    else {
+                        nodes.push(Node.create({ name: tbs[i], align: TextAlign.Center }));
+                    }
                 }
                 return new JQTable.JQGridAssistant(nodes, gridName);
             };
@@ -148,25 +153,24 @@ var nwbzlqk;
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist;
                 tableAssist = JQGridAssistantFactory.createTable(name);
+                var pagername = name + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeColum(0);
+                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
                 tableAssist.mergeTitle();
-                tableAssist.mergeRow(0);
                 this.$(name).jqGrid(tableAssist.decorate({
                     datatype: "local",
                     data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    height: '100%',
+                    height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 1000,
+                    rowNum: this.mData.tjjg.length + 10,
                     viewrecords: true,
-                    caption: "内部质量问题统计情况"
+                    pager: '#' + pagername
                 }));
             };
             ShowView.ins = new ShowView();

@@ -26,7 +26,7 @@ public class NdjhZbCalculator extends GeneralZbCalculator {
 
 	@Override
 	protected void onHandling(Integer zbId, Double val, Calendar cal,
-			Company comp, ZBStatus status) {
+			Company comp, ZBStatus status, Calendar time) {
 		boolean isHandled = false;
 		if (GSZB.XSSR6.value().equals(zbId)){
 			xssr = val;
@@ -35,21 +35,21 @@ public class NdjhZbCalculator extends GeneralZbCalculator {
 				Double yszb = sbdNdjhzbDao
 						.getYszb(cal.get(Calendar.YEAR), comp);
 				if (null != yszb) {
-					injector.inject(zbId, xssr * yszb, cal, comp, status);
+					injector.inject(zbId, xssr * yszb, cal, comp, status, time);
 					isHandled = true;
 				}
 			} else if (GSZB.CH35.value().equals(zbId) && null != xssr) {
 				Double chzb = sbdNdjhzbDao 
 						.getChzb(cal.get(Calendar.YEAR), comp);
 				if (null != chzb) {
-					injector.inject(zbId, xssr * chzb, cal, comp, status);
+					injector.inject(zbId, xssr * chzb, cal, comp, status, time);
 					isHandled = true;
 				}
 			} 
 		} 
 		
 		if (!isHandled){
-			super.onHandling(zbId, val, cal, comp, status);
+			super.onHandling(zbId, val, cal, comp, status, time);
 		}
 	}
 }

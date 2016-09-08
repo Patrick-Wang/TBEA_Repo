@@ -101,10 +101,10 @@ module cwgbjyxxjl {
                     for (var j = 2; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
-                            return;
-                        }
+                        //if ("" == submitData[i][j - 2]) {
+                        //    Util.MessageBox.tip("有空内容 无法提交")
+                        //    return;
+                        //}
                     }
                 }
                 this.mAjaxSubmit.post({

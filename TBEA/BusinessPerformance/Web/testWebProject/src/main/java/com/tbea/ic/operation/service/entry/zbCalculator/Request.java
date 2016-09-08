@@ -9,14 +9,16 @@ import com.tbea.ic.operation.service.entry.zbInjector.ZbInjector;
 public class Request{
 	Integer zbId; Double val; Calendar cal; Company comp; ZBStatus status;
 	ZbInjector injector;
+	Calendar time;
 	public Request(Integer zbId, Double val, Calendar cal, Company comp,
-			ZBStatus status, ZbInjector injector) {
+			ZBStatus status, ZbInjector injector, Calendar time) {
 		super();
 		this.zbId = zbId;
 		this.val = val;
 		this.cal = cal;
 		this.comp = comp;
 		this.status = status;
+		this.time = time;
 		this.injector = injector;
 	}
 
@@ -67,5 +69,15 @@ public class Request{
 	public void setStatus(ZBStatus status) {
 		this.status = status;
 	}
+
+	public Calendar getTime() {
+		return time;
+	}
+
+	public void setTime(Calendar time) {
+		this.time = time;
+	}
+
+
 	
 }

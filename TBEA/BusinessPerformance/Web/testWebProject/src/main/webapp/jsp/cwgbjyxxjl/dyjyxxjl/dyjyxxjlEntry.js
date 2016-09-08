@@ -37,7 +37,7 @@ var cwgbjyxxjl;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -87,10 +87,6 @@ var cwgbjyxxjl;
                     for (var j = 2; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
-                        if ("" == submitData[i][j - 2]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
-                            return;
-                        }
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -165,6 +161,6 @@ var cwgbjyxxjl;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(framework.basic.EntryPluginView));
+        })(framework.basic.EntryPluginView);
     })(dyjyxxjlEntry = cwgbjyxxjl.dyjyxxjlEntry || (cwgbjyxxjl.dyjyxxjlEntry = {}));
 })(cwgbjyxxjl || (cwgbjyxxjl = {}));

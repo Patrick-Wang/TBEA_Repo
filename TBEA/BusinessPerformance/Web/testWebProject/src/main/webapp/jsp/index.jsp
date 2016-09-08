@@ -238,12 +238,18 @@
 											class="ec-icon ec-icon-line"></i> <a href="#cwbbEntry"
 											style="color: rgb(62, 152, 197);">财务管报录入</a></li>
 									</c:if>
+							</ul>
+							
+							<ul id="navlistQualityInput" style="padding: 10px 0; width: 180px; display: none">
+								
 									<c:if test="${QualityEntry}">
 									<li style="background-color: transparent;"><i
-											class="ec-icon ec-icon-line"></i> <a href="#zlgbEntry"
-											style="color: rgb(62, 152, 197);">质量管报录入</a></li>
+											class="ec-icon ec-icon-line"></i> <a href="#zlwtEntry"
+											style="color: rgb(62, 152, 197);">质量录入</a></li>
 									</c:if>
 							</ul>
+							
+							
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -278,7 +284,7 @@
 							<%@include file="index_IndexBusinessReportsCW.jsp"%>
 							</c:if>
 							<c:if test="${QualityLookup || QualityApprove}">
-							<%@include file="index_IndexBusinessReportsZL.jsp"%>
+							<%@include file="index_IndexBusinessReportsZLWT.jsp"%>
 							</c:if>
 						
 					</div>
@@ -307,8 +313,11 @@
 							<c:if test="${FinanceEntry}">
 							<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
 							</c:if>
+					</div>
+					<div id="QualityInput" class="col-md-10"
+						style="display: none">
 							<c:if test="${QualityEntry}">
-							<%@include file="index_IndexBusinessReportsEntryZL.jsp"%>
+							<%@include file="index_IndexBusinessReportsEntryZLWT.jsp"%>
 							</c:if>
 					</div>
 				</c:otherwise>
@@ -487,7 +496,7 @@
 		var aplan = ${approvePlan};
 		var aPredict = ${approvePredict};
 		var gbEntry = ${GbEntry};
-
+		var qualityEntry = ${QualityEntry};
 		init(iPlan, iPredict, aPredict, aplan, "${userName}");
 
 		function delegateCall(obj) {

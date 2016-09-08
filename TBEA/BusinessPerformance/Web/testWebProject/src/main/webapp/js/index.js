@@ -76,6 +76,10 @@ var stringDescription =  '<div class="container">'
 				if (gbEntry){
 					stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="20"><a style="cursor:pointer">管报录入</a></li>';
 				}
+				if (qualityEntry){
+					stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="21"><a style="cursor:pointer">质量录入</a></li>';
+				}
+				
 				stringDescription += '<li>' + 
 				'<a class="dropdown-toggle" data-toggle="dropdown" style="cursor:pointer">' + userName + '<b class="caret"></b></a>' +
 				'<ul class="dropdown-menu" style="width:100%">' +
@@ -163,12 +167,14 @@ function clickli(obj)
 		$("#navlist1").css("display", "none");
 		$("#navlist2").css("display", "none");
 		$("#navlistBusinessReportsInput").css("display", "none");
+		$("#navlistQualityInput").css("display", "none");
 		//$("#navlist3").css("display", "none");
 		
 		$("#IndexSummary").css("display", "");
 		$("#InputList").css("display", "none");
 		$("#approveList").css("display", "none");
 		$("#BusinessReportsInput").css("display", "none");
+		$("#QualityInput").css("display", "none");
 		//$("#financeList").css("display", "none");
 		
 // $("#nav li").eq(1).removeClass("active");
@@ -182,6 +188,7 @@ function clickli(obj)
 		$("#navlist1").css("display", "");
 		$("#navlist2").css("display", "none");
 		$("#navlistBusinessReportsInput").css("display", "none");
+		$("#navlistQualityInput").css("display", "none");
 		// for 财务指标
 		//$("#navlist3").css("display", "none");
 		
@@ -189,6 +196,7 @@ function clickli(obj)
 		$("#InputList").css("display", "");
 		$("#approveList").css("display", "none");
 		$("#BusinessReportsInput").css("display", "none");
+		$("#QualityInput").css("display", "none");
 		//for 财务指标
 		//$("#financeList").css("display", "none");
 		// obj
@@ -201,6 +209,7 @@ function clickli(obj)
 		$("#navlist1").css("display", "none");
 		$("#navlist2").css("display", "");
 		$("#navlistBusinessReportsInput").css("display", "none");
+		$("#navlistQualityInput").css("display", "none");
 		// for 财务指标
 		//$("#navlist3").css("display", "none");
 		
@@ -208,6 +217,7 @@ function clickli(obj)
 		$("#InputList").css("display", "none");
 		$("#approveList").css("display", "");
 		$("#BusinessReportsInput").css("display", "none");
+		$("#QualityInput").css("display", "none");
 		// for 财务指标
 		//$("#financeList").css("display", "none");
 		// $("#nav li").eq(0).removeClass("active");
@@ -220,12 +230,14 @@ function clickli(obj)
 		$("#navlist1").css("display", "none");
 		$("#navlist2").css("display", "none");
 		$("#navlistBusinessReportsInput").css("display", "none");
+		$("#navlistQualityInput").css("display", "none");
 		// for 财务指标
 		//$("#navlist3").css("display", "");
 		
 		$("#IndexSummary").css("display", "none");
 		$("#InputList").css("display", "none");
 		$("#approveList").css("display", "none");
+		$("#QualityInput").css("display", "none");
 		$("#BusinessReportsInput").css("display", "none");
 		// for 财务指标
 		//$("#financeList").css("display", "");
@@ -242,12 +254,31 @@ function clickli(obj)
 		$("#navlistBusinessReportsInput").css("display", "");
 		// for 财务指标
 		$("#navlist3").css("display", "none");
+		$("#navlistQualityInput").css("display", "none");
 		
 		$("#IndexSummary").css("display", "none");
 		$("#InputList").css("display", "none");
 		$("#approveList").css("display", "none");
+		$("#QualityInput").css("display", "none");
 		$("#BusinessReportsInput").css("display", "");
-
+		break;
+	case 21:
+		$("#navlist").css("display", "none");
+		$("#navlist1").css("display", "none");
+		$("#navlist2").css("display", "none");
+		$("#navlistBusinessReportsInput").css("display", "none");
+		// for 财务指标
+		$("#navlist3").css("display", "none");
+		$("#navlistQualityInput").css("display", "");
+		
+		
+		
+		$("#IndexSummary").css("display", "none");
+		$("#InputList").css("display", "none");
+		$("#approveList").css("display", "none");
+		$("#BusinessReportsInput").css("display", "none");
+		$("#QualityInput").css("display", "");
+		
 		break;
 	default:
 	break;

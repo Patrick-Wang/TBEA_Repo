@@ -83,7 +83,7 @@ where
    <map key="updateUrl" value="yclhglqktjApproveUpdate"/>
    <map key="approveUrl" value="yclhglqktjDoApprove"/>
    <map key="title" value="原材料合格率"/>
-   <map map="${authMgr[53]}"/>
+   <map map="${authMgr[22]}"/>
    <map key="unapproveUrl" value="yclhglqktjUnApprove"/>
   </response>
  </controller>
