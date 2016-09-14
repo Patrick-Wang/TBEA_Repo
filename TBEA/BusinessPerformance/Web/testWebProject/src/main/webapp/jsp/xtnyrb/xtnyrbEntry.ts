@@ -32,7 +32,7 @@ module xtnyzb{
             this.mZbdcAssist = Util.createTable(nameZbdc, this.response().zbdc);
             var parent = $("#" + this.opt.host);
             parent.empty();
-            parent.append("<table id='" + nameDjg + "'></table></div><table id='" + nameZbdc + "'></table></div>");
+            parent.append("<table id='" + nameDjg + "'></table><div><table id='" + nameZbdc + "'></table></div>");
             let jqTable = $("#" + nameDjg);
             jqTable.jqGrid(
                 this.mTableAssist.decorate({

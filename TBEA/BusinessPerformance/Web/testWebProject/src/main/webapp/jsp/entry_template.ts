@@ -7,6 +7,9 @@ declare var echarts;
 declare var $;
 module entry_template {
 
+    import Cell = JQTable.Cell;
+    import Formula = JQTable.Formula;
+    import Formula = JQTable.Formula;
     class JQGridAssistantFactory {
 
         public static createFlatTable(gridName: string, title: string[], statusList: string[]): JQTable.JQGridAssistant {
@@ -35,13 +38,28 @@ module entry_template {
         result: string;
     }
 
+    interface Zbxx{
+        id:number;
+        name:string;
+        parent:number;
+        children:Zbxx[];
+    }
+
+    function find(data:Array<string[]>, id:any){
+        for (let i = 0; i < data.length; ++i){
+            if (data[i][0] == id){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     export class View {
         public static instance: View = new View();
         public static getInstance(): View {
             return View.instance;
         }
-
+        private mZbxxs:Array<Zbxx>;
         private mStatusList: Array<string>;
         private mTableData: Array<string[]>;
         private mDateSelector: Util.DateSelector;
@@ -102,6 +120,7 @@ module entry_template {
                 .then((data: any) => {
                     this.mStatusList = data.status;
                     this.mTableData = data.values;
+                    this.mZbxxs = data.zbxx;
                     this.updateTitle();
                     this.updateTable(this.mOpt.tableId);
                     this.updateApproveStatusFromDeputy(date.year, date.month, this.mOpt.entryType);
@@ -289,6 +308,21 @@ module entry_template {
                     }
                 }
             }
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                let zbxxs:Zbxx[] = this.checkSum(submitData);
+                if (zbxxs.length != 0) {
+                    let zbxxs:Zbxx[] = this.checkSum(submitData);
+                    if (zbxxs.length != 0) {
+                        let msg = "";
+                        for (let i = 0; i < zbxxs.length; ++i){
+                            msg += "、" + zbxxs[i].name;
+                        }
+
+                        Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                        return;
+                    }
+                }
+            }
 
             this.mSave.post({
                 year: date.year,
@@ -307,6 +341,8 @@ module entry_template {
             });
         }
 
+        
+        
         public submit() {
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
@@ -328,6 +364,25 @@ module entry_template {
                 }
             }
 
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                let zbxxs:Zbxx[] = this.checkSum(submitData);
+                if (zbxxs.length != 0) {
+                    let zbxxs:Zbxx[] = this.checkSum(submitData);
+                    if (zbxxs.length != 0) {
+                        let zbxxs:Zbxx[] = this.checkSum(submitData);
+                        if (zbxxs.length != 0) {
+                            let msg = "";
+                            for (let i = 0; i < zbxxs.length; ++i){
+                                msg += "、" + zbxxs[i].name;
+                            }
+
+                            Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                            return;
+                        }
+                    }
+                }
+            }
+            
             this.mSubmit.post({
                 year: date.year,
                 month: date.month,
@@ -363,6 +418,22 @@ module entry_template {
                             Util.MessageBox.tip("有空内容 无法提交")
                             return;
                         }
+                    }
+                }
+            }
+
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                let zbxxs:Zbxx[] = this.checkSum(submitData);
+                if (zbxxs.length != 0) {
+                    let zbxxs:Zbxx[] = this.checkSum(submitData);
+                    if (zbxxs.length != 0) {
+                        let msg = "";
+                        for (let i = 0; i < zbxxs.length; ++i){
+                            msg += "、" + zbxxs[i].name;
+                        }
+
+                        Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                        return;
                     }
                 }
             }
@@ -504,13 +575,27 @@ module entry_template {
                 }
             }
 
+            if (Util.ZBType.BYSJ == this.mOpt.entryType){
+                let disabledCell = [];
+                for (let i = 0; i < this.mZbxxs.length; ++i){
+                    let zbxx : Zbxx = this.mZbxxs[i];
+                    if (find(this.mTableData, zbxx.id) >= 0){
+                        for (let j = 0; j < zbxx.children.length; ++j){
+                            let cell = this.parseZbxx(zbxx.children[j]);
+                            if (cell != undefined){
+                                disabledCell.push(cell);
+                            }
+                        }
+                    }
+                }
+                if (disabledCell.length != 0){
+                    this.mTableAssist.disableCellEdit(disabledCell);
+                }
+            }
+
             var data = this.mTableData;
-            var lastsel = "";
-            var lastcell = "";
             $("#" + name).jqGrid(
                 this.mTableAssist.decorate({
-                    // url: "TestTable/WGDD_load.do",
-                    // datatype: "json",
                     data: this.mTableAssist.getDataWithId(data),
                     datatype: "local",
                     multiselect: false,
@@ -523,73 +608,84 @@ module entry_template {
                     width: titles.length * 200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 150,
-
-                    onSelectCell: (id, nm, tmp, iRow, iCol) => {
-                        //                       console.log(iRow +', ' + iCol);
-                    },
-                    
-                    //                    onCellSelect: (ri,ci,tdHtml,e) =>{
-                    //                       console.log(ri +', ' + ci);
-                    //                    },
-                    beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
-                        var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                        if (isNaN(ret)) {
-                            $.jgrid.jqModal = {
-                                width: 290,
-                                left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
-                                top: $("#table").offset().top + $("#table").height() / 2 - 90
-                            };
-                            return v;
-                        } else {
-                            return ret;
-                        }
-                    },
-                    beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
-                        lastsel = iRow;
-                        lastcell = iCol; 
-                        //                        console.log(iRow +', ' + iCol);
-                        $("input").attr("disabled", true);
-                    },
-
-                    afterEditCell: (rowid, cellname, v, iRow, iCol) => {
-                        $("input[type=text]").bind("keydown", function(e) {
-                            if (e.keyCode === 13) {
-                                setTimeout(function() {
-                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
-                                }, 10);
-                            }
-                        });
-                    },
-
-                    afterSaveCell: () => {
-                        $("input").attr("disabled", false);
-                        lastsel = "";
-                    },
-
-                    afterRestoreCell: () => {
-                        $("input").attr("disabled", false);
-
-                        lastsel = "";
-                    }
-                    //                    ,
-                    //                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
-                    //                        lastsel = ""; 
-                    //                        lastcell = ""; 
-                    //                    } 
+                    rowNum: 1000,
+                    assistEditable: true
                 }));
+        }
 
+        private parseZbxx(zbxx:Zbxx):Cell {
+            let row = find(this.mTableData, zbxx.id);
+            if (row < 0) {
+                return undefined;
+            }
+            let cells = [];
+            for (let j = 0; j < zbxx.children.length; ++j){
+                let row2 = find(this.mTableData, zbxx.children[j].id);
+                if (row2 >= 0){
+                    cells.push(new Cell(row2, 1));
+                }
+            }
+            if (cells.length == 0) {
+                return undefined;
+            }
 
-            $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
-                if (lastsel != "") { //if a row is selected for edit 
-                    if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row  
-                        //  $("#" + name).jqGrid('saveRow', lastsel); 
-                        $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                        //$("#" + name).resetSelection(); 
-                        lastsel = "";
+            let dst = new Cell(row, 1);
+            let form : Formula  = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=>{
+                let sum : any;
+                for (let i = 0; i < srcs.length; ++i){
+                    let val = srcs[i].getVal();
+                    if ("" != val){
+                        if (sum == undefined){
+                            sum = parseFloat(val);
+                        }else{
+                            sum += parseFloat(val);
+                        }
                     }
                 }
+                return sum;
             });
+            this.mTableAssist.addFormula(form);
+            return dst;
+        }
+
+        private checkSum(submitData:any): Zbxx[] {
+            let zbxxs : Zbxx[] = [];
+            let zbxx:Zbxx;
+            for (let i = 0; i < this.mZbxxs.length; ++i){
+                zbxx = this.mZbxxs[i];
+                let row = find(submitData, zbxx.id);
+                if (row < 0) {
+                    continue;
+                }
+
+                let sum : number;
+                for(let j = 0; j < zbxx.children.length; ++j){
+                    let row2 = find(submitData, zbxx.children[j].id);
+                    if (row2 < 0) {
+                        continue;
+                    }
+                    if (submitData[row2][1] != ""){
+                        if (sum == undefined){
+                            sum = parseFloat(submitData[row2][1]);
+                        }else{
+                            sum += parseFloat(submitData[row2][1]);
+                        }
+                    }else{
+                        if (sum == undefined){
+                            sum = 0;
+                        }
+                    }
+                }
+                if (sum != undefined){
+                    if (submitData[row][1] == "" && sum != 0){
+                        zbxxs.push(zbxx);
+                    }else if (Math.abs(sum - parseFloat(submitData[row][1])) > 1){
+                        zbxxs.push(zbxx);
+                    }
+                    sum = undefined;
+                }
+            }
+            return zbxxs;
         }
     }
 }

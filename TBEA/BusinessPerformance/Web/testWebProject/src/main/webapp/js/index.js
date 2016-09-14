@@ -47,6 +47,8 @@ switch (curPage) {
 
 function init(ePlan, ePredict, aPlan, aPredict, userName)
 {
+
+	var show = false;
 	entryPlan = ePlan;
 	entryPredict = ePredict;
 	approveplan = aPlan;
@@ -62,22 +64,66 @@ var stringDescription =  '<div class="container">'
           + '<a class="navbar-brand" href="http://www.tbea.com.cn">TBEA 经营管控信息平台</a>'
         + '</div>'
         + '<div class="navbar-collapse collapse" id="nav-wrap">'
-          + '<ul class="nav navbar-nav navbar-right" id="nav" style="max-width:100%;">'
-            + '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="1"><a style="cursor:pointer">数据汇总明细</a></li>';
-			if (!RELEASE){
+          + '<ul class="nav navbar-nav navbar-right" id="nav" style="max-width:100%;">';
+		//	if (!RELEASE){
+				if (summary){
+					stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="1"><a style="cursor:pointer">数据汇总明细</a></li>';
+					if (!show){
+						$(document).ready(function(){
+							$("#nav-wrap li[value='1']").trigger("click");
+						});
+					}
+					show = true;
+				}
+
+				if(qualityLookup)
+				{
+					stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="22"><a style="cursor:pointer">质量信息汇总及分析</a></li>';
+					if (!show){
+						$(document).ready(function(){
+							$("#nav-wrap li[value='22']").trigger("click");
+						});
+					}
+					show = true;
+				}
 				if(entryPlan || entryPredict)
 				{
 					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="2"><a style="cursor:pointer">数据录入</a></li>';
+					if (!show){
+						$(document).ready(function(){
+							$("#nav-wrap li[value='2']").trigger("click");
+						});
+					}
+					show = true;
 				}
 				if(approveplan || approvePredict)
 				{
 					 stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a style="cursor:pointer">数据审核</a></li>';
+					if (!show){
+						$(document).ready(function(){
+							$("#nav-wrap li[value='3']").trigger("click");
+						});
+					}
+					show = true;
 				}
 				if (gbEntry){
 					stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="20"><a style="cursor:pointer">管报录入</a></li>';
+					stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="3"><a style="cursor:pointer">数据审核</a></li>';
+					if (!show){
+						$(document).ready(function(){
+							$("#nav-wrap li[value='20']").trigger("click");
+						});
+					}
+					show = true;
 				}
 				if (qualityEntry){
-					stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="21"><a style="cursor:pointer">质量录入</a></li>';
+					stringDescription += '<li class="' + (activeClass.Sample || '') + '" onclick="delegateCall(this);" value="21"><a style="cursor:pointer">质量信息录入</a></li>';
+					if (!show){
+						$(document).ready(function(){
+							$("#nav-wrap li[value='21']").trigger("click");
+						});
+					}
+					show = true;
 				}
 				
 				stringDescription += '<li>' + 
@@ -88,7 +134,7 @@ var stringDescription =  '<div class="container">'
 				'</li>';
 				//for 财务指标汇总
 	             //stringDescription += '<li class="' + (activeClass.About || '') + '" onclick="delegateCall(this);" value="4"><a>财务指标汇总</a></li>'
-			}
+			//}
           + '</ul>'
         + '</div><!--/.nav-collapse -->'
       + '</div>';
@@ -168,6 +214,7 @@ function clickli(obj)
 		$("#navlist2").css("display", "none");
 		$("#navlistBusinessReportsInput").css("display", "none");
 		$("#navlistQualityInput").css("display", "none");
+
 		//$("#navlist3").css("display", "none");
 		
 		$("#IndexSummary").css("display", "");
@@ -175,6 +222,8 @@ function clickli(obj)
 		$("#approveList").css("display", "none");
 		$("#BusinessReportsInput").css("display", "none");
 		$("#QualityInput").css("display", "none");
+		$("#QualityLookup").css("display", "none");
+		$("#navlistQualityLookup").css("display", "none");
 		//$("#financeList").css("display", "none");
 		
 // $("#nav li").eq(1).removeClass("active");
@@ -197,6 +246,8 @@ function clickli(obj)
 		$("#approveList").css("display", "none");
 		$("#BusinessReportsInput").css("display", "none");
 		$("#QualityInput").css("display", "none");
+		$("#QualityLookup").css("display", "none");
+		$("#navlistQualityLookup").css("display", "none");
 		//for 财务指标
 		//$("#financeList").css("display", "none");
 		// obj
@@ -218,6 +269,8 @@ function clickli(obj)
 		$("#approveList").css("display", "");
 		$("#BusinessReportsInput").css("display", "none");
 		$("#QualityInput").css("display", "none");
+		$("#QualityLookup").css("display", "none");
+		$("#navlistQualityLookup").css("display", "none");
 		// for 财务指标
 		//$("#financeList").css("display", "none");
 		// $("#nav li").eq(0).removeClass("active");
@@ -239,6 +292,8 @@ function clickli(obj)
 		$("#approveList").css("display", "none");
 		$("#QualityInput").css("display", "none");
 		$("#BusinessReportsInput").css("display", "none");
+		$("#QualityLookup").css("display", "none");
+		$("#navlistQualityLookup").css("display", "none");
 		// for 财务指标
 		//$("#financeList").css("display", "");
 		
@@ -261,6 +316,8 @@ function clickli(obj)
 		$("#approveList").css("display", "none");
 		$("#QualityInput").css("display", "none");
 		$("#BusinessReportsInput").css("display", "");
+		$("#QualityLookup").css("display", "none");
+		$("#navlistQualityLookup").css("display", "none");
 		break;
 	case 21:
 		$("#navlist").css("display", "none");
@@ -278,10 +335,31 @@ function clickli(obj)
 		$("#approveList").css("display", "none");
 		$("#BusinessReportsInput").css("display", "none");
 		$("#QualityInput").css("display", "");
+		$("#QualityLookup").css("display", "none");
+		$("#navlistQualityLookup").css("display", "none");
 		
 		break;
+		case 22:
+			$("#navlist").css("display", "none");
+			$("#navlist1").css("display", "none");
+			$("#navlist2").css("display", "none");
+			$("#navlistBusinessReportsInput").css("display", "none");
+			// for 财务指标
+			$("#navlist3").css("display", "none");
+			$("#navlistQualityInput").css("display", "none");
+
+
+
+			$("#IndexSummary").css("display", "none");
+			$("#InputList").css("display", "none");
+			$("#approveList").css("display", "none");
+			$("#BusinessReportsInput").css("display", "none");
+			$("#QualityInput").css("display", "none");
+			$("#QualityLookup").css("display", "");
+			$("#navlistQualityLookup").css("display", "");
+			break;
 	default:
-	break;
+		break;
 	}
 	$("#nav li").removeClass("active");
 	$(obj).addClass("active");

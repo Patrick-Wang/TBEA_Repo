@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.RequestHandler;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
@@ -897,5 +898,12 @@ public class EntryServiceImpl implements EntryService{
 	public boolean hasMarketPermission(Account account) {
 		// TODO Auto-generated method stub
 		return account.getRole() == 2;
+	}
+
+
+
+	@Override
+	public List<ZBXX> getZbNodes() {
+		return zbxxDao.getTopZb();
 	}
 }

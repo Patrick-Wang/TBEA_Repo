@@ -2,6 +2,7 @@ package com.tbea.ic.operation.controller.servlet.entry;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,7 @@ import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.entry.EntryService;
 
 
@@ -100,11 +102,17 @@ public class EntryController {
 		List<String[]> ret =  entryService.getZb(date, account, comp, entryType);
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
 		List<ZBStatus> approved = entryService.getZbStatus(date, comp, entryType);
+		List<ZBXX> zbxx = entryService.getZbNodes();
 		Organization org = companyManager.getBMDBOrganization();
 		Company company = org.getCompany(comp);
 		Company zhgs = org.getCompany(CompanyType.ZHGS);
+		List<ZBXX> zbxx2 = new ArrayList<ZBXX>();
+		for(ZBXX z : zbxx){
+			zbxx2.add(z.clone());
+		}
 		String result = "{\"status\":" + JSONArray.fromObject(approved).toString() +
 						", \"values\":" + zb +
+						", \"zbxx\":" + JSONArray.fromObject(zbxx2).toString() +
 						", \"isJydw\":" + ((2 == company.level() && !zhgs.contains(company)) || comp == CompanyType.ZHGS) + "}"; 
 		
 		return result.getBytes("utf-8");

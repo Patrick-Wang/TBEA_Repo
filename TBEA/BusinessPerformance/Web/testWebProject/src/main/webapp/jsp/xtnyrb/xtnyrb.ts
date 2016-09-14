@@ -1,6 +1,4 @@
 ///<reference path="../framework/basic/basic.ts"/>
-///<reference path="../framework/basic/basicEntry.ts"/>
-///<reference path="../framework/templates/singleDateReport/entry.ts"/>
 ///<reference path="../framework/templates/singleDateReport/show.ts"/>
 
 module xtnyzb{
@@ -8,7 +6,7 @@ module xtnyzb{
         zbdc:Util.ServResp;
     }
 
-    framework.templates.singleDateReport.createInstance = function(){
+    framework.templates.singleDateReport.createInstance = ()=> {
         return new XtnyzbShowView();
     }
 

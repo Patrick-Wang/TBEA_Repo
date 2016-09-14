@@ -157,11 +157,7 @@
 											class="ec-icon ec-icon-line"></i> <a href="#cwbb"
 											style="color: rgb(62, 152, 197);">财务管报汇总</a></li>
 									</c:if>
-									<c:if test="${QualityLookup || QualityApprove}">
-									<li style="background-color: transparent;"><i
-											class="ec-icon ec-icon-line"></i> <a href="#zlgb"
-											style="color: rgb(62, 152, 197);">质量管报汇总</a></li>
-									</c:if>
+
 							</ul>
 							<ul id="navlist1" style="padding: 10px 0; display: none">
 								<c:if test="${entryPlan}">
@@ -241,15 +237,21 @@
 							</ul>
 							
 							<ul id="navlistQualityInput" style="padding: 10px 0; width: 180px; display: none">
-								
 									<c:if test="${QualityEntry}">
 									<li style="background-color: transparent;"><i
 											class="ec-icon ec-icon-line"></i> <a href="#zlwtEntry"
-											style="color: rgb(62, 152, 197);">质量录入</a></li>
+											style="color: rgb(62, 152, 197);">质量信息录入</a></li>
 									</c:if>
 							</ul>
-							
-							
+
+							<ul id="navlistQualityLookup" style="padding: 10px 0; width: 180px; display: none">
+								<c:if test="${QualityLookup || QualityApprove}">
+									<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-line"></i> <a href="#zlgb"
+									style="color: rgb(62, 152, 197);">质量信息汇总</a></li>
+								</c:if>
+							</ul>
+
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -262,36 +264,31 @@
 			</c:when>
 				<c:otherwise>
 					<div id="IndexSummary" class="col-md-10">
-						<c:if test="${!(QualityApprove|| QualityEntry)}">
-						<%@include file="index_IndexSummary.jsp"%>
+						<c:if test="${!(QualityApprove || QualityEntry)}">
+							<%@include file="index_IndexSummary.jsp"%>
 						</c:if>
 						<c:if test="${PriceLibAuth}">
 							<%@include file="index_IndexPriceLib.jsp"%>
 						</c:if>
-							<c:if test="${ComGbLookup}">
-								<%@include file="index_IndexBusinessReportsGBCommon.jsp"%>
-							</c:if>
-							<c:if test="${SbdgbLookup}">
-								<%@include file="index_IndexBusinessReportsSBD.jsp"%>
-							</c:if>
-							<c:if test="${NygbLookup}">
-								<%@include file="index_IndexBusinessReportsNY.jsp"%>
-							</c:if>
-							<c:if test="${XnygbLookup}">
-								<%@include file="index_IndexBusinessReportsXNY.jsp"%>
-							</c:if>
-							<c:if test="${FinanceLookup}">
+						<c:if test="${ComGbLookup}">
+							<%@include file="index_IndexBusinessReportsGBCommon.jsp"%>
+						</c:if>
+						<c:if test="${SbdgbLookup}">
+							<%@include file="index_IndexBusinessReportsSBD.jsp"%>
+						</c:if>
+						<c:if test="${NygbLookup}">
+							<%@include file="index_IndexBusinessReportsNY.jsp"%>
+						</c:if>
+						<c:if test="${XnygbLookup}">
+							<%@include file="index_IndexBusinessReportsXNY.jsp"%>
+						</c:if>
+						<c:if test="${FinanceLookup}">
 							<%@include file="index_IndexBusinessReportsCW.jsp"%>
-							</c:if>
-							<c:if test="${QualityLookup || QualityApprove}">
-							<%@include file="index_IndexBusinessReportsZLWT.jsp"%>
-							</c:if>
-						
+						</c:if>
 					</div>
 					<div id="InputList" class="col-md-10" style="display: none">
 						<%@include file="index_InputList.jsp"%>
 					</div>
-
 					<div id="approveList" class="col-md-10" style="display: none">
 						<%@include file="index_approveList.jsp"%>
 					</div>
@@ -320,6 +317,16 @@
 							<%@include file="index_IndexBusinessReportsEntryZLWT.jsp"%>
 							</c:if>
 					</div>
+					<div id="QualityLookup" class="col-md-10"
+					style="display: none">
+						<c:if test="${QualityLookup || QualityApprove}">
+							<%@include file="index_IndexBusinessReportsZLWT.jsp"%>
+						</c:if>
+					</div>
+
+
+
+
 				</c:otherwise>
 			</c:choose>
 			
@@ -490,13 +497,14 @@
 							$(window).on('resize', _resize);
 							_resize();
 						});
-
+		var summary = $("#IndexSummary").children().length > 0;
 		var iPlan = ${entryPlan};
 		var iPredict = ${entryPredict};
 		var aplan = ${approvePlan};
 		var aPredict = ${approvePredict};
 		var gbEntry = ${GbEntry};
 		var qualityEntry = ${QualityEntry};
+		var qualityLookup = ${QualityLookup || QualityApprove};
 		init(iPlan, iPredict, aPredict, aplan, "${userName}");
 
 		function delegateCall(obj) {

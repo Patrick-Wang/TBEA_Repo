@@ -14,12 +14,15 @@ var Util;
         MessageBox.tip = function (msg, onclose, timeOut) {
             var container = MessageBox.getContainer();
             if (container.attr("finish") == "true") {
-                $("#self_tip").children().eq(0).text(msg);
+                $("#self_tip td").eq(0).text(msg);
             }
             else {
                 container.attr("finish", "true");
                 container.append('<div id="self_tip" class="block modal2" align="center" >' +
-                    '<span style="display:block;line-height:170px;height:100%;font-size:20px;color:blue;">' + msg + '</span></div>');
+                    '<table style="height:100%"> <tr><td style="font-size:20px;color:blue;">' +
+                    msg +
+                    '</td></tr></table>' +
+                    '</div>');
             }
             $("#self_tip").modal('view', {
                 speed: 500,

@@ -347,10 +347,10 @@ var JQTable;
             this.mGrid = grid;
         };
         Cell.prototype.getVal = function () {
-            return this.mGrid.jqGrid("getCell", this.mRow + 1, this.mCol);
+            return this.mGrid.jqGrid("getCell", this.mGrid[0].p.data[this.mRow].id, this.mCol);
         };
         Cell.prototype.setVal = function (val) {
-            return this.mGrid.jqGrid("setCell", this.mRow + 1, this.mCol, val);
+            return this.mGrid.jqGrid("setCell", this.mGrid[0].p.data[this.mRow].id, this.mCol, val, undefined, undefined, true);
         };
         Cell.prototype.row = function () {
             return this.mRow;
@@ -367,19 +367,6 @@ var JQTable;
             this.mSrcCellarray = srcCellarray;
             this.mFormula = formula;
         }
-        Formula.prototype.calc = function (newRow, newCol) {
-            var oldVal = this.mDestCell.getVal();
-            for (var i = 0; i < this.mSrcCellarray.length; i++) {
-                if (this.mSrcCellarray[i].row() == newRow && this.mSrcCellarray[i].col() == newCol) {
-                    var newVal = this.mFormula(this.mDestCell, this.mSrcCellarray);
-                    if (newVal != null && newVal != undefined && oldVal != newVal) {
-                        this.mDestCell.setVal(newVal);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        };
         Formula.prototype.destCell = function () {
             return this.mDestCell;
         };
@@ -391,8 +378,21 @@ var JQTable;
         };
         Formula.prototype.update = function () {
             var newVal = this.mFormula(this.mDestCell, this.mSrcCellarray);
-            if (newVal != null && newVal != undefined) {
-                this.mDestCell.setVal(newVal);
+            var oldVal = this.mDestCell.getVal();
+            if (oldVal == "" && (newVal == undefined || newVal == null || newVal == "")) {
+                return false;
+            }
+            else if (oldVal == newVal) {
+                return false;
+            }
+            else {
+                if (newVal != null && newVal != undefined) {
+                    this.mDestCell.setVal(newVal);
+                }
+                else {
+                    this.mDestCell.setVal("");
+                }
+                return true;
             }
         };
         return Formula;
@@ -496,7 +496,7 @@ var JQTable;
         JQGridAssistant.prototype.centerModal = function (width, height) {
             if (width === void 0) { width = 290; }
             if (height === void 0) { height = 90; }
-            var grid = $("#" + this.mGridName + "");
+            var grid = $("#gview_" + this.mGridName + "");
             $.jgrid.jqModal = {
                 width: width,
                 left: grid.offset().left + grid.width() / 2 - width / 2,
@@ -784,24 +784,25 @@ var JQTable;
                 this.selectedList[i](row, col);
             }
         };
+        JQGridAssistant.prototype.invokeFormula = function (depth) {
+            if (depth === void 0) { depth = 0; }
+            var changed = false;
+            for (var i = 0; i < this.mFormula.length; i++) {
+                changed = changed || this.mFormula[i].update();
+            }
+            if (changed && depth < 10) {
+                this.invokeFormula(++depth);
+            }
+        };
         JQGridAssistant.prototype.addFormula = function (formula) {
+            var _this = this;
             formula.setGrid($("#" + this.mGridName));
             if (this.mFormula.length == 0) {
                 this.completeList.push(function () {
-                    for (var i = 0; i < this.mFormula.length; i++) {
-                        this.mFormula[i].update();
-                    }
-                }.bind(this));
+                    _this.invokeFormula();
+                });
             }
             this.mFormula.push(formula);
-        };
-        JQGridAssistant.prototype.cellChanged = function (iRow, iCol) {
-            for (var i = 0; i < this.mFormula.length; i++) {
-                var changed = this.mFormula[i].calc(iRow - 1, iCol);
-                if (changed) {
-                    this.cellChanged(this.mFormula[i].destCell().row() + 1, this.mFormula[i].destCell().col());
-                }
-            }
         };
         JQGridAssistant.prototype.parseInt = function (px) {
             if (undefined != px && null != px) {
@@ -930,6 +931,16 @@ var JQTable;
                 this.completeList[i]();
             }
         };
+        JQGridAssistant.prototype.disableCellEdit = function (cells) {
+            var _this = this;
+            this.mDisabledEditCells = cells;
+            this.completeList.push(function () {
+                for (var i = 0; i < cells.length; ++i) {
+                    var id = $("#" + _this.mGridName + "")[0].p.data[cells[i].row()].id;
+                    $("#" + _this.mGridName + " #" + id + " td:eq(" + cells[i].col() + ")").css("background", "RGB(183, 222, 232)");
+                }
+            });
+        };
         JQGridAssistant.prototype.enablePageEdit = function (rowNum, pagername) {
             var _this = this;
             var grid = $("#" + this.mGridName + "");
@@ -940,6 +951,17 @@ var JQTable;
                     lastsel = iRow;
                     lastcell = iCol;
                     $("input").attr("disabled", true);
+                    if (undefined != _this.mDisabledEditCells) {
+                        var oldFun = $.jgrid.createEl;
+                        for (var i = 0; i < _this.mDisabledEditCells.length; ++i) {
+                            if (_this.mDisabledEditCells[i].row() == (iRow - 1) && _this.mDisabledEditCells[i].col() == iCol) {
+                                $.jgrid.createEl = function () {
+                                    $.jgrid.createEl = oldFun;
+                                };
+                                break;
+                            }
+                        }
+                    }
                 },
                 afterSaveCell: function () {
                     $("input").attr("disabled", false);
@@ -948,12 +970,25 @@ var JQTable;
                         _this.mEditedRows.push(ids[lastsel - 1]);
                     }
                     lastsel = "";
+                    _this.invokeFormula();
                 },
                 afterRestoreCell: function () {
                     $("input").attr("disabled", false);
                     lastsel = "";
                 },
                 afterEditCell: function (rowid, cellname, v, iRow, iCol) {
+                    var isDisabled = false;
+                    if (undefined != _this.mDisabledEditCells) {
+                        for (var i = 0; i < _this.mDisabledEditCells.length; ++i) {
+                            if (_this.mDisabledEditCells[i].row() == (iRow - 1) && _this.mDisabledEditCells[i].col() == iCol) {
+                                isDisabled = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (isDisabled) {
+                        $("#" + _this.mGridName).restoreCell(iRow, iCol);
+                    }
                     $("#" + _this.mGridName + " input[type=text]").bind("keydown", function (e) {
                         if (e.keyCode === 13) {
                             var ids = grid.jqGrid('getDataIDs');
@@ -982,6 +1017,7 @@ var JQTable;
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
                     if ($(e.target).closest("#" + _this.mGridName).length == 0) {
+                        //and the click is outside of the grid //save the row being edited and unselect the row
                         //  $("#" + name).jqGrid('saveRow', lastsel);
                         if ($('input[type=search]').length != 0) {
                             return;
