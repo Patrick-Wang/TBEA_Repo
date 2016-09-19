@@ -7,9 +7,7 @@
 ///<reference path="../cpzlqk.ts"/>
 ///<reference path="../../jqgrid/jqgrid.d.ts"/>
 
-module plugin {
-    export let byqacptjjg : number = framework.basic.endpoint.lastId();
-}
+
 declare var echarts;
 module cpzlqk {
     export module byqacptjjg {
@@ -39,9 +37,11 @@ module cpzlqk {
             private mAjax:Util.Ajax = new Util.Ajax("../byqacptjjg/update.do", false);
             private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
             private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
+            private mCommentApprove:Util.Ajax = new Util.Ajax("../report/zlfxApprove.do", false);
+            private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqacptjjg/approve.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
-
+            private mTableStatus:TableStatus;
             getId():number {
                 return plugin.byqacptjjg;
             }
@@ -67,7 +67,28 @@ module cpzlqk {
                         this.mCommentSubmit.get({
                             data : JSON.stringify([[param.condition, param.comment]])
                         }).then((jsonData:any)=>{
-                            Util.MessageBox.tip("保存成功", undefined);
+                            Util.MessageBox.tip("提交成功", undefined);
+                        });
+                        break;
+                    case Event.ZLFE_APPROVE_COMMENT:
+                        let param1 = {
+                            condition:Util.Ajax.toUrlParam({
+                                url : this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId:this.mCompType,
+                                ydjd:this.mYdjdType
+                            }),
+                            comment:e.data
+                        }
+                        this.mCommentApprove.get({
+                            data : JSON.stringify([[param1.condition, param1.comment]])
+                        }).then((jsonData:any)=>{
+                            this.mAjaxApprove.get({
+                                date: this.mDt,
+                                companyId:this.mCompType
+                            }).then((jsonData:any)=>{
+                                Util.MessageBox.tip("审核成功", undefined);
+                            });
                         });
                         break;
                 }
@@ -103,7 +124,8 @@ module cpzlqk {
                 this.mAjax.get({
                         date: date,
                         companyId:compType,
-                        ydjd:this.mYdjdType
+                        ydjd:this.mYdjdType,
+                        pageType:pageType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -232,10 +254,23 @@ module cpzlqk {
             }
 
             public init(opt:Option):void {
-                framework.router
-					.fromEp(this)
-					.to(framework.basic.endpoint.FRAME_ID)
-					.send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
+                let contains = true;
+                if (opt.tableStatus != undefined){
+                    contains = false;
+                    for (let i = 0; i < opt.tableStatus.length; ++i){
+                        if (opt.tableStatus[i].id == this.getId()){
+                            this.mTableStatus = opt.tableStatus[i];
+                            contains = true;
+                            break;
+                        }
+                    }
+                }
+                if (contains){
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
+                }
             }
 
 			private getMonth():number{

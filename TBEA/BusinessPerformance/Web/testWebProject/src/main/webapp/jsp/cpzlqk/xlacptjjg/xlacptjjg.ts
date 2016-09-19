@@ -7,7 +7,6 @@
 ///<reference path="../cpzlqk.ts"/>
 
 module plugin {
-    export let xlacptjjg : number = framework.basic.endpoint.lastId();
 }
 declare var echarts;
 module cpzlqk {

@@ -1,6 +1,4 @@
 ///<reference path="../framework/basic/basic.ts"/>
-///<reference path="../framework/basic/basicEntry.ts"/>
-///<reference path="../framework/templates/singleDateReport/entry.ts"/>
 ///<reference path="../framework/templates/singleDateReport/show.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];

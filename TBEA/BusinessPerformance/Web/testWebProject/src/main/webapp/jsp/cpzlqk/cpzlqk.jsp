@@ -210,8 +210,14 @@ th.ui-th-ltr {
 				<div id="comment" style="display:none">
 					<div style="font-size:18px;font-weight:bold">问题分析</div>
 					<textarea id="commentText" cols="20" rows="5" style="width:100%;resize: none;margin-bottom:5px"></textarea>
-					<input type="button" id="saveComment" value="保存" style="float:left;width:90px"
+					<c:if test="${pageType == 1}">
+					<input type="button" id="saveComment" value="提交" style="float:left;width:90px"
 						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_SAVE_COMMENT)">
+					</c:if>
+					<c:if test="${pageType == 2}">
+						<input type="button" id="approveComment" value="审核" style="float:left;width:90px"
+						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT)">
+					</c:if>
 				</div>
 				<form id="export" method="post">
 					<input id="exportButton" type="button" value="导出" style="display:none"
@@ -221,6 +227,9 @@ th.ui-th-ltr {
 		</tr>
 	</Table>
 	<script type="text/javascript">
+	var ts = '${tableStatus}';
+	window.tableStatus = ts == ''?undefined : JSON.parse(ts);
+	window.pageType = ${pageType};
 	$("#radio").buttonset();
     $(document).ready(function () {
 
@@ -230,10 +239,8 @@ th.ui-th-ltr {
 			comps : JSON.parse('${nodeData}'),
 			dt: "dt",
 			contentType: "radio",
-			date: {
-				month: "${month}".length == 0 ? undefined : parseInt("${month}"),
-				year: ${year}
-			}
+			date: Util.parseDate('${year}', "${month}")
+			//isSingleDate: '${isSingleDate}' == 'true',
 		});
         $("#exportButton")
 			.css("height", "23px")

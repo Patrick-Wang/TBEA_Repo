@@ -87,6 +87,8 @@ public class NCController {
 
 	@Scheduled(cron = "0 0 0 4-5 * ?")
 	public void scheduleImportNC() {
+		Logger logger = Logger.getLogger("LOG-NC");
+		logger.debug("scheduleImportNC");
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
@@ -288,6 +290,57 @@ public class NCController {
 			importData(zbStatus, jsImportData, date, comTmp);
 		}
 	}
+	
+	private void importLocalNC2Local(Date d, CompanyType cp) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		// Calendar.MONTH获得月份正常情况下为自然月-1,
+		// 且当前需求中数据的月份为存储时间的前一个月，所以在下面公式调用中不必+1
+		int month = cal.get(Calendar.MONTH) + 1;
+		int year = cal.get(Calendar.YEAR);
+
+		ZBStatus zbStatus = null;
+		List<NCZB> NCZBList = ncService.getNCZBByDate(year, month);
+		// // 需求中数据的月份为存储时间的前一个月
+		// cal.add(Calendar.MONTH, -1);
+		Date date = new Date(cal.getTimeInMillis());
+		Company comp = null;
+		JSONArray jsonArray = null;
+		JSONArray zbArray = null;
+		int zbid = 0;
+		System.out.println("size" + NCZBList.size());
+		List<Company> comps = new ArrayList<Company>();
+		for (NCZB nczb : NCZBList) {
+			zbid = nczb.getZbxx().getId();
+			if (zbList.contains(zbid)) {
+				comp = companyManager.getBMDBOrganization().getCompany(
+						nczb.getDwxx().getId());
+				if (cp == comp.getType()){
+					comps.add(comp);
+					zbStatus = entryService.getZbStatus(date, comp.getType(),
+							ZBType.BYSJ).get(0);
+					zbArray = createIndicator(String.valueOf(zbid),
+							String.valueOf(nczb.getNczbz()));
+					jsonArray = new JSONArray();
+					jsonArray.add(zbArray);
+					System.out.println("comp: " + comp.getName());
+					System.out.println("json: " + jsonArray);
+					System.out.println("date: " + date);
+					System.out.println("zbStatus: " + zbStatus);
+					importData(zbStatus, jsonArray, date, comp);
+				}
+			}
+		}
+
+		for (Company comTmp : comps) {
+			List<String[]> sjzbs = entryService.getZb(date, null,
+					comTmp.getType(), ZBType.BYSJ);
+			JSONArray jsImportData = toImportData(sjzbs);
+			zbStatus = entryService.getZbStatus(date, comTmp.getType(),
+					ZBType.BYSJ).get(0);
+			importData(zbStatus, jsImportData, date, comTmp);
+		}
+	}
 
 	private JSONArray toImportData(List<String[]> sjzbs) {
 		JSONArray jsonArray = new JSONArray();
@@ -299,6 +352,8 @@ public class NCController {
 
 	@RequestMapping(value = "nctest.do", method = RequestMethod.GET)
 	public void nctest(HttpServletRequest request, HttpServletResponse response) {
+		Logger logger = Logger.getLogger("LOG-NC");
+		logger.debug("nctest.do");
 		String driverName = "oracle.jdbc.driver.OracleDriver";
 		String dbURL = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=dm01-scan.tbea.com.cn)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=orcl)))";
 		String userName = "iufo";
@@ -395,6 +450,8 @@ public class NCController {
 	@RequestMapping(value = "importNC.do", method = RequestMethod.GET)
 	public void importNC(HttpServletRequest request,
 			HttpServletResponse response) {
+		Logger logger = Logger.getLogger("LOG-NC");
+		logger.debug("importNC.do");
 		Date d = DateSelection.getDate(request);
 		CompanyType tp = CompanySelection.getCompany(request);
 		if (null == tp){
@@ -408,6 +465,8 @@ public class NCController {
 	@RequestMapping(value = "importNC2LocalNC.do", method = RequestMethod.GET)
 	public void importNC2LocalNC(HttpServletRequest request,
 			HttpServletResponse response) {
+		Logger logger = Logger.getLogger("LOG-NC");
+		logger.debug("importNC2LocalNC.do");
 		Date d = DateSelection.getDate(request);
 		importNC2LocalNC(d);
 	}
@@ -415,8 +474,15 @@ public class NCController {
 	@RequestMapping(value = "importLocalNC2Local.do", method = RequestMethod.GET)
 	public void importLocalNC2Local(HttpServletRequest request,
 			HttpServletResponse response) {
+		Logger logger = Logger.getLogger("LOG-NC");
+		logger.debug("importLocalNC2Local.do");
 		Date d = DateSelection.getDate(request);
-		importLocalNC2Local(d);
+		CompanyType tp = CompanySelection.getCompany(request);
+		if (null == tp){
+			importLocalNC2Local(d);
+		}else{
+			importLocalNC2Local(d, tp);
+		}
 	}
 
 	

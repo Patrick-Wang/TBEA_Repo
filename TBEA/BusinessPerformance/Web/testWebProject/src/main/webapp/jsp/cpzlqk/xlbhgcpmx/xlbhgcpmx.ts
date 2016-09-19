@@ -7,7 +7,6 @@
 ///<reference path="../cpzlqk.ts"/>
 
 module plugin {
-    export let xlbhgcpmx : number = framework.basic.endpoint.lastId();
 }
 
 module cpzlqk {

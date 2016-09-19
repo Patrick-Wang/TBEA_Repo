@@ -1,7 +1,8 @@
 <components>
  <service id="servZlfxUpdate" transaction="transactionManager">
   <sql id="comment" export="true">select
-			comment
+			comment,
+			zt
 			from
 			cpzlqk_zlfx
 			where
@@ -16,6 +17,7 @@
    <set>
     <condition type="string" ref="0"/>
     <comment type="string" ref="1"/>
+    <zt type="int" value="${zt}"/>
    </set>
   </merge>
  </service>
@@ -36,7 +38,8 @@
     </if>
     <if test="${!comment.isEmpty}">
      <response type="json">
-      <comment>${comment[0]}</comment>
+      <comment>${comment[0][0]}</comment>
+      <zt>${comment[0][1]}</zt>
      </response>
     </if>
    </if>
@@ -162,6 +165,16 @@
  </controller>
  <controller id="zlfxSubmit">
   <context key="data" value="${request.data.asJsonArray}"/>
+  <context key="zt" value="${2}"/>
+  <callservice id="servZlfxSubmit"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="zlfxApprove">
+  <context key="data" value="${request.data.asJsonArray}"/>
+  <context key="zt" value="${1}"/>
   <callservice id="servZlfxSubmit"/>
   <response type="json">
    <errorCode>0</errorCode>

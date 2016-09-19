@@ -45,6 +45,16 @@ var cpzlqk;
             EntryView.prototype.getId = function () {
                 return pluginEntry.byqacptjjg;
             };
+            EntryView.prototype.getMonth = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                var month = curDate.getMonth() + 1;
+                return month;
+            };
+            EntryView.prototype.getYear = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                var year = curDate.getYear() + 1;
+                return year;
+            };
             EntryView.prototype.isSupported = function (compType) {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
@@ -104,7 +114,28 @@ var cpzlqk;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("提交 成功", function () {
-                            _this.pluginUpdate(dt, compType);
+                            var param = {
+                                year: _this.getYear(),
+                                month: _this.getMonth(),
+                                pageType: 2,
+                                tableStatus: JSON.stringify([
+                                    {
+                                        id: plugin.byqacptjjg,
+                                        status: Util.ZBStatus.SUBMITTED
+                                    }, {
+                                        id: plugin.byqadwtjjg,
+                                        status: Util.ZBStatus.SUBMITTED
+                                    }, {
+                                        id: plugin.byqcpycssbhgwtmx,
+                                        status: Util.ZBStatus.SUBMITTED
+                                    }, {
+                                        id: plugin.byqcpycssbhgxxfb,
+                                        status: Util.ZBStatus.SUBMITTED
+                                    }
+                                ])
+                            };
+                            window.location.href = "show.do?param=" + JSON.stringify(param);
+                            //this.pluginUpdate(dt, compType);
                         });
                     }
                     else {

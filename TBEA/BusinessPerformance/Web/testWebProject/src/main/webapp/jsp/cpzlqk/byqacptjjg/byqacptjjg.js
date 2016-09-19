@@ -11,10 +11,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var plugin;
-(function (plugin) {
-    plugin.byqacptjjg = framework.basic.endpoint.lastId();
-})(plugin || (plugin = {}));
 var cpzlqk;
 (function (cpzlqk) {
     var byqacptjjg;
@@ -47,6 +43,8 @@ var cpzlqk;
                 this.mAjax = new Util.Ajax("../byqacptjjg/update.do", false);
                 this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
                 this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
+                this.mCommentApprove = new Util.Ajax("../report/zlfxApprove.do", false);
+                this.mAjaxApprove = new Util.Ajax("../byqacptjjg/approve.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqacptjjg;
@@ -56,6 +54,7 @@ var cpzlqk;
                     || compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             };
             ShowView.prototype.onEvent = function (e) {
+                var _this = this;
                 switch (e.id) {
                     case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
@@ -72,7 +71,28 @@ var cpzlqk;
                         this.mCommentSubmit.get({
                             data: JSON.stringify([[param.condition, param.comment]])
                         }).then(function (jsonData) {
-                            Util.MessageBox.tip("保存成功", undefined);
+                            Util.MessageBox.tip("提交成功", undefined);
+                        });
+                        break;
+                    case cpzlqk.Event.ZLFE_APPROVE_COMMENT:
+                        var param1 = {
+                            condition: Util.Ajax.toUrlParam({
+                                url: this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId: this.mCompType,
+                                ydjd: this.mYdjdType
+                            }),
+                            comment: e.data
+                        };
+                        this.mCommentApprove.get({
+                            data: JSON.stringify([[param1.condition, param1.comment]])
+                        }).then(function (jsonData) {
+                            _this.mAjaxApprove.get({
+                                date: _this.mDt,
+                                companyId: _this.mCompType
+                            }).then(function (jsonData) {
+                                Util.MessageBox.tip("审核成功", undefined);
+                            });
                         });
                         break;
                 }
@@ -106,7 +126,8 @@ var cpzlqk;
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
-                    ydjd: this.mYdjdType
+                    ydjd: this.mYdjdType,
+                    pageType: pageType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -222,10 +243,23 @@ var cpzlqk;
                 this.updateEchart();
             };
             ShowView.prototype.init = function (opt) {
-                framework.router
-                    .fromEp(this)
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
+                var contains = true;
+                if (opt.tableStatus != undefined) {
+                    contains = false;
+                    for (var i = 0; i < opt.tableStatus.length; ++i) {
+                        if (opt.tableStatus[i].id == this.getId()) {
+                            this.mTableStatus = opt.tableStatus[i];
+                            contains = true;
+                            break;
+                        }
+                    }
+                }
+                if (contains) {
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
+                }
             };
             ShowView.prototype.getMonth = function () {
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));

@@ -25,7 +25,8 @@ $(document).ready(function(){
                 ct:"chart",
                 ctarea:"ctarea",
                 host: "pdadwtjjg",
-                tbarea:"tbarea"
+                tbarea:"tbarea",
+    tableStatus: tableStatus
             });
 });
 </script>

@@ -27,7 +27,8 @@ $(document).ready(function(){
                 ct1:"pie",
                 host: "pdcpycssbhgxxfb",
                 tbarea:"tbarea",
-                ctarea:"ctarea"
+                ctarea:"ctarea",
+    tableStatus: tableStatus
             });
 });
 </script>

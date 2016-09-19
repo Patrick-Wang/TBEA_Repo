@@ -8,6 +8,18 @@ module Util {
         day?: number;
     }
 
+    export function parseDate(year:string, month ? :string, day ?:string): Date{
+        let date : Date = <Date>{
+            year : year.length == 0 ? undefined : parseInt(year),
+            month : month.length == 0 ? undefined : parseInt(month),
+            day : day.length == 0 ? undefined : parseInt(day)
+        };
+        if (date.year != undefined || date.month != undefined || date.day != undefined){
+            return date;
+        }
+        return undefined;
+    }
+
     export function addMonth(d: Date, count: number): Date {
         var monthCount = parseInt(d.month + '') + parseInt(d.year + '') * 12 + count;
         var year = parseInt('' + monthCount / 12) + (monthCount % 12 == 0 ? -1 : 0);

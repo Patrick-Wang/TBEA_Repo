@@ -12,4 +12,6 @@ public interface ZBXXDao  extends AbstractReadWriteDao<ZBXX> {
 
 	ZBXX getZbByName(String name);
 
+	List<ZBXX> getTopZb();
+
 }

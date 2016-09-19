@@ -5,6 +5,8 @@
 ///<reference path="messageBox.ts"/>
 var entry_template;
 (function (entry_template) {
+    var Cell = JQTable.Cell;
+    var Formula = JQTable.Formula;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
@@ -21,7 +23,15 @@ var entry_template;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
+    function find(data, id) {
+        for (var i = 0; i < data.length; ++i) {
+            if (data[i][0] == id) {
+                return i;
+            }
+        }
+        return -1;
+    }
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zb_update.do", false);
@@ -67,6 +77,7 @@ var entry_template;
                 .then(function (data) {
                 _this.mStatusList = data.status;
                 _this.mTableData = data.values;
+                _this.mZbxxs = data.zbxx;
                 _this.updateTitle();
                 _this.updateTable(_this.mOpt.tableId);
                 _this.updateApproveStatusFromDeputy(date.year, date.month, _this.mOpt.entryType);
@@ -249,6 +260,20 @@ var entry_template;
                     }
                 }
             }
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                var zbxxs = this.checkSum(submitData);
+                if (zbxxs.length != 0) {
+                    var zbxxs_1 = this.checkSum(submitData);
+                    if (zbxxs_1.length != 0) {
+                        var msg = "";
+                        for (var i_1 = 0; i_1 < zbxxs_1.length; ++i_1) {
+                            msg += "、" + zbxxs_1[i_1].name;
+                        }
+                        Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                        return;
+                    }
+                }
+            }
             this.mSave.post({
                 year: date.year,
                 month: date.month,
@@ -282,6 +307,23 @@ var entry_template;
                         submitData[i].push(allData[i][j]);
                         if (allData[i][j].replace(new RegExp(' ', 'g'), '') == "") {
                             Util.MessageBox.tip("有空内容 无法提交");
+                            return;
+                        }
+                    }
+                }
+            }
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                var zbxxs = this.checkSum(submitData);
+                if (zbxxs.length != 0) {
+                    var zbxxs_2 = this.checkSum(submitData);
+                    if (zbxxs_2.length != 0) {
+                        var zbxxs_3 = this.checkSum(submitData);
+                        if (zbxxs_3.length != 0) {
+                            var msg = "";
+                            for (var i_2 = 0; i_2 < zbxxs_3.length; ++i_2) {
+                                msg += "、" + zbxxs_3[i_2].name;
+                            }
+                            Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
                             return;
                         }
                     }
@@ -322,6 +364,20 @@ var entry_template;
                             Util.MessageBox.tip("有空内容 无法提交");
                             return;
                         }
+                    }
+                }
+            }
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                var zbxxs = this.checkSum(submitData);
+                if (zbxxs.length != 0) {
+                    var zbxxs_4 = this.checkSum(submitData);
+                    if (zbxxs_4.length != 0) {
+                        var msg = "";
+                        for (var i_3 = 0; i_3 < zbxxs_4.length; ++i_3) {
+                            msg += "、" + zbxxs_4[i_3].name;
+                        }
+                        Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                        return;
                     }
                 }
             }
@@ -457,12 +513,25 @@ var entry_template;
                     }
                 }
             }
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                var disabledCell = [];
+                for (var i_4 = 0; i_4 < this.mZbxxs.length; ++i_4) {
+                    var zbxx = this.mZbxxs[i_4];
+                    if (find(this.mTableData, zbxx.id) >= 0) {
+                        for (var j_1 = 0; j_1 < zbxx.children.length; ++j_1) {
+                            var cell = this.parseZbxx(zbxx.children[j_1]);
+                            if (cell != undefined) {
+                                disabledCell.push(cell);
+                            }
+                        }
+                    }
+                }
+                if (disabledCell.length != 0) {
+                    this.mTableAssist.disableCellEdit(disabledCell);
+                }
+            }
             var data = this.mTableData;
-            var lastsel = "";
-            var lastcell = "";
             $("#" + name).jqGrid(this.mTableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
                 data: this.mTableAssist.getDataWithId(data),
                 datatype: "local",
                 multiselect: false,
@@ -475,64 +544,87 @@ var entry_template;
                 width: titles.length * 200,
                 shrinkToFit: true,
                 autoScroll: true,
-                rowNum: 150,
-                onSelectCell: function (id, nm, tmp, iRow, iCol) {
-                    //                       console.log(iRow +', ' + iCol);
-                },
-                //                    onCellSelect: (ri,ci,tdHtml,e) =>{
-                //                       console.log(ri +', ' + ci);
-                //                    },
-                beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
-                    var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                    if (isNaN(ret)) {
-                        $.jgrid.jqModal = {
-                            width: 290,
-                            left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
-                            top: $("#table").offset().top + $("#table").height() / 2 - 90
-                        };
-                        return v;
+                rowNum: 1000,
+                assistEditable: true
+            }));
+        };
+        View.prototype.parseZbxx = function (zbxx) {
+            var row = find(this.mTableData, zbxx.id);
+            if (row < 0) {
+                return undefined;
+            }
+            var cells = [];
+            for (var j = 0; j < zbxx.children.length; ++j) {
+                var row2 = find(this.mTableData, zbxx.children[j].id);
+                if (row2 >= 0) {
+                    cells.push(new Cell(row2, 1));
+                }
+            }
+            if (cells.length == 0) {
+                return undefined;
+            }
+            var dst = new Cell(row, 1);
+            var form = new Formula(dst, cells, function (dest, srcs) {
+                var sum;
+                for (var i = 0; i < srcs.length; ++i) {
+                    var val = srcs[i].getVal();
+                    if ("" != val) {
+                        if (sum == undefined) {
+                            sum = parseFloat(val);
+                        }
+                        else {
+                            sum += parseFloat(val);
+                        }
+                    }
+                }
+                return sum;
+            });
+            this.mTableAssist.addFormula(form);
+            return dst;
+        };
+        View.prototype.checkSum = function (submitData) {
+            var zbxxs = [];
+            var zbxx;
+            for (var i = 0; i < this.mZbxxs.length; ++i) {
+                zbxx = this.mZbxxs[i];
+                var row = find(submitData, zbxx.id);
+                if (row < 0) {
+                    continue;
+                }
+                var sum = void 0;
+                for (var j = 0; j < zbxx.children.length; ++j) {
+                    var row2 = find(submitData, zbxx.children[j].id);
+                    if (row2 < 0) {
+                        continue;
+                    }
+                    if (submitData[row2][1] != "") {
+                        if (sum == undefined) {
+                            sum = parseFloat(submitData[row2][1]);
+                        }
+                        else {
+                            sum += parseFloat(submitData[row2][1]);
+                        }
                     }
                     else {
-                        return ret;
-                    }
-                },
-                beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
-                    lastsel = iRow;
-                    lastcell = iCol;
-                    //                        console.log(iRow +', ' + iCol);
-                    $("input").attr("disabled", true);
-                },
-                afterEditCell: function (rowid, cellname, v, iRow, iCol) {
-                    $("input[type=text]").bind("keydown", function (e) {
-                        if (e.keyCode === 13) {
-                            setTimeout(function () {
-                                $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
-                            }, 10);
+                        if (sum == undefined) {
+                            sum = 0;
                         }
-                    });
-                },
-                afterSaveCell: function () {
-                    $("input").attr("disabled", false);
-                    lastsel = "";
-                },
-                afterRestoreCell: function () {
-                    $("input").attr("disabled", false);
-                    lastsel = "";
-                }
-            }));
-            $('html').bind('click', function (e) {
-                if (lastsel != "") {
-                    if ($(e.target).closest("#" + name).length == 0) {
-                        //  $("#" + name).jqGrid('saveRow', lastsel); 
-                        $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                        //$("#" + name).resetSelection(); 
-                        lastsel = "";
                     }
                 }
-            });
+                if (sum != undefined) {
+                    if (submitData[row][1] == "" && sum != 0) {
+                        zbxxs.push(zbxx);
+                    }
+                    else if (Math.abs(sum - parseFloat(submitData[row][1])) > 1) {
+                        zbxxs.push(zbxx);
+                    }
+                    sum = undefined;
+                }
+            }
+            return zbxxs;
         };
         View.instance = new View();
         return View;
-    }());
+    })();
     entry_template.View = View;
 })(entry_template || (entry_template = {}));

@@ -45,6 +45,18 @@ module cpzlqk {
                 return pluginEntry.byqacptjjg;
             }
 
+            private getMonth():number{
+                let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                let month = curDate.getMonth() + 1;
+                return month;
+            }
+
+            private getYear():number{
+                let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                let year = curDate.getYear() + 1;
+                return year;
+            }
+
             protected isSupported(compType:Util.CompanyType):boolean {
                 if (compType == Util.CompanyType.SBGS ||
                     compType == Util.CompanyType.HBGS ||
@@ -104,7 +116,29 @@ module cpzlqk {
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         Util.MessageBox.tip("提交 成功", ()=>{
-                            this.pluginUpdate(dt, compType);
+
+                            let param = {
+                                year : this.getYear(),
+                                month: this.getMonth(),
+                                pageType:2,
+                                tableStatus: JSON.stringify([
+                                    {
+                                        id:plugin.byqacptjjg,
+                                        status:Util.ZBStatus.SUBMITTED
+                                    },{
+                                        id:plugin.byqadwtjjg,
+                                        status:Util.ZBStatus.SUBMITTED
+                                    },{
+                                        id:plugin.byqcpycssbhgwtmx,
+                                        status:Util.ZBStatus.SUBMITTED
+                                    },{
+                                        id:plugin.byqcpycssbhgxxfb,
+                                        status:Util.ZBStatus.SUBMITTED
+                                    }
+                                ])
+                            }
+                            window.location.href = "show.do?param=" + JSON.stringify(param);
+                            //this.pluginUpdate(dt, compType);
                         });
                     } else {
                         Util.MessageBox.tip(resp.message);

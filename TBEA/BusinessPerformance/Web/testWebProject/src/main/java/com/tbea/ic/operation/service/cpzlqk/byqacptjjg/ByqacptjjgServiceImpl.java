@@ -32,8 +32,6 @@ import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoImpl;
 import com.tbea.ic.operation.model.entity.cpzlqk.ByqJdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ByqYdAcptjjgEntity;
-import com.tbea.ic.operation.model.entity.cpzlqk.PdAcptjEntryEntity;
-import com.tbea.ic.operation.model.entity.cpzlqk.PdYdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
 
 @Service(ByqacptjjgServiceImpl.NAME)
@@ -52,18 +50,18 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 
 	@Override
 	public List<List<String>> getByqacptjjg(Date d, Company company,
-			YDJDType yjType) {
+			YDJDType yjType, ZBStatus status) {
 		if (yjType == YDJDType.YD){
-			return getByqYdAcptjjg(d, company, yjType);
+			return getByqYdAcptjjg(d, company, yjType, status);
 		}
-		return getByqJdAcptjjg(d, company, yjType);
+		return getByqJdAcptjjg(d, company, yjType, status);
 	}
 
 	private List<List<String>> getByqYdAcptjjg(Date d, Company company,
-			YDJDType yjType) {
+			YDJDType yjType, ZBStatus status) {
 		
 		List<ByqYdAcptjjgEntity> entities = byqYdAcptjjgDao.getAll();
-		FormulaClientYd client = new FormulaClientYd(this, zltjjgDao, company, d);
+		FormulaClientYd client = new FormulaClientYd(this, zltjjgDao, company, d, status);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (ByqYdAcptjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
@@ -102,9 +100,9 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	}
 	
 	private List<List<String>> getByqJdAcptjjg(Date d, Company company,
-			YDJDType yjType) {
+			YDJDType yjType, ZBStatus status) {
 		List<ByqJdAcptjjgEntity> entities = byqJdAcptjjgDao.getAll();
-		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, company, d);
+		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, company, d, status);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (ByqJdAcptjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
@@ -187,7 +185,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	}
 
 	@Override
-	public List<WaveItem> getJdWaveValues(Date d, Company company) {
+	public List<WaveItem> getJdWaveValues(Date d, Company company, ZBStatus status) {
 		List<Integer> ids = null;
 		if (company.getType() == CompanyType.BYQCY){
 			ids = new ArrayList<Integer>();
@@ -259,7 +257,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	}
 	
 	@Override
-	public List<WaveItem> getWaveValues(Date d, Company company) {
+	public List<WaveItem> getWaveValues(Date d, Company company, ZBStatus status) {
 		List<Integer> ids = null;
 		if (company.getType() == CompanyType.BYQCY){
 			ids = new ArrayList<Integer>();
@@ -285,9 +283,9 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 			for (int i = 0; i < 12; ++i){
 				ZltjjgEntity zltjjg = null;
 				if (ids == null){
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, status);
 				}else{
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, status);
 				}
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));

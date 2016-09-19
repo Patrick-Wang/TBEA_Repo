@@ -6,11 +6,6 @@
 /// <reference path="../cpzlqkdef.ts"/>
 ///<reference path="../cpzlqk.ts"/>
 
-module plugin {
-    export let byqcpycssbhgxxfb : number = framework.basic.endpoint.lastId();
-    export let byqybysqfysxxfb : number = framework.basic.endpoint.lastId();
-    export let byqybyspbcpxxfb : number = framework.basic.endpoint.lastId();
-}
 
 module cpzlqk {
     export module byqcpycssbhgxxfb {

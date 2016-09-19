@@ -74,26 +74,38 @@ var cpzlqk;
             for (var i = 0; i < inputs.length; i++) {
                 if (true == inputs[i].checked) {
                     if (inputs[i].id == 'rdyd') {
-                        this.mYdjdType = cpzlqk.YDJDType.YD;
-                        router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_YD_SELECTED);
-                        var dtNow = this.mDtSec.getDate();
-                        $("#" + this.mOpt.dt).empty();
-                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
-                            year: this.mOpt.date.year,
-                            month: 12
-                        }, dtNow, false, false);
-                        this.mDtSec = dsp;
+                        if (this.mYdjdType == cpzlqk.YDJDType.JD || this.mYdjdType == undefined) {
+                            var dtNow = this.mDtSec.getDate();
+                            this.mDtJd = this.mDtSec.getDate();
+                            if (this.mDtYd != undefined) {
+                                dtNow = this.mDtYd;
+                            }
+                            this.mYdjdType = cpzlqk.YDJDType.YD;
+                            $("#" + this.mOpt.dt).empty();
+                            var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
+                                year: this.mOpt.date.year,
+                                month: 12
+                            }, dtNow, false, false);
+                            this.mDtSec = dsp;
+                            router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_YD_SELECTED);
+                        }
                     }
                     else {
-                        this.mYdjdType = cpzlqk.YDJDType.JD;
-                        var dtNow = this.mDtSec.getDate();
-                        $("#" + this.mOpt.dt).empty();
-                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
-                            year: this.mOpt.date.year,
-                            month: 12
-                        }, dtNow, false, true);
-                        this.mDtSec = dsp;
-                        router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
+                        if (this.mYdjdType == cpzlqk.YDJDType.YD || this.mYdjdType == undefined) {
+                            var dtNow = this.mDtSec.getDate();
+                            this.mDtYd = this.mDtSec.getDate();
+                            //if (this.mDtJd != undefined){
+                            //    dtNow = this.mDtJd;
+                            //}
+                            this.mYdjdType = cpzlqk.YDJDType.JD;
+                            $("#" + this.mOpt.dt).empty();
+                            var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
+                                year: this.mOpt.date.year,
+                                month: 12
+                            }, dtNow, false, true);
+                            this.mDtSec = dsp;
+                            router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
+                        }
                     }
                 }
             }
@@ -118,25 +130,29 @@ var cpzlqk;
                 case cpzlqk.Event.ZLFE_SAVE_COMMENT:
                     router.to(this.mCurrentPlugin).send(cpzlqk.Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
                     break;
+                case cpzlqk.Event.ZLFE_APPROVE_COMMENT:
+                    router.to(this.mCurrentPlugin).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT, $("#commentText").val());
+                    break;
                 case cpzlqk.Event.ZLFE_COMMENT_DENY:
                     $("#comment").hide();
                     break;
                 case cpzlqk.Event.ZLFE_COMMENT_UPDATED:
                     var comment = e.data;
-                    if (comment.deny == "deny") {
-                        $("#comment").hide();
+                    $("#comment").show();
+                    $("#commentText").val(comment.comment);
+                    $("#commentText").attr("readonly", "readonly");
+                    if (window.pageType == 1) {
+                        if (comment.zt == Util.ZBStatus.APPROVED) {
+                            $("#approveComment").hide();
+                        }
+                        else {
+                            $("#approveComment").show();
+                        }
                     }
-                    else if (comment.readonly == "true") {
-                        $("#saveComment").hide();
-                        $("#comment").show();
-                        $("#commentText").val(comment.comment);
-                        $("#commentText").attr("readonly", "readonly");
-                    }
-                    else {
-                        $("#comment").show();
-                        $("#saveComment").show();
-                        $("#commentText").val(comment.comment);
+                    else if (window.pageType == 2) {
                         $("#commentText").removeAttr("readonly");
+                    }
+                    else if (window.pageType == 3) {
                     }
                     break;
             }

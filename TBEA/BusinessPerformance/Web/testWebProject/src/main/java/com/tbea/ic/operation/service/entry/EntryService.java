@@ -6,11 +6,13 @@ import java.util.List;
 
 import net.sf.json.JSONArray;
 
+import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 
 public interface EntryService {
 
@@ -42,4 +44,6 @@ public interface EntryService {
 	List<ZBStatus> getZbStatus(Date date, CompanyType comp, ZBType entryType);
 
 	boolean hasMarketPermission(Account account);
+
+	List<ZBXX> getZbNodes();
 }

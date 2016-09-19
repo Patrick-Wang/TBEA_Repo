@@ -40,4 +40,10 @@ public class ZBXXDaoImpl extends AbstractReadWriteDaoImpl<ZBXX> implements ZBXXD
 		return ret.get(0);
 	}
 
+	@Override
+	public List<ZBXX> getTopZb() {
+		Query q = this.getEntityManager().createQuery("from ZBXX where parent_id is null");
+		return q.getResultList();
+	}
+
 }

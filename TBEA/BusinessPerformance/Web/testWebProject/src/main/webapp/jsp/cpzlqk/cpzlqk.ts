@@ -12,7 +12,8 @@ module cpzlqk {
 
         isCompanySupported:boolean = false;
         mYdjdType : YDJDType;
-
+        mDtYd:Util.Date;
+        mDtJd:Util.Date;
         protected init(opt:any):void {
             this.mOpt = opt;
             let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
@@ -75,31 +76,46 @@ module cpzlqk {
             for (let i = 0; i < inputs.length; i++) {
                 if (true == inputs[i].checked) {
                     if (inputs[i].id == 'rdyd') {
-                        this.mYdjdType = YDJDType.YD;
-                        router.to(this.plugin(node)).send(Event.ZLFE_YD_SELECTED);
-                        let dtNow = this.mDtSec.getDate();
-                        $("#" + this.mOpt.dt).empty();
-                        let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
-                            {year: this.mOpt.date.year - 3, month: 1},
-                            {
-                                year: this.mOpt.date.year,
-                                month: 12
-                            },
-                            dtNow, false, false);
-                        this.mDtSec = dsp;
+                        if ( this.mYdjdType ==  YDJDType.JD || this.mYdjdType == undefined){
+                            let dtNow = this.mDtSec.getDate();
+                            this.mDtJd = this.mDtSec.getDate();
+                            if (this.mDtYd != undefined){
+                                dtNow = this.mDtYd;
+                            }
+                            this.mYdjdType = YDJDType.YD;
+                            $("#" + this.mOpt.dt).empty();
+                            let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                                {year: this.mOpt.date.year - 3, month: 1},
+                                {
+                                    year: this.mOpt.date.year,
+                                    month: 12
+                                },
+                                dtNow, false, false);
+                            this.mDtSec = dsp;
+                            router.to(this.plugin(node)).send(Event.ZLFE_YD_SELECTED);
+                        }
+
+
                     } else {
-                        this.mYdjdType = YDJDType.JD;
-                        let dtNow = this.mDtSec.getDate();
-                        $("#" + this.mOpt.dt).empty();
-                        let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
-                            {year: this.mOpt.date.year - 3, month: 1},
-                            {
-                                year: this.mOpt.date.year,
-                                month: 12
-                            },
-                            dtNow, false, true);
-                        this.mDtSec = dsp;
-                        router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
+                        if ( this.mYdjdType ==  YDJDType.YD || this.mYdjdType == undefined){
+                            let dtNow = this.mDtSec.getDate();
+                            this.mDtYd = this.mDtSec.getDate();
+                            //if (this.mDtJd != undefined){
+                            //    dtNow = this.mDtJd;
+                            //}
+                            this.mYdjdType = YDJDType.JD;
+
+                            $("#" + this.mOpt.dt).empty();
+                            let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                                {year: this.mOpt.date.year - 3, month: 1},
+                                {
+                                    year: this.mOpt.date.year,
+                                    month: 12
+                                },
+                                dtNow, false, true);
+                            this.mDtSec = dsp;
+                            router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
+                        }
                     }
                 }
             }
@@ -120,29 +136,34 @@ module cpzlqk {
         }
 
         onEvent(e:framework.route.Event):any {
+
             switch (e.id) {
                 case Event.ZLFE_SAVE_COMMENT:
                     router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                    break;
+                case Event.ZLFE_APPROVE_COMMENT:
+                    router.to(this.mCurrentPlugin).send(Event.ZLFE_APPROVE_COMMENT, $("#commentText").val());
                     break;
                 case Event.ZLFE_COMMENT_DENY:
                     $("#comment").hide();
                     break;
                 case Event.ZLFE_COMMENT_UPDATED:
                     let comment : Comment = e.data;
-                    if (comment.deny == "deny"){
-                        $("#comment").hide();
-                    }else if(comment.readonly == "true"){
-                        $("#saveComment").hide();
-                        $("#comment").show();
-                        $("#commentText").val(comment.comment);
-                        $("#commentText").attr("readonly","readonly");
-                    }else{
-                        $("#comment").show();
-                        $("#saveComment").show();
-                        $("#commentText").val(comment.comment);
+                    $("#comment").show();
+                    $("#commentText").val(comment.comment);
+                    $("#commentText").attr("readonly","readonly");
+                    if (window.pageType == 1){//approve
+                        if (comment.zt == Util.ZBStatus.APPROVED){
+                            $("#approveComment").hide();
+                        }else{
+                            $("#approveComment").show();
+                        }
+                    }else if (window.pageType == 2){//submit
                         $("#commentText").removeAttr("readonly");
-                    }
 
+                    }else if (window.pageType == 3){//show
+
+                    }
                     break;
             }
             return super.onEvent(e);

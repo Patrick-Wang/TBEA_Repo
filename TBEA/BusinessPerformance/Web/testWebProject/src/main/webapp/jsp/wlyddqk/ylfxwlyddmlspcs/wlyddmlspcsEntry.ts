@@ -56,6 +56,8 @@ module ylfxwlyddmlspcs {
                 return <Option>this.mOpt;
             }
 
+
+
             public pluginSave(dt:string, cpType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];

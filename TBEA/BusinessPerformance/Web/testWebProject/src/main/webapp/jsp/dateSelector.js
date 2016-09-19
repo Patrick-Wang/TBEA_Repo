@@ -1,6 +1,18 @@
 /// <reference path="util.ts" />
 var Util;
 (function (Util) {
+    function parseDate(year, month, day) {
+        var date = {
+            year: year.length == 0 ? undefined : parseInt(year),
+            month: month.length == 0 ? undefined : parseInt(month),
+            day: day.length == 0 ? undefined : parseInt(day)
+        };
+        if (date.year != undefined || date.month != undefined || date.day != undefined) {
+            return date;
+        }
+        return undefined;
+    }
+    Util.parseDate = parseDate;
     function addMonth(d, count) {
         var monthCount = parseInt(d.month + '') + parseInt(d.year + '') * 12 + count;
         var year = parseInt('' + monthCount / 12) + (monthCount % 12 == 0 ? -1 : 0);

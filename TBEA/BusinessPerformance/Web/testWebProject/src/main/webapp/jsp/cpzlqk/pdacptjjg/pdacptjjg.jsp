@@ -28,7 +28,8 @@ $(document).ready(function(){
                 ct:"chart",
                 ctarea:"ctarea",
                 host: "pdacptjjg",
-                tbarea:"tbarea"
+                tbarea:"tbarea",
+                tableStatus: tableStatus
             });
 });
 </script>

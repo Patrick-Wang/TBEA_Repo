@@ -7,9 +7,7 @@
 ///<reference path="../cpzlqk.ts"/>
 ///<reference path="../../jqgrid/jqgrid.d.ts"/>
 
-module plugin {
-    export let pdacptjjg : number = framework.basic.endpoint.lastId();
-}
+
 declare var echarts;
 module cpzlqk {
     export module pdacptjjg {

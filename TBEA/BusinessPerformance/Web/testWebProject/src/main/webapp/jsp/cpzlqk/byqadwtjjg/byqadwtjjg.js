@@ -10,10 +10,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var plugin;
-(function (plugin) {
-    plugin.byqadwtjjg = framework.basic.endpoint.lastId();
-})(plugin || (plugin = {}));
 var cpzlqk;
 (function (cpzlqk) {
     var byqadwtjjg;

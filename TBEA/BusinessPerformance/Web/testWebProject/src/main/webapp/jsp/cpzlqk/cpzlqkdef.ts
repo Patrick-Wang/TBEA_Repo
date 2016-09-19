@@ -1,13 +1,41 @@
 ///<reference path="../framework/basic/basic.ts"/>
 ///<reference path="../framework/basic/basicShow.ts"/>
 
+module plugin {
+    let startId = 10293;
+    export let byqacptjjg : number = ++startId;
+    export let byqadwtjjg : number = ++startId;
+    export let byqcpycssbhgwtmx : number = ++startId;
+    export let byqybysqfyswtmx : number = ++startId;
+    export let byqybyspbcpwtmx : number = ++startId;
+    export let byqcpycssbhgxxfb : number = ++startId;
+    export let byqybysqfysxxfb : number = ++startId;
+    export let byqybyspbcpxxfb : number = ++startId;
+    export let pdacptjjg : number = ++startId;
+    export let pdadwtjjg : number = ++startId;
+    export let pdcpycssbhgwtmx : number = ++startId;
+    export let pdybysqfyswtmx : number = ++startId;
+    export let pdybyspbcpwtmx : number = ++startId;
+    export let pdcpycssbhgxxfb : number = ++startId;
+    export let pdybysqfysxxfb : number = ++startId;
+    export let pdybyspbcpxxfb : number = ++startId;
+    export let xlacptjjg : number = ++startId;
+    export let xladydjtjjg : number = ++startId;
+    export let xlbhgcpmx : number = ++startId;
+}
+
 module cpzlqk{
+
+
+
+    import ZBStatus = Util.ZBStatus;
     export interface Option extends framework.basic.PluginOption {
         tb:string;
         ct?:string;
         ct1?:string;
         ctarea?:string;
-        tips?:string
+        tips?:string;
+        tableStatus:TableStatus[];
     }
 
     export interface FrameOption extends framework.basic.Option {
@@ -18,11 +46,17 @@ module cpzlqk{
         comment?:string;
         readonly?:string;
         deny?:string;
+        zt?:ZBStatus;
     }
 
     export enum YDJDType{
         YD,
         JD
+    }
+
+    export interface TableStatus{
+        id:number;
+        status:ZBStatus;
     }
 
     export interface CpzlqkResp{
@@ -49,6 +83,7 @@ module cpzlqk{
         export let ZLFE_IS_BHGLX_SUPPORTED : number = FrameEvent.lastEvent();
         export let ZLFE_SET_ZBSTATUS : number = FrameEvent.lastEvent();
         export let ZLFE_SAVE_COMMENT : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVE_COMMENT : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_UPDATED : number = FrameEvent.lastEvent();
         export let ZLFE_DATA_STATUS : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_DENY : number = FrameEvent.lastEvent();
