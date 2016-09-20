@@ -46,15 +46,11 @@ module cpzlqk {
             }
 
             private getMonth():number{
-                let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-                return month;
+                return Util.toDate(this.mDt).month;
             }
 
             private getYear():number{
-                let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let year = curDate.getYear() + 1;
-                return year;
+                return Util.toDate(this.mDt).year;
             }
 
             protected isSupported(compType:Util.CompanyType):boolean {
@@ -123,18 +119,17 @@ module cpzlqk {
                                 pageType:2,
                                 tableStatus: JSON.stringify([
                                     {
-                                        id:plugin.byqacptjjg,
-                                        status:Util.ZBStatus.SUBMITTED
+                                        id:plugin.byqacptjjg
                                     },{
-                                        id:plugin.byqadwtjjg,
-                                        status:Util.ZBStatus.SUBMITTED
-                                    },{
-                                        id:plugin.byqcpycssbhgwtmx,
-                                        status:Util.ZBStatus.SUBMITTED
-                                    },{
-                                        id:plugin.byqcpycssbhgxxfb,
-                                        status:Util.ZBStatus.SUBMITTED
+                                        id:plugin.byqadwtjjg
                                     }
+                                    //,{
+                                    //    id:plugin.byqcpycssbhgwtmx,
+                                    //    status:Util.ZBStatus.SUBMITTED
+                                    //},{
+                                    //    id:plugin.byqcpycssbhgxxfb,
+                                    //    status:Util.ZBStatus.SUBMITTED
+                                    //}
                                 ])
                             }
                             window.location.href = "show.do?param=" + JSON.stringify(param);

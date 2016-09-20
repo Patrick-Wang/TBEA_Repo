@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -48,22 +49,27 @@ public class ByqadwtjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		
+		Integer pageType = Integer.valueOf(request.getParameter("pageType"));
+		ZBStatus status = ZBStatus.NONE;
+		if (pageType == 3){
+			status = ZBStatus.APPROVED;
+		}
+
 		boolean all = Boolean.valueOf(request.getParameter("all"));
 		CpzlqkResp resp = null;
 		
 		if (all){
-			List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType);
+			List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType, status);
 			List<WaveItem> waveItems = null;
 			if (yjType == YDJDType.YD){
-				waveItems = byqadwtjjgService.getWaveItems(d);
+				waveItems = byqadwtjjgService.getWaveItems(d, status);
 			}
 			resp = new CpzlqkResp(result, waveItems);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
 			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType, company);
-			List<WaveItem> waveItems = byqadwtjjgService.getByqYdAdwtjjgWaveItems(d, company);
+			List<List<String>> result = byqadwtjjgService.getByqadwtjjg(d, yjType, company, status);
+			List<WaveItem> waveItems = byqadwtjjgService.getByqYdAdwtjjgWaveItems(d, company, status);
 			resp = new CpzlqkResp(result, waveItems);
 		}
 		
@@ -80,16 +86,15 @@ public class ByqadwtjjgServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		List<List<String>> result = null;
-		
+
 		boolean all = Boolean.valueOf(request.getParameter("all"));
-	
 		if (all){
-			result = byqadwtjjgService.getByqadwtjjg(d, yjType);
+			//result = byqadwtjjgService.getByqadwtjjg(d, yjType, );
 			
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
 			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			result = byqadwtjjgService.getByqadwtjjg(d, yjType, company);
+			///result = byqadwtjjgService.getByqadwtjjg(d, yjType, company);
 		}
 		
 		

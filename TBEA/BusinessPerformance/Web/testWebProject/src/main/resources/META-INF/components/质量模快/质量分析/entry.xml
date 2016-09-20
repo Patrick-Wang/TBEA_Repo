@@ -29,6 +29,17 @@
   <context key="isXlCy" value="${50001 == compId}"/>
   <context key="isPdCy" value="${50002 == compId}"/>
   <callservice id="servZlfxUpdate"/>
+  <if test="${comment.isEmpty}">
+     <response type="json">
+      <comment>${&quot;&quot;}</comment>
+     </response>
+    </if>
+    <if test="${!comment.isEmpty}">
+     <response type="json">
+      <comment>${comment[0][0]}</comment>
+      <zt>${comment[0][1]}</zt>
+     </response>
+    </if>
   <if test="${isByqCy}">
    <if test="${auth[46]}">
     <if test="${comment.isEmpty}">

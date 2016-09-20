@@ -2,7 +2,6 @@ package com.tbea.ic.operation.service.cpzlqk.byqadwtjjg;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,6 +14,7 @@ import com.tbea.ic.operation.common.Formula;
 import com.tbea.ic.operation.common.FormulaServer;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Pair;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
@@ -43,8 +43,8 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 
 	@Override
 	public List<List<String>> getByqadwtjjg(Date d,
-			YDJDType yjType) {
-		return getByqadwtjjg(d, yjType, byqAdwtjjgDao.getAll());
+			YDJDType yjType, ZBStatus status) {
+		return getByqadwtjjg(d, yjType, byqAdwtjjgDao.getAll(), status);
 	}
 
 	private int setZltjjg(List<String> row, int start, ZltjjgEntity zltjjg){
@@ -68,9 +68,9 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 	}
 
 	
-	private List<List<String>> getByqadwtjjg(Date d, YDJDType yjType, List<ByqAdwtjjgEntity> entities) {
+	private List<List<String>> getByqadwtjjg(Date d, YDJDType yjType, List<ByqAdwtjjgEntity> entities, ZBStatus status) {
 		List<Integer> comps = new ArrayList<Integer>();
-		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType);
+		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType, status);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (ByqAdwtjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
@@ -89,8 +89,8 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 	
 	@Override
 	public List<List<String>> getByqadwtjjg(Date d, YDJDType yjType,
-			Company company) {
-		return this.getByqadwtjjg(d, yjType, byqAdwtjjgDao.getByDw(company));
+			Company company, ZBStatus status) {
+		return this.getByqadwtjjg(d, yjType, byqAdwtjjgDao.getByDw(company), status);
 	}
 
 	private WaveItem getWaveItem(List<WaveItem> wis, String name){
@@ -114,14 +114,14 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 	}
 	
 	@Override
-	public List<WaveItem> getByqYdAdwtjjgWaveItems(Date d, Company company) {
+	public List<WaveItem> getByqYdAdwtjjgWaveItems(Date d, Company company, ZBStatus status) {
 		
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
 		cal.setMonth(1);
 		for (int j = 0; j < 12; ++j){
-			List<List<String>> result = this.getByqadwtjjg(cal.getDate(), YDJDType.YD, byqAdwtjjgDao.getByDw(company));
+			List<List<String>> result = this.getByqadwtjjg(cal.getDate(), YDJDType.YD, byqAdwtjjgDao.getByDw(company), status);
 			//result.size() - 1 因为最后一行是合计
 			for (int i = 0; i < result.size() - 1; ++i){
 				if (result.get(i).get(1).indexOf("35") < 0){
@@ -136,13 +136,13 @@ public class ByqadwtjjgServiceImpl implements ByqadwtjjgService {
 	}
 
 	@Override
-	public List<WaveItem> getWaveItems(Date d) {
+	public List<WaveItem> getWaveItems(Date d, ZBStatus status) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
 		cal.setMonth(1);
 		for (int j = 0; j < 12; ++j){
-			List<List<String>> result = this.getByqadwtjjg(cal.getDate(), YDJDType.YD);
+			List<List<String>> result = this.getByqadwtjjg(cal.getDate(), YDJDType.YD, status);
 			//result.size() - 1 因为最后一行是合计
 			for (int i = 0; i < result.size() - 1; ++i){
 				if ("合计".equals(result.get(i).get(0).replaceAll("\\s", "")) && result.get(i).get(1).indexOf("35") < 0){

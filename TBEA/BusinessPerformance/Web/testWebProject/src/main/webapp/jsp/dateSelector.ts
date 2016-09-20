@@ -8,11 +8,20 @@ module Util {
         day?: number;
     }
 
+    export function toDate(dt:string): Date{
+        let curDate : any = new Date(Date.parse(dt.replace(/-/g, '/')));
+        return {
+            year : curDate.getFullYear(),
+            month : curDate.getMonth() + 1,
+            day:curDate.getDay()
+        };
+    }
+
     export function parseDate(year:string, month ? :string, day ?:string): Date{
         let date : Date = <Date>{
-            year : year.length == 0 ? undefined : parseInt(year),
-            month : month.length == 0 ? undefined : parseInt(month),
-            day : day.length == 0 ? undefined : parseInt(day)
+            year : year == undefined || year.length == 0 ? undefined : parseInt(year),
+            month :  month == undefined || month.length == 0 ? undefined : parseInt(month),
+            day : day == undefined || day.length == 0 ? undefined : parseInt(day)
         };
         if (date.year != undefined || date.month != undefined || date.day != undefined){
             return date;

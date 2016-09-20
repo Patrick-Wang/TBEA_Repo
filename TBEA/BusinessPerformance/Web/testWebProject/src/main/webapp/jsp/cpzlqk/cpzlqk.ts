@@ -4,6 +4,8 @@
 ///<reference path="../components/dateSelectorProxy.ts"/>
 
 module cpzlqk {
+    declare var tableStatus : TableStatus[];
+
     import router = framework.router;
     import FrameEvent = framework.basic.FrameEvent;
     import DateSelector = Util.DateSelector;
@@ -44,6 +46,23 @@ module cpzlqk {
             this.updateUI();
         }
 
+        protected register(name:string, plugin:number):void {
+            let contains = true;
+            if (tableStatus != undefined){
+                contains = false;
+                for (let i = 0; i < tableStatus.length; ++i){
+                    if (tableStatus[i].id == plugin){
+                        contains = true;
+                        break;
+                    }
+                }
+            }
+
+            if (contains){
+                super.register(name,plugin)
+            }
+        }
+
         protected checkCompanySupported() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
             let isSupported = router.to(this.plugin(node)).send(Event.ZLFE_IS_COMPANY_SUPPORTED, this.mOpt.comps.length);
@@ -76,7 +95,7 @@ module cpzlqk {
             for (let i = 0; i < inputs.length; i++) {
                 if (true == inputs[i].checked) {
                     if (inputs[i].id == 'rdyd') {
-                        if ( this.mYdjdType ==  YDJDType.JD || this.mYdjdType == undefined){
+                       // if ( this.mYdjdType ==  YDJDType.JD || this.mYdjdType == undefined){
                             let dtNow = this.mDtSec.getDate();
                             this.mDtJd = this.mDtSec.getDate();
                             if (this.mDtYd != undefined){
@@ -93,11 +112,11 @@ module cpzlqk {
                                 dtNow, false, false);
                             this.mDtSec = dsp;
                             router.to(this.plugin(node)).send(Event.ZLFE_YD_SELECTED);
-                        }
+                      //  }
 
 
                     } else {
-                        if ( this.mYdjdType ==  YDJDType.YD || this.mYdjdType == undefined){
+                        //if ( this.mYdjdType ==  YDJDType.YD || this.mYdjdType == undefined){
                             let dtNow = this.mDtSec.getDate();
                             this.mDtYd = this.mDtSec.getDate();
                             //if (this.mDtJd != undefined){
@@ -115,7 +134,7 @@ module cpzlqk {
                                 dtNow, false, true);
                             this.mDtSec = dsp;
                             router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
-                        }
+                       // }
                     }
                 }
             }
@@ -153,16 +172,17 @@ module cpzlqk {
                     $("#commentText").val(comment.comment);
                     $("#commentText").attr("readonly","readonly");
                     if (window.pageType == 1){//approve
-                        if (comment.zt == Util.ZBStatus.APPROVED){
+                        if (comment.zt == 1){
                             $("#approveComment").hide();
                         }else{
                             $("#approveComment").show();
                         }
                     }else if (window.pageType == 2){//submit
                         $("#commentText").removeAttr("readonly");
-
                     }else if (window.pageType == 3){//show
-
+                        if (comment.zt != 1){
+                            $("#comment").hide();
+                        }
                     }
                     break;
             }

@@ -92,6 +92,13 @@ var cpzlqk;
                                 companyId: _this.mCompType
                             }).then(function (jsonData) {
                                 Util.MessageBox.tip("审核成功", undefined);
+                                framework.router
+                                    .fromEp(_this)
+                                    .to(framework.basic.endpoint.FRAME_ID)
+                                    .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
+                                    comment: param1.comment,
+                                    zt: 1
+                                });
                             });
                         });
                         break;
@@ -243,28 +250,13 @@ var cpzlqk;
                 this.updateEchart();
             };
             ShowView.prototype.init = function (opt) {
-                var contains = true;
-                if (opt.tableStatus != undefined) {
-                    contains = false;
-                    for (var i = 0; i < opt.tableStatus.length; ++i) {
-                        if (opt.tableStatus[i].id == this.getId()) {
-                            this.mTableStatus = opt.tableStatus[i];
-                            contains = true;
-                            break;
-                        }
-                    }
-                }
-                if (contains) {
-                    framework.router
-                        .fromEp(this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
-                }
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
             };
             ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+                return Util.toDate(this.mDt).month;
             };
             ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";

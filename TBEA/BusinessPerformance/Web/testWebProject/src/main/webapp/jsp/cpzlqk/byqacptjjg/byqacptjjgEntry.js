@@ -46,14 +46,10 @@ var cpzlqk;
                 return pluginEntry.byqacptjjg;
             };
             EntryView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+                return Util.toDate(this.mDt).month;
             };
             EntryView.prototype.getYear = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var year = curDate.getYear() + 1;
-                return year;
+                return Util.toDate(this.mDt).year;
             };
             EntryView.prototype.isSupported = function (compType) {
                 if (compType == Util.CompanyType.SBGS ||
@@ -120,17 +116,9 @@ var cpzlqk;
                                 pageType: 2,
                                 tableStatus: JSON.stringify([
                                     {
-                                        id: plugin.byqacptjjg,
-                                        status: Util.ZBStatus.SUBMITTED
+                                        id: plugin.byqacptjjg
                                     }, {
-                                        id: plugin.byqadwtjjg,
-                                        status: Util.ZBStatus.SUBMITTED
-                                    }, {
-                                        id: plugin.byqcpycssbhgwtmx,
-                                        status: Util.ZBStatus.SUBMITTED
-                                    }, {
-                                        id: plugin.byqcpycssbhgxxfb,
-                                        status: Util.ZBStatus.SUBMITTED
+                                        id: plugin.byqadwtjjg
                                     }
                                 ])
                             };

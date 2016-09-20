@@ -38,6 +38,8 @@ module cpzlqk {
             private mCompType:Util.CompanyType;
             private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
             private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
+            private mCommentApprove:Util.Ajax = new Util.Ajax("../report/zlfxApprove.do", false);
+            private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqacptjjg/approve.do", false);
             getId():number {
                 return plugin.byqadwtjjg;
             }
@@ -64,6 +66,34 @@ module cpzlqk {
                             data : JSON.stringify([[param.condition, param.comment]])
                         }).then((jsonData:any)=>{
                             Util.MessageBox.tip("保存成功", undefined, 1000);
+                        });
+                        break;
+                    case Event.ZLFE_APPROVE_COMMENT:
+                        let param1 = {
+                            condition:Util.Ajax.toUrlParam({
+                                url : this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId:this.mCompType,
+                                ydjd:this.mYdjdType
+                            }),
+                            comment:e.data
+                        }
+                        this.mCommentApprove.get({
+                            data : JSON.stringify([[param1.condition, param1.comment]])
+                        }).then((jsonData:any)=>{
+                            this.mAjaxApprove.get({
+                                date: this.mDt,
+                                companyId:this.mCompType
+                            }).then((jsonData:any)=>{
+                                Util.MessageBox.tip("审核成功", undefined);
+                                framework.router
+                                    .fromEp(this)
+                                    .to(framework.basic.endpoint.FRAME_ID)
+                                    .send(Event.ZLFE_COMMENT_UPDATED, {
+                                        comment:param1.comment,
+                                        zt:1
+                                    });
+                            });
                         });
                         break;
                 }
@@ -101,7 +131,8 @@ module cpzlqk {
                         date: date,
                         companyId:compType,
                         ydjd:this.mYdjdType,
-                        all: this.mCompType == Util.CompanyType.BYQCY
+                        all: this.mCompType == Util.CompanyType.BYQCY,
+                        pageType:pageType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;

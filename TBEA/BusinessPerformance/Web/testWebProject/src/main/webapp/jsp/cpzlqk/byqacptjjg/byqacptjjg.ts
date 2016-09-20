@@ -41,7 +41,6 @@ module cpzlqk {
             private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqacptjjg/approve.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
-            private mTableStatus:TableStatus;
             getId():number {
                 return plugin.byqacptjjg;
             }
@@ -88,6 +87,13 @@ module cpzlqk {
                                 companyId:this.mCompType
                             }).then((jsonData:any)=>{
                                 Util.MessageBox.tip("审核成功", undefined);
+                                framework.router
+                                    .fromEp(this)
+                                    .to(framework.basic.endpoint.FRAME_ID)
+                                    .send(Event.ZLFE_COMMENT_UPDATED, {
+                                        comment:param1.comment,
+                                        zt:1
+                                    });
                             });
                         });
                         break;
@@ -254,29 +260,14 @@ module cpzlqk {
             }
 
             public init(opt:Option):void {
-                let contains = true;
-                if (opt.tableStatus != undefined){
-                    contains = false;
-                    for (let i = 0; i < opt.tableStatus.length; ++i){
-                        if (opt.tableStatus[i].id == this.getId()){
-                            this.mTableStatus = opt.tableStatus[i];
-                            contains = true;
-                            break;
-                        }
-                    }
-                }
-                if (contains){
-                    framework.router
-                        .fromEp(this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
-                }
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
             }
 
 			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
+				return Util.toDate(this.mDt).month;
 			}
 			
             private updateTable():void {

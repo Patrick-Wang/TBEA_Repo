@@ -47,12 +47,12 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 
 	@Override
 	public List<List<String>> getByqcpycssbhgwtmx(Date d,
-			YDJDType yjType) {
+			YDJDType yjType, ZBStatus status) {
 		List<ByqBhgwtmxEntity> entities = null;
 		if (yjType == YDJDType.YD){
-			entities = byqBhgwtmxDao.getByYd(d, ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByYd(d, status);
 		}else{
-			entities = byqBhgwtmxDao.getByJd(d, ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByJd(d, status);
 		}
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (ByqBhgwtmxEntity entity : entities){
@@ -209,12 +209,12 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 
 	@Override
 	public List<List<String>> getByqcpycssbhgwtmx(Date d, YDJDType yjType,
-			Company company) {
+			Company company, ZBStatus status) {
 		List<ByqBhgwtmxEntity> entities = null;
 		if (yjType == YDJDType.YD){
-			entities = byqBhgwtmxDao.getByYd(d, company, ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByYd(d, company, status);
 		}else{
-			entities = byqBhgwtmxDao.getByJd(d, company, ZBStatus.APPROVED);
+			entities = byqBhgwtmxDao.getByJd(d, company, status);
 		}
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (ByqBhgwtmxEntity entity : entities){

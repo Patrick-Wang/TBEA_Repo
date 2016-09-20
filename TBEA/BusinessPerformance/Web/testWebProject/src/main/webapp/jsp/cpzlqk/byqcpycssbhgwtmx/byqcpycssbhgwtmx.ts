@@ -38,6 +38,8 @@ module cpzlqk {
             private mCompType:Util.CompanyType;
             private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
             private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
+            private mCommentApprove:Util.Ajax = new Util.Ajax("../report/zlfxApprove.do", false);
+            private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/approve.do", false);
             getId():number {
                 return plugin.byqcpycssbhgwtmx;
             }
@@ -76,7 +78,8 @@ module cpzlqk {
                         date: date,
                         companyId:compType,
                         ydjd:this.mYdjdType,
-                        all: this.mCompType == Util.CompanyType.BYQCY
+                        all: this.mCompType == Util.CompanyType.BYQCY,
+                        pageType:pageType
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -112,6 +115,34 @@ module cpzlqk {
                             Util.MessageBox.tip("保存成功", undefined, 1000);
                         });
                         break;
+                    case Event.ZLFE_APPROVE_COMMENT:
+                        let param1 = {
+                            condition:Util.Ajax.toUrlParam({
+                                url : this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId:this.mCompType,
+                                ydjd:this.mYdjdType
+                            }),
+                            comment:e.data
+                        }
+                        this.mCommentApprove.get({
+                            data : JSON.stringify([[param1.condition, param1.comment]])
+                        }).then((jsonData:any)=>{
+                            this.mAjaxApprove.get({
+                                date: this.mDt,
+                                companyId:this.mCompType
+                            }).then((jsonData:any)=>{
+                                Util.MessageBox.tip("审核成功", undefined);
+                                framework.router
+                                    .fromEp(this)
+                                    .to(framework.basic.endpoint.FRAME_ID)
+                                    .send(Event.ZLFE_COMMENT_UPDATED, {
+                                        comment:param1.comment,
+                                        zt:1
+                                    });
+                            });
+                        });
+                        break;
                 }
                 return super.onEvent(e);
             }
@@ -124,9 +155,7 @@ module cpzlqk {
             }
 
 			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
+				return Util.toDate(this.mDt).month;
 			}
 			
             private updateTable():void {

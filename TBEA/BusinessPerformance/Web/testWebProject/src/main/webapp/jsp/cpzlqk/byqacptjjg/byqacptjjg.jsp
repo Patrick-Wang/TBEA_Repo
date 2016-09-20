@@ -28,8 +28,7 @@ $(document).ready(function(){
                 ct:"chart",
                 ctarea:"ctarea",
                 host: "byqacptjjg",
-                tbarea:"tbarea",
-                tableStatus: tableStatus
+                tbarea:"tbarea"
             });
 });
 </script>

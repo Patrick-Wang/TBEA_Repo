@@ -1,11 +1,20 @@
 /// <reference path="util.ts" />
 var Util;
 (function (Util) {
+    function toDate(dt) {
+        var curDate = new Date(Date.parse(dt.replace(/-/g, '/')));
+        return {
+            year: curDate.getFullYear(),
+            month: curDate.getMonth() + 1,
+            day: curDate.getDay()
+        };
+    }
+    Util.toDate = toDate;
     function parseDate(year, month, day) {
         var date = {
-            year: year.length == 0 ? undefined : parseInt(year),
-            month: month.length == 0 ? undefined : parseInt(month),
-            day: day.length == 0 ? undefined : parseInt(day)
+            year: year == undefined || year.length == 0 ? undefined : parseInt(year),
+            month: month == undefined || month.length == 0 ? undefined : parseInt(month),
+            day: day == undefined || day.length == 0 ? undefined : parseInt(day)
         };
         if (date.year != undefined || date.month != undefined || date.day != undefined) {
             return date;

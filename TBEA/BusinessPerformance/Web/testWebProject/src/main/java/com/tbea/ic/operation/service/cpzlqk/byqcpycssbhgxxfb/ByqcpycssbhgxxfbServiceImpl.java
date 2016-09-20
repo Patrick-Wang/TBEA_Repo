@@ -99,16 +99,16 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 	
 	
 	@Override
-	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType) {
+	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, ZBStatus status) {
 		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
 										// count]
 		List<Object[]> hjEntities = null;
 		if (yjType == YDJDType.YD) {
-			hjEntities = byqBhgwtmxDao.getByYdFbHj(d, ZBStatus.APPROVED);
-			entities = byqBhgwtmxDao.getByYdFb(d, ZBStatus.APPROVED);
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(d, status);
+			entities = byqBhgwtmxDao.getByYdFb(d, status);
 		} else {
-			hjEntities = byqBhgwtmxDao.getByJdFbHj(d, ZBStatus.APPROVED);
-			entities = byqBhgwtmxDao.getByJdFb(d, ZBStatus.APPROVED);
+			hjEntities = byqBhgwtmxDao.getByJdFbHj(d, status);
+			entities = byqBhgwtmxDao.getByJdFb(d, status);
 		}
 		return this.getByqcpycssbhgxxfb(d, yjType, entities, hjEntities);
 	}
@@ -124,21 +124,21 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 	}
 
 	@Override
-	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, Company company) {
+	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, Company company, ZBStatus status) {
 		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
 		// count]
 		List<Object[]> hjEntities = null;//[Integer dwid, Long
 		                          		// count]
 		if (yjType == YDJDType.YD) {
 			hjEntities = byqBhgwtmxDao.getByYdFbHj(d, company,
-					ZBStatus.APPROVED);
+					status);
 			entities = byqBhgwtmxDao.getByYdFb(d, company,
-					ZBStatus.APPROVED);
+					status);
 		} else {
 			hjEntities = byqBhgwtmxDao.getByJdFbHj(d, company,
-					ZBStatus.APPROVED);
+					status);
 			entities = byqBhgwtmxDao.getByJdFb(d, company,
-					ZBStatus.APPROVED);
+					status);
 		}
 		return this.getByqcpycssbhgxxfb(d, yjType, entities, hjEntities);
 	}
@@ -156,7 +156,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 	
 	
 	@Override
-	public List<WaveItem> getWaveItems(Date d, YDJDType yjType) {
+	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, ZBStatus status) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
@@ -164,7 +164,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 		List<Object[]> hjEntities = null;//[Integer dwid, Long
   		// count]
 		for (int i = 0; i < 12; ++i){
-			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), ZBStatus.APPROVED);
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), status);
 			for (int j = 0; j < hjEntities.size(); ++j){
 				getWaveItem(wis, dwmcDao.getByDwid((Integer) hjEntities.get(j)[0])
 						.getDwmc().getName())
@@ -179,7 +179,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 
 
 	@Override
-	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company) {
+	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company, ZBStatus status) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
@@ -187,7 +187,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 		List<Object[]> hjEntities = null;//[Integer dwid, Long
   		// count]
 		for (int i = 0; i < 12; ++i){
-			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), company, ZBStatus.APPROVED);
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), company, status);
 			
 			for (int j = 0; j < hjEntities.size(); ++j){
 				getWaveItem(wis, company.getName())

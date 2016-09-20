@@ -43,6 +43,8 @@ var cpzlqk;
                 this.mAjax = new Util.Ajax("../byqcpycssbhgwtmx/update.do", false);
                 this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
                 this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
+                this.mCommentApprove = new Util.Ajax("../report/zlfxApprove.do", false);
+                this.mAjaxApprove = new Util.Ajax("../byqcpycssbhgwtmx/approve.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqcpycssbhgwtmx;
@@ -81,7 +83,8 @@ var cpzlqk;
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
-                    all: this.mCompType == Util.CompanyType.BYQCY
+                    all: this.mCompType == Util.CompanyType.BYQCY,
+                    pageType: pageType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -95,6 +98,7 @@ var cpzlqk;
                 this.updateTable();
             };
             ShowView.prototype.onEvent = function (e) {
+                var _this = this;
                 switch (e.id) {
                     case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
@@ -114,6 +118,34 @@ var cpzlqk;
                             Util.MessageBox.tip("保存成功", undefined, 1000);
                         });
                         break;
+                    case cpzlqk.Event.ZLFE_APPROVE_COMMENT:
+                        var param1 = {
+                            condition: Util.Ajax.toUrlParam({
+                                url: this.mAjax.baseUrl(),
+                                date: this.mDt,
+                                companyId: this.mCompType,
+                                ydjd: this.mYdjdType
+                            }),
+                            comment: e.data
+                        };
+                        this.mCommentApprove.get({
+                            data: JSON.stringify([[param1.condition, param1.comment]])
+                        }).then(function (jsonData) {
+                            _this.mAjaxApprove.get({
+                                date: _this.mDt,
+                                companyId: _this.mCompType
+                            }).then(function (jsonData) {
+                                Util.MessageBox.tip("审核成功", undefined);
+                                framework.router
+                                    .fromEp(_this)
+                                    .to(framework.basic.endpoint.FRAME_ID)
+                                    .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
+                                    comment: param1.comment,
+                                    zt: 1
+                                });
+                            });
+                        });
+                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
@@ -124,9 +156,7 @@ var cpzlqk;
                     .send(framework.basic.FrameEvent.FE_REGISTER, "产品一次送试不合格问题明细");
             };
             ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+                return Util.toDate(this.mDt).month;
             };
             ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";

@@ -45,7 +45,6 @@ public class PdcpycssbhgwtmxServlet {
 	PdcpycssbhgwtmxService pdcpycssbhgwtmxService;
 
 
-
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 

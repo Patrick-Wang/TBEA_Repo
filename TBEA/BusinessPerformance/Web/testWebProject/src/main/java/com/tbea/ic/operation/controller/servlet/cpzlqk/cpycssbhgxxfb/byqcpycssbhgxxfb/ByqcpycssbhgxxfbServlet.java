@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -54,24 +55,29 @@ public class ByqcpycssbhgxxfbServlet {
 		boolean all = Boolean.valueOf(request.getParameter("all"));
 		List<List<String>> result = null;
 		List<WaveItem> wis = null;
+		Integer pageType = Integer.valueOf(request.getParameter("pageType"));
+		ZBStatus status = ZBStatus.NONE;
+		if (pageType == 3){
+			status = ZBStatus.APPROVED;
+		}
 		if (all){
-			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType);
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, status);
 			if (yjType == YDJDType.JD){
 				EasyCalendar cal = new EasyCalendar();
 				cal.setTime(d);
-				result.addAll(byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(cal.getLastYear().getDate(), yjType));
+				result.addAll(byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(cal.getLastYear().getDate(), yjType, status));
 			}
-			wis = byqcpycssbhgxxfbService.getWaveItems(d, yjType);
+			wis = byqcpycssbhgxxfbService.getWaveItems(d, yjType, status);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
 			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, company);
+			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, company, status);
 			if (yjType == YDJDType.JD){
 				EasyCalendar cal = new EasyCalendar();
 				cal.setTime(d);
-				result.addAll(byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(cal.getLastYear().getDate(), yjType, company));
+				result.addAll(byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(cal.getLastYear().getDate(), yjType, company, status));
 			}
-			wis = byqcpycssbhgxxfbService.getWaveItems(d, yjType, company);
+			wis = byqcpycssbhgxxfbService.getWaveItems(d, yjType, company, status);
 		}
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, null);
@@ -91,11 +97,11 @@ public class ByqcpycssbhgxxfbServlet {
 		boolean all = Boolean.valueOf(request.getParameter("all"));
 		List<List<String>> result = null;
 		if (all){
-			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType);
+			//result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
 			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, company);
+			//result = byqcpycssbhgxxfbService.getByqcpycssbhgxxfb(d, yjType, company);
 		}
 		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQCPYCSSBHGXXFB);

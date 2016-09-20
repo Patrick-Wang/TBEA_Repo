@@ -55,13 +55,19 @@ public class ByqcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		boolean all = Boolean.valueOf(request.getParameter("all"));
+		Integer pageType = Integer.valueOf(request.getParameter("pageType"));
+		ZBStatus status = ZBStatus.NONE;
+		if (pageType == 3){
+			status = ZBStatus.APPROVED;
+		}
+				
 		List<List<String>> result = null;
 		if (all){
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, status);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
 			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company, status);
 		}
 		
 		
@@ -71,6 +77,20 @@ public class ByqcpycssbhgwtmxServlet {
 		serv.acceptNullAs("--").format(result);
 		
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+	}
+	
+	@RequestMapping(value = "approve.do")
+	public @ResponseBody byte[] approve(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		//JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		List<List<String>> result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company);
+		JSONArray data = JSONArray.fromObject(result);
+		
+		ErrorCode err = byqcpycssbhgwtmxService.approveByqcpycssbhgwtmx(d, data, company);
+		return Util.response(err);
 	}
 	
 	@RequestMapping(value = "entry/update.do")
@@ -167,11 +187,11 @@ public class ByqcpycssbhgwtmxServlet {
 		boolean all = Boolean.valueOf(request.getParameter("all"));
 		List<List<String>> result = null;
 		if (all){
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType);
+			//result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
 			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company);
+			//result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company);
 		}
 		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQCPYCSSBHGWTMX);

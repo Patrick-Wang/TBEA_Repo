@@ -95,13 +95,10 @@ public class CpzlqkServlet {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
-		List<Company> comps = extendAuthService.getAuthedCompanies(
-				SessionManager.getAccount(request.getSession()),
-				AuthType.QualityLookup);
 		
-		CompanySelection compSel = selectCompany(comps);
-		compSel.select(map);
 		
+		
+		List<Company> comps = null;
 		map.put("pageType", 3);
 		
 		String param = request.getParameter("param");
@@ -112,7 +109,17 @@ public class CpzlqkServlet {
 				String key = (String) it.next();
 				map.put(key, jo.get(key));
 			}
+			comps = extendAuthService.getAuthedCompanies(
+					SessionManager.getAccount(request.getSession()),
+					AuthType.QualityEntry);
+		}else{
+			comps = extendAuthService.getAuthedCompanies(
+					SessionManager.getAccount(request.getSession()),
+					AuthType.QualityLookup);
 		}
+		
+		CompanySelection compSel = selectCompany(comps);
+		compSel.select(map);
 		
 		return new ModelAndView("cpzlqk/cpzlqk", map);
 	}
@@ -146,16 +153,16 @@ public class CpzlqkServlet {
 				AuthType.QualityEntry);
 		CompanySelection compSel = selectCompany(comps);
 		compSel.select(map);
-		map.put("pageType", 2);
-		String param = request.getParameter("param");
-		if (null != param){
-			JSONObject jo = JSONObject.fromObject(param);
-			Iterator it = jo.keys();
-			while (it.hasNext()){
-				String key = (String) it.next();
-				map.put(key, jo.get(key));
-			}
-		}
-		return new ModelAndView("cpzlqk/cpzlqk", map);
+//		map.put("pageType", 2);
+//		String param = request.getParameter("param");
+//		if (null != param){
+//			JSONObject jo = JSONObject.fromObject(param);
+//			Iterator it = jo.keys();
+//			while (it.hasNext()){
+//				String key = (String) it.next();
+//				map.put(key, jo.get(key));
+//			}
+//		}
+		return new ModelAndView("cpzlqk/cpzlqkEntry", map);
 	}
 }

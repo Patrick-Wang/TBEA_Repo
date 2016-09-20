@@ -42,6 +42,21 @@ var cpzlqk;
             this.updateTypeSelector();
             this.updateUI();
         };
+        CpzlqkFrameView.prototype.register = function (name, plugin) {
+            var contains = true;
+            if (tableStatus != undefined) {
+                contains = false;
+                for (var i = 0; i < tableStatus.length; ++i) {
+                    if (tableStatus[i].id == plugin) {
+                        contains = true;
+                        break;
+                    }
+                }
+            }
+            if (contains) {
+                _super.prototype.register.call(this, name, plugin);
+            }
+        };
         CpzlqkFrameView.prototype.checkCompanySupported = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
             var isSupported = router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED, this.mOpt.comps.length);
@@ -74,38 +89,36 @@ var cpzlqk;
             for (var i = 0; i < inputs.length; i++) {
                 if (true == inputs[i].checked) {
                     if (inputs[i].id == 'rdyd') {
-                        if (this.mYdjdType == cpzlqk.YDJDType.JD || this.mYdjdType == undefined) {
-                            var dtNow = this.mDtSec.getDate();
-                            this.mDtJd = this.mDtSec.getDate();
-                            if (this.mDtYd != undefined) {
-                                dtNow = this.mDtYd;
-                            }
-                            this.mYdjdType = cpzlqk.YDJDType.YD;
-                            $("#" + this.mOpt.dt).empty();
-                            var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
-                                year: this.mOpt.date.year,
-                                month: 12
-                            }, dtNow, false, false);
-                            this.mDtSec = dsp;
-                            router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_YD_SELECTED);
+                        // if ( this.mYdjdType ==  YDJDType.JD || this.mYdjdType == undefined){
+                        var dtNow = this.mDtSec.getDate();
+                        this.mDtJd = this.mDtSec.getDate();
+                        if (this.mDtYd != undefined) {
+                            dtNow = this.mDtYd;
                         }
+                        this.mYdjdType = cpzlqk.YDJDType.YD;
+                        $("#" + this.mOpt.dt).empty();
+                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
+                            year: this.mOpt.date.year,
+                            month: 12
+                        }, dtNow, false, false);
+                        this.mDtSec = dsp;
+                        router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_YD_SELECTED);
                     }
                     else {
-                        if (this.mYdjdType == cpzlqk.YDJDType.YD || this.mYdjdType == undefined) {
-                            var dtNow = this.mDtSec.getDate();
-                            this.mDtYd = this.mDtSec.getDate();
-                            //if (this.mDtJd != undefined){
-                            //    dtNow = this.mDtJd;
-                            //}
-                            this.mYdjdType = cpzlqk.YDJDType.JD;
-                            $("#" + this.mOpt.dt).empty();
-                            var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
-                                year: this.mOpt.date.year,
-                                month: 12
-                            }, dtNow, false, true);
-                            this.mDtSec = dsp;
-                            router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
-                        }
+                        //if ( this.mYdjdType ==  YDJDType.YD || this.mYdjdType == undefined){
+                        var dtNow = this.mDtSec.getDate();
+                        this.mDtYd = this.mDtSec.getDate();
+                        //if (this.mDtJd != undefined){
+                        //    dtNow = this.mDtJd;
+                        //}
+                        this.mYdjdType = cpzlqk.YDJDType.JD;
+                        $("#" + this.mOpt.dt).empty();
+                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
+                            year: this.mOpt.date.year,
+                            month: 12
+                        }, dtNow, false, true);
+                        this.mDtSec = dsp;
+                        router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
                     }
                 }
             }
@@ -142,7 +155,7 @@ var cpzlqk;
                     $("#commentText").val(comment.comment);
                     $("#commentText").attr("readonly", "readonly");
                     if (window.pageType == 1) {
-                        if (comment.zt == Util.ZBStatus.APPROVED) {
+                        if (comment.zt == 1) {
                             $("#approveComment").hide();
                         }
                         else {
@@ -153,6 +166,9 @@ var cpzlqk;
                         $("#commentText").removeAttr("readonly");
                     }
                     else if (window.pageType == 3) {
+                        if (comment.zt != 1) {
+                            $("#comment").hide();
+                        }
                     }
                     break;
             }
