@@ -43,7 +43,7 @@ var nwbzlqk;
                 return new JQTable.JQGridAssistant(nodes, gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -172,11 +172,11 @@ var nwbzlqk;
                     autoScroll: true,
                     rowNum: this.mData.tjjg.length + 10,
                     viewrecords: true,
-                    pager: '#' + pagername
+                    pager: '#' + pagername,
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(nwbzlqk.ZlPluginView);
+        }(nwbzlqk.ZlPluginView));
     })(byqwbzlwttjqk = nwbzlqk.byqwbzlwttjqk || (nwbzlqk.byqwbzlwttjqk = {}));
 })(nwbzlqk || (nwbzlqk = {}));

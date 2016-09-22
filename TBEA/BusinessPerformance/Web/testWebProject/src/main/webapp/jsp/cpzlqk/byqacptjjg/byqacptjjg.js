@@ -35,7 +35,7 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -75,7 +75,7 @@ var cpzlqk;
                         });
                         break;
                     case cpzlqk.Event.ZLFE_APPROVE_COMMENT:
-                        var param1 = {
+                        var param1_1 = {
                             condition: Util.Ajax.toUrlParam({
                                 url: this.mAjax.baseUrl(),
                                 date: this.mDt,
@@ -85,7 +85,7 @@ var cpzlqk;
                             comment: e.data
                         };
                         this.mCommentApprove.get({
-                            data: JSON.stringify([[param1.condition, param1.comment]])
+                            data: JSON.stringify([[param1_1.condition, param1_1.comment]])
                         }).then(function (jsonData) {
                             _this.mAjaxApprove.get({
                                 date: _this.mDt,
@@ -96,7 +96,7 @@ var cpzlqk;
                                     .fromEp(_this)
                                     .to(framework.basic.endpoint.FRAME_ID)
                                     .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
-                                    comment: param1.comment,
+                                    comment: param1_1.comment,
                                     zt: 1
                                 });
                             });
@@ -226,7 +226,7 @@ var cpzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: false,
                     xAxis: [
@@ -284,6 +284,6 @@ var cpzlqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(cpzlqk.ZlPluginView);
+        }(cpzlqk.ZlPluginView));
     })(byqacptjjg = cpzlqk.byqacptjjg || (cpzlqk.byqacptjjg = {}));
 })(cpzlqk || (cpzlqk = {}));

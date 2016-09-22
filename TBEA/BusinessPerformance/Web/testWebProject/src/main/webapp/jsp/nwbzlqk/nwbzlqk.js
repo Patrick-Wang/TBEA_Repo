@@ -174,7 +174,7 @@ var nwbzlqk;
             });
         };
         return NwbzlqkFrameView;
-    })(framework.basic.ShowFrameView);
+    }(framework.basic.ShowFrameView));
     var ZlPluginView = (function (_super) {
         __extends(ZlPluginView, _super);
         function ZlPluginView() {
@@ -197,7 +197,7 @@ var nwbzlqk;
             return _super.prototype.onEvent.call(this, e);
         };
         return ZlPluginView;
-    })(framework.basic.ShowPluginView);
+    }(framework.basic.ShowPluginView));
     nwbzlqk.ZlPluginView = ZlPluginView;
     var ins = new NwbzlqkFrameView();
 })(nwbzlqk || (nwbzlqk = {}));

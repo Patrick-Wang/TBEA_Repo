@@ -54,6 +54,10 @@
 		<property name="jndiName" value="java:comp/env/jdbc/master_data_psn_jt_db" />
 	</bean>
 	
+	<bean id="dataSource_psn_zh" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/master_data_psn_zh_db" />
+	</bean>
+	
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -102,6 +106,22 @@
 		<property name="persistenceUnitName" value="localDB_psn_jt" />
 	</bean>
 	
+	<bean id="entityManagerFactory_psn_zh"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource_psn_zh" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> 
+					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
+					/> -->
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect"/> 
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="localDB_psn_zh" />
+	</bean>
+	
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 	<!-- -->
@@ -127,6 +147,10 @@
 		<property name="dataSource" ref="dataSource_psn_jt" />
 	</bean>
 	
+	<bean id="transactionManager_psn_zh" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory_psn_zh" />
+		<property name="dataSource" ref="dataSource_psn_zh" />
+	</bean>
 	
 
 	<context:component-scan base-package="com.tbea.ic.carrier.model" />

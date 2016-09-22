@@ -35,7 +35,7 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -151,11 +151,11 @@ var cpzlqk;
                     autoScroll: true,
                     rowNum: 20,
                     viewrecords: true,
-                    pager: '#' + pagername
+                    pager: '#' + pagername,
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(cpzlqk.ZlPluginView);
+        }(cpzlqk.ZlPluginView));
     })(pdcpycssbhgwtmx = cpzlqk.pdcpycssbhgwtmx || (cpzlqk.pdcpycssbhgwtmx = {}));
 })(cpzlqk || (cpzlqk = {}));

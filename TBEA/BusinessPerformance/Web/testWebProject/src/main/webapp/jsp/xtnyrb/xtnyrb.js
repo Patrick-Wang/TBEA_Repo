@@ -74,6 +74,6 @@ var xtnyzb;
             }));
         };
         return XtnyzbShowView;
-    })(framework.templates.singleDateReport.ShowView);
+    }(framework.templates.singleDateReport.ShowView));
     var ins = new XtnyzbShowView();
 })(xtnyzb || (xtnyzb = {}));

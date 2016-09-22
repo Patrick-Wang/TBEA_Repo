@@ -55,7 +55,7 @@ var nwbzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -196,7 +196,7 @@ var nwbzlqk;
                     autoScroll: true,
                     rowNum: this.mData.tjjg.length + 10,
                     viewrecords: true,
-                    pager: '#' + pagername
+                    pager: '#' + pagername,
                 }));
             };
             ShowView.prototype.updateYDEchart = function () {
@@ -259,7 +259,7 @@ var nwbzlqk;
                     tooltip: tooltip,
                     legend: legend,
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: true,
                     series: series
@@ -272,7 +272,7 @@ var nwbzlqk;
                     tooltip: tooltip,
                     legend: legend,
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: true,
                     series: series1
@@ -337,7 +337,7 @@ var nwbzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: false,
                     xAxis: [
@@ -354,6 +354,6 @@ var nwbzlqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(nwbzlqk.ZlPluginView);
+        }(nwbzlqk.ZlPluginView));
     })(pdwbzlwtfl = nwbzlqk.pdwbzlwtfl || (nwbzlqk.pdwbzlwtfl = {}));
 })(nwbzlqk || (nwbzlqk = {}));

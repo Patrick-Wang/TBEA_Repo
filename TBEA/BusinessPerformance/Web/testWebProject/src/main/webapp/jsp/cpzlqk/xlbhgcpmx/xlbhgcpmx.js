@@ -22,21 +22,21 @@ var cpzlqk;
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     Node.create({ name: "单位", align: TextAlign.Center }),
-                    Node.create({ name: "时间", align: TextAlign.Center }),
-                    Node.create({ name: "产品类型", align: TextAlign.Center }),
-                    Node.create({ name: "生产号", align: TextAlign.Center }),
-                    Node.create({ name: "产品型号", align: TextAlign.Center }),
-                    Node.create({ name: "不合格数量", align: TextAlign.Center }),
-                    Node.create({ name: "试验不合格现象", align: TextAlign.Center }),
-                    Node.create({ name: "不合格类别", align: TextAlign.Center }),
-                    Node.create({ name: "原因分析", align: TextAlign.Center }),
-                    Node.create({ name: "处理措施", align: TextAlign.Center }),
-                    Node.create({ name: "处理结果", align: TextAlign.Center }),
-                    Node.create({ name: "责任类别", align: TextAlign.Center })
+                    Node.create({ name: "时间", align: TextAlign.Center, }),
+                    Node.create({ name: "产品类型", align: TextAlign.Center, }),
+                    Node.create({ name: "生产号", align: TextAlign.Center, }),
+                    Node.create({ name: "产品型号", align: TextAlign.Center, }),
+                    Node.create({ name: "不合格数量", align: TextAlign.Center, }),
+                    Node.create({ name: "试验不合格现象", align: TextAlign.Center, }),
+                    Node.create({ name: "不合格类别", align: TextAlign.Center, }),
+                    Node.create({ name: "原因分析", align: TextAlign.Center, }),
+                    Node.create({ name: "处理措施", align: TextAlign.Center, }),
+                    Node.create({ name: "处理结果", align: TextAlign.Center, }),
+                    Node.create({ name: "责任类别", align: TextAlign.Center, })
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -151,11 +151,11 @@ var cpzlqk;
                     autoScroll: true,
                     rowNum: 20,
                     viewrecords: true,
-                    pager: '#' + pagername
+                    pager: '#' + pagername,
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(cpzlqk.ZlPluginView);
+        }(cpzlqk.ZlPluginView));
     })(xlbhgcpmx = cpzlqk.xlbhgcpmx || (cpzlqk.xlbhgcpmx = {}));
 })(cpzlqk || (cpzlqk = {}));

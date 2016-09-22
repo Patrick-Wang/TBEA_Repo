@@ -36,7 +36,7 @@ var cpzlqk;
                 return new JQTable.JQGridAssistant(nodes, gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -229,7 +229,7 @@ var cpzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: false,
                     xAxis: [
@@ -288,7 +288,7 @@ var cpzlqk;
                     tooltip: tooltip,
                     legend: legend,
                     toolbox: {
-                        show: true
+                        show: true,
                     },
                     calculable: true,
                     series: series
@@ -321,7 +321,7 @@ var cpzlqk;
                         tooltip: tooltip,
                         legend: legend,
                         toolbox: {
-                            show: true
+                            show: true,
                         },
                         calculable: true,
                         series: series
@@ -336,6 +336,6 @@ var cpzlqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(cpzlqk.ZlPluginView);
+        }(cpzlqk.ZlPluginView));
     })(pdcpycssbhgxxfb = cpzlqk.pdcpycssbhgxxfb || (cpzlqk.pdcpycssbhgxxfb = {}));
 })(cpzlqk || (cpzlqk = {}));

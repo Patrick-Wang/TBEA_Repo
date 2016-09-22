@@ -78,6 +78,6 @@ var xtnyzb;
             return { djg: this.mTableAssist.getAllData(), zbdc: this.mZbdcAssist.getAllData() };
         };
         return XtnyzbEntryView;
-    })(framework.templates.singleDateReport.EntryView);
+    }(framework.templates.singleDateReport.EntryView));
     var ins = new XtnyzbEntryView();
 })(xtnyzb || (xtnyzb = {}));

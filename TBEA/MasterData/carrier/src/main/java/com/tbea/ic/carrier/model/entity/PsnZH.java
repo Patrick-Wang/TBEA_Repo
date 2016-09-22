@@ -6,26 +6,26 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ehrjt_person_info")
-public class PsnJT extends Psn {
+@Table(name = "zh_psn_info")
+public class PsnZH extends Psn {
 	
 	@Id
-	@Column(name = "身份证号")
+	@Column(name = "iden")
 	String id;
 
-	@Column(name = "姓名")
+	@Column(name = "psnname")
 	String psnname;
 	
-	@Column(name = "性别")
+	@Column(name = "sex")
 	String sex;
 
-	@Column(name = "手机号")
+	@Column(name = "mobile")
 	String mobile;
 	
-	@Column(name = "员工号")
+	@Column(name = "jobnumber")
 	String psnNo;
 	
-	@Column(name = "单点登录名")
+	@Column(name = "dandian")
 	String psnSSO;
 	
 //	@Column(name = "birthdate")

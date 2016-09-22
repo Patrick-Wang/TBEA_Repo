@@ -134,7 +134,7 @@ var framework;
                     });
                 };
                 return EntryView;
-            })(BasicEndpoint);
+            }(BasicEndpoint));
             singleDateReport.EntryView = EntryView;
         })(singleDateReport = templates.singleDateReport || (templates.singleDateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));

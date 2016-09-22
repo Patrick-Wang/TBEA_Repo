@@ -1,7 +1,7 @@
 <Context>
 	<Resource name="jdbc/master_data_db" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://localhost:1433; DatabaseName=master_data"
+		url="jdbc:sqlserver://192.168.7.22:1433; DatabaseName=master_data"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 		
@@ -16,5 +16,13 @@
 		driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@(description=(address=(protocol=tcp)(port=1521)(host=172.28.8.155))(connect_data=(service_name=tbea)))"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1 from dual"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+
+		
+	<Resource name="jdbc/master_data_psn_zh_db" auth="Container" type="javax.sql.DataSource"
+		username="sa" password="Tbea_hrmas2011" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://192.168.7.78:1433; DatabaseName=hrcon"
+		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+		
 </Context>
 

@@ -102,7 +102,7 @@ var framework;
                     });
                 };
                 return ApproveView;
-            })(framework.templates.singleDateReport.ApproveView);
+            }(framework.templates.singleDateReport.ApproveView));
             dateReport.ApproveView = ApproveView;
         })(dateReport = templates.dateReport || (templates.dateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));

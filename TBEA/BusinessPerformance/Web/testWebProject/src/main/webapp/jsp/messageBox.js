@@ -97,6 +97,6 @@ var Util;
         };
         MessageBox.isMSIE = navigator.appName == "Microsoft Internet Explorer";
         return MessageBox;
-    })();
+    }());
     Util.MessageBox = MessageBox;
 })(Util || (Util = {}));
