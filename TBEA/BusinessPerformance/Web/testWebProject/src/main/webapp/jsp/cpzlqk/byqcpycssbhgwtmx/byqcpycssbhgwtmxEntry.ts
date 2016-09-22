@@ -122,7 +122,7 @@ module cpzlqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", ()=>{
+                     //   Util.MessageBox.tip("提交 成功", ()=>{
                             let param = {
                                 year : Util.toDate(dt).year,
                                 month: Util.toDate(dt).month,
@@ -137,7 +137,7 @@ module cpzlqk {
                             }
                             window.location.href = "show.do?param=" + JSON.stringify(param);
                             //this.pluginUpdate(dt, compType);
-                        });
+                      //  });
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }

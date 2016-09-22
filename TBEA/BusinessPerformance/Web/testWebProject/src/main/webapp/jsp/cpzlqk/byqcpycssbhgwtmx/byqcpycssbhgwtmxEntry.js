@@ -120,22 +120,20 @@ var cpzlqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", function () {
-                            var param = {
-                                year: Util.toDate(dt).year,
-                                month: Util.toDate(dt).month,
-                                pageType: 2,
-                                tableStatus: JSON.stringify([
-                                    {
-                                        id: plugin.byqcpycssbhgwtmx
-                                    }, {
-                                        id: plugin.byqcpycssbhgxxfb
-                                    }
-                                ])
-                            };
-                            window.location.href = "show.do?param=" + JSON.stringify(param);
-                            //this.pluginUpdate(dt, compType);
-                        });
+                        //   Util.MessageBox.tip("提交 成功", ()=>{
+                        var param = {
+                            year: Util.toDate(dt).year,
+                            month: Util.toDate(dt).month,
+                            pageType: 2,
+                            tableStatus: JSON.stringify([
+                                {
+                                    id: plugin.byqcpycssbhgwtmx
+                                }, {
+                                    id: plugin.byqcpycssbhgxxfb
+                                }
+                            ])
+                        };
+                        window.location.href = "show.do?param=" + JSON.stringify(param);
                     }
                     else {
                         Util.MessageBox.tip(resp.message);

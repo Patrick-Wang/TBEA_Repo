@@ -17,6 +17,15 @@ var cpzlqk;
             _super.apply(this, arguments);
             this.isCompanySupported = false;
         }
+        CpzlqkFrameView.prototype.checkCompanyCount = function (comps) {
+            if (comps == undefined) {
+                return true;
+            }
+            if (comps.length == 1) {
+                return this.checkCompanyCount(comps[0].subNodes);
+            }
+            return false;
+        };
         CpzlqkFrameView.prototype.init = function (opt) {
             var _this = this;
             this.mOpt = opt;
@@ -29,7 +38,7 @@ var cpzlqk;
             }, false, false);
             this.mDtSec = dsp;
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
-            if (opt.comps.length == 1) {
+            if (this.checkCompanyCount(opt.comps)) {
                 this.mCompanySelector.hide();
             }
             this.mCompanySelector.change(function (selector, depth) {

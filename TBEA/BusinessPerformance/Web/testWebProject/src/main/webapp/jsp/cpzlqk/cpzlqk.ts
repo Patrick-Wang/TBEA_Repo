@@ -16,6 +16,18 @@ module cpzlqk {
         mYdjdType : YDJDType;
         mDtYd:Util.Date;
         mDtJd:Util.Date;
+
+        checkCompanyCount(comps : Util.IDataNode[]){
+            if (comps == undefined){
+                return true;
+            }
+
+            if (comps.length == 1){
+                return this.checkCompanyCount(comps[0].subNodes);
+            }
+            return false;
+        }
+
         protected init(opt:any):void {
             this.mOpt = opt;
             let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
@@ -31,7 +43,7 @@ module cpzlqk {
             this.mDtSec = dsp;
 
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
-            if (opt.comps.length == 1) {
+            if (this.checkCompanyCount(opt.comps)) {
                 this.mCompanySelector.hide();
             }
 
