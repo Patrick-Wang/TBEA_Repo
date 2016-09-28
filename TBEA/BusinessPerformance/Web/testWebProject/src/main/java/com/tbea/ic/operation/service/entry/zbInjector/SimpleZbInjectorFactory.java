@@ -8,30 +8,30 @@ import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
-
+ 
 public class SimpleZbInjectorFactory {
 	public static ZbInjector createInjector(ZBXXDao zbxxDao, DWXXDao dwxxDao, SHZTDao shztDao,
-			NDJHZBDao zbDao){
-		return new NdjhZbInjector(zbxxDao, dwxxDao, shztDao, zbDao);
+			NDJHZBDao zbDao, ZBInjectListener listener){
+		return new NdjhZbInjector(zbxxDao, dwxxDao, shztDao, zbDao, listener);
 	}
 	
 	public static ZbInjector createInjector(ZBXXDao zbxxDao, DWXXDao dwxxDao, SHZTDao shztDao,
-			YDJHZBDao zbDao){
-		return new YdjhZbInjector(zbxxDao, dwxxDao, shztDao, zbDao);
+			YDJHZBDao zbDao, ZBInjectListener listener){
+		return new YdjhZbInjector(zbxxDao, dwxxDao, shztDao, zbDao, listener);
 	}
 	
 	public static ZbInjector createInjector(ZBXXDao zbxxDao, DWXXDao dwxxDao, SHZTDao shztDao,
-			YJ28ZBDao zbDao){
-		return new Yj28ZbInjector(zbxxDao, dwxxDao, shztDao, zbDao);
+			YJ28ZBDao zbDao, ZBInjectListener listener){
+		return new Yj28ZbInjector(zbxxDao, dwxxDao, shztDao, zbDao, listener);
 	}
 	
 	public static ZbInjector createInjector(ZBXXDao zbxxDao, DWXXDao dwxxDao, SHZTDao shztDao,
-			YJ20ZBDao zbDao){
-		return new Yj20ZbInjector(zbxxDao, dwxxDao, shztDao, zbDao);
+			YJ20ZBDao zbDao, ZBInjectListener listener){
+		return new Yj20ZbInjector(zbxxDao, dwxxDao, shztDao, zbDao, listener);
 	}
 	
 	public static ZbInjector createInjector(ZBXXDao zbxxDao, DWXXDao dwxxDao, SHZTDao shztDao,
-			SJZBDao zbDao){
-		return new SjZbInjector(zbxxDao, dwxxDao, shztDao, zbDao);
+			SJZBDao zbDao, ZBInjectListener listener){
+		return new SjZbInjector(zbxxDao, dwxxDao, shztDao, zbDao, listener);
 	}
 }

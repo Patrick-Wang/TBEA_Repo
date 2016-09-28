@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.model.dao.jygk.ydjhzb;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -240,4 +241,16 @@ public class YDJHZBDaoImpl extends AbstractReadWriteDaoImpl<YDJHZB> implements Y
 		return null;
 	}
 
+	@Override
+	public Double getZb(Integer zbId, Date date, List<Integer> companies) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select sum(ydjhz) from YDJHZB where zbxx.id = :id and nf = :nf and yf = :yf and dwxx.id in :comp");
+		q.setParameter("id", zbId);
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("comp", companies);
+		List<Double> ret = q.getResultList();
+		return ret.get(0);
+	}
 }

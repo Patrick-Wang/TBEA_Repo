@@ -1,30 +1,37 @@
 <components>
  <service id="servNbzlqkEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <context key="counterSerial" value="${counterFactory.newCounter.reset[0]}"/>
   <merge data="${data}" table="zl_nbyclzlwt">
+   <where>
+    <serial_num type="string" value="${gs + counterSerial.next.format[8]}"/>
+   </where>
    <set>
-    <company_name type="string" ref="0"/>
-    <issue_happen_date type="date" ref="1"/>
-    <product_type type="string" ref="2"/>
-    <production_num type="string" ref="3"/>
-    <production_model type="string" ref="4"/>
-    <issue_type type="string" ref="5"/>
-    <sub_issue_type type="string" ref="6"/>
-    <material_quality_phenomenon type="string" ref="7"/>
-    <detail type="string" ref="8"/>
-    <material_happen_phase type="string" ref="9"/>
-    <material_count type="double" ref="10"/>
-    <measurement_units type="string" ref="11"/>
-    <suppier type="string" ref="12"/>
-    <issue_process type="string" ref="13"/>
-    <responsibility_department type="string" ref="14"/>
-    <material_treatment_measure type="string" ref="15"/>
-    <onsite_treatmen_measure type="string" ref="16"/>
-    <onsite_treatment_result type="string" ref="17"/>
-    <causa_analysis type="string" ref="18"/>
-    <assessment type="string" ref="19"/>
-    <filling_personnel type="string" ref="20"/>
+    <company_name type="string" ref="${counter.reset[0].val}"/>
+    <issue_happen_date type="date" ref="${counter.next.val}"/>
+    <product_type type="string" ref="${counter.next.val}"/>
+    <production_num type="string" ref="${counter.next.val}"/>
+    <production_model type="string" ref="${counter.next.val}"/>
+    <issue_type type="string" ref="${counter.next.val}"/>
+    <sub_issue_type type="string" ref="${counter.next.val}"/>
+    <category_code type="string" ref="${counter.next.val}"/>
+    <material_quality_phenomenon type="string" ref="${counter.next.val}"/>
+    <detail type="string" ref="${counter.next.val}"/>
+    <material_happen_phase type="string" ref="${counter.next.val}"/>
+    <material_count type="double" ref="${counter.next.val}"/>
+    <measurement_units type="string" ref="${counter.next.val}"/>
+    <suppier type="string" ref="${counter.next.val}"/>
+    <issue_process type="string" ref="${counter.next.val}"/>
+    <responsibility_department type="string" ref="${counter.next.val}"/>
+    <material_treatment_measure type="string" ref="${counter.next.val}"/>
+    <onsite_treatmen_measure type="string" ref="${counter.next.val}"/>
+    <onsite_treatment_result type="string" ref="${counter.next.val}"/>
+    <causa_analysis type="string" ref="${counter.next.val}"/>
+    <assessment type="string" ref="${counter.next.val}"/>
+    <filling_personnel type="string" ref="${counter.next.val}"/>
     <source type="string" value="${src}"/>
     <time type="date" value="${time}"/>
+    <zt type="int" value="2"/>
    </set>
   </merge>
  </service>

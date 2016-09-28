@@ -12,7 +12,6 @@ import com.tbea.ic.operation.common.FormulaServer;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
@@ -29,7 +28,7 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	ZltjjgDao tjjgDao;
 	Company company;
 	Date d;
-	ZBStatus status;
+	List<Integer> zts;
 	List<Integer> ids;
 	public List<List<String>> getResult(){
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -40,12 +39,12 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	}
 	
 	public FormulaClientJd(ByqacptjjgServiceImpl byqacptjjgServiceImpl,
-			ZltjjgDao tjjgDao, Company company, Date d, ZBStatus status) {
+			ZltjjgDao tjjgDao, Company company, Date d, List<Integer> zts) {
 		super();
 		this.byqacptjjgServiceImpl = byqacptjjgServiceImpl;
 		this.tjjgDao = new ZltjjgDaoCacheProxy(tjjgDao,company.getId());
 		this.company = company;
-		this.status = status;
+		this.zts = zts;
 		if (company.getType() == CompanyType.BYQCY ||
 				company.getType() == CompanyType.XLCY ||
 				company.getType() == CompanyType.PDCY){
@@ -65,11 +64,11 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 		ZltjjgEntity tj2 = null;
 
 		if (ids == null){
-			tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), company, status);
-			tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), company, status);
+			tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), company, zts);
+			tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), company, zts);
 		}else{
-			tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), ids, status);
-			tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), ids, status);
+			tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), ids, zts);
+			tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), ids, zts);
 		}
 		return new Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>>(
 				forMap.get(formula).getId(), 

@@ -13,7 +13,7 @@ import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 
 public interface XlacptjjgService {
 
-	List<List<String>> getXlacptjjg(Date d, Company company, YDJDType yjType);
+	List<List<String>> getXlacptjjg(Date d, Company company, YDJDType yjType,  List<Integer> zts);
 
 	List<List<String>> getXlacptjjgEntry(Date d, Company company);
 
@@ -21,7 +21,7 @@ public interface XlacptjjgService {
 
 	ErrorCode submitXlacptjjg(Date d, JSONArray data, Company company);
 
-	List<WaveItem> getWaveValues(Date d, Company company);
+	List<WaveItem> getWaveValues(Date d, Company company,  List<Integer> zts);
 
 	ErrorCode approveXlacptjjg(Date d, JSONArray data, Company company);
 

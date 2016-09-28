@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 
 import com.tbea.ic.operation.common.Formula;
 import com.tbea.ic.operation.common.FormulaClient;
@@ -13,7 +12,6 @@ import com.tbea.ic.operation.common.FormulaServer;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
@@ -29,7 +27,7 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	ZltjjgDao tjjgDao;
 	Date d;
 	YDJDType yjType;
-	
+	List<Integer> zts;
 	List<String> getRow(Formula formula){
 		return this.result.get(forIndexMap.get(formula));
 	}
@@ -45,9 +43,10 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	}
 	
 	public FormulaClientJd(PdadwtjjgServiceImpl pdadwtjjgServiceImpl,
-			ZltjjgDao tjjgDao, List<Integer> comps, Date d, YDJDType yjType) {
+			ZltjjgDao tjjgDao, List<Integer> comps, Date d, YDJDType yjType, List<Integer> zts) {
 		super();
 		this.yjType = yjType;
+		this.zts = zts;
 		this.pdadwtjjgServiceImpl = pdadwtjjgServiceImpl;
 		this.tjjgDao = new ZltjjgDaoCacheProxy(tjjgDao).setComps(comps);
 		this.d = d;
@@ -60,11 +59,11 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 		ZltjjgEntity tj2 = null;
 		if (pair.getSecond() != null){
 			if (this.yjType == YDJDType.YD){
-				tj1 = tjjgDao.getByDate(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
-				tj2 = tjjgDao.getYearAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
+				tj1 = tjjgDao.getByDate(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), this.zts);
+				tj2 = tjjgDao.getYearAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), this.zts);
 			}else{
-				tj1 = tjjgDao.getJdAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
-				tj2 = tjjgDao.getJdAccQntq(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
+				tj1 = tjjgDao.getJdAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), this.zts);
+				tj2 = tjjgDao.getJdAccQntq(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), this.zts);
 			}
 		}
 

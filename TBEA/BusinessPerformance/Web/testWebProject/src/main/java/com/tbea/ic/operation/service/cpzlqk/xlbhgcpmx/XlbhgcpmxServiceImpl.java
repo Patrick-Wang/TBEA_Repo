@@ -46,8 +46,8 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 	public final static String NAME = "XlbhgcpmxServiceImpl";
 
 	@Override
-	public List<List<String>> getXlbhgcpmx(Date d) {
-		List<XlBhgwtmxEntity> entities = xlBhgwtmxDao.getByDate(d, ZBStatus.APPROVED);
+	public List<List<String>> getXlbhgcpmx(Date d, List<Integer> zts) {
+		List<XlBhgwtmxEntity> entities = xlBhgwtmxDao.getByDate(d, zts);
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (XlBhgwtmxEntity entity : entities){
 			result.add(toList(entity));
@@ -200,8 +200,8 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 	}
 
 	@Override
-	public List<List<String>> getXlbhgcpmx(Date d, Company company) {
-		List<XlBhgwtmxEntity> entities = xlBhgwtmxDao.getByDate(d, company, ZBStatus.APPROVED);
+	public List<List<String>> getXlbhgcpmx(Date d, Company company, List<Integer> zts) {
+		List<XlBhgwtmxEntity> entities = xlBhgwtmxDao.getByDate(d, company, zts);
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (XlBhgwtmxEntity entity : entities){
 			result.add(toList(entity));

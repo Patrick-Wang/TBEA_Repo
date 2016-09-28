@@ -29,7 +29,7 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	ZltjjgDao tjjgDao;
 	Date d;
 	YDJDType yjType;
-	
+	List<Integer> zts;
 	public List<List<String>> getResult(){
 		return result;
 	}
@@ -39,9 +39,10 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	}
 	
 	public FormulaClientJd(XladydjtjjgServiceImpl xladydjtjjgServiceImpl,
-			ZltjjgDao tjjgDao, List<Integer> comps, Date d, YDJDType yjType) {
+			ZltjjgDao tjjgDao, List<Integer> comps, Date d, YDJDType yjType, List<Integer> zts) {
 		super();
 		this.yjType = yjType;
+		this.zts = zts;
 		this.xladydjtjjgServiceImpl = xladydjtjjgServiceImpl;
 		this.tjjgDao = new ZltjjgDaoCacheProxy(tjjgDao).setComps(comps);
 		this.d = d;
@@ -54,11 +55,11 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 		ZltjjgEntity tj2 = null;
 		if (pair.getSecond() != null){
 			if (this.yjType == YDJDType.YD){
-				tj1 = tjjgDao.getByDate(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
-				tj2 = tjjgDao.getYearAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
+				tj1 = tjjgDao.getByDate(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), zts);
+				tj2 = tjjgDao.getYearAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), zts);
 			}else{
-				tj1 = tjjgDao.getJdAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
-				tj2 = tjjgDao.getJdAccQntq(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), ZBStatus.APPROVED);
+				tj1 = tjjgDao.getJdAcc(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), zts);
+				tj2 = tjjgDao.getJdAccQntq(d, pair.getFirst().getCpxl().getId(), pair.getSecond(), zts);
 			}
 		}
 

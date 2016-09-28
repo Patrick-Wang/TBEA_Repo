@@ -46,4 +46,6 @@ public interface YJ28ZBDao extends AbstractReadWriteDao<YJ28ZB>{
 	List<Integer> getApprovedCompletedCompanies(Date date);
 
 	Timestamp getApprovedTime(Date date, Company comp);
+
+	Double getZb(Integer indi, Date d, List<Integer> ids);
 }

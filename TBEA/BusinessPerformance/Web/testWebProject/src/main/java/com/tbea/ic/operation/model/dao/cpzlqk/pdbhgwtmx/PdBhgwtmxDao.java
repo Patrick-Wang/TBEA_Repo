@@ -12,36 +12,36 @@ import com.tbea.ic.operation.model.entity.cpzlqk.PdBhgwtmxEntity;
 
 public interface PdBhgwtmxDao extends AbstractReadWriteDao<PdBhgwtmxEntity> {
 
-	List<PdBhgwtmxEntity> getByYd(Date d,  ZBStatus zt);
+	List<PdBhgwtmxEntity> getByYd(Date d,  List<Integer> zts);
 
-	List<PdBhgwtmxEntity> getByJd(Date d,  ZBStatus zt);
+	List<PdBhgwtmxEntity> getByJd(Date d,  List<Integer> zts);
 	
-	List<Object[]> getByYdFb(Date d,  ZBStatus zt);
+	List<Object[]> getByYdFb(Date d,  List<Integer> zts);
 
-	List<Object[]> getByJdFb(Date d,  ZBStatus zt);
+	List<Object[]> getByJdFb(Date d,  List<Integer> zts);
 
 	PdBhgwtmxEntity getFirstBhgwtmx(Date d, Company company);
 
 	List<PdBhgwtmxEntity> getByDate(Date d, Company company);
 
 	List<PdBhgwtmxEntity> getByYd(Date d,  Company company,
-			ZBStatus zt);
+			List<Integer> zts);
 
 	List<PdBhgwtmxEntity> getByJd(Date d,  Company company,
-			ZBStatus zt);
+			List<Integer> zts);
 
 	List<Object[]> getByYdFb(Date d,  Company company,
-			ZBStatus zt);
+			List<Integer> zts);
 	
 	List<Object[]> getByJdFb(Date d,  Company company,
-			ZBStatus zt);
+			List<Integer> zts);
 
-	List<Object[]> getByJdFbHj(Date d,  ZBStatus zt);
+	List<Object[]> getByJdFbHj(Date d,  List<Integer> zts);
 
-	List<Object[]> getByYdFbHj(Date d,  ZBStatus zt);
+	List<Object[]> getByYdFbHj(Date d,  List<Integer> zts);
 
-	List<Object[]> getByYdFbHj(Date d,  Company company, ZBStatus zt);
+	List<Object[]> getByYdFbHj(Date d,  Company company, List<Integer> zts);
 
-	List<Object[]> getByJdFbHj(Date d,  Company company, ZBStatus zt);
+	List<Object[]> getByJdFbHj(Date d,  Company company, List<Integer> zts);
 
 }

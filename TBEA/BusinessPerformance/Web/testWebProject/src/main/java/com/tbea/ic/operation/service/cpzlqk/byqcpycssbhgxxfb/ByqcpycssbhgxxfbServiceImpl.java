@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
@@ -99,16 +98,16 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 	
 	
 	@Override
-	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, ZBStatus status) {
+	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, List<Integer> zts) {
 		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
 										// count]
 		List<Object[]> hjEntities = null;
 		if (yjType == YDJDType.YD) {
-			hjEntities = byqBhgwtmxDao.getByYdFbHj(d, status);
-			entities = byqBhgwtmxDao.getByYdFb(d, status);
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(d, zts);
+			entities = byqBhgwtmxDao.getByYdFb(d, zts);
 		} else {
-			hjEntities = byqBhgwtmxDao.getByJdFbHj(d, status);
-			entities = byqBhgwtmxDao.getByJdFb(d, status);
+			hjEntities = byqBhgwtmxDao.getByJdFbHj(d, zts);
+			entities = byqBhgwtmxDao.getByJdFb(d, zts);
 		}
 		return this.getByqcpycssbhgxxfb(d, yjType, entities, hjEntities);
 	}
@@ -124,21 +123,21 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 	}
 
 	@Override
-	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, Company company, ZBStatus status) {
+	public List<List<String>> getByqcpycssbhgxxfb(Date d, YDJDType yjType, Company company, List<Integer> zts) {
 		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
 		// count]
 		List<Object[]> hjEntities = null;//[Integer dwid, Long
 		                          		// count]
 		if (yjType == YDJDType.YD) {
 			hjEntities = byqBhgwtmxDao.getByYdFbHj(d, company,
-					status);
+					zts);
 			entities = byqBhgwtmxDao.getByYdFb(d, company,
-					status);
+					zts);
 		} else {
 			hjEntities = byqBhgwtmxDao.getByJdFbHj(d, company,
-					status);
+					zts);
 			entities = byqBhgwtmxDao.getByJdFb(d, company,
-					status);
+					zts);
 		}
 		return this.getByqcpycssbhgxxfb(d, yjType, entities, hjEntities);
 	}
@@ -156,7 +155,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 	
 	
 	@Override
-	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, ZBStatus status) {
+	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, List<Integer> zts) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
@@ -164,7 +163,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 		List<Object[]> hjEntities = null;//[Integer dwid, Long
   		// count]
 		for (int i = 0; i < 12; ++i){
-			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), status);
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), zts);
 			for (int j = 0; j < hjEntities.size(); ++j){
 				getWaveItem(wis, dwmcDao.getByDwid((Integer) hjEntities.get(j)[0])
 						.getDwmc().getName())
@@ -179,7 +178,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 
 
 	@Override
-	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company, ZBStatus status) {
+	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company, List<Integer> zts) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
@@ -187,7 +186,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 		List<Object[]> hjEntities = null;//[Integer dwid, Long
   		// count]
 		for (int i = 0; i < 12; ++i){
-			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), company, status);
+			hjEntities = byqBhgwtmxDao.getByYdFbHj(cal.getDate(), company, zts);
 			
 			for (int j = 0; j < hjEntities.size(); ++j){
 				getWaveItem(wis, company.getName())

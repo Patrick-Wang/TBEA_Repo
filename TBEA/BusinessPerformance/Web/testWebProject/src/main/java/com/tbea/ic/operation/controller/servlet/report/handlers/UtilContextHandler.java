@@ -9,6 +9,7 @@ import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.report.Arrays;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
+import com.tbea.ic.operation.controller.servlet.report.Counter;
 import com.tbea.ic.operation.controller.servlet.report.GroupSum;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
@@ -58,6 +59,7 @@ public class UtilContextHandler implements ContextHandler {
 		context.put("array", new Arrays());
 		context.put("accFactory", accFac);
 		context.put("compMgr", companyManager);
+		context.put("counterFactory", new Counter());
 		context.put(com.tbea.ic.operation.reportframe.component.Component.CALENDAR, new EasyCalendar());
 	}
 

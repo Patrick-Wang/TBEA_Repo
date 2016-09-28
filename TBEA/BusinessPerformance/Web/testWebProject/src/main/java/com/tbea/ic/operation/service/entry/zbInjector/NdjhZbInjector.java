@@ -3,22 +3,21 @@ package com.tbea.ic.operation.service.entry.zbInjector;
 import java.util.Calendar;
 
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
-import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
-import com.tbea.ic.operation.common.ZBStatus;
 
 class NdjhZbInjector extends ZbInjector {
 
 	NDJHZBDao ndjhzbDao;
 	
 	public NdjhZbInjector(ZBXXDao zbxxDao, DWXXDao dwxxDao, SHZTDao shztDao,
-			NDJHZBDao ndjhzbDao) {
-		super(zbxxDao, dwxxDao, shztDao);
+			NDJHZBDao ndjhzbDao, ZBInjectListener listener) {
+		super(zbxxDao, dwxxDao, shztDao, listener);
 		this.ndjhzbDao = ndjhzbDao;
 	}
 
@@ -32,7 +31,11 @@ class NdjhZbInjector extends ZbInjector {
 			zb.setZbxx(zbxxDao.getById(zbId));
 			zb.setDwxx(dwxxDao.getById(comp.getId()));
 		}
-		zb.setNdjhshzt(shztDao.getById(status.ordinal()));	
+		
+		if (null != status){
+			zb.setNdjhshzt(shztDao.getById(status.ordinal()));	
+		}
+		
 		if (time != null){
 			zb.setNdjhxgsj(new java.sql.Timestamp(time.getTimeInMillis()));
 		}
@@ -45,6 +48,7 @@ class NdjhZbInjector extends ZbInjector {
 		} else {
 			ndjhzbDao.merge(zb);
 		}
+		listener.onInjected(zbId, val, cal, comp, status, time);
 	}
 
 	@Override

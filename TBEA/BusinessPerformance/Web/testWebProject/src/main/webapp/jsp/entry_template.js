@@ -65,6 +65,8 @@ var entry_template;
             this.updateTitle();
             //this.updateUI();
         };
+        View.prototype.getCurrentExchangeRate = function () {
+        };
         View.prototype.updateUI = function () {
             var _this = this;
             $("#nodatatips").css("display", "none");
@@ -78,6 +80,8 @@ var entry_template;
                 _this.mStatusList = data.status;
                 _this.mTableData = data.values;
                 _this.mZbxxs = data.zbxx;
+                _this.mRate = data.exchangeRate;
+                _this.mExRateZbs = data.exRateZbs;
                 _this.updateTitle();
                 _this.updateTable(_this.mOpt.tableId);
                 _this.updateApproveStatusFromDeputy(date.year, date.month, _this.mOpt.entryType);
@@ -549,6 +553,7 @@ var entry_template;
             }));
         };
         View.prototype.parseZbxx = function (zbxx) {
+            var _this = this;
             var row = find(this.mTableData, zbxx.id);
             if (row < 0) {
                 return undefined;
@@ -576,6 +581,9 @@ var entry_template;
                             sum += parseFloat(val);
                         }
                     }
+                }
+                if (undefined != sum && _this.mExRateZbs.indexOf(zbxx.id) >= 0) {
+                    return sum * _this.mRate;
                 }
                 return sum;
             });

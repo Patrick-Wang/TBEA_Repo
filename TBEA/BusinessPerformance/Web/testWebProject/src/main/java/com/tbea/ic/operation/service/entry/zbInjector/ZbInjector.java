@@ -13,17 +13,18 @@ public abstract class ZbInjector {
 	protected ZBXXDao zbxxDao;
 	protected DWXXDao dwxxDao;
 	protected SHZTDao shztDao;
-
+	protected ZBInjectListener listener;
 
 	public ZbInjector(ZBXXDao zbxxDao, DWXXDao dwxxDao,
-			SHZTDao shztDao) {
+			SHZTDao shztDao, ZBInjectListener listener) {
 		this.zbxxDao = zbxxDao;
 		this.dwxxDao = dwxxDao;
 		this.shztDao = shztDao;
+		this.listener = listener;
 	}
 	
 	abstract public void inject(Integer zbId, double val, Calendar cal, Company comp, ZBStatus status, Calendar time);	
 	
-	abstract public void remove(Integer zbId, Calendar cal, Company comp);	
+	abstract public void remove(Integer zbId, Calendar cal, Company comp);
 
 }

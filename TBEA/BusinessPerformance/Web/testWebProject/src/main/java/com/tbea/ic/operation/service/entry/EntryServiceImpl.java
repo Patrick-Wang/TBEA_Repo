@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -19,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.RequestHandler;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
@@ -28,6 +28,8 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
+import com.tbea.ic.operation.common.indi.relation.Relationships;
+import com.tbea.ic.operation.model.dao.exchangeRate.ExchangeRateDao;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
@@ -39,6 +41,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
+import com.tbea.ic.operation.model.entity.ExchangeRate;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
@@ -49,6 +52,7 @@ import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
 import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
+import com.tbea.ic.operation.service.entry.ZBListenerAggregator.IndiValues;
 import com.tbea.ic.operation.service.entry.zbCalculator.GeneralZbCalculator;
 import com.tbea.ic.operation.service.entry.zbCalculator.NdjhZbCalculator;
 import com.tbea.ic.operation.service.entry.zbCalculator.Request;
@@ -62,6 +66,9 @@ import com.tbea.ic.operation.service.entry.zbInjector.ZbInjector;
 @Transactional("transactionManager")
 public class EntryServiceImpl implements EntryService{
 
+	@Autowired
+	ExchangeRateDao exchangeRateDao;
+	
 	@Autowired
 	SbdNdjhZbDao sbdNdjhzbDao;
 	
@@ -99,19 +106,29 @@ public class EntryServiceImpl implements EntryService{
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	
+	@Resource(type=com.tbea.ic.operation.common.indi.relation.Relationships.class)
+	Relationships indiRelations;
+	
 	ZbInjector ndjhzbInjector;
 	ZbInjector ydjhzbInjector;
 	ZbInjector yd28Injector;
 	ZbInjector yj20Injector;
 	ZbInjector sjzbInjector;
-		
+
+	ComZBInjectListener njhListener = new ComZBInjectListener();
+	ComZBInjectListener ydjhListener = new ComZBInjectListener();
+	ComZBInjectListener yj28Listener = new ComZBInjectListener();
+	ComZBInjectListener yj20Listener = new ComZBInjectListener();
+	ComZBInjectListener sjzbListener = new ComZBInjectListener();
+	
+	
 	@Autowired
 	public void init(){
-		ndjhzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ndjhzbDao);
-		ydjhzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ydjhzbDao);
-		yd28Injector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj28zbDao);
-		yj20Injector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj20zbDao);
-		sjzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, sjzbDao);
+		ndjhzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ndjhzbDao, njhListener);
+		ydjhzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, ydjhzbDao, ydjhListener);
+		yd28Injector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj28zbDao, yj28Listener);
+		yj20Injector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, yj20zbDao, yj20Listener);
+		sjzbInjector = SimpleZbInjectorFactory.createInjector(zbxxDao, dwxxDao, shztDao, sjzbDao, sjzbListener);
 	}
 	
 
@@ -182,25 +199,72 @@ public class EntryServiceImpl implements EntryService{
 		
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		boolean bRet = false;
+		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
+				sjzbDao, yj20zbDao,
+				yj28zbDao, ydjhzbDao,
+				ndjhzbDao, companyManager,
+				indiRelations, entryType);
+		
 		switch (entryType){
 		case BY20YJ:
+			this.yj20Listener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED, time);
+			this.yj20Listener.removeListener(time.getTimeInMillis());
 			break;
 		case BY28YJ:
+			this.yj28Listener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED, time);
+			this.yj28Listener.removeListener(time.getTimeInMillis());
 			break;
 		case BYSJ:
+			this.sjzbListener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED, time);
+			this.sjzbListener.removeListener(time.getTimeInMillis());
 			break;
 		case NDJH:
+			this.njhListener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED, time);
+			this.njhListener.removeListener(time.getTimeInMillis());
 			break;
 		case YDJDMJH:
+			this.ydjhListener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED, time);
+			this.ydjhListener.removeListener(time.getTimeInMillis());
 			break;
 		default:
 			break;
 		}
+		
+		Organization org = companyManager.getBMDBOrganization();
+		Map<String, IndiValues> indis = lsnAggr.getShareIndis();
+		for (Entry<String, IndiValues> entry : indis.entrySet()){
+			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+		}
+		
+		indis = lsnAggr.getSumIndis();
+		for (Entry<String, IndiValues> entry : indis.entrySet()){
+			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+		}
+		
+//		switch (entryType){
+//		case BY20YJ:
+//			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED, time);
+//			break;
+//		case BY28YJ:
+//			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED, time);
+//			break;
+//		case BYSJ:
+//			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED, time);
+//			break;
+//		case NDJH:
+//			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED, time);
+//			break;
+//		case YDJDMJH:
+//			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED, time);
+//			break;
+//		default:
+//			break;
+//		}
 		return bRet;
 	}
 
@@ -287,9 +351,62 @@ public class EntryServiceImpl implements EntryService{
 				calc.compute(id, null, cal, company,
 						status, time);
 			}
-
 		}
 		return true;
+	}
+	
+	
+	public void updateForce(ZBType zbType, Date date, Company company, JSONArray data, Calendar time){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		JSONArray row;
+		ZbCalculator calc = null;
+		ZBStatus curSatus = null;
+		switch(zbType){
+		case BY20YJ:
+			calc = this.createYj20Calc();
+			curSatus = yj20zbDao.getZbStatus(date, company);
+			break;
+		case BY28YJ:
+			calc = this.createYj28Calc();
+			curSatus = yj28zbDao.getZbStatus(date, company);
+			break;
+		case BYSJ:
+			calc = this.createSjzbCalc();
+			curSatus = sjzbDao.getZbStatus(date, company);
+			break;
+		case NDJH:
+			calc = this.createNdjhzbCalc(companyManager, CalculatedZbManager.getJHHandler(cal));
+			curSatus = ndjhzbDao.getZbStatus(date, company);
+			break;
+		case YDJDMJH:
+			calc = this.createYdjhzbCalc(CalculatedZbManager.getJHHandler(cal));
+			curSatus = ydjhzbDao.getZbStatus(date, company);
+			break;
+		}
+		
+		if (ZBStatus.NONE == curSatus){
+			curSatus = ZBStatus.SAVED;
+		}
+		
+		for (int i = 0; i < data.size(); ++i) {
+			row = data.getJSONArray(i);
+			if (!row.getString(1).isEmpty()) {
+				calc.compute(Integer.valueOf(row.getString(0)),
+						Util.toDoubleNull(row.getString(1)), cal, company,
+						curSatus, time);
+			}
+		}
+
+		Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
+		for (Integer id : unenteredZb) {
+			calc.compute(id, null, cal, company, curSatus, time);
+		}
+
+		if (curSatus == ZBStatus.SUBMITTED && zbType != ZBType.NDJH && zbType != ZBType.YDJDMJH) {
+			setYdzbzt(ydzbztDao, dwxxDao, company, cal.get(Calendar.YEAR),
+					cal.get(Calendar.MONTH) + 1, zbType);
+		}
 	}
 
 	//[zbid, value]
@@ -311,7 +428,6 @@ public class EntryServiceImpl implements EntryService{
 							Util.toDoubleNull(row.getString(1)), cal, company,
 							status, time);
 				}
-
 			}
 
 			Set<Integer> unenteredZb = getUnenteredSjzb(company, data);
@@ -845,25 +961,52 @@ public class EntryServiceImpl implements EntryService{
 			ZBType entryType, JSONArray data, Calendar time) {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		boolean bRet = false;
+		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
+				sjzbDao, yj20zbDao,
+				yj28zbDao, ydjhzbDao,
+				ndjhzbDao, companyManager,
+				indiRelations, entryType);
 		switch (entryType){
 		case BY20YJ:
+			this.yj20Listener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = update20YJ(date, company, data, ZBStatus.SAVED, time);
+			this.yj20Listener.removeListener(time.getTimeInMillis());
 			break;
 		case BY28YJ:
+			this.yj28Listener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = update28YJ(date, company, data, ZBStatus.SAVED, time);
+			this.yj28Listener.removeListener(time.getTimeInMillis());
 			break;
 		case BYSJ:
+			this.sjzbListener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = updateBYSJ(date, company, data, ZBStatus.SAVED, time);
+			this.sjzbListener.removeListener(time.getTimeInMillis());
 			break;
 		case NDJH:
+			this.njhListener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = updateNDJH(date, company, data, ZBStatus.SAVED, time);
+			this.njhListener.removeListener(time.getTimeInMillis());
 			break;
 		case YDJDMJH:
+			this.ydjhListener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = updateYDJDMJH(date, company, data, ZBStatus.SAVED, time);
+			this.ydjhListener.removeListener(time.getTimeInMillis());
 			break;
 		default:
 			break;
 		}
+		
+		Organization org = companyManager.getBMDBOrganization();
+		Map<String, IndiValues> indis = lsnAggr.getShareIndis();
+		for (Entry<String, IndiValues> entry : indis.entrySet()){
+			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+		}
+		
+		indis = lsnAggr.getSumIndis();
+		for (Entry<String, IndiValues> entry : indis.entrySet()){
+			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+		}
+
 		return bRet;
 	}
 	
@@ -872,25 +1015,76 @@ public class EntryServiceImpl implements EntryService{
 			ZBType entryType, JSONArray data, Calendar time) {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		boolean bRet = false;
+		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
+				sjzbDao, yj20zbDao,
+				yj28zbDao, ydjhzbDao,
+				ndjhzbDao, companyManager,
+				indiRelations, entryType);
 		switch (entryType){
 		case BY20YJ:
+			this.yj20Listener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED_2, time);
+			this.yj20Listener.removeListener(time.getTimeInMillis());
 			break;
 		case BY28YJ:
+			this.yj28Listener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED_2, time);
+			this.yj28Listener.removeListener(time.getTimeInMillis());
 			break;
 		case BYSJ:
+			this.sjzbListener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED_2, time);
+			this.sjzbListener.removeListener(time.getTimeInMillis());
 			break;
 		case NDJH:
+			this.njhListener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED_2, time);
+			this.njhListener.removeListener(time.getTimeInMillis());
 			break;
 		case YDJDMJH:
+			this.ydjhListener.addListener(time.getTimeInMillis(), lsnAggr);
 			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED_2, time);
+			this.ydjhListener.removeListener(time.getTimeInMillis());
 			break;
 		default:
 			break;
 		}
+
+		Organization org = companyManager.getBMDBOrganization();
+		Map<String, IndiValues> indis = lsnAggr.getShareIndis();
+		for (Entry<String, IndiValues> entry : indis.entrySet()){
+			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+		}
+		
+		indis = lsnAggr.getSumIndis();
+		for (Entry<String, IndiValues> entry : indis.entrySet()){
+			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+		}
+		
+//		Map<String, JSONArray> indis = lsnAggr.getIndis();
+//		for (Entry<String, JSONArray> entry : indis.entrySet()){
+//			this.updateForce(entryType, Date.valueOf(entry.getKey()), company, entry.getValue(), time);
+//		}
+		
+//		switch (entryType){
+//		case BY20YJ:
+//			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED_2, time);
+//			break;
+//		case BY28YJ:
+//			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED_2, time);
+//			break;
+//		case BYSJ:
+//			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED_2, time);
+//			break;
+//		case NDJH:
+//			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED_2, time);
+//			break;
+//		case YDJDMJH:
+//			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED_2, time);
+//			break;
+//		default:
+//			break;
+//		}
 		return bRet;
 	}
 
@@ -900,10 +1094,13 @@ public class EntryServiceImpl implements EntryService{
 		return account.getRole() == 2;
 	}
 
-
-
 	@Override
 	public List<ZBXX> getZbNodes() {
 		return zbxxDao.getTopZb();
+	}
+
+	@Override
+	public ExchangeRate getExchangeRate(Date d) {
+		return exchangeRateDao.getByDate(d);
 	}
 }

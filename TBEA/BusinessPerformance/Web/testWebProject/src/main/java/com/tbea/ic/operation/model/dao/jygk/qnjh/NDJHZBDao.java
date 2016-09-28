@@ -39,4 +39,6 @@ public interface NDJHZBDao  extends AbstractReadWriteDao<NDJHZB>{
 	List<Integer> getApprovedCompletedCompanies(Date date);
 
 	Timestamp getApprovedTime(Date date, Company comp);
+
+	Double getZb(Integer indi, Date d, List<Integer> ids);
 }

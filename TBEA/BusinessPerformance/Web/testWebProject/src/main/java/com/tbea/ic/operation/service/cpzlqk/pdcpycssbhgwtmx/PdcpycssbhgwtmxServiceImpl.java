@@ -47,12 +47,12 @@ public class PdcpycssbhgwtmxServiceImpl implements PdcpycssbhgwtmxService {
 
 	@Override
 	public List<List<String>> getPdcpycssbhgwtmx(Date d,
-			YDJDType yjType) {
+			YDJDType yjType, List<Integer> zts) {
 		List<PdBhgwtmxEntity> entities = null;
 		if (yjType == YDJDType.YD){
-			entities = pdBhgwtmxDao.getByYd(d, ZBStatus.APPROVED);
+			entities = pdBhgwtmxDao.getByYd(d, zts);
 		}else{
-			entities = pdBhgwtmxDao.getByJd(d, ZBStatus.APPROVED);
+			entities = pdBhgwtmxDao.getByJd(d, zts);
 		}
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (PdBhgwtmxEntity entity : entities){
@@ -209,12 +209,12 @@ public class PdcpycssbhgwtmxServiceImpl implements PdcpycssbhgwtmxService {
 
 	@Override
 	public List<List<String>> getPdcpycssbhgwtmx(Date d, YDJDType yjType,
-			Company company) {
+			Company company, List<Integer> zts) {
 		List<PdBhgwtmxEntity> entities = null;
 		if (yjType == YDJDType.YD){
-			entities = pdBhgwtmxDao.getByYd(d, company, ZBStatus.APPROVED);
+			entities = pdBhgwtmxDao.getByYd(d, company, zts);
 		}else{
-			entities = pdBhgwtmxDao.getByJd(d, company, ZBStatus.APPROVED);
+			entities = pdBhgwtmxDao.getByJd(d, company, zts);
 		}
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (PdBhgwtmxEntity entity : entities){

@@ -11,7 +11,7 @@ import com.tbea.ic.operation.common.companys.Company;
 
 public interface XlbhgcpmxService {
 
-	List<List<String>> getXlbhgcpmx(Date d);
+	List<List<String>> getXlbhgcpmx(Date d, List<Integer> zts);
 
 	List<List<String>> getXlbhgcpmxEntry(Date d, Company company);
 
@@ -29,7 +29,7 @@ public interface XlbhgcpmxService {
 
 	ErrorCode unapproveXlbhgcpmx(Date d, JSONArray data, Company company);
 
-	List<List<String>> getXlbhgcpmx(Date d, Company company);
+	List<List<String>> getXlbhgcpmx(Date d, Company company, List<Integer> zts);
 
 
 }

@@ -1030,6 +1030,7 @@ public class ByqnwbzlztqkServiceImpl implements ByqnwbzlztqkService {
 		list.add(entity.getProduction_model());
 		list.add(entity.getIssue_type());
 		list.add(entity.getSub_issue_type());
+		list.add(entity.getCategory_code());
 		list.add(entity.getMaterial_quality_phenomenon());
 		list.add(entity.getDetail());
 		list.add(entity.getMaterial_happen_phase());
@@ -1066,6 +1067,7 @@ public class ByqnwbzlztqkServiceImpl implements ByqnwbzlztqkService {
 		list.add(entity.getProduction_model());
 		list.add(entity.getIssue_type());
 		list.add(entity.getSub_issue_type());
+		list.add(entity.getCategory_code());
 		list.add(entity.getQuality_phenomenon());
 		list.add(entity.getDetail());
 		list.add("" + entity.getMaterial_count());

@@ -10,13 +10,13 @@ import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 
 public interface ByqadwtjjgService {
 
-	List<List<String>> getByqadwtjjg(Date d, YDJDType yjType, Company company, ZBStatus status);
+	List<List<String>> getByqadwtjjg(Date d, YDJDType yjType, Company company,  List<Integer> zts);
 
-	List<List<String>> getByqadwtjjg(Date d, YDJDType yjType, ZBStatus status);
+	List<List<String>> getByqadwtjjg(Date d, YDJDType yjType,  List<Integer> zts);
 
-	List<WaveItem> getByqYdAdwtjjgWaveItems(Date d, Company company, ZBStatus status);
+	List<WaveItem> getByqYdAdwtjjgWaveItems(Date d, Company company,  List<Integer> zts);
 
-	List<WaveItem> getWaveItems(Date d, ZBStatus status);
+	List<WaveItem> getWaveItems(Date d,  List<Integer> zts);
 
 
 }

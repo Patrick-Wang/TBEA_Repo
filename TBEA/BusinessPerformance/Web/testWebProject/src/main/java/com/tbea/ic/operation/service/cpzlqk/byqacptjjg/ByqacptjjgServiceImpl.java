@@ -50,18 +50,18 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 
 	@Override
 	public List<List<String>> getByqacptjjg(Date d, Company company,
-			YDJDType yjType, ZBStatus status) {
+			YDJDType yjType,  List<Integer> zts) {
 		if (yjType == YDJDType.YD){
-			return getByqYdAcptjjg(d, company, yjType, status);
+			return getByqYdAcptjjg(d, company, yjType, zts);
 		}
-		return getByqJdAcptjjg(d, company, yjType, status);
+		return getByqJdAcptjjg(d, company, yjType, zts);
 	}
 
 	private List<List<String>> getByqYdAcptjjg(Date d, Company company,
-			YDJDType yjType, ZBStatus status) {
+			YDJDType yjType,  List<Integer> zts) {
 		
 		List<ByqYdAcptjjgEntity> entities = byqYdAcptjjgDao.getAll();
-		FormulaClientYd client = new FormulaClientYd(this, zltjjgDao, company, d, status);
+		FormulaClientYd client = new FormulaClientYd(this, zltjjgDao, company, d, zts);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (ByqYdAcptjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
@@ -72,17 +72,17 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		return client.getResult();
 	}
 
-	private List<String> toList(ZltjjgDao tjjgDao, ByqYdAcptjjgEntity entity, Date d, Company company, ZBStatus zt) {
+	private List<String> toList(ZltjjgDao tjjgDao, ByqYdAcptjjgEntity entity, Date d, Company company,  List<Integer> zts) {
 		List<String> row = new ArrayList<String>();
 		Util.resize(row, 8);
 		int start = 0;
 		row.set(start++, entity.getCpdl().getName());
 		row.set(start++, entity.getCpxl().getName());
 	
-		ZltjjgEntity zltjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, zt);
+		ZltjjgEntity zltjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, zts);
 		start = setZltjjg(row, start, zltjjg);
 
-		zltjjg = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, zt);
+		zltjjg = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, zts);
 		start = setZltjjg(row, start, zltjjg);
 		return row;
 	}
@@ -100,9 +100,9 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	}
 	
 	private List<List<String>> getByqJdAcptjjg(Date d, Company company,
-			YDJDType yjType, ZBStatus status) {
+			YDJDType yjType,  List<Integer> zts) {
 		List<ByqJdAcptjjgEntity> entities = byqJdAcptjjgDao.getAll();
-		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, company, d, status);
+		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, company, d, zts);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (ByqJdAcptjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
@@ -185,7 +185,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	}
 
 	@Override
-	public List<WaveItem> getJdWaveValues(Date d, Company company, ZBStatus status) {
+	public List<WaveItem> getJdWaveValues(Date d, Company company,  List<Integer> zts) {
 		List<Integer> ids = null;
 		if (company.getType() == CompanyType.BYQCY){
 			ids = new ArrayList<Integer>();
@@ -257,7 +257,7 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	}
 	
 	@Override
-	public List<WaveItem> getWaveValues(Date d, Company company, ZBStatus status) {
+	public List<WaveItem> getWaveValues(Date d, Company company,  List<Integer> zts) {
 		List<Integer> ids = null;
 		if (company.getType() == CompanyType.BYQCY){
 			ids = new ArrayList<Integer>();
@@ -283,9 +283,9 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 			for (int i = 0; i < 12; ++i){
 				ZltjjgEntity zltjjg = null;
 				if (ids == null){
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, status);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, zts);
 				}else{
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, status);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, zts);
 				}
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
@@ -308,9 +308,9 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 			for (int i = 0; i < 12; ++i){
 				ZltjjgEntity zltjjg = null;
 				if (ids == null){
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, zts);
 				}else{
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, zts);
 				}
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));

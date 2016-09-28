@@ -2,6 +2,7 @@ package com.tbea.ic.operation.model.entity.cpzlqk;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +26,7 @@ public class NbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 
 	private static final long serialVersionUID = 1L;
 
+	String serial_num;
 	String company_name;
 	Date issue_happen_date;
 	String product_type;
@@ -32,6 +34,7 @@ public class NbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	String production_model;
 	String issue_type;
 	String sub_issue_type;
+	String category_code;
 	String material_quality_phenomenon;
 	String detail;
 	String material_happen_phase;
@@ -46,6 +49,9 @@ public class NbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	String causa_analysis;
 	String assessment;
 	String filling_personnel;
+	String source;
+	Timestamp time;
+	Integer zt;
 	
 	public String getCompany_name() {
 		return company_name;
@@ -172,5 +178,35 @@ public class NbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void setFilling_personnel(String filling_personnel) {
 		this.filling_personnel = filling_personnel;
+	}
+	public String getSerial_num() {
+		return serial_num;
+	}
+	public void setSerial_num(String serial_num) {
+		this.serial_num = serial_num;
+	}
+	public String getCategory_code() {
+		return category_code;
+	}
+	public void setCategory_code(String category_code) {
+		this.category_code = category_code;
+	}
+	public Integer getZt() {
+		return zt;
+	}
+	public void setZt(Integer zt) {
+		this.zt = zt;
+	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
+	public Timestamp getTime() {
+		return time;
+	}
+	public void setTime(Timestamp time) {
+		this.time = time;
 	}
 }

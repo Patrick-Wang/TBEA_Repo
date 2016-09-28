@@ -7,7 +7,9 @@ public enum ZBStatus{
 	SUBMITTED("已提交"),
 	SAVED("已保存"),
 	APPROVED_2("内部已审核"),
-	SUBMITTED_2("内部已提交");
+	SUBMITTED_2("内部已提交"),
+	INTER_APPROVED_1("内部一级已审核"),
+	INTER_APPROVED_2("内部二级已审核");
 	
 	public String getValue(){
 		return value;

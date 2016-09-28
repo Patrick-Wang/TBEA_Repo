@@ -1,0 +1,51 @@
+<!-- 
+	relationships 节点 : 包含了指标声明、指标共享及指标运算等关系配置
+	
+	
+	indicators 节点 : 该节点所包含的子节点声明了本配置文件中用到的所有指标。其中子节点的 
+					  tagname 即为指标的别名，在后面关系节点中可以通过indi属性引用.	子节点包含下面属性
+					id : 指标的实际id
+					name : 指标名称
+				注 : id和name二选一即可, 如果二者全有，优先使用id值识别指标.	
+
+	company 节点 : 该节点表示公司，包含下面三个属性
+					id : 公司id(与数据库中公司ID一致)
+					name : 公司名称(与数据库中公司名称必须一致)
+					type : 程序中使用的CompanyType对应的枚举值
+				注 : 以上三个参数任选一个就可以，如果填写了两个以上属性，优先级顺序为 id type name
+
+	share 节点 : 该节点用于表示对应的指标值被所有子节点所指定的公司所共享, 包含下面属性
+					indi : 指定要共享的指标名称（在indicators中定义的）
+					type : 可选内容包括 [年计划，月计划，20预计，28预计, 月实际] 
+							中一个或多个，中间用逗号隔开
+							
+	sum 节点 : 该节点中包含一个 target 子节点 和 若干个 src子节点。包含type属性，参考share 中type解释。
+				该节点表示将src所指定的节点指标求个结果共享给target节点指标
+
+	target 节点 : 表示包含的所有公司共享indi指定的指标.包含下面属性 
+				indi ：指标引用
+				 
+	src 节点 : 表示 所有公司 将indi指定的指标值求和。.包含下面属性 
+				indi ：指标引用
+-->
+<relationships>
+ <indicators>
+  <lrze id="1"/>
+  <yszk name="应收账款"/>
+ </indicators>
+ <share indi="lrze" type="月实际">
+  <company name="沈变公司"/>
+  <company id="2"/>
+  <company type="SBGS"/>
+ </share>
+ <sum type="月实际">
+  <target indi="lrze">
+   <company type="TBGS"/>
+  </target>
+  <src indi="lrze">
+   <company name="沈变公司"/>
+   <company name="衡变公司"/>
+   <company name="新变公司"/>
+  </src>
+ </sum>
+</relationships>

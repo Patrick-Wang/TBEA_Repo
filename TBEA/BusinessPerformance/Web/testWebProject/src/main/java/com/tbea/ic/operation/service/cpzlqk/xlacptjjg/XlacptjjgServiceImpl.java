@@ -42,7 +42,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 
 	@Override
 	public List<List<String>> getXlacptjjg(Date d, Company company,
-			YDJDType yjType) {
+			YDJDType yjType,  List<Integer> zts) {
 		List<Integer> ids = null;
 		if (company.getType() == CompanyType.XLCY){
 			ids = new ArrayList<Integer>();
@@ -58,19 +58,19 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 		for (XlAcptjjgEntity entity : entities){
 			if (yjType == YDJDType.YD){
 				if (ids == null){
-					tjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
-					tjjg1 = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+					tjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, zts);
+					tjjg1 = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, zts);
 				}else{
-					tjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), ids, ZBStatus.APPROVED);
-					tjjg1 = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), ids, ZBStatus.APPROVED);
+					tjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), ids, zts);
+					tjjg1 = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), ids, zts);
 				}
 			}else{
 				if (ids == null){
-					tjjg = tjjgDao.getJdAcc(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
-					tjjg1 = tjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), company, ZBStatus.APPROVED);
+					tjjg = tjjgDao.getJdAcc(d, entity.getCpxl().getId(), company, zts);
+					tjjg1 = tjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), company, zts);
 				}else{
-					tjjg = tjjgDao.getJdAcc(d, entity.getCpxl().getId(), ids, ZBStatus.APPROVED);
-					tjjg1 = tjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), ids, ZBStatus.APPROVED);
+					tjjg = tjjgDao.getJdAcc(d, entity.getCpxl().getId(), ids, zts);
+					tjjg1 = tjjgDao.getJdAccQntq(d, entity.getCpxl().getId(), ids, zts);
 				}
 			}
 			result.add(toList(entity, tjjg, tjjg1));
@@ -158,7 +158,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 	}
 
 	@Override
-	public List<WaveItem> getWaveValues(Date d, Company company) {
+	public List<WaveItem> getWaveValues(Date d, Company company,  List<Integer> zts) {
 		List<Integer> ids = null;
 		if (company.getType() == CompanyType.XLCY){
 			ids = new ArrayList<Integer>();
@@ -180,9 +180,9 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 				cpIds.set(0, entity.getCpxl().getId());
 				ZltjjgEntity zltjjg = null;
 				if (null == ids){
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpIds, company, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpIds, company, zts);
 				}else{
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpIds, ids, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpIds, ids, zts);
 				}
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));

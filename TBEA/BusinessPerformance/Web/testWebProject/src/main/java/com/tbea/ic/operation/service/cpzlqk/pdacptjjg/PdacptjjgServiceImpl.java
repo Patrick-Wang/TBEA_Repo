@@ -51,18 +51,18 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 
 	@Override
 	public List<List<String>> getPdacptjjg(Date d, Company company,
-			YDJDType yjType) {
+			YDJDType yjType, List<Integer> zts) {
 		if (yjType == YDJDType.YD){
-			return getPdYdAcptjjg(d, company, yjType);
+			return getPdYdAcptjjg(d, company, yjType, zts);
 		}
-		return getPdJdAcptjjg(d, company, yjType);
+		return getPdJdAcptjjg(d, company, yjType, zts);
 	}
 
 	private List<List<String>> getPdYdAcptjjg(Date d, Company company,
-			YDJDType yjType) {
+			YDJDType yjType, List<Integer> zts) {
 		
 		List<PdYdAcptjjgEntity> entities = pdYdAcptjjgDao.getAll();
-		FormulaClientYd client = new FormulaClientYd(this, zltjjgDao, company, d);
+		FormulaClientYd client = new FormulaClientYd(this, zltjjgDao, company, d, zts);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (PdYdAcptjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
@@ -73,20 +73,20 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 		return client.getResult();
 	}
 
-	private List<String> toList(ZltjjgDao tjjgDao, PdYdAcptjjgEntity entity, Date d, Company company, ZBStatus zt) {
-		List<String> row = new ArrayList<String>();
-		Util.resize(row, 8);
-		int start = 0;
-		row.set(start++, entity.getCpdl().getName());
-		row.set(start++, entity.getCpxl().getName());
-	
-		ZltjjgEntity zltjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, zt);
-		start = setZltjjg(row, start, zltjjg);
-
-		zltjjg = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, zt);
-		start = setZltjjg(row, start, zltjjg);
-		return row;
-	}
+//	private List<String> toList(ZltjjgDao tjjgDao, PdYdAcptjjgEntity entity, Date d, Company company, List<Integer> zts) {
+//		List<String> row = new ArrayList<String>();
+//		Util.resize(row, 8);
+//		int start = 0;
+//		row.set(start++, entity.getCpdl().getName());
+//		row.set(start++, entity.getCpxl().getName());
+//	
+//		ZltjjgEntity zltjjg = tjjgDao.getByDate(d, entity.getCpxl().getId(), company, zts);
+//		start = setZltjjg(row, start, zltjjg);
+//
+//		zltjjg = tjjgDao.getYearAcc(d, entity.getCpxl().getId(), company, zts);
+//		start = setZltjjg(row, start, zltjjg);
+//		return row;
+//	}
 
 	
 	private int setZltjjg(List<String> row, int start, ZltjjgEntity zltjjg){
@@ -101,9 +101,9 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 	}
 	
 	private List<List<String>> getPdJdAcptjjg(Date d, Company company,
-			YDJDType yjType) {
+			YDJDType yjType, List<Integer> zts) {
 		List<PdJdAcptjjgEntity> entities = pdJdAcptjjgDao.getAll();
-		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, company, d);
+		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, company, d, zts);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (PdJdAcptjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
@@ -196,7 +196,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 	}
 
 	@Override
-	public List<WaveItem> getJdWaveValues(Date d, Company company) {
+	public List<WaveItem> getJdWaveValues(Date d, Company company, List<Integer> zts) {
 		List<WaveItem> ret = new ArrayList<WaveItem>();
 		List<String> row = null;
 		EasyCalendar ec = new EasyCalendar(d);
@@ -214,7 +214,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				
-				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, zts);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -234,7 +234,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 			row = Util.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
-				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, zts);
 				if (null != zltjjg){
 					row.set(i, "" + MathUtil.division(MathUtil.minus(zltjjg.getZs(), zltjjg.getBhgs()), zltjjg.getZs()));
 				}else{
@@ -250,7 +250,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 	}
 	
 	@Override
-	public List<WaveItem> getWaveValues(Date d, Company company) {
+	public List<WaveItem> getWaveValues(Date d, Company company, List<Integer> zts) {
 		List<Integer> ids = null;
 		if (company.getType() == CompanyType.PDCY){
 			ids = new ArrayList<Integer>();
@@ -276,9 +276,9 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 			for (int i = 0; i < 12; ++i){
 				ZltjjgEntity zltjjg = null;
 				if (ids == null){
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, zts);
 				}else{
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, zts);
 				}
 //				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
 				if (null != zltjjg){
@@ -302,9 +302,9 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 			for (int i = 0; i < 12; ++i){
 				ZltjjgEntity zltjjg = null;
 				if (ids == null){
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, zts);
 				}else{
-					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, ZBStatus.APPROVED);
+					zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, ids, zts);
 				}
 //				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, ZBStatus.APPROVED);
 				if (null != zltjjg){

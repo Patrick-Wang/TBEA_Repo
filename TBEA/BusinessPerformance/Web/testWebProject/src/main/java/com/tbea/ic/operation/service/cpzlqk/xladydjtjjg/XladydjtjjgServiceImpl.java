@@ -39,9 +39,9 @@ public class XladydjtjjgServiceImpl implements XladydjtjjgService {
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	
-	private List<List<String>> getXladydjtjjg(Date d, YDJDType yjType, List<XlAdwtjjgEntity> entities){
+	private List<List<String>> getXladydjtjjg(Date d, YDJDType yjType, List<XlAdwtjjgEntity> entities, List<Integer> zts){
 		List<Integer> comps = new ArrayList<Integer>();
-		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType);
+		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType, zts);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (XlAdwtjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
@@ -59,9 +59,9 @@ public class XladydjtjjgServiceImpl implements XladydjtjjgService {
 	}
 	
 	@Override
-	public List<List<String>> getXladydjtjjg(Date d, YDJDType yjType) {
+	public List<List<String>> getXladydjtjjg(Date d, YDJDType yjType, List<Integer> zts) {
 		List<XlAdwtjjgEntity> entities = xladwtjjgDao.getAll();
-		return this.getXladydjtjjg(d, yjType, entities);
+		return this.getXladydjtjjg(d, yjType, entities, zts);
 	}
 	
 	private int setZltjjg(List<String> row, int start, ZltjjgEntity zltjjg){
@@ -91,9 +91,9 @@ public class XladydjtjjgServiceImpl implements XladydjtjjgService {
 
 	@Override
 	public List<List<String>> getXladydjtjjg(Date d, YDJDType yjType,
-			Company company) {
+			Company company, List<Integer> zts) {
 		List<XlAdwtjjgEntity> entities = xladwtjjgDao.getByDw(company);
-		return this.getXladydjtjjg(d, yjType, entities);
+		return this.getXladydjtjjg(d, yjType, entities, zts);
 	}
 
 	private WaveItem getWaveItem(List<WaveItem> wis, String name){
@@ -117,13 +117,13 @@ public class XladydjtjjgServiceImpl implements XladydjtjjgService {
 	}
 	@Override
 	public List<WaveItem> getXladydjWaveItems(Date d, YDJDType yjType,
-			Company company) {
+			Company company, List<Integer> zts) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
 		cal.setMonth(1);
 		for (int j = 0; j < 12; ++j){
-			List<List<String>> result = this.getXladydjtjjg(cal.getDate(), YDJDType.YD, xladwtjjgDao.getByDw(company));
+			List<List<String>> result = this.getXladydjtjjg(cal.getDate(), YDJDType.YD, xladwtjjgDao.getByDw(company), zts);
 			for (int i = 0; i < result.size(); ++i){
 				WaveItem item = getWaveItem(wis, result.get(i).get(1));
 				item.getData().add(toCtVal(result.get(i).get(4)));

@@ -21,7 +21,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
 
 public class ComponentLoader {
 
@@ -37,7 +36,7 @@ public class ComponentLoader {
 	private static String resPath;
 	static {
 		try {
-			resPath = new URI(Convertor.class.getClassLoader().getResource("")
+			resPath = new URI(ComponentLoader.class.getClassLoader().getResource("")
 					.getPath()).getPath().substring(1)
 					+ "META-INF/components/";
 		} catch (URISyntaxException e) {

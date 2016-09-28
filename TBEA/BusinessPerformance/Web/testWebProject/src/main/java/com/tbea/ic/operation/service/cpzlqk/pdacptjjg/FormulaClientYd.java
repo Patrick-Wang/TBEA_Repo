@@ -30,6 +30,7 @@ class FormulaClientYd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	Company company;
 	Date d;
 	List<Integer> ids;
+	List<Integer> zts;
 	public List<List<String>> getResult(){
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (int i = 0; i < formulaOrder.size(); ++i){
@@ -39,8 +40,9 @@ class FormulaClientYd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	}
 	
 	public FormulaClientYd(PdacptjjgServiceImpl pdacptjjgServiceImpl,
-			ZltjjgDao tjjgDao, Company company, Date d) {
+			ZltjjgDao tjjgDao, Company company, Date d, List<Integer> zts) {
 		super();
+		this.zts = zts;
 		this.pdacptjjgServiceImpl = pdacptjjgServiceImpl;
 		this.tjjgDao = new ZltjjgDaoCacheProxy(tjjgDao,company.getId());
 		if (company.getType() == CompanyType.BYQCY ||
@@ -61,11 +63,11 @@ class FormulaClientYd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 		ZltjjgEntity tj2 = null;
 
 		if (ids == null){
-			tj1 = tjjgDao.getByDate(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
-			tj2 = tjjgDao.getYearAcc(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
+			tj1 = tjjgDao.getByDate(d, forMap.get(formula).getCpxl().getId(), company, zts);
+			tj2 = tjjgDao.getYearAcc(d, forMap.get(formula).getCpxl().getId(), company, zts);
 		}else{
-			tj1 = tjjgDao.getByDate(d, forMap.get(formula).getCpxl().getId(), ids, ZBStatus.APPROVED);
-			tj2 = tjjgDao.getYearAcc(d, forMap.get(formula).getCpxl().getId(), ids, ZBStatus.APPROVED);
+			tj1 = tjjgDao.getByDate(d, forMap.get(formula).getCpxl().getId(), ids, zts);
+			tj2 = tjjgDao.getYearAcc(d, forMap.get(formula).getCpxl().getId(), ids, zts);
 		}
 		return new Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>>(
 				forMap.get(formula).getId(), 

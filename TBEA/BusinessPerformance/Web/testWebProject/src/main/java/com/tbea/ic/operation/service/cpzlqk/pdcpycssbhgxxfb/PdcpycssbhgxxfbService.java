@@ -9,15 +9,15 @@ import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 
 public interface PdcpycssbhgxxfbService {
 
-	List<List<String>> getPdcpycssbhgxxfb(Date d, YDJDType yjType);
+	List<List<String>> getPdcpycssbhgxxfb(Date d, YDJDType yjType,  List<Integer> zts);
 
 	List<String> getBhglbs();
 
-	List<List<String>> getPdcpycssbhgxxfb(Date d, YDJDType yjType, Company company);
+	List<List<String>> getPdcpycssbhgxxfb(Date d, YDJDType yjType, Company company,  List<Integer> zts);
 
-	List<WaveItem> getWaveItems(Date d, YDJDType yjType);
+	List<WaveItem> getWaveItems(Date d, YDJDType yjType,  List<Integer> zts);
 
-	List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company);
+	List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company,  List<Integer> zts);
 
 
 }

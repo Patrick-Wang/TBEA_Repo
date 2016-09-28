@@ -12,7 +12,6 @@ import javax.persistence.Query;
 
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
 
@@ -112,22 +111,22 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	
 	@Override
 	public ZltjjgEntity getByDateTotal(Date d, List<Integer> cplist,
-			Company company, ZBStatus zt) {
+			Company company, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
 		if (null == dateTotal){
 	        
 	        String sql = null;
-			if (zt != ZBStatus.NONE){
-				sql ="from ZltjjgEntity where zt=:zt and nf = :nf and dwid = :dwid";
-			}else{
-				sql ="from ZltjjgEntity where nf = :nf and dwid = :dwid";
-			}
+//			if (zt != ZBStatus.NONE){
+				sql ="from ZltjjgEntity where zt in :zt and nf = :nf and dwid = :dwid";
+//			}else{
+//				sql ="from ZltjjgEntity where nf = :nf and dwid = :dwid";
+//			}
 			Query q = getEntityManager().createQuery(sql);
 			q.setParameter("nf", ec.getYear());
 			q.setParameter("dwid", company.getId());
-			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zt.ordinal());
-			}
+//			if (zt != ZBStatus.NONE){
+				q.setParameter("zt", zts);
+//			}
 			dateTotal = q.getResultList();
 		}
 		
@@ -145,23 +144,23 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	
 	
 	@Override
-	public ZltjjgEntity getByDate(Date d, int cpid, Company company, ZBStatus zt) {
+	public ZltjjgEntity getByDate(Date d, int cpid, Company company, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
 		if (null == byDate){
-	       // Query q = getEntityManager().createQuery("from ZltjjgEntity where zt=:zt and nf = :nf and yf = :yf and dwid in :dwid");
+	       // Query q = getEntityManager().createQuery("from ZltjjgEntity where zt in :zt and nf = :nf and yf = :yf and dwid in :dwid");
 	        String sql = null;
-			if (zt != ZBStatus.NONE){
-				sql ="from ZltjjgEntity where zt=:zt and nf = :nf and yf = :yf and dwid in :dwid";
-			}else{
-				sql ="from ZltjjgEntity where nf = :nf and yf = :yf and dwid in :dwid";
-			}
+//			if (zt != ZBStatus.NONE){
+				sql ="from ZltjjgEntity where zt in :zt and nf = :nf and yf = :yf and dwid in :dwid";
+//			}else{
+//				sql ="from ZltjjgEntity where nf = :nf and yf = :yf and dwid in :dwid";
+//			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
-			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zt.ordinal());
-			}
+//			if (zt != ZBStatus.NONE){
+				q.setParameter("zt", zts);
+//			}
 			byDate = q.getResultList();
 		}
 		
@@ -171,23 +170,23 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 
 
 	@Override
-	public ZltjjgEntity getYearAcc(Date d, int cpid, Company company, ZBStatus zt) {
+	public ZltjjgEntity getYearAcc(Date d, int cpid, Company company, List<Integer> zts) {
 		if (null == yearAcc){
 			EasyCalendar ec = new EasyCalendar(d);
-	        //Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt=:zt and  nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid");
+	        //Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and  nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid");
 	        String sql = null;
-			if (zt != ZBStatus.NONE){
-				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt=:zt and  nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid";
-			}else{
-				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid";
-			}
+//			if (zt != ZBStatus.NONE){
+				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and  nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid";
+//			}else{
+//				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid";
+//			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
-			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zt.ordinal());
-			}
+//			if (zt != ZBStatus.NONE){
+				q.setParameter("zt", zts);
+//			}
 			List<Object[]> ret = q.getResultList();
 			yearAcc = new ArrayList<ZltjjgEntity>();
 			if (!ret.isEmpty()){
@@ -208,25 +207,25 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 
 
 	@Override
-	public ZltjjgEntity getJdAcc(Date d, int cpid, Company company, ZBStatus zt) {
+	public ZltjjgEntity getJdAcc(Date d, int cpid, Company company, List<Integer> zts) {
 		if(jdAcc == null){
 			jdAcc = new ArrayList<ZltjjgEntity>();
 			EasyCalendar ec = new EasyCalendar(d);
-	       // Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt=:zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid");
+	       // Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid");
 	        String sql = null;
-			if (zt != ZBStatus.NONE){
-				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt=:zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid";
-			}else{
-				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid";
-			}
+//			if (zt != ZBStatus.NONE){
+				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid";
+//			}else{
+//				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid";
+//			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
 			q.setParameter("jdstart", ec.getSeasonFirstMonth());
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
-			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zt.ordinal());
-			}
+//			if (zt != ZBStatus.NONE){
+				q.setParameter("zt", zts);
+//			}
 			List<Object[]> ret = q.getResultList();
 			if (!ret.isEmpty()){
 				for (Object[] objs : ret){
@@ -245,26 +244,26 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 
 
 	@Override
-	public ZltjjgEntity getJdAccQntq(Date d, int cpid, Company company, ZBStatus zt) {
+	public ZltjjgEntity getJdAccQntq(Date d, int cpid, Company company, List<Integer> zts) {
 		if (jdAccQntq == null){
 			jdAccQntq = new ArrayList<ZltjjgEntity>();
 			EasyCalendar ec = new EasyCalendar(d);
 			ec.addYear(-1);
-	        //Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt=:zt and nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid");
+	        //Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid");
 	        String sql = null;
-			if (zt != ZBStatus.NONE){
-				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt=:zt and nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid";
-			}else{
-				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid";
-			}
+//			if (zt != ZBStatus.NONE){
+				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid";
+//			}else{
+//				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid";
+//			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
 			q.setParameter("jdstart", ec.getSeasonFirstMonth());
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
-			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zt.ordinal());
-			}
+//			if (zt != ZBStatus.NONE){
+				q.setParameter("zt", zts);
+//			}
 			List<Object[]> ret = q.getResultList();
 			if (!ret.isEmpty()){
 				for (Object[] objs : ret){
@@ -288,34 +287,34 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 
 	@Override
 	public ZltjjgEntity getByDate(Date d, int id, List<Integer> ids,
-			ZBStatus approved) {
+			List<Integer> zts) {
 		
-		return this.stubDao.getByDate(d, id, ids, approved);
+		return this.stubDao.getByDate(d, id, ids, zts);
 	}
 
 	@Override
 	public ZltjjgEntity getYearAcc(Date d, int id, List<Integer> ids,
-			ZBStatus zt) {
+			List<Integer> zts) {
 		String key = "YearAcc" + id;
 		if (this.cache == null){
 			cache = new HashMap<String, ZltjjgEntity>();
 		}
 		if (!cache.containsKey(key)){
 			EasyCalendar ec = new EasyCalendar(d);
-	      //  Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt = :zt and nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid");
+	      //  Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt  in :zt and nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid");
 	        String sql = null;
-			if (zt != ZBStatus.NONE){
-				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt = :zt and nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid";
-			}else{
-				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid";
-			}
+//			if (zt != ZBStatus.NONE){
+				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt  in :zt and nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid";
+//			}else{
+//				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid";
+//			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwids", ids);
-			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zt.ordinal());
-			}
+//			if (zt != ZBStatus.NONE){
+				q.setParameter("zt", zts);
+//			}
 			List<Object[]> ret = q.getResultList();
 			for (Object[] row : ret){
 				ZltjjgEntity entity = new ZltjjgEntity();
@@ -335,7 +334,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	}
 
 	@Override
-	public ZltjjgEntity getJdAcc(Date d, int id, List<Integer> ids, ZBStatus zt) {
+	public ZltjjgEntity getJdAcc(Date d, int id, List<Integer> ids, List<Integer> zts) {
 		
 		String key = "JdAcc" + id;
 		if (this.cache == null){
@@ -343,21 +342,21 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 		}
 		if (!cache.containsKey(key)){
 			EasyCalendar ec = new EasyCalendar(d);
-	        //Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt = :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid");
+	        //Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt  in :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid");
 	        String sql = null;
-			if (zt != ZBStatus.NONE){
-				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt = :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid";
-			}else{
-				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid";
-			}
+//			if (zt != ZBStatus.NONE){
+				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt  in :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid";
+//			}else{
+//				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid";
+//			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
 			q.setParameter("jdstart", ec.getSeasonFirstMonth());
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwids", ids);
-			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zt.ordinal());
-			}
+//			if (zt != ZBStatus.NONE){
+				q.setParameter("zt", zts);
+//			}
 			List<Object[]> ret = q.getResultList();
 			for (Object[] row : ret){
 				ZltjjgEntity entity = new ZltjjgEntity();
@@ -378,7 +377,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 
 	@Override
 	public ZltjjgEntity getJdAccQntq(Date d, int id, List<Integer> ids,
-			ZBStatus zt) {
+			List<Integer> zts) {
 		String key = "JdAccQntq" + id;
 		if (this.cache == null){
 			cache = new HashMap<String, ZltjjgEntity>();
@@ -386,21 +385,21 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 		if (!cache.containsKey(key)){
 			EasyCalendar ec = new EasyCalendar(d);
 			ec.addYear(-1);
-	        //Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids and zt = :zt group by cpid");
+	        //Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids and zt  in :zt group by cpid");
 	        String sql = null;
-			if (zt != ZBStatus.NONE){
-				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids and zt = :zt group by cpid";
-			}else{
-				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids group by cpid";
-			}
+//			if (zt != ZBStatus.NONE){
+				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids and zt  in :zt group by cpid";
+//			}else{
+//				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids group by cpid";
+//			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
 			q.setParameter("jdstart", ec.getSeasonFirstMonth());
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwids", ids);
-			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zt.ordinal());
-			}
+//			if (zt != ZBStatus.NONE){
+				q.setParameter("zt", zts);
+//			}
 			List<Object[]> ret = q.getResultList();
 			for (Object[] row : ret){
 				ZltjjgEntity entity = new ZltjjgEntity();
@@ -421,21 +420,21 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 
 	@Override
 	public ZltjjgEntity getByDateTotal(Date date, List<Integer> cpids,
-			List<Integer> ids, ZBStatus zt) {
+			List<Integer> ids, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(date);
 		if (null == dateTotal){
-	        //Query q = getEntityManager().createQuery("from ZltjjgEntity where zt=:zt and nf = :nf and dwid in :dwids");
+	        //Query q = getEntityManager().createQuery("from ZltjjgEntity where zt in :zt and nf = :nf and dwid in :dwids");
 	        String sql = null;
-			if (zt != ZBStatus.NONE){
-				sql ="from ZltjjgEntity where zt=:zt and nf = :nf and dwid in :dwids";
-			}else{
-				sql ="from ZltjjgEntity where nf = :nf and dwid in :dwids";
-			}
+//			if (zt != ZBStatus.NONE){
+				sql ="from ZltjjgEntity where zt in :zt and nf = :nf and dwid in :dwids";
+//			}else{
+//				sql ="from ZltjjgEntity where nf = :nf and dwid in :dwids";
+//			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
-			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zt.ordinal());
-			}
+//			if (zt != ZBStatus.NONE){
+				q.setParameter("zt", zts);
+//			}
 			q.setParameter("dwids", ids);
 			dateTotal = q.getResultList();
 		}

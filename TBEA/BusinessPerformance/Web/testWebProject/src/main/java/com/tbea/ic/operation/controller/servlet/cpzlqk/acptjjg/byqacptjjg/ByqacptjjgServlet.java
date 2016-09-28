@@ -2,6 +2,7 @@ package com.tbea.ic.operation.controller.servlet.cpzlqk.acptjjg.byqacptjjg;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -50,9 +51,21 @@ public class ByqacptjjgServlet {
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		Integer pageType = Integer.valueOf(request.getParameter("pageType"));
-		ZBStatus status = ZBStatus.NONE;
+//		ZBStatus status = ZBStatus.NONE;
+		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == 3){
-			status = ZBStatus.APPROVED;
+			zts.add(ZBStatus.APPROVED.ordinal());
+		} else if (pageType == 2){
+			zts.add(ZBStatus.SAVED.ordinal());
+			zts.add(ZBStatus.SUBMITTED.ordinal());
+			zts.add(ZBStatus.APPROVED.ordinal());
+			zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
+			zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
+		}  else if (pageType == 1){
+			zts.add(ZBStatus.APPROVED.ordinal());
+			
+			zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
+			zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
 		}
 		
 		List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, yjType, status);

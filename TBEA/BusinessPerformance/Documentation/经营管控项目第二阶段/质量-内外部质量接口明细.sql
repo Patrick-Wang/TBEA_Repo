@@ -25,6 +25,7 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE zl_wbyclzlwt
 CREATE TABLE [dbo].[zl_wbyclzlwt](
 	[id] [int] IDENTITY(1,1) NOT NULL,
+	[serial_num] varchar](50),
 	[company_name] [varchar](50),
 	[issue_happen_date] date,
 	[product_type] [varchar](50) ,
@@ -32,6 +33,7 @@ CREATE TABLE [dbo].[zl_wbyclzlwt](
 	[production_model] [varchar](50) ,
 	[issue_type] [varchar](50) ,
 	[sub_issue_type] [varchar](50) ,
+	[category_code] [varchar](50) ,
 	[quality_phenomenon] [varchar](50) ,
 	[detail] [varchar](50)  ,
 	[material_count] [numeric](18, 4),
@@ -84,6 +86,7 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE zl_nbyclzlwt
 CREATE TABLE [dbo].[zl_nbyclzlwt](
 	[id] [int] IDENTITY(1,1) NOT NULL,
+	[serial_num] varchar](50),
 	[company_name] [varchar](50),
 	[issue_happen_date] date,
 	[product_type] [varchar](50) ,
@@ -91,6 +94,7 @@ CREATE TABLE [dbo].[zl_nbyclzlwt](
 	[production_model] [varchar](50) ,
 	[issue_type] [varchar](50) ,
 	[sub_issue_type] [varchar](50) ,
+	[category_code] [varchar](50) ,
 	[material_quality_phenomenon] [varchar](50) ,
 	[detail] [varchar](50)  ,
 	[material_happen_phase] [varchar](50) ,

@@ -16,8 +16,8 @@ class SjZbInjector extends ZbInjector {
 	SJZBDao sjzbDao;
 
 	public SjZbInjector(ZBXXDao zbxxDao, DWXXDao dwxxDao, SHZTDao shztDao,
-			SJZBDao sjzbDao) {
-		super(zbxxDao, dwxxDao, shztDao);
+			SJZBDao sjzbDao, ZBInjectListener listener) {
+		super(zbxxDao, dwxxDao, shztDao, listener);
 		this.sjzbDao = sjzbDao;
 	}
 
@@ -33,7 +33,10 @@ class SjZbInjector extends ZbInjector {
 			zb.setDwxx(dwxxDao.getById(comp.getId()));
 			
 		}
-		zb.setSjshzt(shztDao.getById(status.ordinal()));	
+		if (null != status){
+			zb.setSjshzt(shztDao.getById(status.ordinal()));	
+		}
+			
 		if (null != time){
 			zb.setSjxgsj(new java.sql.Timestamp(time.getTimeInMillis()));
 		}
@@ -45,6 +48,7 @@ class SjZbInjector extends ZbInjector {
 		} else {
 			sjzbDao.merge(zb);
 		}
+		listener.onInjected(zbId, val, cal, comp, status, time);
 	}
 	
 	@Override

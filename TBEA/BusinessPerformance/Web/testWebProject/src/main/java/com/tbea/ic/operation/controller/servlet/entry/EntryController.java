@@ -30,6 +30,7 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExchangeRate;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.entry.EntryService;
@@ -110,9 +111,13 @@ public class EntryController {
 		for(ZBXX z : zbxx){
 			zbxx2.add(z.clone());
 		}
+		ExchangeRate rate = entryService.getExchangeRate(date);
+		
 		String result = "{\"status\":" + JSONArray.fromObject(approved).toString() +
 						", \"values\":" + zb +
 						", \"zbxx\":" + JSONArray.fromObject(zbxx2).toString() +
+						", \"exchangeRate\":" + (rate == null ? "1" : rate.getRate()) +
+						", \"exRateZbs\" : " + "[1]"+
 						", \"isJydw\":" + ((2 == company.level() && !zhgs.contains(company)) || comp == CompanyType.ZHGS) + "}"; 
 		
 		return result.getBytes("utf-8");

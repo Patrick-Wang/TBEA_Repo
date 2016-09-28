@@ -61,7 +61,7 @@ public class ComponentManager implements ComponentLoadedListener {
 		@Override
 		public void execute(JobExecutionContext arg0)
 				throws JobExecutionException {
-			Controller controller = instance.getController(arg0.getJobDetail().getName());
+			Controller controller = instance.createController(arg0.getJobDetail().getName());
 			if (null != controller){
 				try{
 					instance.scheduler.onSchedule(new Context(), controller);
@@ -236,14 +236,14 @@ public class ComponentManager implements ComponentLoadedListener {
 		}
 	}
 
-	public Controller getController(String id) {
+	public Controller createController(String id) {
 		if (controllerMap.containsKey(id)){
 			return new Controller((Element) controllerMap.get(id).getE().cloneNode(true), this);
 		}
 		return null;
 	}
 	
-	public Controller getController(String id, Context local) {
+	public Controller createController(String id, Context local) {
 		if (controllerMap.containsKey(id)){
 			return new Controller((Element) controllerMap.get(id).getE().cloneNode(true), this, local);
 		}
@@ -254,14 +254,14 @@ public class ComponentManager implements ComponentLoadedListener {
 		return new Service(e, this);
 	}
 	
-	public Service getService(String id, Context local){
+	public Service createService(String id, Context local){
 		if (serviceMap.containsKey(id)){
 			return new Service((Element) serviceMap.get(id).getE().cloneNode(true), this, local);
 		}
 		return null;
 	}
 	
-	public Service getService(String id) {
+	public Service createService(String id) {
 		if (serviceMap.containsKey(id)){
 			return createService((Element) serviceMap.get(id).getE().cloneNode(true));
 		}

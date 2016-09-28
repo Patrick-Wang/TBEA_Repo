@@ -13,7 +13,7 @@ import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 public interface ByqcpycssbhgwtmxService {
 
 	List<List<String>> getByqcpycssbhgwtmx(Date d,
-			YDJDType yjType, ZBStatus status);
+			YDJDType yjType,  List<Integer> zts);
 
 	List<List<String>> getByqcpycssbhgwtmxEntry(Date d, Company company);
 
@@ -32,7 +32,7 @@ public interface ByqcpycssbhgwtmxService {
 	ErrorCode unapproveByqcpycssbhgwtmx(Date d, JSONArray data, Company company);
 
 	List<List<String>> getByqcpycssbhgwtmx(Date d, YDJDType yjType,
-			Company company, ZBStatus status);
+			Company company,  List<Integer> zts);
 
 
 

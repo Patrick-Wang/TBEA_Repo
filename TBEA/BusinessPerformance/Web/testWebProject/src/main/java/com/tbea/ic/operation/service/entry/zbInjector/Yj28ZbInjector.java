@@ -17,8 +17,8 @@ class Yj28ZbInjector extends ZbInjector {
 	YJ28ZBDao yj28zbDao;
 
 	public Yj28ZbInjector(ZBXXDao zbxxDao, DWXXDao dwxxDao, SHZTDao shztDao,
-			YJ28ZBDao yj28zbDao) {
-		super(zbxxDao, dwxxDao, shztDao);
+			YJ28ZBDao yj28zbDao, ZBInjectListener listener) {
+		super(zbxxDao, dwxxDao, shztDao, listener);
 		this.yj28zbDao = yj28zbDao;
 	}
 
@@ -33,7 +33,10 @@ class Yj28ZbInjector extends ZbInjector {
 			zb.setDwxx(dwxxDao.getById(comp.getId()));
 		}
 
-		zb.setYj28shzt(shztDao.getById(status.ordinal()));
+		if (null != status){
+			zb.setYj28shzt(shztDao.getById(status.ordinal()));	
+		}
+		
 		if (time != null){
 			zb.setYj28xgsj(new java.sql.Timestamp(time.getTimeInMillis()));
 		}
@@ -44,7 +47,8 @@ class Yj28ZbInjector extends ZbInjector {
 			yj28zbDao.create(zb);
 		} else{
 			yj28zbDao.merge(zb);
-		}	
+		}
+		listener.onInjected(zbId, val, cal, comp, status, time);
 	}
 
 	@Override

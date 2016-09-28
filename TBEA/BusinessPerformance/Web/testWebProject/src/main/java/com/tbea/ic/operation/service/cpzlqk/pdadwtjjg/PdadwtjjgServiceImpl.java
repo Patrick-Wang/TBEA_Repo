@@ -43,8 +43,8 @@ public class PdadwtjjgServiceImpl implements PdadwtjjgService {
 
 	@Override
 	public List<List<String>> getPdadwtjjg(Date d,
-			YDJDType yjType) {
-		return getPdadwtjjg(d, yjType, pdAdwtjjgDao.getAll());
+			YDJDType yjType, List<Integer> zts) {
+		return getPdadwtjjg(d, yjType, pdAdwtjjgDao.getAll(), zts);
 	}
 
 	private int setZltjjg(List<String> row, int start, ZltjjgEntity zltjjg){
@@ -68,9 +68,9 @@ public class PdadwtjjgServiceImpl implements PdadwtjjgService {
 	}
 
 	
-	private List<List<String>> getPdadwtjjg(Date d, YDJDType yjType, List<PdAdwtjjgEntity> entities) {
+	private List<List<String>> getPdadwtjjg(Date d, YDJDType yjType, List<PdAdwtjjgEntity> entities, List<Integer> zts) {
 		List<Integer> comps = new ArrayList<Integer>();
-		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType);
+		FormulaClientJd client = new FormulaClientJd(this, zltjjgDao, comps, d, yjType, zts);
 		FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> fs = new FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>>(client);
 		for (PdAdwtjjgEntity entity : entities){
 			Formula formula = new Formula(entity.getFormul());
@@ -89,8 +89,8 @@ public class PdadwtjjgServiceImpl implements PdadwtjjgService {
 	
 	@Override
 	public List<List<String>> getPdadwtjjg(Date d, YDJDType yjType,
-			Company company) {
-		return this.getPdadwtjjg(d, yjType, pdAdwtjjgDao.getByDw(company));
+			Company company, List<Integer> zts) {
+		return this.getPdadwtjjg(d, yjType, pdAdwtjjgDao.getByDw(company), zts);
 	}
 
 	private WaveItem getWaveItem(List<WaveItem> wis, String name){
@@ -114,14 +114,14 @@ public class PdadwtjjgServiceImpl implements PdadwtjjgService {
 	}
 	
 	@Override
-	public List<WaveItem> getPdYdAdwtjjgWaveItems(Date d, Company company) {
+	public List<WaveItem> getPdYdAdwtjjgWaveItems(Date d, Company company, List<Integer> zts) {
 		
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
 		cal.setMonth(1);
 		for (int j = 0; j < 12; ++j){
-			List<List<String>> result = this.getPdadwtjjg(cal.getDate(), YDJDType.YD, pdAdwtjjgDao.getByDw(company));
+			List<List<String>> result = this.getPdadwtjjg(cal.getDate(), YDJDType.YD, pdAdwtjjgDao.getByDw(company), zts);
 			for (int i = 0; i < result.size(); ++i){
 				WaveItem item = getWaveItem(wis, result.get(i).get(0));
 				item.getData().add(toCtVal(result.get(i).get(4)));
@@ -132,13 +132,13 @@ public class PdadwtjjgServiceImpl implements PdadwtjjgService {
 	}
 
 	@Override
-	public List<WaveItem> getPdYdAdwtjjgWaveItems(Date d) {
+	public List<WaveItem> getPdYdAdwtjjgWaveItems(Date d, List<Integer> zts) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
 		cal.setMonth(1);
 		for (int j = 0; j < 12; ++j){
-			List<List<String>> result = this.getPdadwtjjg(cal.getDate(), YDJDType.YD);
+			List<List<String>> result = this.getPdadwtjjg(cal.getDate(), YDJDType.YD, zts);
 			for (int i = 0; i < result.size(); ++i){
 				WaveItem item = getWaveItem(wis, result.get(i).get(0));
 				item.getData().add(toCtVal(result.get(i).get(4)));
@@ -149,13 +149,13 @@ public class PdadwtjjgServiceImpl implements PdadwtjjgService {
 	}
 
 	@Override
-	public List<WaveItem> getWaveItems(Date d) {
+	public List<WaveItem> getWaveItems(Date d, List<Integer> zts) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
 		cal.setMonth(1);
 		for (int j = 0; j < 12; ++j){
-			List<List<String>> result = this.getPdadwtjjg(cal.getDate(), YDJDType.YD);
+			List<List<String>> result = this.getPdadwtjjg(cal.getDate(), YDJDType.YD, zts);
 			for (int i = 0; i < result.size(); ++i){
 				WaveItem item = getWaveItem(wis, result.get(i).get(0));
 				item.getData().add(toCtVal(result.get(i).get(4)));

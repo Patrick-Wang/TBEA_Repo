@@ -30,6 +30,7 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	Company company;
 	Date d;
 	List<Integer> ids;
+	List<Integer> zts;
 	public List<List<String>> getResult(){
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (int i = 0; i < formulaOrder.size(); ++i){
@@ -39,11 +40,12 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	}
 	
 	public FormulaClientJd(PdacptjjgServiceImpl pdacptjjgServiceImpl,
-			ZltjjgDao tjjgDao, Company company, Date d) {
+			ZltjjgDao tjjgDao, Company company, Date d, List<Integer> zts) {
 		super();
 		this.pdacptjjgServiceImpl = pdacptjjgServiceImpl;
 		this.tjjgDao = new ZltjjgDaoCacheProxy(tjjgDao,company.getId());
 		this.company = company;
+		this.zts = zts;
 		if (company.getType() == CompanyType.BYQCY ||
 				company.getType() == CompanyType.XLCY ||
 				company.getType() == CompanyType.PDCY){
@@ -63,11 +65,11 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 		ZltjjgEntity tj2 = null;
 
 		if (ids == null){
-			tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
-			tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), company, ZBStatus.APPROVED);
+			tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), company, zts);
+			tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), company, zts);
 		}else{
-			tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), ids, ZBStatus.APPROVED);
-			tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), ids, ZBStatus.APPROVED);
+			tj1 = tjjgDao.getJdAcc(d, forMap.get(formula).getCpxl().getId(), ids, zts);
+			tj2 = tjjgDao.getJdAccQntq(d, forMap.get(formula).getCpxl().getId(), ids, zts);
 		}
 		return new Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>>(
 				forMap.get(formula).getId(), 

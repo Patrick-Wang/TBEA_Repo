@@ -45,6 +45,12 @@ module entry_template {
         children:Zbxx[];
     }
 
+    interface ExchangeRate{
+        id:number;
+        nf:number;
+        rate:number;
+    }
+
     function find(data:Array<string[]>, id:any){
         for (let i = 0; i < data.length; ++i){
             if (data[i][0] == id){
@@ -59,6 +65,7 @@ module entry_template {
         public static getInstance(): View {
             return View.instance;
         }
+        private mRate:number;
         private mZbxxs:Array<Zbxx>;
         private mStatusList: Array<string>;
         private mTableData: Array<string[]>;
@@ -70,7 +77,9 @@ module entry_template {
         private mSave: Util.Ajax = new Util.Ajax("zb_save.do");
         private mSubmitToDeputy: Util.Ajax = new Util.Ajax("zb_submitToDeputy.do");
         private mTableAssist: JQTable.JQGridAssistant;
+        private mExRateZbs : number[];
         private mTitleCompanyName: string;
+
         initInstance(opt: IViewOption) {
 
             this.mOpt = opt;
@@ -107,7 +116,9 @@ module entry_template {
             //this.updateUI();
         }
 
+        private getCurrentExchangeRate(){
 
+        }
 
         public updateUI() {
             $("#nodatatips").css("display", "none");
@@ -121,6 +132,8 @@ module entry_template {
                     this.mStatusList = data.status;
                     this.mTableData = data.values;
                     this.mZbxxs = data.zbxx;
+                    this.mRate = data.exchangeRate;
+                    this.mExRateZbs = data.exRateZbs;
                     this.updateTitle();
                     this.updateTable(this.mOpt.tableId);
                     this.updateApproveStatusFromDeputy(date.year, date.month, this.mOpt.entryType);
@@ -642,7 +655,12 @@ module entry_template {
                         }
                     }
                 }
+
+                if (undefined != sum && this.mExRateZbs.indexOf(zbxx.id) >= 0){
+                    return sum * this.mRate;
+                }
                 return sum;
+
             });
             this.mTableAssist.addFormula(form);
             return dst;

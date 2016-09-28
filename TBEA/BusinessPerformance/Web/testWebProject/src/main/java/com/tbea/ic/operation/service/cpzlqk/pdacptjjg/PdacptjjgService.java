@@ -13,7 +13,7 @@ import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 
 public interface PdacptjjgService {
 
-	List<List<String>> getPdacptjjg(Date d, Company company, YDJDType yjType);
+	List<List<String>> getPdacptjjg(Date d, Company company, YDJDType yjType, List<Integer> zts);
 
 	ErrorCode savePdacptjjg(Date d, JSONArray data, Company company);
 
@@ -21,7 +21,7 @@ public interface PdacptjjgService {
 
 	List<List<String>> getPdacptjjgEntry(Date d, Company company);
 
-	List<WaveItem> getWaveValues(Date d, Company company);
+	List<WaveItem> getWaveValues(Date d, Company company, List<Integer> zts);
 
 	ErrorCode approvePdacptjjg(Date d, JSONArray data, Company company);
 
@@ -29,6 +29,6 @@ public interface PdacptjjgService {
 
 	ErrorCode unapprovePdacptjjg(Date d, JSONArray data, Company company);
 
-	List<WaveItem> getJdWaveValues(Date d, Company company);
+	List<WaveItem> getJdWaveValues(Date d, Company company, List<Integer> zts);
 
 }

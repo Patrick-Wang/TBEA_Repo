@@ -58,7 +58,7 @@ public class ReportServlet implements Scheduler {
 			HttpServletResponse response,
 			@PathVariable("controllor") String controllor) throws Exception {
 		
-		com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.getController(controllor);
+		com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.createController(controllor);
 		if (null != controller){
 			Context context = new Context();
 			ContextHandlers handlers = new ContextHandlers();

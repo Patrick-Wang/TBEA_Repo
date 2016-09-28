@@ -9,15 +9,15 @@ import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 
 public interface PdadwtjjgService {
 
-	List<List<String>> getPdadwtjjg(Date d, YDJDType yjType);
+	List<List<String>> getPdadwtjjg(Date d, YDJDType yjType, List<Integer> zts);
 
-	List<List<String>> getPdadwtjjg(Date d, YDJDType yjType, Company company);
+	List<List<String>> getPdadwtjjg(Date d, YDJDType yjType, Company company, List<Integer> zts);
 
-	List<WaveItem> getPdYdAdwtjjgWaveItems(Date d, Company company);
+	List<WaveItem> getPdYdAdwtjjgWaveItems(Date d, Company company, List<Integer> zts);
 
-	List<WaveItem> getPdYdAdwtjjgWaveItems(Date d);
+	List<WaveItem> getPdYdAdwtjjgWaveItems(Date d, List<Integer> zts);
 
-	List<WaveItem> getWaveItems(Date d);
+	List<WaveItem> getWaveItems(Date d, List<Integer> zts);
 
 
 }

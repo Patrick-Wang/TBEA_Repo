@@ -19,9 +19,9 @@ public class CallControllerXmlInterpreter implements XmlInterpreter {
 		
 		Controller controller = null;
 		if ("true".equals(e.getAttribute("inline"))){
-			controller = component.getCM().getController(id, component.localContext());
+			controller = component.getCM().createController(id, component.localContext());
 		}else{
-			controller = component.getCM().getController(id);
+			controller = component.getCM().createController(id);
 		}
 		
 		if (null != controller){

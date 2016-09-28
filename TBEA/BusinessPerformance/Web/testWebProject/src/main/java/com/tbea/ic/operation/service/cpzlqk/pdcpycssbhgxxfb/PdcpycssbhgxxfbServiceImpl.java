@@ -99,16 +99,16 @@ public class PdcpycssbhgxxfbServiceImpl implements PdcpycssbhgxxfbService {
 	
 	
 	@Override
-	public List<List<String>> getPdcpycssbhgxxfb(Date d, YDJDType yjType) {
+	public List<List<String>> getPdcpycssbhgxxfb(Date d, YDJDType yjType,  List<Integer> zts) {
 		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
 										// count]
 		List<Object[]> hjEntities = null;
 		if (yjType == YDJDType.YD) {
-			hjEntities = pdBhgwtmxDao.getByYdFbHj(d, ZBStatus.APPROVED);
-			entities = pdBhgwtmxDao.getByYdFb(d, ZBStatus.APPROVED);
+			hjEntities = pdBhgwtmxDao.getByYdFbHj(d, zts);
+			entities = pdBhgwtmxDao.getByYdFb(d, zts);
 		} else {
-			hjEntities = pdBhgwtmxDao.getByJdFbHj(d, ZBStatus.APPROVED);
-			entities = pdBhgwtmxDao.getByJdFb(d, ZBStatus.APPROVED);
+			hjEntities = pdBhgwtmxDao.getByJdFbHj(d, zts);
+			entities = pdBhgwtmxDao.getByJdFb(d, zts);
 		}
 		return this.getPdcpycssbhgxxfb(d, yjType, entities, hjEntities);
 	}
@@ -124,21 +124,21 @@ public class PdcpycssbhgxxfbServiceImpl implements PdcpycssbhgxxfbService {
 	}
 
 	@Override
-	public List<List<String>> getPdcpycssbhgxxfb(Date d, YDJDType yjType, Company company) {
+	public List<List<String>> getPdcpycssbhgxxfb(Date d, YDJDType yjType, Company company,  List<Integer> zts) {
 		List<Object[]> entities = null;// [Integer dwid, Integer bhglxid, Long
 		// count]
 		List<Object[]> hjEntities = null;//[Integer dwid, Long
 		                          		// count]
 		if (yjType == YDJDType.YD) {
 			hjEntities = pdBhgwtmxDao.getByYdFbHj(d, company,
-					ZBStatus.APPROVED);
+					zts);
 			entities = pdBhgwtmxDao.getByYdFb(d, company,
-					ZBStatus.APPROVED);
+					zts);
 		} else {
 			hjEntities = pdBhgwtmxDao.getByJdFbHj(d, company,
-					ZBStatus.APPROVED);
+					zts);
 			entities = pdBhgwtmxDao.getByJdFb(d, company,
-					ZBStatus.APPROVED);
+					zts);
 		}
 		return this.getPdcpycssbhgxxfb(d, yjType, entities, hjEntities);
 	}
@@ -156,7 +156,7 @@ public class PdcpycssbhgxxfbServiceImpl implements PdcpycssbhgxxfbService {
 	
 	
 	@Override
-	public List<WaveItem> getWaveItems(Date d, YDJDType yjType) {
+	public List<WaveItem> getWaveItems(Date d, YDJDType yjType,  List<Integer> zts) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
@@ -164,7 +164,7 @@ public class PdcpycssbhgxxfbServiceImpl implements PdcpycssbhgxxfbService {
 		List<Object[]> hjEntities = null;//[Integer dwid, Long
   		// count]
 		for (int i = 0; i < 12; ++i){
-			hjEntities = pdBhgwtmxDao.getByYdFbHj(cal.getDate(), ZBStatus.APPROVED);
+			hjEntities = pdBhgwtmxDao.getByYdFbHj(cal.getDate(), zts);
 			for (int j = 0; j < hjEntities.size(); ++j){
 				getWaveItem(wis, dwmcDao.getByDwid((Integer) hjEntities.get(j)[0])
 						.getDwmc().getName())
@@ -179,7 +179,7 @@ public class PdcpycssbhgxxfbServiceImpl implements PdcpycssbhgxxfbService {
 
 
 	@Override
-	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company) {
+	public List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company,  List<Integer> zts) {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		EasyCalendar cal = new EasyCalendar();
 		cal.setTime(d);
@@ -187,7 +187,7 @@ public class PdcpycssbhgxxfbServiceImpl implements PdcpycssbhgxxfbService {
 		List<Object[]> hjEntities = null;//[Integer dwid, Long
   		// count]
 		for (int i = 0; i < 12; ++i){
-			hjEntities = pdBhgwtmxDao.getByYdFbHj(cal.getDate(), company, ZBStatus.APPROVED);
+			hjEntities = pdBhgwtmxDao.getByYdFbHj(cal.getDate(), company, zts);
 			
 			for (int j = 0; j < hjEntities.size(); ++j){
 				getWaveItem(wis, company.getName())

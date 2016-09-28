@@ -33,6 +33,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 	ELParser elp;
 	List<FieldSql> where;
 	List<FieldSql> set;
+	AbstractXmlComponent component;
 	private int getTypes(Map<Integer, Integer> types){
 		int max = 0;
 		for (FieldSql sql : where){
@@ -92,6 +93,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isMerge(e)){
 			return false;
 		}
+		this.component = component;
 		elp = new ELParser(component);
 		String table = (String) XmlUtil.getObjectAttr(e, "table", elp);
 		Object dataObj = component.getVar("data");
@@ -109,7 +111,8 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				JSONArray data = (JSONArray) dataObj;				
 				for (int i = 0, len = data.size(); i < len; ++i){
 					JSONArray row = data.getJSONArray(i);
-					merge(em, table, row, where, set);
+					this.component.local("i", i);
+					merge(em, table, row);
 				}
 				
 			} else if (dataObj instanceof XSSFWorkbook){
@@ -117,7 +120,11 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				XSSFSheet sheet = workbook.getSheetAt(0);
 				boolean isInsert = where.isEmpty();
 				int maxCol = getTypes(types);
-				where.add(0, new FieldSql("id", TypeUtil.INT, null, maxCol + 1));
+//				FieldSql fs = new FieldSql(elp);
+//				fs.setProp("id");
+//				fs.setType(TypeUtil.INT);
+//				fs.setRef("" + (maxCol + 1));
+//				where.add(0, fs);
 				for (int i = 1; i <= sheet.getLastRowNum(); ++i){
 					XSSFRow row = sheet.getRow(i);
 					if (null != row){
@@ -125,16 +132,19 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 						if (isInsert){
 							jrow.add("add");
 						}
-						merge(em, table, jrow, where, set);
+						this.component.local("i", i - 1);
+						merge(em, table, jrow);
 					}
 				}		
 			} else if (dataObj instanceof List){
 				List<List<Object>> objs = (List<List<Object>>) dataObj;
 				for (int i = 0; i < objs.size(); ++i){
 					JSONArray jrow = List2Json(objs.get(i));
-					merge(em, table, jrow, where, set);
+					this.component.local("i", i - 1);
+					merge(em, table, jrow);
 				}
 			}
+			this.component.removeLocal("i");
 		}
 		
 		return true;
@@ -163,7 +173,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 
 	private String getValue(JSONArray row, FieldSql sql, EntityManager em){
 		String ret = null;
-		if (sql.getValue() != null){
+		if (sql.hasValue()){
 			switch (sql.getType()){
 			case TypeUtil.INT:
 			case TypeUtil.DOUBLE:
@@ -176,7 +186,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			}
 		}else{
 			
-			if (sql.getJoin() != null){
+			if (sql.hasJoin()){
 				String querySql = "select " + sql.getSelect() + " from " + sql.getJoin() + " where " + sql.getIn() + " = ?0";
 				Query q = em.createNativeQuery(querySql);
 				List<Object> result = null;
@@ -187,7 +197,6 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 						q.setParameter(0, val);
 						result = q.getResultList();
 					}
-					
 					break;
 				case TypeUtil.DOUBLE:
 					Double d = Util.toDoubleNull(row.getString(sql.getRef()));
@@ -252,31 +261,39 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 					break;
 				}
 			}
-			
-			
 		}
-		
-		
-		
 		
 		return ret;
 	}
 	
-	private void merge(EntityManager em, String table, JSONArray row, List<FieldSql> where,
-			List<FieldSql> set) {
-		
-		if (!where.isEmpty() && null != where.get(0).getRef()){
-			String firstWhere = row.getString(where.get(0).getRef());
-			if (null != firstWhere && firstWhere.startsWith("add")){
-				doInsert(em, table, row, where, set);
-				return;
+	private void merge(EntityManager em, String table, JSONArray row) {
+		boolean doInsert = false;
+		String firstWhere = null;
+		do{
+			if (where.isEmpty()){
+				break;
 			}
+			
+			Integer ref = where.get(0).getRef();
+			if (null == ref){
+				break;
+			}
+			
+			firstWhere = row.getString(ref);
+			if (null == firstWhere || !firstWhere.startsWith("add")){
+				break;
+			}
+			
+			doInsert(em, table, row, set);
+			doInsert = true;
+		}while(false);
+		
+		if (!doInsert){
+			doUpdate(em, table, row);
 		}
-		doUpdate(em, table, row, where, set);
 	}
 
-	private void doInsert(EntityManager em, String table, JSONArray row,
-			List<FieldSql> where, List<FieldSql> set) {
+	private void doInsert(EntityManager em, String table, JSONArray row, List<FieldSql> set) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(" INSERT INTO ");
 		sb.append(table);
@@ -320,8 +337,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		return null;
 	}
 	
-	private void doUpdate(EntityManager em, String table, JSONArray row,
-			List<FieldSql> where, List<FieldSql> set) {
+	private void doUpdate(EntityManager em, String table, JSONArray row) {
 		String whereSql = parseWhereSql(em, row);
 		Integer count = null;
 		if (null != whereSql){
@@ -350,20 +366,20 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			System.out.println(sb.toString());
 			em.createNativeQuery(sb.toString()).executeUpdate();
 		}else{
-			doInsert(em, table, row, where, set);
+			doInsert(em, table, row, set);
 		}
 	}
 
 	private FieldSql compileElement(Element elem) throws Exception{
-		Object val = XmlUtil.getObjectAttr(elem, "value", elp);
-		FieldSql fs = new FieldSql();
+		//Object val = XmlUtil.getObjectAttr(elem, "value", elp);
+		FieldSql fs = new FieldSql(elp);
 		fs.setProp(elem.getTagName());
 		fs.setType(TypeUtil.typeof(elem));
 		if (elem.hasAttribute("op")){
 			fs.setOper(elem.getAttribute("op"));
 		}
-		if (val != null){
-			fs.setValue(val);
+		if (elem.hasAttribute("value")){
+			fs.setValue(elem.getAttribute("value"));
 		}else{
 			Integer ref = XmlUtil.getIntAttr(elem, "ref", elp, null);
 			if (null != ref){
