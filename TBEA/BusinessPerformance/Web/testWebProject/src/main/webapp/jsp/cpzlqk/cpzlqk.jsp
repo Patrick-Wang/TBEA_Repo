@@ -215,12 +215,16 @@ th.ui-th-ltr {
 					<div style="font-size:18px;font-weight:bold">问题分析</div>
 					<textarea id="commentText" cols="20" rows="5" style="width:100%;resize: none;margin-bottom:5px"></textarea>
 					<c:if test="${pageType == 2}"><%-- 2 录入页面--%>
-					<input type="button" id="saveComment" value="提交" style="float:right;width:90px"
+						<input type="button" id="saveComment" value="提交" style="float:right;width:90px"
 						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_SAVE_COMMENT)">
 					</c:if>
 					<c:if test="${pageType == 1}"><%-- 1 为审核页面 --%>
-						<input type="button" id="approveComment" value="审核" style="float:right;width:90px"
+						<input type="button" id="approveComment" value="上报" style="float:right;width:90px"
 						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT)">
+						<input type="button" id="approveComment1" value="一级上报" style="float:right;width:90px"
+						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT1)">
+						<input type="button" id="approveComment2" value="二级上报" style="float:right;width:90px"
+						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT2)">
 					</c:if>
 				</div>
 				<form id="export" method="post">

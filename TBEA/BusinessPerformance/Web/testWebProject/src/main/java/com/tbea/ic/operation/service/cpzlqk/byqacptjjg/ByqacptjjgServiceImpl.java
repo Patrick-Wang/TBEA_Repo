@@ -327,14 +327,14 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 	}
 
 	@Override
-	public ErrorCode approveByqacptjjg(Date d, JSONArray data, Company company) {
+	public ErrorCode approveByqacptjjg(Date d, JSONArray data, Company company, ZBStatus zbStatus) {
 		ZltjjgEntity zltjjg = null;
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
 			Integer cpid = Integer.valueOf(row.getInt(0));
 			zltjjg = zltjjgDao.getByDateIgnoreStatus(d, cpid, company);
 			if (null != zltjjg){
-				zltjjg.setZt(ZBStatus.APPROVED.ordinal());
+				zltjjg.setZt(zbStatus.ordinal());
 				zltjjgDao.merge(zltjjg);
 			}
 		}

@@ -42,6 +42,13 @@ module cpzlqk{
         contentType: string;
     }
 
+    export enum PageType {
+        NONE,
+        APPROVE,
+        ENTRY,
+        SHOW
+    }
+
     export interface Comment{
         comment?:string;
         readonly?:string;
@@ -84,9 +91,12 @@ module cpzlqk{
         export let ZLFE_SET_ZBSTATUS : number = FrameEvent.lastEvent();
         export let ZLFE_SAVE_COMMENT : number = FrameEvent.lastEvent();
         export let ZLFE_APPROVE_COMMENT : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVE_COMMENT1 : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVE_COMMENT2 : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_UPDATED : number = FrameEvent.lastEvent();
         export let ZLFE_DATA_STATUS : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_DENY : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVEAUTH_UPDATED : number = FrameEvent.lastEvent();
     }
 
     export enum NwbzlType {

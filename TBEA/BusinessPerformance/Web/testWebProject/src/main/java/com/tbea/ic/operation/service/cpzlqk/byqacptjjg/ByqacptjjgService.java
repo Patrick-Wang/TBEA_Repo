@@ -23,7 +23,7 @@ public interface ByqacptjjgService {
 
 	List<WaveItem> getWaveValues(Date d, Company company,  List<Integer> zts);
 
-	ErrorCode approveByqacptjjg(Date d, JSONArray data, Company company);
+	ErrorCode approveByqacptjjg(Date d, JSONArray data, Company company, ZBStatus zbStatus);
 
 	ZBStatus getStatus(Date d, Company company);
 

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,10 +28,13 @@ import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.PageType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.cpzlqk.byqacptjjg.ByqacptjjgService;
 import com.tbea.ic.operation.service.cpzlqk.byqacptjjg.ByqacptjjgServiceImpl;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "byqacptjjg")
@@ -43,6 +47,9 @@ public class ByqacptjjgServlet {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	@Autowired
+	ExtendAuthorityService extendAuthService;
+	
 	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] getByqacptjjg(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -50,33 +57,50 @@ public class ByqacptjjgServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		Integer pageType = Integer.valueOf(request.getParameter("pageType"));
-//		ZBStatus status = ZBStatus.NONE;
+		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
+		ZBStatus status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
+		List<Integer> auths = JSONArray.fromObject(request.getParameter("auths"));
+		
 		List<Integer> zts = new ArrayList<Integer>();
-		if (pageType == 3){
+		if (pageType == PageType.SHOW){
 			zts.add(ZBStatus.APPROVED.ordinal());
-		} else if (pageType == 2){
+		} else if (pageType == PageType.ENTRY){
 			zts.add(ZBStatus.SAVED.ordinal());
 			zts.add(ZBStatus.SUBMITTED.ordinal());
 			zts.add(ZBStatus.APPROVED.ordinal());
 			zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
 			zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
-		}  else if (pageType == 1){
-			zts.add(ZBStatus.APPROVED.ordinal());
-			
-			zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
-			zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
+		}  else if (pageType == PageType.APPROVE){
+			if (status == ZBStatus.SUBMITTED){
+				if (auths.contains(53)){
+					zts.add(ZBStatus.SUBMITTED.ordinal());
+				}
+			} else if (status == ZBStatus.INTER_APPROVED_1){
+				if (auths.contains(54) || auths.contains(53)){
+					zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
+				}
+			} else if (status == ZBStatus.INTER_APPROVED_2){
+				if (auths.contains(53) || auths.contains(AuthType.QualityApprove.ordinal()) || auths.contains(54)){
+					zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
+				}
+			} else if (status == ZBStatus.APPROVED){
+				if (auths.contains(53) || auths.contains(AuthType.QualityApprove.ordinal()) || auths.contains(54)){
+					zts.add(ZBStatus.APPROVED.ordinal());
+				}
+			}
 		}
 		
-		List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, yjType, status);
+		List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, yjType, zts);
 		List<WaveItem> waveItems = null;
 		if (yjType == YDJDType.YD){
-			waveItems  = byqacptjjgService.getWaveValues(d, company, status);
+			waveItems  = byqacptjjgService.getWaveValues(d, company, zts);
 		}else{
-			waveItems  = byqacptjjgService.getJdWaveValues(d, company, status);
+			waveItems  = byqacptjjgService.getJdWaveValues(d, company, zts);
 		}
 		
 		CpzlqkResp resp = new CpzlqkResp(result, waveItems);
+		
+		
 		
 		return JSONObject.fromObject(resp.format()).toString().getBytes("utf-8");
 	}
@@ -88,9 +112,10 @@ public class ByqacptjjgServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		ZBStatus status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
 		List<List<String>> result = byqacptjjgService.getByqacptjjgEntry(d, company);
 		JSONArray data = JSONArray.fromObject(result);
-		ErrorCode err = byqacptjjgService.approveByqacptjjg(d, data, company);
+		ErrorCode err = byqacptjjgService.approveByqacptjjg(d, data, company, status);
 		return Util.response(err);
 	}
 	
@@ -164,8 +189,9 @@ public class ByqacptjjgServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		
-		ErrorCode err = byqacptjjgService.approveByqacptjjg(d, data, company);
+
+		ZBStatus status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
+		ErrorCode err = byqacptjjgService.approveByqacptjjg(d, data, company, status);
 		return Util.response(err);
 	}
 	

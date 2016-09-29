@@ -280,9 +280,22 @@ var Util;
         ZBStatus.SAVED = "SAVED";
         ZBStatus.APPROVED_2 = "APPROVED_2";
         ZBStatus.SUBMITTED_2 = "SUBMITTED_2";
+        ZBStatus.INTER_APPROVED_1 = "内部一级已审核";
+        ZBStatus.INTER_APPROVED_2 = "内部二级已审核";
         return ZBStatus;
     })();
     Util.ZBStatus = ZBStatus;
+    (function (IndiStatus) {
+        IndiStatus[IndiStatus["NONE"] = 0] = "NONE";
+        IndiStatus[IndiStatus["APPROVED"] = 1] = "APPROVED";
+        IndiStatus[IndiStatus["SUBMITTED"] = 2] = "SUBMITTED";
+        IndiStatus[IndiStatus["SAVED"] = 3] = "SAVED";
+        IndiStatus[IndiStatus["APPROVED_2"] = 4] = "APPROVED_2";
+        IndiStatus[IndiStatus["SUBMITTED_2"] = 5] = "SUBMITTED_2";
+        IndiStatus[IndiStatus["INTER_APPROVED_1"] = 6] = "INTER_APPROVED_1";
+        IndiStatus[IndiStatus["INTER_APPROVED_2"] = 7] = "INTER_APPROVED_2"; //("内部二级已审核");
+    })(Util.IndiStatus || (Util.IndiStatus = {}));
+    var IndiStatus = Util.IndiStatus;
     (function (ZBType) {
         ZBType[ZBType["QNJH"] = 0] = "QNJH";
         ZBType[ZBType["YDJDMJH"] = 1] = "YDJDMJH";

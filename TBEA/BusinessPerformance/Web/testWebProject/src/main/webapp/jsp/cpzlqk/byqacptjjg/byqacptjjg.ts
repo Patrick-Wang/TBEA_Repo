@@ -39,6 +39,7 @@ module cpzlqk {
             private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             private mCommentApprove:Util.Ajax = new Util.Ajax("../report/zlfxApprove.do", false);
             private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqacptjjg/approve.do", false);
+            private mAjaxAuth:Util.Ajax = new Util.Ajax("auth.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
             getId():number {
@@ -50,6 +51,8 @@ module cpzlqk {
                     ||compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             }
             onEvent(e:framework.route.Event):any {
+
+                let zt;
                 switch (e.id) {
                     case Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
@@ -69,34 +72,45 @@ module cpzlqk {
                             Util.MessageBox.tip("提交成功", undefined);
                         });
                         break;
-                    case Event.ZLFE_APPROVE_COMMENT:
-                        let param1 = {
-                            condition:Util.Ajax.toUrlParam({
-                                url : this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId:this.mCompType,
-                                ydjd:this.mYdjdType
-                            }),
-                            comment:e.data
-                        }
-                        this.mCommentApprove.get({
-                            data : JSON.stringify([[param1.condition, param1.comment]])
-                        }).then((jsonData:any)=>{
-                            this.mAjaxApprove.get({
-                                date: this.mDt,
-                                companyId:this.mCompType
-                            }).then((jsonData:any)=>{
-                                Util.MessageBox.tip("审核成功", undefined);
-                                framework.router
-                                    .fromEp(this)
-                                    .to(framework.basic.endpoint.FRAME_ID)
-                                    .send(Event.ZLFE_COMMENT_UPDATED, {
-                                        comment:param1.comment,
-                                        zt:1
-                                    });
-                            });
-                        });
+                    case Event.ZLFE_APPROVE_COMMENT1:
+                        zt = Util.IndiStatus.INTER_APPROVED_1;
                         break;
+                    case Event.ZLFE_APPROVE_COMMENT2:
+                        zt = Util.IndiStatus.INTER_APPROVED_2;
+                        break;
+                    case Event.ZLFE_APPROVE_COMMENT:
+                        zt = Util.IndiStatus.APPROVED;
+                        break;
+                }
+                if (undefined != zt){
+                    let param = {
+                        condition:Util.Ajax.toUrlParam({
+                            url : this.mAjax.baseUrl(),
+                            date: this.mDt,
+                            companyId:this.mCompType,
+                            ydjd:this.mYdjdType
+                        }),
+                        comment:e.data
+                    }
+                    this.mCommentApprove.get({
+                        data : JSON.stringify([[param.condition, param.comment]]),
+                        zt:zt
+                    }).then((jsonData:any)=>{
+                        this.mAjaxApprove.get({
+                            date: this.mDt,
+                            companyId:this.mCompType,
+                            zt:zt
+                        }).then((jsonData:any)=>{
+                            //Util.MessageBox.tip("审核成功", undefined);
+                            framework.router
+                                .fromEp(this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(Event.ZLFE_COMMENT_UPDATED, {
+                                    comment:param.comment,
+                                    zt:zt
+                                });
+                        });
+                    });
                 }
                 return super.onEvent(e);
             }
@@ -116,27 +130,43 @@ module cpzlqk {
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
-                    url : this.mAjax.baseUrl(),
-                    date: date,
+                this.mAjaxAuth.get({
                     companyId:compType,
-                    ydjd:this.mYdjdType
-                }),compId:compType}).then((jsonData:any)=>{
+                }).then((auths:any)=>{
                     framework.router
                         .fromEp(this)
                         .to(framework.basic.endpoint.FRAME_ID)
-                        .send(Event.ZLFE_COMMENT_UPDATED, jsonData);
-                });
-                this.mAjax.get({
+                        .send(Event.ZLFE_APPROVEAUTH_UPDATED, auths);
+                    this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                        url : this.mAjax.baseUrl(),
                         date: date,
                         companyId:compType,
                         ydjd:this.mYdjdType,
-                        pageType:pageType
-                    })
-                    .then((jsonData:any) => {
-                        this.mData = jsonData;
-                        this.refresh();
+                    }),compId:compType}).then((jsonData:any)=>{
+                        let comment : Comment = jsonData;
+                        framework.router
+                            .fromEp(this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(Event.ZLFE_COMMENT_UPDATED, comment);
+
+                        this.mAjax.get({
+                                date: date,
+                                companyId:compType,
+                                ydjd:this.mYdjdType,
+                                pageType:pageType,
+                                zt:comment.zt,
+                                auths:JSON.stringify(auths)
+                            })
+                            .then((jsonData:any) => {
+                                this.mData = jsonData;
+                                this.refresh();
+                            });
                     });
+                })
+
+
+
+
             }
 
             private toCtVal(val:string){

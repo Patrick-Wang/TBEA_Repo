@@ -25,6 +25,13 @@ var plugin;
 })(plugin || (plugin = {}));
 var cpzlqk;
 (function (cpzlqk) {
+    (function (PageType) {
+        PageType[PageType["NONE"] = 0] = "NONE";
+        PageType[PageType["APPROVE"] = 1] = "APPROVE";
+        PageType[PageType["ENTRY"] = 2] = "ENTRY";
+        PageType[PageType["SHOW"] = 3] = "SHOW";
+    })(cpzlqk.PageType || (cpzlqk.PageType = {}));
+    var PageType = cpzlqk.PageType;
     (function (YDJDType) {
         YDJDType[YDJDType["YD"] = 0] = "YD";
         YDJDType[YDJDType["JD"] = 1] = "JD";
@@ -41,9 +48,12 @@ var cpzlqk;
         Event.ZLFE_SET_ZBSTATUS = FrameEvent.lastEvent();
         Event.ZLFE_SAVE_COMMENT = FrameEvent.lastEvent();
         Event.ZLFE_APPROVE_COMMENT = FrameEvent.lastEvent();
+        Event.ZLFE_APPROVE_COMMENT1 = FrameEvent.lastEvent();
+        Event.ZLFE_APPROVE_COMMENT2 = FrameEvent.lastEvent();
         Event.ZLFE_COMMENT_UPDATED = FrameEvent.lastEvent();
         Event.ZLFE_DATA_STATUS = FrameEvent.lastEvent();
         Event.ZLFE_COMMENT_DENY = FrameEvent.lastEvent();
+        Event.ZLFE_APPROVEAUTH_UPDATED = FrameEvent.lastEvent();
     })(Event = cpzlqk.Event || (cpzlqk.Event = {}));
     (function (NwbzlType) {
         NwbzlType[NwbzlType["ZT"] = 0] = "ZT";

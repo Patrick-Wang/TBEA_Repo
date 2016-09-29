@@ -35,7 +35,7 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -45,6 +45,7 @@ var cpzlqk;
                 this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
                 this.mCommentApprove = new Util.Ajax("../report/zlfxApprove.do", false);
                 this.mAjaxApprove = new Util.Ajax("../byqacptjjg/approve.do", false);
+                this.mAjaxAuth = new Util.Ajax("auth.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqacptjjg;
@@ -55,6 +56,7 @@ var cpzlqk;
             };
             ShowView.prototype.onEvent = function (e) {
                 var _this = this;
+                var zt;
                 switch (e.id) {
                     case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
@@ -74,34 +76,45 @@ var cpzlqk;
                             Util.MessageBox.tip("提交成功", undefined);
                         });
                         break;
+                    case cpzlqk.Event.ZLFE_APPROVE_COMMENT1:
+                        zt = Util.IndiStatus.INTER_APPROVED_1;
+                        break;
+                    case cpzlqk.Event.ZLFE_APPROVE_COMMENT2:
+                        zt = Util.IndiStatus.INTER_APPROVED_2;
+                        break;
                     case cpzlqk.Event.ZLFE_APPROVE_COMMENT:
-                        var param1_1 = {
-                            condition: Util.Ajax.toUrlParam({
-                                url: this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId: this.mCompType,
-                                ydjd: this.mYdjdType
-                            }),
-                            comment: e.data
-                        };
-                        this.mCommentApprove.get({
-                            data: JSON.stringify([[param1_1.condition, param1_1.comment]])
+                        zt = Util.IndiStatus.APPROVED;
+                        break;
+                }
+                if (undefined != zt) {
+                    var param = {
+                        condition: Util.Ajax.toUrlParam({
+                            url: this.mAjax.baseUrl(),
+                            date: this.mDt,
+                            companyId: this.mCompType,
+                            ydjd: this.mYdjdType
+                        }),
+                        comment: e.data
+                    };
+                    this.mCommentApprove.get({
+                        data: JSON.stringify([[param.condition, param.comment]]),
+                        zt: zt
+                    }).then(function (jsonData) {
+                        _this.mAjaxApprove.get({
+                            date: _this.mDt,
+                            companyId: _this.mCompType,
+                            zt: zt
                         }).then(function (jsonData) {
-                            _this.mAjaxApprove.get({
-                                date: _this.mDt,
-                                companyId: _this.mCompType
-                            }).then(function (jsonData) {
-                                Util.MessageBox.tip("审核成功", undefined);
-                                framework.router
-                                    .fromEp(_this)
-                                    .to(framework.basic.endpoint.FRAME_ID)
-                                    .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
-                                    comment: param1_1.comment,
-                                    zt: 1
-                                });
+                            //Util.MessageBox.tip("审核成功", undefined);
+                            framework.router
+                                .fromEp(_this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
+                                comment: param.comment,
+                                zt: zt
                             });
                         });
-                        break;
+                    });
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
@@ -119,26 +132,37 @@ var cpzlqk;
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
-                        url: this.mAjax.baseUrl(),
-                        date: date,
-                        companyId: compType,
-                        ydjd: this.mYdjdType
-                    }), compId: compType }).then(function (jsonData) {
+                this.mAjaxAuth.get({
+                    companyId: compType
+                }).then(function (auths) {
                     framework.router
                         .fromEp(_this)
                         .to(framework.basic.endpoint.FRAME_ID)
-                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData);
-                });
-                this.mAjax.get({
-                    date: date,
-                    companyId: compType,
-                    ydjd: this.mYdjdType,
-                    pageType: pageType
-                })
-                    .then(function (jsonData) {
-                    _this.mData = jsonData;
-                    _this.refresh();
+                        .send(cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED, auths);
+                    _this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
+                            url: _this.mAjax.baseUrl(),
+                            date: date,
+                            companyId: compType,
+                            ydjd: _this.mYdjdType
+                        }), compId: compType }).then(function (jsonData) {
+                        var comment = jsonData;
+                        framework.router
+                            .fromEp(_this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, comment);
+                        _this.mAjax.get({
+                            date: date,
+                            companyId: compType,
+                            ydjd: _this.mYdjdType,
+                            pageType: pageType,
+                            zt: comment.zt,
+                            auths: JSON.stringify(auths)
+                        })
+                            .then(function (jsonData) {
+                            _this.mData = jsonData;
+                            _this.refresh();
+                        });
+                    });
                 });
             };
             ShowView.prototype.toCtVal = function (val) {
@@ -226,7 +250,7 @@ var cpzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -284,6 +308,6 @@ var cpzlqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(cpzlqk.ZlPluginView));
+        })(cpzlqk.ZlPluginView);
     })(byqacptjjg = cpzlqk.byqacptjjg || (cpzlqk.byqacptjjg = {}));
 })(cpzlqk || (cpzlqk = {}));
