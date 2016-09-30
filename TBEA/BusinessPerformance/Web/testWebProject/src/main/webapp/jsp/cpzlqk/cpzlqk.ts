@@ -179,6 +179,9 @@ module cpzlqk {
                     $("#comment").hide();
                     break;
                 case Event.ZLFE_APPROVEAUTH_UPDATED:
+                    $("#approveComment").hide();
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
                     if (Util.indexOf(e.data, 22) >= 0){
                         $("#approveComment").show();
                     }
@@ -190,7 +193,8 @@ module cpzlqk {
                     }
                     break;
                 case Event.ZLFE_COMMENT_UPDATED:
-                    let comment : Comment = e.data;
+                    let comment : Comment = e.data.comment;
+                    let auths = e.data.auths;
                     $("#comment").show();
                     $("#commentText").val(comment.comment);
                     $("#commentText").attr("readonly","readonly");
@@ -202,9 +206,27 @@ module cpzlqk {
                         } else if (comment.zt == Util.IndiStatus.INTER_APPROVED_1){
                             $("#approveComment").hide();
                             $("#approveComment1").hide();
+                            if ($("#approveComment1").is(":hidden")){
+                                $("#commentText").val("");
+                            }
+
                         } else if (comment.zt == Util.IndiStatus.INTER_APPROVED_2){
                             $("#approveComment1").hide();
                             $("#approveComment2").hide();
+                            if ($("#approveComment").is(":hidden")){
+                                $("#commentText").val("");
+                            }
+                        } else if (comment.zt == Util.IndiStatus.SUBMITTED){
+                            $("#approveComment").hide();
+                            $("#approveComment2").hide();
+                            if ($("#approveComment1").is(":hidden")){
+                                $("#commentText").val("");
+                            }
+                        } else{
+                            $("#approveComment").hide();
+                            $("#approveComment1").hide();
+                            $("#approveComment2").hide();
+                            $("#commentText").val("");
                         }
                     }else if (window.pageType == PageType.ENTRY){//submit
                         $("#commentText").removeAttr("readonly");

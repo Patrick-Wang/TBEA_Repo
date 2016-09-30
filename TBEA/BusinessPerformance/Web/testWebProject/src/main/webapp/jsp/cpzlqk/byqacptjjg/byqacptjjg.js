@@ -149,7 +149,7 @@ var cpzlqk;
                         framework.router
                             .fromEp(_this)
                             .to(framework.basic.endpoint.FRAME_ID)
-                            .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, comment);
+                            .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, { comment: comment, auths: auths });
                         _this.mAjax.get({
                             date: date,
                             companyId: compType,

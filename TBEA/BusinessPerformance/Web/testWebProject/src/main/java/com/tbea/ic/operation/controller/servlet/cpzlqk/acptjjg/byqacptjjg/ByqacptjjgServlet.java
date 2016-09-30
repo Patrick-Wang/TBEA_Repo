@@ -58,9 +58,12 @@ public class ByqacptjjgServlet {
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
-		ZBStatus status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
-		List<Integer> auths = JSONArray.fromObject(request.getParameter("auths"));
+		ZBStatus status = ZBStatus.NONE;
+		if (request.getParameter("zt") != null){
+			status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
+		}		
 		
+		List<Integer> auths = JSONArray.fromObject(request.getParameter("auths"));
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
 			zts.add(ZBStatus.APPROVED.ordinal());
@@ -71,7 +74,10 @@ public class ByqacptjjgServlet {
 			zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
 			zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
 		}  else if (pageType == PageType.APPROVE){
-			if (status == ZBStatus.SUBMITTED){
+			
+			if (status == ZBStatus.NONE || status == ZBStatus.SAVED ){
+
+			} else if (status == ZBStatus.SUBMITTED){
 				if (auths.contains(53)){
 					zts.add(ZBStatus.SUBMITTED.ordinal());
 				}
@@ -88,6 +94,10 @@ public class ByqacptjjgServlet {
 					zts.add(ZBStatus.APPROVED.ordinal());
 				}
 			}
+		}
+		
+		if (zts.isEmpty()){
+			zts.add(ZBStatus.NONE.ordinal());
 		}
 		
 		List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, yjType, zts);

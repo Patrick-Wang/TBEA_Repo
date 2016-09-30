@@ -147,7 +147,7 @@ module cpzlqk {
                         framework.router
                             .fromEp(this)
                             .to(framework.basic.endpoint.FRAME_ID)
-                            .send(Event.ZLFE_COMMENT_UPDATED, comment);
+                            .send(Event.ZLFE_COMMENT_UPDATED, {comment:comment, auths:auths});
 
                         this.mAjax.get({
                                 date: date,

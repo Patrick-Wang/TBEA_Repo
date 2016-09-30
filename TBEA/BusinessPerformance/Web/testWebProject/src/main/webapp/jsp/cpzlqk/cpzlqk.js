@@ -159,6 +159,9 @@ var cpzlqk;
                     $("#comment").hide();
                     break;
                 case cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED:
+                    $("#approveComment").hide();
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
                     if (Util.indexOf(e.data, 22) >= 0) {
                         $("#approveComment").show();
                     }
@@ -170,7 +173,8 @@ var cpzlqk;
                     }
                     break;
                 case cpzlqk.Event.ZLFE_COMMENT_UPDATED:
-                    var comment = e.data;
+                    var comment = e.data.comment;
+                    var auths = e.data.auths;
                     $("#comment").show();
                     $("#commentText").val(comment.comment);
                     $("#commentText").attr("readonly", "readonly");
@@ -183,10 +187,29 @@ var cpzlqk;
                         else if (comment.zt == Util.IndiStatus.INTER_APPROVED_1) {
                             $("#approveComment").hide();
                             $("#approveComment1").hide();
+                            if ($("#approveComment1").is(":hidden")) {
+                                $("#commentText").val("");
+                            }
                         }
                         else if (comment.zt == Util.IndiStatus.INTER_APPROVED_2) {
                             $("#approveComment1").hide();
                             $("#approveComment2").hide();
+                            if ($("#approveComment").is(":hidden")) {
+                                $("#commentText").val("");
+                            }
+                        }
+                        else if (comment.zt == Util.IndiStatus.SUBMITTED) {
+                            $("#approveComment").hide();
+                            $("#approveComment2").hide();
+                            if ($("#approveComment1").is(":hidden")) {
+                                $("#commentText").val("");
+                            }
+                        }
+                        else {
+                            $("#approveComment").hide();
+                            $("#approveComment1").hide();
+                            $("#approveComment2").hide();
+                            $("#commentText").val("");
                         }
                     }
                     else if (window.pageType == cpzlqk.PageType.ENTRY) {
