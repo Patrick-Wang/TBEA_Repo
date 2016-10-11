@@ -181,11 +181,13 @@ th.ui-th-ltr {
 	<Table id="frameTable" align="center" style="width:1200px">
 		<tr>
 			<td>
+				<div id="zlAndyclhgl" style="float: left"></div>
 				<div id="dt" style="float: left"></div>
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
+
 				<div id="radio" style="float: right">
 					<input type="radio" id="rdyd" name="radio" checked="checked">
 					<label	for="rdyd">月度</label>
@@ -239,6 +241,43 @@ th.ui-th-ltr {
 	window.tableStatus = ts == ''?undefined : JSON.parse(ts);
 	window.pageType = ${pageType};
 	$("#radio").buttonset();
+	//$("#zlAndyclhgl").buttonset();
+
+	function clickYcl(){
+		window.location.href="${pageContext.request.contextPath}/report/yclhglqktj.do";
+	}
+
+	var pageSlector = new Util.UnitedSelector([{
+	data:{
+	id:0,
+	value:"产品一次送试"
+	}
+	},{
+	data:{
+	id:1,
+	value:"原材料合格率"
+	}
+	}],"zlAndyclhgl");
+
+	pageSlector.change(function(){
+	if (pageSlector.getPath()[0] == 1){
+	window.location.href="${pageContext.request.contextPath}/report/yclhglqktj.do";
+	}
+	});
+
+	$("#zlAndyclhgl select")
+	.multiselect({
+	multiple: false,
+	header: false,
+	minWidth: 115,
+	height:'100%',
+	// noneSelectedText: "请选择月份",
+	selectedList: 1
+	})
+	.css("padding", "2px 0 2px 4px")
+	.css("text-align", "left")
+	.css("font-size", "12px");
+
     $(document).ready(function () {
 
 		framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{

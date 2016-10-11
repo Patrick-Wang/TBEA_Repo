@@ -25,22 +25,27 @@
   <context key="condition" value="${request.condition.asString}"/>
   <context key="type" value="${request.type.asString}"/>
   <context key="compId" value="${orgs.virtualCYOrg.ids[request.compId.asInt]}"/>
-  <context key="isByqCy" value="${50000 == compId}"/>
-  <context key="isXlCy" value="${50001 == compId}"/>
-  <context key="isPdCy" value="${50002 == compId}"/>
-  <callservice id="servZlfxUpdate"/>
-  <if test="${comment.isEmpty}">
+  <context key="isCategory" value="${50000 == compId || 50001 == compId || 50002 == compId}"/>
+  <if test="${isCategory}">
    <response type="json">
-    <comment>${&quot;&quot;}</comment>
+    <deny>deny</deny>
    </response>
   </if>
-  <if test="${!comment.isEmpty}">
-   <response type="json">
-    <comment>${comment[0][0]}</comment>
-    <zt>${comment[0][1]}</zt>
-   </response>
+  <if test="${!isCategory}">
+   <callservice id="servZlfxUpdate"/>
+   <if test="${comment.isEmpty}">
+    <response type="json">
+     <comment>${&quot;&quot;}</comment>
+    </response>
+   </if>
+   <if test="${!comment.isEmpty}">
+    <response type="json">
+     <comment>${comment[0][0]}</comment>
+     <zt>${comment[0][1]}</zt>
+    </response>
+   </if>
   </if>
-  <if test="${isByqCy}">
+  <!-- <if test="${isByqCy}">
    <if test="${auth[46]}">
     <if test="${comment.isEmpty}">
      <response type="json">
@@ -172,7 +177,7 @@
      <deny>deny</deny>
     </response>
    </if>
-  </if>
+  </if> -->
  </controller>
  <controller id="zlfxSubmit">
   <context key="data" value="${request.data.asJsonArray}"/>

@@ -243,7 +243,7 @@ var framework;
                             data: this.mChartResp.yNames
                         },
                         toolbox: {
-                            show: true,
+                            show: true
                         },
                         calculable: false,
                         xAxis: [
@@ -263,7 +263,7 @@ var framework;
                     echarts.init($("#" + this.option().chartId + "ct")[0]).setOption(option);
                 };
                 return ShowView;
-            }(framework.templates.singleDateReport.ShowView));
+            })(framework.templates.singleDateReport.ShowView);
             dateChartReport.ShowView = ShowView;
         })(dateChartReport = templates.dateChartReport || (templates.dateChartReport = {}));
     })(templates = framework.templates || (framework.templates = {}));

@@ -744,7 +744,7 @@ public class ByqnwbzlztqkServiceImpl implements ByqnwbzlztqkService {
 		result.add(compName);
 		result.add(dynb + "");
 		result.add(dywb + "");
-		result.add(MathUtil.sum(dywb, dywb) + "");
+		result.add(MathUtil.sum(dynb, dywb) + "");
 		return result;
 	}
 
@@ -767,7 +767,7 @@ public class ByqnwbzlztqkServiceImpl implements ByqnwbzlztqkService {
 		result.add(compName);
 		result.add(dynb + "");
 		result.add(dywb + "");
-		result.add(MathUtil.sum(dywb, dywb) + "");
+		result.add(MathUtil.sum(dynb, dywb) + "");
 		result.add(ljnb + "");
 		result.add(ljwb + "");
 		result.add(MathUtil.sum(ljnb, ljwb) + "");
@@ -1040,7 +1040,7 @@ public class ByqnwbzlztqkServiceImpl implements ByqnwbzlztqkService {
 		list.add(entity.getIssue_process());
 		list.add(entity.getResponsibility_department());
 		list.add(entity.getMaterial_treatment_measure());
-		list.add(entity.getOnsite_treatmen_measure());
+		list.add(entity.getOnsite_treatment_measure());
 		list.add(entity.getOnsite_treatment_result());
 		list.add(entity.getCausa_analysis());
 		list.add(entity.getAssessment());

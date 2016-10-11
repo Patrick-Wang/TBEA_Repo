@@ -109,10 +109,14 @@ var cpzlqk;
                             framework.router
                                 .fromEp(_this)
                                 .to(framework.basic.endpoint.FRAME_ID)
-                                .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
-                                comment: param.comment,
-                                zt: zt
-                            });
+                                .send(cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED, _this.mAuths);
+                            framework.router
+                                .fromEp(_this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, { comment: {
+                                    comment: param.comment,
+                                    zt: zt
+                                } });
                         });
                     });
                 }
@@ -135,10 +139,11 @@ var cpzlqk;
                 this.mAjaxAuth.get({
                     companyId: compType
                 }).then(function (auths) {
+                    _this.mAuths = auths;
                     framework.router
                         .fromEp(_this)
                         .to(framework.basic.endpoint.FRAME_ID)
-                        .send(cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED, auths);
+                        .send(cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED, _this.mAuths);
                     _this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
                             url: _this.mAjax.baseUrl(),
                             date: date,

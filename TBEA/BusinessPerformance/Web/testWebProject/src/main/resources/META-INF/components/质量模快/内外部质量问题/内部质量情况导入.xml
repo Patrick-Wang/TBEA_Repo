@@ -1,0 +1,188 @@
+<components>
+ <service id="servNbzlqkEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <context key="counterSerial" value="${counterFactory.newCounter.reset[0]}"/>
+  <merge data="${data}" table="zl_nbyclzlwt">
+   <set>
+    <serial_num type="string" value="${'gs' + '0' + 'counterSerial.next.format[7]'}"/>
+    <company_name type="string" ref="${counter.reset[0].val}"/>
+    <issue_happen_date type="date" ref="${counter.next.val}"/>
+    <product_type type="string" ref="${counter.next.val}"/>
+    <production_num type="string" ref="${counter.next.val}"/>
+    <production_model type="string" ref="${counter.next.val}"/>
+    <issue_type type="string" ref="${counter.next.val}"/>
+    <sub_issue_type type="string" ref="${counter.next.val}"/>
+    <category_code type="string" ref="${counter.next.val}"/>
+    <material_quality_phenomenon type="string" ref="${counter.next.val}"/>
+    <detail type="string" ref="${counter.next.val}"/>
+    <material_happen_phase type="string" ref="${counter.next.val}"/>
+    <material_count type="double" ref="${counter.next.val}"/>
+    <measurement_units type="string" ref="${counter.next.val}"/>
+    <suppier_id type="string" ref="${counter.next.val}"/>
+    <suppier type="string" ref="${counter.next.val}"/>
+    <issue_process type="string" ref="${counter.next.val}"/>
+    <responsibility_department type="string" ref="${counter.next.val}"/>
+    <material_treatment_measure type="string" ref="${counter.next.val}"/>
+    <onsite_treatment_measure type="string" ref="${counter.next.val}"/>
+    <onsite_treatment_result type="string" ref="${counter.next.val}"/>
+    <causa_analysis type="string" ref="${counter.next.val}"/>
+    <assessment type="string" ref="${counter.next.val}"/>
+    <filling_personnel type="string" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+    <zt type="int" value="2"/>
+   </set>
+  </merge>
+ </service>
+ <service id="servNbzlqkImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="zl_nbyclzlwt">
+   <where>
+    <serial_num type="string" ref="0"/>
+   </where>
+   <set>
+    <serial_num type="string" ref="${counter.reset[0].val}"/>
+    <company_name type="string" ref="${counter.next.val}"/>
+    <issue_happen_date type="date" ref="${counter.next.val}"/>
+    <product_type type="string" ref="${counter.next.val}"/>
+    <production_num type="string" ref="${counter.next.val}"/>
+    <production_model type="string" ref="${counter.next.val}"/>
+    <issue_type type="string" ref="${counter.next.val}"/>
+    <sub_issue_type type="string" ref="${counter.next.val}"/>
+    <category_code type="string" ref="${counter.next.val}"/>
+    <material_quality_phenomenon type="string" ref="${counter.next.val}"/>
+    <detail type="string" ref="${counter.next.val}"/>
+    <material_happen_phase type="string" ref="${counter.next.val}"/>
+    <material_count type="double" ref="${counter.next.val}"/>
+    <measurement_units type="string" ref="${counter.next.val}"/>
+    <suppier_id type="string" ref="${counter.next.val}"/>
+    <suppier type="string" ref="${counter.next.val}"/>
+    <issue_process type="string" ref="${counter.next.val}"/>
+    <responsibility_department type="string" ref="${counter.next.val}"/>
+    <material_treatment_measure type="string" ref="${counter.next.val}"/>
+    <onsite_treatment_measure type="string" ref="${counter.next.val}"/>
+    <onsite_treatment_result type="string" ref="${counter.next.val}"/>
+    <causa_analysis type="string" ref="${counter.next.val}"/>
+    <assessment type="string" ref="${counter.next.val}"/>
+    <filling_personnel type="string" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+    <zt type="int" value="2"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="nbzlqkImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servNbzlqkImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="nbzlqkImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="nbzlqkImport"/>
+   <map key="title" value="内部质量情况导入"/>
+  </response>
+ </controller>
+ <controller id="nbzlqkTransport" cron1="0 0 2 ？ * 2">
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servNbzlqkTransSb"/> 
+   <callservice id="servNbzlqkTransXl"/>
+  <callservice id="servNbzlqkTransHb"/> 
+  <!--<callservice id="servNbzlqkTransDl"/>-->
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <service id="servNbzlqkTrans" transaction="transactionManager">
+  <sql>delete from zl_nbyclzlwt where source = ${src}</sql>
+  <callservice id="servNbzlqkEntry"/>
+ </service>
+ <service id="servNbzlqkTransLl" transaction="transLl">
+  <context key="src" value="鲁缆数据库收集"/>
+  <context key="gs" value="ll"/>
+  <callservice id="servGetAndTransNbzlqk"/>
+ </service>
+ <service id="servNbzlqkTransXl" transaction="transXl">
+  <context key="src" value="新缆数据库收集"/>
+  <context key="gs" value="xl"/>
+  <callservice id="servGetAndTransNbzlqk"/>
+ </service>
+ <service id="servNbzlqkTransDl" transaction="transDl">
+  <context key="src" value="德缆数据库收集"/>
+  <context key="gs" value="dl"/>
+  <callservice id="servGetAndTransNbzlqk"/>
+ </service>
+ <service id="servNbzlqkTransSb" transaction="transSb">
+  <context key="src" value="沈变数据库收集"/>
+  <context key="gs" value="sl"/>
+  <callservice id="servGetAndTransNbzlqk"/>
+ </service>
+ <service id="servNbzlqkTransHb">
+  <context key="src" value="衡变数据库收集"/>
+  <context key="gs" value="hl"/>
+  <list type="string" id="cols">company_name,
+issue_happen_date,
+product_type,
+production_num,
+production_model,
+issue_type,
+sub_issue_type,
+category_code,
+material_quality_phenomenon,
+detail,
+material_happen_phase,
+material_count,
+measurement_units,
+suppier_id,
+suppier,
+issue_process,
+responsibility_department,
+material_treatment_measure,
+onsite_treatmen_measure,
+onsite_treatment_result,
+causa_analysis,
+assessment,
+filling_personnel</list>
+  <context key="data" value="${zlqkWebService.HBNbzlqk[cols]}"/>
+  <callservice id="servNbzlqkTrans"/>
+ </service>
+ <service id="servNbzlqkTransXb" transaction="transXb">
+  <context key="src" value="新变数据库收集"/>
+  <context key="gs" value="xb"/>
+  <callservice id="servGetAndTransNbzlqk"/>
+ </service>
+ <service id="servGetAndTransNbzlqk">
+  <sql id="data" export="true">select
+	company_name,
+	issue_happen_date,
+	product_type,
+	production_num,
+	production_model,
+	issue_type,
+	sub_issue_type,
+	category_code,
+	material_quality_phenomenon,
+	detail,
+	material_happen_phase,
+	material_count,
+	measurement_units,
+	suppier_id,
+	suppier,
+	issue_process,
+	responsibility_department,
+	material_treatment_measure,
+	onsite_treatment_measure,
+	onsite_treatment_result,
+	causa_analysis,
+	assessment,
+	filling_personnel
+from
+	internal_quality</sql>
+  <callservice id="servNbzlqkTrans"/>
+ </service>
+</components>

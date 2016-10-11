@@ -40,11 +40,12 @@ public class NbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	String material_happen_phase;
 	Double material_count;
 	String measurement_units;
+	String suppier_id;
 	String suppier;
 	String issue_process;
 	String responsibility_department;
 	String material_treatment_measure;
-	String onsite_treatmen_measure;
+	String onsite_treatment_measure;
 	String onsite_treatment_result;
 	String causa_analysis;
 	String assessment;
@@ -52,7 +53,12 @@ public class NbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	String source;
 	Timestamp time;
 	Integer zt;
-	
+	public String getSuppier_id() {
+		return suppier_id;
+	}
+	public void setSuppier_id(String suppier_id) {
+		this.suppier_id = suppier_id;
+	}
 	public String getCompany_name() {
 		return company_name;
 	}
@@ -149,11 +155,11 @@ public class NbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	public void setMaterial_treatment_measure(String material_treatment_measure) {
 		this.material_treatment_measure = material_treatment_measure;
 	}
-	public String getOnsite_treatmen_measure() {
-		return onsite_treatmen_measure;
+	public String getOnsite_treatment_measure() {
+		return onsite_treatment_measure;
 	}
-	public void setOnsite_treatmen_measure(String onsite_treatmen_measure) {
-		this.onsite_treatmen_measure = onsite_treatmen_measure;
+	public void setOnsite_treatment_measure(String onsite_treatment_measure) {
+		this.onsite_treatment_measure = onsite_treatment_measure;
 	}
 	public String getOnsite_treatment_result() {
 		return onsite_treatment_result;

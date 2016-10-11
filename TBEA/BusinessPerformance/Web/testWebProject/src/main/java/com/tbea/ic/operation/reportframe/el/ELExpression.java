@@ -3,8 +3,10 @@ package com.tbea.ic.operation.reportframe.el;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +28,14 @@ public class ELExpression{
 	static final Pattern expPattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\[[^\\[]+\\])*(\\.[a-zA-Z][a-zA-Z0-9]*(\\[[^\\[]+\\])*)*");  
 	static final Pattern indexesPattern = Pattern.compile("(\\[[^\\[]+\\])+"); 
 	static final Pattern indexedObjectPattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\[[^\\[]+\\])*"); 
+	static final Set<String> jsKeyWords = new HashSet<String>();
+	
+	static{
+		jsKeyWords.add("indexOf");
+		jsKeyWords.add("true");
+		jsKeyWords.add("false");
+	}
+	
 	int start;
 	int end;
 	String expression;
@@ -156,7 +166,7 @@ public class ELExpression{
 					break;
 				}
 			}catch(ELInitObjectNotExist e){
-				if (!"indexOf".equals(e.getMessage())){
+				if (!jsKeyWords.contains(e.getMessage())){
 					e.printStackTrace();
 				}
 			}
@@ -239,10 +249,10 @@ public class ELExpression{
 			Exception {
 		Matcher indexedObjMatcher = indexedObjectPattern.matcher(exp);
 		Object obj = null;
-		System.out.println("EL : " + exp);
+//		System.out.println("EL : " + exp);
 		while(indexedObjMatcher.find()){
 			String objExp = indexedObjMatcher.group();
-			System.out.println("obj : " + objExp);
+//			System.out.println("obj : " + objExp);
 			Matcher indexesMatcher = indexesPattern.matcher(objExp);
 			if (obj == null){
 				if (indexesMatcher.find()){
@@ -265,7 +275,7 @@ public class ELExpression{
 					obj = getPropByName(obj, objExp);
 				}
 			}
-			System.out.println(obj);
+//			System.out.println(obj);
 		}
 		return obj;
 	}

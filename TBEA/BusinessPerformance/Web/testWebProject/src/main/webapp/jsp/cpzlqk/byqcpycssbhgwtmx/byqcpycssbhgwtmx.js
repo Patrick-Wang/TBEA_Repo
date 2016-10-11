@@ -5,6 +5,7 @@
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
 ///<reference path="../cpzlqk.ts"/>
+///<reference path="../../jqgrid/jqgrid.d.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -35,7 +36,7 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -45,6 +46,7 @@ var cpzlqk;
                 this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
                 this.mCommentApprove = new Util.Ajax("../report/zlfxApprove.do", false);
                 this.mAjaxApprove = new Util.Ajax("../byqcpycssbhgwtmx/approve.do", false);
+                this.mAjaxAuth = new Util.Ajax("auth.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqcpycssbhgwtmx;
@@ -99,6 +101,7 @@ var cpzlqk;
             };
             ShowView.prototype.onEvent = function (e) {
                 var _this = this;
+                var zt;
                 switch (e.id) {
                     case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
@@ -115,38 +118,102 @@ var cpzlqk;
                         this.mCommentSubmit.get({
                             data: JSON.stringify([[param.condition, param.comment]])
                         }).then(function (jsonData) {
-                            Util.MessageBox.tip("保存成功", undefined, 1000);
+                            Util.MessageBox.tip("提交成功", undefined);
                         });
+                        break;
+                    case cpzlqk.Event.ZLFE_APPROVE_COMMENT1:
+                        zt = Util.IndiStatus.INTER_APPROVED_1;
+                        break;
+                    case cpzlqk.Event.ZLFE_APPROVE_COMMENT2:
+                        zt = Util.IndiStatus.INTER_APPROVED_2;
                         break;
                     case cpzlqk.Event.ZLFE_APPROVE_COMMENT:
-                        var param1_1 = {
-                            condition: Util.Ajax.toUrlParam({
-                                url: this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId: this.mCompType,
-                                ydjd: this.mYdjdType
-                            }),
-                            comment: e.data
-                        };
-                        this.mCommentApprove.get({
-                            data: JSON.stringify([[param1_1.condition, param1_1.comment]])
-                        }).then(function (jsonData) {
-                            _this.mAjaxApprove.get({
-                                date: _this.mDt,
-                                companyId: _this.mCompType
-                            }).then(function (jsonData) {
-                                Util.MessageBox.tip("审核成功", undefined);
-                                framework.router
-                                    .fromEp(_this)
-                                    .to(framework.basic.endpoint.FRAME_ID)
-                                    .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
-                                    comment: param1_1.comment,
-                                    zt: 1
-                                });
-                            });
-                        });
+                        zt = Util.IndiStatus.APPROVED;
                         break;
                 }
+                if (undefined != zt) {
+                    var param = {
+                        condition: Util.Ajax.toUrlParam({
+                            url: this.mAjax.baseUrl(),
+                            date: this.mDt,
+                            companyId: this.mCompType,
+                            ydjd: this.mYdjdType
+                        }),
+                        comment: e.data
+                    };
+                    this.mCommentApprove.get({
+                        data: JSON.stringify([[param.condition, param.comment]]),
+                        zt: zt
+                    }).then(function (jsonData) {
+                        _this.mAjaxApprove.get({
+                            date: _this.mDt,
+                            companyId: _this.mCompType,
+                            zt: zt
+                        }).then(function (jsonData) {
+                            //Util.MessageBox.tip("审核成功", undefined);
+                            framework.router
+                                .fromEp(_this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED, _this.mAuths);
+                            framework.router
+                                .fromEp(_this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, { comment: {
+                                    comment: param.comment,
+                                    zt: zt
+                                } });
+                        });
+                    });
+                }
+                return _super.prototype.onEvent.call(this, e);
+            };
+            ShowView.prototype.pluginGetExportUrl = function (date, compType) {
+                return "../byqacptjjg/export.do?" + Util.Ajax.toUrlParam({
+                    date: date,
+                    companyId: compType,
+                    ydjd: this.mYdjdType
+                });
+            };
+            ShowView.prototype.option = function () {
+                return this.mOpt;
+            };
+            ShowView.prototype.pluginUpdate = function (date, compType) {
+                var _this = this;
+                this.mDt = date;
+                this.mCompType = compType;
+                this.mAjaxAuth.get({
+                    companyId: compType
+                }).then(function (auths) {
+                    _this.mAuths = auths;
+                    framework.router
+                        .fromEp(_this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED, _this.mAuths);
+                    _this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
+                            url: _this.mAjax.baseUrl(),
+                            date: date,
+                            companyId: compType,
+                            ydjd: _this.mYdjdType
+                        }), compId: compType }).then(function (jsonData) {
+                        var comment = jsonData;
+                        framework.router
+                            .fromEp(_this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, { comment: comment, auths: auths });
+                        _this.mAjax.get({
+                            date: date,
+                            companyId: compType,
+                            ydjd: _this.mYdjdType,
+                            pageType: pageType,
+                            zt: comment.zt,
+                            auths: JSON.stringify(auths)
+                        })
+                            .then(function (jsonData) {
+                            _this.mData = jsonData;
+                            _this.refresh();
+                        });
+                    });
+                });
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.init = function (opt) {
@@ -180,11 +247,11 @@ var cpzlqk;
                     autoScroll: true,
                     rowNum: 20,
                     viewrecords: true,
-                    pager: '#' + pagername,
+                    pager: '#' + pagername
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(cpzlqk.ZlPluginView));
+        })(cpzlqk.ZlPluginView);
     })(byqcpycssbhgwtmx = cpzlqk.byqcpycssbhgwtmx || (cpzlqk.byqcpycssbhgwtmx = {}));
 })(cpzlqk || (cpzlqk = {}));

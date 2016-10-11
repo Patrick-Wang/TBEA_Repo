@@ -5,8 +5,10 @@
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../cpzlqkdef.ts"/>
 ///<reference path="../cpzlqk.ts"/>
+///<reference path="../../jqgrid/jqgrid.d.ts"/>
 
 
+declare var echarts;
 module cpzlqk {
     export module byqcpycssbhgwtmx {
         import TextAlign = JQTable.TextAlign;
@@ -40,6 +42,10 @@ module cpzlqk {
             private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             private mCommentApprove:Util.Ajax = new Util.Ajax("../report/zlfxApprove.do", false);
             private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/approve.do", false);
+            private mAjaxAuth:Util.Ajax = new Util.Ajax("auth.do", false);
+            private mDt: string;
+            private mCompType:Util.CompanyType;
+            private mAuths : any;
             getId():number {
                 return plugin.byqcpycssbhgwtmx;
             }
@@ -96,6 +102,7 @@ module cpzlqk {
             }
 
             onEvent(e: framework.route.Event): any {
+                let zt;
                 switch (e.id){
                     case Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
@@ -112,38 +119,106 @@ module cpzlqk {
                         this.mCommentSubmit.get({
                             data : JSON.stringify([[param.condition, param.comment]])
                         }).then((jsonData:any)=>{
-                            Util.MessageBox.tip("保存成功", undefined, 1000);
+                            Util.MessageBox.tip("提交成功", undefined);
                         });
+                        break;
+                    case Event.ZLFE_APPROVE_COMMENT1:
+                        zt = Util.IndiStatus.INTER_APPROVED_1;
+                        break;
+                    case Event.ZLFE_APPROVE_COMMENT2:
+                        zt = Util.IndiStatus.INTER_APPROVED_2;
                         break;
                     case Event.ZLFE_APPROVE_COMMENT:
-                        let param1 = {
-                            condition:Util.Ajax.toUrlParam({
-                                url : this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId:this.mCompType,
-                                ydjd:this.mYdjdType
-                            }),
-                            comment:e.data
-                        }
-                        this.mCommentApprove.get({
-                            data : JSON.stringify([[param1.condition, param1.comment]])
-                        }).then((jsonData:any)=>{
-                            this.mAjaxApprove.get({
-                                date: this.mDt,
-                                companyId:this.mCompType
-                            }).then((jsonData:any)=>{
-                                Util.MessageBox.tip("审核成功", undefined);
-                                framework.router
-                                    .fromEp(this)
-                                    .to(framework.basic.endpoint.FRAME_ID)
-                                    .send(Event.ZLFE_COMMENT_UPDATED, {
-                                        comment:param1.comment,
-                                        zt:1
-                                    });
-                            });
-                        });
+                        zt = Util.IndiStatus.APPROVED;
                         break;
                 }
+                if (undefined != zt){
+                    let param = {
+                        condition:Util.Ajax.toUrlParam({
+                            url : this.mAjax.baseUrl(),
+                            date: this.mDt,
+                            companyId:this.mCompType,
+                            ydjd:this.mYdjdType
+                        }),
+                        comment:e.data
+                    }
+                    this.mCommentApprove.get({
+                        data : JSON.stringify([[param.condition, param.comment]]),
+                        zt:zt
+                    }).then((jsonData:any)=>{
+                        this.mAjaxApprove.get({
+                            date: this.mDt,
+                            companyId:this.mCompType,
+                            zt:zt
+                        }).then((jsonData:any)=>{
+                            //Util.MessageBox.tip("审核成功", undefined);
+                            framework.router
+                                .fromEp(this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(Event.ZLFE_APPROVEAUTH_UPDATED, this.mAuths);
+
+                            framework.router
+                                .fromEp(this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(Event.ZLFE_COMMENT_UPDATED, {comment:{
+                                    comment:param.comment,
+                                    zt:zt
+                            }});
+                        });
+                    });
+                }
+                return super.onEvent(e);
+            }
+
+            pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
+                return "../byqacptjjg/export.do?" + Util.Ajax.toUrlParam({
+                        date: date,
+                        companyId:compType,
+                        ydjd:this.mYdjdType
+                 });
+            }
+
+            private option():Option {
+                return <Option>this.mOpt;
+            }
+
+            public pluginUpdate(date:string, compType:Util.CompanyType):void {
+                this.mDt = date;
+                this.mCompType = compType;
+                this.mAjaxAuth.get({
+                    companyId:compType,
+                }).then((auths:any)=>{
+                    this.mAuths = auths;
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(Event.ZLFE_APPROVEAUTH_UPDATED, this.mAuths);
+                    this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                        url : this.mAjax.baseUrl(),
+                        date: date,
+                        companyId:compType,
+                        ydjd:this.mYdjdType,
+                    }),compId:compType}).then((jsonData:any)=>{
+                        let comment : Comment = jsonData;
+                        framework.router
+                            .fromEp(this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(Event.ZLFE_COMMENT_UPDATED, {comment:comment, auths:auths});
+
+                        this.mAjax.get({
+                                date: date,
+                                companyId:compType,
+                                ydjd:this.mYdjdType,
+                                pageType:pageType,
+                                zt:comment.zt,
+                                auths:JSON.stringify(auths)
+                            })
+                            .then((jsonData:any) => {
+                                this.mData = jsonData;
+                                this.refresh();
+                            });
+                        });
+                });
                 return super.onEvent(e);
             }
 

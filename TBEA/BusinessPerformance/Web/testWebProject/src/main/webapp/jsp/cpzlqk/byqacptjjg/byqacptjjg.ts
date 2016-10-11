@@ -42,6 +42,7 @@ module cpzlqk {
             private mAjaxAuth:Util.Ajax = new Util.Ajax("auth.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
+            private mAuths : any;
             getId():number {
                 return plugin.byqacptjjg;
             }
@@ -105,10 +106,15 @@ module cpzlqk {
                             framework.router
                                 .fromEp(this)
                                 .to(framework.basic.endpoint.FRAME_ID)
-                                .send(Event.ZLFE_COMMENT_UPDATED, {
+                                .send(Event.ZLFE_APPROVEAUTH_UPDATED, this.mAuths);
+
+                            framework.router
+                                .fromEp(this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(Event.ZLFE_COMMENT_UPDATED, {comment:{
                                     comment:param.comment,
                                     zt:zt
-                                });
+                            }});
                         });
                     });
                 }
@@ -133,10 +139,11 @@ module cpzlqk {
                 this.mAjaxAuth.get({
                     companyId:compType,
                 }).then((auths:any)=>{
+                    this.mAuths = auths;
                     framework.router
                         .fromEp(this)
                         .to(framework.basic.endpoint.FRAME_ID)
-                        .send(Event.ZLFE_APPROVEAUTH_UPDATED, auths);
+                        .send(Event.ZLFE_APPROVEAUTH_UPDATED, this.mAuths);
                     this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
                         url : this.mAjax.baseUrl(),
                         date: date,

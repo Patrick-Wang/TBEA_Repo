@@ -39,6 +39,7 @@ public class WbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	String detail;
 	Double material_count;
 	String measurement_units;
+	String suppier_id;
 	String suppier;
 	String responsibility_department;
 	String filling_personnel;
@@ -215,5 +216,11 @@ public class WbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void setTime(Timestamp time) {
 		this.time = time;
+	}
+	public String getSuppier_id() {
+		return suppier_id;
+	}
+	public void setSuppier_id(String suppier_id) {
+		this.suppier_id = suppier_id;
 	}
 }

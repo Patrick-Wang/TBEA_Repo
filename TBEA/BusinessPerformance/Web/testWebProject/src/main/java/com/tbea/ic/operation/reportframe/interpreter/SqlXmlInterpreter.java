@@ -59,11 +59,12 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isSql(e)){
 			return false;
 		}
-
-		Transaction tx = (Transaction) component.getVar(component.getConfig().getAttribute("transaction"));
+		String trans = component.getConfigAttribute("transaction");
+		Transaction tx = (Transaction) component.getVar(trans);
 		if (null == tx){
 			throw new Exception("请指定 transaction " + e.toString());
 		}
+		System.out.println("database : " + trans);
 		el = new ELParser(component);
 		Query q = parseElSql(
 				e.getFirstChild().getTextContent(),

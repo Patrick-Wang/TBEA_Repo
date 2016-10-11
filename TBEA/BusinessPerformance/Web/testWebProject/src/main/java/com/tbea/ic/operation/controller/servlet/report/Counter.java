@@ -1,13 +1,14 @@
 package com.tbea.ic.operation.controller.servlet.report;
 
 public class Counter {
-	Integer start;
+	Integer start = 0;
 
 	public Counter newCounter(){
 		return new Counter();
 	}
 	
 	public Counter reset(Integer start){
+		this.start = start;
 		return this;
 	}
 	

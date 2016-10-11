@@ -19,12 +19,12 @@ import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 public class Service extends AbstractXmlComponent implements ServiceRunnable {
 	
-	public Service(Element e, ComponentManager mgr) {
-		super(e, mgr);
+	public Service(AbstractXmlComponent preComponent,Element e, ComponentManager mgr) {
+		super(preComponent,e, mgr);
 	}
 	
-	public Service(Element e, ComponentManager mgr, Context context) {
-		super(e, mgr);
+	public Service(AbstractXmlComponent preComponent,Element e, ComponentManager mgr, Context context) {
+		super(preComponent,e, mgr);
 		this.local = context;
 	}
 
@@ -72,7 +72,7 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 
 	@Override
 	public AbstractXmlComponent clone(Element e) {
-		Service serv = new Service(e, mgr);
+		Service serv = new Service(preComponent, e, mgr);
 		serv.local = this.local;
 		serv.global = this.global;
 		return serv;

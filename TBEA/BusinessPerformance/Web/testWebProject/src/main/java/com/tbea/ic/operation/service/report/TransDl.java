@@ -13,7 +13,7 @@ import com.tbea.ic.operation.reportframe.component.service.Transaction;
 public class TransDl implements Transaction{
 	
 	public static final String NAME = "TransDl";
-	@PersistenceContext(unitName = "dbDl")
+	@PersistenceContext(unitName = "DlDB")
 	EntityManager em;
 	
 	@Transactional("transDl")

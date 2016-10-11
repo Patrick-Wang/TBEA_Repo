@@ -25,13 +25,13 @@ public class Controller extends AbstractXmlComponent {
 
 	public static final String MODEL_AND_VIEW = "_mv_";
 	
-	public Controller(Element e, ComponentManager mgr) {
-		super(e, mgr);
+	public Controller(AbstractXmlComponent preComponent, Element e, ComponentManager mgr) {
+		super(preComponent, e, mgr);
 	}
 
-	public Controller(Element e, ComponentManager mgr,
+	public Controller(AbstractXmlComponent preComponent, Element e, ComponentManager mgr,
 			Context local) {
-		super(e, mgr);
+		super(preComponent, e, mgr);
 		this.local = local;
 	}
 
@@ -75,7 +75,7 @@ public class Controller extends AbstractXmlComponent {
 
 	@Override
 	public AbstractXmlComponent clone(Element e) {
-		Controller controller = new Controller(e, mgr);
+		Controller controller = new Controller(preComponent, e, mgr);
 		controller.local = this.local;
 		controller.global = this.global;
 		return controller;

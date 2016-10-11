@@ -1,8 +1,10 @@
 package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONNull;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -33,6 +36,8 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 	ELParser elp;
 	List<FieldSql> where;
 	List<FieldSql> set;
+	StringBuilder insertValues;
+	int insertCount;
 	AbstractXmlComponent component;
 	private int getTypes(Map<Integer, Integer> types){
 		int max = 0;
@@ -93,182 +98,263 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isMerge(e)){
 			return false;
 		}
+		
 		this.component = component;
 		elp = new ELParser(component);
 		String table = (String) XmlUtil.getObjectAttr(e, "table", elp);
-		Object dataObj = component.getVar("data");
-		if (dataObj == null){
-			dataObj = XmlUtil.getObjectAttr(e, "data", elp);
+		if (table == null || table.isEmpty()){
+			return true;
 		}
-		if (table != null && !table.isEmpty() && dataObj != null){
-			where = compile(e.getElementsByTagName("where"));
-			set = compile(e.getElementsByTagName("set"));
-			Map<Integer, Integer> types = new HashMap<Integer, Integer>();
-			Transaction tx = (Transaction) component.getVar(component.getConfig().getAttribute("transaction"));
-			EntityManager em = tx.getEntityManager();
 		
-			if (dataObj instanceof JSONArray){
-				JSONArray data = (JSONArray) dataObj;				
-				for (int i = 0, len = data.size(); i < len; ++i){
-					JSONArray row = data.getJSONArray(i);
-					this.component.local("i", i);
-					merge(em, table, row);
-				}
-				
-			} else if (dataObj instanceof XSSFWorkbook){
-				XSSFWorkbook workbook = (XSSFWorkbook) dataObj;
-				XSSFSheet sheet = workbook.getSheetAt(0);
-				boolean isInsert = where.isEmpty();
-				int maxCol = getTypes(types);
-//				FieldSql fs = new FieldSql(elp);
-//				fs.setProp("id");
-//				fs.setType(TypeUtil.INT);
-//				fs.setRef("" + (maxCol + 1));
-//				where.add(0, fs);
-				for (int i = 1; i <= sheet.getLastRowNum(); ++i){
-					XSSFRow row = sheet.getRow(i);
-					if (null != row){
-						JSONArray jrow = XSSF2Json(row, types, maxCol);
-						if (isInsert){
-							jrow.add("add");
-						}
-						this.component.local("i", i - 1);
-						merge(em, table, jrow);
-					}
-				}		
-			} else if (dataObj instanceof List){
-				List<List<Object>> objs = (List<List<Object>>) dataObj;
-				for (int i = 0; i < objs.size(); ++i){
-					JSONArray jrow = List2Json(objs.get(i));
-					this.component.local("i", i - 1);
-					merge(em, table, jrow);
-				}
+		Object dataObj = null;
+		if("true".equalsIgnoreCase(XmlUtil.getAttr(e, "nodata"))){
+			JSONArray ja = new JSONArray();
+			ja.add(new JSONArray());
+			dataObj = ja;
+		}else{
+			dataObj = component.getVar(XmlUtil.getAttr(e, "data"));
+			if (dataObj == null){
+				dataObj = XmlUtil.getObjectAttr(e, "data", elp);
 			}
-			this.component.removeLocal("i");
+		}		
+
+		if (dataObj == null){
+			return true;
 		}
 		
+		where = compile(e.getElementsByTagName("where"));
+		set = compile(e.getElementsByTagName("set"));
+		String trans = component.getConfigAttribute("transaction");
+		System.out.println("database : " + trans);
+		Transaction tx = (Transaction) component.getVar(trans);
+		EntityManager em = tx.getEntityManager();
+		if (dataObj instanceof JSONArray){
+			mergeJson((JSONArray)dataObj, em, table);
+		} else if (dataObj instanceof XSSFWorkbook){
+			mergeExcel((XSSFWorkbook)dataObj, em, table);
+		} else if (dataObj instanceof List){
+			mergeList((List)dataObj, em, table);
+		}  else if (dataObj instanceof Iterator){
+			mergeIterator((Iterator)dataObj, em, table);
+		} 
+		
+		completeInsert(em);
+		
+		this.component.removeLocal("i");
 		return true;
 	}
 
 	
 	
-	private JSONArray List2Json(Object objs) {
+	private void completeInsert(EntityManager em) {
+		if (null != insertValues){
+			String insertSql = insertValues.toString();
+			insertValues = null;
+			insertCount = 0;
+			System.out.println(insertSql);
+			em.createNativeQuery(insertSql).executeUpdate() ;
+		}
+	}
+
+
+	private void mergeIterator(Iterator it, EntityManager em, String table) {
+		for (int i = 0; it.hasNext(); ++i){
+			JSONArray row = list2Json(it.next());
+			this.component.local("i", i - 1);
+			merge(em, table, row);
+		}
+	}
+
+
+	private void mergeList(List dataList, EntityManager em, String table) {
+		for (int i = 0; i < dataList.size(); ++i){
+			JSONArray row = list2Json(dataList.get(i));
+			this.component.local("i", i - 1);
+			merge(em, table, row);
+		}
+	}
+
+
+	private void mergeExcel(XSSFWorkbook dataExcel, EntityManager em, String table) throws ValidationException {
+		XSSFWorkbook workbook = (XSSFWorkbook) dataExcel;
+		XSSFSheet sheet = workbook.getSheetAt(0);
+		boolean isInsert = where.isEmpty();
+		Map<Integer, Integer> types = new HashMap<Integer, Integer>();
+		int maxCol = getTypes(types);
+		for (int i = 1; i <= sheet.getLastRowNum(); ++i){
+			XSSFRow row = sheet.getRow(i);
+			if (null != row){
+				JSONArray jrow = XSSF2Json(row, types, maxCol);
+				if (isInsert){
+					jrow.add("add");
+				}
+				this.component.local("i", i - 1);
+				merge(em, table, jrow);
+			}
+		}		
+	}
+
+
+	private void mergeJson(JSONArray dataJson, EntityManager em, String table) {
+		for (int i = 0, len = dataJson.size(); i < len; ++i){
+			JSONArray row = dataJson.getJSONArray(i);
+			this.component.local("i", i);
+			merge(em, table, row);
+		}
+	}
+
+
+	private JSONArray list2Json(Object lRow) {
 		JSONArray jrow = new JSONArray();
-		if (objs.getClass().isArray()){
-			Object[] arr = (Object[]) objs;
+		if (lRow.getClass().isArray()){
+			Object[] arr = (Object[]) lRow;
 			for(int i = 0; i < arr.length; ++i){
+				if (null != arr[i]){
+					if (arr[i] instanceof Date){
+						arr[i] = Util.formatToMill((Date)arr[i]);
+					} else if (arr[i] instanceof Timestamp){
+						arr[i] = Util.formatToMill(new Date(((Timestamp)arr[i]).getTime()));
+					}
+				}
 				jrow.add(arr[i]);
 			}
-		}else if (objs instanceof List){
-			List<Object> list = (List<Object>) objs;
+		}else if (lRow instanceof List){
+			List<Object> list = (List<Object>) lRow;
 			for (Object obj : list){
+				if (null != obj){
+					if (obj instanceof Date){
+						obj = Util.formatToMill((Date)obj);
+					} else if (obj instanceof Timestamp){
+						obj = Util.formatToMill(new Date(((Timestamp)obj).getTime()));
+					}
+				}
 				jrow.add(obj);
 			}
 		}else{
-			System.out.println("List2Json type error : " + objs);
+			System.out.println("list2Json type error : " + lRow);
 		}
 		return jrow;
 	}
 
-
-	private String getValue(JSONArray row, FieldSql sql, EntityManager em){
+	private String getValue(FieldSql fs){
 		String ret = null;
-		if (sql.hasValue()){
-			switch (sql.getType()){
-			case TypeUtil.INT:
-			case TypeUtil.DOUBLE:
-				ret = "" + sql.getValue();
-				break;
-			case TypeUtil.STRING:
-			case TypeUtil.SQLDATE:
-				ret = "'" + sql.getValue() + "'";
-				break;
+		switch (fs.getType()){
+		case TypeUtil.INT:
+		case TypeUtil.DOUBLE:
+			ret = "" + fs.getValue();
+			break;
+		case TypeUtil.STRING:
+		case TypeUtil.SQLDATE:
+			Object val = fs.getValue();
+			if (null != val){
+				ret = "'" + val + "'";
 			}
-		}else{
-			
-			if (sql.hasJoin()){
-				String querySql = "select " + sql.getSelect() + " from " + sql.getJoin() + " where " + sql.getIn() + " = ?0";
-				Query q = em.createNativeQuery(querySql);
-				List<Object> result = null;
-				switch (sql.getJoinType()){
+			break;
+		}
+		return ret;
+	}
+	
+	private String getJoin(JSONArray row, FieldSql fs, EntityManager em){
+		String ret = null;
+		String querySql = "select " + fs.getSelect() + " from " + fs.getJoin() + " where " + fs.getIn() + " = ?0";
+		Query q = em.createNativeQuery(querySql);
+		List<Object> result = null;
+		switch (fs.getJoinType()){
+		case TypeUtil.INT:
+			Integer val = Util.toIntNull(row.getString(fs.getRef()));
+			if (null != val){
+				q.setParameter(0, val);
+				result = q.getResultList();
+			}
+			break;
+		case TypeUtil.DOUBLE:
+			Double d = Util.toDoubleNull(row.getString(fs.getRef()));
+			if (null != d){
+				q.setParameter(0, d);
+				result = q.getResultList();
+			}
+			break;
+		case TypeUtil.STRING:
+			String s = row.getString(fs.getRef());
+			if (!s.isEmpty()){
+				q.setParameter(0, s);
+				result = q.getResultList();
+			}
+			break;
+		case TypeUtil.SQLDATE:
+			String date = row.getString(fs.getRef());
+			if (!date.isEmpty()){
+				q.setParameter(0, Date.valueOf(date));
+				result = q.getResultList();
+			}
+			break;
+		}
+		
+		if (null != result && !result.isEmpty()){
+			if (!result.get(0).getClass().isArray()){
+				switch (fs.getType()){
 				case TypeUtil.INT:
-					Integer val = Util.toIntNull(row.getString(sql.getRef()));
-					if (null != val){
-						q.setParameter(0, val);
-						result = q.getResultList();
-					}
-					break;
 				case TypeUtil.DOUBLE:
-					Double d = Util.toDoubleNull(row.getString(sql.getRef()));
-					if (null != d){
-						q.setParameter(0, d);
-						result = q.getResultList();
-					}
-					break;
-				case TypeUtil.STRING:
-					String s = row.getString(sql.getRef());
-					if (!s.isEmpty()){
-						q.setParameter(0, s);
-						result = q.getResultList();
-					}
-					break;
-				case TypeUtil.SQLDATE:
-					String date = row.getString(sql.getRef());
-					if (!date.isEmpty()){
-						q.setParameter(0, Date.valueOf(date));
-						result = q.getResultList();
-					}
-					break;
-				}
-				
-				if (null != result && !result.isEmpty()){
-//					System.out.println(result.get(0).getClass());
-//					System.out.println(result.get(0));
-					if (!result.get(0).getClass().isArray()){
-						switch (sql.getType()){
-						case TypeUtil.INT:
-						case TypeUtil.DOUBLE:
-							ret = "" + result.get(0);
-							break;
-						case TypeUtil.STRING:
-						case TypeUtil.SQLDATE:
-							ret = "'"+ result.get(0) + "'";
-							break;
-						}
-						
-					}
-				}
-			}else{
-				switch (sql.getType()){
-				case TypeUtil.INT:
-					Integer val = Util.toIntNull(row.getString(sql.getRef()));
-					if (null != val){
-						ret = val + "";
-					}
-					break;
-				case TypeUtil.DOUBLE:
-					Double d = Util.toDoubleNull(row.getString(sql.getRef()));
-					if (null != d){
-						ret = d + "";
-					}
+					ret = "" + result.get(0);
 					break;
 				case TypeUtil.STRING:
 				case TypeUtil.SQLDATE:
-					String s = row.getString(sql.getRef());
-					if (!s.isEmpty()){
-						ret = "'" + s + "'";
+					Object val = result.get(0);
+					if (null != val){
+						ret = "'" + result.get(0) + "'";
 					}
 					break;
 				}
 			}
 		}
-		
+		return ret;
+	}
+	
+	private String getRef(JSONArray row, FieldSql fs){
+		String ret = null;
+		switch (fs.getType()){
+		case TypeUtil.INT:
+			Integer val = Util.toIntNull(row.getString(fs.getRef()));
+			if (null != val){
+				ret = val + "";
+			}
+			break;
+		case TypeUtil.DOUBLE:
+			Double d = Util.toDoubleNull(row.getString(fs.getRef()));
+			if (null != d){
+				ret = d + "";
+			}
+			break;
+		case TypeUtil.STRING:
+		case TypeUtil.SQLDATE:
+			Integer ref = fs.getRef();
+			if (!(row.get(ref) instanceof JSONNull)){
+				String s = row.getString(ref);
+				if (!s.isEmpty()){
+					ret = "'" + s + "'";
+				}
+			}
+			break;
+		}
+		return ret;
+	}
+
+	private String getQueryValue(JSONArray row, FieldSql fs, EntityManager em){
+		String ret = null;
+		if (fs.hasValue()){
+			ret = getValue(fs);
+		}else if (fs.hasJoin()){
+			ret = getJoin(row, fs, em);
+		}else{
+			ret = getRef(row, fs);
+		}
 		return ret;
 	}
 	
 	private void merge(EntityManager em, String table, JSONArray row) {
 		boolean doInsert = false;
 		String firstWhere = null;
+		component.local("row", row);
 		do{
 			if (where.isEmpty()){
 				break;
@@ -291,33 +377,41 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		if (!doInsert){
 			doUpdate(em, table, row);
 		}
+		
+		component.removeLocal("row");
 	}
 
 	private void doInsert(EntityManager em, String table, JSONArray row, List<FieldSql> set) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(" INSERT INTO ");
-		sb.append(table);
-		sb.append(" ");
-		StringBuilder sbCols = new StringBuilder();
-		StringBuilder sbValues = new StringBuilder();
 		if (!set.isEmpty()){
-			sbCols.append("(");
-			sbValues.append("(");
+			if (insertValues == null){
+				insertValues = new StringBuilder();
+				insertValues.append(" INSERT INTO ");
+				insertValues.append(table);
+				insertValues.append(" \r\n(");
+				for (FieldSql setSql: set){
+					insertValues.append(setSql.getProp());
+					if (setSql != set.get(set.size() - 1)){
+						insertValues.append(", ");
+					}
+				}
+				insertValues.append(") VALUES ");
+				insertValues.append(" \r\n(");
+			}else{
+				insertValues.append(",\r\n(");
+			}
+			
 			for (FieldSql setSql: set){
-				sbCols.append(setSql.getProp());
-				sbValues.append(getValue(row, setSql, em));
+				insertValues.append(getQueryValue(row, setSql, em));
 				if (setSql != set.get(set.size() - 1)){
-					sbCols.append(", ");
-					sbValues.append(", ");
+					insertValues.append(", ");
 				}
 			}
-			sbValues.append(")");
-			sbCols.append(") VALUES ");
+			insertValues.append(")");
+			++insertCount;
+			if (insertCount == 200){
+				completeInsert(em);
+			}
 		}
-		sb.append(sbCols.toString());
-		sb.append(sbValues.toString());
-		System.out.println(sb.toString());
-		em.createNativeQuery(sb.toString()).executeUpdate() ;
 	}
 
 	private String parseWhereSql(EntityManager em, JSONArray row){
@@ -327,7 +421,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			for (FieldSql whereSql: where){
 				sb.append(whereSql.getProp());
 				sb.append(whereSql.getOper());
-				sb.append(getValue(row, whereSql, em));
+				sb.append(getQueryValue(row, whereSql, em));
 				if (whereSql != where.get(where.size() - 1)){
 					sb.append(" and ");
 				}
@@ -339,10 +433,10 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 	
 	private void doUpdate(EntityManager em, String table, JSONArray row) {
 		String whereSql = parseWhereSql(em, row);
-		Integer count = null;
+		Integer count = 0;
 		if (null != whereSql){
 			String sql = "select count(*) from " + table + whereSql;
-			List ret = em.createNativeQuery("select count(*) from " + table + whereSql).getResultList();
+			List ret = em.createNativeQuery(sql).getResultList();
 			System.out.println(sql);
 			count = (Integer) ret.get(0);
 		}
@@ -356,7 +450,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				for (FieldSql setSql: set){
 					sb.append(setSql.getProp());
 					sb.append("=");
-					sb.append(getValue(row, setSql, em));
+					sb.append(getQueryValue(row, setSql, em));
 					if (setSql != set.get(set.size() - 1)){
 						sb.append(", ");
 					}

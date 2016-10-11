@@ -18,6 +18,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.tbea.ic.operation.service.report.ZlqkWebService;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 
 @Component(UtilContextHandler.NAME)
@@ -60,6 +61,7 @@ public class UtilContextHandler implements ContextHandler {
 		context.put("accFactory", accFac);
 		context.put("compMgr", companyManager);
 		context.put("counterFactory", new Counter());
+		context.put("zlqkWebService", new ZlqkWebService());
 		context.put(com.tbea.ic.operation.reportframe.component.Component.CALENDAR, new EasyCalendar());
 	}
 

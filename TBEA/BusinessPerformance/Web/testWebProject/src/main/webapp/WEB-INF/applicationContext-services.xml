@@ -39,13 +39,12 @@
 	<!-- -->
 	<!-- DATABASE -->
 	<!-- -->
+
+
+	<!--======================================= 主数据库 ===========================================-->
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/my_test_db" />
 	</bean>
-	<bean id="dataSource2" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:comp/env/jdbc/yszk_db" />
-	</bean>
-
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -60,6 +59,17 @@
 			</bean>
 		</property>
 		<property name="persistenceUnitName" value="localDB" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+		<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!--======================================= 主数据库 ===========================================-->
+
+	<!--======================================= 15数据库 ===========================================-->
+	<bean id="dataSource2" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/yszk_db" />
 	</bean>
 	<bean id="entityManagerFactory2"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -76,6 +86,144 @@
 		</property>
 		<property name="persistenceUnitName" value="15DB" />
 	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager2" />
+		<bean id="transactionManager2" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory2" />
+		<property name="dataSource" ref="dataSource2" />
+	</bean>
+	<!--======================================= 15数据库 ===========================================-->
+	
+	<!--======================================= 德缆数据库 ===========================================-->
+	<bean id="dsDl" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/dbDl" />
+	</bean>
+	<bean id="emfDl"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dsDl" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="DlDB" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transDl" />
+	<bean id="transDl" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emfDl" />
+		<property name="dataSource" ref="dsDl" />
+	</bean>
+	<!--======================================= 德缆数据库 ===========================================-->
+	
+	<!--======================================= 新缆数据库 ===========================================-->
+	<bean id="dsXl" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/dbXl" />
+	</bean>
+	<bean id="emfXl"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dsXl" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="XlDB" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transXl" />
+	<bean id="transXl" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emfXl" />
+		<property name="dataSource" ref="dsXl" />
+	</bean>
+	<!--======================================= 新缆数据库 ===========================================-->
+	
+	<!--======================================= 鲁缆数据库 ===========================================-->
+	<bean id="dsLl" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/dbLl" />
+	</bean>
+	<bean id="emfLl"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dsLl" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="LlDB" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transLl" />
+	<bean id="transLl" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emfLl" />
+		<property name="dataSource" ref="dsLl" />
+	</bean>
+	<!--======================================= 鲁缆数据库 ===========================================-->
+	
+	<!--======================================= 新变数据库 ===========================================-->
+	<bean id="dsXb" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/dbXb" />
+	</bean>
+	<bean id="emfXb"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dsXb" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="XbDB" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transXb" />
+	<bean id="transXb" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emfXb" />
+		<property name="dataSource" ref="dsXb" />
+	</bean>
+	<!--======================================= 新变数据库 ===========================================-->
+	
+	<!--======================================= 沈变数据库 ===========================================-->
+ 	<bean id="dsSb" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/dbSb" />
+	</bean>
+	<bean id="emfSb"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dsSb" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="SbDB" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transSb" />
+	<bean id="transSb" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emfSb" />
+		<property name="dataSource" ref="dsSb" />
+	</bean>
+	<!--======================================= 沈变数据库 ===========================================-->
+	
+	<!--======================================= 天缆数据库 ===========================================-->
+ 	<bean id="dsTb" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/dbTb" />
+	</bean>
+	<bean id="emfTb"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dsTb" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="TbDB" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transTb" />
+	<bean id="transTb" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emfTb" />
+		<property name="dataSource" ref="dsTb" />
+	</bean>
+	<!--======================================= 天缆数据库 ===========================================-->
 	
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
@@ -84,20 +232,12 @@
 	<!-- -->
 	<!-- TRANSACTIONS -->
 	<!-- -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
-	<tx:annotation-driven transaction-manager="transactionManager2" />
+	
+	
 	<aop:aspectj-autoproxy />
 
 
-
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-	<bean id="transactionManager2" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory2" />
-		<property name="dataSource" ref="dataSource2" />
-	</bean>
+	
 	<context:component-scan base-package="com.tbea.ic.operation.common" />
 	<context:component-scan base-package="com.tbea.ic.operation.model" />
 	<context:component-scan base-package="com.tbea.ic.operation.service" />

@@ -25,7 +25,7 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE zl_wbyclzlwt
 CREATE TABLE [dbo].[zl_wbyclzlwt](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[serial_num] varchar](50),
+	[serial_num] [varchar](50),
 	[company_name] [varchar](50),
 	[issue_happen_date] date,
 	[product_type] [varchar](50) ,
@@ -35,22 +35,24 @@ CREATE TABLE [dbo].[zl_wbyclzlwt](
 	[sub_issue_type] [varchar](50) ,
 	[category_code] [varchar](50) ,
 	[quality_phenomenon] [varchar](50) ,
-	[detail] [varchar](50)  ,
+	[detail] [varchar](1000)  ,
 	[material_count] [numeric](18, 4),
 	[measurement_units] [varchar](50) ,
+	[suppier_id] [varchar](50),
 	[suppier] [varchar](50),
 	[responsibility_department] [varchar](50) ,
 	[filling_personnel] [varchar](50) ,
 	[product_delivery_date] date,
 	[failure_subject] [varchar](50) ,
-	[material_treatment_measure] [varchar](50) ,
+	[material_treatment_measure] [varchar](500) ,
 	[onsite_treatment_measure] [varchar](500) ,
 	[onsite_treatment_result] [varchar](500) ,
 	[user_unit] [varchar](50) ,
 	[onsite_after_sales] [varchar](50) ,
 	[after_sales_tel] [varchar](50),
 	[source] [varchar](50),
-	[time] [datetime]
+	[time] [datetime],
+	[zt] [int]
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
@@ -86,7 +88,7 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE zl_nbyclzlwt
 CREATE TABLE [dbo].[zl_nbyclzlwt](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	[serial_num] varchar](50),
+	[serial_num] [varchar](50),
 	[company_name] [varchar](50),
 	[issue_happen_date] date,
 	[product_type] [varchar](50) ,
@@ -96,21 +98,23 @@ CREATE TABLE [dbo].[zl_nbyclzlwt](
 	[sub_issue_type] [varchar](50) ,
 	[category_code] [varchar](50) ,
 	[material_quality_phenomenon] [varchar](50) ,
-	[detail] [varchar](50)  ,
+	[detail] [varchar](1000)  ,
 	[material_happen_phase] [varchar](50) ,
 	[material_count] [numeric](18, 4),
 	[measurement_units] [varchar](50) ,
+	[suppier_id] [varchar](50),
 	[suppier] [varchar](50),
 	[issue_process] [varchar](50) ,
 	[responsibility_department] [varchar](50) ,
-	[material_treatment_measure] [varchar](50) ,
-	[onsite_treatmen_measure] [varchar](500) ,
+	[material_treatment_measure] [varchar](500) ,
+	[onsite_treatment_measure] [varchar](500) ,
 	[onsite_treatment_result] [varchar](500) ,
 	[causa_analysis] [varchar](500) ,
 	[assessment] [varchar](500),
 	[filling_personnel] [varchar](50),
 	[source] [varchar](50),
-	[time] [datetime]
+	[time] [datetime],
+	[zt] [int]
 PRIMARY KEY CLUSTERED 
 (
 	[id] ASC

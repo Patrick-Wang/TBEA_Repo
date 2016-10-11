@@ -32,7 +32,6 @@ public class FieldSql{
 		try {
 			return XmlUtil.parseELText(value, elp);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -54,15 +53,10 @@ public class FieldSql{
 	public String getProp() {
 		return prop;
 	}
+	
 	public void setProp(String prop) {
 		this.prop = prop;
 	}
-//	public FieldSql(String prop, int type, Object value, ELParser elp) {
-//		super();
-//		this.prop = prop;
-//		this.type = type;
-//		this.elp = elp;
-//	}
 	
 	public boolean hasJoin(){
 		return join != null;

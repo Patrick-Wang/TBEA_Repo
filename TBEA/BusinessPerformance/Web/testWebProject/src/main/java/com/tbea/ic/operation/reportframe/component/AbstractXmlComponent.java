@@ -10,6 +10,7 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	protected Context local = new Context();
 	protected Context global;
 	protected Element config;
+	protected AbstractXmlComponent preComponent;
 	protected ComponentManager mgr;
 	
 	public ComponentManager getCM(){
@@ -28,6 +29,18 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	
 	public Element getConfig(){
 		return config;
+	}
+	
+
+	public String getConfigAttribute(String attr){
+		if (config.hasAttribute(attr)){
+			return config.getAttribute(attr);
+		}else{
+			if (preComponent != null){
+				return preComponent.getConfigAttribute(attr);
+			}
+			return null;
+		}
 	}
 	
 	public void local(String key, Object value){
@@ -59,8 +72,9 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 		}
 	}
 	
-	public AbstractXmlComponent(Element e, ComponentManager mgr){
+	public AbstractXmlComponent(AbstractXmlComponent preComponent, Element e, ComponentManager mgr){
 		this.config = e;
+		this.preComponent = preComponent;
 		this.mgr = mgr;
 	}
 	

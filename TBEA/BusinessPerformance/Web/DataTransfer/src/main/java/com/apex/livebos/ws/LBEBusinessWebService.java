@@ -1,14 +1,10 @@
 
 package com.apex.livebos.ws;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-import javax.xml.ws.WebEndpoint;
-import javax.xml.ws.WebServiceClient;
-import javax.xml.ws.WebServiceException;
-import javax.xml.ws.WebServiceFeature;
+import oracle.net.ano.Service;
+
+import org.apache.tomcat.util.net.URL;
+import org.dom4j.QName;
 
 
 /**

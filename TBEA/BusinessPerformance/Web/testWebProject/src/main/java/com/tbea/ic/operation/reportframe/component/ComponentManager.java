@@ -61,7 +61,7 @@ public class ComponentManager implements ComponentLoadedListener {
 		@Override
 		public void execute(JobExecutionContext arg0)
 				throws JobExecutionException {
-			Controller controller = instance.createController(arg0.getJobDetail().getName());
+			Controller controller = instance.createController(null, arg0.getJobDetail().getName());
 			if (null != controller){
 				try{
 					instance.scheduler.onSchedule(new Context(), controller);
@@ -236,34 +236,34 @@ public class ComponentManager implements ComponentLoadedListener {
 		}
 	}
 
-	public Controller createController(String id) {
+	public Controller createController(AbstractXmlComponent preComponent,String id) {
 		if (controllerMap.containsKey(id)){
-			return new Controller((Element) controllerMap.get(id).getE().cloneNode(true), this);
+			return new Controller(preComponent,(Element) controllerMap.get(id).getE().cloneNode(true), this);
 		}
 		return null;
 	}
 	
-	public Controller createController(String id, Context local) {
+	public Controller createController(AbstractXmlComponent preComponent,String id, Context local) {
 		if (controllerMap.containsKey(id)){
-			return new Controller((Element) controllerMap.get(id).getE().cloneNode(true), this, local);
+			return new Controller(preComponent,(Element) controllerMap.get(id).getE().cloneNode(true), this, local);
 		}
 		return null;
 	}
 	
-	private Service createService(Element e){
-		return new Service(e, this);
+	private Service createService(AbstractXmlComponent preComponent,Element e){
+		return new Service(preComponent,e, this);
 	}
 	
-	public Service createService(String id, Context local){
+	public Service createService(AbstractXmlComponent preComponent,String id, Context local){
 		if (serviceMap.containsKey(id)){
-			return new Service((Element) serviceMap.get(id).getE().cloneNode(true), this, local);
+			return new Service(preComponent,(Element) serviceMap.get(id).getE().cloneNode(true), this, local);
 		}
 		return null;
 	}
 	
-	public Service createService(String id) {
+	public Service createService(AbstractXmlComponent preComponent,String id) {
 		if (serviceMap.containsKey(id)){
-			return createService((Element) serviceMap.get(id).getE().cloneNode(true));
+			return createService(preComponent,(Element) serviceMap.get(id).getE().cloneNode(true));
 		}
 		return null;
 	}

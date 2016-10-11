@@ -174,7 +174,10 @@ var cpzlqk;
                     break;
                 case cpzlqk.Event.ZLFE_COMMENT_UPDATED:
                     var comment = e.data.comment;
-                    var auths = e.data.auths;
+                    if (comment.deny == "deny") {
+                        $("#comment").hide();
+                        break;
+                    }
                     $("#comment").show();
                     $("#commentText").val(comment.comment);
                     $("#commentText").attr("readonly", "readonly");
@@ -187,7 +190,7 @@ var cpzlqk;
                         else if (comment.zt == Util.IndiStatus.INTER_APPROVED_1) {
                             $("#approveComment").hide();
                             $("#approveComment1").hide();
-                            if ($("#approveComment1").is(":hidden")) {
+                            if ($("#approveComment2").is(":hidden")) {
                                 $("#commentText").val("");
                             }
                         }
@@ -217,7 +220,7 @@ var cpzlqk;
                     }
                     else if (window.pageType == cpzlqk.PageType.SHOW) {
                         if (comment.zt != 1) {
-                            $("#comment").hide();
+                            $("#commentText").val("");
                         }
                     }
                     break;

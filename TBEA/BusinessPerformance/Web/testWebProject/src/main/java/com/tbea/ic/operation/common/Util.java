@@ -24,6 +24,11 @@ public class Util {
 		return formatter.format(d);
 	}
 	
+	public static String formatToMill(Date d) {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+		return formatter.format(d);
+	}
+	
 	public static String formatToSecond(Timestamp d) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		

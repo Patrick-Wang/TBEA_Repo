@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.reportframe.component.service.ServiceRunnable;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 
-@Service(TransHb.NAME)
-public class TransHb implements Transaction{
+@Service(TransTb.NAME)
+public class TransTb implements Transaction{
 	
-	public static final String NAME = "TransHb";
-	@PersistenceContext(unitName = "dbHb")
+	public static final String NAME = "TransTb";
+	@PersistenceContext(unitName = "TbDB")
 	EntityManager em;
 	
-	@Transactional("transHb")
+	@Transactional("transTb")
 	public void run(ServiceRunnable run) throws Exception{
 		run.run();
 	}

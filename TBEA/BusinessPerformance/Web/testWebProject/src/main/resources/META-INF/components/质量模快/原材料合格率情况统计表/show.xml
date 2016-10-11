@@ -748,7 +748,7 @@ where
    <map key="updateUrl" value="yclhglqktjUpdate"/>
    <map key="exportUrl" value="yclhglqktjExport"/>
    <map key="title" value="原材料合格率"/>
-   <map map="${authMgr[20]}"/>
+   <map map="${authMgr[41]}"/>
    <map key="itemChart">[
 {&quot;item&quot;:${orgs.virtualCYOrg.types[1]},&quot;chart&quot;:0},
 {&quot;item&quot;:${orgs.virtualCYOrg.types[2]},&quot;chart&quot;:0},
@@ -764,6 +764,7 @@ where
 {&quot;chart&quot;:1,&quot;nodes&quot;:${dataNodeFactory[xlClid][xlName].asJson}}
 ]</map>
    <map key="chartUrl" value="yclhglqktjChart"/>
+   <map key="relateZl" value="${true}"/>
   </response>
  </controller>
  <service id="servYclhglqkCldlItems" transaction="transactionManager">

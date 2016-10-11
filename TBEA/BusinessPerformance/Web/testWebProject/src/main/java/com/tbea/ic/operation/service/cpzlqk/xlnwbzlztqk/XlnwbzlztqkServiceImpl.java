@@ -1070,7 +1070,7 @@ public class XlnwbzlztqkServiceImpl implements XlnwbzlztqkService {
 		list.add(entity.getIssue_process());
 		list.add(entity.getResponsibility_department());
 		list.add(entity.getMaterial_treatment_measure());
-		list.add(entity.getOnsite_treatmen_measure());
+		list.add(entity.getOnsite_treatment_measure());
 		list.add(entity.getOnsite_treatment_result());
 		list.add(entity.getCausa_analysis());
 		list.add(entity.getAssessment());

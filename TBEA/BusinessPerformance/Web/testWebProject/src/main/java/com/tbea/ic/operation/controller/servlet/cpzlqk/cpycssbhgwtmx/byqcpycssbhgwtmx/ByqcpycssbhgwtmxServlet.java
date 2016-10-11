@@ -3,6 +3,7 @@ package com.tbea.ic.operation.controller.servlet.cpzlqk.cpycssbhgwtmx.byqcpycssb
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -34,7 +35,9 @@ import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.PageType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx.ByqcpycssbhgwtmxService;
 import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx.ByqcpycssbhgwtmxServiceImpl;
 
@@ -55,19 +58,57 @@ public class ByqcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		boolean all = Boolean.valueOf(request.getParameter("all"));
-		Integer pageType = Integer.valueOf(request.getParameter("pageType"));
+		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		ZBStatus status = ZBStatus.NONE;
-		if (pageType == 3){
-			status = ZBStatus.APPROVED;
+		if (request.getParameter("zt") != null){
+			status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
+		}		
+		
+		List<Integer> auths = JSONArray.fromObject(request.getParameter("auths"));
+		List<Integer> zts = new ArrayList<Integer>();
+		if (pageType == PageType.SHOW){
+			zts.add(ZBStatus.APPROVED.ordinal());
+		} else if (pageType == PageType.ENTRY){
+			zts.add(ZBStatus.SAVED.ordinal());
+			zts.add(ZBStatus.SUBMITTED.ordinal());
+			zts.add(ZBStatus.APPROVED.ordinal());
+			zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
+			zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
+		}  else if (pageType == PageType.APPROVE){
+			
+			if (status == ZBStatus.NONE || status == ZBStatus.SAVED ){
+
+			} else if (status == ZBStatus.SUBMITTED){
+				if (auths.contains(53)){
+					zts.add(ZBStatus.SUBMITTED.ordinal());
+				}
+			} else if (status == ZBStatus.INTER_APPROVED_1){
+				if (auths.contains(54) || auths.contains(53)){
+					zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
+				}
+			} else if (status == ZBStatus.INTER_APPROVED_2){
+				if (auths.contains(53) || auths.contains(AuthType.QualityApprove.ordinal()) || auths.contains(54)){
+					zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
+				}
+			} else if (status == ZBStatus.APPROVED){
+				if (auths.contains(53) || auths.contains(AuthType.QualityApprove.ordinal()) || auths.contains(54)){
+					zts.add(ZBStatus.APPROVED.ordinal());
+				}
+			}
 		}
+		
+		if (zts.isEmpty()){
+			zts.add(ZBStatus.NONE.ordinal());
+		}
+
 				
 		List<List<String>> result = null;
 		if (all){
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, status);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, zts);
 		}else{
 			CompanyType comp = CompanySelection.getCompany(request);
 			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company, status);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company, zts);
 		}
 		
 		

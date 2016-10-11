@@ -19,9 +19,9 @@ public class CallServiceXmlInterpreter implements XmlInterpreter {
 		
 		Service serv = null;
 		if ("true".equals(e.getAttribute("inline"))){
-			serv = component.getCM().createService(id, component.localContext());
+			serv = component.getCM().createService(component, id, component.localContext());
 		}else{
-			serv = component.getCM().createService(id);
+			serv = component.getCM().createService(component, id);
 		}
 		
 		if (null != serv){

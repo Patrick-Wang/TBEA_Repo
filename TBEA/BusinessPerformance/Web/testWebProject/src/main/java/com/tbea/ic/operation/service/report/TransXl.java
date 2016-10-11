@@ -13,8 +13,8 @@ import com.tbea.ic.operation.reportframe.component.service.Transaction;
 public class TransXl implements Transaction{
 	
 	public static final String NAME = "TransXl";
-	@PersistenceContext(unitName = "dbXl")
-	EntityManager em;
+	@PersistenceContext(unitName = "XlDB")
+	EntityManager em; 
 	
 	@Transactional("transXl")
 	public void run(ServiceRunnable run) throws Exception{

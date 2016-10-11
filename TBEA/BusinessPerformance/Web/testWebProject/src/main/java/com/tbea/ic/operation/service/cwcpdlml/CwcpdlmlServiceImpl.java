@@ -8,7 +8,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -712,10 +715,10 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth();
 
 			List<CpflEntity> entities = cpflDao.getAll();
-			Logger logger = Logger.getLogger("LOG-NC");
-			logger.debug("财务产品大类毛利 sqlCbByqcyAdydjfl");
+			Logger logger = LoggerFactory.getLogger("LOG-NC");
+			logger.info("财务产品大类毛利 sqlCbByqcyAdydjfl");
 			ResultSet rsCb = connection.query(sqlCbByqcyAdydjfl + whereSql);
-			logger.debug("财务产品大类毛利 sqlSrByqcyAdydjfl");
+			logger.info("财务产品大类毛利 sqlSrByqcyAdydjfl");
 			ResultSet rsSr = connection.query(sqlSrByqcyAdydjfl + whereSql);
 			
 			
@@ -729,45 +732,45 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 			
 			
 			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
-			logger.debug("财务产品大类毛利  sqlCbByqcyAcplxfl");
+			logger.info("财务产品大类毛利  sqlCbByqcyAcplxfl");
 			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
-			logger.debug("财务产品大类毛利  sqlSrByqcyAcplxfl");
+			logger.info("财务产品大类毛利  sqlSrByqcyAcplxfl");
 			rsSr = connection.query(sqlSrByqcyAcplxfl + whereSql);
 			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
 			
-			logger.debug("财务产品大类毛利  sqlCbXlcy");
+			logger.info("财务产品大类毛利  sqlCbXlcy");
 			rsCb = connection.query(sqlCbXlcy + whereSql);
-			logger.debug("财务产品大类毛利  sqlSrXlcy");
+			logger.info("财务产品大类毛利  sqlSrXlcy");
 			rsSr = connection.query(sqlSrXlcy + whereSql);
 			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
 			
-			logger.debug("财务产品大类毛利  sqlCbXny");
+			logger.info("财务产品大类毛利  sqlCbXny");
 			rsCb = connection.query(sqlCbXny + whereSql);
-			logger.debug("财务产品大类毛利  sqlSrXny");
+			logger.info("财务产品大类毛利  sqlSrXny");
 			rsSr = connection.query(sqlSrXny + whereSql);
 			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
 			
-			logger.debug("财务产品大类毛利  sqlCbGcl");
+			logger.info("财务产品大类毛利  sqlCbGcl");
 			rsCb = connection.query(sqlCbGcl + whereSql);
-			logger.debug("财务产品大类毛利  sqlSrGcl");
+			logger.info("财务产品大类毛利  sqlSrGcl");
 			rsSr = connection.query(sqlSrGcl + whereSql);
 			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
 			
-			logger.debug("财务产品大类毛利  sqlCbYysl");
+			logger.info("财务产品大类毛利  sqlCbYysl");
 			rsCb = connection.query(sqlCbYysl + whereSql);
-			logger.debug("财务产品大类毛利  sqlSrYysl");
+			logger.info("财务产品大类毛利  sqlSrYysl");
 			rsSr = connection.query(sqlSrYysl + whereSql);
 			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
 			
-			logger.debug("财务产品大类毛利  sqlCbMtcy");
+			logger.info("财务产品大类毛利  sqlCbMtcy");
 			rsCb = connection.query(sqlCbMtcy + whereSql);
-			logger.debug("财务产品大类毛利  sqlSrMtcy");
+			logger.info("财务产品大类毛利  sqlSrMtcy");
 			rsSr = connection.query(sqlSrMtcy + whereSql);
 			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
 			
-			logger.debug("财务产品大类毛利  sqlCbWlmyl");
+			logger.info("财务产品大类毛利  sqlCbWlmyl");
 			rsCb = connection.query(sqlCbWlmyl + whereSql);
-			logger.debug("财务产品大类毛利  sqlSrWlmyl");
+			logger.info("财务产品大类毛利  sqlSrWlmyl");
 			rsSr = connection.query(sqlSrWlmyl + whereSql);
 			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
 			

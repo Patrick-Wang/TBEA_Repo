@@ -53,12 +53,12 @@ public class ReportServlet implements Scheduler {
 		return new ModelAndView("report/report_console", model);
 	}
 	
-	@RequestMapping(value = "{controllor}.do")
-	public ModelAndView ssoLogin(HttpServletRequest request,
+	@RequestMapping(value = "{controller}.do")
+	public ModelAndView onController(HttpServletRequest request,
 			HttpServletResponse response,
-			@PathVariable("controllor") String controllor) throws Exception {
+			@PathVariable("controller") String controllor) throws Exception {
 		
-		com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.createController(controllor);
+		com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.createController(null, controllor);
 		if (null != controller){
 			Context context = new Context();
 			ContextHandlers handlers = new ContextHandlers();

@@ -193,6 +193,9 @@
 <Table id="frameTable" align="center" style="width:1200px">
     <tr>
         <td>
+    <c:if test="${relateZl}">
+            <div id="zlAndyclhgl" style="float: left"></div>
+    </c:if>
             <div id="dt" style="float: left;margin-right:10px"></div>
             <div  style="float: left;margin-right:10px">
                 <div id="im">
@@ -231,6 +234,39 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+    	
+        var pageSlector = new Util.UnitedSelector([{
+            data:{
+                id:0,
+                value:"产品一次送试"
+            }
+        },{
+            data:{
+                id:1,
+                value:"原材料合格率"
+            }
+        }],"zlAndyclhgl", [1]);
+
+        pageSlector.change(function(){
+            if (pageSlector.getPath()[0] == 0){
+                window.location.href="${pageContext.request.contextPath}/cpzlqk/show.do";
+            }
+        });
+        
+        $("#zlAndyclhgl select")
+        .multiselect({
+            multiple: false,
+            header: false,
+            minWidth: 115,
+            height:'100%',
+            // noneSelectedText: "请选择月份",
+            selectedList: 1
+            })
+        .css("padding", "2px 0 2px 4px")
+        .css("text-align", "left")
+        .css("font-size", "12px");
+        
+
         framework.templates.dateChartReport.createInstance();
         var dateEnd;
         var date;
@@ -272,6 +308,9 @@
             chartNodes:JSON.parse('${chartNodes}'),
             itemChart:JSON.parse('${itemChart}')
         });
+
+    //$("#zlAndyclhgl").buttonset();
+
         $("#radio").buttonset();
         $("#exportButton")
             .css("height", "23px")

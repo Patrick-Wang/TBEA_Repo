@@ -194,7 +194,12 @@ module cpzlqk {
                     break;
                 case Event.ZLFE_COMMENT_UPDATED:
                     let comment : Comment = e.data.comment;
-                    let auths = e.data.auths;
+
+                    if (comment.deny == "deny"){
+                        $("#comment").hide();
+                        break;
+                    }
+
                     $("#comment").show();
                     $("#commentText").val(comment.comment);
                     $("#commentText").attr("readonly","readonly");
@@ -206,7 +211,7 @@ module cpzlqk {
                         } else if (comment.zt == Util.IndiStatus.INTER_APPROVED_1){
                             $("#approveComment").hide();
                             $("#approveComment1").hide();
-                            if ($("#approveComment1").is(":hidden")){
+                            if ($("#approveComment2").is(":hidden")){
                                 $("#commentText").val("");
                             }
 
@@ -232,7 +237,7 @@ module cpzlqk {
                         $("#commentText").removeAttr("readonly");
                     }else if (window.pageType == PageType.SHOW){//show
                         if (comment.zt != 1){
-                            $("#comment").hide();
+                            $("#commentText").val("");
                         }
                     }
                     break;
