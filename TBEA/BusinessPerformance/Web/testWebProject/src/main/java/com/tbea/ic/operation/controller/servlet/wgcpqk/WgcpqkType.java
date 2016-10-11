@@ -5,7 +5,7 @@ public enum WgcpqkType{
     YLFX_WGCPYLNL_BYQ_ZH(11),
     YLFX_WGCPYLNL_BYQ_MLL(12),
     YLFX_WGCPYLNL_XL_ZH(14),
-    YLFX_WGCPYLNL_XL_CPFL(15);
+    YLFX_WGCPYLNL_XL_MLL(15);
     
     private int _value;
 

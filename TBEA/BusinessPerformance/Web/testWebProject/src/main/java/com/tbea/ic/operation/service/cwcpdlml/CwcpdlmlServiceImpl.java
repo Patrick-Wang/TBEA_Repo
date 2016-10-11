@@ -785,9 +785,10 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 		try {
 			boolean hasCb = rsCb.next(); 
 			boolean hasSr = rsSr.next();
-			if (hasCb || hasSr){
+			while (hasCb || hasSr){
+				CpdlmlEntity entity = null;
 				for (int i = 4; i <= rsCb.getMetaData().getColumnCount(); ++i){
-					CpdlmlEntity entity = cpdlmlDao.getByDate(d, entities.get(i - 4).getId());
+					entity = cpdlmlDao.getByDate(d, entities.get(i - 4).getId());
 					if (null == entity){
 						entity = new CpdlmlEntity();
 						entity.setCpdl(entities.get(i - 4).getId());
@@ -797,9 +798,12 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 					entity.setLjcb(hasCb ? rsCb.getDouble(i) : null);
 					entity.setLjsr(hasSr ? rsSr.getDouble(i) : null);
 					cpdlmlDao.merge(entity);
-					hjEntity.setLjcb(MathUtil.sum(hjEntity.getLjcb(), entity.getLjcb()));
-					hjEntity.setLjsr(MathUtil.sum(hjEntity.getLjsr(), entity.getLjsr()));
 				}
+				
+				hjEntity.setLjcb(MathUtil.sum(hjEntity.getLjcb(), entity.getLjcb()));
+				hjEntity.setLjsr(MathUtil.sum(hjEntity.getLjsr(), entity.getLjsr()));
+				hasCb = rsCb.next(); 
+				hasSr = rsSr.next();
 			}
 			
 		} catch (SQLException e) {

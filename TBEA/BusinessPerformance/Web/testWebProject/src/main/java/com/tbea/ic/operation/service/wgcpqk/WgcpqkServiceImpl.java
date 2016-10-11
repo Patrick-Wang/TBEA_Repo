@@ -11,7 +11,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,8 +79,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	       imdu.m10064 dkq330cb,	" +	//今年累计其中：330kV及以下销售成本
 	"	       imdu.m10038 dkq500cb,	" +	//今年累计500kV电销售成本
 	"	       imdu.m10012 dkq750cb,	" +	//今年累计750kV电销售成本
-	"	       imdz.m10341 dkq1000cb,	" +	//今年累计1000kV电销售成本
-	"	       imdz.m10315 dydjljcb	" +	//今年累计小计销售成本（按产品电压等级分类）
+	"	       imdz.m10341 dkq1000cb	" +	//今年累计1000kV电销售成本
+//	"	       imdz.m10315 dydjljcb	" +	//今年累计小计销售成本（按产品电压等级分类）
 	"	  from iufo_measure_data_7zz4hjkz imd7	" +	
 	"	  left join iufo_measure_data_ukdj7hhy imdu	" +	
 	"	    on imd7.alone_id = imdu.alone_id	" +	
@@ -107,37 +108,71 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	       imdz.m10249 gsbyqcb,	" +	//今年累计干式变压器销售成本
 	"	       imdz.m10223 gsfjcb,	" +	//今年累计其中：F级干变销售成本
 	"	       imdz.m10197 gshjcb,	" +	//今年累计H级干变销售成本
-	"	       imdz.m10171 gsxsbdcb,	" +	//今年累计箱式变电站销售成本
+//	"	       imdz.m10171 gsxsbdcb,	" +	//今年累计箱式变电站销售成本
 	"	       imdz.m10145 gsdkqcb,	" +	//今年累计干式电抗器销售成本
+
+	" imd2.m10300 pdbyqcb,"+	//--今年累计配电变压器销售成本 modify by song 16-06-15
+	"imd2.m10274 fjhjcb,"+	//--今年累计非晶合金销售成本 modify by song 16-06-15
+	"imd2.m10248 jtxcb,"+	//--卷铁心 modify by song 16-06-15
+	"imd2.m10222 dtxcb,"+	//--叠铁心 modify by song 16-06-15
+	"imd2.m10196 pdbyqqtcb,"+	//--配电变压器其它 modify by song 16-06-15
+	"imd2.m10170 xsbdzcb,"+	//--箱式变电站 modify by song 16-06-15
+	"imd2.m10144 osbdzcb,"+	//--欧式变电站 modify by song 16-06-15
+	"imd2.m10118 msbdzcb,"+	//--美式变电站 modify by song 16-06-15
+	"imd2.m10092 hsbdzcb,"+	//--华式变电站 modify by song 16-06-15
+	"imd2.m10066 xsbdzqtcb,"+	//--箱式变电站其它 modify by song 16-06-15
+ 
 	"	       imdz.m10119 tzbyqcb,	" +	//今年累计特种变压器销售成本
-	"	       imdz.m10093 tzgbcb,	" +	//今年累计其中：隔爆变销售成本
 	"	       imdz.m10067 tzzlcb,	" +	//今年累计整流变销售成本
 	"	       imdz.m10041 tzqycb,	" +	//今年累计牵引变销售成本
+	"	       imdz.m10093 tzgbcb,	" +	//今年累计其中：隔爆变销售成本
 	"	       imdz.m10015 tzytcb,	" +	//今年累计油田变销售成本
 	"	       imdq.m10344 tzqtcb,	" +	//今年累计其它销售成本
+	
 	"	       imdq.m10318 yslcb,	" +	//今年累计延伸类销售成本
 	"	       imdq.m10292 yslpdzdhcb,	" +	//今年累计配电自动化销售成本
 	"	       imdq.m10266 yslkgcb,	" +	//今年累计开关销售成本
 	"	       imdq.m10240 ysltgcb,	" +	//今年累计套管销售成本
 	"	       imdq.m10214 yslhgqcb,	" +	//今年累计互感器销售成本
 	"	       imdq.m10188 yslwxbjcb,	" +	//今年累计维修备件销售成本
-	"	       imdq.m10162 cplxflljcb	" +	//今年累计小计销售成本（按产品类型分类）
-	"	  from iufo_measure_data_qp1i8fs7 imdq	" +	
-	"	  left join iufo_measure_data_zwrb9cyz imdz	" +	
-	"	    on imdq.alone_id = imdz.alone_id	" +	
-	"	  left join (select alone_id,	" +	
-	"	                    code,	" +	
-	"	                    inputdate,	" +	
-	"	                    keyword2,	" +	
-	"	                    keyword3,	" +	
-	"	                    time_code,	" +	
-	"	                    ts,	" +	
-	"	                    ver	" +	
-	"	               from iufo_measure_pubdata) imp	" +	
-	"	    on imdq.alone_id = imp.alone_id	" +	
-	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
-	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+    "		   imd2.m10014 yslqtcb" +	//--延伸类其它 modify by song 16-06-15 
+//	"	       imdq.m10162 cplxflljcb	" +	//今年累计小计销售成本（按产品类型分类）
+//	"	  from iufo_measure_data_qp1i8fs7 imdq	" +	
+//	"	  left join iufo_measure_data_zwrb9cyz imdz	" +	
+//	"	    on imdq.alone_id = imdz.alone_id	" +	
+//	"	  left join (select alone_id,	" +	
+//	"	                    code,	" +	
+//	"	                    inputdate,	" +	
+//	"	                    keyword2,	" +	
+//	"	                    keyword3,	" +	
+//	"	                    time_code,	" +	
+//	"	                    ts,	" +	
+//	"	                    ver	" +	
+//	"	               from iufo_measure_pubdata) imp	" +	
+//	"	    on imdq.alone_id = imp.alone_id	" +	
+//	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
+//	"	    on imp.code = iui.unit_id	" +	
+//	"	 where imp.ver = 0	";	
+"	from iufo_measure_data_qp1i8fs7 imdq" +	//
+"	left join iufo_measure_data_zwrb9cyz imdz" +	//
+"	  on imdq.alone_id = imdz.alone_id" +	//
+"	left join iufo_measure_data_2xbg8smg imd2" +	// --modify by song 16-06-16
+"	  on imdq.alone_id = imd2.alone_id" +	// --modify by song 16-06-16
+"	left join iufo_measure_data_i2ld0qqp imdi" +	// --modify by song 16-06-16
+"	  on imdq.alone_id = imdi.alone_id" +	// --modify by song 16-06-16
+"	left join (select alone_id," +	//
+"	                  code," +	//
+"	                  inputdate," +	//
+"	                  keyword2," +	//
+"						keyword3," +	//
+"	                  time_code," +	//
+"	                  ts," +	//
+"	                  ver" +	//
+"	             from iufo_measure_pubdata) imp" +	//
+"	  on imdq.alone_id = imp.alone_id" +	//
+"	left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui" +	//
+"	  on imp.code = iui.unit_id" +	//
+"	where imp.ver in (0,510)";
 		 		
 	//	--------------------------线缆产业-------------------------------		
 	private static String sqlCbXlcy = 
@@ -180,8 +215,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	select unit_code,	" +	
 	"	       unit_name,	" +	
 	"	       inputdate,	" +	
-	"	       imd5.m10014 wlmycb,	" +	//今年累计物流贸易销售成本
-	"	       imdg.m10343 wlmyxjcb	" +	//今年累计小计销售成本
+	"	       imd5.m10014 wlmycb	" +	//今年累计物流贸易销售成本
+	//"	       imdg.m10343 wlmyxjcb	" +	//今年累计小计销售成本
 	"	  from iufo_measure_data_5a801obu imd5	" +	
 	"	  left join iufo_measure_data_gyin4hlu imdg	" +	
 	"	    on imd5.alone_id = imdg.alone_id	" +	
@@ -205,6 +240,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	select unit_code,	" +	
 	"	       unit_name,	" +	
 	"	       inputdate,	" +	
+	"	       imdg.m10031 xjcb,	" +	//今年累计小计销售成本
 	"	       imdg.m10317 hyfcb,	" +	//今年累计会议费收入销售成本
 	"	       imdg.m10291 wyfcb,	" +	//今年累计物业费收入销售成本
 	"	       imdg.m10265 lwfcb,	" +	//今年累计劳务收入销售成本
@@ -215,8 +251,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	       imdg.m10135 dfcb,	" +	//今年累计电费收入销售成本
 	"	       imdg.m10109 sqncb,	" +	//今年累计水汽暖收入销售成本
 	"	       imdg.m10083 cycb,	" +	//今年累计餐饮收入销售成本
-	"	       imdg.m10057 qtcb,	" +	//今年累计其他收入销售成本
-	"	       imdg.m10031 xjcb		" +	//今年累计小计销售成本
+	"	       imdg.m10057 qtcb	" +	//今年累计其他收入销售成本
 	"	  from iufo_measure_data_gyin4hlu imdg	" +	
 	"	  left join (select alone_id,	" +	
 	"	                    code,	" +	
@@ -255,8 +290,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	       imdu.m10065 dkq330sr,	" +	//今年累计其中：330kV及以下销售收入
 	"	       imdu.m10039 dkq500sr,	" +	//今年累计500kV电销售收入
 	"	       imdu.m10013 dkq750sr,	" +	//今年累计750kV电销售收入
-	"	       imdz.m10342 dkq1000sr,	" +	//今年累计1000kV电销售收入
-	"	       imdz.m10316 dydjljsr	" +	//今年累计小计销售收入(按电压等级分类)
+	"	       imdz.m10342 dkq1000sr	" +	//今年累计1000kV电销售收入
+//	"	       imdz.m10316 dydjljsr	" +	//今年累计小计销售收入(按电压等级分类)
 	"	  from iufo_measure_data_7zz4hjkz imd7	" +	
 	"	  left join iufo_measure_data_ukdj7hhy imdu	" +	
 	"	    on imd7.alone_id = imdu.alone_id	" +	
@@ -285,12 +320,24 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	       imdz.m10250 gsbyqsr,	" +	//今年累计干式变压器销售收入
 	"	       imdz.m10224 gsfjsr,	" +	//今年累计其中：F级干变销售收入
 	"	       imdz.m10198 gshjsr,	" +	//今年累计H级干变销售收入
-	"	       imdz.m10172 gsxsbdsr,	" +	//今年累计箱式变电站销售收入
+//	"	       imdz.m10172 gsxsbdsr,	" +	//今年累计箱式变电站销售收入
 	"	       imdz.m10146 gsdkqsr,	" +	//今年累计干式电抗器销售收入
+	
+    "   imd2.m10301 pdbyqsr," +	//--今年累计配电变压器销售收入 modify by song 16-06-15
+    "   imd2.m10275 pdfjhjsr," +	//--今年累计非晶合金销售收入 modify by song 16-06-15
+    "   imd2.m10249 pdjtxsr," +	//--卷铁芯 modify by song 16-06-15
+    "   imd2.m10223 pddtxsr," +	//--叠铁芯 modify by song 16-06-15
+    "   imd2.m10197 pdqtsr," +	//--配电变压器其它 modify by song 16-06-15
+    "   imd2.m10171 xsbdzsr," +	//--箱式变电站 modify by song 16-06-15
+    "   imd2.m10145 xsosbdzsr," +	//--欧式变电站 modify by song 16-06-15
+    "   imd2.m10119 xsmsbdzsr," +	//--美式变电站 modify by song 16-06-15
+    "   imd2.m10093 xshsbdzsr," +	//--华式变电站 modify by song 16-06-15
+    "   imd2.m10067 xsdbzqtsr," +	//--箱式变电站其它 modify by song 16-06-15
+	
 	"	       imdz.m10120 tzbyqsr,	" +	//今年累计特种变压器销售收入
-	"	       imdz.m10094 tzgbsr,	" +	//今年累计其中：隔爆变销售收入
 	"	       imdz.m10068 tzzlsr,	" +	//今年累计整流变销售收入
 	"	       imdz.m10042 tzqysr,	" +	//今年累计牵引变销售收入
+	"	       imdz.m10094 tzgbsr,	" +	//今年累计其中：隔爆变销售收入
 	"	       imdz.m10016 tzytsr,	" +	//今年累计油田变销售收入
 	"	       imdq.m10345 tzqtsr,	" +	//今年累计其它销售收入
 	"	       imdq.m10319 yslsr,	" +	//今年累计延伸类销售收入
@@ -299,23 +346,28 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	       imdq.m10241 ysltg,	" +	//今年累计套管销售收入
 	"	       imdq.m10215 yslhgqsr,	" +	//今年累计互感器销售收入
 	"	       imdq.m10189 yslwxbjsr,	" +	//今年累计维修备件销售收入
-	"	       imdq.m10163 cplxflljsr	" +	//今年累计小计销售收入(按产品类型分类)
-	"	  from iufo_measure_data_qp1i8fs7 imdq	" +	
-	"	  left join iufo_measure_data_zwrb9cyz imdz	" +	
-	"	    on imdq.alone_id = imdz.alone_id	" +	
-	"	  left join (select alone_id,	" +	
-	"	                    code,	" +	
-	"	                    inputdate,	" +	
-	"	                    keyword2,	" +	
-	"	                    keyword3,	" +	
-	"	                    time_code,	" +	
-	"	                    ts,	" +	
-	"	                    ver	" +	
-	"	               from iufo_measure_pubdata) imp	" +	
-	"	    on imdq.alone_id = imp.alone_id	" +	
-	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
-	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"		   imd2.m10015 yslqtsr "+//--延伸类其它  modify by song 16-06-15   
+//	"	       imdq.m10163 cplxflljsr	" +	//今年累计小计销售收入(按产品类型分类)
+"from iufo_measure_data_qp1i8fs7 imdq	" +	
+"left join iufo_measure_data_zwrb9cyz imdz	" +	
+"  on imdq.alone_id = imdz.alone_id	" +	
+"left join iufo_measure_data_2xbg8smg imd2	" +	 //--modify by song 16-06-15
+"  on imdq.alone_id = imd2.alone_id	" +	 //--modify by song 16-06-15
+"left join iufo_measure_data_i2ld0qqp imdi	" +	 //--modify by song 16-06-15
+"  on imdq.alone_id = imdi.alone_id	" +	 //--modify by song 16-06-15
+"left join (select alone_id,	" +	
+"                  code,	" +	
+"                  inputdate,	" +	
+"                  keyword2,	" +	
+"                  keyword3,	" +	
+"                  time_code,	" +	
+"                  ts,	" +	
+"                  ver	" +	
+"             from iufo_measure_pubdata) imp	" +	
+"  on imdq.alone_id = imp.alone_id	" +	
+"left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
+"  on imp.code = iui.unit_id	" +	
+"where imp.ver in (0,510)		";
 		 		
 		 		
 	//	--------------------------线缆产业-------------------------------		
@@ -359,8 +411,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	select unit_code,	" +	
 	"	       unit_name,	" +	
 	"	       inputdate,	" +	
-	"	       imd5.m10015 ,	" +	//今年累计物流贸易销售收入
-	"	       imdg.m10344	" +	//今年累计小计销售收入
+	"	       imd5.m10015 	" +	//今年累计物流贸易销售收入
+//	"	       imdg.m10344	" +	//今年累计小计销售收入
 	"	  from iufo_measure_data_5a801obu imd5	" +	
 	"	  left join iufo_measure_data_gyin4hlu imdg	" +	
 	"	    on imd5.alone_id = imdg.alone_id	" +	
@@ -383,6 +435,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	select unit_code,	" +	
 	"	       unit_name,	" +	
 	"	       inputdate,	" +	
+	"	       imdg.m10032 xjsr,	" +	//今年累计小计销售收入
 	"	       imdg.m10318 hyfsr,	" +	//今年累计会议费收入销售收入
 	"	       imdg.m10292 wyfsr,	" +	//今年累计物业费收入销售收入
 	"	       imdg.m10266 lwfsr,	" +	//今年累计劳务收入销售收入
@@ -393,8 +446,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	       imdg.m10136 dfsr,	" +	//今年累计电费收入销售收入
 	"	       imdg.m10110 sqnsr,	" +	//今年累计水汽暖收入销售收入
 	"	       imdg.m10084 cysr,	" +	//今年累计餐饮收入销售收入
-	"	       imdg.m10058 qtsr,	" +	//今年累计其他收入销售收入
-	"	       imdg.m10032 xjsr	" +	//今年累计小计销售收入
+	"	       imdg.m10058 qtsr	" +	//今年累计其他收入销售收入
 	"	  from iufo_measure_data_gyin4hlu imdg	" +	
 	"	  left join (select alone_id,	" +	
 	"	                    code,	" +	
@@ -416,32 +468,32 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	       unit_name,	" +	
 	"	       inputdate,	" +	
 	"	       imdo.m10123 gnsr,	" +	//今年累计国内工程销售收入
-	"	       imd0.m10304 gnsbdsr,	" +	//今年累计其中：输变电工程销售收入
+//	"	       imd0.m10304 gnsbdsr,	" +	//今年累计其中：输变电工程销售收入
 	"	       imdo.m10102 gnsbdepcsr,	" +	//今年累计输变电-EPC模式销售收入
 	"	       imdo.m10076 gnsbdbtsr,	" +	//今年累计输变电-BT模式销售收入
 	"	       imdo.m10050 gnsbdqtsr,	" +	//今年累计输变电-其他模式销售收入
-	"	       imd0.m10278 gngfsr,	" +	//今今年累计光伏工程销售收入
-	"	       imdo.m10024 gngfepcsr,	" +	//今年累计光伏-EPC模式销售收入
-	"	       imdz.m10353 gngfbtsr,	" +	//今年累计光伏-BT模式销售收入
-	"	       imdz.m10327 gngfqtsr,	" +	//今年累计光伏-其他模式销售收入
-	"	       imd0.m10252 gnfdsr,	" +	//今年累计风电工程销售收入
-	"	       imdz.m10301 gnfdepcsr,	" +	//今年累计风电-EPC模式销售收入
-	"	       imdz.m10275 gnfdbtsr,	" +	//今年累计风电-BT模式销售收入
-	"	       imdz.m10249 gnfdqtsr,	" +	//今年累计风电-其他模式销售收入
+//	"	       imd0.m10278 gngfsr,	" +	//今今年累计光伏工程销售收入
+//	"	       imdo.m10024 gngfepcsr,	" +	//今年累计光伏-EPC模式销售收入
+//	"	       imdz.m10353 gngfbtsr,	" +	//今年累计光伏-BT模式销售收入
+//	"	       imdz.m10327 gngfqtsr,	" +	//今年累计光伏-其他模式销售收入
+//	"	       imd0.m10252 gnfdsr,	" +	//今年累计风电工程销售收入
+//	"	       imdz.m10301 gnfdepcsr,	" +	//今年累计风电-EPC模式销售收入
+//	"	       imdz.m10275 gnfdbtsr,	" +	//今年累计风电-BT模式销售收入
+//	"	       imdz.m10249 gnfdqtsr,	" +	//今年累计风电-其他模式销售收入
 	"	       imdz.m10235 gjsr,	" +	//今年累计国际工程销售收入
-	"	       imd0.m10206 gjsbdsr,	" +	//今年累计其中：输变电工程销售收入
+//	"	       imd0.m10206 gjsbdsr,	" +	//今年累计其中：输变电工程销售收入
 	"	       imdz.m10214 gjsbdepcsr,	" +	//今年累计输变电-EPC模式销售收入
 	"	       imdz.m10188 gjsbdbtsr,	" +	//今年累计输变电-BT模式销售收入
-	"	       imdz.m10162 gjsbdqtsr,	" +	//今年累计输变电-其他模式销售收入
-	"	       imd0.m10180 gjgfsr,	" +	//今年累计今年累计 光伏工程销售收入
-	"	       imdz.m10136 gjgfepcsr,	" +	//今年累计光伏-EPC模式销售收入
-	"	       imdz.m10110 gjgfbtsr,	" +	//今年累计光伏-BT模式销售收入
-	"	       imdz.m10084 gjgfqtsr,	" +	//今年累计光伏-其他模式销售收入
-	"	       imd0.m10154 gjfdsr,	" +	//今年累计 风电工程销售收入
-	"	       imdz.m10058 gjfdepcsr,	" +	//今年累计风电-EPC模式销售收入
-	"	       imdz.m10032 gjfdbtsr,	" +	//今年累计风电-BT模式销售收入
-	"	       imdz.m10006 gjfdqtsr,	" +	//今年累计风电-其他模式销售收入
-	"	       imd0.m10128 xjsr	" +	//今年累计小计销售收入
+	"	       imdz.m10162 gjsbdqtsr	" +	//今年累计输变电-其他模式销售收入
+//	"	       imd0.m10180 gjgfsr,	" +	//今年累计今年累计 光伏工程销售收入
+//	"	       imdz.m10136 gjgfepcsr,	" +	//今年累计光伏-EPC模式销售收入
+//	"	       imdz.m10110 gjgfbtsr,	" +	//今年累计光伏-BT模式销售收入
+//	"	       imdz.m10084 gjgfqtsr,	" +	//今年累计光伏-其他模式销售收入
+//	"	       imd0.m10154 gjfdsr,	" +	//今年累计 风电工程销售收入
+//	"	       imdz.m10058 gjfdepcsr,	" +	//今年累计风电-EPC模式销售收入
+//	"	       imdz.m10032 gjfdbtsr,	" +	//今年累计风电-BT模式销售收入
+//	"	       imdz.m10006 gjfdqtsr,	" +	//今年累计风电-其他模式销售收入
+//	"	       imd0.m10128 xjsr	" +	//今年累计小计销售收入
 	"	  from iufo_measure_data_oxpoeewv imdo	" +	
 	"	  left join iufo_measure_data_0lmfwcux imd0	" +	
 	"	    on imdo.alone_id = imd0.alone_id	" +	
@@ -467,32 +519,32 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	       unit_name,	" +	
 	"	       inputdate,	" +	
 	"	       imdo.m10122 gncb,	" +	//今年累计国内工程销售成本
-	"	       imd0.m10303 gnsbdcb,	" +	//今年累计其中：输变电工程销售成本
+	//"	       imd0.m10303 gnsbdcb,	" +	//今年累计其中：输变电工程销售成本
 	"	       imdo.m10101 gnsbdepccb,	" +	//今年累计输变电-EPC模式销售成本
 	"	       imdo.m10075 gnsbdbtcb,	" +	//今年累计输变电-BT模式销售成本
 	"	       imdo.m10049 gnsbdqtcb,	" +	//今年累计输变电-其他模式销售成本
-	"	       imd0.m10277 gngfcb,	" +	//今年累计光伏工程销售成本
-	"	       imdo.m10023 gngfepccb,	" +	//今年累计光伏-EPC模式销售成本
-	"	       imdz.m10352 gngfbtcb,	" +	//今年累计光伏-BT模式销售成本
-	"	       imdz.m10326 gngfqtcb,	" +	//今年累计光伏-其他模式销售成本
-	"	       imd0.m10251 gnfdcb,	" +	//今年累计风电工程销售成本
-	"	       imdz.m10300 gnfdepccb,	" +	//今年累计风电-EPC模式销售成本
-	"	       imdz.m10274 gnfdbtcb,	" +	//今年累计风电-BT模式销售成本
-	"	       imdz.m10248 gnfdqtcb,	" +	//今年累计风电-其他模式销售成本
+//	"	       imd0.m10277 gngfcb,	" +	//今年累计光伏工程销售成本
+//	"	       imdo.m10023 gngfepccb,	" +	//今年累计光伏-EPC模式销售成本
+//	"	       imdz.m10352 gngfbtcb,	" +	//今年累计光伏-BT模式销售成本
+//	"	       imdz.m10326 gngfqtcb,	" +	//今年累计光伏-其他模式销售成本
+//	"	       imd0.m10251 gnfdcb,	" +	//今年累计风电工程销售成本
+//	"	       imdz.m10300 gnfdepccb,	" +	//今年累计风电-EPC模式销售成本
+//	"	       imdz.m10274 gnfdbtcb,	" +	//今年累计风电-BT模式销售成本
+//	"	       imdz.m10248 gnfdqtcb,	" +	//今年累计风电-其他模式销售成本
 	"	       imdz.m10234 gjcb,	" +	//今年累计国际工程销售成本
-	"	       imd0.m10205 gjsbdcb,	" +	//今年累计其中：输变电工程销售成本
+//	"	       imd0.m10205 gjsbdcb,	" +	//今年累计其中：输变电工程销售成本
 	"	       imdz.m10213 gjsbdepccb,	" +	//今年累计输变电-EPC模式销售成本
 	"	       imdz.m10187 gjsbdbtcb,	" +	//今年累计输变电-BT模式销售成本
-	"	       imdz.m10161 gjsbdqtcb,	" +	//今年累计输变电-其他模式销售成本
-	"	       imd0.m10179 gjgfcb,	" +	//今年累计光伏工程销售成本
-	"	       imdz.m10135 gjgfepccb,	" +	//今年累计光伏-EPC模式销售成本
-	"	       imdz.m10109 gjgfbtcb,	" +	//今年累计光伏-BT模式销售成本
-	"	       imdz.m10083 gjgfqtcb,	" +	//今年累计光伏-其他模式销售成本
-	"	       imd0.m10153 gjfdcb,	" +	//今年累计风电工程销售成本
-	"	       imdz.m10057 gjfdepccb,	" +	//今年累计风电-EPC模式销售成本
-	"	       imdz.m10031 gjfdbtcb,	" +	//今年累计风电-BT模式销售成本
-	"	       imdz.m10005 gjfdqtcb,	" +	//今年累计风电-其他模式销售成本
-	"	       imd0.m10127 xjcb	" +	//今年累计小计销售成本(工程类)
+	"	       imdz.m10161 gjsbdqtcb	" +	//今年累计输变电-其他模式销售成本
+//	"	       imd0.m10179 gjgfcb,	" +	//今年累计光伏工程销售成本
+//	"	       imdz.m10135 gjgfepccb,	" +	//今年累计光伏-EPC模式销售成本
+//	"	       imdz.m10109 gjgfbtcb,	" +	//今年累计光伏-BT模式销售成本
+//	"	       imdz.m10083 gjgfqtcb,	" +	//今年累计光伏-其他模式销售成本
+//	"	       imd0.m10153 gjfdcb,	" +	//今年累计风电工程销售成本
+//	"	       imdz.m10057 gjfdepccb,	" +	//今年累计风电-EPC模式销售成本
+//	"	       imdz.m10031 gjfdbtcb,	" +	//今年累计风电-BT模式销售成本
+//	"	       imdz.m10005 gjfdqtcb,	" +	//今年累计风电-其他模式销售成本
+//	"	       imd0.m10127 xjcb	" +	//今年累计小计销售成本(工程类)
 	"	  from iufo_measure_data_oxpoeewv imdo	" +	
 	"	  left join iufo_measure_data_0lmfwcux imd0	" +	
 	"	    on imdo.alone_id = imd0.alone_id	" +	
@@ -522,109 +574,153 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth() +
 					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")";
+			EasyCalendar ecPre = cal.getLastMonth();
+			String whereSqlPreMonth = 
+					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getYear() + 
+					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getMonth() +
+					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")";
 			
-			Logger logger = Logger.getLogger("LOG-NC");
-//			logger.debug("完工成品情况  sqlCbByqcyAdydjfl");
-//			ResultSet rsCb = connection.query(sqlCbByqcyAdydjfl + whereSql);
-//			logger.debug("完工成品情况  sqlSrByqcyAdydjfl");
-//			ResultSet rsSr = connection.query(sqlSrByqcyAdydjfl + whereSql);
-//			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ);
-//			mergeResultSets(
-//					d, 
-//					rsCb, 
-//					rsSr, 
-//					WgcpqkType.YLFX_WGCPYLNL_BYQ_DYDJ, 
-//					cpList, 
-//					0, 
-//					4, 
-//					cpList.size());
-//			logger.debug("完工成品情况  sqlCbByqcyAcplxfl");
-//			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
-//			logger.debug("完工成品情况  sqlSrByqcyAcplxfl");
-//			rsSr = connection.query(sqlSrByqcyAcplxfl + whereSql);
-//			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL);
-//			mergeResultSets(
-//					d, 
-//					rsCb, 
-//					rsSr, 
-//					WgcpqkType.YLFX_WGCPYLNL_BYQ_CPFL, 
-//					cpList, 
-//					0, 
-//					4, 
-//					cpList.size());
-			logger.debug("完工成品情况  sqlCbGcl");
-			ResultSet rsCb = connection.query(sqlCbGcl + whereSql);
-			logger.debug("完工成品情况  sqlSrGcl");
-			ResultSet rsSr = connection.query(sqlSrGcl + whereSql);
-			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH);
+			Logger logger = LoggerFactory.getLogger("LOG-NC");
+			logger.info("完工成品情况  sqlCbByqcyAdydjfl");
+			ResultSet rsCb = connection.query(sqlCbByqcyAdydjfl + whereSql);
+			logger.info("完工成品情况  sqlSrByqcyAdydjfl");
+			ResultSet rsSr = connection.query(sqlSrByqcyAdydjfl + whereSql);
+			logger.info("上月完工成品情况  sqlCbByqcyAdydjfl");
+			ResultSet rsCbPre = connection.query(sqlCbByqcyAdydjfl + whereSqlPreMonth);
+			logger.info("上月完工成品情况  sqlSrByqcyAdydjfl");
+			ResultSet rsSrPre = connection.query(sqlSrByqcyAdydjfl + whereSqlPreMonth);
+			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL);
 			mergeResultSets(
 					d, 
 					rsCb, 
 					rsSr, 
+					rsCbPre,
+					rsSrPre,
+					WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL, 
+					cpList, 
+					0, 
+					4, 
+					19);
+			
+			logger.info("完工成品情况  sqlCbByqcyAcplxfl");
+			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
+			logger.info("完工成品情况  sqlSrByqcyAcplxfl");
+			rsSr = connection.query(sqlSrByqcyAcplxfl + whereSql);
+			logger.info("上月完工成品情况  sqlCbByqcyAcplxfl");
+			rsCbPre = connection.query(sqlCbByqcyAcplxfl + whereSqlPreMonth);
+			logger.info("上月完工成品情况  sqlSrByqcyAcplxfl");
+			rsSrPre = connection.query(sqlSrByqcyAcplxfl + whereSqlPreMonth);
+			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL);
+			mergeResultSets(
+					d, 
+					rsCb, 
+					rsSr, 
+					rsCbPre,
+					rsSrPre,
+					WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL, 
+					cpList, 
+					0, 
+					4, 
+					cpList.size() - 19);
+			logger.info("完工成品情况  sqlCbGcl");
+			rsCb = connection.query(sqlCbGcl + whereSql);
+			logger.info("完工成品情况  sqlSrGcl");
+			rsSr = connection.query(sqlSrGcl + whereSql);
+			logger.info("上月完工成品情况  sqlCbGcl");
+			rsCbPre = connection.query(sqlCbGcl + whereSqlPreMonth);
+			logger.info("上月完工成品情况  sqlSrGcl");
+			rsSrPre = connection.query(sqlSrGcl + whereSqlPreMonth);
+			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH);
+			mergeResultSets(
+					d, 
+					rsCb, 
+					rsSr, 
+					rsCbPre,
+					rsSrPre,
 					WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH, 
 					cpList, 
 					0, 
-					5, 
-					4);
-			
-			try {
-				rsCb.beforeFirst();
-				rsSr.beforeFirst();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			mergeResultSets(
-					d, 
-					rsCb, 
-					rsSr, 
-					WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH, 
-					cpList, 
 					4, 
-					18, 
-					4);
-			logger.debug("完工成品情况  sqlCbWlmyl");
+					8);
+			
+//			try {
+//				rsCb.beforeFirst();
+//				rsSr.beforeFirst();
+//				rsCbPre.beforeFirst();
+//				rsSrPre.beforeFirst();
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			mergeResultSets(
+//					d, 
+//					rsCb, 
+//					rsSr,
+//					rsCbPre,
+//					rsSrPre,
+//					WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH, 
+//					cpList, 
+//					4, 
+//					18, 
+//					4);
+			logger.info("完工成品情况  sqlCbWlmyl");
 			rsCb = connection.query(sqlCbWlmyl + whereSql);
-			logger.debug("完工成品情况  sqlSrWlmyl");
+			logger.info("完工成品情况  sqlSrWlmyl");
 			rsSr = connection.query(sqlSrWlmyl + whereSql);
+			logger.info("上月完工成品情况  sqlCbWlmyl");
+			rsCbPre = connection.query(sqlCbWlmyl + whereSqlPreMonth);
+			logger.info("上月完工成品情况  sqlSrWlmyl");
+			rsSrPre = connection.query(sqlSrWlmyl + whereSqlPreMonth);
 			mergeResultSets(
 					d, 
 					rsCb, 
-					rsSr, 
+					rsSr,
+					rsCbPre,
+					rsSrPre,
 					WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH, 
 					cpList, 
 					8, 
 					4, 
 					1);
-			logger.debug("完工成品情况  sqlCbFwl");
+			logger.info("完工成品情况  sqlCbFwl");
 			rsCb = connection.query(sqlCbFwl + whereSql);
-			logger.debug("完工成品情况  sqlSrFwl");
+			logger.info("完工成品情况  sqlSrFwl");
 			rsSr = connection.query(sqlSrFwl + whereSql);
+			logger.info("上月完工成品情况  sqlCbFwl");
+			rsCbPre = connection.query(sqlCbFwl + whereSqlPreMonth);
+			logger.info("上月完工成品情况  sqlSrFwl");
+			rsSrPre = connection.query(sqlSrFwl + whereSqlPreMonth);
 			mergeResultSets(
 					d, 
 					rsCb, 
 					rsSr, 
+					rsCbPre,
+					rsSrPre,
 					WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH, 
 					cpList, 
 					9, 
-					cpList.size() - 9 - 1 + 4, 
-					1);
-			try {
-				rsCb.beforeFirst();
-				rsSr.beforeFirst();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			mergeResultSets(
-					d, 
-					rsCb, 
-					rsSr, 
-					WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH, 
-					cpList, 
-					10, 
 					4, 
-					cpList.size() - 9 - 1 - 1);
+					cpList.size() - 9);
+//			try {
+//				rsCb.beforeFirst();
+//				rsSr.beforeFirst();
+//				rsCbPre.beforeFirst();
+//				rsSrPre.beforeFirst();
+//			} catch (SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			mergeResultSets(
+//					d, 
+//					rsCb, 
+//					rsSr, 
+//					rsCbPre,
+//					rsSrPre,
+//					WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH, 
+//					cpList, 
+//					10, 
+//					4, 
+//					cpList.size() - 9 - 1 - 1);
 		}
 	}
 
@@ -632,12 +728,13 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 			Date d, 
 			ResultSet rsCb, 
 			ResultSet rsSr, 
-			WgcpqkType type, 
+			ResultSet rsCbPre, ResultSet rsSrPre, WgcpqkType type, 
 			List<Integer> cpIds, 
 			int cpflStart, 
 			int rsStart, 
 			int size) {
 		Map<Company, Pair<List<Double>, List<Double>>> compCbSrMap = new HashMap<Company, Pair<List<Double>, List<Double>>>();
+		Map<Company, Pair<List<Double>, List<Double>>> compCbSrMapPre = new HashMap<Company, Pair<List<Double>, List<Double>>>();
 		try {
 			while (rsCb.next()){
 				String unitCode = String.valueOf(rsCb.getObject(1));
@@ -649,13 +746,13 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					compCbSrMap.put(comp, cbsr);
 				}
 				
-				for (int i = cpflStart; i < size; ++i){
-					cbsr.getFirst().add(rsCb.getDouble(i + rsStart));
+				for (int i = rsStart; i < rsStart + size; ++i){
+					cbsr.getFirst().add(rsCb.getDouble(i));
 				}				
 			}
 			
 			while (rsSr.next()){
-				String unitCode = String.valueOf(rsCb.getObject(1));
+				String unitCode = String.valueOf(rsSr.getObject(1));
 				CompanyType companyType = NCCompanyCode.getType(unitCode);
 				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
 				Pair<List<Double>, List<Double>> cbsr = compCbSrMap.get(comp);
@@ -664,18 +761,53 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					compCbSrMap.put(comp, cbsr);
 				}
 				
-				for (int i = cpflStart; i < size; ++i){
-					cbsr.getSecond().add(rsSr.getDouble(i + rsStart));
+				for (int i = rsStart; i < rsStart + size; ++i){
+					cbsr.getSecond().add(rsSr.getDouble(i));
 				}				
 			}
+			
+			while (rsCbPre.next()){
+				String unitCode = String.valueOf(rsCbPre.getObject(1));
+				CompanyType companyType = NCCompanyCode.getType(unitCode);
+				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+				Pair<List<Double>, List<Double>> cbsr = compCbSrMapPre.get(comp);
+				if (cbsr == null){
+					cbsr = new Pair<List<Double>, List<Double>>(new ArrayList<Double>(), new ArrayList<Double>());
+					compCbSrMapPre.put(comp, cbsr);
+				}
+				
+				for (int i = rsStart; i < rsStart + size; ++i){
+					cbsr.getFirst().add(rsCbPre.getDouble(i));
+				}				
+			}
+			
+			while (rsSrPre.next()){
+				String unitCode = String.valueOf(rsSrPre.getObject(1));
+				CompanyType companyType = NCCompanyCode.getType(unitCode);
+				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+				Pair<List<Double>, List<Double>> cbsr = compCbSrMapPre.get(comp);
+				if (cbsr == null){
+					cbsr = new Pair<List<Double>, List<Double>>(new ArrayList<Double>(), new ArrayList<Double>());
+					compCbSrMapPre.put(comp, cbsr);
+				}
+
+				for (int i = rsStart; i < rsStart + size; ++i){
+					cbsr.getSecond().add(rsSrPre.getDouble(i));
+				}				
+			}
+			
 			for (Company comp : compCbSrMap.keySet()){
 				for (int i = cpflStart; i < size; ++i){
 					mergeEntity(d, 
 							comp, 
 							type, 
 							cpIds.get(i), 
-							compCbSrMap.get(comp).getFirst().get(i - cpflStart), 
-							compCbSrMap.get(comp).getSecond().get(i - cpflStart));
+							MathUtil.minus(
+									compCbSrMap.get(comp).getFirst().get(i - cpflStart),
+									compCbSrMapPre.containsKey(comp) ? compCbSrMapPre.get(comp).getFirst().get(i - cpflStart) : 0.0),
+							MathUtil.minus(
+									compCbSrMap.get(comp).getSecond().get(i - cpflStart),
+									compCbSrMapPre.containsKey(comp) ? compCbSrMapPre.get(comp).getSecond().get(i - cpflStart) : 0.0));
 				}	
 			}
 		} catch (SQLException e) {
@@ -711,94 +843,96 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth() +
 					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")"; 
 
-			Logger logger = Logger.getLogger("LOG-NC");
-			logger.debug("完工成品情况  sqlCbXlcy");
+			EasyCalendar ecPre = cal.getLastMonth();
+			String whereSqlPreMonth = 
+					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getYear() + 
+					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getMonth() +
+					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")";
+			
+			
+			Logger logger = LoggerFactory.getLogger("LOG-NC");
+			logger.info("完工成品情况  sqlCbXlcy");
 			ResultSet rsCb = connection.query(sqlCbXlcy + whereSql);
-			logger.debug("完工成品情况  sqlCbXlcy");
+			logger.info("完工成品情况  sqlCbXlcy");
 			ResultSet rsSr = connection.query(sqlSrXlcy + whereSql);
-			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_XL_CPFL);
+			logger.info("上月完工成品情况  sqlCbXlcy");
+			ResultSet rsCbPre = connection.query(sqlCbXlcy + whereSqlPreMonth);
+			logger.info("上月完工成品情况  sqlSrXlcy");
+			ResultSet rsSrPre = connection.query(sqlSrXlcy + whereSqlPreMonth);
+			List<Integer> cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_XL_MLL);
 			mergeResultSets(
 					d, 
 					rsCb, 
-					rsSr, 
-					WgcpqkType.YLFX_WGCPYLNL_XL_CPFL, 
+					rsSr,
+					rsCbPre,
+					rsSrPre,
+					WgcpqkType.YLFX_WGCPYLNL_XL_MLL, 
 					cpList, 
 					0, 
 					4, 
 					cpList.size());
-			logger.debug("完工成品情况  sqlCbGcl");
+
+			logger.info("完工成品情况  sqlCbGcl");
 			rsCb = connection.query(sqlCbGcl + whereSql);
-			logger.debug("完工成品情况  sqlSrGcl");
+			logger.info("完工成品情况  sqlSrGcl");
 			rsSr = connection.query(sqlSrGcl + whereSql);
+			logger.info("上月完工成品情况  sqlCbGcl");
+			rsCbPre = connection.query(sqlCbGcl + whereSqlPreMonth);
+			logger.info("上月完工成品情况  sqlSrGcl");
+			rsSrPre = connection.query(sqlSrGcl + whereSqlPreMonth);
 			cpList = wgcpylnlspcsService.getCpIdList(WgcpqkType.YLFX_WGCPYLNL_XL_ZH);
 			mergeResultSets(
 					d, 
 					rsCb, 
 					rsSr, 
+					rsCbPre,
+					rsSrPre,
 					WgcpqkType.YLFX_WGCPYLNL_XL_ZH, 
 					cpList, 
 					0, 
-					5, 
-					4);
-			
-			try {
-				rsCb.beforeFirst();
-				rsSr.beforeFirst();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			mergeResultSets(
-					d, 
-					rsCb, 
-					rsSr, 
-					WgcpqkType.YLFX_WGCPYLNL_XL_ZH, 
-					cpList, 
 					4, 
-					18, 
-					4);
-			logger.debug("完工成品情况  sqlCbWlmyl");
+					8);
+			
+
+			logger.info("完工成品情况  sqlCbWlmyl");
 			rsCb = connection.query(sqlCbWlmyl + whereSql);
-			logger.debug("完工成品情况  sqlSrWlmyl");
+			logger.info("完工成品情况  sqlSrWlmyl");
 			rsSr = connection.query(sqlSrWlmyl + whereSql);
+			logger.info("上月完工成品情况  sqlCbWlmyl");
+			rsCbPre = connection.query(sqlCbWlmyl + whereSqlPreMonth);
+			logger.info("上月完工成品情况  sqlSrWlmyl");
+			rsSrPre = connection.query(sqlSrWlmyl + whereSqlPreMonth);
 			mergeResultSets(
 					d, 
 					rsCb, 
 					rsSr, 
+					rsCbPre,
+					rsSrPre,
 					WgcpqkType.YLFX_WGCPYLNL_XL_ZH, 
 					cpList, 
 					8, 
 					4, 
 					1);
-			logger.debug("完工成品情况  sqlCbFwl");
+			
+			logger.info("完工成品情况  sqlCbFwl");
 			rsCb = connection.query(sqlCbFwl + whereSql);
-			logger.debug("完工成品情况  sqlSrFwl");
+			logger.info("完工成品情况  sqlSrFwl");
 			rsSr = connection.query(sqlSrFwl + whereSql);
+			logger.info("上月完工成品情况  sqlCbFwl");
+			rsCbPre = connection.query(sqlCbFwl + whereSqlPreMonth);
+			logger.info("上月完工成品情况  sqlSrFwl");
+			rsSrPre = connection.query(sqlSrFwl + whereSqlPreMonth);
 			mergeResultSets(
 					d, 
 					rsCb, 
 					rsSr, 
+					rsCbPre,
+					rsSrPre,
 					WgcpqkType.YLFX_WGCPYLNL_XL_ZH, 
 					cpList, 
 					9, 
-					cpList.size() - 9 - 1 + 4, 
-					1);
-			try {
-				rsCb.beforeFirst();
-				rsSr.beforeFirst();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			mergeResultSets(
-					d, 
-					rsCb, 
-					rsSr, 
-					WgcpqkType.YLFX_WGCPYLNL_XL_ZH, 
-					cpList, 
-					10, 
 					4, 
-					cpList.size() - 9 - 1 - 1);
+					cpList.size() - 9);
 		}
 	}
 

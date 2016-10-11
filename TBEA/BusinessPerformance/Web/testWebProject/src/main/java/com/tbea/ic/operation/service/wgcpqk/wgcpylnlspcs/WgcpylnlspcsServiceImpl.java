@@ -125,7 +125,7 @@ public class WgcpylnlspcsServiceImpl implements WgcpylnlspcsService {
 			}
 			break;
 		}
-		case YLFX_WGCPYLNL_XL_CPFL: {
+		case YLFX_WGCPYLNL_XL_MLL: {
 			for (WGCPYLNL_XL_CPFL_Type cp : WGCPYLNL_XL_CPFL_Type.values()) {
 				cpIdList.add(cp.value());
 			}

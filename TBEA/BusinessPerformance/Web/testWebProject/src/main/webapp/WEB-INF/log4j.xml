@@ -36,7 +36,7 @@
      <!-- [NC  APPENDER] -->  
    <appender name="NC-APPENDER"  
 	class="org.apache.log4j.DailyRollingFileAppender">  
-     <param name="File" value="${catalina.home}/logs/nc.log" />  
+     <param name="File" value="d:/logs/nc.log" />  
      <param name="Append" value="true" />  
      <param name="encoding" value="utf-8" />  
      <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />  

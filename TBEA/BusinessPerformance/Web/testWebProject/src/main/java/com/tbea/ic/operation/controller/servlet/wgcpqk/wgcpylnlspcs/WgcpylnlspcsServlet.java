@@ -66,7 +66,7 @@ public class WgcpylnlspcsServlet {
 		}else if (15 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
 			return WgcpqkType.YLFX_WGCPYLNL_XL_ZH;
 		}else if (16 == Integer.valueOf(request.getParameter("wgcpqkType"))) {
-			return WgcpqkType.YLFX_WGCPYLNL_XL_CPFL;
+			return WgcpqkType.YLFX_WGCPYLNL_XL_MLL;
 		}
 		
 		return WgcpqkType.YLFX_WGCPYLNL_BYQ_ZH;
@@ -124,7 +124,7 @@ public class WgcpylnlspcsServlet {
 		cal.setTime(d);
 		if (wgcpqkType == WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL){
 			return YlfxwgcpylnlspcsSheetType.YLFX_WGCPYINL_MLL;
-		}else if(wgcpqkType == WgcpqkType.YLFX_WGCPYLNL_XL_CPFL){
+		}else if(wgcpqkType == WgcpqkType.YLFX_WGCPYLNL_XL_MLL){
 			return YlfxwgcpylnlspcsSheetType.YLFX_WGCPYINL_CPFL;
 		}else{
 			return YlfxwgcpylnlspcsSheetType.YLFX_WGCPYINL_ZH;
