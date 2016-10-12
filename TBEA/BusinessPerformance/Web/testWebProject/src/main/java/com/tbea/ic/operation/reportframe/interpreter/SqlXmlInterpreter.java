@@ -7,14 +7,16 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import net.sf.json.JSONArray;
+
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELExpression;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
-
 
 public class SqlXmlInterpreter implements XmlInterpreter {
 
@@ -32,15 +34,14 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			}
 		}
 		
-		System.out.println(sql.replaceAll("\\s+", " "));
+		ReportLogger.logger().debug(sql);
 		
 		Query q = em.createNativeQuery(sql);
 		for (int i = 0; i < objs.size(); ++i){
 			q.setParameter(i, objs.get(i));
-			System.out.print("?" + i + " : " + objs.get(i) + "\t");
+			ReportLogger.logger().debug("?{} : {}\t",i , objs.get(i));
 		}
-		
-		System.out.println(" ");
+
 		return q;
 	}
 	
@@ -53,44 +54,24 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		return -1;
 	} 
 	
-	@Override
-	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
-		
-		if (!Schema.isSql(e)){
-			return false;
-		}
-		String trans = component.getConfigAttribute("transaction");
-		Transaction tx = (Transaction) component.getVar(trans);
-		if (null == tx){
-			throw new Exception("请指定 transaction " + e.toString());
-		}
-		System.out.println("database : " + trans);
-		el = new ELParser(component);
-		Query q = parseElSql(
-				e.getFirstChild().getTextContent(),
-				tx.getEntityManager());
-		
-		if (!e.hasAttribute("id")){
-			q.executeUpdate();
-			return true;
-		}
-		
-		List sqlRet = q.getResultList();
+	private void preHandleResult(List sqlRet){
 		if (!sqlRet.isEmpty() &&
-			null != sqlRet.get(0) &&
-			sqlRet.get(0).getClass().isArray()){
-			for (Object[] objs : (List<Object[]>)sqlRet){
-				for (int i = 0; i < objs.length; ++i){
-					if (objs[i] instanceof BigDecimal){
-						objs[i] = ((BigDecimal)objs[i]).doubleValue();
-					}else if (objs[i] instanceof Long){
-						objs[i] = ((Long)objs[i]).intValue();
+				null != sqlRet.get(0) &&
+				sqlRet.get(0).getClass().isArray()){
+				for (Object[] objs : (List<Object[]>)sqlRet){
+					for (int i = 0; i < objs.length; ++i){
+						if (objs[i] instanceof BigDecimal){
+							objs[i] = ((BigDecimal)objs[i]).doubleValue();
+						}else if (objs[i] instanceof Long){
+							objs[i] = ((Long)objs[i]).intValue();
+						}
 					}
 				}
-			}
 
-		}
-		
+			}
+	}
+	
+	private void parseOrder(List sqlRet, AbstractXmlComponent component, Element e) throws Exception{
 		List order = (List) component.getVar(e.getAttribute("order"));
 		if (null != order){
 			Integer by = XmlUtil.getIntAttr(e, "by", el, null);
@@ -109,7 +90,47 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 				sqlRet = objs;
 			}
 		}
-		component.put(e, sqlRet);
+	}
+	
+	@Override
+	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
+		
+		if (!Schema.isSql(e)){
+			return false;
+		}
+		
+		String trans = component.getConfigAttribute("transaction");
+		Transaction tx = (Transaction) component.getVar(trans);
+		if (null == tx){
+			throw new Exception("请指定 transaction " + e.toString());
+		}
+		
+		ReportLogger.logger().debug("database : {}", trans);
+		
+		el = new ELParser(component);
+		
+		Query q = parseElSql(
+				e.getFirstChild().getTextContent(),
+				tx.getEntityManager());
+		
+		if (e.hasAttribute("id")){
+			
+			List sqlRet = q.getResultList();
+
+			preHandleResult(sqlRet);
+
+			parseOrder(sqlRet, component, e);
+
+			if (ReportLogger.logger().isDebugEnabled()){
+				ReportLogger.logger().debug(JSONArray.fromObject(sqlRet).toString());
+			}
+
+			component.put(e, sqlRet);
+			
+		}else{
+			q.executeUpdate();
+		}
+
 		return true;
 	}
 }

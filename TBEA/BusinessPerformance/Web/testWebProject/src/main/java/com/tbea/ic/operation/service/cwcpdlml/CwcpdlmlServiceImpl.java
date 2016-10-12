@@ -194,35 +194,41 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 				
 	//	-------------------------服务类-------------------------------		
 	private static String sqlCbFwl = 			
-	"	select unit_code,	" +	
-	"	       unit_name,	" +	
-	"	       inputdate,	" +	
-	"	       imdg.m10317 hyfcb,	" +	//今年累计会议费收入销售成本
-	"	       imdg.m10291 wyfcb,	" +	//今年累计物业费收入销售成本
-	"	       imdg.m10265 lwfcb,	" +	//今年累计劳务收入销售成本
-	"	       imdg.m10239 hmcb,	" +	//今年累计花苗收入销售成本
-	"	       imdg.m10213 zscb,	" +	//今年累计住宿收入销售成本
-	"	       imdg.m10187 jpdlcb,	" +	//今年累计机票代理收入销售成本
-	"	       imdg.m10161 rybhcb,	" +	//今年累计日用百货收入销售成本
-	"	       imdg.m10135 dfcb,	" +	//今年累计电费收入销售成本
-	"	       imdg.m10109 sqncb,	" +	//今年累计水汽暖收入销售成本
-	"	       imdg.m10083 cycb,	" +	//今年累计餐饮收入销售成本
-	"	       imdg.m10057 qtcb,	" +	//今年累计其他收入销售成本
-	"	       imdg.m10031 xjcb		" +	//今年累计小计销售成本
-	"	  from iufo_measure_data_gyin4hlu imdg	" +	
-	"	  left join (select alone_id,	" +	
-	"	                    code,	" +	
-	"	                    inputdate,	" +	
-	"	                    keyword2,	" +	
-	"	                    keyword3,	" +	
-	"	                    time_code,	" +	
-	"	                    ts,	" +	
-	"	                    ver	" +	
-	"	               from iufo_measure_pubdata) imp	" +	
-	"	    on imdg.alone_id = imp.alone_id	" +	
-	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
-	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	select unit_code,	" + //	
+	"	       unit_name,	" + //	
+	"	       inputdate,	" + //	
+	"	       imdi.m10057 jcxscb,	" + //	检测修试成本 modify by song 16-06-16
+	"	       imdi.m10031 cjcb,	" + //	设计成本 modify by song 16-06-16
+	"	       imdi.m10005 zxcb,	" + //	咨询成本 modify by song 16-06-16
+	"	       imdg.m10317 hyfcb, 	" + //	今年累计会议费收入销售成本
+	"	       imdg.m10291 wyfcb, 	" + //	今年累计物业费收入销售成本
+	"	       imdg.m10265 lwfcb, 	" + //	今年累计劳务收入销售成本
+	"	       imdg.m10239 hmcb, 	" + //	今年累计花苗收入销售成本
+	"	       imdg.m10213 zscb, 	" + //	今年累计住宿收入销售成本
+	"	       imdg.m10187 jpdlcb, 	" + //	今年累计机票代理收入销售成本
+	"	       imdg.m10161 rybhcb, 	" + //	今年累计日用百货收入销售成本
+	"	       imdg.m10135 dfcb, 	" + //	今年累计电费收入销售成本
+	"	       imdg.m10109 sqncb, 	" + //	今年累计水汽暖收入销售成本
+	"	       imdg.m10083 cycb, 	" + //	今年累计餐饮收入销售成本
+	"	       imdg.m10057 qtcb, 	" + //	今年累计其他收入销售成本
+	"	       imdg.m10031 xjcb 	" + //	今年累计小计销售成本
+	"	  from iufo_measure_data_gyin4hlu imdg	" + //	
+	"	  left join iufo_measure_data_i2ld0qqp imdi 	" + //	modify by song 16-06-16
+	"	    on imdg.alone_id = imdi.alone_id 	" + //	modify  by song 16-06-16
+	"	  left join (select alone_id,	" + //	
+	"	                    code,	" + //	
+	"	                    inputdate,	" + //	
+	"	                    keyword2,	" + //	
+	"	                    keyword3,	" + //	
+	"	                    time_code,	" + //	
+	"	                    ts,	" + //	
+	"	                    ver	" + //	
+	"	               from iufo_measure_pubdata) imp	" + //	
+	"	    on imdg.alone_id = imp.alone_id	" + //	
+	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" + //	
+	"	    on imp.code = iui.unit_id	" + //	
+	"	 where imp.ver in (0,510)	";
+
 	
 		//------------------------变压器产业（按电压等级分类）-------------------------------		
 	private static String sqlSrByqcyAdydjfl = 			
@@ -372,35 +378,41 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 				
 	//	-------------------------服务类-------------------------------		
 	private static String sqlSrFwl = 
-	"	select unit_code,	" +	
-	"	       unit_name,	" +	
-	"	       inputdate,	" +	
-	"	       imdg.m10318 hyfsr,	" +	//今年累计会议费收入销售收入
-	"	       imdg.m10292 wyfsr,	" +	//今年累计物业费收入销售收入
-	"	       imdg.m10266 lwfsr,	" +	//今年累计劳务收入销售收入
-	"	       imdg.m10240 hmsr,	" +	//今年累计花苗收入销售收入
-	"	       imdg.m10214 zssr,	" +	//今年累计住宿收入销售收入
-	"	       imdg.m10188 jpdlsr,	" +	//今年累计机票代理收入销售收入
-	"	       imdg.m10162 rybhsr,	" +	//今年累计日用百货收入销售收入
-	"	       imdg.m10136 dfsr,	" +	//今年累计电费收入销售收入
-	"	       imdg.m10110 sqnsr,	" +	//今年累计水汽暖收入销售收入
-	"	       imdg.m10084 cysr,	" +	//今年累计餐饮收入销售收入
-	"	       imdg.m10058 qtsr,	" +	//今年累计其他收入销售收入
-	"	       imdg.m10032 xjsr	" +	//今年累计小计销售收入
-	"	  from iufo_measure_data_gyin4hlu imdg	" +	
-	"	  left join (select alone_id,	" +	
-	"	                    code,	" +	
-	"	                    inputdate,	" +	
-	"	                    keyword2,	" +	
-	"	                    keyword3,	" +	
-	"	                    time_code,	" +	
-	"	                    ts,	" +	
-	"	                    ver	" +	
-	"	               from iufo_measure_pubdata) imp	" +	
-	"	    on imdg.alone_id = imp.alone_id	" +	
-	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
-	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+		"	select unit_code,	" + //	
+		"	       unit_name,	" + //	
+		"	       inputdate,	" + //	
+		"	       imdi.m10058 jcxssr,	" + //	检测修试收入 modify by song 16-06-16
+		"	       imdi.m10032 sjsr,	" + //	设计收入 modify by song 16-06-16
+		"	       imdi.m10006 zxsr,	" + //	咨询收入 modify by song 16-06-16
+		"	       imdg.m10318 hyfsr, 	" + //	今年累计会议费收入销售收入
+		"	       imdg.m10292 wyfsr, 	" + //	今年累计物业费收入销售收入
+		"	       imdg.m10266 lwfsr, 	" + //	今年累计劳务收入销售收入
+		"	       imdg.m10240 hmsr, 	" + //	今年累计花苗收入销售收入
+		"	       imdg.m10214 zssr, 	" + //	今年累计住宿收入销售收入
+		"	       imdg.m10188 jpdlsr, 	" + //	今年累计机票代理收入销售收入
+		"	       imdg.m10162 rybhsr, 	" + //	今年累计日用百货收入销售收入
+		"	       imdg.m10136 dfsr, 	" + //	今年累计电费收入销售收入
+		"	       imdg.m10110 sqnsr, 	" + //	今年累计水汽暖收入销售收入
+		"	       imdg.m10084 cysr, 	" + //	今年累计餐饮收入销售收入
+		"	       imdg.m10058 qtsr, 	" + //	今年累计服务类其他收入销售收入
+		"	       imdg.m10032 xjsr 	" + //	今年累计小计销售收入
+		"	  from iufo_measure_data_gyin4hlu imdg	" + //	
+		"	  left join iufo_measure_data_i2ld0qqp imdi 	" + //	modify by song 16-06-16
+		"	    on imdg.alone_id = imdi.alone_id 	" + //	modify by song 16-06-16
+		"	  left join (select alone_id,	" + //	
+		"	                    code,	" + //	
+		"	                    inputdate,	" + //	
+		"	                    keyword2,	" + //	
+		"	                    keyword3,	" + //	
+		"	                    time_code,	" + //	
+		"	                    ts,	" + //	
+		"	                    ver	" + //	
+		"	               from iufo_measure_pubdata) imp	" + //	
+		"	    on imdg.alone_id = imp.alone_id	" + //	
+		"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" + //	
+		"	    on imp.code = iui.unit_id	" + //	
+		"	 where imp.ver in (0,510)	";	
+
 				
 	//	-----------------------工程类收入20160422------------------------------------		
 	private static String sqlSrGcl = 			
@@ -416,6 +428,10 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imdo.m10024 gngfepcsr,	" +	//今年累计光伏-EPC模式销售收入
 	"	       imdz.m10353 gngfbtsr,	" +	//今年累计光伏-BT模式销售收入
 	"	       imdz.m10327 gngfqtsr,	" +	//今年累计光伏-其他模式销售收入
+    "imdi.m10318 gnhdsr," +	//--今年累计火电工程销售收入 modify by song 16-06-16
+    "imdi.m10292 gnhdepcsr," +	//--国内火电EPC modify by song 16-06-16
+    "imdi.m10266 gnhdbtsr," +	//--国内火电BT modify by song 16-06-16
+    "imdi.m10240 gnhdqtsr," +	//--国内火电其它 modify by song 16-06-16
 	"	       imd0.m10252 gnfdsr,	" +	//今年累计风电工程销售收入
 	"	       imdz.m10301 gnfdepcsr,	" +	//今年累计风电-EPC模式销售收入
 	"	       imdz.m10275 gnfdbtsr,	" +	//今年累计风电-BT模式销售收入
@@ -429,6 +445,10 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imdz.m10136 gjgfepcsr,	" +	//今年累计光伏-EPC模式销售收入
 	"	       imdz.m10110 gjgfbtsr,	" +	//今年累计光伏-BT模式销售收入
 	"	       imdz.m10084 gjgfqtsr,	" +	//今年累计光伏-其他模式销售收入
+	"imdi.m10214 gjhdsr," +	//--国际火电工程销售收入  modify by song 16-06-16
+    "imdi.m10188 gjhdepcsr," +	//--国际火电EPC     modify by song 16-06-16
+    "imdi.m10162 gjhdbtsr," +	//--国际火电BT    modify by song 16-06-16
+    "imdi.m10136 gjhdqtsr," +	//--国际火电其它      modify by song 16-06-16
 	"	       imd0.m10154 gjfdsr,	" +	//今年累计 风电工程销售收入
 	"	       imdz.m10058 gjfdepcsr,	" +	//今年累计风电-EPC模式销售收入
 	"	       imdz.m10032 gjfdbtsr,	" +	//今年累计风电-BT模式销售收入
@@ -439,6 +459,8 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdo.alone_id = imd0.alone_id	" +	
 	"	  left join iufo_measure_data_za2q47m4 imdz	" +	
 	"	    on imdo.alone_id = imdz.alone_id	" +	
+	"	left join iufo_measure_data_i2ld0qqp imdi" +	//--modify by song 16-06-16
+	"	on imdo.alone_id = imdi.alone_id" +	//--modify by song 16-06-16
 	"	  left join (select alone_id,	" +	
 	"	                    code,	" +	
 	"	                    inputdate,	" +	
@@ -467,6 +489,10 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imdo.m10023 gngfepccb,	" +	//今年累计光伏-EPC模式销售成本
 	"	       imdz.m10352 gngfbtcb,	" +	//今年累计光伏-BT模式销售成本
 	"	       imdz.m10326 gngfqtcb,	" +	//今年累计光伏-其他模式销售成本
+    "imdi.m10317 gnhdcb," +	//--今年累计火电工程销售成本 modify by song 16-06-16
+    "imdi.m10291 gnhdepccb," +	//--国内火电EPC modify by song 16-06-16
+    "imdi.m10265 gnhdbtcb," +	//--国内火电BT modify by song 16-06-16
+    "imdi.m10239 gnhdqtcb," +	//--国内火电其它 modify by song 16-06-16
 	"	       imd0.m10251 gnfdcb,	" +	//今年累计风电工程销售成本
 	"	       imdz.m10300 gnfdepccb,	" +	//今年累计风电-EPC模式销售成本
 	"	       imdz.m10274 gnfdbtcb,	" +	//今年累计风电-BT模式销售成本
@@ -480,6 +506,10 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imdz.m10135 gjgfepccb,	" +	//今年累计光伏-EPC模式销售成本
 	"	       imdz.m10109 gjgfbtcb,	" +	//今年累计光伏-BT模式销售成本
 	"	       imdz.m10083 gjgfqtcb,	" +	//今年累计光伏-其他模式销售成本
+    "imdi.m10213 gjhdcb," +	//--国际火电工程销售成本 modify by song 16-06-16
+    "imdi.m10187 gjhdepccb," +	//--国际火电EPC modify by song 16-06-16
+    "imdi.m10161 gjhdbtcb," +	//--国际火电BT modify by song 16-06-16
+    "imdi.m10135 gjhdqtcb," +	//--国际火电其它 modify by song 16-06-16
 	"	       imd0.m10153 gjfdcb,	" +	//今年累计风电工程销售成本
 	"	       imdz.m10057 gjfdepccb,	" +	//今年累计风电-EPC模式销售成本
 	"	       imdz.m10031 gjfdbtcb,	" +	//今年累计风电-BT模式销售成本
@@ -490,6 +520,8 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdo.alone_id = imd0.alone_id	" +	
 	"	  left join iufo_measure_data_za2q47m4 imdz	" +	
 	"	    on imdo.alone_id = imdz.alone_id	" +	
+	"	left join iufo_measure_data_i2ld0qqp imdi" +	// --modify by song 16-06-16
+	"	on imdo.alone_id = imdi.alone_id " +	//--modify by song 16-06-16
 	"	  left join (select alone_id,	" +	
 	"	                    code,	" +	
 	"	                    inputdate,	" +	
@@ -599,8 +631,11 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imd5.m10119 slksr,	" +	//今年累计四六块销售收入
 	"	       imd5.m10093 jcmsr,	" +	//今年累计锯采煤销售收入
 	"	       imd5.m10067 mmsr,	" +	//今年累计末煤销售收入
+	"	imdi.m10084 mtqtsr," +	//--煤炭产业其它收入 modify by song  16-06-16
 	"	       imd5.m10041 xjsr	" +	//今年累计小计销售收入
-	"	  from iufo_measure_data_5a801obu imd5	" +	
+	"	  from iufo_measure_data_5a801obu imd5	" +
+	"	left join iufo_measure_data_i2ld0qqp imdi" +	// --modify by song 16-06-16
+	"	on imd5.alone_id = imdi.alone_id" +	//  --modify by song 16-06-16
 	"	  left join (select alone_id,	" +	
 	"	                    code,	" +	
 	"	                    inputdate,	" +	
@@ -628,8 +663,11 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imd5.m10118 slkcb,	" +	//今年累计四六块销售成本
 	"	       imd5.m10092 jcmcb,	" +	//今年累计锯采煤销售成本
 	"	       imd5.m10066 mmcb,	" +	//今年累计末煤销售成本
+	"	imdi.m10083 mtqtcb," +	//--煤炭产业其它成本 modify by song 16-06-16
 	"	       imd5.m10040 xjcb	" +	//今年累计小计销售成本
 	"	  from iufo_measure_data_5a801obu imd5	" +	
+	"	left join iufo_measure_data_i2ld0qqp imdi " +	//--modify by song 16-06-16
+	"	on imd5.alone_id = imdi.alone_id  " +	//--modify by song 16-06-16
 	"	  left join (select alone_id,	" +	
 	"	                    code,	" +	
 	"	                    inputdate,	" +	
@@ -656,10 +694,13 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imd5.m10353 cdzsr,	" +	//今年累计充电站销售收入
 	"	       imd5.m10327 sdgssr,	" +	//今年累计售电公司销售收入
 	"	       imd5.m10301 grgssr,	" +	//今年累计供热公司销售收入
+	"	imdi.m10110 yysqtsr," +	//--运营商类其它类收入 modify by song 16-06-16
 	"	       imd5.m10275 xjsr	" +	//今年累计小计销售收入
 	"	  from iufo_measure_data_0lmfwcux imd0	" +	
 	"	  left join iufo_measure_data_5a801obu imd5	" +	
 	"	    on imd0.alone_id = imd5.alone_id	" +	
+	"	left join iufo_measure_data_i2ld0qqp imdi" +	// --modify by song 16-06-16
+	"	on imd0.alone_id = imdi.alone_id" +	//  --modify by song 16-06-16
 	"	  left join (select alone_id,	" +	
 	"	                    code,	" +	
 	"	                    inputdate,	" +	
@@ -686,10 +727,13 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imd5.m10352 cdzcb,	" +	//今年累计充电站销售成本
 	"	       imd5.m10326 sdgscb,	" +	//今年累计售电公司销售成本
 	"	       imd5.m10300 grgscb,	" +	//今年累计供热公司销售成本
+	"imdi.m10110 yysqtsr," +	//--运营商类其它类收入 modify by song 16-06-16
 	"	       imd5.m10274 xjcb	" +	//今年累计小计销售成本
 	"	  from iufo_measure_data_0lmfwcux imd0	" +	
 	"	  left join iufo_measure_data_5a801obu imd5	" +	
 	"	    on imd0.alone_id = imd5.alone_id	" +	
+	  "left join iufo_measure_data_i2ld0qqp imdi " +	//--modify by song 16-06-16
+	    "on imd0.alone_id = imdi.alone_id  " +	//--modify by song 16-06-16
 	"	  left join (select alone_id,	" +	
 	"	                    code,	" +	
 	"	                    inputdate,	" +	
@@ -706,11 +750,12 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 
 
 	@Override
-	public void importFromNC(Date d) {
+	public void importFromNC(Date d,  Company comp) {
 		NCConnection connection = NCConnection.create();
 		if (null != connection){
 			EasyCalendar cal = new EasyCalendar(d);
-			String whereSql = 
+			String whereSql =
+					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "'" + 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth();
 
@@ -725,54 +770,61 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 			CpdlmlEntity hjEntity = cpdlmlDao.getByDate(d, entities.get(entities.size() - 1).getId());
 			if (hjEntity == null){
 				hjEntity = new CpdlmlEntity();
+				hjEntity.setDwid(comp.getId());
 				hjEntity.setCpdl(entities.get(entities.size() - 1).getId());
 				hjEntity.setNf(cal.getYear());
 				hjEntity.setYf(cal.getMonth());
 			}
 			
 			
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
 			logger.info("财务产品大类毛利  sqlCbByqcyAcplxfl");
 			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
 			logger.info("财务产品大类毛利  sqlSrByqcyAcplxfl");
 			rsSr = connection.query(sqlSrByqcyAcplxfl + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
 			
 			logger.info("财务产品大类毛利  sqlCbXlcy");
 			rsCb = connection.query(sqlCbXlcy + whereSql);
 			logger.info("财务产品大类毛利  sqlSrXlcy");
 			rsSr = connection.query(sqlSrXlcy + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
 			
 			logger.info("财务产品大类毛利  sqlCbXny");
 			rsCb = connection.query(sqlCbXny + whereSql);
 			logger.info("财务产品大类毛利  sqlSrXny");
 			rsSr = connection.query(sqlSrXny + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
 			
 			logger.info("财务产品大类毛利  sqlCbGcl");
 			rsCb = connection.query(sqlCbGcl + whereSql);
 			logger.info("财务产品大类毛利  sqlSrGcl");
 			rsSr = connection.query(sqlSrGcl + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
 			
 			logger.info("财务产品大类毛利  sqlCbYysl");
 			rsCb = connection.query(sqlCbYysl + whereSql);
 			logger.info("财务产品大类毛利  sqlSrYysl");
 			rsSr = connection.query(sqlSrYysl + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
 			
 			logger.info("财务产品大类毛利  sqlCbMtcy");
 			rsCb = connection.query(sqlCbMtcy + whereSql);
 			logger.info("财务产品大类毛利  sqlSrMtcy");
 			rsSr = connection.query(sqlSrMtcy + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
 			
 			logger.info("财务产品大类毛利  sqlCbWlmyl");
 			rsCb = connection.query(sqlCbWlmyl + whereSql);
 			logger.info("财务产品大类毛利  sqlSrWlmyl");
 			rsSr = connection.query(sqlSrWlmyl + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
+			
+			logger.info("财务产品大类毛利  sqlCbFwl");
+			rsCb = connection.query(sqlCbFwl + whereSql);
+			logger.info("财务产品大类毛利  sqlSrFwl");
+			rsSr = connection.query(sqlSrFwl + whereSql);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
 			
 			cpdlmlDao.merge(hjEntity);
 		}
@@ -780,7 +832,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 
 
 	private void mergerEntity(CpdlmlEntity hjEntity, EasyCalendar cal, ResultSet rsCb,
-			ResultSet rsSr, List<CpflEntity> entities) {
+			ResultSet rsSr, List<CpflEntity> entities, Company comp) {
 		Date d = cal.getDate();
 		try {
 			boolean hasCb = rsCb.next(); 
@@ -794,6 +846,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 						entity.setCpdl(entities.get(i - 4).getId());
 						entity.setNf(cal.getYear());
 						entity.setYf(cal.getMonth());
+						entity.setDwid(comp.getId());
 					}
 					entity.setLjcb(hasCb ? rsCb.getDouble(i) : null);
 					entity.setLjsr(hasSr ? rsSr.getDouble(i) : null);

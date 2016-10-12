@@ -31,7 +31,7 @@
 	margin-top: -33px;
 	text-align: left;
 	font-weight: bold;
-	position: absolute;
+	//position: absolute;
 	z-index: 2001;
 	background: white;
 }

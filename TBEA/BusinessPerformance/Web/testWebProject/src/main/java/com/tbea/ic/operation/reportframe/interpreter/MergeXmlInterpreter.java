@@ -22,6 +22,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELParser;
@@ -125,7 +126,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		where = compile(e.getElementsByTagName("where"));
 		set = compile(e.getElementsByTagName("set"));
 		String trans = component.getConfigAttribute("transaction");
-		System.out.println("database : " + trans);
+		ReportLogger.logger().debug("database : {}", trans);
 		Transaction tx = (Transaction) component.getVar(trans);
 		EntityManager em = tx.getEntityManager();
 		if (dataObj instanceof JSONArray){
@@ -151,7 +152,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			String insertSql = insertValues.toString();
 			insertValues = null;
 			insertCount = 0;
-			System.out.println(insertSql);
+			ReportLogger.logger().info(insertSql);
 			em.createNativeQuery(insertSql).executeUpdate() ;
 		}
 	}
@@ -231,7 +232,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				jrow.add(obj);
 			}
 		}else{
-			System.out.println("list2Json type error : " + lRow);
+			ReportLogger.logger().error("list2Json type error : " + lRow);
 		}
 		return jrow;
 	}
@@ -437,7 +438,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		if (null != whereSql){
 			String sql = "select count(*) from " + table + whereSql;
 			List ret = em.createNativeQuery(sql).getResultList();
-			System.out.println(sql);
+			ReportLogger.logger().debug(sql);
 			count = (Integer) ret.get(0);
 		}
 		if (count > 0){
@@ -457,8 +458,9 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				}
 			}
 			sb.append(whereSql);
-			System.out.println(sb.toString());
-			em.createNativeQuery(sb.toString()).executeUpdate();
+			String sql = sb.toString();
+			ReportLogger.logger().debug(sql);
+			em.createNativeQuery(sql).executeUpdate();
 		}else{
 			doInsert(em, table, row, set);
 		}

@@ -134,8 +134,9 @@ module framework.templates.singleDateReport {
                 })
             .then((resp:Util.IResponse) => {
                 if (Util.ErrorCode.OK == resp.errorCode) {
-                    this.update(date);
-                    Util.MessageBox.tip("保存 成功");
+                    Util.MessageBox.tip("保存 成功", ()=>{
+                        this.update(date);
+                    });
                 } else {
                     Util.MessageBox.tip(resp.message);
                 }

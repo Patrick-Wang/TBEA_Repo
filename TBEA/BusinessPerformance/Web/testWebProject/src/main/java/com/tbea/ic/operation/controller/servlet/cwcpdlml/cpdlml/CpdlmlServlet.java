@@ -47,7 +47,7 @@ public class CpdlmlServlet {
 	public @ResponseBody byte[] getCpdlml(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
-
+		
 		
 		List<List<String>> result = cpdlmlService.getCpdlml(d);
 		

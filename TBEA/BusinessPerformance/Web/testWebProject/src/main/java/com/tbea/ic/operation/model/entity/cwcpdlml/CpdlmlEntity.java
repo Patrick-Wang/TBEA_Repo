@@ -30,6 +30,7 @@ public class CpdlmlEntity extends AbstractReadWriteEntity implements Serializabl
 	Integer cpdl;
 	Double ljsr;
 	Double ljcb;
+	Integer dwid;
 	public Integer getNf() {
 		return nf;
 	}
@@ -60,5 +61,11 @@ public class CpdlmlEntity extends AbstractReadWriteEntity implements Serializabl
 	}
 	public void setLjcb(Double ljcb) {
 		this.ljcb = ljcb;
+	}
+	public Integer getDwid() {
+		return dwid;
+	}
+	public void setDwid(Integer dwid) {
+		this.dwid = dwid;
 	}
 }

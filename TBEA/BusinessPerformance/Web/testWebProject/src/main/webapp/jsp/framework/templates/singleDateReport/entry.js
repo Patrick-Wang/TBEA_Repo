@@ -125,8 +125,9 @@ var framework;
                     })
                         .then(function (resp) {
                         if (Util.ErrorCode.OK == resp.errorCode) {
-                            _this.update(date);
-                            Util.MessageBox.tip("保存 成功");
+                            Util.MessageBox.tip("保存 成功", function () {
+                                _this.update(date);
+                            });
                         }
                         else {
                             Util.MessageBox.tip(resp.message);
@@ -134,7 +135,7 @@ var framework;
                     });
                 };
                 return EntryView;
-            }(BasicEndpoint));
+            })(BasicEndpoint);
             singleDateReport.EntryView = EntryView;
         })(singleDateReport = templates.singleDateReport || (templates.singleDateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));

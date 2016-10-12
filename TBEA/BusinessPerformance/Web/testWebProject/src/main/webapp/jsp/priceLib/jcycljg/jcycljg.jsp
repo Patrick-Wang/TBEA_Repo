@@ -186,8 +186,8 @@ th.ui-th-ltr {
 				value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="view.updateUI()" />
 				<div id="radio" style="float: right">
-					<input type="radio" id="rdct" name="radio" ><label
-						for="rdct">图</label> <input type="radio" id="rdtb" name="radio" checked="checked"
+					<input type="radio" id="rdct" name="radio" checked="checked"><label
+						for="rdct">图</label> <input type="radio" id="rdtb" name="radio"
 						><label for="rdtb">表</label>
 				</div>  
 			</td> 

@@ -74,8 +74,10 @@ public class CwcpdlmlServlet {
 		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
-
-		cwcpdlmlService.importFromNC(d);
+		
+		for (Company comp : COMPS){
+			cwcpdlmlService.importFromNC(d, comp);
+		}
 	}
 	
 	@RequestMapping(value = "nctest.do")
@@ -87,7 +89,9 @@ public class CwcpdlmlServlet {
 		if (!(request.getParameter("date") == null)){
 			d = Date.valueOf(request.getParameter("date"));
 		}
-		cwcpdlmlService.importFromNC(d);
+		for (Company comp : COMPS){
+			cwcpdlmlService.importFromNC(d, comp);
+		}
 		return "OK".getBytes("utf-8");
 	}
 	
