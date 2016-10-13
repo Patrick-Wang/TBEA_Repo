@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -151,7 +152,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 //								finalListTemp1.set(i, finalListTemp1.get(i) + entity.getQye());
 //								finalListNullOrNot1.set(i, false);						
 								
-								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
+								finalListTempAll.set(i, MathUtil.sum(finalListTempAll.get(i), entity.getQye()));
 								finalListNullOrNotAll.set(i, false);
 								
 							} 
@@ -170,7 +171,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 //							}
 						}else{
 							if (hjlist.contains(entity.getCpmc().getId())){
-								finalListTempAll.set(i, finalListTempAll.get(i) + entity.getQye());
+								finalListTempAll.set(i, MathUtil.sum(finalListTempAll.get(i), entity.getQye()));
 								finalListNullOrNotAll.set(i, false);
 							}
 						}
