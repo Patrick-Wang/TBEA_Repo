@@ -98,7 +98,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imd7.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 
 	//------------------------变压器产业（按产品类型分类）-------------------------------		
 	private static String sqlCbByqcyAcplxfl = 			
@@ -208,7 +208,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imdq.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 		 		
 	//	-------------------------物流贸易类---------------------		
 	private static String sqlCbWlmyl = 			
@@ -232,7 +232,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imd5.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 		 		
 				
 	//	-------------------------服务类-------------------------------		
@@ -265,7 +265,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imdg.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 	
 		//------------------------变压器产业（按电压等级分类）-------------------------------		
 	private static String sqlSrByqcyAdydjfl = 			
@@ -309,7 +309,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imd7.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 		 		
 		 		
 		//------------------------变压器产业（按产品类型分类）-------------------------------		
@@ -404,7 +404,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imdq.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 				
 	//	-------------------------物流贸易类---------------------		
 	private static String sqlSrWlmyl = 
@@ -428,7 +428,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imd5.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 				
 	//	-------------------------服务类-------------------------------		
 	private static String sqlSrFwl = 
@@ -460,7 +460,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imdg.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 				
 	//	-----------------------工程类收入20160422------------------------------------		
 	private static String sqlSrGcl = 			
@@ -511,7 +511,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imdo.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 	
 	//---------------------工程类成本20160422------------------------------------		
 	private static String sqlCbGcl = 			
@@ -562,7 +562,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	"	    on imdo.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 
 
 	@Override

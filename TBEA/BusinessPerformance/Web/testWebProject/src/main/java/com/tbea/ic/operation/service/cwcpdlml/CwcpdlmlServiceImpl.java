@@ -91,7 +91,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imd7.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 		 		
 		//------------------------变压器产业（按产品类型分类）-------------------------------		
 	private static String sqlCbByqcyAcplxfl = 			
@@ -131,7 +131,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdq.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 		 		
 	//	--------------------------线缆产业-------------------------------		
 	private static String sqlCbXlcy = 
@@ -167,7 +167,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdq.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 		 		
 	//	-------------------------物流贸易类---------------------		
 	private static String sqlCbWlmyl = 			
@@ -191,7 +191,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imd5.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 		 		
 				
 	//	-------------------------服务类-------------------------------		
@@ -274,7 +274,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imd7.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 		 		
 		 		
 		//------------------------变压器产业（按产品类型分类）-------------------------------		
@@ -315,7 +315,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdq.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 		 		
 		 		
 	//	--------------------------线缆产业-------------------------------		
@@ -352,7 +352,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdq.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver  in (0,510)	";	
 				
 	//	-------------------------物流贸易类---------------------		
 	private static String sqlSrWlmyl = 
@@ -376,7 +376,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imd5.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 				
 	//	-------------------------服务类-------------------------------		
 	private static String sqlSrFwl = 
@@ -475,7 +475,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdo.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 	
 	//	//---------------------工程类成本20160422------------------------------------		
 	private static String sqlCbGcl = 			
@@ -536,7 +536,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdo.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 				
 		//---------------------新能源收入20160422------------------------------------		
 	private static String sqlSrXny = 			
@@ -577,7 +577,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdl.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 				
 		//---------------------新能源成本20160422------------------------------------		
 	private static String sqlCbXny = 			
@@ -618,7 +618,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imdl.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 				
 		//---------------------煤炭产业收入20160422------------------------------------		
 	private static String sqlSrMtcy = 			
@@ -650,7 +650,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imd5.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";
+	"	 where imp.ver in (0,510)	";
 				
 		//---------------------煤炭产业成本20160422------------------------------------		
 	private static String sqlCbMtcy = 			
@@ -682,7 +682,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imd5.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 				
 	//	-----------------------运营商类收入20160422------------------------------------		
 	private static String sqlSrYysl = 
@@ -715,7 +715,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imd0.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 				
 	//	-----------------------运营商类成本20160422------------------------------------		
 	private static String sqlCbYysl = 
@@ -748,7 +748,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	    on imd0.alone_id = imp.alone_id	" +	
 	"	  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui	" +	
 	"	    on imp.code = iui.unit_id	" +	
-	"	 where imp.ver = 0	";	
+	"	 where imp.ver in (0,510)	";	
 
 
 	@Override
