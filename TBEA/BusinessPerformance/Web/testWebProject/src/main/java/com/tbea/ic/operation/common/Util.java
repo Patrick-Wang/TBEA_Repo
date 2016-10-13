@@ -168,6 +168,14 @@ public class Util {
 		return ret.substring(1);
 	}
 	
+	public static List<Integer> toIds(List<Company> comps){
+		List<Integer> ids = new ArrayList<Integer>();
+		for (Company comp : comps){
+			ids.add(comp.getId());
+		}
+		return ids;
+	}
+	
 	public static String toBMSString(List<Company> comps){
 		String ret = "";
 		for (Company comp : comps){

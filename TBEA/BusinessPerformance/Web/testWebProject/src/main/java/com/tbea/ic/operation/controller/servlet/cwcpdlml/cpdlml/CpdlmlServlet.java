@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.excel.CwcpdlmlSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
@@ -30,8 +32,11 @@ import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.cwcpdlml.cpdlml.CpdlmlService;
 import com.tbea.ic.operation.service.cwcpdlml.cpdlml.CpdlmlServiceImpl;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "cpdlml")
@@ -40,6 +45,9 @@ public class CpdlmlServlet {
 	CpdlmlService cpdlmlService;
 
 
+	@Autowired
+	ExtendAuthorityService extAuthServ;
+
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
@@ -47,9 +55,11 @@ public class CpdlmlServlet {
 	public @ResponseBody byte[] getCpdlml(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
+		List<Company> comps = extAuthServ.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.FinanceLookup);
 		
-		
-		List<List<String>> result = cpdlmlService.getCpdlml(d);
+		List<List<String>> result = cpdlmlService.getCpdlml(d, comps);
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
 		handler.next(new RawPercentFormatterHandler(1, null, new Integer[]{3, 6, 7, 10, 11}));
@@ -64,8 +74,10 @@ public class CpdlmlServlet {
 	public void exportCpdlml(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
-		
-		List<List<String>> result = cpdlmlService.getCpdlml(d);
+		List<Company> comps = extAuthServ.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.FinanceLookup);
+		List<List<String>> result = cpdlmlService.getCpdlml(d, comps);
 		ExcelTemplate template = ExcelTemplate.createCwcpdlmlTemplate(CwcpdlmlSheetType.CPDLML);
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
 		handler.next(new TextFormatterHandler(null, new Integer[]{0, 1}))

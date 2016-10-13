@@ -566,19 +566,19 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 
 
 	@Override
-	public void importByqFromNC(Date d, List<Company> comps) {
+	public void importByqFromNC(Date d, Company comp) {
 		NCConnection connection = NCConnection.create();
 		if (null != connection){
 			EasyCalendar cal = new EasyCalendar(d);
 			String whereSql = 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth() +
-					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")";
+					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "' ";
 			EasyCalendar ecPre = cal.getLastMonth();
 			String whereSqlPreMonth = 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getMonth() +
-					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")";
+					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "' ";
 			
 			Logger logger = LoggerFactory.getLogger("LOG-NC");
 			logger.info("完工成品情况  sqlCbByqcyAdydjfl");
@@ -600,7 +600,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList, 
 					0, 
 					4, 
-					19);
+					19,
+					comp);
 			
 			logger.info("完工成品情况  sqlCbByqcyAcplxfl");
 			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
@@ -619,9 +620,10 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					rsSrPre,
 					WgcpqkType.YLFX_WGCPYLNL_BYQ_MLL, 
 					cpList, 
-					0, 
+					19, 
 					4, 
-					cpList.size() - 19);
+					cpList.size() - 19,
+					comp);
 			logger.info("完工成品情况  sqlCbGcl");
 			rsCb = connection.query(sqlCbGcl + whereSql);
 			logger.info("完工成品情况  sqlSrGcl");
@@ -641,7 +643,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList, 
 					0, 
 					4, 
-					8);
+					8,
+					comp);
 			
 //			try {
 //				rsCb.beforeFirst();
@@ -681,7 +684,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList, 
 					8, 
 					4, 
-					1);
+					1,
+					comp);
 			logger.info("完工成品情况  sqlCbFwl");
 			rsCb = connection.query(sqlCbFwl + whereSql);
 			logger.info("完工成品情况  sqlSrFwl");
@@ -700,7 +704,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList, 
 					9, 
 					4, 
-					cpList.size() - 9);
+					cpList.size() - 9,
+					comp);
 //			try {
 //				rsCb.beforeFirst();
 //				rsSr.beforeFirst();
@@ -723,6 +728,24 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 //					cpList.size() - 9 - 1 - 1);
 		}
 	}
+	
+	private Pair<Double, Double> getCbsr(Pair<List<Double>, List<Double>> cbsr, Pair<List<Double>, List<Double>> preCbsr, int i){
+	
+		Pair<Double, Double> pair = new Pair<Double, Double>(null, null);
+		
+		if (!cbsr.getFirst().isEmpty()){
+			pair.setFirst(MathUtil.minus(
+								cbsr.getFirst().get(i),
+								preCbsr.getFirst().isEmpty() ? 0.0 : preCbsr.getFirst().get(i)));
+		}
+		
+		if (!cbsr.getSecond().isEmpty()){
+			pair.setSecond(MathUtil.minus(
+								cbsr.getSecond().get(i),
+								preCbsr.getSecond().isEmpty() ? 0.0 : preCbsr.getSecond().get(i)));
+		}
+		return pair;
+	}
 
 	private void mergeResultSets(
 			Date d, 
@@ -732,84 +755,45 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 			List<Integer> cpIds, 
 			int cpflStart, 
 			int rsStart, 
-			int size) {
-		Map<Company, Pair<List<Double>, List<Double>>> compCbSrMap = new HashMap<Company, Pair<List<Double>, List<Double>>>();
-		Map<Company, Pair<List<Double>, List<Double>>> compCbSrMapPre = new HashMap<Company, Pair<List<Double>, List<Double>>>();
+			int size, Company comp) {
+		Pair<List<Double>, List<Double>> cbsr = new Pair<List<Double>, List<Double>>(new ArrayList<Double>(), new ArrayList<Double>());
+		Pair<List<Double>, List<Double>> preCbsr = new Pair<List<Double>, List<Double>>(new ArrayList<Double>(), new ArrayList<Double>());
 		try {
-			while (rsCb.next()){
-				String unitCode = String.valueOf(rsCb.getObject(1));
-				CompanyType companyType = NCCompanyCode.getType(unitCode);
-				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
-				Pair<List<Double>, List<Double>> cbsr = compCbSrMap.get(comp);
-				if (cbsr == null){
-					cbsr = new Pair<List<Double>, List<Double>>(new ArrayList<Double>(), new ArrayList<Double>());
-					compCbSrMap.put(comp, cbsr);
-				}
-				
+			if (rsCb.next()){				
 				for (int i = rsStart; i < rsStart + size; ++i){
 					cbsr.getFirst().add(rsCb.getDouble(i));
 				}				
 			}
 			
-			while (rsSr.next()){
-				String unitCode = String.valueOf(rsSr.getObject(1));
-				CompanyType companyType = NCCompanyCode.getType(unitCode);
-				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
-				Pair<List<Double>, List<Double>> cbsr = compCbSrMap.get(comp);
-				if (cbsr == null){
-					cbsr = new Pair<List<Double>, List<Double>>(new ArrayList<Double>(), new ArrayList<Double>());
-					compCbSrMap.put(comp, cbsr);
-				}
-				
+			if (rsSr.next()){
 				for (int i = rsStart; i < rsStart + size; ++i){
 					cbsr.getSecond().add(rsSr.getDouble(i));
 				}				
 			}
 			
-			while (rsCbPre.next()){
-				String unitCode = String.valueOf(rsCbPre.getObject(1));
-				CompanyType companyType = NCCompanyCode.getType(unitCode);
-				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
-				Pair<List<Double>, List<Double>> cbsr = compCbSrMapPre.get(comp);
-				if (cbsr == null){
-					cbsr = new Pair<List<Double>, List<Double>>(new ArrayList<Double>(), new ArrayList<Double>());
-					compCbSrMapPre.put(comp, cbsr);
-				}
-				
+			if (rsCbPre.next()){				
 				for (int i = rsStart; i < rsStart + size; ++i){
-					cbsr.getFirst().add(rsCbPre.getDouble(i));
+					preCbsr.getFirst().add(rsCbPre.getDouble(i));
 				}				
 			}
 			
-			while (rsSrPre.next()){
-				String unitCode = String.valueOf(rsSrPre.getObject(1));
-				CompanyType companyType = NCCompanyCode.getType(unitCode);
-				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
-				Pair<List<Double>, List<Double>> cbsr = compCbSrMapPre.get(comp);
-				if (cbsr == null){
-					cbsr = new Pair<List<Double>, List<Double>>(new ArrayList<Double>(), new ArrayList<Double>());
-					compCbSrMapPre.put(comp, cbsr);
-				}
-
+			if (rsSrPre.next()){
 				for (int i = rsStart; i < rsStart + size; ++i){
-					cbsr.getSecond().add(rsSrPre.getDouble(i));
+					preCbsr.getSecond().add(rsSrPre.getDouble(i));
 				}				
 			}
 			
-			for (Company comp : compCbSrMap.keySet()){
-				for (int i = cpflStart; i < size; ++i){
-					mergeEntity(d, 
-							comp, 
-							type, 
-							cpIds.get(i), 
-							MathUtil.minus(
-									compCbSrMap.get(comp).getFirst().get(i - cpflStart),
-									compCbSrMapPre.containsKey(comp) ? compCbSrMapPre.get(comp).getFirst().get(i - cpflStart) : 0.0),
-							MathUtil.minus(
-									compCbSrMap.get(comp).getSecond().get(i - cpflStart),
-									compCbSrMapPre.containsKey(comp) ? compCbSrMapPre.get(comp).getSecond().get(i - cpflStart) : 0.0));
-				}	
-			}
+			
+			Pair<Double, Double> pair;
+			for (int i = cpflStart; i < size; ++i){
+				pair = getCbsr(cbsr, preCbsr, i - cpflStart);
+				mergeEntity(d, 
+						comp, 
+						type, 
+						cpIds.get(i), 
+						pair.getFirst(),
+						pair.getSecond());
+			}	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -834,20 +818,20 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 	}
 	
 	@Override
-	public void importXlFromNC(Date d, List<Company> comps) {
+	public void importXlFromNC(Date d, Company comp) {
 		NCConnection connection = NCConnection.create();
 		if (null != connection){
 			EasyCalendar cal = new EasyCalendar(d);
 			String whereSql = 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth() +
-					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")"; 
+					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "' ";
 
 			EasyCalendar ecPre = cal.getLastMonth();
 			String whereSqlPreMonth = 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getMonth() +
-					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")";
+					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "' ";
 			
 			
 			Logger logger = LoggerFactory.getLogger("LOG-NC");
@@ -870,7 +854,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList, 
 					0, 
 					4, 
-					cpList.size());
+					cpList.size(),
+					comp);
 
 			logger.info("完工成品情况  sqlCbGcl");
 			rsCb = connection.query(sqlCbGcl + whereSql);
@@ -891,7 +876,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList, 
 					0, 
 					4, 
-					8);
+					8,
+					comp);
 			
 
 			logger.info("完工成品情况  sqlCbWlmyl");
@@ -912,7 +898,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList, 
 					8, 
 					4, 
-					1);
+					1,
+					comp);
 			
 			logger.info("完工成品情况  sqlCbFwl");
 			rsCb = connection.query(sqlCbFwl + whereSql);
@@ -932,7 +919,8 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 					cpList, 
 					9, 
 					4, 
-					cpList.size() - 9);
+					cpList.size() - 9,
+					comp);
 		}
 	}
 

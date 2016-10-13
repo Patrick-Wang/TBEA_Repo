@@ -80,21 +80,15 @@ public class WgcpqkServlet {
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
 
-		List<Company> comps = new ArrayList<Company>();
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
+		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
+		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+
 		
-		
-		wgcpqkService.importByqFromNC(d, comps);
-		
-		comps.clear();
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-		
-		wgcpqkService.importXlFromNC(d, comps);
+		wgcpqkService.importXlFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+		wgcpqkService.importXlFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+		wgcpqkService.importXlFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
 	}
 	
 	@RequestMapping(value = "nctest.do")
@@ -106,21 +100,17 @@ public class WgcpqkServlet {
 		if (!(request.getParameter("date") == null)){
 			d = Date.valueOf(request.getParameter("date"));
 		}
-		List<Company> comps = new ArrayList<Company>();
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+
 		
+		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
+		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
+		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
+
 		
-		wgcpqkService.importByqFromNC(d, comps);
-		
-		comps.clear();
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-		
-		wgcpqkService.importXlFromNC(d, comps);
+		wgcpqkService.importXlFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+		wgcpqkService.importXlFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
+		wgcpqkService.importXlFromNC(d, companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
 		return "OK".getBytes("utf-8");
 	}
 }

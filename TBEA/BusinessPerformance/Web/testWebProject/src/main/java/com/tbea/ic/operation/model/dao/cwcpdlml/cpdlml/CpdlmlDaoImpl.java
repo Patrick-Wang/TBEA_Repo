@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.cwcpdlml.CpdlmlEntity;
 
@@ -30,17 +31,37 @@ public class CpdlmlDaoImpl extends AbstractReadWriteDaoImpl<CpdlmlEntity> implem
 	}
 
 	@Override
-	public CpdlmlEntity getByDate(Date d, Integer cpid) {
+	public CpdlmlEntity getByDate(Date d, Integer cpid, Company comp) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		Query q = this.getEntityManager().createQuery("from CpdlmlEntity where nf=:nf and yf=:yf and cpdl = :cpid");
+		Query q = this.getEntityManager().createQuery("from CpdlmlEntity where nf=:nf and yf=:yf and cpdl = :cpid and dwid = :dwid");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("cpid", cpid);
+		q.setParameter("dwid", comp.getId());
 		List<CpdlmlEntity> list = q.getResultList();
 		if (list.isEmpty()){
 			return null;
 		}
 		return list.get(0);
+	}
+
+	@Override
+	public CpdlmlEntity getSumByDate(Date d, Integer cpid, List<Company> comps) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		Query q = this.getEntityManager().createQuery("select sum(ljsr) as sr, sum(ljcb) as cb from CpdlmlEntity where nf=:nf and yf=:yf and cpdl = :cpid and dwid in :dwids");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("cpid", cpid);
+		q.setParameter("dwids", Util.toIds(comps));
+		List<Object[]> list = q.getResultList();
+		CpdlmlEntity entity = new CpdlmlEntity();
+		entity.setNf(cal.get(Calendar.YEAR));
+		entity.setYf(cal.get(Calendar.MONTH) + 1);
+		entity.setCpdl(cpid);
+		entity.setLjcb((Double)list.get(0)[0]);
+		entity.setLjsr((Double)list.get(0)[1]);
+		return entity;
 	}
 }

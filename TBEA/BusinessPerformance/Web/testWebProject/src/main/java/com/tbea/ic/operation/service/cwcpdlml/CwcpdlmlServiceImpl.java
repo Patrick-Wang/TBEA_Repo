@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import com.tbea.ic.operation.model.entity.cwgbjyxxjl.JyxxjlEntity;
 import com.tbea.ic.operation.model.entity.identifier.cwgb.KmEntity;
 import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
+import com.tbea.ic.operation.service.util.nc.NCLoggerFactory;
 
 @Service(CwcpdlmlServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -760,71 +762,76 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth();
 
 			List<CpflEntity> entities = cpflDao.getAll();
-			Logger logger = LoggerFactory.getLogger("LOG-NC");
-			logger.info("财务产品大类毛利 sqlCbByqcyAdydjfl");
-			ResultSet rsCb = connection.query(sqlCbByqcyAdydjfl + whereSql);
-			logger.info("财务产品大类毛利 sqlSrByqcyAdydjfl");
-			ResultSet rsSr = connection.query(sqlSrByqcyAdydjfl + whereSql);
-			
-			
-			CpdlmlEntity hjEntity = cpdlmlDao.getByDate(d, entities.get(entities.size() - 1).getId());
+			CpdlmlEntity hjEntity = cpdlmlDao.getByDate(d, entities.get(entities.size() - 1).getId(), comp);
 			if (hjEntity == null){
 				hjEntity = new CpdlmlEntity();
 				hjEntity.setDwid(comp.getId());
 				hjEntity.setCpdl(entities.get(entities.size() - 1).getId());
 				hjEntity.setNf(cal.getYear());
 				hjEntity.setYf(cal.getMonth());
+			}else{
+				hjEntity.setLjcb(null);
+				hjEntity.setLjsr(null);
 			}
 			
 			
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
-			logger.info("财务产品大类毛利  sqlCbByqcyAcplxfl");
+			
+			
+			//Logger logger = LoggerFactory.getLogger("LOG-NC");
+			NCLoggerFactory.logger().info("财务产品大类毛利 sqlCbByqcyAdydjfl");
+			ResultSet rsCb = connection.query(sqlCbByqcyAdydjfl + whereSql);
+			NCLoggerFactory.logger().info("财务产品大类毛利 sqlSrByqcyAdydjfl");
+			ResultSet rsSr = connection.query(sqlSrByqcyAdydjfl + whereSql);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, 0, comp);
+			
+			
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlCbByqcyAcplxfl");
 			rsCb = connection.query(sqlCbByqcyAcplxfl + whereSql);
-			logger.info("财务产品大类毛利  sqlSrByqcyAcplxfl");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlSrByqcyAcplxfl");
 			rsSr = connection.query(sqlSrByqcyAcplxfl + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, 20, comp);
 			
-			logger.info("财务产品大类毛利  sqlCbXlcy");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlCbXlcy");
 			rsCb = connection.query(sqlCbXlcy + whereSql);
-			logger.info("财务产品大类毛利  sqlSrXlcy");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlSrXlcy");
 			rsSr = connection.query(sqlSrXlcy + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, 38, comp);
 			
-			logger.info("财务产品大类毛利  sqlCbXny");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlCbXny");
 			rsCb = connection.query(sqlCbXny + whereSql);
-			logger.info("财务产品大类毛利  sqlSrXny");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlSrXny");
 			rsSr = connection.query(sqlSrXny + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, 38 + 14, comp);
 			
-			logger.info("财务产品大类毛利  sqlCbGcl");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlCbGcl");
 			rsCb = connection.query(sqlCbGcl + whereSql);
-			logger.info("财务产品大类毛利  sqlSrGcl");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlSrGcl");
 			rsSr = connection.query(sqlSrGcl + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, 38 + 14 + 17, comp);
 			
-			logger.info("财务产品大类毛利  sqlCbYysl");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlCbYysl");
 			rsCb = connection.query(sqlCbYysl + whereSql);
-			logger.info("财务产品大类毛利  sqlSrYysl");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlSrYysl");
 			rsSr = connection.query(sqlSrYysl + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, 38 + 14 + 17 + 35, comp);
 			
-			logger.info("财务产品大类毛利  sqlCbMtcy");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlCbMtcy");
 			rsCb = connection.query(sqlCbMtcy + whereSql);
-			logger.info("财务产品大类毛利  sqlSrMtcy");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlSrMtcy");
 			rsSr = connection.query(sqlSrMtcy + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, 38 + 14 + 17 + 35 + 9, comp);
 			
-			logger.info("财务产品大类毛利  sqlCbWlmyl");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlCbWlmyl");
 			rsCb = connection.query(sqlCbWlmyl + whereSql);
-			logger.info("财务产品大类毛利  sqlSrWlmyl");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlSrWlmyl");
 			rsSr = connection.query(sqlSrWlmyl + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, 38 + 14 + 17 + 35 + 9 + 10, comp);
 			
-			logger.info("财务产品大类毛利  sqlCbFwl");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlCbFwl");
 			rsCb = connection.query(sqlCbFwl + whereSql);
-			logger.info("财务产品大类毛利  sqlSrFwl");
+			NCLoggerFactory.logger().info("财务产品大类毛利  sqlSrFwl");
 			rsSr = connection.query(sqlSrFwl + whereSql);
-			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, comp);
+			mergerEntity(hjEntity, cal, rsCb, rsSr, entities, 38 + 14 + 17 + 35 + 9 + 10 + 2, comp);
 			
 			cpdlmlDao.merge(hjEntity);
 		}
@@ -832,18 +839,18 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 
 
 	private void mergerEntity(CpdlmlEntity hjEntity, EasyCalendar cal, ResultSet rsCb,
-			ResultSet rsSr, List<CpflEntity> entities, Company comp) {
+			ResultSet rsSr, List<CpflEntity> entities, Integer base, Company comp) {
 		Date d = cal.getDate();
 		try {
 			boolean hasCb = rsCb.next(); 
 			boolean hasSr = rsSr.next();
-			while (hasCb || hasSr){
+			if (hasCb || hasSr){
 				CpdlmlEntity entity = null;
 				for (int i = 4; i <= rsCb.getMetaData().getColumnCount(); ++i){
-					entity = cpdlmlDao.getByDate(d, entities.get(i - 4).getId());
+					entity = cpdlmlDao.getByDate(d, entities.get(i - 4 + base).getId(), comp);
 					if (null == entity){
 						entity = new CpdlmlEntity();
-						entity.setCpdl(entities.get(i - 4).getId());
+						entity.setCpdl(entities.get(i - 4 + base).getId());
 						entity.setNf(cal.getYear());
 						entity.setYf(cal.getMonth());
 						entity.setDwid(comp.getId());
@@ -851,12 +858,18 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 					entity.setLjcb(hasCb ? rsCb.getDouble(i) : null);
 					entity.setLjsr(hasSr ? rsSr.getDouble(i) : null);
 					cpdlmlDao.merge(entity);
+					NCLoggerFactory.logger().info("{}\t{}\t{}\t{}\t{}\t\t\t{}\t{}",new Object[]{
+							comp.getName(),
+							entity.getNf(), 
+							entity.getYf(), 
+							entities.get(i - 4 + base).getCy().getName(), 
+							entities.get(i - 4 + base).getName(),
+							entity.getLjcb(),
+							entity.getLjsr()});
 				}
 				
 				hjEntity.setLjcb(MathUtil.sum(hjEntity.getLjcb(), entity.getLjcb()));
 				hjEntity.setLjsr(MathUtil.sum(hjEntity.getLjsr(), entity.getLjsr()));
-				hasCb = rsCb.next(); 
-				hasSr = rsSr.next();
 			}
 			
 		} catch (SQLException e) {

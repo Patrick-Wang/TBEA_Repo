@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpdlml.CpdlmlDao;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpfl.CpflDao;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpfl.CpflDaoImpl;
@@ -52,7 +53,7 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 	}
 	
 	@Override
-	public List<List<String>> getCpdlml(Date d) {
+	public List<List<String>> getCpdlml(Date d, List<Company> comps) {
 		List<CpflEntity> cpfls = cpflDao.getAll();
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Integer> hjs = new ArrayList<Integer>();
@@ -69,12 +70,12 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 			if (cpflEntity.getLx() > 0){
 				hjs.add(i);
 			}
-			CpdlmlEntity dlmx = cpdlmlDao.getByDate(d, cpflEntity.getId());
+			CpdlmlEntity dlmx = cpdlmlDao.getSumByDate(d, cpflEntity.getId(), comps);
 			if (dlmx != null){
 				line.set(2, "" + dlmx.getLjsr());
 				line.set(4, "" + dlmx.getLjcb());
 			}
-			dlmx = cpdlmlDao.getByDate(ec.getDate(), cpflEntity.getId());
+			dlmx = cpdlmlDao.getSumByDate(ec.getDate(), cpflEntity.getId(), comps);
 			if (dlmx != null){
 				line.set(8, "" + dlmx.getLjsr());
 				line.set(9, "" + dlmx.getLjcb());
