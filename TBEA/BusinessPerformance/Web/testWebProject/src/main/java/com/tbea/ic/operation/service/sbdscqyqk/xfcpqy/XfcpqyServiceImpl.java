@@ -9,24 +9,28 @@ import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.sbdscqyqk.SbdscqyqkType;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDaoImpl;
-import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
+import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfcpqyEntity;
+import com.tbea.ic.operation.service.report.HBWebService;
 
 @Service(XfcpqyServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -324,5 +328,66 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 	public ZBStatus getXfcpqyStatus(Date d, Company comp, SbdscqyqkType type) {
 		return ZBStatus.SAVED;
 	}
+
+	@Override
+	public void importCpqy(Date d) {
+		HBWebService hbws = new HBWebService();
+		List<String> cols = new ArrayList<String>();
+		cols.add("product_type");
+		cols.add("contract_volume");
+		List<List<Object>> result = hbws.getHBCpqy(cols, d);
+		EasyCalendar ec = new EasyCalendar(d);
+		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS);
+		List<XfcpqyEntity> entities = xfcpqyDao.getByDate(d, comp, SbdscqyqkType.YLFX_WGCPYLNL_BYQ);
+		ZBStatus status = ZBStatus.SUBMITTED;
+		if (null != entities && !entities.isEmpty()){
+			status = ZBStatus.valueOf(entities.get(0).getZt());
+		}
+		List<Integer> byqCps = this.getCpIdList(SbdscqyqkType.YLFX_WGCPYLNL_BYQ);
+		List<CpmcEntity> cps = getCpList(byqCps);
+		for (List<Object> r: result){
+			CpmcEntity mc = findCp(cps, (String)r.get(0));
+			if (null == mc){
+				LoggerFactory.getLogger("WEBSERVICE").info("importCpqy 无法找到产品 : " + (String)r.get(0));
+			}else{
+				XfcpqyEntity entity= xfcpqyDao.getByDate(d, comp, SbdscqyqkType.YLFX_WGCPYLNL_BYQ, mc.getId());
+
+				if (null == entity){
+					entity = new XfcpqyEntity();
+
+					entity.setNf(ec.getYear());
+					entity.setYf(ec.getMonth());
+					entity.setDwxx(dwxxDao.getById(comp.getId()));
+					entity.setCpmc(mc);
+					entity.setTjfs(SbdscqyqkType.YLFX_WGCPYLNL_BYQ.value());
+				}
+
+				entity.setZt(status.ordinal());
+				entity.setQye(Util.toDoubleNull(((String)r.get(1)).replaceAll(",", "")));
+				xfcpqyDao.merge(entity);
+				
+			}
+		}
+		
+	}
+	
+	private CpmcEntity findCp(List<CpmcEntity> cps, String name){
+		for (CpmcEntity cp : cps){
+			if (cp.getName().trim().equals(name)){
+				return cp;
+			}
+		}
+		return null;
+	}
+
+	private List<CpmcEntity> getCpList(List<Integer> byqCps) {
+		List<CpmcEntity> ret  = new ArrayList<CpmcEntity>();
+		for (Integer cp : byqCps){
+			ret.add(cpmcDao.getById(cp));
+		}
+		return ret;
+	}
+	
+	
 
 }

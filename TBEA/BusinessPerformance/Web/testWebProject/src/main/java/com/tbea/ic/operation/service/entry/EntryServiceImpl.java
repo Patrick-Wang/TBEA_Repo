@@ -204,32 +204,32 @@ public class EntryServiceImpl implements EntryService{
 				yj28zbDao, ydjhzbDao,
 				ndjhzbDao, companyManager,
 				indiRelations, entryType);
-		
+		Calendar keyTime = Calendar.getInstance();
 		switch (entryType){
 		case BY20YJ:
-			this.yj20Listener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.yj20Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED, time);
-			this.yj20Listener.removeListener(time.getTimeInMillis());
+			this.yj20Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BY28YJ:
-			this.yj28Listener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.yj28Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED, time);
-			this.yj28Listener.removeListener(time.getTimeInMillis());
+			this.yj28Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BYSJ:
-			this.sjzbListener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.sjzbListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED, time);
-			this.sjzbListener.removeListener(time.getTimeInMillis());
+			this.sjzbListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case NDJH:
-			this.njhListener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.njhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED, time);
-			this.njhListener.removeListener(time.getTimeInMillis());
+			this.njhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case YDJDMJH:
-			this.ydjhListener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.ydjhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED, time);
-			this.ydjhListener.removeListener(time.getTimeInMillis());
+			this.ydjhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		default:
 			break;
@@ -966,31 +966,32 @@ public class EntryServiceImpl implements EntryService{
 				yj28zbDao, ydjhzbDao,
 				ndjhzbDao, companyManager,
 				indiRelations, entryType);
+		Calendar keyTime = Calendar.getInstance();
 		switch (entryType){
 		case BY20YJ:
-			this.yj20Listener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.yj20Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update20YJ(date, company, data, ZBStatus.SAVED, time);
-			this.yj20Listener.removeListener(time.getTimeInMillis());
+			this.yj20Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BY28YJ:
-			this.yj28Listener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.yj28Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update28YJ(date, company, data, ZBStatus.SAVED, time);
-			this.yj28Listener.removeListener(time.getTimeInMillis());
+			this.yj28Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BYSJ:
-			this.sjzbListener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.sjzbListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateBYSJ(date, company, data, ZBStatus.SAVED, time);
-			this.sjzbListener.removeListener(time.getTimeInMillis());
+			this.sjzbListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case NDJH:
-			this.njhListener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.njhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateNDJH(date, company, data, ZBStatus.SAVED, time);
-			this.njhListener.removeListener(time.getTimeInMillis());
+			this.njhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case YDJDMJH:
-			this.ydjhListener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.ydjhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateYDJDMJH(date, company, data, ZBStatus.SAVED, time);
-			this.ydjhListener.removeListener(time.getTimeInMillis());
+			this.ydjhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		default:
 			break;
@@ -1020,31 +1021,32 @@ public class EntryServiceImpl implements EntryService{
 				yj28zbDao, ydjhzbDao,
 				ndjhzbDao, companyManager,
 				indiRelations, entryType);
+		Calendar keyTime = Calendar.getInstance();
 		switch (entryType){
 		case BY20YJ:
-			this.yj20Listener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.yj20Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.yj20Listener.removeListener(time.getTimeInMillis());
+			this.yj20Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BY28YJ:
-			this.yj28Listener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.yj28Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.yj28Listener.removeListener(time.getTimeInMillis());
+			this.yj28Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BYSJ:
-			this.sjzbListener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.sjzbListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.sjzbListener.removeListener(time.getTimeInMillis());
+			this.sjzbListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case NDJH:
-			this.njhListener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.njhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.njhListener.removeListener(time.getTimeInMillis());
+			this.njhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case YDJDMJH:
-			this.ydjhListener.addListener(time.getTimeInMillis(), lsnAggr);
+			this.ydjhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.ydjhListener.removeListener(time.getTimeInMillis());
+			this.ydjhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		default:
 			break;

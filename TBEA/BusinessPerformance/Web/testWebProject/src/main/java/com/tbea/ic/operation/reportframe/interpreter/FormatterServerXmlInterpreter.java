@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
@@ -19,7 +20,7 @@ public class FormatterServerXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isFormatterServer(e)) {
 			return false;
 		}
-
+		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 		FormatterServer serv = new FormatterServer();
 		
 		XmlUtil.each(e.getChildNodes(), new OnLoop(){

@@ -12,11 +12,14 @@ var nwbzlqk;
 (function (nwbzlqk) {
     var router = framework.router;
     var FrameEvent = framework.basic.FrameEvent;
+    var PageType = nwbzlqk.PageType;
     var NwbzlqkFrameView = (function (_super) {
         __extends(NwbzlqkFrameView, _super);
         function NwbzlqkFrameView() {
             _super.apply(this, arguments);
             this.isCompanySupported = false;
+            this.mAjaxApprove = new Util.Ajax("doApprove.do", false);
+            this.mAjaxAuth = new Util.Ajax("auth.do", false);
         }
         NwbzlqkFrameView.prototype.init = function (opt) {
             var _this = this;
@@ -92,7 +95,7 @@ var nwbzlqk;
                         var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
                             year: this.mOpt.date.year,
                             month: 12
-                        }, dtNow, false, true);
+                        }, dtNow, true, false);
                         this.mDtSec = dsp;
                         router.to(this.plugin(node)).send(nwbzlqk.Event.ZLFE_JD_SELECTED);
                     }
@@ -116,34 +119,29 @@ var nwbzlqk;
         };
         NwbzlqkFrameView.prototype.onEvent = function (e) {
             switch (e.id) {
-                case nwbzlqk.Event.ZLFE_SAVE_COMMENT:
-                    router.to(this.mCurrentPlugin).send(nwbzlqk.Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                case nwbzlqk.Event.ZLFE_APPROVE_COMMENT1:
+                case nwbzlqk.Event.ZLFE_APPROVE_COMMENT2:
+                case nwbzlqk.Event.ZLFE_APPROVE_COMMENT3:
+                case nwbzlqk.Event.ZLFE_APPROVE_COMMENT:
+                    this.onApproved(e.id);
                     break;
-                case nwbzlqk.Event.ZLFE_COMMENT_UPDATED:
-                    var comment = e.data;
-                    if (comment.deny == "deny") {
-                        $("#comment").hide();
-                    }
-                    else if (comment.readonly == "true") {
-                        $("#saveComment").hide();
-                        $("#comment").show();
-                        $("#commentText").val(comment.comment);
-                        $("#commentText").attr("readonly", "readonly");
-                    }
-                    else {
-                        $("#comment").show();
-                        $("#saveComment").show();
-                        $("#commentText").val(comment.comment);
-                        $("#commentText").removeAttr("readonly");
-                    }
+                case nwbzlqk.Event.ZLFE_SAVE_COMMENT:
+                    router.to(this.mCurrentPlugin).send(e.id, $("#commentText").val());
                     break;
                 case nwbzlqk.Event.ZLFE_COMMENT_DENY:
                     $("#comment").hide();
+                    break;
+                case nwbzlqk.Event.ZLFE_APPROVEAUTH_UPDATED:
+                    this.onUpdateAuth();
+                    break;
+                case nwbzlqk.Event.ZLFE_COMMENT_UPDATED:
+                    this.onUpdateComment(e.data.comment, e.data.zt);
                     break;
             }
             return _super.prototype.onEvent.call(this, e);
         };
         NwbzlqkFrameView.prototype.updateUI = function () {
+            var _this = this;
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
             var dt = this.mDtSec.getDate();
             if (dt.month == undefined) {
@@ -168,17 +166,178 @@ var nwbzlqk;
                 title = this.mCompanySelector.getCompanyName() + " " + title;
             }
             $("#headertitle")[0].innerHTML = title;
-            router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
-                date: dt,
-                compType: this.mCurrentComp
-            });
+            if (pageType == PageType.APPROVE) {
+                this.mAjaxAuth.get({ companyId: this.mCurrentComp })
+                    .then(function (jsonData) {
+                    _this.mAuths = jsonData;
+                    router.to(_this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
+                        date: dt,
+                        compType: _this.mCurrentComp
+                    });
+                });
+            }
+            else {
+                router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
+                    date: dt,
+                    compType: this.mCurrentComp
+                });
+            }
+        };
+        NwbzlqkFrameView.prototype.onApproved = function (id) {
+            var _this = this;
+            var zt;
+            switch (id) {
+                case nwbzlqk.Event.ZLFE_APPROVE_COMMENT1:
+                    zt = Util.IndiStatus.INTER_APPROVED_1;
+                    break;
+                case nwbzlqk.Event.ZLFE_APPROVE_COMMENT2:
+                    zt = Util.IndiStatus.INTER_APPROVED_2;
+                    break;
+                case nwbzlqk.Event.ZLFE_APPROVE_COMMENT3:
+                    zt = Util.IndiStatus.INTER_APPROVED_3;
+                    break;
+                case nwbzlqk.Event.ZLFE_APPROVE_COMMENT:
+                    zt = Util.IndiStatus.APPROVED;
+                    break;
+            }
+            if (undefined != zt) {
+                this.mAjaxApprove.get({
+                    date: this.mCurrentDate.year + "-" + this.mCurrentDate.month + "-1",
+                    companyId: this.mCurrentComp,
+                    zt: zt
+                }).then(function (jsonData) {
+                    framework.router
+                        .fromEp(_this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(nwbzlqk.Event.ZLFE_APPROVEAUTH_UPDATED);
+                    framework.router
+                        .fromEp(_this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(nwbzlqk.Event.ZLFE_COMMENT_UPDATED, { comment: {
+                            comment: $("#commentText").val()
+                        }, zt: zt });
+                    if (zt == Util.IndiStatus.INTER_APPROVED_1) {
+                        Util.MessageBox.tip("审核成功", undefined);
+                    }
+                    else {
+                        Util.MessageBox.tip("上报成功", undefined);
+                    }
+                });
+            }
+        };
+        NwbzlqkFrameView.prototype.onUpdateComment = function (comment, zt) {
+            if (comment.deny == "deny") {
+                $("#comment").hide();
+                return;
+            }
+            this.mCurZt = zt;
+            $("#comment").show();
+            $("#commentText").val(comment.comment);
+            $("#commentText").attr("readonly", "readonly");
+            if (pageType == PageType.APPROVE) {
+                if (zt == Util.IndiStatus.SUBMITTED) {
+                    if ($("#approveComment1").is(":visible")) {
+                    }
+                    else {
+                        $("#commentText").val("");
+                    }
+                    $("#approveComment").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment3").hide();
+                }
+                else if (zt == Util.IndiStatus.INTER_APPROVED_1) {
+                    if ($("#approveComment2").is(":visible") ||
+                        $("#approveComment1").is(":visible")) {
+                    }
+                    else {
+                        $("#commentText").val("");
+                    }
+                    $("#approveComment").hide();
+                    $("#approveComment1").hide();
+                    $("#approveComment3").hide();
+                }
+                else if (zt == Util.IndiStatus.INTER_APPROVED_2) {
+                    if ($("#approveComment2").is(":visible") ||
+                        $("#approveComment1").is(":visible") ||
+                        $("#approveComment3").is(":visible")) {
+                    }
+                    else {
+                        $("#commentText").val("");
+                    }
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment").hide();
+                }
+                else if (zt == Util.IndiStatus.INTER_APPROVED_3) {
+                    if ($("#approveComment2").is(":visible") ||
+                        $("#approveComment1").is(":visible") ||
+                        $("#approveComment3").is(":visible") ||
+                        $("#approveComment").is(":visible")) {
+                    }
+                    else {
+                        $("#commentText").val("");
+                    }
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment3").hide();
+                }
+                else if (zt == Util.IndiStatus.APPROVED) {
+                    $("#approveComment").hide();
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment3").hide();
+                }
+                else {
+                    $("#approveComment").hide();
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment3").hide();
+                    $("#commentText").val("");
+                }
+            }
+            else if (pageType == PageType.ENTRY) {
+                $("#approveComment").hide();
+                $("#approveComment1").hide();
+                $("#approveComment2").hide();
+                $("#approveComment3").hide();
+                $("#commentText").removeAttr("readonly");
+            }
+            else if (pageType == PageType.SHOW) {
+                $("#approveComment").hide();
+                $("#approveComment1").hide();
+                $("#approveComment2").hide();
+                $("#approveComment3").hide();
+                if (zt != 1) {
+                    $("#commentText").val("");
+                }
+            }
+        };
+        NwbzlqkFrameView.prototype.onUpdateAuth = function () {
+            $("#approveComment").hide();
+            $("#approveComment1").hide();
+            $("#approveComment2").hide();
+            $("#approveComment3").hide();
+            if (Util.indexOf(this.mAuths, 22) >= 0) {
+                $("#approveComment").show();
+            }
+            if (Util.indexOf(this.mAuths, 53) >= 0) {
+                $("#approveComment1").show();
+            }
+            if (Util.indexOf(this.mAuths, 54) >= 0) {
+                $("#approveComment2").show();
+            }
+            if (Util.indexOf(this.mAuths, 55) >= 0) {
+                $("#approveComment3").show();
+            }
         };
         return NwbzlqkFrameView;
-    }(framework.basic.ShowFrameView));
+    })(framework.basic.ShowFrameView);
     var ZlPluginView = (function (_super) {
         __extends(ZlPluginView, _super);
         function ZlPluginView() {
             _super.apply(this, arguments);
+            this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
+            this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
         }
         ZlPluginView.prototype.onEvent = function (e) {
             switch (e.id) {
@@ -193,11 +352,14 @@ var nwbzlqk;
                 case nwbzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                     this.mCompSize = e.data;
                     return false;
+                case nwbzlqk.Event.ZLFE_SAVE_COMMENT:
+                    this.onSaveComment(e.data);
+                    break;
             }
             return _super.prototype.onEvent.call(this, e);
         };
         return ZlPluginView;
-    }(framework.basic.ShowPluginView));
+    })(framework.basic.ShowPluginView);
     nwbzlqk.ZlPluginView = ZlPluginView;
     var ins = new NwbzlqkFrameView();
 })(nwbzlqk || (nwbzlqk = {}));

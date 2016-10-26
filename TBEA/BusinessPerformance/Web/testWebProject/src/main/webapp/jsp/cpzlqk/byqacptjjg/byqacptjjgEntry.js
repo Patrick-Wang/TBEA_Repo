@@ -98,8 +98,6 @@ var cpzlqk;
                         submitData[i].push(allData[i][j]);
                         submitData[i][j - 3] = submitData[i][j - 3].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j - 3]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
-                            return;
                         }
                     }
                 }
@@ -109,7 +107,6 @@ var cpzlqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        //Util.MessageBox.tip("提交 成功", ()=>{
                         var param = {
                             year: _this.getYear(),
                             month: _this.getMonth(),

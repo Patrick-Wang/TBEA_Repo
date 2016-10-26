@@ -46,14 +46,12 @@ var nwbzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../pdnwbzlztqk/update.do", false);
-                this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
-                this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.pdnwbzlztqk;
@@ -67,22 +65,6 @@ var nwbzlqk;
                 switch (e.id) {
                     case nwbzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
-                    case nwbzlqk.Event.ZLFE_SAVE_COMMENT:
-                        var param = {
-                            condition: Util.Ajax.toUrlParam({
-                                url: this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId: this.mCompType,
-                                ydjd: this.mYdjdType
-                            }),
-                            comment: e.data
-                        };
-                        this.mCommentSubmit.get({
-                            data: JSON.stringify([[param.condition, param.comment]])
-                        }).then(function (jsonData) {
-                            Util.MessageBox.tip("保存成功", undefined);
-                        });
-                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
@@ -96,31 +78,66 @@ var nwbzlqk;
             ShowView.prototype.option = function () {
                 return this.mOpt;
             };
+            ShowView.prototype.onSaveComment = function (comment) {
+                var param = {
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: this.mDt,
+                        companyId: this.mCompType,
+                        ydjd: this.mYdjdType
+                    }),
+                    comment: comment
+                };
+                this.mCommentSubmit.get({
+                    data: JSON.stringify([[param.condition, param.comment]])
+                }).then(function (jsonData) {
+                    Util.MessageBox.tip("提交成功", undefined);
+                });
+            };
             ShowView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
-                        url: this.mAjax.baseUrl(),
-                        date: date,
-                        companyId: compType,
-                        ydjd: this.mYdjdType
-                    }), compId: compType }).then(function (jsonData) {
-                    framework.router
-                        .fromEp(_this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(nwbzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData);
-                });
+                var comment;
+                var cpzlqkResp;
+                var complete = function (jsonData) {
+                    if (undefined != jsonData.tjjg) {
+                        cpzlqkResp = jsonData;
+                    }
+                    else {
+                        comment = jsonData;
+                    }
+                    if (comment != undefined && cpzlqkResp != undefined) {
+                        _this.mData = cpzlqkResp;
+                        _this.refresh();
+                        if (pageType == nwbzlqk.PageType.APPROVE) {
+                            framework.router
+                                .fromEp(_this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(nwbzlqk.Event.ZLFE_APPROVEAUTH_UPDATED);
+                        }
+                        framework.router
+                            .fromEp(_this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(nwbzlqk.Event.ZLFE_COMMENT_UPDATED, {
+                            comment: comment,
+                            zt: cpzlqkResp.zt });
+                    }
+                };
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
-                    all: this.mCompType == Util.CompanyType.PDCY
-                })
-                    .then(function (jsonData) {
-                    _this.mData = jsonData;
-                    _this.refresh();
-                });
+                    pageType: pageType
+                }).then(complete);
+                this.mCommentGet.get({
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: date,
+                        companyId: compType,
+                        ydjd: this.mYdjdType }),
+                    compId: compType
+                }).then(complete);
             };
             ShowView.prototype.toCtVal = function (val) {
                 var index = val.lastIndexOf('%');
@@ -232,7 +249,7 @@ var nwbzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -292,11 +309,11 @@ var nwbzlqk;
                     autoScroll: true,
                     rowNum: this.mData.tjjg.length + 10,
                     viewrecords: true,
-                    pager: '#' + pagername,
+                    pager: '#' + pagername
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(nwbzlqk.ZlPluginView));
+        })(nwbzlqk.ZlPluginView);
     })(pdnwbzlztqk = nwbzlqk.pdnwbzlztqk || (nwbzlqk.pdnwbzlztqk = {}));
 })(nwbzlqk || (nwbzlqk = {}));

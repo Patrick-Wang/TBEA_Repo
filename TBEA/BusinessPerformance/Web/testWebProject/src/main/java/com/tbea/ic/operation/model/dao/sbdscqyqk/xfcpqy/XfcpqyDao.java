@@ -2,6 +2,7 @@ package com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy;
 import java.sql.Date;
 import java.util.List;
 
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.sbdscqyqk.SbdscqyqkType;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfcpqyEntity;
@@ -22,5 +23,6 @@ public interface XfcpqyDao extends AbstractReadWriteDao<XfcpqyEntity> {
 
 	List<XfcpqyEntity> getSumByDate(Date ds, Date de,
 			List<Company> comps, SbdscqyqkType type, Integer cpId);
+
 
 }

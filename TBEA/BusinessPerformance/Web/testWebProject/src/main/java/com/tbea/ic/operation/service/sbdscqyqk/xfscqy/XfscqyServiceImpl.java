@@ -5,27 +5,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import net.sf.json.JSONArray;
+
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDaoImpl;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDao;
-
-import javax.annotation.Resource;
-
-import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDaoImpl;
+import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDao;
+import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDaoImpl;
 import com.tbea.ic.operation.model.entity.identifier.scfxgb.HyEntity;
-import com.tbea.ic.operation.model.entity.sbdscqyqk.XfcpqyEntity;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfscqyEntity;
-import com.tbea.ic.operation.service.sbdscqyqk.xfscqy.XfscqyService;
-
-import net.sf.json.JSONArray;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.tbea.ic.operation.service.report.HBWebService;
 
 @Service(XfscqyServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -124,6 +125,43 @@ public class XfscqyServiceImpl implements XfscqyService {
 	@Override
 	public ErrorCode submitXfscqy(Date d, JSONArray data, Company company) {
 		return entryXfscqy(d, data, company, ZBStatus.SUBMITTED);
+	}
+
+	@Override
+	public void importScqy(Date d) {
+		HBWebService hbws = new HBWebService();
+		List<String> cols = new ArrayList<String>();
+		cols.add("industry");
+		cols.add("contract_volume");
+		List<List<Object>> result = hbws.getHBScqy(cols, d);
+		EasyCalendar ec = new EasyCalendar(d);
+		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS);
+		List<XfscqyEntity> entities = xfscqyDao.getByDate(d, comp);
+		ZBStatus status = ZBStatus.SUBMITTED;
+		if (null != entities && !entities.isEmpty()){
+			status = ZBStatus.valueOf(entities.get(0).getZt());
+		}
+		for (List<Object> r: result){
+			HyEntity mc = hyDao.getByName((String)r.get(0));
+			if (null == mc){
+				LoggerFactory.getLogger("WEBSERVICE").info("importScqy 系统中无法找到行业 : " + (String)r.get(0));
+			}else{
+				XfscqyEntity entity= xfscqyDao.getByDate(d, comp, mc.getId());
+				
+				if (null == entity){
+					entity = new XfscqyEntity();
+
+					entity.setNf(ec.getYear());
+					entity.setYf(ec.getMonth());
+					entity.setDwid(comp.getId());
+					entity.setHyid(mc.getId());
+				}
+
+				entity.setZt(status.ordinal());
+				entity.setQye(Util.toDoubleNull(((String)r.get(1)).replaceAll(",", "")));
+				xfscqyDao.merge(entity);
+			}
+		}
 	}
 
 }

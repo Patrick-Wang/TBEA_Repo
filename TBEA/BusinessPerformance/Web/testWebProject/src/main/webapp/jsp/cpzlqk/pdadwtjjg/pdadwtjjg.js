@@ -34,14 +34,12 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../pdadwtjjg/update.do", false);
-                this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
-                this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.pdadwtjjg;
@@ -53,22 +51,6 @@ var cpzlqk;
                 switch (e.id) {
                     case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
-                    case cpzlqk.Event.ZLFE_SAVE_COMMENT:
-                        var param = {
-                            condition: Util.Ajax.toUrlParam({
-                                url: this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId: this.mCompType,
-                                ydjd: this.mYdjdType
-                            }),
-                            comment: e.data
-                        };
-                        this.mCommentSubmit.get({
-                            data: JSON.stringify([[param.condition, param.comment]])
-                        }).then(function (jsonData) {
-                            Util.MessageBox.tip("保存成功", undefined, 1000);
-                        });
-                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
@@ -87,27 +69,68 @@ var cpzlqk;
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
-                        url: this.mAjax.baseUrl(),
-                        date: date,
-                        companyId: compType,
-                        ydjd: this.mYdjdType
-                    }), compId: compType }).then(function (jsonData) {
-                    framework.router
-                        .fromEp(_this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData);
-                });
+                //this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                //    url : this.mAjax.baseUrl(),
+                //    date: date,
+                //    companyId:compType,
+                //    ydjd:this.mYdjdType
+                //}),compId:compType}).then((jsonData:any)=>{
+                //    framework.router
+                //        .fromEp(this)
+                //        .to(framework.basic.endpoint.FRAME_ID)
+                //        .send(Event.ZLFE_COMMENT_UPDATED, jsonData);
+                //});
+                //this.mAjax.get({
+                //        date: date,
+                //        companyId:compType,
+                //        ydjd:this.mYdjdType,
+                //        all: this.mCompType == Util.CompanyType.PDCY
+                //    })
+                //    .then((jsonData:any) => {
+                //        this.mData = jsonData;
+                //        this.refresh();
+                //    });
+                var comment;
+                var cpzlqkResp;
+                var complete = function (jsonData) {
+                    if (undefined != jsonData.tjjg) {
+                        cpzlqkResp = jsonData;
+                    }
+                    else {
+                        comment = jsonData;
+                    }
+                    if (comment != undefined && cpzlqkResp != undefined) {
+                        _this.mData = cpzlqkResp;
+                        _this.refresh();
+                        if (pageType == cpzlqk.PageType.APPROVE) {
+                            framework.router
+                                .fromEp(_this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED);
+                        }
+                        framework.router
+                            .fromEp(_this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
+                            comment: comment,
+                            zt: cpzlqkResp.zt });
+                    }
+                };
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
-                    all: this.mCompType == Util.CompanyType.PDCY
-                })
-                    .then(function (jsonData) {
-                    _this.mData = jsonData;
-                    _this.refresh();
-                });
+                    all: this.mCompType == Util.CompanyType.BYQCY,
+                    pageType: pageType
+                }).then(complete);
+                this.mCommentGet.get({
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: date,
+                        companyId: compType,
+                        ydjd: this.mYdjdType }),
+                    compId: compType
+                }).then(complete);
             };
             ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
@@ -139,7 +162,7 @@ var cpzlqk;
                     formatter: function (params) {
                         var ret = params[0][1];
                         for (var i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                            ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 1.0).toFixed(2) + "%";
                         }
                         return ret;
                     }
@@ -202,7 +225,7 @@ var cpzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -251,8 +274,24 @@ var cpzlqk;
                     viewrecords: true
                 }));
             };
+            ShowView.prototype.onSaveComment = function (comment) {
+                var param = {
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: this.mDt,
+                        companyId: this.mCompType,
+                        ydjd: this.mYdjdType
+                    }),
+                    comment: comment
+                };
+                this.mCommentSubmit.get({
+                    data: JSON.stringify([[param.condition, param.comment]])
+                }).then(function (jsonData) {
+                    Util.MessageBox.tip("提交成功", undefined);
+                });
+            };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(cpzlqk.ZlPluginView));
+        })(cpzlqk.ZlPluginView);
     })(pdadwtjjg = cpzlqk.pdadwtjjg || (cpzlqk.pdadwtjjg = {}));
 })(cpzlqk || (cpzlqk = {}));

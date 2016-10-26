@@ -25,14 +25,18 @@ var framework;
                 function ShowView() {
                     _super.apply(this, arguments);
                 }
-                ShowView.prototype.onInitialize = function (opt) {
-                    this.unitedSelector = new UnitedSelector(opt.itemNodes, opt.itemId);
-                    this.unitedSelector.change(function () {
-                        $("#" + opt.itemId + " select")
-                            .multiselect({
+                ShowView.prototype.renderItemSelector = function (itemId) {
+                    var sels = $("#" + itemId + " select");
+                    for (var i = 0; i < sels.length; ++i) {
+                        var opts = $("#" + itemId + " select:eq(" + i + ") option");
+                        var items = [];
+                        for (var j = 0; j < opts.length; ++j) {
+                            items.push(opts[j].text);
+                        }
+                        $(sels[i]).multiselect({
                             multiple: false,
                             header: false,
-                            minWidth: 100,
+                            minWidth: Util.getUIWidth(items),
                             height: '100%',
                             // noneSelectedText: "请选择月份",
                             selectedList: 1
@@ -40,19 +44,15 @@ var framework;
                             .css("padding", "2px 0 2px 4px")
                             .css("text-align", "left")
                             .css("font-size", "12px");
+                    }
+                };
+                ShowView.prototype.onInitialize = function (opt) {
+                    var _this = this;
+                    this.unitedSelector = new UnitedSelector(opt.itemNodes, opt.itemId);
+                    this.unitedSelector.change(function () {
+                        _this.renderItemSelector(opt.itemId);
                     });
-                    $("#" + opt.itemId + " select")
-                        .multiselect({
-                        multiple: false,
-                        header: false,
-                        minWidth: 100,
-                        height: '100%',
-                        // noneSelectedText: "请选择月份",
-                        selectedList: 1
-                    })
-                        .css("padding", "2px 0 2px 4px")
-                        .css("text-align", "left")
-                        .css("font-size", "12px");
+                    this.renderItemSelector(opt.itemId);
                     _super.prototype.onInitialize.call(this, opt);
                 };
                 ShowView.prototype.getParams = function (date) {

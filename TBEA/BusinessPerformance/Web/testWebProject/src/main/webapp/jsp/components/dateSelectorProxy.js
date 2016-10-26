@@ -4,13 +4,13 @@
 var Util;
 (function (Util) {
     var DateSelectorProxy = (function () {
-        function DateSelectorProxy(divId, dtStart, dtEnd, dtNow, asSeason, asSeasonAcc) {
+        function DateSelectorProxy(divId, dtStart, dtEnd, dtNow, asSeason, asSeasonAcc, jdName) {
             var _this = this;
             if (asSeason === void 0) { asSeason = false; }
             if (asSeasonAcc === void 0) { asSeasonAcc = false; }
             this.curDate = dtNow;
             if (asSeasonAcc) {
-                this.seasonAccSelect = new Util.SeasonAccSelector(dtStart, dtEnd, dtNow, divId);
+                this.seasonAccSelect = new Util.SeasonAccSelector(dtStart, dtEnd, dtNow, divId, jdName);
             }
             else if (asSeason) {
                 this.seasonSelect = new Util.DateSeasonSelector(dtStart, dtEnd, dtNow, divId);

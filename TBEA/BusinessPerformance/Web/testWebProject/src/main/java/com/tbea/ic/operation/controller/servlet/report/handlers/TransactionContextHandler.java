@@ -7,9 +7,11 @@ import org.springframework.stereotype.Component;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
+import com.tbea.ic.operation.service.report.Trans15;
 import com.tbea.ic.operation.service.report.TransDl;
 import com.tbea.ic.operation.service.report.TransLl;
 import com.tbea.ic.operation.service.report.TransLocal;
+import com.tbea.ic.operation.service.report.TransNC;
 import com.tbea.ic.operation.service.report.TransSb;
 import com.tbea.ic.operation.service.report.TransTb;
 import com.tbea.ic.operation.service.report.TransXb;
@@ -39,6 +41,12 @@ public class TransactionContextHandler implements ContextHandler {
 	
 	@Resource(name = TransTb.NAME)
 	Transaction trTb;
+	
+	@Resource(name = TransNC.NAME)
+	Transaction trNc;
+	
+	@Resource(name = Trans15.NAME)
+	Transaction tr15;
 
 	@Override
 	public void onHandle(Context context) {
@@ -49,6 +57,9 @@ public class TransactionContextHandler implements ContextHandler {
 		context.put("transSb", trSb);
 		context.put("transXb", trXb);
 		context.put("transTb", trTb);
+		context.put("transNc", trNc);
+		context.put("trans15", tr15);
+		
 	}
 
 }

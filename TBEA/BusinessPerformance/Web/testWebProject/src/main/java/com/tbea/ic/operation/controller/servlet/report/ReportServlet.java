@@ -19,9 +19,11 @@ import com.tbea.ic.operation.controller.servlet.report.handlers.AuthContextHandl
 import com.tbea.ic.operation.controller.servlet.report.handlers.ContextHandlers;
 import com.tbea.ic.operation.controller.servlet.report.handlers.DataNodeContextHandler;
 import com.tbea.ic.operation.controller.servlet.report.handlers.OrgsContextHandlers;
+import com.tbea.ic.operation.controller.servlet.report.handlers.QualityHandler;
 import com.tbea.ic.operation.controller.servlet.report.handlers.RequestContextHandler;
 import com.tbea.ic.operation.controller.servlet.report.handlers.TransactionContextHandler;
 import com.tbea.ic.operation.controller.servlet.report.handlers.UtilContextHandler;
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.controller.Scheduler;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
@@ -44,6 +46,10 @@ public class ReportServlet implements Scheduler {
 	@Resource(type = AuthContextHandler.class)
 	AuthContextHandler authContext;	
 	
+	@Resource(type = QualityHandler.class)
+	QualityHandler qualityContext;	
+	
+	
 	@RequestMapping(value = "console/show.do")
 	public ModelAndView consoleShow(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -60,6 +66,7 @@ public class ReportServlet implements Scheduler {
 		
 		com.tbea.ic.operation.reportframe.component.controller.Controller controller = compMgr.createController(null, controllor);
 		if (null != controller){
+			ReportLogger.trace().debug("begin ==================================");
 			Context context = new Context();
 			ContextHandlers handlers = new ContextHandlers();
 			handlers.add(new RequestContextHandler(request, response))
@@ -67,9 +74,12 @@ public class ReportServlet implements Scheduler {
 					.add(utilContext)
 					.add(orgsContext)
 					.add(authContext)
+					.add(qualityContext)
 					.add(new DataNodeContextHandler());
+			context.put("isSchedule", false);
 			handlers.onHandle(context);
 			controller.run(context);
+			ReportLogger.trace().debug("end +++++++++++++++++++++++++++++++++++++++ ==================================");
 			return (ModelAndView) context.get(com.tbea.ic.operation.reportframe.component.controller.Controller.MODEL_AND_VIEW);
 		}
 		return null;
@@ -85,6 +95,7 @@ public class ReportServlet implements Scheduler {
 					.add(utilContext)
 					.add(orgsContext)
 					.add(new DataNodeContextHandler());
+			context.put("isSchedule", true);
 			handlers.onHandle(context);
 			controller.run(context);
 	}

@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.util.nc;
+package com.tbea.ic.operation.common;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 
-public class NCCompanyCode {
+public class CompanyNCCode {
 	final static Map<String, CompanyType> companyMap = new HashMap<String, CompanyType>();
 	static {
 		companyMap.put("0202AA000000", CompanyType.SBGS);
@@ -44,7 +44,7 @@ public class NCCompanyCode {
 	public static List<String> toCodeList(List<Company> comps){
 		List<String> ret = new ArrayList<String>();
 		for (Company comp : comps){
-			String code = NCCompanyCode.getCode(comp.getType());
+			String code = CompanyNCCode.getCode(comp.getType());
 			if (null != code){
 				ret.add("\'" + code + "\'");
 			}

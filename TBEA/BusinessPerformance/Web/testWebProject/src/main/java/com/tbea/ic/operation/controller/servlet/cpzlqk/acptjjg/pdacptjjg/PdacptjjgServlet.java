@@ -3,6 +3,7 @@ package com.tbea.ic.operation.controller.servlet.cpzlqk.acptjjg.pdacptjjg;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,11 +36,18 @@ import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
+import com.tbea.ic.operation.common.querier.QuerierFactory;
+import com.tbea.ic.operation.common.querier.ZBStatusQuerier;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.PageType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
 import com.tbea.ic.operation.service.cpzlqk.pdacptjjg.PdacptjjgService;
 import com.tbea.ic.operation.service.cpzlqk.pdacptjjg.PdacptjjgServiceImpl;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "pdacptjjg")
@@ -46,29 +55,57 @@ public class PdacptjjgServlet {
 	@Resource(name=PdacptjjgServiceImpl.NAME)
 	PdacptjjgService pdacptjjgService;
 
-
-
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	@Autowired
+	ExtendAuthorityService extendAuthService;
+	
+	@Autowired
+	CpzlqkService cpzlqkService;
+	
 	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] getPdacptjjg(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
+		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
+		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		
-		
-		List<List<String>> result = pdacptjjgService.getPdacptjjg(d, company, yjType);
-		List<WaveItem> waveItems = null;
-		if (yjType == YDJDType.YD){
-			waveItems  = pdacptjjgService.getWaveValues(d, company);
-		}else{
-			waveItems  = pdacptjjgService.getJdWaveValues(d, company);
+		CpzlqkResp resp = new CpzlqkResp();
+		List<Integer> zts = new ArrayList<Integer>();
+		if (pageType == PageType.SHOW){
+			zts.add(ZBStatus.APPROVED.ordinal());
+		} else {
+			Account account = SessionManager.getAccount(request.getSession());
+			List<Integer> auths = extendAuthService.getAuths(account, company);
+			if (request.getParameter("zt") == null){
+				ZBStatus status = cpzlqkService.getCpzlqkStatus(d, company);
+				resp.setZt(status.ordinal());
+			}
+			if (pageType == PageType.ENTRY){
+				ZBStatusQuerier querier = QuerierFactory.createZlEntryQuerier();			
+				zts = querier.queryStatus(auths);
+			}  else if (pageType == PageType.APPROVE){
+				ZBStatusQuerier querier = QuerierFactory.createZlApproveQuerier();			
+				zts = querier.queryStatus(auths);
+			}
+			
+			if (zts.isEmpty()){
+				zts.add(ZBStatus.NONE.ordinal());
+			}
 		}
 		
-		CpzlqkResp resp = new CpzlqkResp(result, waveItems);
+		List<List<String>> result = pdacptjjgService.getPdacptjjg(d, company, yjType, zts);
+		List<WaveItem> waveItems = null;
+		if (yjType == YDJDType.YD){
+			waveItems  = pdacptjjgService.getWaveValues(d, company, zts);
+		}else{
+			waveItems  = pdacptjjgService.getJdWaveValues(d, company, zts);
+		}
+		
+		resp.setWaveItems(waveItems);
+		resp.setTjjg(result);
 		
 		return JSONObject.fromObject(resp.format()).toString().getBytes("utf-8");
 	}
@@ -167,8 +204,9 @@ public class PdacptjjgServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		
-		List<List<String>> result = pdacptjjgService.getPdacptjjg(d, company, yjType);
+		List<Integer> zts = new ArrayList<Integer>();
+		zts.add(ZBStatus.APPROVED.ordinal());
+		List<List<String>> result = pdacptjjgService.getPdacptjjg(d, company, yjType, zts);
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQACPTJJG);
 		
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0, 1});

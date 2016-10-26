@@ -116,28 +116,74 @@ module cpzlqk {
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
-                    url : this.mAjax.baseUrl(),
+
+                let comment : Comment;
+                let cpzlqkResp : CpzlqkResp;
+                let complete = (jsonData:any)=>{
+                    if (undefined != jsonData.tjjg){
+                        cpzlqkResp = jsonData;
+                    }else{
+                        comment = jsonData;
+                    }
+
+                    if (comment != undefined && cpzlqkResp != undefined){
+                        this.mData = cpzlqkResp;
+                        this.refresh();
+                        if (pageType == PageType.APPROVE){
+                            framework.router
+                                .fromEp(this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(Event.ZLFE_APPROVEAUTH_UPDATED);
+                        }
+
+                        framework.router
+                            .fromEp(this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(Event.ZLFE_COMMENT_UPDATED, {
+                                comment : comment,
+                                zt : cpzlqkResp.zt});
+                    }
+                }
+
+                this.mAjax.get({
                     date: date,
                     companyId:compType,
-                    ydjd:this.mYdjdType
-                }),compId:compType}).then((jsonData:any)=>{
-                    framework.router
-                        .fromEp(this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(Event.ZLFE_COMMENT_UPDATED, jsonData);
-                });
-                this.mAjax.get({
+                    ydjd:this.mYdjdType,
+                    all: this.mCompType == Util.CompanyType.BYQCY,
+                    pageType:pageType
+                }).then(complete);
+
+                this.mCommentGet.get({
+                    condition : Util.Ajax.toUrlParam({
+                        url : this.mAjax.baseUrl(),
                         date: date,
                         companyId:compType,
-                        ydjd:this.mYdjdType,
-                        all: this.mCompType == Util.CompanyType.BYQCY,
-                        pageType:pageType
-                    })
-                    .then((jsonData:any) => {
-                        this.mData = jsonData;
-                        this.refresh();
-                    });
+                        ydjd:this.mYdjdType}),
+                    compId : compType}).then(complete);
+
+
+                //this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                //    url : this.mAjax.baseUrl(),
+                //    date: date,
+                //    companyId:compType,
+                //    ydjd:this.mYdjdType
+                //}),compId:compType}).then((jsonData:any)=>{
+                //    framework.router
+                //        .fromEp(this)
+                //        .to(framework.basic.endpoint.FRAME_ID)
+                //        .send(Event.ZLFE_COMMENT_UPDATED, jsonData);
+                //});
+                //this.mAjax.get({
+                //        date: date,
+                //        companyId:compType,
+                //        ydjd:this.mYdjdType,
+                //        all: this.mCompType == Util.CompanyType.BYQCY,
+                //        pageType:pageType
+                //    })
+                //    .then((jsonData:any) => {
+                //        this.mData = jsonData;
+                //        this.refresh();
+                //    });
             }
 
             public refresh() : void{
@@ -176,7 +222,7 @@ module cpzlqk {
                     formatter : (params) => {
                         let ret = params[0][1];
                         for (let i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                            ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 1.0).toFixed(2) + "%";
                         }
                         return ret;
                     }
@@ -287,9 +333,7 @@ module cpzlqk {
             }
 
 			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
+				return Util.toDate(this.mDt).month;
 			}
 			
             private updateTable():void {
@@ -315,6 +359,22 @@ module cpzlqk {
                         rowNum: 1000,
                         viewrecords : true
                     }));
+            }
+            onSaveComment(comment:any):void {
+                let param = {
+                    condition:Util.Ajax.toUrlParam({
+                        url : this.mAjax.baseUrl(),
+                        date: this.mDt,
+                        companyId:this.mCompType,
+                        ydjd:this.mYdjdType
+                    }),
+                    comment:comment
+                };
+                this.mCommentSubmit.get({
+                    data : JSON.stringify([[param.condition, param.comment]])
+                }).then((jsonData:any)=>{
+                    Util.MessageBox.tip("提交成功", undefined);
+                });
             }
         }
     }

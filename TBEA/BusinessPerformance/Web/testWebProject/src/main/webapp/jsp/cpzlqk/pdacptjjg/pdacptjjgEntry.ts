@@ -94,15 +94,26 @@ module cpzlqk {
                         }
                     }
                 }
+
                 this.mAjaxSubmit.post({
                     date: dt,
                     data: JSON.stringify(submitData),
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", ()=>{
-                            this.pluginUpdate(dt, compType);
-                        });
+                        let param = {
+                            year : Util.toDate(dt).year,
+                            month: Util.toDate(dt).month,
+                            pageType:2,
+                            tableStatus: JSON.stringify([
+                                {
+                                    id:plugin.pdacptjjg
+                                },{
+                                    id:plugin.pdadwtjjg
+                                }
+                            ])
+                        }
+                        window.location.href = "show.do?param=" + JSON.stringify(param);
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }

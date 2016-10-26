@@ -2,22 +2,9 @@
 /// <reference path="unitedSelector.ts" />
 declare var $;
 
+
+
 module Util {
-    String.prototype["getWidth"] = function(fontSize)
-    {
-        var span = document.getElementById("__getwidth");
-        if (span == null) {
-            span = document.createElement("span");
-            span.id = "__getwidth";
-            document.body.appendChild(span);
-            span.style.visibility = "hidden";
-            span.style.whiteSpace = "nowrap";
-        }
-        span.innerText = this;
-        span.style.fontSize = fontSize + "px";
-    
-        return span.offsetWidth;
-    }
 
     export class ICompanySelectorOption{ 
         noneSelectedText : string = '项目公司';

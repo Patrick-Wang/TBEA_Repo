@@ -1,4 +1,4 @@
-/***************************************************************************** 产品类别 - 变压器
+﻿/***************************************************************************** 产品类别 - 变压器
 id	name
 *****************************************************************************/
 IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'identifier_cpzlqk_names')
@@ -270,6 +270,11 @@ INSERT [dbo].[cpzlqk_acptj_pd_fdwlr] ([id], [dwid], [tjjgid])VALUES (11, 301, 2)
 INSERT [dbo].[cpzlqk_acptj_pd_fdwlr] ([id], [dwid], [tjjgid])VALUES (12, 301, 4)
 INSERT [dbo].[cpzlqk_acptj_pd_fdwlr] ([id], [dwid], [tjjgid])VALUES (13, 301, 5)
 INSERT [dbo].[cpzlqk_acptj_pd_fdwlr] ([id], [dwid], [tjjgid])VALUES (14, 301, 6)
+
+--特变电工智能电气有限责任公司
+INSERT [dbo].[cpzlqk_acptj_pd_fdwlr] ([id], [dwid], [tjjgid])VALUES (15, 303, 4)
+INSERT [dbo].[cpzlqk_acptj_pd_fdwlr] ([id], [dwid], [tjjgid])VALUES (16, 303, 5)
+INSERT [dbo].[cpzlqk_acptj_pd_fdwlr] ([id], [dwid], [tjjgid])VALUES (17, 303, 6)
 SET IDENTITY_INSERT [dbo].[cpzlqk_acptj_pd_fdwlr] OFF  
 
 /***************************************************************************** 季度按产品统计结果 - 配电
@@ -709,6 +714,8 @@ CREATE TABLE [dbo].[cpzlqk_zltjjg](
 	[cpid] [int] not NULL,
 	[bhgs] [int],
 	[zs] [int],
+	[xgsj] [datetime],
+	[shsj] [datetime],
 	[zt] [int] not NULL
 PRIMARY KEY CLUSTERED 
 (
@@ -737,6 +744,8 @@ CREATE TABLE [dbo].[cpzlqk_bhgwtmx_byq](
 	[clcs] [varchar](2000),
 	[cljg] [varchar](2000),
 	[zrlbid] [int] not NULL,
+	[xgsj] [datetime],
+	[shsj] [datetime],
 	[zt] [int] not NULL
 PRIMARY KEY CLUSTERED 
 (
@@ -765,6 +774,8 @@ CREATE TABLE [dbo].[cpzlqk_bhgwtmx_xl](
 	[clcs] [varchar](2000),
 	[cljg] [varchar](2000),
 	[zrlbid] [int] not NULL,
+	[xgsj] [datetime],
+	[shsj] [datetime],
 	[zt] [int] not NULL
 PRIMARY KEY CLUSTERED 
 (
@@ -793,6 +804,8 @@ CREATE TABLE [dbo].[cpzlqk_bhgwtmx_pd](
 	[clcs] [varchar](2000),
 	[cljg] [varchar](2000),
 	[zrlbid] [int] not NULL,
+	[xgsj] [datetime],
+	[shsj] [datetime],
 	[zt] [int] not NULL
 PRIMARY KEY CLUSTERED 
 (

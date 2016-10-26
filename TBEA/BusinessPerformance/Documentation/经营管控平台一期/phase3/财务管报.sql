@@ -96,7 +96,7 @@ INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [lx])VALUES (15,	0,	N'其中：
 INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [lx])VALUES (16,	0,	N'500kV电',	0)
 INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [lx])VALUES (17,	0,	N'750kV电',	0)
 INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [lx])VALUES (18,	0,	N'1000kV电',	0)
-INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [lx])VALUES (19,	0,	N'小计',	0)
+INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [lx])VALUES (19,	0,	N'小计',	1)
 INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [lx])VALUES (20,	1,	N'干式变压器',	0)
 INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [lx])VALUES (21,	1,	N'其中：F级干变',	0)
 INSERT [dbo].[cwgb_cy_cpfl] ([id], [cy], [name], [lx])VALUES (22,	1,	N'H级干变',	0)

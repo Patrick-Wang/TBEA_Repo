@@ -10,6 +10,13 @@ module nwbzlqk{
         tips?:string
     }
 
+    export enum PageType {
+        NONE,
+        APPROVE,
+        ENTRY,
+        SHOW
+    }
+
     export interface FrameOption extends framework.basic.Option {
         contentType: string;
     }
@@ -32,6 +39,7 @@ module nwbzlqk{
         status?:Util.ZBStatus;
         bhglx?:string[];
         zrlb?:string[];
+        zt:number;
     }
 
     export interface WaveItem{
@@ -49,9 +57,14 @@ module nwbzlqk{
         export let ZLFE_IS_BHGLX_SUPPORTED : number = FrameEvent.lastEvent();
         export let ZLFE_SET_ZBSTATUS : number = FrameEvent.lastEvent();
         export let ZLFE_SAVE_COMMENT : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVE_COMMENT : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVE_COMMENT1 : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVE_COMMENT2 : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVE_COMMENT3 : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_UPDATED : number = FrameEvent.lastEvent();
         export let ZLFE_DATA_STATUS : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_DENY : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVEAUTH_UPDATED : number = FrameEvent.lastEvent();
     }
 
     export enum NwbzlType {

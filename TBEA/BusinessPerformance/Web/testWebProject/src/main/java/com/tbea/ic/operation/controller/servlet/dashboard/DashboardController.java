@@ -161,13 +161,14 @@ public class DashboardController {
 						sdf.format(new Date(session.getCreationTime())));
 				jUser.element("last_accessed_time", sdf.format(new java.util.Date(
 						session.getLastAccessedTime())));
+				jUser.element("ip", session.getAttribute("remoteIP"));
 				arrUsers.add(jUser);
 	        }
 	    }
 
 		jRet.element("active_user_count", activeCount);
 		if (null != latestActiveSession) {
-			account = SessionManager.getAccount(request.getSession(false));
+			account = SessionManager.getAccount(latestActiveSession);
 			jRet.element("latest_active_user", account.getName());
 			jRet.element("last_accessed_time", sdf.format(new java.util.Date(
 					latestActiveSession.getLastAccessedTime())));

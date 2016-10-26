@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.model.entity.cpzlqk;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,6 +48,8 @@ public class XlBhgwtmxEntity extends AbstractReadWriteEntity implements Serializ
 	String clcs;
 	String cljg;
 	XlZrlbEntity zrlb;//zrlbid;
+	Timestamp xgsj;
+	Timestamp shsj;
 	Integer zt;
 	public Integer getNf() {
 		return nf;
@@ -137,6 +140,18 @@ public class XlBhgwtmxEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void setZt(Integer zt) {
 		this.zt = zt;
+	}
+	public Timestamp getXgsj() {
+		return xgsj;
+	}
+	public void setXgsj(Timestamp xgsj) {
+		this.xgsj = xgsj;
+	}
+	public Timestamp getShsj() {
+		return shsj;
+	}
+	public void setShsj(Timestamp shsj) {
+		this.shsj = shsj;
 	}
 
 }

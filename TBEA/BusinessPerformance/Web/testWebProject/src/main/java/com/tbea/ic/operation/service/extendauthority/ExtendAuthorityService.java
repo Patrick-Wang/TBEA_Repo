@@ -22,4 +22,6 @@ public interface ExtendAuthorityService {
 
 	Boolean hasAuthority(Account account, Integer authType);
 
+	List<Integer> getAuths(Account account, Company comp);
+
 }

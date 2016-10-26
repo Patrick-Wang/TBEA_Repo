@@ -7,8 +7,6 @@ import com.tbea.ic.operation.common.PropMap;
 public class ControllerSession extends PropMap{
 	HttpSession session;
 	
-	
-	
 	public ControllerSession(HttpSession session) {
 		super();
 		this.session = session;

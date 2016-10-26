@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.MathUtil;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -28,7 +29,6 @@ import com.tbea.ic.operation.model.dao.identifier.cwyjsf.sz.SzDao;
 import com.tbea.ic.operation.model.dao.identifier.cwyjsf.sz.SzDaoImpl;
 import com.tbea.ic.operation.model.entity.cwyjsf.YjsfEntity;
 import com.tbea.ic.operation.model.entity.cwyjsf.YjsfNdqcsEntity;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 
 @Service(CwyjsfServiceImpl.NAME)
@@ -365,11 +365,11 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			String whereSql = 
-				" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
+				" and iui.unit_code in (" + StringUtils.join(CompanyNCCode.toCodeList(comps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR);
 			
 			String whereMonthSql = 
-					" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
+					" and iui.unit_code in (" + StringUtils.join(CompanyNCCode.toCodeList(comps).toArray(), ",") + ")" + 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
 			Logger logger = Logger.getLogger("LOG-NC");
@@ -456,7 +456,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			while (rs.next()) {
 
 				String unitCode = String.valueOf(rs.getObject(1));
-				CompanyType companyType = NCCompanyCode.getType(unitCode);
+				CompanyType companyType = CompanyNCCode.getType(unitCode);
 				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
 				int nf = cal.get(Calendar.YEAR);
 				int yf = cal.get(Calendar.MONTH) + 1;
@@ -495,7 +495,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 			while (rs.next()) {
 
 				String unitCode = String.valueOf(rs.getObject(1));
-				CompanyType companyType = NCCompanyCode.getType(unitCode);
+				CompanyType companyType = CompanyNCCode.getType(unitCode);
 				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
 				int nf = cal.get(Calendar.YEAR);
 				Double sum = null;

@@ -4,8 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
+
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -32,6 +36,8 @@ public class ZltjjgEntity extends AbstractReadWriteEntity implements Serializabl
 	Integer cpid;
 	Integer bhgs;
 	Integer zs;
+	Timestamp xgsj;
+	Timestamp shsj;
 	Integer zt;
 	public Integer getNf() {
 		return nf;
@@ -74,5 +80,17 @@ public class ZltjjgEntity extends AbstractReadWriteEntity implements Serializabl
 	}
 	public void setZt(Integer zt) {
 		this.zt = zt;
+	}
+	public Timestamp getXgsj() {
+		return xgsj;
+	}
+	public void setXgsj(Timestamp xgsj) {
+		this.xgsj = xgsj;
+	}
+	public Timestamp getShsj() {
+		return shsj;
+	}
+	public void setShsj(Timestamp shsj) {
+		this.shsj = shsj;
 	}
 }

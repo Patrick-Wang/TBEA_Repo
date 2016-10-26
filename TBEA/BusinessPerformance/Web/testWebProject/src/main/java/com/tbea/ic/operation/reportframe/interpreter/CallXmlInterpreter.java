@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
@@ -123,7 +124,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isCall(e)){
 			return false;
 		}
-
+		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 		elp = new ELParser(component);
 		
 		Object obj = XmlUtil.getObjectAttr(e, "object", elp);

@@ -22,28 +22,26 @@ var cpzlqk;
             JQGridAssistantFactory.createTable = function (gridName) {
                 return new JQTable.JQGridAssistant([
                     Node.create({ name: "单位", align: TextAlign.Center }),
-                    Node.create({ name: "时间", align: TextAlign.Center, }),
-                    Node.create({ name: "产品类型", align: TextAlign.Center, }),
-                    Node.create({ name: "生产号", align: TextAlign.Center, }),
-                    Node.create({ name: "产品型号", align: TextAlign.Center, }),
-                    Node.create({ name: "不合格数量", align: TextAlign.Center, }),
-                    Node.create({ name: "试验不合格现象", align: TextAlign.Center, }),
-                    Node.create({ name: "不合格类别", align: TextAlign.Center, }),
-                    Node.create({ name: "原因分析", align: TextAlign.Center, }),
-                    Node.create({ name: "处理措施", align: TextAlign.Center, }),
-                    Node.create({ name: "处理结果", align: TextAlign.Center, }),
-                    Node.create({ name: "责任类别", align: TextAlign.Center, })
+                    Node.create({ name: "时间", align: TextAlign.Center }),
+                    Node.create({ name: "产品类型", align: TextAlign.Center }),
+                    Node.create({ name: "生产号", align: TextAlign.Center }),
+                    Node.create({ name: "产品型号", align: TextAlign.Center }),
+                    Node.create({ name: "不合格数量", align: TextAlign.Center }),
+                    Node.create({ name: "试验不合格现象", align: TextAlign.Center }),
+                    Node.create({ name: "不合格类别", align: TextAlign.Center }),
+                    Node.create({ name: "原因分析", align: TextAlign.Center }),
+                    Node.create({ name: "处理措施", align: TextAlign.Center }),
+                    Node.create({ name: "处理结果", align: TextAlign.Center }),
+                    Node.create({ name: "责任类别", align: TextAlign.Center })
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../xlbhgcpmx/update.do", false);
-                this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
-                this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
@@ -55,22 +53,6 @@ var cpzlqk;
                         return true;
                     case cpzlqk.Event.ZLFE_IS_YDJD_SUPPORTED:
                         return false;
-                    case cpzlqk.Event.ZLFE_SAVE_COMMENT:
-                        var param = {
-                            condition: Util.Ajax.toUrlParam({
-                                url: window.location.href + this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId: this.mCompType,
-                                ydjd: this.mYdjdType
-                            }),
-                            comment: e.data
-                        };
-                        this.mCommentSubmit.get({
-                            data: JSON.stringify([[param.condition, param.comment]])
-                        }).then(function (jsonData) {
-                            Util.MessageBox.tip("保存成功", undefined, 1000);
-                        });
-                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
@@ -91,26 +73,67 @@ var cpzlqk;
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
-                        url: window.location.href + this.mAjax.baseUrl(),
-                        date: date,
-                        companyId: compType,
-                        ydjd: this.mYdjdType
-                    }), compId: compType }).then(function (jsonData) {
-                    framework.router
-                        .fromEp(_this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData);
-                });
+                //this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                //    url : window.location.href + this.mAjax.baseUrl(),
+                //    date: date,
+                //    companyId:compType,
+                //    ydjd:this.mYdjdType
+                //}),compId:compType}).then((jsonData:any)=>{
+                //    framework.router
+                //        .fromEp(this)
+                //        .to(framework.basic.endpoint.FRAME_ID)
+                //        .send(Event.ZLFE_COMMENT_UPDATED, jsonData);
+                //});
+                //
+                //this.mAjax.get({
+                //        date: date,
+                //        companyId:compType,
+                //        all: this.mCompSize > 1
+                //    })
+                //    .then((jsonData:any) => {
+                //        this.mData = jsonData;
+                //        this.refresh();
+                //    });
+                var comment;
+                var cpzlqkResp;
+                var complete = function (jsonData) {
+                    if (undefined != jsonData.tjjg) {
+                        cpzlqkResp = jsonData;
+                    }
+                    else {
+                        comment = jsonData;
+                    }
+                    if (comment != undefined && cpzlqkResp != undefined) {
+                        _this.mData = cpzlqkResp.tjjg;
+                        _this.refresh();
+                        if (pageType == cpzlqk.PageType.APPROVE) {
+                            framework.router
+                                .fromEp(_this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED);
+                        }
+                        framework.router
+                            .fromEp(_this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
+                            comment: comment,
+                            zt: cpzlqkResp.zt });
+                    }
+                };
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
-                    all: this.mCompSize > 1
-                })
-                    .then(function (jsonData) {
-                    _this.mData = jsonData;
-                    _this.refresh();
-                });
+                    ydjd: this.mYdjdType,
+                    pageType: pageType
+                }).then(complete);
+                this.mCommentGet.get({
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: date,
+                        companyId: compType,
+                        ydjd: this.mYdjdType }),
+                    compId: compType
+                }).then(complete);
             };
             ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
@@ -151,11 +174,27 @@ var cpzlqk;
                     autoScroll: true,
                     rowNum: 20,
                     viewrecords: true,
-                    pager: '#' + pagername,
+                    pager: '#' + pagername
                 }));
+            };
+            ShowView.prototype.onSaveComment = function (comment) {
+                var param = {
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: this.mDt,
+                        companyId: this.mCompType,
+                        ydjd: this.mYdjdType
+                    }),
+                    comment: comment
+                };
+                this.mCommentSubmit.get({
+                    data: JSON.stringify([[param.condition, param.comment]])
+                }).then(function (jsonData) {
+                    Util.MessageBox.tip("提交成功", undefined);
+                });
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(cpzlqk.ZlPluginView));
+        })(cpzlqk.ZlPluginView);
     })(xlbhgcpmx = cpzlqk.xlbhgcpmx || (cpzlqk.xlbhgcpmx = {}));
 })(cpzlqk || (cpzlqk = {}));

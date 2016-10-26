@@ -2,6 +2,13 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 var nwbzlqk;
 (function (nwbzlqk) {
+    (function (PageType) {
+        PageType[PageType["NONE"] = 0] = "NONE";
+        PageType[PageType["APPROVE"] = 1] = "APPROVE";
+        PageType[PageType["ENTRY"] = 2] = "ENTRY";
+        PageType[PageType["SHOW"] = 3] = "SHOW";
+    })(nwbzlqk.PageType || (nwbzlqk.PageType = {}));
+    var PageType = nwbzlqk.PageType;
     (function (YDJDType) {
         YDJDType[YDJDType["YD"] = 0] = "YD";
         YDJDType[YDJDType["JD"] = 1] = "JD";
@@ -17,9 +24,14 @@ var nwbzlqk;
         Event.ZLFE_IS_BHGLX_SUPPORTED = FrameEvent.lastEvent();
         Event.ZLFE_SET_ZBSTATUS = FrameEvent.lastEvent();
         Event.ZLFE_SAVE_COMMENT = FrameEvent.lastEvent();
+        Event.ZLFE_APPROVE_COMMENT = FrameEvent.lastEvent();
+        Event.ZLFE_APPROVE_COMMENT1 = FrameEvent.lastEvent();
+        Event.ZLFE_APPROVE_COMMENT2 = FrameEvent.lastEvent();
+        Event.ZLFE_APPROVE_COMMENT3 = FrameEvent.lastEvent();
         Event.ZLFE_COMMENT_UPDATED = FrameEvent.lastEvent();
         Event.ZLFE_DATA_STATUS = FrameEvent.lastEvent();
         Event.ZLFE_COMMENT_DENY = FrameEvent.lastEvent();
+        Event.ZLFE_APPROVEAUTH_UPDATED = FrameEvent.lastEvent();
     })(Event = nwbzlqk.Event || (nwbzlqk.Event = {}));
     (function (NwbzlType) {
         NwbzlType[NwbzlType["ZT"] = 0] = "ZT";

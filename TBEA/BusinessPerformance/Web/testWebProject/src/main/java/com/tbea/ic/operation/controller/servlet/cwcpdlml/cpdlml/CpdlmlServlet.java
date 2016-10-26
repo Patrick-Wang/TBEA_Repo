@@ -23,6 +23,7 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
+import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
@@ -32,6 +33,10 @@ import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
+import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
+import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
+import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.cwcpdlml.cpdlml.CpdlmlService;
@@ -61,11 +66,13 @@ public class CpdlmlServlet {
 		
 		List<List<String>> result = cpdlmlService.getCpdlml(d, comps);
 		
-		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
-		handler.next(new RawPercentFormatterHandler(1, null, new Integer[]{3, 6, 7, 10, 11}));
-		handler.next(new RawNumberFormatterHandler(1));
-		RawFormatterServer serv = new RawFormatterServer(handler);
-		serv.acceptNullAs("--").format(result);
+		com.tbea.ic.operation.common.formatter.v2.core.FormatterServer serv = new com.tbea.ic.operation.common.formatter.v2.core.FormatterServer();
+		serv.handlerBuilder()
+			.add(new EmptyFormatter(DefaultMatcher.LEFT2_MATCHER))
+			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3, 6, 7, 10, 11}), 1))
+			.add(new NumberFormatter(1))
+			.server()
+			.format(result);
 		
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}

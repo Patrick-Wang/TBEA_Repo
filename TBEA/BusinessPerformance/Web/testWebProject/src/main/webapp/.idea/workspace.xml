@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="xtnyrbEntry.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/xtnyrb/xtnyrbEntry.ts">
+      <file leaf-file-name="entry.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/entry.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="75" selection-start-line="15" selection-start-column="75" selection-end-line="15" selection-end-column="75" />
+              <caret line="39" column="43" selection-start-line="39" selection-start-column="43" selection-end-line="39" selection-end-column="43" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -37,77 +37,37 @@
         <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="145" column="1" selection-start-line="145" selection-start-column="1" selection-end-line="145" selection-end-column="1" />
+              <caret line="88" column="43" selection-start-line="88" selection-start-column="43" selection-end-line="88" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xtnyrbEntry.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/xtnyrb/xtnyrbEntry.jsp">
+      <file leaf-file-name="show.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/show.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.428571">
-              <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+            <state vertical-scroll-proportion="-3.4464285">
+              <caret line="256" column="44" selection-start-line="256" selection-start-column="36" selection-end-line="256" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loading.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/components/loading.jsp">
+      <file leaf-file-name="entry.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/entry.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.142858">
-              <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="6" />
+            <state vertical-scroll-proportion="-12.653846">
+              <caret line="75" column="9" selection-start-line="73" selection-start-column="8" selection-end-line="75" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loading.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/loading.jsp">
+      <file leaf-file-name="show.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="37" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index_IndexBusinessReportsEntryZL.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/index_IndexBusinessReportsEntryZL.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.464286">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="23" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index_IndexBusinessReportsEntryZLWT.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/index_IndexBusinessReportsEntryZLWT.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.5">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="26" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index_IndexBusinessReportsZLWT.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/index_IndexBusinessReportsZLWT.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.142858">
-              <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jcycljg.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljg.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="-8.833333">
+              <caret line="123" column="80" selection-start-line="123" selection-start-column="75" selection-end-line="123" selection-end-column="80" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -115,12 +75,66 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jcycljg.jsp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljg.jsp">
+      <file leaf-file-name="show.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/gcyzb/show.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4793578">
-              <caret line="188" column="80" selection-start-line="188" selection-start-column="80" selection-end-line="188" selection-end-column="80" />
+            <state vertical-scroll-proportion="-3.1538463">
+              <caret line="257" column="16" selection-start-line="257" selection-start-column="12" selection-end-line="257" selection-end-column="16" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dateSelectorProxy.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/components/dateSelectorProxy.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+              <folding>
+                <marker date="1476940906620" expanded="true" signature="1369:1381" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/gcyzb/show.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.76937985">
+              <caret line="127" column="31" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="31" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="entry.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.732143">
+              <caret line="68" column="27" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/gcyzb/show.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+              <folding>
+                <marker date="1477449750769" expanded="true" signature="817:5950" placeholder="{...}" />
+                <marker date="1477449750769" expanded="true" signature="900:970" placeholder="{...}" />
+                <marker date="1477449750769" expanded="true" signature="1045:2023" placeholder="{...}" />
+                <marker date="1477449750769" expanded="true" signature="1165:2005" placeholder="{...}" />
+                <marker date="1477449750769" expanded="true" signature="1354:1435" placeholder="{...}" />
+                <marker date="1477449750769" expanded="true" signature="1483:1811" placeholder="{&quot;multiple&quot;: false...}" />
+                <marker date="1477449750769" expanded="true" signature="2843:3552" placeholder="{...}" />
+                <marker date="1477449750769" expanded="true" signature="3123:3208" placeholder="{...}" />
+                <marker date="1477449750769" expanded="true" signature="3377:3462" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -141,57 +155,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/cpczwcqk/cpczwcqkEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/cpclwcqk/cpclwcqkEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/clylwcqk/clylwcqkEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/cwgbjyxxjl/dyjyxxjl/dyjyxxjlEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/cwgbjyxxjl/ndjyxxjl/ndjyxxjlEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/jqgrid/js/jquery.jqGrid.js" />
-        <option value="$PROJECT_DIR$/jsp/wlyddqk/ylfxwlyddmlspcs/wlyddmlspcsEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/xtnyrb/xtnyrbEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/xtnyrb/xtnyrb.ts" />
-        <option value="$PROJECT_DIR$/jsp/messageBox.ts" />
-        <option value="$PROJECT_DIR$/jsp/index_IndexBusinessReportsZLWT.jsp" />
-        <option value="$PROJECT_DIR$/jsp/index.jsp" />
-        <option value="$PROJECT_DIR$/js/index.js" />
-        <option value="$PROJECT_DIR$/jsp/jqgrid/jqassist.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqkEntry.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqadwtjjg/byqadwtjjg.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmx.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgxxfb/byqcpycssbhgxxfb.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/pdacptjjg/pdacptjjg.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/pdadwtjjg/pdadwtjjg.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/pdcpycssbhgwtmx/pdcpycssbhgwtmx.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/pdcpycssbhgxxfb/pdcpycssbhgxxfb.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjg.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/xladydjtjjg/xladydjtjjg.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/xlbhgcpmx/xlbhgcpmx.jsp" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/nwbzlqkdef.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqsjzlqk/byqsjzlqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqsczzzlwt/byqsczzzlwt.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqnwbzlztqk/byqnwbzlztqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqyclzlwt/byqyclzlwt.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqysazzlwt/byqysazzlwt.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdnwbzlztqk/pdnwbzlztqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdsczzzlwt/pdsczzzlwt.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdsjzlqk/pdsjzlqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdysazzlwt/pdysazzlwt.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlgyzlqk/xlgyzlqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlnwbzlztqk/xlnwbzlztqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlsczzzlwt/xlsczzzlwt.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlsczzzlwtxxxx/xlsczzzlwtxxxx.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlyclzlwt/xlyclzlwt.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlysazzlwt/xlysazzlwt.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/nwbzlqk.jsp" />
+        <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.jsp" />
+        <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqsczzzlwtxxxx/byqsczzzlwtxxxx.ts" />
+        <option value="$PROJECT_DIR$/jsp/companySelector.ts" />
+        <option value="$PROJECT_DIR$/jsp/framework/templates/dateReport/show.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqwbzlwttjqk/byqwbzlwttjqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqnbzlwttjqk/byqnbzlwttjqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdnbzlwttjqk/pdnbzlwttjqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdwbzlwttjqk/pdwbzlwttjqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlnbzlwttjqk/xlnbzlwttjqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlwbzlwttjqk/xlwbzlwttjqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqnbzlwtfl/byqnbzlwtfl.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqwbzlwtfl/byqwbzlwtfl.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdnbzlwtfl/pdnbzlwtfl.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdwbzlwtfl/pdwbzlwtfl.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlnbzlwtfl/xlnbzlwtfl.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/xlwbzlwtfl/xlwbzlwtfl.ts" />
+        <option value="$PROJECT_DIR$/jsp/components/SeasonAccSelector.ts" />
+        <option value="$PROJECT_DIR$/jsp/components/dateSelectorProxy.ts" />
+        <option value="$PROJECT_DIR$/jsp/nwbzlqk/nwbzlqk.ts" />
+        <option value="$PROJECT_DIR$/jsp/UserStatusView.ts" />
+        <option value="$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjgApprove.ts" />
+        <option value="$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjgEntry.ts" />
+        <option value="$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjg.ts" />
+        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqadwtjjg/byqadwtjjg.ts" />
+        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqacptjjg/byqacptjjg.ts" />
         <option value="$PROJECT_DIR$/jsp/cpzlqk/pdacptjjg/pdacptjjg.ts" />
         <option value="$PROJECT_DIR$/jsp/cpzlqk/pdadwtjjg/pdadwtjjg.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/pdcpycssbhgwtmx/pdcpycssbhgwtmx.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/pdcpycssbhgxxfb/pdcpycssbhgxxfb.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjg.ts" />
         <option value="$PROJECT_DIR$/jsp/cpzlqk/xladydjtjjg/xladydjtjjg.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/xlbhgcpmx/xlbhgcpmx.ts" />
-        <option value="$PROJECT_DIR$/jsp/dateSelector.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqacptjjg/byqacptjjg.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqadwtjjg/byqadwtjjg.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgxxfb/byqcpycssbhgxxfb.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/entry_template.ts" />
+        <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqkEntry.ts" />
+        <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.jsp" />
+        <option value="$PROJECT_DIR$/jsp/gcyzb/show.jsp" />
         <option value="$PROJECT_DIR$/jsp/util.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqkdef.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqacptjjg/byqacptjjgEntry.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqacptjjg/byqacptjjg.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmx.ts" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.jsp" />
-        <option value="$PROJECT_DIR$/jsp/framework/templates/dateChartReport/show.jsp" />
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.ts" />
-        <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.ts" />
-        <option value="$PROJECT_DIR$/jsp/components/loading.jsp" />
-        <option value="$PROJECT_DIR$/jsp/loading.jsp" />
-        <option value="$PROJECT_DIR$/jsp/index_IndexBusinessReportsEntryZLWT.jsp" />
-        <option value="$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljg.jsp" />
+        <option value="$PROJECT_DIR$/jsp/gcyzb/show.ts" />
       </list>
     </option>
   </component>
@@ -201,9 +215,9 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="width" value="1292" />
-    <option name="height" value="767" />
+    <option name="x" value="-8" />
+    <option name="width" value="1452" />
+    <option name="height" value="869" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -255,7 +269,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -320,17 +334,105 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="priceLib" />
+              <option name="myItemId" value="gcyzb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jcycljg" />
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="framework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="singleDateReport" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="framework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dateReport" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="framework" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="framework" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -342,18 +444,18 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\gcyzb" />
+      <recent name="E:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\framework\templates\dateReport" />
+      <recent name="E:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\framework\templates\singleDateReport" />
+      <recent name="E:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\nwbzlqk" />
+      <recent name="E:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\wlyddqk" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\priceLib\jcycljg\ysjs" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\priceLib\jcycljg\ggp" />
       <recent name="D:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\framework\templates\dateReport" />
-      <recent name="E:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\framework\templates\singleDateReport" />
-      <recent name="E:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\nwbzlqk" />
-      <recent name="E:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp" />
-      <recent name="E:\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\cpzlqk" />
     </key>
   </component>
   <component name="RunManager">
@@ -433,25 +535,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1292" height="767" extended-state="1" />
+    <frame x="-8" y="0" width="1452" height="869" extended-state="1" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25862068" sideWeight="0.84584177" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27089137" sideWeight="0.7963303" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24961948" sideWeight="0.4721166" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12631579" sideWeight="0.4721166" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24380705" sideWeight="0.5278834" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28289473" sideWeight="0.48479086" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17473118" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" x="3" y="335" width="1594" height="168" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25862068" sideWeight="0.15415822" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27089137" sideWeight="0.20366973" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25128534" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28292048" sideWeight="0.48479086" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -497,228 +599,369 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/pdcpycssbhgwtmx/pdcpycssbhgwtmx.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/xlsczzzlwtxxxx/xlsczzzlwtxxxx.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <caret line="269" column="0" selection-start-line="269" selection-start-column="0" selection-end-line="274" selection-end-column="86" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/pdacptjjg/pdacptjjg.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/companySelector.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.6">
+          <caret line="48" column="9" selection-start-line="37" selection-start-column="8" selection-end-line="48" selection-end-column="9" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/byqnwbzlztqk/byqnwbzlztqk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-155.26666">
+          <caret line="274" column="61" selection-start-line="274" selection-start-column="61" selection-end-line="274" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/byqsczzzlwtxxxx/byqsczzzlwtxxxx.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-149.2">
+          <caret line="267" column="0" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/byqwbzlwttjqk/byqwbzlwttjqk.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicdef.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/byqnbzlwttjqk/byqnbzlwttjqk.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="188" column="26" selection-start-line="188" selection-start-column="26" selection-end-line="188" selection-end-column="26" />
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/pdcpycssbhgxxfb/pdcpycssbhgxxfb.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/pdnbzlwttjqk/pdnbzlwttjqk.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.036893204">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/gdw_indexInput_summary.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/pdwbzlwttjqk/pdwbzlwttjqk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/xlnbzlwttjqk/xlnbzlwttjqk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="28" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/xlwbzlwttjqk/xlwbzlwttjqk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/xlwbzlwtfl/xlwbzlwtfl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="243" column="58" selection-start-line="243" selection-start-column="58" selection-end-line="243" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/xlnbzlwtfl/xlnbzlwtfl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="241" column="58" selection-start-line="241" selection-start-column="58" selection-end-line="241" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/pdwbzlwtfl/pdwbzlwtfl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="248" column="58" selection-start-line="248" selection-start-column="58" selection-end-line="248" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/pdnbzlwtfl/pdnbzlwtfl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="248" column="58" selection-start-line="248" selection-start-column="58" selection-end-line="248" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/byqwbzlwtfl/byqwbzlwtfl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="241" column="58" selection-start-line="241" selection-start-column="58" selection-end-line="241" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/byqnbzlwtfl/byqnbzlwtfl.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="258" column="43" selection-start-line="258" selection-start-column="43" selection-end-line="258" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/nwbzlqk.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/nwbzlqk/nwbzlqk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/components/SeasonAccSelector.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="49" selection-start-line="22" selection-start-column="49" selection-end-line="22" selection-end-column="49" />
+          <folding>
+            <marker date="1476940906662" expanded="true" signature="1110:1120" placeholder="..." />
+            <marker date="1476940906662" expanded="true" signature="1195:1205" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/UserStatusView.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="42" selection-start-line="65" selection-start-column="42" selection-end-line="65" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xlbhgcpmx/xlbhgcpmxApprove.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/jqgrid/jqassist.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.623301">
-          <caret line="1317" column="13" selection-start-line="1317" selection-start-column="13" selection-end-line="1317" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/typescriptCompiler/external/lib.es6.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33203885">
-          <caret line="815" column="27" selection-start-line="815" selection-start-column="27" selection-end-line="815" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20787746">
-          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/gdw_indexInput_summary.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="42.75">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicShow.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33203885">
-          <caret line="17" column="47" selection-start-line="17" selection-start-column="47" selection-end-line="17" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basic.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36893204">
-          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqacptjjg/byqacptjjg.jsp">
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xlbhgcpmx/xlbhgcpmxEntry.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+          <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmx.jsp">
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjgEntry.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="16" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/util.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33195877">
-          <caret line="274" column="25" selection-start-line="274" selection-start-column="17" selection-end-line="274" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgxxfb/byqcpycssbhgxxfb.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjgApprove.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxEntry.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="127" column="19" selection-start-line="127" selection-start-column="19" selection-end-line="127" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxApprove.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="54" selection-start-line="54" selection-start-column="54" selection-end-line="54" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicApprove.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35774058">
-          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqkApprove.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="65" selection-start-line="10" selection-start-column="65" selection-end-line="10" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/yszkgb/yszkgb.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27824268">
-          <caret line="13" column="31" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxApprove.jsp">
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xlbhgcpmx/xlbhgcpmx.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqadwtjjg/byqadwtjjg.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="133" column="70" selection-start-line="133" selection-start-column="70" selection-end-line="133" selection-end-column="70" />
+          <caret line="224" column="68" selection-start-line="224" selection-start-column="68" selection-end-line="224" selection-end-column="99" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqkEntry.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/pdacptjjg/pdacptjjg.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="62" selection-start-line="42" selection-start-column="62" selection-end-line="42" selection-end-column="62" />
+          <caret line="161" column="99" selection-start-line="161" selection-start-column="99" selection-end-line="161" selection-end-column="99" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqkdef.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36783734">
-          <caret line="28" column="48" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/entry_template.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/pdadwtjjg/pdadwtjjg.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+          <caret line="171" column="99" selection-start-line="171" selection-start-column="99" selection-end-line="171" selection-end-column="99" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjg.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="185" column="90" selection-start-line="185" selection-start-column="90" selection-end-line="185" selection-end-column="101" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xladydjtjjg/xladydjtjjg.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="171" column="99" selection-start-line="171" selection-start-column="99" selection-end-line="171" selection-end-column="99" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqacptjjg/byqacptjjgEntry.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="123" column="60" selection-start-line="123" selection-start-column="60" selection-end-line="123" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/util.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="336" column="0" selection-start-line="336" selection-start-column="0" selection-end-line="336" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqkdef.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="21" selection-start-line="51" selection-start-column="21" selection-end-line="51" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateChartReport/show.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="142" column="9" selection-start-line="142" selection-start-column="9" selection-end-line="142" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/dateSelector.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="208" column="16" selection-start-line="208" selection-start-column="16" selection-end-line="208" selection-end-column="16" />
+          <caret line="161" column="48" selection-start-line="161" selection-start-column="32" selection-end-line="161" selection-end-column="48" />
           <folding>
-            <marker date="1474264128808" expanded="true" signature="6123:6136" placeholder="..." />
-            <marker date="1474264128808" expanded="true" signature="6193:6203" placeholder="..." />
-            <marker date="1474264128808" expanded="true" signature="7709:7722" placeholder="..." />
-            <marker date="1474264128808" expanded="true" signature="7783:7793" placeholder="..." />
-            <marker date="1474264128808" expanded="true" signature="10391:10404" placeholder="..." />
-            <marker date="1474264128808" expanded="true" signature="10465:10475" placeholder="..." />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqacptjjg/byqacptjjg.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="150" column="33" selection-start-line="150" selection-start-column="33" selection-end-line="150" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqkEntry.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="197" column="17" selection-start-line="197" selection-start-column="17" selection-end-line="197" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqkEntry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.875">
+          <caret line="250" column="60" selection-start-line="250" selection-start-column="49" selection-end-line="250" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.533334">
+          <caret line="234" column="48" selection-start-line="234" selection-start-column="48" selection-end-line="234" selection-end-column="48" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.038462">
+          <caret line="254" column="11" selection-start-line="254" selection-start-column="11" selection-end-line="254" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/show.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.5">
+          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="88" column="43" selection-start-line="88" selection-start-column="43" selection-end-line="88" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/entry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="43" selection-start-line="39" selection-start-column="43" selection-end-line="39" selection-end-column="43" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/show.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.4464285">
+          <caret line="256" column="44" selection-start-line="256" selection-start-column="36" selection-end-line="256" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/gcyzb/show.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding>
+            <marker date="1477449750769" expanded="true" signature="817:5950" placeholder="{...}" />
+            <marker date="1477449750769" expanded="true" signature="900:970" placeholder="{...}" />
+            <marker date="1477449750769" expanded="true" signature="1045:2023" placeholder="{...}" />
+            <marker date="1477449750769" expanded="true" signature="1165:2005" placeholder="{...}" />
+            <marker date="1477449750769" expanded="true" signature="1354:1435" placeholder="{...}" />
+            <marker date="1477449750769" expanded="true" signature="1483:1811" placeholder="{&quot;multiple&quot;: false...}" />
+            <marker date="1477449750769" expanded="true" signature="2843:3552" placeholder="{...}" />
+            <marker date="1477449750769" expanded="true" signature="3123:3208" placeholder="{...}" />
+            <marker date="1477449750769" expanded="true" signature="3377:3462" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.732143">
+          <caret line="68" column="27" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/unitedSelector.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="177" column="17" selection-start-line="177" selection-start-column="17" selection-end-line="177" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.43217054">
+          <caret line="239" column="0" selection-start-line="239" selection-start-column="0" selection-end-line="239" selection-end-column="0" />
           <folding>
             <marker date="1471226829184" expanded="true" signature="10123:10137" placeholder="..." />
             <marker date="1471226829184" expanded="true" signature="10194:10204" placeholder="..." />
@@ -726,179 +969,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateChartReport/show.jsp">
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/entry.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="266" column="34" selection-start-line="266" selection-start-column="34" selection-end-line="266" selection-end-column="34" />
+        <state vertical-scroll-proportion="-12.653846">
+          <caret line="75" column="9" selection-start-line="73" selection-start-column="8" selection-end-line="75" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/predictionCompanys_selection.jsp">
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/approve.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="51" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
+        <state vertical-scroll-proportion="0.29651162">
+          <caret line="24" column="18" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/companySelector.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/components/dateSelectorProxy.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="76" column="34" selection-start-line="76" selection-start-column="34" selection-end-line="76" selection-end-column="34" />
-          <folding />
+          <caret line="18" column="29" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+          <folding>
+            <marker date="1476940906620" expanded="true" signature="1369:1381" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmx.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/util.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="143" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqacptjjg/byqacptjjg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="219" column="25" selection-start-line="219" selection-start-column="25" selection-end-line="219" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-204.25">
-          <caret line="301" column="7" selection-start-line="301" selection-start-column="7" selection-end-line="301" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="203" column="53" selection-start-line="203" selection-start-column="53" selection-end-line="203" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/wgcpqk/ylfxwgcpylnlspcs/wgcpylnlspcs.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="107" column="58" selection-start-line="107" selection-start-column="58" selection-end-line="107" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.56395346">
+          <caret line="64" column="19" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="19" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/xtnyrb/xtnyrb.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="-8.833333">
+          <caret line="123" column="80" selection-start-line="123" selection-start-column="75" selection-end-line="123" selection-end-column="80" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/xtnyrb/xtnyrbEntry.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/gcyzb/show.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="75" selection-start-line="15" selection-start-column="75" selection-end-line="15" selection-end-column="75" />
+        <state vertical-scroll-proportion="-3.1538463">
+          <caret line="257" column="16" selection-start-line="257" selection-start-column="12" selection-end-line="257" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/gcyzb/show.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.76937985">
+          <caret line="127" column="31" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="31" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/messageBox.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33189654">
-          <caret line="17" column="39" selection-start-line="17" selection-start-column="32" selection-end-line="17" selection-end-column="39" />
-          <folding>
-            <marker date="1473759326435" expanded="true" signature="897:908" placeholder="..." />
-            <marker date="1473759326435" expanded="true" signature="926:952" placeholder="..." />
-            <marker date="1473759326435" expanded="true" signature="2558:2570" placeholder="..." />
-            <marker date="1473759326435" expanded="true" signature="2635:2701" placeholder="..." />
-            <marker date="1473759326435" expanded="true" signature="2947:2959" placeholder="..." />
-            <marker date="1473759326435" expanded="true" signature="3024:3126" placeholder="..." />
-            <marker date="1473759326435" expanded="true" signature="3597:3655" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="145" column="1" selection-start-line="145" selection-start-column="1" selection-end-line="145" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/xtnyrb/xtnyrbEntry.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.428571">
-          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/components/loading.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.142858">
-          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/loading.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="37" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/index_IndexBusinessReportsEntryZL.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.464286">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="23" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/index_IndexBusinessReportsEntryZLWT.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.5">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="26" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/index_IndexBusinessReportsZLWT.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.142858">
-          <caret line="18" column="69" selection-start-line="18" selection-start-column="69" selection-end-line="18" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/priceLib/jcycljg/jcycljg.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4793578">
-          <caret line="188" column="80" selection-start-line="188" selection-start-column="80" selection-end-line="188" selection-end-column="80" />
-          <folding />
         </state>
       </provider>
     </entry>

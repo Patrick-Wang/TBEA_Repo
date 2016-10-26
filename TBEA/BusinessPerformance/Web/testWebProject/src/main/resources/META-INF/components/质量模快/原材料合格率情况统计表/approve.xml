@@ -9,7 +9,8 @@ from
 where
  CLDL.cy=${cy}</sql>
   <list id="ids" type="int" sql="clids" value="0"/>
-  <sql id="dyz" order="ids" by="0" colcount="3">select
+  <if test="${zts.isEmpty}">
+   <sql id="dyz" order="ids" by="0" colcount="3">select
  CLDL.id,
  YCL.hgs,
  YCL.zs
@@ -21,6 +22,22 @@ where
  YCL.nf=${cal.year} and
  YCL.yf=${cal.month} and
  YCL.dwid=${compId}</sql>
+  </if>
+  <if test="${!zts.isEmpty}">
+   <sql id="dyz" order="ids" by="0" colcount="3">select
+ CLDL.id,
+ YCL.hgs,
+ YCL.zs
+from
+ zl_yclhglqk_cldl CLDL,
+ zl_yclhglqk YCL
+where
+ YCL.clid=CLDL.id and
+ YCL.nf=${cal.year} and
+ YCL.yf=${cal.month} and
+ YCL.dwid=${compId} and
+ zt in ${zts}</sql>
+  </if>
   <table id="result" rowIds="ids">
    <list type="string" sql="clids" value="1"/>
    <list type="string" sql="clids" value="2"/>
@@ -46,6 +63,12 @@ where
   <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
   <context key="cal" value="${request.date.asCalendar}"/>
   <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
+  <if test="${request.zt.toString != null}">
+   <context key="zts" value="${zlzts[request.zt.asInt][request.item.asInt]}"/>
+  </if>
+  <if test="${request.zt.toString == null}">
+   <list type="int" id="zts" export="true"/>
+  </if>
   <callservice id="servYclhglqktjApproveStatus"/>
   <callservice id="servYclhglqktjApproveUpdate"/>
   <formatter id="data">
@@ -77,14 +100,17 @@ where
   </response>
  </controller>
  <controller id="yclhglqktjApprove">
+  <list type="int" id="auths">22,53,54,55</list>
   <response type="jsp" name="framework/templates/dateReport/approve">
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
    <map key="updateUrl" value="yclhglqktjApproveUpdate"/>
    <map key="approveUrl" value="yclhglqktjDoApprove"/>
+   <map key="relateZl" value="${true}"/>
    <map key="title" value="原材料合格率"/>
-   <map map="${authMgr[22]}"/>
+   <map map="${authMgr[auths]}"/>
    <map key="unapproveUrl" value="yclhglqktjUnApprove"/>
+   <map key="zt" value="${request.zt.asInt}"/>
   </response>
  </controller>
  <controller id="yclhglqktjUnApprove">
@@ -136,5 +162,25 @@ where
   <if test="${dyz.size == 0}">
    <context key="zt" value="${0}"/>
   </if>
+ </service>
+ <controller id="yclhglqktjZlDoApprove">
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="zt" value="${request.zt.asInt}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servYclhglqktjZlDoApprove"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <service id="servYclhglqktjZlDoApprove" transaction="transactionManager">
+  <sql data="data" table="zl_yclhglqk">update
+ zl_yclhglqk
+set
+ zt = ${zt}
+where
+ nf=${cal.year} and
+ yf=${cal.month} and
+ dwid=${compId}</sql>
  </service>
 </components>

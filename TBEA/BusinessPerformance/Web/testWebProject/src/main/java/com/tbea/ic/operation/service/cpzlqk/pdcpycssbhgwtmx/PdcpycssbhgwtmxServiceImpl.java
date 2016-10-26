@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.cpzlqk.pdcpycssbhgwtmx;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,6 +130,7 @@ public class PdcpycssbhgwtmxServiceImpl implements PdcpycssbhgwtmxService {
 	private ErrorCode entryPdcpycssbhgwtmx(Date d, JSONArray data,
 			Company company, ZBStatus zt) {
 		EasyCalendar ec = new EasyCalendar(d);
+		Timestamp ts = new EasyCalendar().getTimestamp();
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
 			PdBhgwtmxEntity entity = null;
@@ -154,6 +156,7 @@ public class PdcpycssbhgwtmxServiceImpl implements PdcpycssbhgwtmxService {
 			entity.setClcs(row.getString(start++));
 			entity.setCljg(row.getString(start++));
 			entity.setZrlb(pdZrlbDao.getByName(row.getString(start++)));
+			entity.setXgsj(ts);
 			pdBhgwtmxDao.merge(entity);
 			
 		}

@@ -52,6 +52,7 @@ public class NbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	String filling_personnel;
 	String source;
 	Timestamp time;
+	Timestamp shsj;
 	Integer zt;
 	public String getSuppier_id() {
 		return suppier_id;
@@ -214,5 +215,11 @@ public class NbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void setTime(Timestamp time) {
 		this.time = time;
+	}
+	public Timestamp getShsj() {
+		return shsj;
+	}
+	public void setShsj(Timestamp shsj) {
+		this.shsj = shsj;
 	}
 }

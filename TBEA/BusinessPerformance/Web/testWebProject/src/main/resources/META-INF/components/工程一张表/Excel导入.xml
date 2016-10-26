@@ -1,0 +1,69 @@
+<components>
+ <service id="servGcyzbImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="project_comprehensive_table_imported">
+   <where>
+    <xmqc type="string" ref="1"/>
+   </where>
+   <set>
+    <lsh type="string" ref="${counter.reset[0].val}"/>
+    <xmqc type="string" ref="${counter.next.val}"/>
+    <xmgs type="string" ref="${counter.next.val}"/>
+    <xmlx type="string" ref="${counter.next.val}"/>
+    <xmrl type="string" ref="${counter.next.val}"/>
+    <xyjhqrsr type="double" ref="${counter.next.val}"/>
+    <xyjhkpje type="double" ref="${counter.next.val}"/>
+    <xyjhrzch type="double" ref="${counter.next.val}"/>
+    <jcsgrq type="date" ref="${counter.next.val}"/>
+    <xmsjjgrq type="date" ref="${counter.next.val}"/>
+    <xmsjjsrq type="date" ref="${counter.next.val}"/>
+    <sfzjsyz type="string" ref="${counter.next.val}"/>
+    <syzdydj type="double" ref="${counter.next.val}"/>
+    <syzrl type="double" ref="${counter.next.val}"/>
+    <sfzjwx type="string" ref="${counter.next.val}"/>
+    <wxdydj type="double" ref="${counter.next.val}"/>
+    <wxcd type="double" ref="${counter.next.val}"/>
+    <qzbwrq type="date" ref="${counter.next.val}"/>
+    <ybwrl type="double" ref="${counter.next.val}"/>
+    <njllyxfdxss type="double" ref="${counter.next.val}"/>
+    <bypjfh type="double" ref="${counter.next.val}"/>
+    <byjhfdl type="double" ref="${counter.next.val}"/>
+    <bysjfdl type="double" ref="${counter.next.val}"/>
+    <ndljswdl type="double" ref="${counter.next.val}"/>
+    <xyjhfdl type="double" ref="${counter.next.val}"/>
+    <htydzbq type="double" ref="${counter.next.val}"/>
+    <zbqqsbz type="string" ref="${counter.next.val}"/>
+    <zbqqssj type="date" ref="${counter.next.val}"/>
+    <sfbhhzbj type="string" ref="${counter.next.val}"/>
+    <khzczbj type="double" ref="${counter.next.val}"/>
+    <khqyxz type="string" ref="${counter.next.val}"/>
+    <khdbdyfkbhqk type="string" ref="${counter.next.val}"/>
+    <sfdzyw type="string" ref="${counter.next.val}"/>
+    <xmsfhfhg type="string" ref="${counter.next.val}"/>
+    <gqsfywjcsdfx type="string" ref="${counter.next.val}"/>
+    <gjsbcghtzbqjqssjsffgEPCht type="string" ref="${counter.next.val}"/>
+    <fdlcnqk type="string" ref="${counter.next.val}"/>
+    <sfxyzcjgbhbzwj type="string" ref="${counter.next.val}"/>
+    <xmfxjyh type="string" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="gcyzbImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servGcyzbImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="gcyzbImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="gcyzbImport"/>
+   <map key="title" value="工程一张表导入"/>
+  </response>
+ </controller>
+</components>

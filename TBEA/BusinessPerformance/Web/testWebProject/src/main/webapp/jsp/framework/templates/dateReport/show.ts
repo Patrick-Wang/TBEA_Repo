@@ -25,27 +25,19 @@ module framework.templates.dateReport {
     export class ShowView extends framework.templates.singleDateReport.ShowView{
         unitedSelector : Util.UnitedSelector;
 
-        onInitialize(opt:any):void{
-            this.unitedSelector = new UnitedSelector(opt.itemNodes,opt.itemId);
-            this.unitedSelector.change(()=>{
-                $("#" + opt.itemId + " select")
-                    .multiselect({
-                        multiple: false,
-                        header: false,
-                        minWidth: 100,
-                        height: '100%',
-                        // noneSelectedText: "请选择月份",
-                        selectedList: 1
-                    })
-                    .css("padding", "2px 0 2px 4px")
-                    .css("text-align", "left")
-                    .css("font-size", "12px");
-            })
-            $("#" + opt.itemId + " select")
-                .multiselect({
+
+        private renderItemSelector(itemId:string):void{
+            let sels = $("#" + itemId + " select");
+            for (let i = 0; i < sels.length; ++i){
+                let opts = $("#" + itemId + " select:eq(" + i + ") option");
+                let items = [];
+                for (let j = 0; j < opts.length; ++j){
+                    items.push(opts[j].text);
+                }
+                $(sels[i]) .multiselect({
                     multiple: false,
                     header: false,
-                    minWidth: 100,
+                    minWidth: Util.getUIWidth(items),
                     height: '100%',
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
@@ -53,6 +45,15 @@ module framework.templates.dateReport {
                 .css("padding", "2px 0 2px 4px")
                 .css("text-align", "left")
                 .css("font-size", "12px");
+            }
+        }
+
+        onInitialize(opt:any):void{
+            this.unitedSelector = new UnitedSelector(opt.itemNodes,opt.itemId);
+            this.unitedSelector.change(()=>{
+                this.renderItemSelector(opt.itemId);
+            });
+            this.renderItemSelector(opt.itemId);
             super.onInitialize(opt);
         }
 

@@ -14,7 +14,7 @@ var userStatus;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
         }
@@ -37,19 +37,20 @@ var userStatus;
         View.prototype.updateTable = function (tableId) {
             var name = tableId + "_jqgrid";
             var tableAssist = JQGridAssistantFactory.createFlatTable(name, [
-                "用户名", "SID", "登录时间", "最近访问时间"]);
+                "用户名", "IP", "SID", "登录时间", "最近访问时间"]);
             var summary = "● 在线户数 : " + this.mData.active_user_count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp";
             if (undefined != this.mData.latest_active_user) {
                 summary += "● 最近访问用户 : " + this.mData.latest_active_user + "&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;";
             }
             if (undefined != this.mData.last_accessed_time) {
-                summary += "● 最近访问用户 : " + this.mData.last_accessed_time;
+                summary += "● 访问时间 : " + this.mData.last_accessed_time;
             }
             $('#text')[0].innerHTML = summary;
             var data = [];
             for (var i = 0; i < this.mData.users.length; ++i) {
                 data.push([
                     this.mData.users[i].name,
+                    this.mData.users[i].ip,
                     this.mData.users[i].sid,
                     this.mData.users[i].login_time,
                     this.mData.users[i].last_accessed_time,
@@ -72,11 +73,11 @@ var userStatus;
                 width: 1000,
                 height: '100%',
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.instance = new View();
         return View;
-    }());
+    })();
     userStatus.View = View;
 })(userStatus || (userStatus = {}));

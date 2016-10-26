@@ -41,13 +41,15 @@ var nwbzlqk;
                 return new JQTable.JQGridAssistant(nodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../xlnbzlwttjqk/update.do", false);
             }
+            ShowView.prototype.onSaveComment = function (data) {
+            };
             ShowView.prototype.getId = function () {
                 return plugin.xlnbzlwttjqk;
             };
@@ -61,22 +63,6 @@ var nwbzlqk;
                         return false;
                     case nwbzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
-                    case nwbzlqk.Event.ZLFE_SAVE_COMMENT:
-                        //let param = {
-                        //    condition:Util.Ajax.toUrlParam({
-                        //        url : this.mAjax.baseUrl(),
-                        //        date: this.mDt,
-                        //        companyId:this.mCompType,
-                        //        ydjd:this.mYdjdType
-                        //    }),
-                        //    comment:e.data
-                        //}
-                        //this.mCommentSubmit.get({
-                        //    data : JSON.stringify([[param.condition, param.comment]])
-                        //}).then((jsonData:any)=>{
-                        //    Util.MessageBox.tip("保存成功", undefined);
-                        //});
-                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
@@ -118,7 +104,8 @@ var nwbzlqk;
                 //});
                 this.mAjax.get({
                     date: date,
-                    companyId: compType
+                    companyId: compType,
+                    pageType: pageType
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -170,11 +157,11 @@ var nwbzlqk;
                     autoScroll: true,
                     rowNum: this.mData.tjjg.length + 10,
                     viewrecords: true,
-                    pager: '#' + pagername,
+                    pager: '#' + pagername
                 }));
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(nwbzlqk.ZlPluginView));
+        })(nwbzlqk.ZlPluginView);
     })(xlnbzlwttjqk = nwbzlqk.xlnbzlwttjqk || (nwbzlqk.xlnbzlwttjqk = {}));
 })(nwbzlqk || (nwbzlqk = {}));

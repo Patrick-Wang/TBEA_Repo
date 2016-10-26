@@ -225,6 +225,28 @@
 	</bean>
 	<!--======================================= 天缆数据库 ===========================================-->
 	
+	
+	<!--======================================= NC数据库 ===========================================-->
+ 	<bean id="dsNc" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/dbNc" />
+	</bean>
+	<bean id="emfNc"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dsNc" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> 
+				<property name="showSql" value="false" />
+			</bean>
+		</property>
+		<property name="persistenceUnitName" value="NcDB" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transNc" />
+	<bean id="transNc" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="emfNc" />
+		<property name="dataSource" ref="dsNc" />
+	</bean>
+	<!--======================================= NC数据库 ===========================================-->
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 

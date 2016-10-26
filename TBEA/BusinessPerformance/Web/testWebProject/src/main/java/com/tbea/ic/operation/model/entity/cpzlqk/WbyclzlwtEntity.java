@@ -53,6 +53,7 @@ public class WbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	String after_sales_tel;
 	String source;
 	Timestamp time;
+	Timestamp shsj;
 	Integer zt;
 	
 	public String getCompany_name() {
@@ -222,5 +223,11 @@ public class WbyclzlwtEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void setSuppier_id(String suppier_id) {
 		this.suppier_id = suppier_id;
+	}
+	public Timestamp getShsj() {
+		return shsj;
+	}
+	public void setShsj(Timestamp shsj) {
+		this.shsj = shsj;
 	}
 }

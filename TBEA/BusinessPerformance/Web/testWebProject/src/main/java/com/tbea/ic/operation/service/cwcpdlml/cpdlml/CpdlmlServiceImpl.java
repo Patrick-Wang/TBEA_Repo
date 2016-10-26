@@ -37,11 +37,11 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 	public final static String NAME = "CpdlmlServiceImpl";
 
 	private void compute(List<String> hj, List<List<String>> result, int start, int end){
-		for (int i = start; i <= end; ++i){
+		for (int i = end; i >= 0; --i){
 			List<String> line = result.get(i);
 			line.set(3, "" + MathUtil.division(MathUtil.toDouble(line.get(2)), MathUtil.toDouble(hj.get(2))));
-			line.set(6, "" + MathUtil.division(MathUtil.toDouble(line.get(5)), MathUtil.toDouble(hj.get(5))));
 			line.set(5, "" + MathUtil.minus(MathUtil.toDouble(line.get(4)), MathUtil.toDouble(line.get(2))));
+			line.set(6, "" + MathUtil.division(MathUtil.toDouble(line.get(5)), MathUtil.toDouble(hj.get(5))));
 			line.set(7, "" + MathUtil.division(MathUtil.toDouble(line.get(5)), MathUtil.toDouble(line.get(2))));
 			line.set(10, "" + MathUtil.division(
 					MathUtil.minus(
@@ -56,7 +56,7 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 	public List<List<String>> getCpdlml(Date d, List<Company> comps) {
 		List<CpflEntity> cpfls = cpflDao.getAll();
 		List<List<String>> result = new ArrayList<List<String>>();
-		List<Integer> hjs = new ArrayList<Integer>();
+//		List<Integer> hjs = new ArrayList<Integer>();
 		EasyCalendar ec = new EasyCalendar(d);
 		ec.addYear(-1);
 		ec.setMonth(12);
@@ -67,9 +67,9 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 			Util.resize(line, 12);
 			line.set(0, cpflEntity.getCy().getName());
 			line.set(1, cpflEntity.getName());		
-			if (cpflEntity.getLx() > 0){
-				hjs.add(i);
-			}
+//			if (cpflEntity.getLx() > 1){
+//				hjs.add(i);
+//			}
 			CpdlmlEntity dlmx = cpdlmlDao.getSumByDate(d, cpflEntity.getId(), comps);
 			if (dlmx != null){
 				line.set(2, "" + dlmx.getLjsr());
@@ -81,13 +81,15 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 				line.set(9, "" + dlmx.getLjcb());
 			}
 		}
-		hjs.add(cpfls.size() - 1);
-		int start = 0;
-		for (int i = 0; i < hjs.size(); ++i){
-			int end = hjs.get(i);
-			compute(result.get(end), result, start, end);
-			start = end + 1;
-		}
+//		hjs.add(cpfls.size() - 1);
+//		int start = 0;
+//		for (int i = 0; i < hjs.size(); ++i){
+//			int end = hjs.get(i);
+//			compute(result.get(end), result, start, end);
+//			start = end + 1;
+//		}
+//		
+		compute(result.get(cpfls.size() - 1), result, 0, cpfls.size() - 1);
 		return result;
 	}
 

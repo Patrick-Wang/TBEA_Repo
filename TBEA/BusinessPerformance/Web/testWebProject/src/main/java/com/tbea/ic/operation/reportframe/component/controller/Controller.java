@@ -3,6 +3,7 @@ package com.tbea.ic.operation.reportframe.component.controller;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
@@ -66,6 +67,9 @@ public class Controller extends AbstractXmlComponent {
 			public void on(Element elem) throws Exception  {
 				for (XmlInterpreter interpreter : interpreters){
 					if (interpreter.accept(Controller.this, elem)){
+						if (ReportLogger.trace().isDebugEnabled()){
+							ReportLogger.trace().debug("controller : " + XmlUtil.toStringFromDoc(elem));
+						}
 						break;
 					}
 				}

@@ -72,6 +72,7 @@
     <zt type="int" value="2"/>
    </set>
   </merge>
+  <sql>delete from zl_wbyclzlwt where serial_num is null</sql>
  </service>
  <controller id="wbzlqkImport">
   <context key="data" value="${request.upfile.asExcel}"/>
@@ -91,10 +92,11 @@
  </controller>
  <controller id="wbzlqkTransport" cron1="0 0 1 ？ * 2">
   <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servWbzlqkTransTb"/>
   <callservice id="servWbzlqkTransSb"/>
    <callservice id="servWbzlqkTransXl"/>
   <callservice id="servWbzlqkTransHb"/> 
- <!-- <callservice id="servWbzlqkTransDl"/>-->
+  <callservice id="servWbzlqkTransDl"/>
   <response type="json">
    <errorCode>0</errorCode>
    <message>OK</message>
@@ -106,27 +108,27 @@
  </service>
  <service id="servWbzlqkTransLl" transaction="transLl">
   <context key="src" value="鲁缆数据库收集"/>
-  <context key="gs" value="ll"/>
+  <context key="gs" value="LL"/>
   <callservice id="servGetAndTransWbzlqk"/>
  </service>
  <service id="servWbzlqkTransXl" transaction="transXl">
   <context key="src" value="新缆数据库收集"/>
-  <context key="gs" value="xl"/>
+  <context key="gs" value="XL"/>
   <callservice id="servGetAndTransWbzlqk"/>
  </service>
  <service id="servWbzlqkTransDl" transaction="transDl">
   <context key="src" value="德缆数据库收集"/>
-  <context key="gs" value="dl"/>
+  <context key="gs" value="DL"/>
   <callservice id="servGetAndTransWbzlqk"/>
  </service>
  <service id="servWbzlqkTransSb" transaction="transSb">
   <context key="src" value="沈变数据库收集"/>
-  <context key="gs" value="sb"/>
+  <context key="gs" value="SB"/>
   <callservice id="servGetAndTransWbzlqk"/>
  </service>
  <service id="servWbzlqkTransHb">
   <context key="src" value="衡变数据库收集"/>
-  <context key="gs" value="hb"/>
+  <context key="gs" value="HB"/>
   <list type="string" id="cols">company_name,
 issue_happen_date,
 product_type,
@@ -156,7 +158,12 @@ after_sales_tel</list>
  </service>
  <service id="servWbzlqkTransXb" transaction="transXb">
   <context key="src" value="新变数据库收集"/>
-  <context key="gs" value="xb"/>
+  <context key="gs" value="XB"/>
+  <callservice id="servGetAndTransWbzlqk"/>
+ </service>
+ <service id="servWbzlqkTransTb" transaction="transTb">
+  <context key="src" value="天变数据库收集"/>
+  <context key="gs" value="TB"/>
   <callservice id="servGetAndTransWbzlqk"/>
  </service>
  <service id="servGetAndTransWbzlqk">

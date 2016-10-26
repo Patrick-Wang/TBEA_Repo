@@ -15,6 +15,15 @@ public class CpzlqkResp {
 	
 	List<List<String>> tjjg;
 	ZBStatus status;
+	Integer zt;
+	public Integer getZt() {
+		return zt;
+	}
+
+	public void setZt(Integer zt) {
+		this.zt = zt;
+	}
+
 	List<WaveItem> waveItems;
 	List<String> waveX;
 	List<String> zrlb;
@@ -35,6 +44,9 @@ public class CpzlqkResp {
 		this.status = status;
 		this.zrlb = zrlb;
 		this.bhglx = bhglx;
+	}
+	public CpzlqkResp() {
+		super();
 	}
 
 	public CpzlqkResp(List<List<String>> tjjg, ZBStatus status) {
@@ -70,7 +82,7 @@ public class CpzlqkResp {
 		
 		if (null != tjjg){
 			RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
-			handler.next(new RawPercentFormatterHandler(1, null, new Integer[]{4, 7}))
+			handler.next(new RawPercentFormatterHandler(2, null, new Integer[]{4, 7}))
 				.next(new RawNumberFormatterHandler(0));
 			RawFormatterServer serv = new RawFormatterServer(handler);
 			serv.acceptNullAs("--").format(tjjg);

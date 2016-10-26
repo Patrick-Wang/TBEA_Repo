@@ -46,11 +46,20 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isTable(e)) {
 			return false;
 		}
+		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 		elp = new ELParser(component);
 		Table tb = new Table();
 		tb.setIds((List) component.getVar(e.getAttribute("rowIds")));
 		List<List<Object>> tbValues = new ArrayList<List<Object>>();
 		tb.setValues(tbValues);
+		
+		if (e.hasAttribute("table")){
+			Object obj = XmlUtil.getObjectAttr(e, "table", elp);
+			if (obj instanceof List){
+				parseTable((List)obj, tb);
+			}
+		}
+
 		XmlUtil.each(e.getChildNodes(), new OnLoop(){
 
 			@Override
@@ -74,6 +83,55 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		this.clearTemps(tbValues);
 		component.put(e, tb);
 		return true;
+	}
+
+	private void parseTable(List rows, Table tb) {
+		if (rows.isEmpty()){
+			return;
+		}
+		
+		if (rows.get(0) instanceof List){
+			parseList(rows, tb);
+			return;
+		}
+
+		
+		if (rows.get(0) != null && rows.get(0).getClass().isArray()){
+			parseArray(rows, tb);
+			return;
+		}
+		
+		parseRow(rows, tb);
+	}
+
+	private void parseRow(List<List<Object>> rows, Table tb) {
+		for (int i = 0; i < rows.size(); ++i){
+			for (int j = 0; j < rows.get(i).size(); ++j){
+				if (tb.getValues().size() >= j){
+					tb.getValues().add(new ArrayList<Object>());
+				}
+				tb.getValues().get(j).add(rows.get(i).get(j));
+			}
+		}
+	}
+
+	private void parseArray(List<Object[]> rows, Table tb) {
+		for (int i = 0; i < rows.size(); ++i){
+			for (int j = 0; j < rows.get(i).length; ++j){
+				if (tb.getValues().size() >= j){
+					tb.getValues().add(new ArrayList<Object>());
+				}
+				tb.getValues().get(j).add(rows.get(i)[j]);
+			}
+		}
+	}
+
+	private void parseList(List<Object> row, Table tb) {
+		for (int i = 0; i < row.size(); ++i){
+			List<Object> col = new ArrayList<Object>();
+			col.add(row.get(i));
+			tb.getValues().add(col);
+		}	
 	}
 
 	protected void parseGrowthRates(AbstractXmlComponent component, Table tb,

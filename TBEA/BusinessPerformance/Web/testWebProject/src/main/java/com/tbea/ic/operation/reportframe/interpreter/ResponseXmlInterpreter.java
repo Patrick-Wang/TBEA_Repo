@@ -16,6 +16,7 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.el.ELParser;
@@ -84,7 +85,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isResponse(e)){
 			return false;
 		}
-		
+		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 		elp = new ELParser(component);
 		
 		HttpServletResponse resp = (HttpServletResponse) component.getVar("response");

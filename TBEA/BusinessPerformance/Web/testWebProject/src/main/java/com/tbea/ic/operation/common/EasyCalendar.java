@@ -312,6 +312,10 @@ public class EasyCalendar {
 		return (Timestamp) cache(KEY_Timestamp, new Timestamp(cal.getTimeInMillis()));
 	}
 	
+	public int getSeason(){
+		return getJdCount(this.getMonth());
+	}
+	
 	public int getDay(){
 		return cal.get(Calendar.DAY_OF_MONTH);
 	}

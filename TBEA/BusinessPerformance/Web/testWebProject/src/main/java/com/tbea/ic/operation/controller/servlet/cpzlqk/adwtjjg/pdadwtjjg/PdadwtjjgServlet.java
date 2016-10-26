@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -28,11 +30,18 @@ import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler
 import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
 import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
+import com.tbea.ic.operation.common.querier.QuerierFactory;
+import com.tbea.ic.operation.common.querier.ZBStatusQuerier;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
+import com.tbea.ic.operation.controller.servlet.cpzlqk.PageType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
 import com.tbea.ic.operation.service.cpzlqk.pdadwtjjg.PdadwtjjgService;
 import com.tbea.ic.operation.service.cpzlqk.pdadwtjjg.PdadwtjjgServiceImpl;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "pdadwtjjg")
@@ -43,33 +52,61 @@ public class PdadwtjjgServlet {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	@Autowired
+	CpzlqkService cpzlqkService;
+	
+	@Autowired
+	ExtendAuthorityService extendAuthService;
+	
+	
 	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] getPdadwtjjg(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
+		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 		
-		boolean all = Boolean.valueOf(request.getParameter("all"));
-		CpzlqkResp resp = null;
-		
-		if (all){
-			List<List<String>> result = pdadwtjjgService.getPdadwtjjg(d, yjType);
+		CpzlqkResp resp = new CpzlqkResp();
+		List<Integer> zts = new ArrayList<Integer>();
+		if (pageType == PageType.SHOW){
+			zts.add(ZBStatus.APPROVED.ordinal());
+		} else {
+			Account account = SessionManager.getAccount(request.getSession());
+			List<Integer> auths = extendAuthService.getAuths(account, company);
+			if (request.getParameter("zt") == null){
+				ZBStatus status = cpzlqkService.getCpzlqkStatus(d, company);
+				resp.setZt(status.ordinal());
+			}
+			if (pageType == PageType.ENTRY){
+				ZBStatusQuerier querier = QuerierFactory.createZlEntryQuerier();			
+				zts = querier.queryStatus(auths);
+			}  else if (pageType == PageType.APPROVE){
+				ZBStatusQuerier querier = QuerierFactory.createZlApproveQuerier();			
+				zts = querier.queryStatus(auths);
+			}
+			
+			if (zts.isEmpty()){
+				zts.add(ZBStatus.NONE.ordinal());
+			}
+		}
+				
+		if (comp == CompanyType.PDCY){
+			List<List<String>> result = pdadwtjjgService.getPdadwtjjg(d, yjType, zts);
 			List<WaveItem> waveItems = new ArrayList<WaveItem>();
 			if (yjType == YDJDType.YD){
-				waveItems = pdadwtjjgService.getWaveItems(d);
+				waveItems = pdadwtjjgService.getWaveItems(d, zts);
 			}
-			resp = new CpzlqkResp(result, waveItems);
+			resp.setWaveItems(waveItems);
+			resp.setTjjg(result);
 		}else{
-			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			List<List<String>> result = pdadwtjjgService.getPdadwtjjg(d, yjType, company);
-			List<WaveItem> waveItems = pdadwtjjgService.getPdYdAdwtjjgWaveItems(d, company);
-			resp = new CpzlqkResp(result, waveItems);
+			List<List<String>> result = pdadwtjjgService.getPdadwtjjg(d, yjType, company, zts);
+			List<WaveItem> waveItems = pdadwtjjgService.getPdYdAdwtjjgWaveItems(d, company, zts);
+			resp.setWaveItems(waveItems);
+			resp.setTjjg(result);
 		}
-		
-		
-		
-	
+
 		return JSONObject.fromObject(resp.format()).toString().getBytes("utf-8");
 	}
 
@@ -81,17 +118,15 @@ public class PdadwtjjgServlet {
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		List<List<String>> result = null;
 		
-		boolean all = Boolean.valueOf(request.getParameter("all"));
-	
-		if (all){
-			result = pdadwtjjgService.getPdadwtjjg(d, yjType);
-			
+		List<Integer> zts = new ArrayList<Integer>();
+		zts.add(ZBStatus.APPROVED.ordinal());
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (comp == CompanyType.PDCY){
+			result = pdadwtjjgService.getPdadwtjjg(d, yjType, zts);
 		}else{
-			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			result = pdadwtjjgService.getPdadwtjjg(d, yjType, company);
+			result = pdadwtjjgService.getPdadwtjjg(d, yjType, company, zts);
 		}
-		
 		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQADWTJJG);
 	

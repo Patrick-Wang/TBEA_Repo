@@ -9,92 +9,92 @@ import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 
 public interface ByqnwbzlztqkService {
 
-	List<List<String>> getYdnwbzlqk(Date d);
+	List<List<String>> getYdnwbzlqk(Date d, List<Integer> zts);
 
-	List<List<String>> getJdnwbzlqk(Date date);
+	List<List<String>> getJdnwbzlqk(Date date, List<Integer> zts);
 	
-	List<List<String>> getYdnwbzlqk(Date d, Company company);
+	List<List<String>> getYdnwbzlqk(Date d, Company company, List<Integer> zts);
 
-	List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company);
+	List<WaveItem> getWaveItems(Date d, YDJDType yjType, Company company, List<Integer> zts);
 
-	List<List<String>> getJdnwbzlqk(Date d, Company company);
+	List<List<String>> getJdnwbzlqk(Date d, Company company, List<Integer> zts);
 
-	List<WaveItem> getWaveItems(Date d, YDJDType yjType);
+	List<WaveItem> getWaveItems(Date d, YDJDType yjType, List<Integer> zts);
 
-	List<List<String>> getJdsjzlqk(Date d);
+	List<List<String>> getJdsjzlqk(Date d, List<Integer> zts);
 
-	List<List<String>> getYdsjzlqk(Date d);
+	List<List<String>> getYdsjzlqk(Date d, List<Integer> zts);
 
-	List<WaveItem> getSjzlqkWaveItems(Date d, YDJDType yjType);
+	List<WaveItem> getSjzlqkWaveItems(Date d, YDJDType yjType, List<Integer> zts);
 
-	List<List<String>> getJdsjzlqk(Date d, Company company);
+	List<List<String>> getJdsjzlqk(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getYdsjzlqk(Date d, Company company);
+	List<List<String>> getYdsjzlqk(Date d, Company company, List<Integer> zts);
 
-	List<WaveItem> getSjzlqkWaveItems(Date d, YDJDType yjType, Company company);
+	List<WaveItem> getSjzlqkWaveItems(Date d, YDJDType yjType, Company company, List<Integer> zts);
 
-	List<List<String>> getJdYclzlwt(Date d);
+	List<List<String>> getJdYclzlwt(Date d, List<Integer> zts);
 
-	List<List<String>> getYdYclzlwt(Date d);
+	List<List<String>> getYdYclzlwt(Date d, List<Integer> zts);
 
-	List<WaveItem> getWaveItemsYclzlwt(Date d, YDJDType yjType);
+	List<WaveItem> getWaveItemsYclzlwt(Date d, YDJDType yjType, List<Integer> zts);
 
-	List<List<String>> getJdYclzlwt(Date d, Company company);
+	List<List<String>> getJdYclzlwt(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getYdYclzlwt(Date d, Company company);
+	List<List<String>> getYdYclzlwt(Date d, Company company, List<Integer> zts);
 
-	List<WaveItem> getWaveItemsYclzlwt(Date d, YDJDType yjType, Company company);
+	List<WaveItem> getWaveItemsYclzlwt(Date d, YDJDType yjType, Company company, List<Integer> zts);
 
-	List<List<String>> getJdSczzzlqk(Date d);
+	List<List<String>> getJdSczzzlqk(Date d, List<Integer> zts);
 
-	List<List<String>> getYdSczzzlqk(Date d);
+	List<List<String>> getYdSczzzlqk(Date d, List<Integer> zts);
 
-	List<WaveItem> getWaveItemsSczzzlqk(Date d, YDJDType yjType);
+	List<WaveItem> getWaveItemsSczzzlqk(Date d, YDJDType yjType, List<Integer> zts);
 
-	List<List<String>> getJdSczzzlqk(Date d, Company company);
+	List<List<String>> getJdSczzzlqk(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getYdSczzzlqk(Date d, Company company);
+	List<List<String>> getYdSczzzlqk(Date d, Company company, List<Integer> zts);
 
-	List<WaveItem> getWaveItemsSczzzlqk(Date d, YDJDType yjType, Company company);
+	List<WaveItem> getWaveItemsSczzzlqk(Date d, YDJDType yjType, Company company, List<Integer> zts);
 
-	List<List<String>> getJdSczzzlqkxxxx(Date d);
+	List<List<String>> getJdSczzzlqkxxxx(Date d, List<Integer> zts);
 
-	List<List<String>> getYdSczzzlqkxxxx(Date d);
+	List<List<String>> getYdSczzzlqkxxxx(Date d, List<Integer> zts);
 
-	List<List<String>> getJdSczzzlqkxxxx(Date d, Company company);
+	List<List<String>> getJdSczzzlqkxxxx(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getYdSczzzlqkxxxx(Date d, Company company);
+	List<List<String>> getYdSczzzlqkxxxx(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getJdYsazzlwt(Date d);
+	List<List<String>> getJdYsazzlwt(Date d, List<Integer> zts);
 
-	List<List<String>> getJdYsazzlwt(Date d, Company company);
+	List<List<String>> getJdYsazzlwt(Date d, Company company, List<Integer> zts);
 
-	List<WaveItem> getWaveItemsYsazzlwt(Date d, YDJDType yjType, Company company);
+	List<WaveItem> getWaveItemsYsazzlwt(Date d, YDJDType yjType, Company company, List<Integer> zts);
 
-	List<WaveItem> getWaveItemsYsazzlwt(Date d, YDJDType yjType);
+	List<WaveItem> getWaveItemsYsazzlwt(Date d, YDJDType yjType, List<Integer> zts);
 
-	List<List<String>> getYdYsazzlwt(Date d);
+	List<List<String>> getYdYsazzlwt(Date d, List<Integer> zts);
 
-	List<List<String>> getYdYsazzlwt(Date d, Company company);
+	List<List<String>> getYdYsazzlwt(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getJdNbzlwtfl(Date d);
+	List<List<String>> getJdNbzlwtfl(Date d, List<Integer> zts);
 
-	List<List<String>> getYdNbzlwtfl(Date d);
+	List<List<String>> getYdNbzlwtfl(Date d, List<Integer> zts);
 
-	List<List<String>> getJdNbzlwtfl(Date d, Company company);
+	List<List<String>> getJdNbzlwtfl(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getYdNbzlwtfl(Date d, Company company);
+	List<List<String>> getYdNbzlwtfl(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getJdWbzlwtfl(Date d);
+	List<List<String>> getJdWbzlwtfl(Date d, List<Integer> zts);
 
-	List<List<String>> getYdWbzlwtfl(Date d);
+	List<List<String>> getYdWbzlwtfl(Date d, List<Integer> zts);
 
-	List<List<String>> getJdWbzlwtfl(Date d, Company company);
+	List<List<String>> getJdWbzlwtfl(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getYdWbzlwtfl(Date d, Company company);
+	List<List<String>> getYdWbzlwtfl(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getNbzlwttjqk(Date d, Company company);
+	List<List<String>> getNbzlwttjqk(Date d, Company company, List<Integer> zts);
 
-	List<List<String>> getWbzlwttjqk(Date d, Company company);
+	List<List<String>> getWbzlwttjqk(Date d, Company company, List<Integer> zts);
 
 }

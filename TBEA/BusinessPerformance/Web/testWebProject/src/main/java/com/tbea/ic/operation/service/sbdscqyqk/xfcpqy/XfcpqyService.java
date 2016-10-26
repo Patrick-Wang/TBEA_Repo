@@ -22,4 +22,6 @@ public interface XfcpqyService {
 	
 	ZBStatus getXfcpqyStatus(Date d, Company comp, SbdscqyqkType type);
 
+	void importCpqy(Date d);
+
 }

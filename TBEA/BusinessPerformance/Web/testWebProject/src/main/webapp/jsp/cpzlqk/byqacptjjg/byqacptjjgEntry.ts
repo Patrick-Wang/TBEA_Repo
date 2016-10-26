@@ -100,8 +100,8 @@ module cpzlqk {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j - 3] = submitData[i][j - 3].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j - 3]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
-                            return;
+                            //Util.MessageBox.tip("有空内容 无法提交")
+                            //return;
                         }
                     }
                 }
@@ -111,8 +111,6 @@ module cpzlqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        //Util.MessageBox.tip("提交 成功", ()=>{
-
                             let param = {
                                 year : this.getYear(),
                                 month: this.getMonth(),

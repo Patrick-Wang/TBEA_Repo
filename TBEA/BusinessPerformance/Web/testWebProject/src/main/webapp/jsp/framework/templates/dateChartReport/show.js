@@ -31,6 +31,7 @@ var framework;
             };
             dateChartReport.FE_TB_CLICKED = framework.route.nextId();
             dateChartReport.FE_CT_CLICKED = framework.route.nextId();
+            dateChartReport.FE_ZL_APPROVED = framework.route.nextId();
             function createInstance() {
                 return new ShowView();
             }

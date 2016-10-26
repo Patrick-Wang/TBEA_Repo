@@ -1,4 +1,10 @@
-﻿<html>
+﻿<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<html>
 <head>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -197,7 +203,9 @@
 <Table id="frameTable" align="center" style="width:1200px">
     <tr>
         <td>
-        
+            <c:if test="${relateZl}">
+                <div id="zlAndyclhgl" style="float: left"></div>
+            </c:if>
             <div id="dt" style="float: left;margin-right:10px"></div>
             <div  style="float: left;margin-right:10px">
                 <div id="im">
@@ -215,13 +223,51 @@
     </tr>
     <tr>
         <td>
+    <c:if test="${!relateZl}">
     <input id="unapprove" type="button" value="反审核" style="display:none;float: right;width: 80px; mrgin-left: 10px;"
     onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UNAPPROVE)" />
+
     <input id="approve" type="button" value="审核" style="display:none;float: right;width: 80px; mrgin-left: 10px;"
     onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_APPROVE)" />
+    </c:if>
         </td>
     </tr>
 </Table>
+    <c:if test="${relateZl}">
+        <script type="text/javascript">
+            window.gZt = '${zt}' == '' ? undefined : '${zt}';
+
+            var pageSlector = new Util.UnitedSelector([{
+            data:{
+            id:0,
+            value:"产品一次送试"
+            }
+            },{
+            data:{
+            id:1,
+            value:"原材料合格率"
+            }
+            }],"zlAndyclhgl", [1]);
+
+            pageSlector.change(function(){
+            if (pageSlector.getPath()[0] == 0){
+            window.location.href="${pageContext.request.contextPath}/cpzlqk/approve.do";
+            }
+            });
+            $("#zlAndyclhgl select")
+            .multiselect({
+            multiple: false,
+            header: false,
+            minWidth: 115,
+            height:'100%',
+            // noneSelectedText: "请选择月份",
+            selectedList: 1
+            })
+            .css("padding", "2px 0 2px 4px")
+            .css("text-align", "left")
+            .css("font-size", "12px");
+        </script>
+    </c:if>
 <script type="text/javascript">
     $(document).ready(function () {
         framework.templates.dateReport.createInstance();

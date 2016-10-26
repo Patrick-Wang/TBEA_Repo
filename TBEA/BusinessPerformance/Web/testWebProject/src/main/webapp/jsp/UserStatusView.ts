@@ -45,7 +45,7 @@ module userStatus {
             var name = tableId + "_jqgrid";
             var tableAssist: JQTable.JQGridAssistant =
                 JQGridAssistantFactory.createFlatTable(name, [
-                "用户名", "SID", "登录时间", "最近访问时间"]);
+                "用户名", "IP", "SID", "登录时间", "最近访问时间"]);
 
             var summary = "● 在线户数 : " + this.mData.active_user_count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp";
           
@@ -54,7 +54,7 @@ module userStatus {
             } 
             
             if(undefined != this.mData.last_accessed_time){
-                summary += "● 最近访问用户 : " + this.mData.last_accessed_time;
+                summary += "● 访问时间 : " + this.mData.last_accessed_time;
             } 
             
             $('#text')[0].innerHTML = summary;
@@ -63,6 +63,7 @@ module userStatus {
             for (var i = 0; i < this.mData.users.length; ++i) {
                 data.push([
                     this.mData.users[i].name,
+                    this.mData.users[i].ip,
                     this.mData.users[i].sid,
                     this.mData.users[i].login_time,
                     this.mData.users[i].last_accessed_time,

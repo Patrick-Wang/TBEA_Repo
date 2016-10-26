@@ -2,8 +2,10 @@ package com.tbea.ic.operation.reportframe.interpreter;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
 
 
 public class CallControllerXmlInterpreter implements XmlInterpreter {
@@ -14,7 +16,7 @@ public class CallControllerXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isCallController(e)){
 			return false;
 		}
-
+		
 		String id = e.getAttribute("id");
 		
 		Controller controller = null;

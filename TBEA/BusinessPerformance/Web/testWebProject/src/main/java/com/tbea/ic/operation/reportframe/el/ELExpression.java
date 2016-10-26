@@ -22,18 +22,20 @@ import com.tbea.ic.operation.reportframe.util.TypeUtil;
 
 public class ELExpression{
 	
-	static final String namePtn = "[a-zA-Z][a-zA-Z0-9]*";
+	static final String namePtn = "[a-zA-Z_][a-zA-Z0-9_]*";
 	static final String indexPtn = "\\[[^\\[]+\\]";
 	
-	static final Pattern expPattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\[[^\\[]+\\])*(\\.[a-zA-Z][a-zA-Z0-9]*(\\[[^\\[]+\\])*)*");  
+	static final Pattern expPattern = Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*(\\[[^\\[]+\\])*(\\.[a-zA-Z_][a-zA-Z0-9_]*(\\[[^\\[]+\\])*)*");  
 	static final Pattern indexesPattern = Pattern.compile("(\\[[^\\[]+\\])+"); 
-	static final Pattern indexedObjectPattern = Pattern.compile("[a-zA-Z][a-zA-Z0-9]*(\\[[^\\[]+\\])*"); 
+	static final Pattern indexedObjectPattern = Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*(\\[[^\\[]+\\])*"); 
 	static final Set<String> jsKeyWords = new HashSet<String>();
 	
 	static{
 		jsKeyWords.add("indexOf");
 		jsKeyWords.add("true");
 		jsKeyWords.add("false");
+		jsKeyWords.add("null");
+		jsKeyWords.add("undefined");
 	}
 	
 	int start;
@@ -48,6 +50,10 @@ public class ELExpression{
 		this.end = end;
 		this.expression = expression;
 		this.loader = loader;
+	}
+	
+	public String exp(){
+		return expression;
 	}
 	
 	public int start(){

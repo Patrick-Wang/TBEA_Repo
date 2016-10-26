@@ -4,7 +4,7 @@
  CLDL.id,
  sum(YCL.hgs) as hgs,
  sum(YCL.zs) as zs,
- (sum(YCL.zs) * 1.0 - sum(YCL.hgs)) / sum(YCL.zs) as hgl
+ (sum(YCL.hgs) * 1.0) / nullif(sum(YCL.zs),0) as hgl
 from
  zl_yclhglqk_cldl CLDL,
  zl_yclhglqk YCL
@@ -14,14 +14,14 @@ where
  YCL.nf=${cal.year} and
  YCL.yf=${cal.month} and
  YCL.dwid in ${companies} and
- YCL.zt=1
+ YCL.zt in ${zt}
 group by
  CLDL.id</sql>
   <sql id="hjljz" order="ids" by="0" export="true">select
  CLDL.id,
  sum(YCL.hgs) as newHgs,
  sum(YCL.zs) as newZs,
- (sum(YCL.zs) * 1.0 - sum(YCL.hgs)) / sum(YCL.zs) as hgl
+ (sum(YCL.hgs) * 1.0) / nullif(sum(YCL.zs),0) as hgl
 from
  zl_yclhglqk_cldl CLDL,
  zl_yclhglqk YCL
@@ -31,7 +31,7 @@ where
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
  YCL.dwid in ${companies} and
- YCL.zt=1
+ YCL.zt in ${zt}
 group by
  CLDL.id</sql>
  </service>
@@ -40,7 +40,7 @@ group by
  CLDL.id,
  YCL.hgs,
  YCL.zs,
- (YCL.zs * 1.0 - YCL.hgs) / YCL.zs as hgl
+ (YCL.hgs * 1.0) / nullif(YCL.zs,0) as hgl
 from
  zl_yclhglqk_cldl CLDL,
  zl_yclhglqk YCL
@@ -50,12 +50,12 @@ where
  YCL.nf=${cal.year} and
  YCL.yf=${cal.month} and
  YCL.dwid=${compId} and
- YCL.zt=1</sql>
+ YCL.zt in ${zt}</sql>
   <sql id="ljz" order="ids" by="0" export="true">select
  CLDL.id,
  sum(YCL.hgs) as newHgs,
  sum(YCL.zs) as newZs,
- (sum(YCL.zs) * 1.0 - sum(YCL.hgs)) / sum(YCL.zs) as hgl
+ (sum(YCL.hgs) * 1.0) / nullif(sum(YCL.zs),0) as hgl
 from
  zl_yclhglqk_cldl CLDL,
  zl_yclhglqk YCL
@@ -65,7 +65,7 @@ where
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
  YCL.dwid=${compId} and
- YCL.zt=1
+ YCL.zt in ${zt}
 group by
  CLDL.id</sql>
  </service>
@@ -211,7 +211,7 @@ where
    <EmptyFormatter>
     <DefaultMatcher cols="0,1"/>
    </EmptyFormatter>
-   <PercentFormatter reservedCount="1">
+   <PercentFormatter reservedCount="2">
     <DefaultMatcher cols="4,7"/>
    </PercentFormatter>
    <NumberFormatter reservedCount="0"/>
@@ -222,7 +222,7 @@ where
    <EmptyFormatter>
     <DefaultMatcher cols="0,1"/>
    </EmptyFormatter>
-   <PercentFormatter reservedCount="1">
+   <PercentFormatter reservedCount="2">
     <DefaultMatcher cols="4,7,10,13,16,19,22,25"/>
    </PercentFormatter>
    <NumberFormatter reservedCount="0"/>
@@ -234,6 +234,10 @@ where
   <context key="isJydw" value="${[50000,50001].indexOf(compId) &lt; 0}"/>
   <context key="isByqcy" value="${50000 == compId}"/>
   <context key="isXlcy" value="${50001 == compId}"/>
+  <list type="int" id="zt" export="true">1</list>
+  <if test="${auth[40]}">
+   <list id="zt" type="int" export="true">1,2,3,4,5,6,7</list>
+  </if>
  </controller>
  <controller id="yclhglqktjUpdate">
   <callcontroller id="clrYclhglqkParams"/>
@@ -748,7 +752,7 @@ where
    <map key="updateUrl" value="yclhglqktjUpdate"/>
    <map key="exportUrl" value="yclhglqktjExport"/>
    <map key="title" value="原材料合格率"/>
-   <map map="${authMgr[41]}"/>
+   <map map="${authMgr[43]}"/>
    <map key="itemChart">[
 {&quot;item&quot;:${orgs.virtualCYOrg.types[1]},&quot;chart&quot;:0},
 {&quot;item&quot;:${orgs.virtualCYOrg.types[2]},&quot;chart&quot;:0},
@@ -810,7 +814,7 @@ where
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
  YCL.dwid in ${dwids} and 
- YCL.zt=1
+ YCL.zt in ${zt}
 group by
  YCL.nf,
  YCL.yf

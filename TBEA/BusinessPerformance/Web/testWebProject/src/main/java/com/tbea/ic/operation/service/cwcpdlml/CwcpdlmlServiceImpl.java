@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.MathUtil;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -31,7 +33,6 @@ import com.tbea.ic.operation.model.entity.cwcpdlml.CpdlmlEntity;
 import com.tbea.ic.operation.model.entity.cwcpdlml.CpflEntity;
 import com.tbea.ic.operation.model.entity.cwgbjyxxjl.JyxxjlEntity;
 import com.tbea.ic.operation.model.entity.identifier.cwgb.KmEntity;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 import com.tbea.ic.operation.service.util.nc.NCLoggerFactory;
 
@@ -757,7 +758,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 		if (null != connection){
 			EasyCalendar cal = new EasyCalendar(d);
 			String whereSql =
-					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "'" + 
+					" and unit_code = '" + CompanyNCCode.getCode(comp.getType()) + "'" + 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth();
 
@@ -855,8 +856,8 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 						entity.setYf(cal.getMonth());
 						entity.setDwid(comp.getId());
 					}
-					entity.setLjcb(hasCb ? rsCb.getDouble(i) : null);
-					entity.setLjsr(hasSr ? rsSr.getDouble(i) : null);
+					entity.setLjcb(hasCb ? MathUtil.division(rsCb.getDouble(i), 10000d) : null);
+					entity.setLjsr(hasSr ? MathUtil.division(rsSr.getDouble(i), 10000d) : null);
 					cpdlmlDao.merge(entity);
 					NCLoggerFactory.logger().info("{}\t{}\t{}\t{}\t{}\t\t\t{}\t{}",new Object[]{
 							comp.getName(),

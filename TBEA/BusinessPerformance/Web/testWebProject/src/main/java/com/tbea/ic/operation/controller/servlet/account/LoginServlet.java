@@ -28,6 +28,7 @@ import com.tbea.ic.operation.service.entry.DailyReportService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.login.LoginService;
+import com.tbea.ic.operation.service.report.HBWebService;
 
 @Controller
 @RequestMapping(value = "Login")
@@ -108,6 +109,7 @@ public class LoginServlet implements OnSessionChangedListener {
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		
 		HttpSession session = request.getSession(false);
 		if (SessionManager.isOnline(session)) {
 			return new ModelAndView("redirect:/Login/index.do");
@@ -182,7 +184,10 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("NygbEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.NygbEntry)))
 		.add("NYzbscqkEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.NYzbscqkEntry)))
 		.add("QualityEntry", extAuthServ.hasAuthority(account, AuthType.QualityEntry))
-		.add("QualityApprove", extAuthServ.hasAuthority(account, AuthType.QualityApprove))
+		.add("QualityApprove", extAuthServ.hasAuthority(account, AuthType.QualityApprove) ||
+				extAuthServ.hasAuthority(account, 53) ||
+				extAuthServ.hasAuthority(account, 54) ||
+				extAuthServ.hasAuthority(account, 55))
 		.add("QualityLookup", extAuthServ.hasAuthority(account, AuthType.QualityLookup))
 		.add("FinanceLookup", extAuthServ.hasAuthority(account, AuthType.FinanceLookup))
 		.add("FinanceEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.FinanceEntry)))
@@ -209,6 +214,8 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("zhJyfxLookupAuth", extAuthServ.hasAuthority(account, 34))
 		.add("xtnyrbEntryAuth", jyfxEntry.or(extAuthServ.hasAuthority(account, 35)))
 		.add("xtnyrbLookupAuth", extAuthServ.hasAuthority(account, 36))
+		.add("QualityAuth", account.getRole() == 3 || account.getRole() == 4)
+		.add("I_EQualityImport", account.getName().equals("鲁缆质量部") || account.getName().equals("新变质量部"))
 		.add("jyfxEntry", jyfxEntry.value());
 		
 		

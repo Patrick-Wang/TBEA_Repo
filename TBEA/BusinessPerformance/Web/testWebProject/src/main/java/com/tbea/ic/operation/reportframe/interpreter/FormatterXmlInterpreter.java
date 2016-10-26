@@ -74,6 +74,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isFormatter(e)){
 			return false;
 		}
+		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 		this.component = component;
 		elp = new ELParser(component);
 		List<FormatterHandler> handlers = new ArrayList<FormatterHandler>();

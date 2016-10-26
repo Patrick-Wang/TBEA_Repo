@@ -25,6 +25,14 @@
 				<li><a href="../report/yclhglqktjEntry.do" target="_blank"><img
 						src="../images/charts/bar3.png"> <span><strong>原材料合格率录入</strong></span></a>
 				</li>
+				<c:if test="${I_EQualityImport}">
+					<li><a href="../report/nbzlqkImportJsp.do" target="_blank"><img
+						src="../images/charts/bar4.png"> <span><strong>内部质量问题导入</strong></span></a>
+					</li>
+					<li><a href="../report/wbzlqkImportJsp.do" target="_blank"><img
+						src="../images/charts/bar4.png"> <span><strong>外部质量问题导入</strong></span></a>
+					</li>
+				</c:if>
 			</ul>
 		</div>
 	</div>

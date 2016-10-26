@@ -31,4 +31,15 @@ public class HyDaoImpl extends AbstractReadWriteDaoImpl<HyEntity> implements HyD
 		Query q = this.getEntityManager().createQuery("from HyEntity");
 		return q.getResultList();
 	}
+
+	@Override
+	public HyEntity getByName(String hyName) {
+		Query q = this.getEntityManager().createQuery("from HyEntity where trim(name) = :name");
+		q.setParameter("name", hyName);
+		List ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
+		}
+		return (HyEntity) ret.get(0);
+	}
 }

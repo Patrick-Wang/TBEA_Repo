@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.MathUtil;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -27,7 +28,6 @@ import com.tbea.ic.operation.model.dao.identifier.cwgb.km.KmDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.entity.cwgbjyxxjl.JyxxjlEntity;
 import com.tbea.ic.operation.model.entity.identifier.cwgb.KmEntity;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 
 @Service(CwgbjyxxjlServiceImpl.NAME)
@@ -157,7 +157,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			String whereSql = 
-				" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
+				" and unit_code in (" + StringUtils.join(CompanyNCCode.toCodeList(comps).toArray(), ",") + ")" + 
 						" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 						" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
 
@@ -201,7 +201,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 			while (rs.next()) {
 
 				String unitCode = String.valueOf(rs.getObject(1));
-				CompanyType companyType = NCCompanyCode.getType(unitCode);
+				CompanyType companyType = CompanyNCCode.getType(unitCode);
 				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
 				
 				

@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.sbdscqyqk.SbdscqyqkType;
 import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
@@ -131,4 +132,5 @@ public class XfcpqyDaoImpl extends AbstractReadWriteDaoImpl<XfcpqyEntity> implem
 		}
 		return rets;
 	}
+
 }

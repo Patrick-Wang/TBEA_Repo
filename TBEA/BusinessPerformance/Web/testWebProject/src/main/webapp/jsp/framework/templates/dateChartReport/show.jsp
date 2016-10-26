@@ -1,4 +1,10 @@
-﻿<html>
+﻿<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -193,9 +199,9 @@
 <Table id="frameTable" align="center" style="width:1200px">
     <tr>
         <td>
-    <c:if test="${relateZl}">
-            <div id="zlAndyclhgl" style="float: left"></div>
-    </c:if>
+            <c:if test="${relateZl}">
+                    <div id="zlAndyclhgl" style="float: left"></div>
+            </c:if>
             <div id="dt" style="float: left;margin-right:10px"></div>
             <div  style="float: left;margin-right:10px">
                 <div id="im">
@@ -228,6 +234,7 @@
                 <input id="exportButton" type="button" value="导出"
                        onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_EXPORTEXCEL, 'export')">
             </form>
+
         </td>
     </tr>
 </Table>

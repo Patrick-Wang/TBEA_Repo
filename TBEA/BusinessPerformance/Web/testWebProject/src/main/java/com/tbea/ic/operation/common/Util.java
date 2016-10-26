@@ -20,8 +20,11 @@ public class Util {
 	}
 	
 	public static String formatToDay(Date d) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		return formatter.format(d);
+		if (null != d){
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			return formatter.format(d);
+		}
+		return null;
 	}
 	
 	public static String formatToMill(Date d) {

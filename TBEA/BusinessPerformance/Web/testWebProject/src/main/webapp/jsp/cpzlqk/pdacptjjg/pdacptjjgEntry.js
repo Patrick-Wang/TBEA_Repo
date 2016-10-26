@@ -80,7 +80,6 @@ var cpzlqk;
                 });
             };
             EntryView.prototype.pluginSubmit = function (dt, compType) {
-                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -100,9 +99,19 @@ var cpzlqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", function () {
-                            _this.pluginUpdate(dt, compType);
-                        });
+                        var param = {
+                            year: Util.toDate(dt).year,
+                            month: Util.toDate(dt).month,
+                            pageType: 2,
+                            tableStatus: JSON.stringify([
+                                {
+                                    id: plugin.pdacptjjg
+                                }, {
+                                    id: plugin.pdadwtjjg
+                                }
+                            ])
+                        };
+                        window.location.href = "show.do?param=" + JSON.stringify(param);
                     }
                     else {
                         Util.MessageBox.tip(resp.message);

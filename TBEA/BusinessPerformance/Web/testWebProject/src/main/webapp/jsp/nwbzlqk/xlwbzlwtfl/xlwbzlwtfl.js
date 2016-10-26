@@ -49,14 +49,12 @@ var nwbzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../xlwbzlwtfl/update.do", false);
-                this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
-                this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.xlwbzlwtfl;
@@ -69,21 +67,6 @@ var nwbzlqk;
                 switch (e.id) {
                     case nwbzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
-                    case nwbzlqk.Event.ZLFE_SAVE_COMMENT:
-                        var param = {
-                            condition: Util.Ajax.toUrlParam({
-                                url: this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId: this.mCompType,
-                                ydjd: this.mYdjdType
-                            }),
-                            comment: e.data
-                        };
-                        this.mCommentSubmit.get({
-                            data: JSON.stringify([[param.condition, param.comment]])
-                        }).then(function (jsonData) {
-                            Util.MessageBox.tip("保存成功", undefined);
-                        });
                         break;
                 }
                 return _super.prototype.onEvent.call(this, e);
@@ -98,31 +81,66 @@ var nwbzlqk;
             ShowView.prototype.option = function () {
                 return this.mOpt;
             };
+            ShowView.prototype.onSaveComment = function (comment) {
+                var param = {
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: this.mDt,
+                        companyId: this.mCompType,
+                        ydjd: this.mYdjdType
+                    }),
+                    comment: comment
+                };
+                this.mCommentSubmit.get({
+                    data: JSON.stringify([[param.condition, param.comment]])
+                }).then(function (jsonData) {
+                    Util.MessageBox.tip("提交成功", undefined);
+                });
+            };
             ShowView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
-                        url: this.mAjax.baseUrl(),
-                        date: date,
-                        companyId: compType,
-                        ydjd: this.mYdjdType
-                    }), compId: compType }).then(function (jsonData) {
-                    framework.router
-                        .fromEp(_this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(nwbzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData);
-                });
+                var comment;
+                var cpzlqkResp;
+                var complete = function (jsonData) {
+                    if (undefined != jsonData.tjjg) {
+                        cpzlqkResp = jsonData;
+                    }
+                    else {
+                        comment = jsonData;
+                    }
+                    if (comment != undefined && cpzlqkResp != undefined) {
+                        _this.mData = cpzlqkResp;
+                        _this.refresh();
+                        if (pageType == nwbzlqk.PageType.APPROVE) {
+                            framework.router
+                                .fromEp(_this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(nwbzlqk.Event.ZLFE_APPROVEAUTH_UPDATED);
+                        }
+                        framework.router
+                            .fromEp(_this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(nwbzlqk.Event.ZLFE_COMMENT_UPDATED, {
+                            comment: comment,
+                            zt: cpzlqkResp.zt });
+                    }
+                };
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
-                    all: this.mCompType == Util.CompanyType.XLCY
-                })
-                    .then(function (jsonData) {
-                    _this.mData = jsonData;
-                    _this.refresh();
-                });
+                    pageType: pageType
+                }).then(complete);
+                this.mCommentGet.get({
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: date,
+                        companyId: compType,
+                        ydjd: this.mYdjdType }),
+                    compId: compType
+                }).then(complete);
             };
             ShowView.prototype.toCtVal = function (val) {
                 var index = val.lastIndexOf('%');
@@ -189,22 +207,30 @@ var nwbzlqk;
                     autoScroll: true,
                     rowNum: this.mData.tjjg.length + 10,
                     viewrecords: true,
-                    pager: '#' + pagername,
+                    pager: '#' + pagername
                 }));
             };
             ShowView.prototype.updateYDEchart = function () {
                 var title = "外部质量问题分类统计情况";
                 var wtlb = [];
+                var wtlb1 = [];
                 for (var i = 0; i < this.mData.tjjg.length; ++i) {
                     wtlb.push(this.mData.tjjg[i][0]);
+                    wtlb1.push(this.mData.tjjg[i][0]);
                 }
                 var legend = {
                     orient: 'vertical',
                     x: 'left',
                     data: wtlb
                 };
+                var legend1 = {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: wtlb1
+                };
                 var tooltip = {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
                 };
                 var series = [{
                         name: "问题类别",
@@ -227,7 +253,7 @@ var nwbzlqk;
                             value: this.toCtVal(this.mData.tjjg[i][7] + "")
                         });
                         series1[0].data.push({
-                            name: wtlb[i],
+                            name: wtlb1[i],
                             value: this.toCtVal(this.mData.tjjg[i][8] + "")
                         });
                     }
@@ -239,9 +265,19 @@ var nwbzlqk;
                             value: this.toCtVal(this.mData.tjjg[i][1] + "")
                         });
                         series1[0].data.push({
-                            name: wtlb[i],
+                            name: wtlb1[i],
                             value: this.toCtVal(this.mData.tjjg[i][2] + "")
                         });
+                    }
+                }
+                for (var i = series[0].data.length - 1; i >= 0; --i) {
+                    if (series[0].data[i].value == 0) {
+                        series[0].data.splice(i, 1);
+                        wtlb.splice(i, 1);
+                    }
+                    if (series1[0].data[i].value == 0) {
+                        series1[0].data.splice(i, 1);
+                        wtlb1.splice(i, 1);
                     }
                 }
                 var option = {
@@ -252,7 +288,7 @@ var nwbzlqk;
                     tooltip: tooltip,
                     legend: legend,
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: true,
                     series: series
@@ -263,9 +299,9 @@ var nwbzlqk;
                         x: 'center'
                     },
                     tooltip: tooltip,
-                    legend: legend,
+                    legend: legend1,
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: true,
                     series: series1
@@ -330,7 +366,7 @@ var nwbzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -347,6 +383,6 @@ var nwbzlqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(nwbzlqk.ZlPluginView));
+        })(nwbzlqk.ZlPluginView);
     })(xlwbzlwtfl = nwbzlqk.xlwbzlwtfl || (nwbzlqk.xlwbzlwtfl = {}));
 })(nwbzlqk || (nwbzlqk = {}));

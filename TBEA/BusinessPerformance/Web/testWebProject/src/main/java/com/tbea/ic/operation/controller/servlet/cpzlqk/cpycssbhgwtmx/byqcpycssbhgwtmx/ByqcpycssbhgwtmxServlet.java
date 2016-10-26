@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -34,12 +35,17 @@ import com.tbea.ic.operation.common.formatter.excel.TextFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
+import com.tbea.ic.operation.common.querier.QuerierFactory;
+import com.tbea.ic.operation.common.querier.ZBStatusQuerier;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.PageType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
-import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
 import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx.ByqcpycssbhgwtmxService;
 import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx.ByqcpycssbhgwtmxServiceImpl;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "byqcpycssbhgwtmx")
@@ -47,67 +53,52 @@ public class ByqcpycssbhgwtmxServlet {
 	@Resource(name=ByqcpycssbhgwtmxServiceImpl.NAME)
 	ByqcpycssbhgwtmxService byqcpycssbhgwtmxService;
 
-
-
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
+	
+	@Autowired
+	CpzlqkService cpzlqkService;
 
+	@Autowired
+	ExtendAuthorityService extendAuthService;
+	
 	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] getByqcpycssbhgwtmx(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
-		boolean all = Boolean.valueOf(request.getParameter("all"));
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
-		ZBStatus status = ZBStatus.NONE;
-		if (request.getParameter("zt") != null){
-			status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
-		}		
-		
-		List<Integer> auths = JSONArray.fromObject(request.getParameter("auths"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		CpzlqkResp resp = new CpzlqkResp();
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
 			zts.add(ZBStatus.APPROVED.ordinal());
-		} else if (pageType == PageType.ENTRY){
-			zts.add(ZBStatus.SAVED.ordinal());
-			zts.add(ZBStatus.SUBMITTED.ordinal());
-			zts.add(ZBStatus.APPROVED.ordinal());
-			zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
-			zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
-		}  else if (pageType == PageType.APPROVE){
-			
-			if (status == ZBStatus.NONE || status == ZBStatus.SAVED ){
-
-			} else if (status == ZBStatus.SUBMITTED){
-				if (auths.contains(53)){
-					zts.add(ZBStatus.SUBMITTED.ordinal());
-				}
-			} else if (status == ZBStatus.INTER_APPROVED_1){
-				if (auths.contains(54) || auths.contains(53)){
-					zts.add(ZBStatus.INTER_APPROVED_1.ordinal());
-				}
-			} else if (status == ZBStatus.INTER_APPROVED_2){
-				if (auths.contains(53) || auths.contains(AuthType.QualityApprove.ordinal()) || auths.contains(54)){
-					zts.add(ZBStatus.INTER_APPROVED_2.ordinal());
-				}
-			} else if (status == ZBStatus.APPROVED){
-				if (auths.contains(53) || auths.contains(AuthType.QualityApprove.ordinal()) || auths.contains(54)){
-					zts.add(ZBStatus.APPROVED.ordinal());
-				}
+		} else {
+			Account account = SessionManager.getAccount(request.getSession());
+			List<Integer> auths = extendAuthService.getAuths(account, company);
+			if (request.getParameter("zt") == null){
+				ZBStatus status = cpzlqkService.getCpzlqkStatus(d, company);
+				resp.setZt(status.ordinal());
 			}
-		}
-		
-		if (zts.isEmpty()){
-			zts.add(ZBStatus.NONE.ordinal());
+			if (pageType == PageType.ENTRY){
+				ZBStatusQuerier querier = QuerierFactory.createZlEntryQuerier();			
+				zts = querier.queryStatus(auths);
+			}  else if (pageType == PageType.APPROVE){
+				ZBStatusQuerier querier = QuerierFactory.createZlApproveQuerier();			
+				zts = querier.queryStatus(auths);
+			}
+			
+			if (zts.isEmpty()){
+				zts.add(ZBStatus.NONE.ordinal());
+			}
 		}
 
 				
 		List<List<String>> result = null;
-		if (all){
+		if (comp == CompanyType.BYQCY){
 			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, zts);
 		}else{
-			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company, zts);
 		}
 		
@@ -116,23 +107,24 @@ public class ByqcpycssbhgwtmxServlet {
 		RawFormatterHandler handler = new RawEmptyHandler(null, null);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
+		resp.setTjjg(result);
 		
-		return JSONArray.fromObject(result).toString().getBytes("utf-8");
+		return JSONObject.fromObject(resp).toString().getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "approve.do")
-	public @ResponseBody byte[] approve(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		//JSONArray data = JSONArray.fromObject(request.getParameter("data"));
-		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		List<List<String>> result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company);
-		JSONArray data = JSONArray.fromObject(result);
-		
-		ErrorCode err = byqcpycssbhgwtmxService.approveByqcpycssbhgwtmx(d, data, company);
-		return Util.response(err);
-	}
+//	@RequestMapping(value = "approve.do")
+//	public @ResponseBody byte[] approve(HttpServletRequest request,
+//			HttpServletResponse response) throws UnsupportedEncodingException {
+//		//JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+//		Date d = Date.valueOf(request.getParameter("date"));
+//		CompanyType comp = CompanySelection.getCompany(request);
+//		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+//		List<List<String>> result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company);
+//		JSONArray data = JSONArray.fromObject(result);
+//		
+//		ErrorCode err = byqcpycssbhgwtmxService.approveByqcpycssbhgwtmx(d, data, company);
+//		return Util.response(err);
+//	}
 	
 	@RequestMapping(value = "entry/update.do")
 	public @ResponseBody byte[] updateByqcpycssbhgwtmx(HttpServletRequest request,
@@ -174,50 +166,48 @@ public class ByqcpycssbhgwtmxServlet {
 	}
 	
 	
-	@RequestMapping(value = "approve/update.do")
-	public @ResponseBody byte[] updateApproveByqcpycssbhgwtmx(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		List<List<String>> result = null;
-		ZBStatus status = byqcpycssbhgwtmxService.getStatus(d, company);
-		if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED){
-			
-			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company);
-		
-			RawFormatterHandler handler = new RawEmptyHandler();
-			RawFormatterServer serv = new RawFormatterServer(handler);
-			serv.acceptNullAs("--").format(result);
-		}
-		
-		
-		return JSONObject.fromObject(new CpzlqkResp(result, status)).toString().getBytes("utf-8");
-	}
-	
-	@RequestMapping(value = "approve/approve.do")
-	public @ResponseBody byte[] approveByqcpycssbhgwtmx(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
-		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		
-		ErrorCode err = byqcpycssbhgwtmxService.approveByqcpycssbhgwtmx(d, data, company);
-		return Util.response(err);
-	}
-	
-	@RequestMapping(value = "approve/unapprove.do")
-	public @ResponseBody byte[] unapproveByqcpycssbhgwtmx(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
-		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		
-		ErrorCode err = byqcpycssbhgwtmxService.unapproveByqcpycssbhgwtmx(d, data, company);
-		return Util.response(err);
-	}
+//	@RequestMapping(value = "approve/update.do")
+//	public @ResponseBody byte[] updateApproveByqcpycssbhgwtmx(HttpServletRequest request,
+//			HttpServletResponse response) throws UnsupportedEncodingException {
+//		Date d = Date.valueOf(request.getParameter("date"));
+//		CompanyType comp = CompanySelection.getCompany(request);
+//		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+//		List<List<String>> result = null;
+//		ZBStatus status = byqcpycssbhgwtmxService.getStatus(d, company);
+//		if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED){
+//			
+//			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company);
+//		
+//			RawFormatterHandler handler = new RawEmptyHandler();
+//			RawFormatterServer serv = new RawFormatterServer(handler);
+//			serv.acceptNullAs("--").format(result);
+//		}		
+//		return JSONObject.fromObject(new CpzlqkResp(result, status)).toString().getBytes("utf-8");
+//	}
+//	
+//	@RequestMapping(value = "approve/approve.do")
+//	public @ResponseBody byte[] approveByqcpycssbhgwtmx(HttpServletRequest request,
+//			HttpServletResponse response) throws UnsupportedEncodingException {
+//		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+//		Date d = Date.valueOf(request.getParameter("date"));
+//		CompanyType comp = CompanySelection.getCompany(request);
+//		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+//		
+//		ErrorCode err = byqcpycssbhgwtmxService.approveByqcpycssbhgwtmx(d, data, company);
+//		return Util.response(err);
+//	}
+//	
+//	@RequestMapping(value = "approve/unapprove.do")
+//	public @ResponseBody byte[] unapproveByqcpycssbhgwtmx(HttpServletRequest request,
+//			HttpServletResponse response) throws UnsupportedEncodingException {
+//		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+//		Date d = Date.valueOf(request.getParameter("date"));
+//		CompanyType comp = CompanySelection.getCompany(request);
+//		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+//		
+//		ErrorCode err = byqcpycssbhgwtmxService.unapproveByqcpycssbhgwtmx(d, data, company);
+//		return Util.response(err);
+//	}
 	
 	@RequestMapping(value = "export.do")
 	public void exportByqcpycssbhgwtmx(HttpServletRequest request,
@@ -225,14 +215,15 @@ public class ByqcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		
-		boolean all = Boolean.valueOf(request.getParameter("all"));
 		List<List<String>> result = null;
-		if (all){
-			//result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType);
+		List<Integer> zts = new ArrayList<Integer>();
+		zts.add(ZBStatus.APPROVED.ordinal());
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (comp == CompanyType.PDCY){
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, zts);
 		}else{
-			CompanyType comp = CompanySelection.getCompany(request);
-			Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-			//result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company);
+			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, company, zts);
 		}
 		
 		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQCPYCSSBHGWTMX);

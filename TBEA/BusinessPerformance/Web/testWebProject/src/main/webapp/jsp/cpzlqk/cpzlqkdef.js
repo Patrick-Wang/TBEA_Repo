@@ -50,6 +50,7 @@ var cpzlqk;
         Event.ZLFE_APPROVE_COMMENT = FrameEvent.lastEvent();
         Event.ZLFE_APPROVE_COMMENT1 = FrameEvent.lastEvent();
         Event.ZLFE_APPROVE_COMMENT2 = FrameEvent.lastEvent();
+        Event.ZLFE_APPROVE_COMMENT3 = FrameEvent.lastEvent();
         Event.ZLFE_COMMENT_UPDATED = FrameEvent.lastEvent();
         Event.ZLFE_DATA_STATUS = FrameEvent.lastEvent();
         Event.ZLFE_COMMENT_DENY = FrameEvent.lastEvent();

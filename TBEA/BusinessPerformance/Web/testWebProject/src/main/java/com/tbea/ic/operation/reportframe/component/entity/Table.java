@@ -9,25 +9,29 @@ public class Table {
 	
 	public List<List<String>> getMatrix() {
 		List<List<String>> matrix = new ArrayList<List<String>>();
-		for (int i = 0; i < ids.size(); ++i){
-			List<String> tmpList = new ArrayList<String>();
-			tmpList.add("" + ids.get(i));
-			for (int j = 0; j < values.size(); ++j){
-				tmpList.add(values.get(j).get(i) + "");
+		if (ids != null){
+			for (int i = 0; i < ids.size(); ++i){
+				List<String> tmpList = new ArrayList<String>();
+				tmpList.add("" + ids.get(i));
+				for (int j = 0; j < values.size(); ++j){
+					tmpList.add(values.get(j).get(i) + "");
+				}
+				matrix.add(tmpList);
 			}
-			matrix.add(tmpList);
 		}
 		return matrix;
 	}
 	
 	public List<List<String>> getMatrixNoIds() {
 		List<List<String>> matrix = new ArrayList<List<String>>();
-		for (int i = 0; i < ids.size(); ++i){
-			List<String> tmpList = new ArrayList<String>();
-			for (int j = 0; j < values.size(); ++j){
-				tmpList.add(values.get(j).get(i) + "");
+		if (ids != null){
+			for (int i = 0; i < ids.size(); ++i){
+				List<String> tmpList = new ArrayList<String>();
+				for (int j = 0; j < values.size(); ++j){
+					tmpList.add(values.get(j).get(i) + "");
+				}
+				matrix.add(tmpList);
 			}
-			matrix.add(tmpList);
 		}
 		return matrix;
 	}

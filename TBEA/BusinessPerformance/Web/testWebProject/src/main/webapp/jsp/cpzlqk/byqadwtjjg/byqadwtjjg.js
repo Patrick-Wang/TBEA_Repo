@@ -34,7 +34,7 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -74,7 +74,7 @@ var cpzlqk;
                         });
                         break;
                     case cpzlqk.Event.ZLFE_APPROVE_COMMENT:
-                        var param1_1 = {
+                        var param1 = {
                             condition: Util.Ajax.toUrlParam({
                                 url: this.mAjax.baseUrl(),
                                 date: this.mDt,
@@ -84,7 +84,7 @@ var cpzlqk;
                             comment: e.data
                         };
                         this.mCommentApprove.get({
-                            data: JSON.stringify([[param1_1.condition, param1_1.comment]])
+                            data: JSON.stringify([[param1.condition, param1.comment]])
                         }).then(function (jsonData) {
                             _this.mAjaxApprove.get({
                                 date: _this.mDt,
@@ -95,7 +95,7 @@ var cpzlqk;
                                     .fromEp(_this)
                                     .to(framework.basic.endpoint.FRAME_ID)
                                     .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
-                                    comment: param1_1.comment,
+                                    comment: param1.comment,
                                     zt: 1
                                 });
                             });
@@ -119,28 +119,68 @@ var cpzlqk;
                 var _this = this;
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mCommentGet.get({ condition: Util.Ajax.toUrlParam({
-                        url: this.mAjax.baseUrl(),
-                        date: date,
-                        companyId: compType,
-                        ydjd: this.mYdjdType
-                    }), compId: compType }).then(function (jsonData) {
-                    framework.router
-                        .fromEp(_this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, jsonData);
-                });
+                var comment;
+                var cpzlqkResp;
+                var complete = function (jsonData) {
+                    if (undefined != jsonData.tjjg) {
+                        cpzlqkResp = jsonData;
+                    }
+                    else {
+                        comment = jsonData;
+                    }
+                    if (comment != undefined && cpzlqkResp != undefined) {
+                        _this.mData = cpzlqkResp;
+                        _this.refresh();
+                        if (pageType == cpzlqk.PageType.APPROVE) {
+                            framework.router
+                                .fromEp(_this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED);
+                        }
+                        framework.router
+                            .fromEp(_this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
+                            comment: comment,
+                            zt: cpzlqkResp.zt });
+                    }
+                };
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
                     all: this.mCompType == Util.CompanyType.BYQCY,
                     pageType: pageType
-                })
-                    .then(function (jsonData) {
-                    _this.mData = jsonData;
-                    _this.refresh();
-                });
+                }).then(complete);
+                this.mCommentGet.get({
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: date,
+                        companyId: compType,
+                        ydjd: this.mYdjdType }),
+                    compId: compType }).then(complete);
+                //this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
+                //    url : this.mAjax.baseUrl(),
+                //    date: date,
+                //    companyId:compType,
+                //    ydjd:this.mYdjdType
+                //}),compId:compType}).then((jsonData:any)=>{
+                //    framework.router
+                //        .fromEp(this)
+                //        .to(framework.basic.endpoint.FRAME_ID)
+                //        .send(Event.ZLFE_COMMENT_UPDATED, jsonData);
+                //});
+                //this.mAjax.get({
+                //        date: date,
+                //        companyId:compType,
+                //        ydjd:this.mYdjdType,
+                //        all: this.mCompType == Util.CompanyType.BYQCY,
+                //        pageType:pageType
+                //    })
+                //    .then((jsonData:any) => {
+                //        this.mData = jsonData;
+                //        this.refresh();
+                //    });
             };
             ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
@@ -174,7 +214,7 @@ var cpzlqk;
                     formatter: function (params) {
                         var ret = params[0][1];
                         for (var i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                            ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 1.0).toFixed(2) + "%";
                         }
                         return ret;
                     }
@@ -254,7 +294,7 @@ var cpzlqk;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -276,9 +316,7 @@ var cpzlqk;
                     .send(framework.basic.FrameEvent.FE_REGISTER, "按单位统计结果");
             };
             ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+                return Util.toDate(this.mDt).month;
             };
             ShowView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
@@ -303,8 +341,24 @@ var cpzlqk;
                     viewrecords: true
                 }));
             };
+            ShowView.prototype.onSaveComment = function (comment) {
+                var param = {
+                    condition: Util.Ajax.toUrlParam({
+                        url: this.mAjax.baseUrl(),
+                        date: this.mDt,
+                        companyId: this.mCompType,
+                        ydjd: this.mYdjdType
+                    }),
+                    comment: comment
+                };
+                this.mCommentSubmit.get({
+                    data: JSON.stringify([[param.condition, param.comment]])
+                }).then(function (jsonData) {
+                    Util.MessageBox.tip("提交成功", undefined);
+                });
+            };
             ShowView.ins = new ShowView();
             return ShowView;
-        }(cpzlqk.ZlPluginView));
+        })(cpzlqk.ZlPluginView);
     })(byqadwtjjg = cpzlqk.byqadwtjjg || (cpzlqk.byqadwtjjg = {}));
 })(cpzlqk || (cpzlqk = {}));

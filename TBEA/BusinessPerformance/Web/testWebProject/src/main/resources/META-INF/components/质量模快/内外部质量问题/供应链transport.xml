@@ -1,10 +1,13 @@
 <components>
  <service id="servGylTransport" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
-  <sql id="nbzlqkResult">select * from zl_nbyclzlwt where issue_type = '原材料质量问题'</sql>
-  <sql id="wbzlqkResult">select * from zl_wbyclzlwt where issue_type = '原材料质量问题'</sql>
+  <sql id="nbzlqkResult">select * from zl_nbyclzlwt where issue_type = '原材料质量问题' and suppier_id is not null</sql>
+  <sql id="wbzlqkResult">select * from zl_wbyclzlwt where issue_type = '原材料质量问题' and suppier_id is not null</sql>
   <sql id="batchResult">select count(distinct(BATCH_NO)) as batch_no from CUX_QUALITY_ISSUE_IN_CTRL_T</sql>
   <context key="batch" value="${batchResult[0] + 1}"/>
+  <context key="counterBatch" value="${counterFactory.newCounter.reset[batch]}"/>
+  <context key="batch" value="${'TBEA' + 'counterBatch.format[20]'}"/>
+  
   <merge data="${nbzlqkResult}" table="CUX_QUALITY_ISSUE_IN_T">
    <set>
     <BATCH_NO type="string" value="${batch}"/>
@@ -18,7 +21,7 @@
     <ISSUE_TYPE type="string" ref="${counter.next.val}"/>
     <SUB_ISSUE_TYPE type="string" ref="${counter.next.val}"/>
     <CATEGORY_CODE type="string" ref="${counter.next.val}"/>
-    <QUALITY_PHENOMENON type="double" ref="${counter.next.val}"/>
+    <QUALITY_PHENOMENON type="string" ref="${counter.next.val}"/>
     <DETAIL type="string" ref="${counter.next.val}"/>
     <MATERIAL_HAPPEN_PHASE type="string" ref="${counter.next.val}"/>
     <MATERIAL_COUNT type="double" ref="${counter.next.val}"/>
@@ -48,9 +51,9 @@
     <ISSUE_TYPE type="string" ref="${counter.next.val}"/>
     <SUB_ISSUE_TYPE type="string" ref="${counter.next.val}"/>
     <CATEGORY_CODE type="string" ref="${counter.next.val}"/>
-    <QUALITY_PHENOMENON type="double" ref="${counter.next.val}"/>
+    <QUALITY_PHENOMENON type="string" ref="${counter.next.val}"/>
     <DETAIL type="string" ref="${counter.next.val}"/>
-    <MATERIAL_HAPPEN_PHASE type="string" value="场外现场"/>
+    <MATERIAL_HAPPEN_PHASE type="string" value="客户现场"/>
     <MATERIAL_COUNT type="double" ref="${counter.next.val}"/>
     <MEASUREMENT_UNITS type="string" ref="${counter.next.val}"/>
     <SCM_V_ID type="double" ref="${counter.next.val}"/>

@@ -2,6 +2,7 @@ package com.tbea.ic.operation.reportframe.interpreter;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
@@ -13,6 +14,7 @@ public class ContextXmlInterpreter implements XmlInterpreter {
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		
 		if (Schema.isContext(e)){
+			//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 			String key = e.getAttribute("key");
 			String value = e.getAttribute("value");
 			Object obj = XmlUtil.parseELText(value, new ELParser(component));

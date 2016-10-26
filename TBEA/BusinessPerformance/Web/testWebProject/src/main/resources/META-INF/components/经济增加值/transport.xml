@@ -1,0 +1,351 @@
+<components>
+ <service id="servJjzjzToLocal" transaction="transactionManager">
+  <if test="${!ncData.isEmpty}">
+   <context key="counter" value="${counterFactory.newCounter.reset[2]}"/>
+   <context key="counterZb" value="${counterFactory.newCounter.reset[-1]}"/>
+   <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
+   <list id="data" type="object">${ncData[0]}</list>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+   <merge data="${data}" table="jjzjz">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" ref="counterZb.next.val"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zbid type="int" value="${counterZb.val}"/>
+     <value type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+  </if>
+ </service>
+ <service id="servJjzjzFrom15" transaction="trans15">
+  <sql id="rsData">select 
+  * 
+from 
+  t_jysj2014_hrrs 
+where  
+  HR_unitcode = ${Code15.code[type]} and 
+  NF = ${cal.year} and 
+  YF = ${cal.month}</sql>
+  <context value="${0}" key="rs"/>
+  <if test="${!rsData.isEmpty}">
+   <context value="${rsData[0][3]}" key="rs"/>
+  </if>
+ </service>
+ <service id="servJjzjzFromNC" transaction="transNc">
+  <sql id="ncData" export="true">select unit_code,
+       unit_name,
+       inputdate,
+       imdx.m10002 jlr, --净利润数值
+       imdx.m10008 lxzc, --利息支出数值
+       imdx.m10014 yffy, --研发费用数值
+       imdx.m10005 bmyzzc, --变卖优质资产取得的非经营性收益数值
+       imdx.m10011 shjyylr, --税后净营业利润①数值
+       imdx.m10001 pjsyzqy, --平均所有者权益数值
+       imdx.m10007 pjfzhj, --平均负债合计数值
+       imdx.m10013 pjwxldfz, --平均无息流动负债数值
+       imdx.m10004 pjzjgc, --平均在建工程数值
+       imdx.m10010 tzhzb, --调整后资本数值
+       imdx.m10000 pjzbcbl, --平均资本成本率数值
+       imdx.m10006 zbcb, --资本成本②数值
+       ${rs}, --人数③数值
+       (shjyylr - zbcb), --经济增加值④=①一②数值
+       (shjyylr - zbcb) / nullif(${rs}, 0) --imdx.m10009 rjjjzjz --人均经济增加值⑤=④÷③数值
+  from iufo_measure_data_xwv5toc8 imdx
+  left join (select alone_id,
+                    code,
+                    inputdate,
+                    keyword2,
+                    keyword3,
+                    time_code,
+                    ts,
+                    ver
+               from iufo_measure_pubdata) imp
+    on imdx.alone_id = imp.alone_id
+  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
+    on imp.code = iui.unit_id
+ where imp.ver in (0, 510)
+ and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
+ and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
+ and unit_code = ${NCCode.code[type]}</sql>
+ </service>
+ <controller id="jjzjzTransport" cron1="0 0 2 ？ * 2">
+  <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
+   <context key="cal" value="${calendar.current}"/>
+  </if>
+  <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
+   <context key="cal" value="${request.date.asCalendar}"/>
+  </if>
+  <context key="type" value="${CompanyType.SBGS}"/>
+  <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.HBGS}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.XBC}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.TBGS}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.LLGS}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.XLC}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.DLGS}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.XNYGS}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.XTNYGS}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.TCNY}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.NDGS}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.JCKGS_JYDW}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <context key="type" value="${CompanyType.GJGCGS_GFGS}"/>
+  <callservice id="servJjzjzFrom15"/>
+  <callservice id="servJjzjzFromNC"/>
+  <callservice id="servJjzjzToLocal"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+</components>

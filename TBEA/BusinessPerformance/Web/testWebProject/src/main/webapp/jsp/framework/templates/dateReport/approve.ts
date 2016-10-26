@@ -47,7 +47,8 @@ module framework.templates.dateReport {
         getParams(date:Util.Date):any{
             return {
                 date: this.getDate(date),
-                item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
+                item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id,
+                zt : gZt
             };
         }
 

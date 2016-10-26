@@ -5,8 +5,34 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 /// <reference path="jqgrid/vector.ts" />
 ///<reference path="jqgrid/jqassist.ts"/>
+String.prototype["getWidth"] = function (fontSize) {
+    var span = document.getElementById("__getwidth");
+    if (span == null) {
+        span = document.createElement("span");
+        span.id = "__getwidth";
+        document.body.appendChild(span);
+        span.style.visibility = "hidden";
+        span.style.whiteSpace = "nowrap";
+    }
+    span.innerText = this;
+    span.style.fontSize = fontSize + "px";
+    return span.offsetWidth;
+};
 var Util;
 (function (Util) {
+    function getUIWidth(opts) {
+        var max = 0;
+        var tmp = 0;
+        var fontSize = Util.isMSIE() ? 14 : 13;
+        for (var i = 0; i < opts.length; ++i) {
+            tmp = opts[i].getWidth(fontSize) + 25;
+            if (max < tmp) {
+                max = tmp;
+            }
+        }
+        return max;
+    }
+    Util.getUIWidth = getUIWidth;
     (function (ErrorCode) {
         ErrorCode[ErrorCode["OK"] = 0] = "OK";
         ErrorCode[ErrorCode["DATABASE_EXCEPTION"] = 1] = "DATABASE_EXCEPTION";
@@ -293,7 +319,8 @@ var Util;
         IndiStatus[IndiStatus["APPROVED_2"] = 4] = "APPROVED_2";
         IndiStatus[IndiStatus["SUBMITTED_2"] = 5] = "SUBMITTED_2";
         IndiStatus[IndiStatus["INTER_APPROVED_1"] = 6] = "INTER_APPROVED_1";
-        IndiStatus[IndiStatus["INTER_APPROVED_2"] = 7] = "INTER_APPROVED_2"; //("内部二级已审核");
+        IndiStatus[IndiStatus["INTER_APPROVED_2"] = 7] = "INTER_APPROVED_2";
+        IndiStatus[IndiStatus["INTER_APPROVED_3"] = 8] = "INTER_APPROVED_3"; //("内部三级已审核");
     })(Util.IndiStatus || (Util.IndiStatus = {}));
     var IndiStatus = Util.IndiStatus;
     (function (ZBType) {

@@ -23,6 +23,13 @@ public class SessionCheckFilter implements Filter {
 	public void destroy() {
 	}
 
+	public String getRemoteIP(HttpServletRequest request) {
+		if (request.getHeader("x-forwarded-for") == null) {
+			return request.getRemoteAddr();
+		}
+		return request.getHeader("x-forwarded-for");
+	}
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
@@ -53,6 +60,10 @@ public class SessionCheckFilter implements Filter {
 					} else {
 						httpResp.sendRedirect(redirUrl);
 						return;
+					}
+				}else{
+					if (session.getAttribute("remoteIP") == null){
+						session.setAttribute("remoteIP", getRemoteIP((HttpServletRequest) request));
 					}
 				}
 			}

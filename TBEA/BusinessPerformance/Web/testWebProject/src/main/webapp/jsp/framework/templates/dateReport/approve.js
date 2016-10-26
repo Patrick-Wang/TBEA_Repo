@@ -47,7 +47,8 @@ var framework;
                 ApproveView.prototype.getParams = function (date) {
                     return {
                         date: this.getDate(date),
-                        item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
+                        item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id,
+                        zt: gZt
                     };
                 };
                 ApproveView.prototype.update = function (date) {
@@ -102,7 +103,7 @@ var framework;
                     });
                 };
                 return ApproveView;
-            }(framework.templates.singleDateReport.ApproveView));
+            })(framework.templates.singleDateReport.ApproveView);
             dateReport.ApproveView = ApproveView;
         })(dateReport = templates.dateReport || (templates.dateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));

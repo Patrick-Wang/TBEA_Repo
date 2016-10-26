@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.MathUtil;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -31,8 +32,8 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.wgcpylnlspcs.WgcpylnlspcsDaoImpl;
 import com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs.WgcpylnlspcsEntity;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
+import com.tbea.ic.operation.service.util.nc.NCLoggerFactory;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsService;
 
 @Service(WgcpqkServiceImpl.NAME)
@@ -573,12 +574,12 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 			String whereSql = 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth() +
-					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "' ";
+					" and unit_code = '" + CompanyNCCode.getCode(comp.getType()) + "' ";
 			EasyCalendar ecPre = cal.getLastMonth();
 			String whereSqlPreMonth = 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getMonth() +
-					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "' ";
+					" and unit_code = '" + CompanyNCCode.getCode(comp.getType()) + "' ";
 			
 			Logger logger = LoggerFactory.getLogger("LOG-NC");
 			logger.info("完工成品情况  sqlCbByqcyAdydjfl");
@@ -785,7 +786,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 			
 			
 			Pair<Double, Double> pair;
-			for (int i = cpflStart; i < size; ++i){
+			for (int i = cpflStart; i < cpflStart + size; ++i){
 				pair = getCbsr(cbsr, preCbsr, i - cpflStart);
 				mergeEntity(d, 
 						comp, 
@@ -793,7 +794,7 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 						cpIds.get(i), 
 						pair.getFirst(),
 						pair.getSecond());
-			}	
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -802,10 +803,10 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 
 	private void mergeEntity(Date d, Company company, WgcpqkType type, Integer cpId, Double cb, Double sr){
 		WgcpylnlspcsEntity entity = wgcpylnlspcsDao.getByDate(d, company, type, cpId);
+		EasyCalendar ec = new EasyCalendar(d);
 		if (entity == null){
 			entity = new WgcpylnlspcsEntity();
 			entity.setDwxx(dwxxDao.getById(company.getId()));
-			EasyCalendar ec = new EasyCalendar(d);
 			entity.setNf(ec.getYear());
 			entity.setYf(ec.getMonth());
 			entity.setCpmc(cpmcDao.getById(cpId));
@@ -814,6 +815,16 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 		}
 		entity.setSr(MathUtil.division(sr, 10000d));
 		entity.setCb(MathUtil.division(cb, 10000d));
+		
+		NCLoggerFactory.logger().debug("{}\t{}\t{}\t{}\t{}\t{}\t", new Object[]{
+				company.getName(),
+				ec.getYear() + "-" + ec.getMonth(),
+				cpmcDao.getById(cpId).getName(),
+				type.value(),
+				entity.getCb(),
+				entity.getSr()				
+		});
+		
 		wgcpylnlspcsDao.merge(entity);
 	}
 	
@@ -825,13 +836,13 @@ public class WgcpqkServiceImpl implements WgcpqkService {
 			String whereSql = 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + cal.getMonth() +
-					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "' ";
+					" and unit_code = '" + CompanyNCCode.getCode(comp.getType()) + "' ";
 
 			EasyCalendar ecPre = cal.getLastMonth();
 			String whereSqlPreMonth = 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getYear() + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + ecPre.getMonth() +
-					" and unit_code = '" + NCCompanyCode.getCode(comp.getType()) + "' ";
+					" and unit_code = '" + CompanyNCCode.getCode(comp.getType()) + "' ";
 			
 			
 			Logger logger = LoggerFactory.getLogger("LOG-NC");

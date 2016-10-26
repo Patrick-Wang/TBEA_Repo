@@ -2,9 +2,37 @@
 ///<reference path="jqgrid/jqassist.ts"/>
 declare var $;
 
+String.prototype["getWidth"] = function(fontSize)
+{
+    var span = document.getElementById("__getwidth");
+    if (span == null) {
+        span = document.createElement("span");
+        span.id = "__getwidth";
+        document.body.appendChild(span);
+        span.style.visibility = "hidden";
+        span.style.whiteSpace = "nowrap";
+    }
+    span.innerText = this;
+    span.style.fontSize = fontSize + "px";
+
+    return span.offsetWidth;
+}
+
+
 module Util {
 
-
+    export function getUIWidth(opts : any) : number{
+        var max = 0;
+        var tmp = 0;
+        var fontSize = Util.isMSIE() ? 14 : 13;
+        for (var i = 0; i < opts.length; ++i){
+            tmp = opts[i].getWidth(fontSize) + 25;
+            if (max < tmp){
+                max = tmp;
+            }
+        }
+        return max;
+    }
 
     export interface Header{
         name:string;
@@ -34,6 +62,7 @@ module Util {
         mergeTitle:string;
         width:string;
         pager:string;
+        shrinkToFit:string;
     }
 
     export interface ChartCtrl{
@@ -333,7 +362,8 @@ module Util {
         APPROVED_2,//("内部已审核"),
         SUBMITTED_2,//("内部已提交"),
         INTER_APPROVED_1,//("内部一级已审核"),
-        INTER_APPROVED_2//("内部二级已审核");
+        INTER_APPROVED_2,//("内部二级已审核");
+        INTER_APPROVED_3//("内部三级已审核");
     }
 
     export enum ZBType {

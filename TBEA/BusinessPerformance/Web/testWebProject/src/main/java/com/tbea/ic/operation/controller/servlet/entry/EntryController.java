@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
@@ -33,7 +36,9 @@ import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExchangeRate;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
+import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
+import com.tbea.ic.operation.service.entry.SjzbImportService;
 
 
 @Controller
@@ -42,8 +47,15 @@ public class EntryController {
 	
 	@Autowired
 	private EntryService entryService;
+	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
+
+	@Autowired
+	SjzbImportService sjzbImportService;
+	
+	@Autowired
+	ApproveService approveService;
 	
 	private List<Company> getOwnedCompanies(Account account, ZBType entryType){
 		List<Company> comps = null;
@@ -161,4 +173,85 @@ public class EntryController {
 		String result = "{\"result\":\"" + ret + "\"}";
 		return result.getBytes("utf-8");
 	}
+	
+	@RequestMapping(value = "schedule.do")
+	public @ResponseBody byte[] schedule(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		if (request.getParameter("date") != null){
+			d = Date.valueOf(request.getParameter("date"));
+		}
+		
+		Map<Company, JSONArray> data = sjzbImportService.getHBSjzb(d);
+		
+		for (Entry<Company, JSONArray> entry : data.entrySet()){
+			importData(entry, d);
+		}		
+		
+		String result = "{\"result\":\"OK\"}";
+		return result.getBytes("utf-8");
+	}
+	
+	//每月3到五号零点触发
+	@Scheduled(cron="0 0 0 4-5 * ?")
+	public void scheduleImport(){
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		
+		Map<Company, JSONArray> data = sjzbImportService.getHBSjzb(d);
+		
+		for (Entry<Company, JSONArray> entry : data.entrySet()){
+			importData(entry, d);
+		}		
+	}
+
+	private void importData(ZBStatus zbStatus, JSONArray jsonArray, Date date,
+			Company comp) {
+		Calendar time = null;
+		switch (zbStatus) {
+		case APPROVED:
+			List<Company> compsTmp = new ArrayList<Company>();
+			compsTmp.add(comp);
+			approveService.unapproveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp,
+					date);
+			entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
+					jsonArray, time);
+			approveService.approveSjZb(Account.KNOWN_ACCOUNT_GFGS, compsTmp,
+					date, true);
+			break;
+		case APPROVED_2:
+			entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
+					jsonArray, time);
+			List<Company> compsTmp2 = new ArrayList<Company>();
+			compsTmp2.add(comp);
+			approveService.approveSjZb(Account.KNOWN_ACCOUNT_JYFZ, compsTmp2,
+					date, true);
+			break;
+		case NONE:
+		case SAVED:
+			entryService.saveZb(date, null, comp.getType(), ZBType.BYSJ,
+					jsonArray, time);
+			break;
+		case SUBMITTED:
+			entryService.submitZb(date, null, comp.getType(), ZBType.BYSJ,
+					jsonArray, time);
+			break;
+		case SUBMITTED_2:
+			entryService.submitToDeputy(date, null, comp.getType(),
+					ZBType.BYSJ, jsonArray, time);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void importData(Entry<Company, JSONArray> entry, Date d) {
+		ZBStatus zbStatus = entryService.getZbStatus(d, entry.getKey().getType(),
+				ZBType.BYSJ).get(0);
+		importData(zbStatus, entry.getValue(), d, entry.getKey());		
+	}
+	
 }

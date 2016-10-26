@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,6 +106,7 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 	@Override
 	public ErrorCode approveByqcpycssbhgwtmx(Date d, JSONArray data,
 			Company company) {
+
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
 			Integer id = Util.toIntNull(row.getString(0));
@@ -129,6 +131,7 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 	private ErrorCode entryByqcpycssbhgwtmx(Date d, JSONArray data,
 			Company company, ZBStatus zt) {
 		EasyCalendar ec = new EasyCalendar(d);
+		Timestamp ts = new EasyCalendar().getTimestamp();
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
 			ByqBhgwtmxEntity entity = null;
@@ -154,6 +157,7 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 			entity.setClcs(row.getString(start++));
 			entity.setCljg(row.getString(start++));
 			entity.setZrlb(byqZrlbDao.getByName(row.getString(start++)));
+			entity.setXgsj(ts);
 			byqBhgwtmxDao.merge(entity);
 			
 		}

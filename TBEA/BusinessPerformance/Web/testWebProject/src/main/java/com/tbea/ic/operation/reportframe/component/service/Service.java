@@ -2,6 +2,7 @@ package com.tbea.ic.operation.reportframe.component.service;
 
 import org.w3c.dom.Element;
 
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
@@ -63,6 +64,9 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 			public void on(Element elem) throws Exception {
 				for (XmlInterpreter interpreter : interpreters) {
 					if (interpreter.accept(Service.this, elem)) {
+						if (ReportLogger.trace().isDebugEnabled()){
+							ReportLogger.trace().debug("service : " + XmlUtil.toStringFromDoc(elem));
+						}
 						break;
 					}
 				}

@@ -22,8 +22,8 @@ module cpzlqk {
                 return new JQTable.JQGridAssistant([
                     Node.create({name : "考核项目", align : TextAlign.Center}),
                     Node.create({name : "考核项目", align : TextAlign.Center}),
-                    Node.create({name : "不合格数(台)", isReadOnly:readOnly}),
-                    Node.create({name : "总数(台)", isReadOnly:readOnly})
+                    Node.create({name : "不合格数", isReadOnly:readOnly}),
+                    Node.create({name : "总数", isReadOnly:readOnly})
                 ], gridName);
             }
         }
@@ -74,9 +74,19 @@ module cpzlqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", ()=>{
-                            this.pluginUpdate(dt, compType);
-                        });
+                        let param = {
+                            year : Util.toDate(dt).year,
+                            month: Util.toDate(dt).month,
+                            pageType:2,
+                            tableStatus: JSON.stringify([
+                                {
+                                    id:plugin.xlacptjjg
+                                },{
+                                    id:plugin.xladydjtjjg
+                                }
+                            ])
+                        }
+                        window.location.href = "show.do?param=" + JSON.stringify(param);
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }
@@ -103,9 +113,19 @@ module cpzlqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", ()=>{
-                            this.pluginUpdate(dt, compType);
-                        });
+                        let param = {
+                            year : Util.toDate(dt).year,
+                            month: Util.toDate(dt).month,
+                            pageType:2,
+                            tableStatus: JSON.stringify([
+                                {
+                                    id:plugin.xlacptjjg
+                                },{
+                                    id:plugin.xladydjtjjg
+                                }
+                            ])
+                        }
+                        window.location.href = "show.do?param=" + JSON.stringify(param);
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }

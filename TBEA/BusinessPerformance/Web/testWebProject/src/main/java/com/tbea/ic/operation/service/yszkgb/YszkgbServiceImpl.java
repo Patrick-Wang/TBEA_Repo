@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.MathUtil;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -40,7 +41,6 @@ import com.tbea.ic.operation.model.entity.yszkgb.YszkKxxzEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkYjtzTjqsEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkZlEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 
 @Service(YszkgbServiceImpl.NAME)
@@ -82,9 +82,10 @@ public class YszkgbServiceImpl implements YszkgbService {
 		}
 		List<String> list = new ArrayList<String>();
 		if (null != entity){
-			list.add("" + entity.getZmje());
-			list.add("" + entity.getHzzb());
 			list.add("" + entity.getYz());
+			list.add("" + entity.getHzzb());
+			list.add("" + entity.getZmje());
+			
 		}else{
 			Util.resize(list, 3);
 		}
@@ -516,7 +517,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		while (rs.next()) {
 			
 			String unitCode = String.valueOf(rs.getObject(1));
-			CompanyType companyType = NCCompanyCode.getType(unitCode);
+			CompanyType companyType = CompanyNCCode.getType(unitCode);
 			Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;
@@ -544,7 +545,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			String whereSql = 
-				" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
+				" and iui.unit_code in (" + StringUtils.join(CompanyNCCode.toCodeList(comps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
 			Logger logger = Logger.getLogger("LOG-NC");
@@ -574,7 +575,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 		while (rs.next()) {
 			
 			String unitCode = String.valueOf(rs.getObject(1));
-			CompanyType companyType = NCCompanyCode.getType(unitCode);
+			CompanyType companyType = CompanyNCCode.getType(unitCode);
 			Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;
@@ -604,7 +605,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			String whereSql = 
-				" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(yszkgbComps).toArray(), ",") + ")" + 
+				" and iui.unit_code in (" + StringUtils.join(CompanyNCCode.toCodeList(yszkgbComps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
 			

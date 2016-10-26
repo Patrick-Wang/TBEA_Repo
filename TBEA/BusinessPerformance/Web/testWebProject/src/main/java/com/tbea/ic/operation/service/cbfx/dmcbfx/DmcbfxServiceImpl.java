@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -28,7 +29,6 @@ import com.tbea.ic.operation.model.dao.cbfx.dmcbfx.DmcbfxDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.cbfx.cbfl.Cbfl;
 import com.tbea.ic.operation.model.dao.identifier.cbfx.cbfl.CbflDao;
 import com.tbea.ic.operation.model.entity.cbfx.DmcbfxEntity;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 
 @Service(DmcbfxServiceImpl.NAME)
@@ -245,7 +245,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(d);
 			String whereSql = 
-				" and iui.unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
+				" and iui.unit_code in (" + StringUtils.join(CompanyNCCode.toCodeList(comps).toArray(), ",") + ")" + 
 				" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 				" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
 			
@@ -275,7 +275,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 	private void mergeEntity(Calendar cal, ResultSet rs) throws SQLException {
 	while (rs.next()) {
 			String unitCode = String.valueOf(rs.getObject(1));
-			CompanyType companyType = NCCompanyCode.getType(unitCode);
+			CompanyType companyType = CompanyNCCode.getType(unitCode);
 			Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;

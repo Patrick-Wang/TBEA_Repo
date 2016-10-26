@@ -31,6 +31,7 @@ module framework.templates.dateChartReport {
 
     export let FE_TB_CLICKED:number = framework.route.nextId();
     export let FE_CT_CLICKED:number = framework.route.nextId();
+    export let FE_ZL_APPROVED:number = framework.route.nextId();
 
     export function createInstance() : ShowView {
         return new ShowView();

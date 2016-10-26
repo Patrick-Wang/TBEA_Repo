@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.controller.servlet.cpzlqk;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -27,12 +28,17 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.CompanySelection.Filter;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.EasyList;
+import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
+import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
@@ -45,6 +51,8 @@ public class CpzlqkServlet {
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	
+	@Autowired
+	CpzlqkService cpzlqkService;
 	
 	private CompanySelection selectCompany(List<Company> comps){
 		Organization org = companyManager.getVirtualCYOrg();
@@ -102,6 +110,9 @@ public class CpzlqkServlet {
 		dateSel.select(map);
 
 		List<Company> comps = null;
+		comps = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.QualityEntry);
 		
 		map.put("pageType", PageType.SHOW.ordinal());
 		String param = request.getParameter("param");
@@ -112,13 +123,15 @@ public class CpzlqkServlet {
 				String key = (String) it.next();
 				map.put(key, jo.get(key));
 			}
-			comps = extendAuthService.getAuthedCompanies(
-					SessionManager.getAccount(request.getSession()),
-					AuthType.QualityEntry);
+			
 		}else{
-			comps = extendAuthService.getAuthedCompanies(
-					SessionManager.getAccount(request.getSession()),
-					AuthType.QualityLookup);
+			if(comps.isEmpty()){
+				comps = extendAuthService.getAuthedCompanies(
+						SessionManager.getAccount(request.getSession()),
+						AuthType.QualityLookup);
+			}else{
+				map.put("pageType", PageType.ENTRY.ordinal());
+			}
 		}
 		
 		CompanySelection compSel = selectCompany(comps);
@@ -142,10 +155,13 @@ public class CpzlqkServlet {
 		List<Company> comps2 = extendAuthService.getAuthedCompanies(
 				SessionManager.getAccount(request.getSession()),54);
 		List<Company> comps3 = extendAuthService.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),55);
+		List<Company> comps4 = extendAuthService.getAuthedCompanies(
 				SessionManager.getAccount(request.getSession()),AuthType.QualityApprove);
 		comps.addAll(comps1);
 		comps.addAll(comps2);
 		comps.addAll(comps3);
+		comps.addAll(comps4);
 		List<Company> compTmp = new ArrayList<Company>();
 		for (Company comp : comps){
 			compTmp.add(comp);
@@ -173,29 +189,24 @@ public class CpzlqkServlet {
 		return new ModelAndView("cpzlqk/cpzlqkEntry", map);
 	}
 	
+	@RequestMapping(value = "doApprove.do")
+	public @ResponseBody byte[] approve(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		ZBStatus status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
+		ErrorCode er = cpzlqkService.approve(d, company, status);
+		return Util.response(er);
+	}
+	
 	@RequestMapping(value = "auth.do")
 	public @ResponseBody byte[] getAytg(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		CompanyType comp = CompanySelection.getCompany(request);
-		Organization org = companyManager.getBMDBOrganization();
-		Company cp = org.getCompany(comp);
-		List<Company> comps1 = extendAuthService.getAuthedCompanies(
-				SessionManager.getAccount(request.getSession()),53);
-		List<Company> comps2 = extendAuthService.getAuthedCompanies(
-				SessionManager.getAccount(request.getSession()),54);
-		List<Company> comps3 = extendAuthService.getAuthedCompanies(
-				SessionManager.getAccount(request.getSession()),AuthType.QualityApprove);
-		List<Integer> auths = new ArrayList<Integer>();
-		if (comps1.contains(cp)){
-			auths.add(53);
-		}
-		if (comps2.contains(cp)){
-			auths.add(54);
-		}
-		if (comps3.contains(cp)){
-			auths.add(AuthType.QualityApprove.ordinal());
-		}
-		
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Account account = SessionManager.getAccount(request.getSession());
+		List<Integer> auths = extendAuthService.getAuths(account, company);
 		return JSONArray.fromObject(auths).toString().getBytes("utf-8");
 	}
 }

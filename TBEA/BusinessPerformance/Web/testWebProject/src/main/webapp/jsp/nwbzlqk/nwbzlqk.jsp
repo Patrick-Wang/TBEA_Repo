@@ -1,6 +1,10 @@
 ﻿<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	 pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://ww w.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
@@ -227,8 +231,27 @@ th.ui-th-ltr {
 				<div id="comment" style="display:none">
 					<div style="font-size:18px;font-weight:bold">问题分析</div>
 					<textarea id="commentText" cols="20" rows="5" style="width:100%;resize: none;margin-bottom:5px"></textarea>
-					<input type="button" id="saveComment" value="保存" style="float:left;width:90px"
-						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(nwbzlqk.Event.ZLFE_SAVE_COMMENT)">
+				<c:if test="${pageType == 2}">
+					<%-- 2 录入页面--%>
+					<input type="button" id="saveComment" value="提交"
+					style="float: right; width: 90px"
+					onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(nwbzlqk.Event.ZLFE_SAVE_COMMENT)">
+				</c:if>
+				<c:if test="${pageType == 1}">
+					<%-- 1 为审核页面 --%>
+					<input type="button" id="approveComment" value="同意上报"
+					style="float: right; width: 90px"
+					onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(nwbzlqk.Event.ZLFE_APPROVE_COMMENT)">
+					<input type="button" id="approveComment1" value="审核"
+					style="float: right; width: 90px"
+					onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(nwbzlqk.Event.ZLFE_APPROVE_COMMENT1)">
+					<input type="button" id="approveComment2" value="同意上报"
+					style="float: right; width: 90px"
+					onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(nwbzlqk.Event.ZLFE_APPROVE_COMMENT2)">
+					<input type="button" id="approveComment3" value="同意上报"
+					style="float: right; width: 90px"
+					onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(nwbzlqk.Event.ZLFE_APPROVE_COMMENT3)">
+				</c:if>
 				</div>
 				<form id="export" method="post">
 					<input id="exportButton" type="button" value="导出" style="display:none"
@@ -238,6 +261,7 @@ th.ui-th-ltr {
 		</tr>
 	</Table>
 	<script type="text/javascript">
+	window.pageType = ${pageType};
 	$("#radio").buttonset();
     $(document).ready(function () {
 

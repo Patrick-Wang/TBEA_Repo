@@ -1,8 +1,7 @@
 <components>
  <service id="servZlfxUpdate" transaction="transactionManager">
   <sql id="comment" export="true">select
-			comment,
-			zt
+			comment
 			from
 			cpzlqk_zlfx
 			where
@@ -17,13 +16,13 @@
    <set>
     <condition type="string" ref="0"/>
     <comment type="string" ref="1"/>
-    <zt type="int" value="${zt}"/>
+   <!--  <zt type="int" value="${zt}"/> -->
    </set>
   </merge>
  </service>
  <controller id="zlfxUpdate">
   <context key="condition" value="${request.condition.asString}"/>
-  <context key="type" value="${request.type.asString}"/>
+<!--   <context key="type" value="${request.type.asString}"/> -->
   <context key="compId" value="${orgs.virtualCYOrg.ids[request.compId.asInt]}"/>
   <context key="isCategory" value="${50000 == compId || 50001 == compId || 50002 == compId}"/>
   <if test="${isCategory}">

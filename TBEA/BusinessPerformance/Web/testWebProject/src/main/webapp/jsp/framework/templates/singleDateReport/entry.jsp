@@ -10,10 +10,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
 
     <!-- jquery ui blue -->
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
 
     <!-- 多选菜单 -->
     <link rel="stylesheet" type="text/css"

@@ -1,64 +1,93 @@
 ﻿<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="UTF-8">
 <!-- message box -->
-<link href="${pageContext.request.contextPath}/jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
+<link
+	href="${pageContext.request.contextPath}/jsp/message-box/css/style.css"
+	rel="stylesheet" type="text/css">
 
 <!-- jquery -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
-<!-- jquery ui blue --> 
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
+<!-- jquery ui blue -->
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
-<!-- 多选菜单 -->  
-<link rel="stylesheet" type="text/css" 
+<!-- 多选菜单 -->
+<link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.css" />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/multi-select/assets/style.css" />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/multi-select/assets/prettify.css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/multi-select/assets/prettify.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/jsp/multi-select/assets/prettify.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.js"></script>
 
 
-<!-- jqgrid --> 
+<!-- jqgrid -->
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.jqgrid.css">
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.multiselect.css">
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/i18n/grid.locale-cn.js"
+<script
+	src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.tablednd.js"
 	type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
- 
+<script
+	src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.contextmenu.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/jqgrid/js/i18n/grid.locale-cn.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.layout.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js"
+	type="text/javascript"></script>
+
 <!-- jqgrid assist -->
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js"
+	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js"
+	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/json2.js"
+	type="text/javascript"></script>
 
 
 <!-- message box -->
-<script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js"
+	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/messageBox.js"
+	type="text/javascript"></script>
 <%@include file="../framework/basic/basicShow.jsp"%>
-	<script src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/components/SeasonAccSelector.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqk.js" type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/components/SeasonAccSelector.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js"
+	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkdef.js"
+	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqk.js"
+	type="text/javascript"></script>
 <title>产品质量情况</title>
 
 <style type="text/css">
@@ -105,7 +134,7 @@ body {
 .btn_loading, .btn_detail {
 	width: 100px;
 	height: 30px;
-	padding: 5px,10px;
+	padding: 5px, 10px;
 	font-size: 12px;
 	line-height: 1.5;
 	boder-radius: 3px;
@@ -160,14 +189,16 @@ th.ui-th-ltr {
 	/* jqGrid columns name wrap  */
 	font-size: 14px;
 }
+
 .ui-multiselect {
 	padding: 2px 0 2px 4px;
 	text-align: left;
 	font-size: 12px;
 }
+
 #exportButton {
 	height: 23px;
-	width:100px;
+	width: 100px;
 	padding: .1em 1em;
 	margin-top: 2px;
 }
@@ -178,27 +209,25 @@ th.ui-th-ltr {
 		<h1 id="headertitle">产品质量情况</h1>
 	</div>
 
-	<Table id="frameTable" align="center" style="width:1200px">
+	<Table id="frameTable" align="center" style="width: 1200px">
 		<tr>
 			<td>
 				<div id="zlAndyclhgl" style="float: left"></div>
 				<div id="dt" style="float: left"></div>
 				<div id="compid" style="float: left"></div>
-				<div id="type" style="float: left"></div>
-				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
+				<div id="type" style="float: left"></div> <input type="button"
+				value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 
 				<div id="radio" style="float: right">
 					<input type="radio" id="rdyd" name="radio" checked="checked">
-					<label	for="rdyd">月度</label>
-					<input type="radio" id="rdjd" name="radio">
-					<label for="rdjd">季度</label>
+					<label for="rdyd">月度</label> <input type="radio" id="rdjd"
+						name="radio"> <label for="rdjd">季度</label>
 				</div>
 			</td>
 		</tr>
 		<tr>
-			<td id="plugin">
-				<%@include file="byqacptjjg/byqacptjjg.jsp"%>
+			<td id="plugin"><%@include file="byqacptjjg/byqacptjjg.jsp"%>
 				<%@include file="pdacptjjg/pdacptjjg.jsp"%>
 				<%@include file="xlacptjjg/xlacptjjg.jsp"%>
 				<%@include file="byqadwtjjg/byqadwtjjg.jsp"%>
@@ -208,75 +237,52 @@ th.ui-th-ltr {
 				<%@include file="pdcpycssbhgwtmx/pdcpycssbhgwtmx.jsp"%>
 				<%@include file="byqcpycssbhgxxfb/byqcpycssbhgxxfb.jsp"%>
 				<%@include file="pdcpycssbhgxxfb/pdcpycssbhgxxfb.jsp"%>
-				 <%@include file="xlbhgcpmx/xlbhgcpmx.jsp"%>
+				<%@include file="xlbhgcpmx/xlbhgcpmx.jsp"%>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<div id="comment" style="display:none">
-					<div style="font-size:18px;font-weight:bold">问题分析</div>
-					<textarea id="commentText" cols="20" rows="5" style="width:100%;resize: none;margin-bottom:5px"></textarea>
-					<c:if test="${pageType == 2}"><%-- 2 录入页面--%>
-						<input type="button" id="saveComment" value="提交" style="float:right;width:90px"
-						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_SAVE_COMMENT)">
+				<div id="comment" style="display: none">
+					<div style="font-size: 18px; font-weight: bold">问题分析</div>
+					<textarea id="commentText" cols="20" rows="5"
+						style="width: 100%; resize: none; margin-bottom: 5px"></textarea>
+					<c:if test="${pageType == 2}">
+						<%-- 2 录入页面--%>
+						<input type="button" id="saveComment" value="提交"
+							style="float: right; width: 90px"
+							onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_SAVE_COMMENT)">
 					</c:if>
-					<c:if test="${pageType == 1}"><%-- 1 为审核页面 --%>
-						<input type="button" id="approveComment" value="上报" style="float:right;width:90px"
-						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT)">
-						<input type="button" id="approveComment1" value="一级上报" style="float:right;width:90px"
-						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT1)">
-						<input type="button" id="approveComment2" value="二级上报" style="float:right;width:90px"
-						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT2)">
+					<c:if test="${pageType == 1}">
+						<%-- 1 为审核页面 --%>
+						<input type="button" id="approveComment" value="同意上报"
+							style="float: right; width: 90px"
+							onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT)">
+						<input type="button" id="approveComment1" value="审核"
+							style="float: right; width: 90px"
+							onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT1)">
+						<input type="button" id="approveComment2" value="同意上报"
+							style="float: right; width: 90px"
+							onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT2)">
+						<input type="button" id="approveComment3" value="同意上报"
+							style="float: right; width: 90px"
+							onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT3)">
 					</c:if>
 				</div>
 				<form id="export" method="post">
-					<input id="exportButton" type="button" value="导出" style="display:none"
-						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
+					<input id="exportButton" type="button" value="导出"
+						style="display: none"
+						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
 				</form>
 			</td>
 		</tr>
 	</Table>
 	<script type="text/javascript">
-	var ts = '${tableStatus}';
-	window.tableStatus = ts == ''?undefined : JSON.parse(ts);
-	window.pageType = ${pageType};
-	$("#radio").buttonset();
-	//$("#zlAndyclhgl").buttonset();
 
-	function clickYcl(){
-		window.location.href="${pageContext.request.contextPath}/report/yclhglqktj.do";
-	}
-
-	var pageSlector = new Util.UnitedSelector([{
-	data:{
-	id:0,
-	value:"产品一次送试"
-	}
-	},{
-	data:{
-	id:1,
-	value:"原材料合格率"
-	}
-	}],"zlAndyclhgl");
-
-	pageSlector.change(function(){
-	if (pageSlector.getPath()[0] == 1){
-	window.location.href="${pageContext.request.contextPath}/report/yclhglqktj.do";
-	}
-	});
-
-	$("#zlAndyclhgl select")
-	.multiselect({
-	multiple: false,
-	header: false,
-	minWidth: 115,
-	height:'100%',
-	// noneSelectedText: "请选择月份",
-	selectedList: 1
-	})
-	.css("padding", "2px 0 2px 4px")
-	.css("text-align", "left")
-	.css("font-size", "12px");
+		var ts = '${tableStatus}';
+		window.tableStatus = ts == ''?undefined : JSON.parse(ts);
+		window.pageType = ${pageType};
+		$("#radio").buttonset();
+		//$("#zlAndyclhgl").buttonset();
 
     $(document).ready(function () {
 
@@ -303,7 +309,8 @@ th.ui-th-ltr {
 </script>
 
 	<script src="${pageContext.request.contextPath}/jsp/style_button.js"></script>
-	<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 	<%@include file="../components/loading.jsp"%>
 </body>
 

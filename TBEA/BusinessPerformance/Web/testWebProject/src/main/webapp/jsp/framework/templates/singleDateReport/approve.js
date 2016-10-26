@@ -121,7 +121,7 @@ var framework;
                         height: '100%',
                         width: 1200,
                         shrinkToFit: true,
-                        autoScroll: true,
+                        autoScroll: true
                     };
                     //if (this.resp.pager == 'none'){
                     //    opt.pager = undefined;
@@ -164,7 +164,7 @@ var framework;
                     });
                 };
                 return ApproveView;
-            }(BasicEndpoint));
+            })(BasicEndpoint);
             singleDateReport.ApproveView = ApproveView;
         })(singleDateReport = templates.singleDateReport || (templates.singleDateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));

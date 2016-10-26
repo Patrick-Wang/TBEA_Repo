@@ -11,4 +11,6 @@ public interface HyDao extends AbstractReadWriteDao<HyEntity> {
 
 	List<HyEntity> getAll();
 
+	HyEntity getByName(String hyName);
+
 }

@@ -449,4 +449,9 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 		
 		return ret;
 	}
+
+	@Override
+	public List<ZltjjgEntity> getByDateIgnoreStatus(Date d, Company company) {
+		return this.stubDao.getByDateIgnoreStatus(d, company);
+	}
 }

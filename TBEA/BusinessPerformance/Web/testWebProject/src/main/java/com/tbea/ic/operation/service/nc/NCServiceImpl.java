@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.CommonMethod;
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -28,7 +29,6 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.dao.nc.NCZBDao;
 import com.tbea.ic.operation.model.entity.jygk.NCZB;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 
 @Service
 @Transactional("transactionManager")
@@ -51,18 +51,18 @@ public class NCServiceImpl implements NCService {
 
 	public static Map<String, CompanyType> companyMap = new HashMap<String, CompanyType>();
 	static {
-		companyMap.put(NCCompanyCode.getCode(CompanyType.SBGS), CompanyType.SBGS);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.LLGS), CompanyType.LLGS);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.DLGS), CompanyType.DLGS);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.HBGS), CompanyType.HBGS);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.XBC), CompanyType.XBC);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.XLC), CompanyType.XLC);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.XNYGS), CompanyType.XNYGS);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.XTNYGS), CompanyType.XTNYGS);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.TCNY), CompanyType.TCNY);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.NDGS), CompanyType.NDGS);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.JCKGS_JYDW), CompanyType.JCKGS_JYDW);
-		companyMap.put(NCCompanyCode.getCode(CompanyType.GJGCGS_GFGS), CompanyType.GJGCGS_GFGS);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.SBGS), CompanyType.SBGS);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.LLGS), CompanyType.LLGS);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.DLGS), CompanyType.DLGS);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.HBGS), CompanyType.HBGS);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.XBC), CompanyType.XBC);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.XLC), CompanyType.XLC);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.XNYGS), CompanyType.XNYGS);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.XTNYGS), CompanyType.XTNYGS);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.TCNY), CompanyType.TCNY);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.NDGS), CompanyType.NDGS);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.JCKGS_JYDW), CompanyType.JCKGS_JYDW);
+		companyMap.put(CompanyNCCode.getCode(CompanyType.GJGCGS_GFGS), CompanyType.GJGCGS_GFGS);
 	}
 
 	private void mergeNCZB(CompanyType companyType, GSZB zb, int nf, int yf,

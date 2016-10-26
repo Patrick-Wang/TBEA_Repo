@@ -1,9 +1,16 @@
 package com.tbea.ic.operation.reportframe.util;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -235,6 +242,37 @@ public class XmlUtil {
 			}
 		}
 	}
+	
+	public static String toStringFromDoc(Element elem) {
+        String result = null;
+
+
+            StringWriter strWtr = new StringWriter();
+            StreamResult strResult = new StreamResult(strWtr);
+            TransformerFactory tfac = TransformerFactory.newInstance();
+            try {
+                javax.xml.transform.Transformer t = tfac.newTransformer();
+                t.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                t.setOutputProperty(OutputKeys.INDENT, "yes");
+                t.setOutputProperty(OutputKeys.METHOD, "xml"); // xml, html,
+                // text
+                t.setOutputProperty(
+                        "{http://xml.apache.org/xslt}indent-amount", "4");
+                t.transform(new DOMSource(elem),
+                        strResult);
+            } catch (Exception e) {
+                System.err.println("XML.toString(Document): " + e);
+            }
+            result = strResult.getWriter().toString();
+            try {
+                strWtr.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+     
+
+        return result;
+    }
 	
 	public static Element each(NodeList list, OnEach onEach) throws Exception{
 		Node node = null;

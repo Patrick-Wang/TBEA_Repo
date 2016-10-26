@@ -5,8 +5,12 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.tbea.ic.operation.common.Company15Code;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.PropMap;
 import com.tbea.ic.operation.common.companys.CompanyManager;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.report.Arrays;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
 import com.tbea.ic.operation.controller.servlet.report.Counter;
@@ -18,7 +22,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
-import com.tbea.ic.operation.service.report.ZlqkWebService;
+import com.tbea.ic.operation.service.report.HBWebService;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 
 @Component(UtilContextHandler.NAME)
@@ -61,8 +65,18 @@ public class UtilContextHandler implements ContextHandler {
 		context.put("accFactory", accFac);
 		context.put("compMgr", companyManager);
 		context.put("counterFactory", new Counter());
-		context.put("zlqkWebService", new ZlqkWebService());
+		context.put("zlqkWebService", new HBWebService());
 		context.put(com.tbea.ic.operation.reportframe.component.Component.CALENDAR, new EasyCalendar());
+		context.put("CompanyType", new PropMap(){
+
+			@Override
+			public Object getProperty(Object key) throws Exception {
+				return CompanyType.valueOf((String)key);
+			}
+			
+		});
+		context.put("NCCode", new CompanyNCCode());
+		context.put("Code15", new Company15Code());
 	}
 
 }

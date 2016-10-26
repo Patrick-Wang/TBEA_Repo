@@ -14,13 +14,8 @@ module cpzlqk{
         onEvent(e:framework.route.Event):any {
             switch (e.id){
                 case Event.ZLFE_DATA_STATUS:
-                    if (e.data == Util.ZBStatus.APPROVED){
-                        $("#gbsm").hide();
-                        $("#gbsv").hide();
-                    }else{
-                        $("#gbsm").show();
-                        $("#gbsv").show();
-                    }
+                    $("#gbsm").show();
+                    $("#gbsv").show();
                     break;
             }
             return super.onEvent(e);

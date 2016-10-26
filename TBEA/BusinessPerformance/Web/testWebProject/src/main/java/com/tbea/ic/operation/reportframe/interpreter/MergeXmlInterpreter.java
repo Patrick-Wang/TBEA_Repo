@@ -79,13 +79,25 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 					}
 					break;
 				case TypeUtil.STRING:
-					jrow.add(cell.getStringCellValue());
+					if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING){
+						jrow.add(cell.getStringCellValue());
+					}else{
+						String raw = cell.getRawValue();
+						jrow.add(raw);
+					}
+					
 					break;
 				case TypeUtil.OBJECT:
 					jrow.add(null);
 					break;
 				case TypeUtil.SQLDATE:
-					jrow.add(Util.formatToDay(ExcelUtil.parseDate(cell)));
+					Date d = ExcelUtil.parseDate(cell);
+					if (null != d){
+						jrow.add(Util.formatToDay(d));
+					}else{
+						jrow.add(null);
+					}
+					
 					break;
 				}
 			}
@@ -99,7 +111,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isMerge(e)){
 			return false;
 		}
-		
+		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 		this.component = component;
 		elp = new ELParser(component);
 		String table = (String) XmlUtil.getObjectAttr(e, "table", elp);
@@ -213,7 +225,9 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				if (null != arr[i]){
 					if (arr[i] instanceof Date){
 						arr[i] = Util.formatToMill((Date)arr[i]);
-					} else if (arr[i] instanceof Timestamp){
+					} else if (arr[i] instanceof java.util.Date){
+						arr[i] = Util.formatToMill((java.util.Date)arr[i]);
+					} if (arr[i] instanceof Timestamp){
 						arr[i] = Util.formatToMill(new Date(((Timestamp)arr[i]).getTime()));
 					}
 				}
@@ -225,6 +239,8 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				if (null != obj){
 					if (obj instanceof Date){
 						obj = Util.formatToMill((Date)obj);
+					} else if (obj instanceof java.util.Date){
+						obj = Util.formatToMill((java.util.Date)obj);
 					} else if (obj instanceof Timestamp){
 						obj = Util.formatToMill(new Date(((Timestamp)obj).getTime()));
 					}
@@ -438,7 +454,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		if (null != whereSql){
 			String sql = "select count(*) from " + table + whereSql;
 			List ret = em.createNativeQuery(sql).getResultList();
-			ReportLogger.logger().debug(sql);
+			ReportLogger.logger().info(sql);
 			count = (Integer) ret.get(0);
 		}
 		if (count > 0){

@@ -44,8 +44,6 @@ module nwbzlqk {
             static ins = new ShowView();
             private mData:CpzlqkResp;
             private mAjax:Util.Ajax = new Util.Ajax("../pdsczzzlwt/update.do", false);
-            private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
-            private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
 
@@ -62,22 +60,6 @@ module nwbzlqk {
                 switch (e.id) {
                     case Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
-                    case Event.ZLFE_SAVE_COMMENT:
-                        let param = {
-                            condition:Util.Ajax.toUrlParam({
-                                url : this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId:this.mCompType,
-                                ydjd:this.mYdjdType
-                            }),
-                            comment:e.data
-                        }
-                        this.mCommentSubmit.get({
-                            data : JSON.stringify([[param.condition, param.comment]])
-                        }).then((jsonData:any)=>{
-                            Util.MessageBox.tip("保存成功", undefined);
-                        });
-                        break;
                 }
                 return super.onEvent(e);
             }
@@ -94,30 +76,70 @@ module nwbzlqk {
                 return <Option>this.mOpt;
             }
 
+            onSaveComment(comment:any):void {
+                let param = {
+                    condition:Util.Ajax.toUrlParam({
+                        url : this.mAjax.baseUrl(),
+                        date: this.mDt,
+                        companyId:this.mCompType,
+                        ydjd:this.mYdjdType
+                    }),
+                    comment:comment
+                };
+                this.mCommentSubmit.get({
+                    data : JSON.stringify([[param.condition, param.comment]])
+                }).then((jsonData:any)=>{
+                    Util.MessageBox.tip("提交成功", undefined);
+                });
+            }
+
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
-                    url : this.mAjax.baseUrl(),
+
+                let comment : Comment;
+                let cpzlqkResp : CpzlqkResp;
+                let complete = (jsonData:any)=>{
+                    if (undefined != jsonData.tjjg){
+                        cpzlqkResp = jsonData;
+                    }else{
+                        comment = jsonData;
+                    }
+
+                    if (comment != undefined && cpzlqkResp != undefined){
+                        this.mData = cpzlqkResp;
+                        this.refresh();
+                        if (pageType == PageType.APPROVE){
+                            framework.router
+                                .fromEp(this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(Event.ZLFE_APPROVEAUTH_UPDATED);
+                        }
+
+                        framework.router
+                            .fromEp(this)
+                            .to(framework.basic.endpoint.FRAME_ID)
+                            .send(Event.ZLFE_COMMENT_UPDATED, {
+                                comment : comment,
+                                zt : cpzlqkResp.zt});
+                    }
+                }
+
+                this.mAjax.get({
                     date: date,
                     companyId:compType,
-                    ydjd:this.mYdjdType
-                }),compId:compType}).then((jsonData:any)=>{
-                    framework.router
-                        .fromEp(this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(Event.ZLFE_COMMENT_UPDATED, jsonData);
-                });
-                this.mAjax.get({
+                    ydjd:this.mYdjdType,
+                    pageType:pageType
+                }).then(complete);
+
+                this.mCommentGet.get({
+                    condition : Util.Ajax.toUrlParam({
+                        url : this.mAjax.baseUrl(),
                         date: date,
                         companyId:compType,
-                        ydjd:this.mYdjdType,
-                        all: this.mCompType == Util.CompanyType.PDCY
-                    })
-                    .then((jsonData:any) => {
-                        this.mData = jsonData;
-                        this.refresh();
-                    });
+                        ydjd:this.mYdjdType}),
+                    compId : compType
+                }).then(complete);
             }
 
             private toCtVal(val:string){

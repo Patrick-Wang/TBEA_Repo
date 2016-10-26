@@ -16,14 +16,8 @@ var cpzlqk;
         CpzlqkEntryFrameView.prototype.onEvent = function (e) {
             switch (e.id) {
                 case cpzlqk.Event.ZLFE_DATA_STATUS:
-                    if (e.data == Util.ZBStatus.APPROVED) {
-                        $("#gbsm").hide();
-                        $("#gbsv").hide();
-                    }
-                    else {
-                        $("#gbsm").show();
-                        $("#gbsv").show();
-                    }
+                    $("#gbsm").show();
+                    $("#gbsv").show();
                     break;
             }
             return _super.prototype.onEvent.call(this, e);

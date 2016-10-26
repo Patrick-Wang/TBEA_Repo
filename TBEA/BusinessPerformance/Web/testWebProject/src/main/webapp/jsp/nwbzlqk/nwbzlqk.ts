@@ -4,15 +4,23 @@
 ///<reference path="../components/dateSelectorProxy.ts"/>
 ///<reference path="../framework/basic/basicdef.ts"/>
 
+
+declare var pageType;
+
 module nwbzlqk {
     import router = framework.router;
     import FrameEvent = framework.basic.FrameEvent;
     import DateSelector = Util.DateSelector;
+    import PageType = nwbzlqk.PageType;
 
     class NwbzlqkFrameView extends framework.basic.ShowFrameView {
 
         isCompanySupported:boolean = false;
         mYdjdType : YDJDType;
+        mAjaxApprove:Util.Ajax = new Util.Ajax("doApprove.do", false);
+        mAjaxAuth:Util.Ajax = new Util.Ajax("auth.do", false);
+        mCurZt:number;
+        mAuths:any;
 
         protected init(opt:any):void {
             this.mOpt = opt;
@@ -98,7 +106,7 @@ module nwbzlqk {
                                 year: this.mOpt.date.year,
                                 month: 12
                             },
-                            dtNow, false, true);
+                            dtNow, true, false);
                         this.mDtSec = dsp;
                         router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
                     }
@@ -122,27 +130,23 @@ module nwbzlqk {
 
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
-                case Event.ZLFE_SAVE_COMMENT:
-                    router.to(this.mCurrentPlugin).send(Event.ZLFE_SAVE_COMMENT, $("#commentText").val());
+                case Event.ZLFE_APPROVE_COMMENT1:
+                case Event.ZLFE_APPROVE_COMMENT2:
+                case Event.ZLFE_APPROVE_COMMENT3:
+                case Event.ZLFE_APPROVE_COMMENT:
+                    this.onApproved(e.id);
                     break;
-                case Event.ZLFE_COMMENT_UPDATED:
-                    let comment : Comment = e.data;
-                    if (comment.deny == "deny"){
-                        $("#comment").hide();
-                    }else if(comment.readonly == "true"){
-                        $("#saveComment").hide();
-                        $("#comment").show();
-                        $("#commentText").val(comment.comment);
-                        $("#commentText").attr("readonly","readonly");
-                    }else{
-                        $("#comment").show();
-                        $("#saveComment").show();
-                        $("#commentText").val(comment.comment);
-                        $("#commentText").removeAttr("readonly");
-                    }
+                case Event.ZLFE_SAVE_COMMENT:
+                    router.to(this.mCurrentPlugin).send(e.id, $("#commentText").val());
                     break;
                 case Event.ZLFE_COMMENT_DENY:
                     $("#comment").hide();
+                    break;
+                case Event.ZLFE_APPROVEAUTH_UPDATED:
+                    this.onUpdateAuth();
+                    break;
+                case Event.ZLFE_COMMENT_UPDATED:
+                    this.onUpdateComment(e.data.comment, e.data.zt);
                     break;
             }
             return super.onEvent(e);
@@ -178,16 +182,182 @@ module nwbzlqk {
                 title = this.mCompanySelector.getCompanyName() + " " + title;
             }
             $("#headertitle")[0].innerHTML = title;
-            router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
-                date:dt,
-                compType:this.mCurrentComp
-            });
+
+            if (pageType == PageType.APPROVE){
+                this.mAjaxAuth.get({companyId: this.mCurrentComp})
+                    .then((jsonData:any)=>{
+                        this.mAuths = jsonData;
+                        router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
+                            date:dt,
+                            compType:this.mCurrentComp
+                        });
+                    });
+            }else{
+                router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
+                    date:dt,
+                    compType:this.mCurrentComp
+                });
+            }
+        }
+
+        onApproved(id:number){
+            let zt;
+            switch(id){
+                case Event.ZLFE_APPROVE_COMMENT1:
+                    zt = Util.IndiStatus.INTER_APPROVED_1;
+                    break;
+                case Event.ZLFE_APPROVE_COMMENT2:
+                    zt = Util.IndiStatus.INTER_APPROVED_2;
+                    break;
+                case Event.ZLFE_APPROVE_COMMENT3:
+                    zt = Util.IndiStatus.INTER_APPROVED_3;
+                    break;
+                case Event.ZLFE_APPROVE_COMMENT:
+                    zt = Util.IndiStatus.APPROVED;
+                    break;
+            }
+
+            if (undefined != zt){
+                this.mAjaxApprove.get({
+                    date : this.mCurrentDate.year + "-" + this.mCurrentDate.month + "-1",
+                    companyId: this.mCurrentComp,
+                    zt : zt
+                }).then((jsonData:any)=>{
+
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(Event.ZLFE_APPROVEAUTH_UPDATED);
+
+                    framework.router
+                        .fromEp(this)
+                        .to(framework.basic.endpoint.FRAME_ID)
+                        .send(Event.ZLFE_COMMENT_UPDATED, {comment:{
+                            comment : $("#commentText").val()
+                        }, zt:zt});
+
+                    if (zt == Util.IndiStatus.INTER_APPROVED_1){
+                        Util.MessageBox.tip("审核成功", undefined);
+                    }else{
+                        Util.MessageBox.tip("上报成功", undefined);
+                    }
+
+                });
+            }
+        }
+
+        private onUpdateComment(comment:Comment, zt:number):void {
+
+            if (comment.deny == "deny"){
+                $("#comment").hide();
+                return;
+            }
+
+            this.mCurZt = zt;
+
+            $("#comment").show();
+            $("#commentText").val(comment.comment);
+            $("#commentText").attr("readonly","readonly");
+            if (pageType == PageType.APPROVE){//approve
+                if (zt == Util.IndiStatus.SUBMITTED){
+                    if ($("#approveComment1").is(":visible")){
+
+                    }else{
+                        $("#commentText").val("");
+                    }
+                    $("#approveComment").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment3").hide();
+                } else if (zt == Util.IndiStatus.INTER_APPROVED_1){
+                    if ($("#approveComment2").is(":visible") ||
+                        $("#approveComment1").is(":visible")){
+
+                    }else{
+                        $("#commentText").val("");
+                    }
+                    $("#approveComment").hide();
+                    $("#approveComment1").hide();
+                    $("#approveComment3").hide();
+
+                } else if (zt == Util.IndiStatus.INTER_APPROVED_2){
+                    if ($("#approveComment2").is(":visible") ||
+                        $("#approveComment1").is(":visible") ||
+                        $("#approveComment3").is(":visible")){
+
+                    }else{
+                        $("#commentText").val("");
+                    }
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment").hide();
+                } else if (zt == Util.IndiStatus.INTER_APPROVED_3){
+                    if ($("#approveComment2").is(":visible") ||
+                        $("#approveComment1").is(":visible") ||
+                        $("#approveComment3").is(":visible") ||
+                        $("#approveComment").is(":visible")){
+
+                    }else{
+                        $("#commentText").val("");
+                    }
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment3").hide();
+
+                } else if (zt == Util.IndiStatus.APPROVED){
+                    $("#approveComment").hide();
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment3").hide();
+                } else {
+                    $("#approveComment").hide();
+                    $("#approveComment1").hide();
+                    $("#approveComment2").hide();
+                    $("#approveComment3").hide();
+                    $("#commentText").val("");
+                }
+            }else if (pageType == PageType.ENTRY){//submit
+                $("#approveComment").hide();
+                $("#approveComment1").hide();
+                $("#approveComment2").hide();
+                $("#approveComment3").hide();
+                $("#commentText").removeAttr("readonly");
+            }else if (pageType == PageType.SHOW){//show
+                $("#approveComment").hide();
+                $("#approveComment1").hide();
+                $("#approveComment2").hide();
+                $("#approveComment3").hide();
+                if (zt != 1){
+                    $("#commentText").val("");
+                }
+            }
+        }
+
+        private onUpdateAuth():void {
+            $("#approveComment").hide();
+            $("#approveComment1").hide();
+            $("#approveComment2").hide();
+            $("#approveComment3").hide();
+            if (Util.indexOf(this.mAuths, 22) >= 0){
+                $("#approveComment").show();
+            }
+            if (Util.indexOf(this.mAuths, 53) >= 0){
+                $("#approveComment1").show();
+            }
+            if (Util.indexOf(this.mAuths, 54) >= 0){
+                $("#approveComment2").show();
+            }
+            if (Util.indexOf(this.mAuths, 55) >= 0){
+                $("#approveComment3").show();
+            }
         }
     }
 
     export abstract class ZlPluginView extends framework.basic.ShowPluginView {
         protected mYdjdType : YDJDType;
         protected mCompSize:number;
+        mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
+        mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
+
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
                 case Event.ZLFE_IS_YDJD_SUPPORTED:
@@ -201,9 +371,13 @@ module nwbzlqk {
                 case Event.ZLFE_IS_COMPANY_SUPPORTED:
                     this.mCompSize = e.data;
                     return false;
+                case Event.ZLFE_SAVE_COMMENT:
+                    this.onSaveComment(e.data);
+                    break;
             }
             return super.onEvent(e);
         }
+        abstract onSaveComment(data:any):void;
     }
 
 

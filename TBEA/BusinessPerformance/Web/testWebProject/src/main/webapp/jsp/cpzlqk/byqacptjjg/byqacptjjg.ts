@@ -9,6 +9,7 @@
 
 
 declare var echarts;
+declare var pageType;
 module cpzlqk {
     export module byqacptjjg {
 
@@ -35,14 +36,8 @@ module cpzlqk {
             static ins = new ShowView();
             private mData:CpzlqkResp;
             private mAjax:Util.Ajax = new Util.Ajax("../byqacptjjg/update.do", false);
-            private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
-            private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
-            private mCommentApprove:Util.Ajax = new Util.Ajax("../report/zlfxApprove.do", false);
-            private mAjaxApprove:Util.Ajax = new Util.Ajax("../byqacptjjg/approve.do", false);
-            private mAjaxAuth:Util.Ajax = new Util.Ajax("auth.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
-            private mAuths : any;
             getId():number {
                 return plugin.byqacptjjg;
             }
@@ -52,71 +47,9 @@ module cpzlqk {
                     ||compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             }
             onEvent(e:framework.route.Event):any {
-
-                let zt;
                 switch (e.id) {
                     case Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
-                    case Event.ZLFE_SAVE_COMMENT:
-                        let param = {
-                            condition:Util.Ajax.toUrlParam({
-                                url : this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId:this.mCompType,
-                                ydjd:this.mYdjdType
-                            }),
-                            comment:e.data
-                        }
-                        this.mCommentSubmit.get({
-                            data : JSON.stringify([[param.condition, param.comment]])
-                        }).then((jsonData:any)=>{
-                            Util.MessageBox.tip("提交成功", undefined);
-                        });
-                        break;
-                    case Event.ZLFE_APPROVE_COMMENT1:
-                        zt = Util.IndiStatus.INTER_APPROVED_1;
-                        break;
-                    case Event.ZLFE_APPROVE_COMMENT2:
-                        zt = Util.IndiStatus.INTER_APPROVED_2;
-                        break;
-                    case Event.ZLFE_APPROVE_COMMENT:
-                        zt = Util.IndiStatus.APPROVED;
-                        break;
-                }
-                if (undefined != zt){
-                    let param = {
-                        condition:Util.Ajax.toUrlParam({
-                            url : this.mAjax.baseUrl(),
-                            date: this.mDt,
-                            companyId:this.mCompType,
-                            ydjd:this.mYdjdType
-                        }),
-                        comment:e.data
-                    }
-                    this.mCommentApprove.get({
-                        data : JSON.stringify([[param.condition, param.comment]]),
-                        zt:zt
-                    }).then((jsonData:any)=>{
-                        this.mAjaxApprove.get({
-                            date: this.mDt,
-                            companyId:this.mCompType,
-                            zt:zt
-                        }).then((jsonData:any)=>{
-                            //Util.MessageBox.tip("审核成功", undefined);
-                            framework.router
-                                .fromEp(this)
-                                .to(framework.basic.endpoint.FRAME_ID)
-                                .send(Event.ZLFE_APPROVEAUTH_UPDATED, this.mAuths);
-
-                            framework.router
-                                .fromEp(this)
-                                .to(framework.basic.endpoint.FRAME_ID)
-                                .send(Event.ZLFE_COMMENT_UPDATED, {comment:{
-                                    comment:param.comment,
-                                    zt:zt
-                            }});
-                        });
-                    });
                 }
                 return super.onEvent(e);
             }
@@ -136,44 +69,49 @@ module cpzlqk {
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
                 this.mCompType = compType;
-                this.mAjaxAuth.get({
-                    companyId:compType,
-                }).then((auths:any)=>{
-                    this.mAuths = auths;
-                    framework.router
-                        .fromEp(this)
-                        .to(framework.basic.endpoint.FRAME_ID)
-                        .send(Event.ZLFE_APPROVEAUTH_UPDATED, this.mAuths);
-                    this.mCommentGet.get({condition:Util.Ajax.toUrlParam({
-                        url : this.mAjax.baseUrl(),
-                        date: date,
-                        companyId:compType,
-                        ydjd:this.mYdjdType,
-                    }),compId:compType}).then((jsonData:any)=>{
-                        let comment : Comment = jsonData;
+                let comment : Comment;
+                let cpzlqkResp : CpzlqkResp;
+                let complete = (jsonData:any)=>{
+                    if (undefined != jsonData.tjjg){
+                        cpzlqkResp = jsonData;
+                    }else{
+                        comment = jsonData;
+                    }
+
+                    if (comment != undefined && cpzlqkResp != undefined){
+                        this.mData = cpzlqkResp;
+                        this.refresh();
+                        if (pageType == PageType.APPROVE){
+                            framework.router
+                                .fromEp(this)
+                                .to(framework.basic.endpoint.FRAME_ID)
+                                .send(Event.ZLFE_APPROVEAUTH_UPDATED);
+                        }
+
                         framework.router
                             .fromEp(this)
                             .to(framework.basic.endpoint.FRAME_ID)
-                            .send(Event.ZLFE_COMMENT_UPDATED, {comment:comment, auths:auths});
+                            .send(Event.ZLFE_COMMENT_UPDATED, {
+                                    comment : comment,
+                                    zt : cpzlqkResp.zt});
+                    }
+                }
 
-                        this.mAjax.get({
-                                date: date,
-                                companyId:compType,
-                                ydjd:this.mYdjdType,
-                                pageType:pageType,
-                                zt:comment.zt,
-                                auths:JSON.stringify(auths)
-                            })
-                            .then((jsonData:any) => {
-                                this.mData = jsonData;
-                                this.refresh();
-                            });
-                    });
-                })
+                this.mAjax.get({
+                    date: date,
+                    companyId:compType,
+                    ydjd:this.mYdjdType,
+                    pageType:pageType
+                }).then(complete);
 
-
-
-
+                this.mCommentGet.get({
+                    condition : Util.Ajax.toUrlParam({
+                                    url : this.mAjax.baseUrl(),
+                                    date: date,
+                                    companyId:compType,
+                                    ydjd:this.mYdjdType}),
+                    compId : compType
+                }).then(complete);
             }
 
             private toCtVal(val:string){
@@ -197,7 +135,7 @@ module cpzlqk {
                     formatter : (params) => {
                         let ret = params[0][1];
                         for (let i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                            ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 1.0).toFixed(2) + "%";
                         }
                         return ret;
                     }
@@ -331,6 +269,23 @@ module cpzlqk {
                         viewrecords : true,
                         caption:"按产品统计结果"
                     }));
+            }
+
+            onSaveComment(comment:any):void {
+                let param = {
+                    condition:Util.Ajax.toUrlParam({
+                        url : this.mAjax.baseUrl(),
+                        date: this.mDt,
+                        companyId:this.mCompType,
+                        ydjd:this.mYdjdType
+                    }),
+                    comment:comment
+                };
+                this.mCommentSubmit.get({
+                    data : JSON.stringify([[param.condition, param.comment]])
+                }).then((jsonData:any)=>{
+                    Util.MessageBox.tip("提交成功", undefined);
+                });
             }
         }
     }

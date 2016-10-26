@@ -80,8 +80,6 @@ public class ControllerRequest extends PropMap{
 		}
 	}
 	
-	
-	
 	public ControllerRequest(HttpServletRequest req) {
 		super();
 		this.req = req;

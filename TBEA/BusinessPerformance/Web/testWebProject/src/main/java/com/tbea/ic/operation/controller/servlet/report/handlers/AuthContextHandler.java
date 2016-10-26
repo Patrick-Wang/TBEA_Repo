@@ -2,8 +2,10 @@ package com.tbea.ic.operation.controller.servlet.report.handlers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -75,48 +77,68 @@ public class AuthContextHandler implements ContextHandler {
 
 			@Override
 			public Object getProperty(Object key) throws Exception {
-				Integer authType = (Integer)key;
-				List<Company> comps = extendAuthService.getAuthedCompanies(SessionManager.getAccount(request.getSession()), authType);
-				if (authType == 43){
-					Organization org = companyManager.getVirtualCYOrg();
-					List<Company> byqs = new EasyList<Company>(org.getCompany(CompanyType.BYQCY).getSubCompanies()).clone();
-					List<Company> xls = new EasyList<Company>(org.getCompany(CompanyType.XLCY).getSubCompanies()).clone();
-					CompanySelection compSel = new CompanySelection(false, org.getTopCompany(), new Filter(){
+				
+				if (key instanceof Integer){
+					Integer authType = (Integer)key;
+					List<Company> comps = extendAuthService.getAuthedCompanies(
+							SessionManager.getAccount(request.getSession()), authType);
+					if (authType == 43){
+						Organization org = companyManager.getVirtualCYOrg();
+						List<Company> byqs = new EasyList<Company>(org.getCompany(CompanyType.BYQCY).getSubCompanies()).clone();
+						List<Company> xls = new EasyList<Company>(org.getCompany(CompanyType.XLCY).getSubCompanies()).clone();
+						CompanySelection compSel = new CompanySelection(false, org.getTopCompany(), new Filter(){
 
-						@Override
-						public boolean keep(Company comp) {
-							for (Company cp : comps){
-								if (cp.getType() == comp.getType()){
-									byqs.remove(comp);
-									xls.remove(comp);
-									return true;
+							@Override
+							public boolean keep(Company comp) {
+								for (Company cp : comps){
+									if (cp.getType() == comp.getType()){
+										byqs.remove(comp);
+										xls.remove(comp);
+										return true;
+									}
 								}
-							}
-							
-							if (comp.getType() == CompanyType.BYQCY){
-								if (byqs.isEmpty()){
-									return true;
+								
+								if (comp.getType() == CompanyType.BYQCY){
+									if (byqs.isEmpty()){
+										return true;
+									}
 								}
-							}
-							
-							if (comp.getType() == CompanyType.XLCY){
-								if (xls.isEmpty()){
-									return true;
+								
+								if (comp.getType() == CompanyType.XLCY){
+									if (xls.isEmpty()){
+										return true;
+									}
 								}
+								
+								return false;
 							}
-							
-							return false;
-						}
 
-						@Override
-						public boolean keepGroup(Company comp) {
-							return true;
-						}
-					});
-					Map<String, Object> map = new HashMap<String, Object>();
-					compSel.select(map);
-					return map; 
+							@Override
+							public boolean keepGroup(Company comp) {
+								return true;
+							}
+						});
+						Map<String, Object> map = new HashMap<String, Object>();
+						compSel.select(map);
+						return map; 
+					}else{
+						CompanySelection compSel = new CompanySelection(true, comps);
+						Map<String, Object> map = new HashMap<String, Object>();
+						compSel.select(map);
+						return map;
+					}
+					
 				}else{
+					List<Company> comps = new ArrayList<Company>();
+					Set<Company> compSet = new HashSet<Company>();
+					List<Integer> auths = (List<Integer>) key;
+					for (Integer auth : auths){
+						compSet.addAll(extendAuthService.getAuthedCompanies(
+								SessionManager.getAccount(request.getSession()), auth));
+					}
+					for (Company comp : compSet){
+						comps.add(comp);
+					}
 					CompanySelection compSel = new CompanySelection(true, comps);
 					Map<String, Object> map = new HashMap<String, Object>();
 					compSel.select(map);

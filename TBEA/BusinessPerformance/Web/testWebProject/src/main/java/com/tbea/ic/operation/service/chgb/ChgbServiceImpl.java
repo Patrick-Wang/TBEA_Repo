@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.MathUtil;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -45,7 +46,6 @@ import com.tbea.ic.operation.model.entity.chgb.NychEntity;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 
 @Service(ChgbServiceImpl.NAME)
@@ -670,7 +670,7 @@ public class ChgbServiceImpl implements ChgbService {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(d);
 				String whereSql = 
-					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
+					" and unit_code in (" + StringUtils.join(CompanyNCCode.toCodeList(comps).toArray(), ",") + ")" + 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
 
@@ -692,7 +692,7 @@ public class ChgbServiceImpl implements ChgbService {
 				while (rs.next()) {
 
 					String unitCode = String.valueOf(rs.getObject(1));
-					CompanyType companyType = NCCompanyCode.getType(unitCode);
+					CompanyType companyType = CompanyNCCode.getType(unitCode);
 					Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
 					
 					List<ChZmEntity> entities = chzmDao.getByDate(d, comp);
@@ -725,7 +725,7 @@ public class ChgbServiceImpl implements ChgbService {
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(d);
 				String whereSql = 
-					" and unit_code in (" + StringUtils.join(NCCompanyCode.toCodeList(comps).toArray(), ",") + ")" + 
+					" and unit_code in (" + StringUtils.join(CompanyNCCode.toCodeList(comps).toArray(), ",") + ")" + 
 					" and extract(year from to_date(inputdate,'yyyy-mm-dd')) =" + cal.get(Calendar.YEAR) + 
 					" and extract(month from to_date(inputdate,'yyyy-mm-dd')) =" + (cal.get(Calendar.MONTH) + 1);
 				
@@ -747,7 +747,7 @@ public class ChgbServiceImpl implements ChgbService {
 				while (rs.next()) {
 
 					String unitCode = String.valueOf(rs.getObject(1));
-					CompanyType companyType = NCCompanyCode.getType(unitCode);
+					CompanyType companyType = CompanyNCCode.getType(unitCode);
 					Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
 					
 					List<NychEntity> entities = nychDao.getByDate(d, d, comp);

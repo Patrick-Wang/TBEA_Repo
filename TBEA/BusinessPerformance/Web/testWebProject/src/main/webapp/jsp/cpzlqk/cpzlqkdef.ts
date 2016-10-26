@@ -70,6 +70,7 @@ module cpzlqk{
         tjjg : string[][];
         waveItems: WaveItem[];
         waveX?:string[];
+        zt:number;
         status?:Util.ZBStatus;
         bhglx?:string[];
         zrlb?:string[];
@@ -93,6 +94,7 @@ module cpzlqk{
         export let ZLFE_APPROVE_COMMENT : number = FrameEvent.lastEvent();
         export let ZLFE_APPROVE_COMMENT1 : number = FrameEvent.lastEvent();
         export let ZLFE_APPROVE_COMMENT2 : number = FrameEvent.lastEvent();
+        export let ZLFE_APPROVE_COMMENT3 : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_UPDATED : number = FrameEvent.lastEvent();
         export let ZLFE_DATA_STATUS : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_DENY : number = FrameEvent.lastEvent();

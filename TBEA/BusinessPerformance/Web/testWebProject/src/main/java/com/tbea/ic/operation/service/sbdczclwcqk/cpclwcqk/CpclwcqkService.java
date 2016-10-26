@@ -22,4 +22,6 @@ public interface CpclwcqkService {
 	
 	ZBStatus getCpclwcqkStatus(Date d, Company comp, SbdczclwcqkType type);
 
+	void importCl(java.sql.Date d);
+
 }

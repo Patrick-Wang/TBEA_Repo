@@ -1,0 +1,1104 @@
+<components>
+ <controller id="gcyzbUpdate">
+  <context key="item" value="${request.item.asInt}"/>
+  <context key="xmmc" value="${request.xmmc.asString}"/>
+  <if test="${item == 1}">
+   <callcontroller id="project_basic_info_update"/>
+  </if>
+  <if test="${item == 2}">
+   <callcontroller id="budget_control_update"/>
+  </if>
+  <if test="${item == 3}">
+   <callcontroller id="business_indicator_update"/>
+  </if>
+  <if test="${item == 4}">
+   <callcontroller id="business_indicator_plan_update"/>
+  </if>
+  <if test="${item == 5}">
+   <callcontroller id="output_value_update"/>
+  </if>
+  <if test="${item == 6}">
+   <callcontroller id="construction_update"/>
+  </if>
+  <if test="${item == 7}">
+   <callcontroller id="electricity_update"/>
+  </if>
+  <if test="${item == 8}">
+   <callcontroller id="quality_assurance_update"/>
+  </if>
+  <if test="${item == 9}">
+   <callcontroller id="risk_update"/>
+  </if>
+ </controller>
+ <controller id="gcyzbExport">
+  <context key="item" value="${request.item.asInt}"/>
+  <context key="xmmc" value="${request.xmmc.asString}"/>
+  <if test="${item == 1}">
+   <callcontroller id="project_basic_info_export"/>
+  </if>
+  <if test="${item == 2}">
+   <callcontroller id="budget_control_export"/>
+  </if>
+  <if test="${item == 3}">
+   <callcontroller id="business_indicator_export"/>
+  </if>
+  <if test="${item == 4}">
+   <callcontroller id="business_indicator_plan_export"/>
+  </if>
+  <if test="${item == 5}">
+   <callcontroller id="output_value_export"/>
+  </if>
+  <if test="${item == 6}">
+   <callcontroller id="construction_export"/>
+  </if>
+  <if test="${item == 7}">
+   <callcontroller id="electricity_export"/>
+  </if>
+  <if test="${item == 8}">
+   <callcontroller id="quality_assurance_export"/>
+  </if>
+  <if test="${item == 9}">
+   <callcontroller id="risk_export"/>
+  </if>
+ </controller>
+ <service id="serv_project_names" transaction="transactionManager">
+  <sql id="data">select 
+	NC.id,
+	NC.xmqc
+from 
+	project_comprehensive_table_nc NC</sql>
+  <list id="xmIds" sql="data" value="0" export="true" type="int">1,2,3,4,5,6,7,8,9,10</list>
+  <list id="xmmcs" sql="data" value="1" export="true" type="string">1,2,3,4,5,6,7,8,9,10</list>
+ </service>
+ <controller id="gcyzb">
+  <list type="int" id="ids">
+   <item from="1" to="9"/>
+  </list>
+  <list type="string" id="names">项目基本信息,
+预算控制情况,
+项目经营指标情况,
+项目经营指标规划,
+产值情况,
+建设情况,
+发电情况,
+质保情况,
+风险情况</list>
+  <callservice id="serv_project_names"/>
+  <response type="jsp" name="gcyzb/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="gcyzbUpdate"/>
+   <map key="exportUrl" value="gcyzbExport"/>
+   <map key="nodeData" value="${dataNodeFactory[ids][names].asJson}"/>
+   <map key="nodeXmmc" value="${dataNodeFactory[xmIds][xmmcs].asJson}"/>
+   <map key="title" value="工程一张表"/>
+  </response>
+ </controller>
+ <service id="serv_project_basic_info" transaction="transactionManager">
+  <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.xmlx,
+	PM.project_category,
+	IMP.project_capacity,
+	NC.khqc,
+	PM.contract_amount,
+	PM.contract_date,
+	PM.completion_date,
+	PM.payment_mode,
+	PM.prepayment
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name 
+where
+	NC.xmqc = ${xmmc}</sql>
+  <list id="ids" type="int" from="1" to="${data.size}"/>
+  <table id="result" table="${data}" export="true" rowIds="ids"/>
+ </service>
+ <controller id="project_basic_info_update">
+  <callservice id="serv_project_basic_info"/>
+  <callcontroller id="project_basic_info_format"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目公司/事业部</name>
+    </item>
+    <item>
+     <name>项目编号</name>
+    </item>
+    <item>
+     <name>项目全称</name>
+    </item>
+    <item>
+     <name>项目类型</name>
+    </item>
+    <item>
+     <name>工程类别</name>
+    </item>
+    <item>
+     <name>项目容量</name>
+    </item>
+    <item>
+     <name>客户全称</name>
+    </item>
+    <item>
+     <name>合同金额</name>
+    </item>
+    <item>
+     <name>签约日期</name>
+    </item>
+    <item>
+     <name>要求完工日期</name>
+    </item>
+    <item>
+     <name>合同付款方式</name>
+    </item>
+    <item>
+     <name>预付款金额（万元）</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="project_basic_info_format">
+  <formatter id="fmtData" export="true">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="5,7,10,11"/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="project_basic_info_export">
+  <callservice id="serv_project_basic_info"/>
+  <callcontroller id="project_basic_info_format"/>
+  <ExcelTemplate id="excelTemplate" sheet="项目基本信息"/>
+  <list id="title" type="string">项目公司/事业部,
+项目编号,
+项目全称,
+项目类型,
+工程类别,
+项目容量,
+客户全称,
+合同金额,
+签约日期,
+要求完工日期,
+合同付款方式,
+预付款金额（万元）</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}项目基本信息.xls" serv="fmtServ"/>
+ </controller>
+ <service id="serv_budget_control" transaction="transactionManager">
+  <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	PM.income,
+	PM.bid_budget_cost,
+	PM.target_cost,
+	PM.dynamic_cost,
+	PM.unit_dynamic_cost
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+where
+	NC.xmqc = ${xmmc}</sql>
+  <list id="ids" type="int" from="1" to="${data.size}"/>
+  <table id="result" table="${data}" export="true" rowIds="ids"/>
+ </service>
+ <controller id="budget_control_update">
+  <callservice id="serv_budget_control"/>
+  <callcontroller id="budget_control_format"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目公司/事业部</name>
+    </item>
+    <item>
+     <name>项目编号</name>
+    </item>
+    <item>
+     <name>项目全称</name>
+    </item>
+    <item>
+     <name>收入金额（万元）</name>
+    </item>
+    <item>
+     <name>投标预算总成本（万元）</name>
+    </item>
+    <item>
+     <name>目标总成本（万元）</name>
+    </item>
+    <item>
+     <name>动态总成本（万元）</name>
+    </item>
+    <item>
+     <name>单位动态总成本（元/瓦）</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="budget_control_format">
+  <formatter id="fmtData" export="true">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="3,4,5,6,7"/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="budget_control_export">
+  <callservice id="serv_budget_control"/>
+  <callcontroller id="budget_control_format"/>
+  <ExcelTemplate id="excelTemplate" sheet="项目预算控制情况"/>
+  <list id="title" type="string">项目公司/事业部,
+项目编号,
+项目全称,
+收入金额（万元）,
+投标预算总成本（万元）,
+目标总成本（万元）,
+动态总成本（万元）,
+单位动态总成本（元/瓦）</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}项目预算控制情况.xls" serv="fmtServ"/>
+ </controller>
+ <service id="serv_business_indicator" transaction="transactionManager">
+  <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	PM.finacial_record_gross_profit_rate,
+	NC.bysjqrsr,
+	NC.bysjkpje,
+	NC.bysjml,
+	NC.bysjrzch,
+	PM.current_month_fund_restream,
+	NC.ljqrsr,
+	NC.ljqrsr/nullif(PM.income,0) as name1,
+	NC.ljtxml,
+	NC.ljkpje,
+	NC.ljkpje/nullif(PM.contract_amount,0)  as name2,
+	PM.cumulative_fund_restream,
+	PM.cumulative_fund_restream/nullif(PM.contract_amount,0)  as name3,
+	NC.zmysye,
+	NC.ljrzch,
+	NC.chye,
+	NC.qzzmch,
+	NC.qzyxmgszcxsxcdchye,
+	NC.yjzch,
+	PM.dynamic_gross_profit_rate,
+	PM.overdue_payment	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+where
+	NC.xmqc = ${xmmc}</sql>
+  <list id="ids" type="int" from="1" to="${data.size}"/>
+  <table id="result" table="${data}" export="true" rowIds="ids"/>
+ </service>
+ <controller id="business_indicator_update">
+  <callservice id="serv_business_indicator"/>
+  <callcontroller id="business_indicator_format"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目公司/事业部</name>
+    </item>
+    <item>
+     <name>项目编号</name>
+    </item>
+    <item>
+     <name>项目全称</name>
+    </item>
+    <item>
+     <name>财务备案毛利率（%）</name>
+    </item>
+    <item>
+     <name>本月实际确认收入（万元）</name>
+    </item>
+    <item>
+     <name>本月实际开票金额（万元）</name>
+    </item>
+    <item>
+     <name>本月实际毛利（万元）</name>
+    </item>
+    <item>
+     <name>本月实际入账存货（万元）</name>
+    </item>
+    <item>
+     <name>本月实际回款金额（万元）</name>
+    </item>
+    <item>
+     <name>累计确认收入（万元）</name>
+    </item>
+    <item>
+     <name>累计确认收入比例（%）</name>
+    </item>
+    <item>
+     <name>累计体现毛利（万元）</name>
+    </item>
+    <item>
+     <name>累计开票金额（万元）</name>
+    </item>
+    <item>
+     <name>累计开票比例（%）</name>
+    </item>
+    <item>
+     <name>累计回款金额（万元）</name>
+    </item>
+    <item>
+     <name>累计回款比例（%）</name>
+    </item>
+    <item>
+     <name>账面应收余额（万元）</name>
+    </item>
+    <item>
+     <name>累计入账存货（万元）</name>
+    </item>
+    <item>
+     <name>存货余额（万元）</name>
+    </item>
+    <item>
+     <name>其中：账面存货</name>
+    </item>
+    <item>
+     <name>其中：已项目公司资产形式形成的存货余额</name>
+    </item>
+    <item>
+     <name>已结转存货</name>
+    </item>
+    <item>
+     <name>动态毛利率（%）</name>
+    </item>
+    <item>
+     <name>逾期款金额</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+   <width>1300</width>
+   <shrinkToFit>false</shrinkToFit>
+  </response>
+ </controller>
+ <controller id="business_indicator_format">
+  <formatter id="fmtData" export="true">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="4,5,6,7,8,9,11,12,13,14,16,17,18,19,20,21,23"/>
+   </NumberFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="3,10,13,15,22"/>
+   </PercentFormatter>
+  </formatter>
+ </controller>
+ <controller id="business_indicator_export">
+  <callservice id="serv_business_indicator"/>
+  <callcontroller id="business_indicator_format"/>
+  <ExcelTemplate id="excelTemplate" sheet="项目经营指标情况"/>
+  <list id="title" type="string">项目公司/事业部,
+项目编号,
+项目全称,
+财务备案毛利率（%）,
+本月实际确认收入（万元）,
+本月实际开票金额（万元）,
+本月实际毛利（万元）,
+本月实际入账存货（万元）,
+本月实际回款金额（万元）,
+累计确认收入（万元）,
+累计确认收入比例（%）,
+累计体现毛利（万元）,
+累计开票金额（万元）,
+累计开票比例（%）,
+累计回款金额（万元）,
+累计回款比例（%）,
+账面应收余额（万元）,
+累计入账存货（万元）,
+存货余额（万元）,
+其中：账面存货,
+其中：已项目公司资产形式形成的存货余额,
+已结转存货,
+动态毛利率（%）,
+逾期款金额</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}项目经营指标情况.xls" serv="fmtServ"/>
+ </controller>
+ <service id="serv_business_indicator_plan" transaction="transactionManager">
+  <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.xyjhqrsr,
+	IMP.xyjhkpje,
+	IMP.xyjhrzch,
+	PM.next_month_fund_restream	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+where
+	NC.xmqc = ${xmmc}</sql>
+  <list id="ids" type="int" from="1" to="${data.size}"/>
+  <table id="result" table="${data}" export="true" rowIds="ids"/>
+ </service>
+ <controller id="business_indicator_plan_update">
+  <callservice id="serv_business_indicator_plan"/>
+  <callcontroller id="business_indicator_plan_format"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目公司/事业部</name>
+    </item>
+    <item>
+     <name>项目编号</name>
+    </item>
+    <item>
+     <name>项目全称</name>
+    </item>
+    <item>
+     <name>下月计划确认收入（万元）</name>
+    </item>
+    <item>
+     <name>下月计划开票金额（万元）</name>
+    </item>
+    <item>
+     <name>下月计划入账存货（万元）</name>
+    </item>
+    <item>
+     <name>下月计划回款金额（万元）</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="business_indicator_plan_format">
+  <formatter id="fmtData" export="true">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="3,4,5,6"/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="business_indicator_plan_export">
+  <callservice id="serv_business_indicator_plan"/>
+  <callcontroller id="business_indicator_plan_format"/>
+  <ExcelTemplate id="excelTemplate" sheet="项目经营指标规划"/>
+  <list id="title" type="string">项目公司/事业部,
+项目编号,
+项目全称,
+下月计划确认收入（万元）,
+下月计划开票金额（万元）,
+下月计划入账存货（万元）,
+下月计划回款金额（万元）</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}项目经营指标规划.xls" serv="fmtServ"/>
+ </controller>
+ <service id="serv_construction" transaction="transactionManager">
+  <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.jcsgrq,
+	PM.progress_percentage,
+	IMP.installed_capacity,
+	IMP.xmsjjgrq,
+	IMP.xmsjjsrq,
+	IMP.sfzjsyz,
+	IMP.syzdydj,
+	IMP.syzrl,
+	IMP.sfzjwx,
+	IMP.wxdydj,
+	IMP.wxcd	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+where
+	NC.xmqc = ${xmmc}</sql>
+  <list id="ids" type="int" from="1" to="${data.size}"/>
+  <table id="result" table="${data}" export="true" rowIds="ids"/>
+ </service>
+ <controller id="construction_update">
+  <callservice id="serv_construction"/>
+  <callcontroller id="construction_format"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目公司/事业部</name>
+    </item>
+    <item>
+     <name>项目编号</name>
+    </item>
+    <item>
+     <name>项目全称</name>
+    </item>
+    <item>
+     <name>进场施工日期</name>
+    </item>
+    <item>
+     <name>形象进度百分比（%）</name>
+    </item>
+    <item>
+     <name>实际装机容量（MW）</name>
+    </item>
+    <item>
+     <name>项目实际（预计）竣工日期</name>
+    </item>
+    <item>
+     <name>项目实际（预计）决算日期</name>
+    </item>
+    <item>
+     <name>是否自建升压站</name>
+    </item>
+    <item>
+     <name>升压站电压等级(kV)</name>
+    </item>
+    <item>
+     <name>升压站容量(kVA)</name>
+    </item>
+    <item>
+     <name>是否自建外线</name>
+    </item>
+    <item>
+     <name>外线电压等级(kV)</name>
+    </item>
+    <item>
+     <name>外线长度(kM)</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="construction_format">
+  <formatter id="fmtData" export="true">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="5,9,10,12,13"/>
+    <PercentMatcher cols="4"/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="construction_export">
+  <callservice id="serv_construction"/>
+  <callcontroller id="construction_format"/>
+  <ExcelTemplate id="excelTemplate" sheet="建设情况"/>
+  <list id="title" type="string">项目公司/事业部,
+项目编号,
+项目全称,
+进场施工日期,
+形象进度百分比（%）,
+实际装机容量（MW）,
+项目实际（预计）竣工日期,
+项目实际（预计）决算日期,
+是否自建升压站,
+升压站电压等级(kV),
+升压站容量(kVA),
+是否自建外线,
+外线电压等级(kV),
+外线长度(kM)</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}建设情况.xls" serv="fmtServ"/>
+ </controller>
+ <service id="serv_electricity" transaction="transactionManager">
+  <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.qzbwrq,
+	IMP.ybwrl,
+	IMP.njllyxfdxss,
+	IMP.bypjfh,
+	IMP.byjhfdl,
+	IMP.bysjfdl,
+	IMP.ndljswdl,
+	IMP.xyjhfdl	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name 
+where
+	NC.xmqc = ${xmmc}</sql>
+  <list id="ids" type="int" from="1" to="${data.size}"/>
+  <table id="result" table="${data}" export="true" rowIds="ids"/>
+ </service>
+ <controller id="electricity_update">
+  <callservice id="serv_electricity"/>
+  <callcontroller id="electricity_format"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目公司/事业部</name>
+    </item>
+    <item>
+     <name>项目编号</name>
+    </item>
+    <item>
+     <name>项目全称</name>
+    </item>
+    <item>
+     <name>全站并网日期</name>
+    </item>
+    <item>
+     <name>已并网容量（MW）</name>
+    </item>
+    <item>
+     <name>年均理论有效发电小时数</name>
+    </item>
+    <item>
+     <name>本月平均负荷</name>
+    </item>
+    <item>
+     <name>本月计划发电量（万kWh）</name>
+    </item>
+    <item>
+     <name>本月实际发电量（万kWh）</name>
+    </item>
+    <item>
+     <name>年度累计上网电量（万kWh）</name>
+    </item>
+    <item>
+     <name>下月计划发电量（万kWh）</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="electricity_format">
+  <formatter id="fmtData" export="true">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="4,5,6,7,8,9,10"/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="electricity_export">
+  <callservice id="serv_electricity"/>
+  <callcontroller id="electricity_format"/>
+  <ExcelTemplate id="excelTemplate" sheet="发电情况"/>
+  <list id="title" type="string">项目公司/事业部,
+项目编号,
+项目全称,
+全站并网日期,
+已并网容量（MW）,
+年均理论有效发电小时数,
+本月平均负荷,
+本月计划发电量（万kWh）,
+本月实际发电量（万kWh）,
+年度累计上网电量（万kWh）,
+下月计划发电量（万kWh）</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}发电情况.xls" serv="fmtServ"/>
+ </controller>
+ <service id="serv_quality_assurance" transaction="transactionManager">
+  <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.htydzbq,
+	IMP.zbqqsbz,
+	IMP.zbqqssj,
+	IMP.sfbhhzbj
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+where
+	NC.xmqc = ${xmmc}</sql>
+  <list id="ids" type="int" from="1" to="${data.size}"/>
+  <table id="result" table="${data}" export="true" rowIds="ids"/>
+ </service>
+ <controller id="quality_assurance_update">
+  <callservice id="serv_quality_assurance"/>
+  <callcontroller id="quality_assurance_format"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目公司/事业部</name>
+    </item>
+    <item>
+     <name>项目编号</name>
+    </item>
+    <item>
+     <name>项目全称</name>
+    </item>
+    <item>
+     <name>合同约定质保期（月）</name>
+    </item>
+    <item>
+     <name>质保期起算标准</name>
+    </item>
+    <item>
+     <name>质保期起算时间</name>
+    </item>
+    <item>
+     <name>是否保函换质保金</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="quality_assurance_format">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter/>
+  </formatter>
+ </controller>
+ <controller id="quality_assurance_export">
+  <callservice id="serv_quality_assurance"/>
+  <callcontroller id="quality_assurance_format"/>
+  <ExcelTemplate id="excelTemplate" sheet="质保情况"/>
+  <list id="title" type="string">项目公司/事业部,
+项目编号,
+项目全称,
+合同约定质保期（月）,
+质保期起算标准,
+质保期起算时间,
+是否保函换质保金</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}质保情况.xls" serv="fmtServ"/>
+ </controller>
+ <service id="serv_risk" transaction="transactionManager">
+  <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.khzczbj,
+	IMP.khqyxz,
+	IMP.khdbdyfkbhqk,
+	IMP.sfdzyw,
+	IMP.xmsfhfhg,
+	IMP.gqsfywjcsdfx,
+	IMP.gjsbcghtzbqjqssjsffgEPCht,
+	IMP.fdlcnqk,
+	IMP.sfxyzcjgbhbzwj,
+	IMP.xmfxjyh	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+where
+	NC.xmqc = ${xmmc}</sql>
+  <list id="ids" type="int" from="1" to="${data.size}"/>
+  <table id="result" table="${data}" export="true" rowIds="ids"/>
+ </service>
+ <controller id="risk_update">
+  <callservice id="serv_risk"/>
+  <callcontroller id="risk_format"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目公司/事业部</name>
+    </item>
+    <item>
+     <name>项目编号</name>
+    </item>
+    <item>
+     <name>项目全称</name>
+    </item>
+    <item>
+     <name>客户注册资本金</name>
+    </item>
+    <item>
+     <name>客户企业性质</name>
+    </item>
+    <item>
+     <name>客户担保、抵押、付款保函情况</name>
+    </item>
+    <item>
+     <name>是否垫资业务</name>
+    </item>
+    <item>
+     <name>项目是否合法合规</name>
+    </item>
+    <item>
+     <name>工期是否延误及产生的风险</name>
+    </item>
+    <item>
+     <name>关键设备采购合同质保期及起算时间是否覆盖EPC合同</name>
+    </item>
+    <item>
+     <name>发电量承诺情况</name>
+    </item>
+    <item>
+     <name>是否向业主出具过保函、保证文件</name>
+    </item>
+    <item>
+     <name>项目风险及隐患</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="risk_format">
+  <formatter id="fmtData" export="true">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="3"/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="risk_export">
+  <callservice id="serv_risk"/>
+  <callcontroller id="risk_format"/>
+  <ExcelTemplate id="excelTemplate" sheet="风险情况"/>
+  <list id="title" type="string">项目公司/事业部,
+项目编号,
+项目全称,
+客户注册资本金,
+客户企业性质,
+客户担保、抵押、付款保函情况,
+是否垫资业务,
+项目是否合法合规,
+工期是否延误及产生的风险,
+关键设备采购合同质保期及起算时间是否覆盖EPC合同,
+发电量承诺情况,
+是否向业主出具过保函、保证文件,
+项目风险及隐患</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}风险情况.xls" serv="fmtServ"/>
+ </controller>
+ <service id="serv_output_value" transaction="transactionManager">
+  <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.cost_control_plan_amount,
+	IMP.achieve_amount_of_cumup	,
+	IMP.achieve_amount_of_cumua,
+	IMP.achieve_amount_of_curp,
+	IMP.achieve_amount_of_cura,
+	IMP.achieve_amount_of_nextp,
+	IMP.payment_of_current_month,
+	IMP.cumulative_payment
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+where
+	NC.xmqc = ${xmmc}</sql>
+  <list id="ids" type="int" from="1" to="${data.size}"/>
+  <table id="result" table="${data}" export="true" rowIds="ids"/>
+ </service>
+ <controller id="output_value_update">
+  <callservice id="serv_output_value"/>
+  <callcontroller id="output_value_format"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目公司/事业部</name>
+    </item>
+    <item>
+     <name>项目编号</name>
+    </item>
+    <item>
+     <name>项目全称</name>
+    </item>
+    <item>
+     <name>成本管控目标金额（万元）</name>
+    </item>
+    <item>
+     <name>累计计划完成目标金额（万元）</name>
+    </item>
+    <item>
+     <name>累计实际完成目标金额（万元）</name>
+    </item>
+    <item>
+     <name>本月计划完成目标金额（万元）</name>
+    </item>
+    <item>
+     <name>本月实际完成目标金额（万元）</name>
+    </item>
+    <item>
+     <name>下月计划完成目标金额（万元）</name>
+    </item>
+    <item>
+     <name>本月付款（万元）</name>
+    </item>
+    <item>
+     <name>累计付款（万元）</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="output_value_format">
+  <formatter id="fmtData" export="true">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="3,4,5,6,7,8,9,10"/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="output_value_export">
+  <callservice id="serv_output_value"/>
+  <callcontroller id="output_value_format"/>
+  <ExcelTemplate id="excelTemplate" sheet="产值情况"/>
+  <list id="title" type="string">项目公司/事业部,
+项目编号,
+项目全称,
+成本管控目标金额（万元）,
+累计计划完成目标金额（万元）,
+累计实际完成目标金额（万元）,
+本月计划完成目标金额（万元）,
+本月实际完成目标金额（万元）,
+下月计划完成目标金额（万元）,
+本月付款（万元）,
+累计付款（万元）</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}产值情况.xls" serv="fmtServ"/>
+ </controller>
+</components>

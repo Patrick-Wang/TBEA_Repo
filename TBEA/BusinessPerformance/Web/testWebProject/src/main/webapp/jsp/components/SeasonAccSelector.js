@@ -7,11 +7,14 @@
 var Util;
 (function (Util) {
     var SeasonAccSelector = (function () {
-        function SeasonAccSelector(start, end, now, id) {
+        function SeasonAccSelector(start, end, now, id, jdName) {
             var _this = this;
             var dates = this.getYears(start, end);
-            var seasonEnd = parseInt("" + (end.month - 1) / 3);
             var jdNames = ["一季度", "半年度", "三季度", "年度"];
+            if (undefined != jdName) {
+                jdNames = jdName;
+            }
+            var seasonEnd = parseInt("" + (end.month - 1) / 3);
             var seasons = [];
             for (var i = 0; i <= seasonEnd; ++i) {
                 seasons.push({

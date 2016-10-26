@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.GSZB;
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
@@ -39,7 +40,6 @@ import com.tbea.ic.operation.model.entity.jygk.NCZB;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.nc.NCService;
-import com.tbea.ic.operation.service.util.nc.NCCompanyCode;
 
 @Controller
 @RequestMapping(value = "nc")
@@ -193,7 +193,7 @@ public class NCController {
 		// 合并
 		List<String> unitList = new ArrayList<String>();
 		logger.debug("connetToNCSystem 510 compType = " + compType);
-		unitList.add(NCCompanyCode.getCode(compType));
+		unitList.add(CompanyNCCode.getCode(compType));
 
 		ncService.connetToNCSystem("510", cal, unitList);
 	}
@@ -219,18 +219,18 @@ public class NCController {
 //		unitList.add("CC04");
 		logger.debug("connetToNCSystem 510");
 		
-		unitList.add(NCCompanyCode.getCode(CompanyType.SBGS));//CompanyType.SBGS);
-		unitList.add(NCCompanyCode.getCode(CompanyType.LLGS));//CompanyType.LLGS);
-		unitList.add(NCCompanyCode.getCode(CompanyType.DLGS));//CompanyType.DLGS);
-		unitList.add(NCCompanyCode.getCode(CompanyType.HBGS));//CompanyType.HBGS);
-		unitList.add(NCCompanyCode.getCode(CompanyType.XBC));//CompanyType.XBC);
-		unitList.add(NCCompanyCode.getCode(CompanyType.XLC));//CompanyType.XLC);
-		unitList.add(NCCompanyCode.getCode(CompanyType.XNYGS));//CompanyType.XNYGS);
-		unitList.add(NCCompanyCode.getCode(CompanyType.XTNYGS));//CompanyType.XTNYGS);
-		unitList.add(NCCompanyCode.getCode(CompanyType.TCNY));//CompanyType.TCNY);
-		unitList.add(NCCompanyCode.getCode(CompanyType.NDGS));//CompanyType.NDGS);
-		unitList.add(NCCompanyCode.getCode(CompanyType.JCKGS_JYDW));//CompanyType.JCKGS_JYDW);
-		unitList.add(NCCompanyCode.getCode(CompanyType.GJGCGS_GFGS));//CompanyType.GJGCGS_GFGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.SBGS));//CompanyType.SBGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.LLGS));//CompanyType.LLGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.DLGS));//CompanyType.DLGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.HBGS));//CompanyType.HBGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.XBC));//CompanyType.XBC);
+		unitList.add(CompanyNCCode.getCode(CompanyType.XLC));//CompanyType.XLC);
+		unitList.add(CompanyNCCode.getCode(CompanyType.XNYGS));//CompanyType.XNYGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.XTNYGS));//CompanyType.XTNYGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.TCNY));//CompanyType.TCNY);
+		unitList.add(CompanyNCCode.getCode(CompanyType.NDGS));//CompanyType.NDGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.JCKGS_JYDW));//CompanyType.JCKGS_JYDW);
+		unitList.add(CompanyNCCode.getCode(CompanyType.GJGCGS_GFGS));//CompanyType.GJGCGS_GFGS);
 
 		ncService.connetToNCSystem("510", cal, unitList);
 

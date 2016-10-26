@@ -376,4 +376,17 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		return entity;
 	}
+
+	@Override
+	public List<ZltjjgEntity> getByDateIgnoreStatus(Date d,
+			Company company) {
+		EasyCalendar ec = new EasyCalendar(d);
+        
+        Query q = getEntityManager().createQuery("from ZltjjgEntity where nf = :nf and yf = :yf and dwid = :dwid");
+		q.setParameter("nf", ec.getYear());
+		q.setParameter("yf", ec.getMonth());
+		q.setParameter("dwid", company.getId());
+		List<ZltjjgEntity> ret = q.getResultList();
+		return ret;
+	}
 }

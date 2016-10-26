@@ -25,8 +25,6 @@ public interface ByqacptjjgService {
 
 	ErrorCode approveByqacptjjg(Date d, JSONArray data, Company company, ZBStatus zbStatus);
 
-	ZBStatus getStatus(Date d, Company company);
-
 	ErrorCode unapproveByqacptjjg(Date d, JSONArray data, Company company);
 
 	List<WaveItem> getJdWaveValues(Date d, Company company,  List<Integer> zts);

@@ -49,7 +49,7 @@
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-<%@include file="../framework/basic/basicShow.jsp"%>
+<%@include file="../../../framework/basic/basicShow.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/basicReport/basicReportdef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/basicReport/basicReport.js" type="text/javascript"></script>
 <title>${title}</title>

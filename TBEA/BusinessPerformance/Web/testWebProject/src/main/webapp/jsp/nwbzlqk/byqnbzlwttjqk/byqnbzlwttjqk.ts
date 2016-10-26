@@ -37,6 +37,7 @@ module nwbzlqk {
         }
 
         class ShowView extends ZlPluginView {
+
             static ins = new ShowView();
             private mData:CpzlqkResp;
             private mAjax:Util.Ajax = new Util.Ajax("../byqnbzlwttjqk/update.do", false);
@@ -53,28 +54,16 @@ module nwbzlqk {
                 return compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS
                     ||compType == Util.CompanyType.XBC;
             }
+
+            onSaveComment(data:any):void {
+            }
+
             onEvent(e:framework.route.Event):any {
                 switch (e.id) {
                     case Event.ZLFE_IS_YDJD_SUPPORTED:
                         return false;
                     case Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
-                    case Event.ZLFE_SAVE_COMMENT:
-                        //let param = {
-                        //    condition:Util.Ajax.toUrlParam({
-                        //        url : this.mAjax.baseUrl(),
-                        //        date: this.mDt,
-                        //        companyId:this.mCompType,
-                        //        ydjd:this.mYdjdType
-                        //    }),
-                        //    comment:e.data
-                        //}
-                        //this.mCommentSubmit.get({
-                        //    data : JSON.stringify([[param.condition, param.comment]])
-                        //}).then((jsonData:any)=>{
-                        //    Util.MessageBox.tip("保存成功", undefined);
-                        //});
-                        break;
                 }
                 return super.onEvent(e);
             }
@@ -118,7 +107,8 @@ module nwbzlqk {
                 //});
                 this.mAjax.get({
                         date: date,
-                        companyId:compType
+                        companyId:compType,
+                        pageType:pageType
                         //ydjd:this.mYdjdType,
                         //all: this.mCompType == Util.CompanyType.BYQCY
                     })

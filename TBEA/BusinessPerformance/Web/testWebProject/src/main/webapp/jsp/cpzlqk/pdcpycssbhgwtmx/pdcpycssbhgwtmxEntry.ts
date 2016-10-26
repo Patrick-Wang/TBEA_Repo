@@ -90,9 +90,19 @@ module cpzlqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", ()=>{
-                            this.pluginUpdate(dt, compType);
-                        });
+                        let param = {
+                            year : Util.toDate(dt).year,
+                            month: Util.toDate(dt).month,
+                            pageType:2,
+                            tableStatus: JSON.stringify([
+                                {
+                                    id:plugin.pdcpycssbhgwtmx
+                                },{
+                                    id:plugin.pdcpycssbhgxxfb
+                                }
+                            ])
+                        }
+                        window.location.href = "show.do?param=" + JSON.stringify(param);
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }

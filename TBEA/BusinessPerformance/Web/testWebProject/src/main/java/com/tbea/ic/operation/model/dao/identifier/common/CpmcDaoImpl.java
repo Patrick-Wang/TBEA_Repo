@@ -40,4 +40,15 @@ public class CpmcDaoImpl extends AbstractReadWriteDaoImpl<CpmcEntity> implements
 		}
 		return result.get(0);
 	}
+
+	@Override
+	public CpmcEntity getByName(String name) {
+		Query q = this.getEntityManager().createQuery("from CpmcEntity where trim(name)=:name");
+		q.setParameter("name", name);
+		List<CpmcEntity> result = q.getResultList();
+		if (result.isEmpty()) {
+			return null;
+		}
+		return result.get(0);
+	}
 }

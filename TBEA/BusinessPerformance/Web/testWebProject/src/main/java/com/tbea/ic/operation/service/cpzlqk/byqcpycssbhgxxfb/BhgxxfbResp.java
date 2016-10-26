@@ -8,6 +8,17 @@ public class BhgxxfbResp {
 	List<String> bhglbs;
 	List<List<String>> result;
 	List<WaveItem> waveItems;
+	Integer zt;
+	
+	public Integer getZt() {
+		return zt;
+	}
+	public void setZt(Integer zt) {
+		this.zt = zt;
+	}
+	public BhgxxfbResp(){
+		
+	}
 	
 	public BhgxxfbResp(List<String> bhglbs, List<List<String>> result,
 			List<WaveItem> waveItems) {

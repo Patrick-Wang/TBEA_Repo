@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.service.cpzlqk.xlacptjjg;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,6 +129,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 	public ErrorCode entryXlacptjjg(Date d, JSONArray data, Company company, ZBStatus zt) {
 		ZltjjgEntity zltjjg = null;
 		EasyCalendar ec = new EasyCalendar(d);
+		Timestamp ts = new EasyCalendar().getTimestamp();
 		for (int i = 0; i < data.size(); ++i){
 			JSONArray row = data.getJSONArray(i);
 			Integer cpid = Integer.valueOf(row.getInt(0));
@@ -142,6 +144,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 			zltjjg.setZt(zt.ordinal());
 			zltjjg.setBhgs(Util.toIntNull(row.getString(1)));
 			zltjjg.setZs(Util.toIntNull(row.getString(2)));
+			zltjjg.setXgsj(ts);
 			zltjjgDao.merge(zltjjg);
 		}
 		return ErrorCode.OK;

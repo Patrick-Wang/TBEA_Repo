@@ -11,11 +11,14 @@ module Util {
         seasonSelector : Util.UnitedSelector;
 
 
-        constructor(start:Util.Date, end:Util.Date, now:Util.Date, id:string){
+        constructor(start:Util.Date, end:Util.Date, now:Util.Date, id:string, jdName ?:string[]){
             let dates:Util.IDataNode[] = this.getYears(start, end);
-
-            let seasonEnd : number = parseInt("" + (end.month - 1) / 3);
             let jdNames:string[] = ["一季度", "半年度","三季度","年度"];
+            if (undefined != jdName){
+                jdNames = jdName;
+            }
+            let seasonEnd : number = parseInt("" + (end.month - 1) / 3);
+
             let seasons:Util.IDataNode[] = [];
             for (let i = 0; i <= seasonEnd; ++i){
                 seasons.push({

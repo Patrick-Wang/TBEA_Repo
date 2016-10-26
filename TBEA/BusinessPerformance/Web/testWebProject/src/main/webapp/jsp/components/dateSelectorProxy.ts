@@ -13,10 +13,11 @@ module Util{
                            dtEnd : Util.Date,
                            dtNow : Util.Date,
                            asSeason:boolean = false,
-                           asSeasonAcc:boolean = false){
+                           asSeasonAcc:boolean = false,
+                           jdName?:string[]){
             this.curDate = dtNow;
             if (asSeasonAcc){
-                this.seasonAccSelect = new Util.SeasonAccSelector(dtStart, dtEnd, dtNow, divId);
+                this.seasonAccSelect = new Util.SeasonAccSelector(dtStart, dtEnd, dtNow, divId, jdName);
             }else if (asSeason){
                 this.seasonSelect = new Util.DateSeasonSelector(dtStart, dtEnd, dtNow, divId);
             } else if (this.curDate.day != undefined){
