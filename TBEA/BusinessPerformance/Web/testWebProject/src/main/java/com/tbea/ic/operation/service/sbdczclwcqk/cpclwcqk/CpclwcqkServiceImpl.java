@@ -84,7 +84,7 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 		return hjList;
 	}
 	
-	private List<Integer> getCpIdList(SbdczclwcqkType type) {
+	public static List<Integer> getCpIdList(SbdczclwcqkType type) {
 		
 		List<Integer> cpIdList = new ArrayList<Integer>();
 		
@@ -299,83 +299,5 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 	@Override
 	public ZBStatus getCpclwcqkStatus(Date d, Company comp, SbdczclwcqkType type) {
 		return ZBStatus.SAVED;	
-	}
-
-	@Override
-	public void importCl(java.sql.Date d) {
-		HBWebService hbws = new HBWebService();
-		List<String> cols = new ArrayList<String>();
-		cols.add("statistical_type");
-		cols.add("statistical_item");
-		cols.add("value");
-		List<List<Object>> result = hbws.getHBClwcqk(cols, d);
-		EasyCalendar ec = new EasyCalendar(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS);
-		List<CpclwcqkEntity> entities = cpclwcqkDao.getByDate(d, comp, SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ);
-		ZBStatus status = ZBStatus.SUBMITTED;
-		if (null != entities && !entities.isEmpty()){
-			status = ZBStatus.valueOf(entities.get(0).getZt());
-		}
-
-		List<Integer> cpIdList = this.getCpIdList(SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ);
-		List<CpmcEntity> cps = getCpList(cpIdList);
-		for (List<Object> r: result){
-			CpmcEntity mc = findCp(cps, (String)r.get(1));
-			if (null == mc){
-				LoggerFactory.getLogger("WEBSERVICE").info("importCl 无法找到产值产量 : " + (String)r.get(1));
-			}else{
-				if ("产量".equals(r.get(0))){
-					CpclwcqkEntity entityCl = cpclwcqkDao.getByDate(d, comp, SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ, mc.getId());
-					
-					if (null == entityCl){
-						entityCl = new CpclwcqkEntity();
-
-						entityCl.setNf(ec.getYear());
-						entityCl.setYf(ec.getMonth());
-						entityCl.setDwxx(dwxxDao.getById(comp.getId()));
-						entityCl.setCpmc(mc);
-						entityCl.setTjfs(SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ.value());
-					}
-
-					entityCl.setZt(status.ordinal());
-					entityCl.setCl(Util.toDoubleNull(r.get(2).toString().replaceAll(",", "")));	
-				}else{
-					CpczwcqkEntity entityCz = cpczwcqkDao.getByDate(d, comp, SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ, mc.getId());
-					
-					if (null == entityCz){
-						entityCz = new CpczwcqkEntity();
-
-						entityCz.setNf(ec.getYear());
-						entityCz.setYf(ec.getMonth());
-						entityCz.setDwxx(dwxxDao.getById(comp.getId()));
-						entityCz.setCpmc(mc);
-						entityCz.setTjfs(SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ.value());
-					}
-
-					entityCz.setZt(status.ordinal());
-					entityCz.setCz(Util.toDoubleNull(r.get(2).toString().replaceAll(",", "")));
-					
-					cpczwcqkDao.merge(entityCz);	
-				}
-			}
-			
-		}
-	}
-	
-	private CpmcEntity findCp(List<CpmcEntity> cps, String name){
-		for (CpmcEntity cp : cps){
-			if (cp.getName().trim().equals(name)){
-				return cp;
-			}
-		}
-		return null;
-	}
-
-	private List<CpmcEntity> getCpList(List<Integer> byqCps) {
-		List<CpmcEntity> ret  = new ArrayList<CpmcEntity>();
-		for (Integer cp : byqCps){
-			ret.add(cpmcDao.getById(cp));
-		}
-		return ret;
 	}
 }

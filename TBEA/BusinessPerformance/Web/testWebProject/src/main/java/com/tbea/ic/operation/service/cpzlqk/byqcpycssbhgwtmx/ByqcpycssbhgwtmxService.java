@@ -34,6 +34,8 @@ public interface ByqcpycssbhgwtmxService {
 	List<List<String>> getByqcpycssbhgwtmx(Date d, YDJDType yjType,
 			Company company,  List<Integer> zts);
 
+	ErrorCode updateStatus(Date d, Company company, ZBStatus zt);
+
 
 
 

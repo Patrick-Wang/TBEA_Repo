@@ -178,14 +178,14 @@ var framework;
                         chart: nodes[nodes.length - 1].data.id
                     }, this.getParams(date))).then(function (jsonData) {
                         _this.mChartResp = jsonData;
-                        if (!$("#" + _this.option().chartId).is(":hidden")) {
+                        if ($("#" + _this.option().chartId).css("display") != "none") {
                             _this.updateChart();
                         }
                     });
                     this.mAjaxUpdate.get(this.getParams(date))
                         .then(function (jsonData) {
                         _this.resp = jsonData;
-                        if (!$("#" + _this.option().host).is(":hidden")) {
+                        if ($("#" + _this.option().host).css("display") != "none") {
                             _this.updateTable();
                         }
                     });

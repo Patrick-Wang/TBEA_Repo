@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 
 public class FormulaServer<T> {
 	private Map<Integer, T> paramCache = new HashMap<Integer, T>();
@@ -61,6 +63,7 @@ public class FormulaServer<T> {
 			}
 			client.onComplete(this, formula);
 			if (null != pair){
+				//System.out.println(JSONObject.fromObject(pair).toString());
 				paramCache.put(pair.getFirst(), pair.getSecond());
 			}
 		}

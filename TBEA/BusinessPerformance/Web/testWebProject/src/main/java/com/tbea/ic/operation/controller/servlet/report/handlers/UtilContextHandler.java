@@ -15,6 +15,7 @@ import com.tbea.ic.operation.controller.servlet.report.Arrays;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
 import com.tbea.ic.operation.controller.servlet.report.Counter;
 import com.tbea.ic.operation.controller.servlet.report.GroupSum;
+import com.tbea.ic.operation.controller.servlet.report.ReportMath;
 import com.tbea.ic.operation.model.dao.jygk.qnjh.NDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
@@ -77,6 +78,7 @@ public class UtilContextHandler implements ContextHandler {
 		});
 		context.put("NCCode", new CompanyNCCode());
 		context.put("Code15", new Company15Code());
+		context.put("math", new ReportMath());
 	}
 
 }

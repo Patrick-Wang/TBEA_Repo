@@ -475,7 +475,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			}
 			sb.append(whereSql);
 			String sql = sb.toString();
-			ReportLogger.logger().debug(sql);
+			ReportLogger.logger().info(sql);
 			em.createNativeQuery(sql).executeUpdate();
 		}else{
 			doInsert(em, table, row, set);

@@ -9,6 +9,7 @@ public class Schema {
 	static final String TAG_EXCELTEMPLATE = "ExcelTemplate";
 	static final String TAG_FORMATTERSERVER = "formatterServer";
 	static final String TAG_FORMATTER = "formatter";
+	static final String TAG_LOOP = "loop";
 	static final String TAG_LIST = "list";
 	static final String TAG_RESPONSE = "response";
 	static final String TAG_SQL = "sql";
@@ -67,4 +68,8 @@ public class Schema {
 	public static boolean isIf(Element e){
 		return TAG_IF.equals(e.getTagName());
 	}
+	public static boolean isLoop(Element e){
+		return TAG_LOOP.equals(e.getTagName());
+	}
+	
 }

@@ -170,11 +170,25 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 			@Override
 			public void on(Element elem) throws Exception {
 				if ("MergeRegion".equals(elem.getTagName())){
-					handler.addMergeRegion(new MergeRegion(
-						getIntAttribute(elem, "x", 0),	
-						getIntAttribute(elem, "y", 0),	
-						getIntAttribute(elem, "width", 0),	
-						getIntAttribute(elem, "height", 0)));
+					MergeRegion mr = new MergeRegion(
+							getIntAttribute(elem, "x", 0),	
+							getIntAttribute(elem, "y", 0),	
+							getIntAttribute(elem, "width", 0),	
+							getIntAttribute(elem, "height", 0));
+					
+					
+					Integer yCount = getIntAttribute(elem, "yCount", -1);
+					if (-1 == yCount){
+						handler.addMergeRegion(mr);
+					}else{
+						for (int i = 0; i < yCount; ++i){
+							handler.addFMR(new MergeRegion(
+							mr.getX(),	
+							mr.getY() + i * mr.getHeight(),	
+							mr.getWidth(),	
+							mr.getHeight()));
+						}
+					}
 				}
 			}
 

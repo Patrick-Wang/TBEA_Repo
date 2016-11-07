@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.cpzlqk.byqacptjjg;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -187,6 +188,19 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 		return result;
 	}
 
+	
+	@Override
+	public ErrorCode updateStatus(Date d, Company company, ZBStatus zt) {
+		List<ZltjjgEntity> entities = zltjjgDao.getByDateIgnoreStatus(d, company);
+		Timestamp ts = new Timestamp(Calendar.getInstance().getTimeInMillis());
+		for (ZltjjgEntity entity : entities){
+			entity.setZt(zt.ordinal());
+			entity.setXgsj(ts);
+			zltjjgDao.merge(entity);
+		}
+		return ErrorCode.OK;
+	}
+	
 	@Override
 	public List<WaveItem> getJdWaveValues(Date d, Company company,  List<Integer> zts) {
 		List<Integer> ids = null;

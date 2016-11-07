@@ -1,0 +1,249 @@
+<components>
+ <service id="servWinBidModelCollection" transaction="transactionManager">
+  <sql id="tbddhz" order="dwmcs" by="0" colCount="19">select 
+	convert(varchar(200), company_name) cn,
+	sum(not_tax_inclusive_price) tip,
+	sum(win_bid_gross_profit_amount) gp,
+	sum(win_bid_gross_profit_amount) / nullif(sum(not_tax_inclusive_price),0) mll,
+	sum(win_bid_silicon_steel_price) wbssp,
+	sum(win_bid_silicon_steel_amount) wbssa,
+	sum(win_bid_ele_copper_price) wbecp,
+	sum(win_bid_ele_copper_amount) wbeca,
+	sum(win_bid_ele_copper_process_cost) wbecpc,
+	sum(win_bid_insulating_oil_price) wbiop,
+	sum(win_bid_insulating_oil_amount) wbioa,
+	sum(win_bid_cardboard_price) wbcp,
+	sum(win_bid_cardboard_amount) wbca,
+	sum(win_bid_rolled_steel_price) wbrsp,
+	sum(win_bid_rolled_steel_amount) wbrsa,
+	sum(win_bid_other_material_cost) wbomc,
+	sum(labour_cost) lc,
+	sum(manufacturing_cost) mc,
+	sum(win_bid_cost) wbc
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS
+where
+	model = ${productModel}
+group by 
+	company_name
+</sql>
+  <sql id="tbddhzhj">select 
+	'合计',
+	sum(not_tax_inclusive_price) tip,
+	sum(win_bid_gross_profit_amount) gp,
+	sum(win_bid_gross_profit_amount) / nullif(sum(not_tax_inclusive_price),0) mll,
+	sum(win_bid_silicon_steel_price) wbssp,
+	sum(win_bid_silicon_steel_amount) wbssa,
+	sum(win_bid_ele_copper_price) wbecp,
+	sum(win_bid_ele_copper_amount) wbeca,
+	sum(win_bid_ele_copper_process_cost) wbecpc,
+	sum(win_bid_insulating_oil_price) wbiop,
+	sum(win_bid_insulating_oil_amount) wbioa,
+	sum(win_bid_cardboard_price) wbcp,
+	sum(win_bid_cardboard_amount) wbca,
+	sum(win_bid_rolled_steel_price) wbrsp,
+	sum(win_bid_rolled_steel_amount) wbrsa,
+	sum(win_bid_other_material_cost) wbomc,
+	sum(labour_cost) lc,
+	sum(manufacturing_cost) mc,
+	sum(win_bid_cost) wbc
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS
+where
+	model = ${productModel}</sql>
+  <list id="tbddhz" type="object">
+   <item concat="tbddhzhj"/>
+  </list>
+  <list id="ids" type="int">
+   <item from="${0}" to="${dwmcs.size - 1}"/>
+   <item>100</item>
+  </list>
+  <context key="counter" value="${counterFactory.newCounter.reset[0]}"/>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string" >
+   	<item concat="dwmcs"/>
+   	<item>合计</item>
+   </list>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+   <list type="double" sql="tbddhz" value="${counter.next.val}"/>
+  </table>
+ </service>
+ <controller id="WinBidModelCollectionFmtter">
+  <formatter id="dataFmt" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="3"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="WinBidModelCollectionParams">
+  <context key="compId" value="${orgs.virtualCYOrg.ids[request.item.asInt]}"/>
+  <if test="${50000 == compId}">
+   <list id="comps" type="int">1,2,3</list>
+   <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[comps]}"/>
+  </if>
+  <if test="${50000 != compId}">
+   <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compId.packAsList]}"/>
+  </if>
+  <context key="productModel" value="${request.model.asString}"/>
+ </controller>
+ <controller id="WinBidModelCollectionUpdate">
+  <callcontroller id="WinBidModelCollectionParams"/>
+  <callservice id="servWinBidModelCollection"/>
+  <callcontroller id="WinBidModelCollectionFmtter"/>
+  <formatterServer id="fmtServWinBidModelCollection" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>单位</name>
+    </item>
+    <item>
+     <name>合同金额</name>
+    </item>
+    <item>
+     <name>毛利额</name>
+    </item>
+    <item>
+     <name>毛利率</name>
+    </item>
+    <item>
+     <name>硅钢</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>电解铜</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+      <item>
+       <name>加工费</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>纸板</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>变压器油</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>钢材</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>其他材料成本</name>
+    </item>
+    <item>
+     <name>人工费用</name>
+    </item>
+    <item>
+     <name>制造费用</name>
+    </item>
+    <item>
+     <name>材料成本总计</name>
+    </item>
+   </header>
+   <data>${fmtServWinBidModelCollection.result}</data>
+  </response>
+ </controller>
+ <controller id="WinBidModelCollectionExport">
+  <callcontroller id="WinBidModelCollectionParams"/>
+  <callservice id="servWinBidModelCollection"/>
+  <callcontroller id="WinBidModelCollectionFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="中标产品型号汇总表"/>
+  <list id="title1" type="string">单位,合同金额,毛利额,毛利率,硅钢,硅钢,电解铜,电解铜,电解铜,变压器油,变压器油,纸板,纸板,钢材,钢材,其他材料成本,人工费用,制造费用,材料成本总计</list>
+  <list id="title2" type="string">单位,合同金额,毛利额,毛利率,单价,用量,单价,用量,加工费,单价,用量,,单价,用量,单价,用量,其他材料成本,人工费用,制造费用,材料成本总计</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title1"/>
+     <title ref="title2"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title1.size}" height="2"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="servFmt" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="中标产品型号汇总表 .xls" serv="servFmt"/>
+ </controller>
+ <controller id="WinBidModelCollection">
+  <response type="jsp" name="sddb/sddb">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="updateUrl" value="WinBidModelCollectionUpdate"/>
+   <map key="exportUrl" value="WinBidModelCollectionExport"/>
+   <map map="${authMgr[23]}"/>
+   <map key="title" value="中标产品型号汇总表"/>
+  </response>
+ </controller>
+</components>

@@ -36,6 +36,8 @@ module cpzlqk {
             static ins = new ShowView();
             private mData:Array<string[]>;
             private mAjax:Util.Ajax = new Util.Ajax("../pdcpycssbhgwtmx/update.do", false);
+
+            private mAjaxStatus:Util.Ajax = new Util.Ajax("../pdcpycssbhgwtmx/updateStatus.do", false);
             private mDateSelector:Util.DateSelector;
             private mDt: string;
             private mCompType:Util.CompanyType;
@@ -45,9 +47,11 @@ module cpzlqk {
                 return plugin.pdcpycssbhgwtmx;
             }
             protected isSupported(compType:Util.CompanyType):boolean {
-                return compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
+                let isSupport = (compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
                     || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
-                    || compType == Util.CompanyType.XBXBGS|| compType == Util.CompanyType.PDCY;
+                    || compType == Util.CompanyType.XBXBGS|| compType == Util.CompanyType.PDCY);
+                return isSupport;
+
             }
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
                 return "../pdcpycssbhgwtmx/export.do?" + Util.Ajax.toUrlParam({
@@ -199,6 +203,15 @@ module cpzlqk {
                     }),
                     comment:comment
                 };
+
+                this.mAjaxStatus.get({
+                    date: this.mDt,
+                    companyId:this.mCompType,
+                    zt : Util.IndiStatus.SUBMITTED
+                }).then(()=>{
+
+                });
+
                 this.mCommentSubmit.get({
                     data : JSON.stringify([[param.condition, param.comment]])
                 }).then((jsonData:any)=>{

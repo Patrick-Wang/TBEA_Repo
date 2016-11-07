@@ -100,6 +100,7 @@ var cpzlqk;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         var param = {
+                            companyId: compType,
                             year: Util.toDate(dt).year,
                             month: Util.toDate(dt).month,
                             pageType: 2,

@@ -291,6 +291,7 @@ public class WbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<WbyclzlwtEntity> 
 	public List<String> getXmgs(Company company, List<Integer> zts) {
 		Query q = getEntityManager().createQuery(
 				"select responsibility_department from WbyclzlwtEntity where company_name = :comp  and " + 
+				"issue_type = '生产制造质量问题' and " +
 				"zt in :zts " + 
 				"group by responsibility_department");
 		q.setParameter("comp", company.getName());
@@ -304,6 +305,7 @@ public class WbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<WbyclzlwtEntity> 
 				"select count(*) from WbyclzlwtEntity where company_name = :comp and " +
 				"datediff(mm, issue_happen_date, :date) = 0 and " + 
 				"responsibility_department = :gs  and " + 
+				"issue_type = '生产制造质量问题' and " + 
 				"zt in :zts");
 		q.setParameter("comp", comp.getName());
 		q.setParameter("date", d);
@@ -318,7 +320,8 @@ public class WbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<WbyclzlwtEntity> 
 				"select count(*) from WbyclzlwtEntity where company_name = :comp and " +
 				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
 				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
-				"responsibility_department = :gs  and " + 
+				"responsibility_department = :gs  and " +
+				"issue_type = '生产制造质量问题' and " +
 				"zt in :zts");
 		q.setParameter("comp", comp.getName());
 		q.setParameter("dStart", date);

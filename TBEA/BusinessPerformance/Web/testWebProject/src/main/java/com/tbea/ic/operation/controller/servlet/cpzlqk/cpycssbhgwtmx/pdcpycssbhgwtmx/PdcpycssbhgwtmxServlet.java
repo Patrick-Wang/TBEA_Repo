@@ -139,6 +139,18 @@ public class PdcpycssbhgwtmxServlet {
 		return Util.response(err);
 	}
 	
+	@RequestMapping(value = "updateStatus.do")
+	public @ResponseBody byte[] updateStatus(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		ZBStatus zt = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		
+		ErrorCode err = pdcpycssbhgwtmxService.updateStatus(d, company, zt);
+		return Util.response(err);
+	}
+	
 	@RequestMapping(value = "entry/submit.do")
 	public @ResponseBody byte[] submitPdcpycssbhgwtmx(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {

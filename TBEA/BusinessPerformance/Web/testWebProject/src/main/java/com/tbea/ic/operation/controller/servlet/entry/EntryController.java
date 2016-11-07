@@ -174,6 +174,19 @@ public class EntryController {
 		return result.getBytes("utf-8");
 	}
 	
+	private void transport(Date d){
+		Map<Company, JSONArray> data = sjzbImportService.getHBSjzb(d);
+		
+		for (Entry<Company, JSONArray> entry : data.entrySet()){
+			importData(entry, d);
+		}		
+		
+		data = sjzbImportService.getDLSjzb(d);
+		for (Entry<Company, JSONArray> entry : data.entrySet()){
+			importData(entry, d);
+		}
+	}
+	
 	@RequestMapping(value = "schedule.do")
 	public @ResponseBody byte[] schedule(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -184,28 +197,22 @@ public class EntryController {
 			d = Date.valueOf(request.getParameter("date"));
 		}
 		
-		Map<Company, JSONArray> data = sjzbImportService.getHBSjzb(d);
 		
-		for (Entry<Company, JSONArray> entry : data.entrySet()){
-			importData(entry, d);
-		}		
+		transport(d);
 		
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
 	}
 	
 	//每月3到五号零点触发
-	@Scheduled(cron="0 0 0 4-5 * ?")
+	@Scheduled(cron="0 0 12 4 * ?")
 	public void scheduleImport(){
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
 		
-		Map<Company, JSONArray> data = sjzbImportService.getHBSjzb(d);
+		transport(d);
 		
-		for (Entry<Company, JSONArray> entry : data.entrySet()){
-			importData(entry, d);
-		}		
 	}
 
 	private void importData(ZBStatus zbStatus, JSONArray jsonArray, Date date,

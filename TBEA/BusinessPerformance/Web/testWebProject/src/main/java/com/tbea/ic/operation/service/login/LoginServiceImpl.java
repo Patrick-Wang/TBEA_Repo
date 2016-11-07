@@ -1,7 +1,13 @@
 package com.tbea.ic.operation.service.login;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+
 import javax.annotation.Resource;
 
+import net.sf.json.JSONObject;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +17,8 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.account.AccountDao;
 import com.tbea.ic.operation.model.dao.qxgl.QXGLDao;
+import com.tbea.ic.operation.model.dao.userusage.UserUsageDao;
+import com.tbea.ic.operation.model.entity.UserUsage;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 
@@ -26,6 +34,9 @@ public class LoginServiceImpl implements LoginService {
 
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
+	
+	@Autowired
+	UserUsageDao userUsageDao;
 	
 	public String getPassword(String usrName) {
 		if (usrName != null && !usrName.isEmpty()) {
@@ -88,5 +99,20 @@ public class LoginServiceImpl implements LoginService {
 			return accountDao.getAccount(usrName);
 		}
 		return null;
+	}
+
+	@Override
+	public void logout(Account account, long creationTime,
+			long lastAccessedTime, String ip) {
+		LoggerFactory.getLogger("ACCOUNT").info("logout");
+		UserUsage userUsage = new UserUsage();
+		userUsage.setUserId(account.getId());
+		userUsage.setUserName(account.getName());
+		userUsage.setLoginTime(new Timestamp(creationTime));
+		userUsage.setLastAccessedTime(new Timestamp(lastAccessedTime));
+		userUsage.setLogoutTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+		userUsage.setIp(ip);
+//		LoggerFactory.getLogger("ACCOUNT").info(JSONObject.fromObject(userUsage).toString());
+		userUsageDao.merge(userUsage);
 	}
 }

@@ -47,7 +47,7 @@
         //modal wrapper
         _modalWrapper = $('<div id="_swoverlaywrapper"></div>').css({
             width : '100%',
-            height: document.body.scrollHeight,//'100%',
+            height: document.body.scrollHeight < window.screen.height ? '100%' :  document.body.scrollHeight,
             position : 'absolute',
             display: 'none',
             overflow : 'hidden',
@@ -177,9 +177,9 @@
             //clear previous clone content
             clone.children(':first').hide().appendTo('body');
             target.appendTo(clone);
-            
+
             _modalWrapper.css({
-                height : document.body.scrollHeight,//'100%',//$(document).height(),
+                height : document.body.scrollHeight < window.screen.height ? '100%' :  document.body.scrollHeight,//'100%',//$(document).height(),
                 width : '100%',
                 display : 'block'
             });

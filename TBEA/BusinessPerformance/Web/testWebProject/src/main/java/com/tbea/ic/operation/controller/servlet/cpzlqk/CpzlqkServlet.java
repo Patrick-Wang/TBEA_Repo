@@ -124,6 +124,9 @@ public class CpzlqkServlet {
 				map.put(key, jo.get(key));
 			}
 			
+			CompanyType compType = CompanyType.valueOf(Integer.valueOf(jo.getString("companyId")));
+			comps = new ArrayList<Company>();
+			comps.add(companyManager.getBMDBOrganization().getCompany(compType));
 		}else{
 			if(comps.isEmpty()){
 				comps = extendAuthService.getAuthedCompanies(

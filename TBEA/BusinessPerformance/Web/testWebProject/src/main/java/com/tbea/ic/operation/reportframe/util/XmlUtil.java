@@ -354,4 +354,15 @@ public class XmlUtil {
 		}
 		return list;
 	}
+
+	public static boolean hasText(Element e) {
+		if (e.getFirstChild() != null){
+			return e.getFirstChild().getNodeType() == Node.TEXT_NODE;
+		}
+		return false;
+	}
+
+	public static String getText(Element e) {
+		return e.getFirstChild().getTextContent();
+	}
 }

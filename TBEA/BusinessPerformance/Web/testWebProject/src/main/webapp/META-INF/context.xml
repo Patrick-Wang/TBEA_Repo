@@ -54,8 +54,8 @@
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/dbXl" auth="Container" type="javax.sql.DataSource"
-		username="outtest" password="12345q" driverClassName="net.sourceforge.jtds.jdbc.Driver"
-		url="jdbc:jtds:sqlserver://192.168.7.110;DatabaseName=testmid"
+		username="xlcyjtz" password="P@$$w0rd" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://192.168.7.125;DatabaseName=testmid"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<!-- <Resource name="jdbc/dbLl" auth="Container" type="javax.sql.DataSource"

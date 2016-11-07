@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.cpzlqk.pdcpycssbhgwtmx;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ import com.tbea.ic.operation.model.dao.cpzlqk.pdbhgwtmx.PdBhgwtmxDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.cpzlqk.pdbhglb.PdBhglbDao;
 import com.tbea.ic.operation.model.dao.identifier.cpzlqk.pdbhglb.PdBhglbDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.cpzlqk.pdzrlb.PdZrlbDao;
+import com.tbea.ic.operation.model.entity.cpzlqk.ByqBhgwtmxEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.PdBhgwtmxEntity;
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.PdBhglbEntity;
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.PdZrlbEntity;
@@ -101,6 +103,18 @@ public class PdcpycssbhgwtmxServiceImpl implements PdcpycssbhgwtmxService {
 			result.add(toEntryList(entity));
 		}
 		return result;
+	}
+	
+	@Override
+	public ErrorCode updateStatus(Date d, Company company, ZBStatus zt) {
+		List<PdBhgwtmxEntity> entities = pdBhgwtmxDao.getByDate(d, company);
+		Timestamp ts = new Timestamp(Calendar.getInstance().getTimeInMillis());
+		for (PdBhgwtmxEntity entity : entities){
+			entity.setZt(zt.ordinal());
+			entity.setXgsj(ts);
+			pdBhgwtmxDao.merge(entity);
+		}
+		return ErrorCode.OK;
 	}
 
 	@Override

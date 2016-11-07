@@ -42,6 +42,7 @@ var cpzlqk;
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../pdcpycssbhgxxfb/update.do", false);
+                this.mAjaxStatus = new Util.Ajax("../pdcpycssbhgwtmx/updateStatus.do", false);
                 this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
                 this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
@@ -369,6 +370,12 @@ var cpzlqk;
                     }),
                     comment: comment
                 };
+                this.mAjaxStatus.get({
+                    date: this.mDt,
+                    companyId: this.mCompType,
+                    zt: Util.IndiStatus.SUBMITTED
+                }).then(function () {
+                });
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {

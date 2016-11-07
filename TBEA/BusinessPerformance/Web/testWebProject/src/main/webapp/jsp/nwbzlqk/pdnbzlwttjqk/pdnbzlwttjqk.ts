@@ -147,8 +147,8 @@ module nwbzlqk {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist:JQTable.JQGridAssistant;
                 tableAssist = JQGridAssistantFactory.createTable(name);
-                tableAssist.mergeRow(5);
-                tableAssist.mergeRow(6);
+                //tableAssist.mergeRow(5);
+                //tableAssist.mergeRow(6);
                 let pagername = name + "pager"
                 var parent = this.$(this.option().tb);
                 parent.empty();

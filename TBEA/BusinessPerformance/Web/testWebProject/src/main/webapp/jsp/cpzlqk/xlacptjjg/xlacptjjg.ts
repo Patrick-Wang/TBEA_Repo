@@ -34,6 +34,8 @@ module cpzlqk {
             static ins = new ShowView();
             private mData:CpzlqkResp;
             private mAjax:Util.Ajax = new Util.Ajax("../xlacptjjg/update.do", false);
+
+            private mAjaxStatus:Util.Ajax = new Util.Ajax("../xlacptjjg/updateStatus.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
             protected isSupported(compType:Util.CompanyType):boolean {
@@ -328,6 +330,15 @@ module cpzlqk {
                     }),
                     comment:comment
                 };
+
+                this.mAjaxStatus.get({
+                    date: this.mDt,
+                    companyId:this.mCompType,
+                    zt : Util.IndiStatus.SUBMITTED
+                }).then(()=>{
+
+                });
+
                 this.mCommentSubmit.get({
                     data : JSON.stringify([[param.condition, param.comment]])
                 }).then((jsonData:any)=>{

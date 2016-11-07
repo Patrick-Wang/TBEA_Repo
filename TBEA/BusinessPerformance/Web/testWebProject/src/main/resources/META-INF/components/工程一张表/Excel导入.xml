@@ -10,11 +10,20 @@
     <xmqc type="string" ref="${counter.next.val}"/>
     <xmgs type="string" ref="${counter.next.val}"/>
     <xmlx type="string" ref="${counter.next.val}"/>
-    <xmrl type="string" ref="${counter.next.val}"/>
+    <project_capacity type="string" ref="${counter.next.val}"/>
     <xyjhqrsr type="double" ref="${counter.next.val}"/>
     <xyjhkpje type="double" ref="${counter.next.val}"/>
-    <xyjhrzch type="double" ref="${counter.next.val}"/>
+    <cost_control_plan_amount type="double" ref="${counter.next.val}"/>
+	<achieve_amount_of_cumup type="double" ref="${counter.next.val}"/>
+	<achieve_amount_of_cumua type="double" ref="${counter.next.val}"/>
+	<achieve_amount_of_curp type="double" ref="${counter.next.val}"/>
+	<achieve_amount_of_cura type="double" ref="${counter.next.val}"/>
+	<achieve_amount_of_nextp type="double" ref="${counter.next.val}"/>	
+	<payment_of_current_month type="double" ref="${counter.next.val}"/> 
+	<cumulative_payment type="double" ref="${counter.next.val}"/>
+	<xyjhrzch type="double" ref="${counter.next.val}"/>   
     <jcsgrq type="date" ref="${counter.next.val}"/>
+    <installed_capacity type="double" ref="${counter.next.val}"/>
     <xmsjjgrq type="date" ref="${counter.next.val}"/>
     <xmsjjsrq type="date" ref="${counter.next.val}"/>
     <sfzjsyz type="string" ref="${counter.next.val}"/>

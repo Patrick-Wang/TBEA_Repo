@@ -71,11 +71,11 @@ public class NCController {
 		zbList.add(GSZB.JZCSYL_66.value());
 
 		hrCompMap.put("10100", CompanyType.SBGS);
-		hrCompMap.put("10200", CompanyType.HBGS);
+//		hrCompMap.put("10200", CompanyType.HBGS);
 		hrCompMap.put("10300", CompanyType.XBC);
 		hrCompMap.put("10500", CompanyType.LLGS);
 		hrCompMap.put("10600", CompanyType.XLC);
-		hrCompMap.put("10700", CompanyType.DLGS);
+//		hrCompMap.put("10700", CompanyType.DLGS);
 		hrCompMap.put("11000", CompanyType.TCNY);
 		hrCompMap.put("11200", CompanyType.NDGS);
 		hrCompMap.put("10800", CompanyType.XNYGS);
@@ -221,8 +221,8 @@ public class NCController {
 		
 		unitList.add(CompanyNCCode.getCode(CompanyType.SBGS));//CompanyType.SBGS);
 		unitList.add(CompanyNCCode.getCode(CompanyType.LLGS));//CompanyType.LLGS);
-		unitList.add(CompanyNCCode.getCode(CompanyType.DLGS));//CompanyType.DLGS);
-		unitList.add(CompanyNCCode.getCode(CompanyType.HBGS));//CompanyType.HBGS);
+//		unitList.add(CompanyNCCode.getCode(CompanyType.DLGS));//CompanyType.DLGS);
+//		unitList.add(CompanyNCCode.getCode(CompanyType.HBGS));//CompanyType.HBGS);
 		unitList.add(CompanyNCCode.getCode(CompanyType.XBC));//CompanyType.XBC);
 		unitList.add(CompanyNCCode.getCode(CompanyType.XLC));//CompanyType.XLC);
 		unitList.add(CompanyNCCode.getCode(CompanyType.XNYGS));//CompanyType.XNYGS);

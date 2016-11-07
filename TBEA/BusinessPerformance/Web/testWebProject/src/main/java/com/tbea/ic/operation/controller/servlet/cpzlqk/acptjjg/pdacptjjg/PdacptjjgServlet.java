@@ -126,6 +126,18 @@ public class PdacptjjgServlet {
 		return JSONObject.fromObject(resp).toString().getBytes("utf-8");
 	}
 	
+	@RequestMapping(value = "updateStatus.do")
+	public @ResponseBody byte[] updateStatus(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		ZBStatus zt = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		
+		ErrorCode err = pdacptjjgService.updateStatus(d, company, zt);
+		return Util.response(err);
+	}
+	
 	@RequestMapping(value = "entry/save.do")
 	public @ResponseBody byte[] savePdacptjjg(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {

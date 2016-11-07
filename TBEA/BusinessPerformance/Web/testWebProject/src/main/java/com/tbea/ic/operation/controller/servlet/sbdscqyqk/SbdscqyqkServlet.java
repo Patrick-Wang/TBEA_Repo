@@ -89,21 +89,25 @@ public class SbdscqyqkServlet {
 			d = Date.valueOf(request.getParameter("date"));
 		}
 		
-		xfcpqyService.importCpqy(d);
-		xfscqyService.importScqy(d);
+		xfcpqyService.importHBCpqy(d);
+		xfcpqyService.importDLCpqy(d);
+		xfscqyService.importHBScqy(d);
+		xfscqyService.importDLScqy(d);
 		
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
 	}
 	
 	//每月3到五号零点触发
-	@Scheduled(cron="0 0 0 4-5 * ?")
+	@Scheduled(cron="0 0 12 4 * ?")
 	public void scheduleImport(){
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
-		xfcpqyService.importCpqy(d);
-		xfscqyService.importScqy(d);
+		xfcpqyService.importHBCpqy(d);
+		xfcpqyService.importDLCpqy(d);
+		xfscqyService.importHBScqy(d);
+		xfscqyService.importDLScqy(d);
 	}
 	
 }

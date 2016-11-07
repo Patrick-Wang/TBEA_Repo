@@ -67,7 +67,11 @@ public class CallXmlInterpreter implements XmlInterpreter {
 			
 			@Override
 			public void on(Element elem) throws Exception {
-				String text = elem.getFirstChild().getTextContent();
+				if (!XmlUtil.hasText(e)){
+					return;
+				}
+				
+				String text = XmlUtil.getText(elem);
 				int tp = TypeUtil.typeof(elem);
 				switch (tp){
 				case TypeUtil.DOUBLE:

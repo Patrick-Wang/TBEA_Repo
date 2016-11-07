@@ -35,6 +35,10 @@ public class TypeUtil {
 		return Integer.class.isAssignableFrom(cls) || cls.getName().equals("int");
 	}
 	
+	public static boolean isLong(Class<?> cls){
+		return Long.class.isAssignableFrom(cls) || cls.getName().equals("long");
+	}
+	
 	public static boolean isDouble(Class<?> cls){
 		return Double.class.isAssignableFrom(cls) || cls.getName().equals("double");
 	}

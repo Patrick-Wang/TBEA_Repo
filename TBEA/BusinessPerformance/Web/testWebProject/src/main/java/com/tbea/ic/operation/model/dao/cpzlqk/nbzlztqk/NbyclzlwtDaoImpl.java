@@ -234,7 +234,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 		Query q = getEntityManager().createQuery("select count(*) from NbyclzlwtEntity where company_name = :comp and " +
 				"datediff(mm, issue_happen_date, :date) = 0 and " + 
 				"issue_type = '原材料质量问题' and " +
-				"material_happen_phase = '生产过程' and " + 
+				"material_happen_phase = '生产过程质量' and " + 
 				"zt in :zts");
 		q.setParameter("comp", company.getName());
 		q.setParameter("date", d);
@@ -248,7 +248,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
 				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
 				"issue_type = '原材料质量问题' and " +
-				"material_happen_phase = '生产过程' and " + 
+				"material_happen_phase = '生产过程质量' and " + 
 				"zt in :zts");
 		q.setParameter("comp", company.getName());
 		q.setParameter("dStart", date);
@@ -264,7 +264,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
 				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
 				"issue_type = '原材料质量问题' and " +
-				"material_happen_phase = '生产过程' and " + 
+				"material_happen_phase = '生产过程质量' and " + 
 				"zt in :zts");
 		q.setParameter("dStart", date);
 		q.setParameter("dEnd", d);
@@ -278,7 +278,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 				Util.toNameString(comps) + ") and " +
 				"datediff(mm, issue_happen_date, :date) = 0 and " + 
 				"issue_type = '原材料质量问题' and " +
-				"material_happen_phase = '生产过程' and " + 
+				"material_happen_phase = '生产过程质量' and " + 
 				"zt in :zts");
 		q.setParameter("date", d);
 		q.setParameter("zts", zts);
@@ -290,7 +290,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 		Query q = getEntityManager().createQuery("select count(*) from NbyclzlwtEntity where company_name = :comp and " +
 				"datediff(mm, issue_happen_date, :date) = 0 and " + 
 				"issue_type = '原材料质量问题' and " +
-				"material_happen_phase = '入场检测' and " + 
+				"material_happen_phase = '入场检测质量' and " + 
 				"zt in :zts");
 		q.setParameter("comp", company.getName());
 		q.setParameter("date", d);
@@ -304,7 +304,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
 				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
 				"issue_type = '原材料质量问题' and " +
-				"material_happen_phase = '入场检测' and " + 
+				"material_happen_phase = '入场检测质量' and " + 
 				"zt in :zts");
 		q.setParameter("comp", company.getName());
 		q.setParameter("dStart", date);
@@ -320,7 +320,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
 				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
 				"issue_type = '原材料质量问题' and " +
-				"material_happen_phase = '入场检测' and " + 
+				"material_happen_phase = '入场检测质量' and " + 
 				"zt in :zts");
 		q.setParameter("dStart", date);
 		q.setParameter("dEnd", d);
@@ -334,7 +334,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 				Util.toNameString(comps) + ") and " +
 				"datediff(mm, issue_happen_date, :date) = 0 and " + 
 				"issue_type = '原材料质量问题' and " +
-				"material_happen_phase = '入场检测' and " + 
+				"material_happen_phase = '入场检测质量' and " + 
 				"zt in :zts");
 		q.setParameter("date", d);
 		q.setParameter("zts", zts);
@@ -350,6 +350,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 	public List<String> getXmgs(Company company, List<Integer> zts) {
 		Query q = getEntityManager().createQuery(
 				"select responsibility_department from NbyclzlwtEntity where company_name = :comp and " + 
+				"issue_type = '生产制造质量问题' and " +
 				"zt in :zts " +
 				"group by responsibility_department ");
 		q.setParameter("comp", company.getName());
@@ -365,6 +366,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 				"select count(*) from NbyclzlwtEntity where company_name = :comp and " +
 				"datediff(mm, issue_happen_date, :date) = 0 and " + 
 				"responsibility_department = :gs  and " + 
+				"issue_type = '生产制造质量问题' and " +
 				"zt in :zts");
 		q.setParameter("comp", comp.getName());
 		q.setParameter("date", d);
@@ -380,6 +382,7 @@ public class NbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<NbyclzlwtEntity> 
 				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
 				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
 				"responsibility_department = :gs  and " + 
+				"issue_type = '生产制造质量问题' and " +
 				"zt in :zts");
 		q.setParameter("comp", comp.getName());
 		q.setParameter("dStart", date);

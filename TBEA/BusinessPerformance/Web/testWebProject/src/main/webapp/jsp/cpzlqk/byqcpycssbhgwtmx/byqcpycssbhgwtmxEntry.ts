@@ -124,6 +124,7 @@ module cpzlqk {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                      //   Util.MessageBox.tip("提交 成功", ()=>{
                             let param = {
+                                companyId:compType,
                                 year : Util.toDate(dt).year,
                                 month: Util.toDate(dt).month,
                                 pageType:2,

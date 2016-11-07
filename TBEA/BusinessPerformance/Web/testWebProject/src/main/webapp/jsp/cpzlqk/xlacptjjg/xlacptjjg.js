@@ -40,6 +40,7 @@ var cpzlqk;
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../xlacptjjg/update.do", false);
+                this.mAjaxStatus = new Util.Ajax("../xlacptjjg/updateStatus.do", false);
             }
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
@@ -310,6 +311,12 @@ var cpzlqk;
                     }),
                     comment: comment
                 };
+                this.mAjaxStatus.get({
+                    date: this.mDt,
+                    companyId: this.mCompType,
+                    zt: Util.IndiStatus.SUBMITTED
+                }).then(function () {
+                });
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {

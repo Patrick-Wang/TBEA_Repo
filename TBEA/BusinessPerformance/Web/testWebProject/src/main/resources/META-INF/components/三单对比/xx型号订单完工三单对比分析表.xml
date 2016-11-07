@@ -1,0 +1,511 @@
+<components>
+ <service id="servModelFdwCollection" transaction="transactionManager">
+  <sql id="zbddhz" order="dwmcs" by="0" colcount="26">select 
+	convert(varchar(200), company_name) cn,
+	sum(not_tax_inclusive_price) ntip1,
+	sum(win_bid_gross_profit_amount) wbgpa2,
+	sum(win_bid_gross_profit_amount) / nullif(sum(not_tax_inclusive_price),0) mll3,
+	sum(win_bid_silicon_steel_price) wbssp4,
+	sum(win_bid_silicon_steel_amount) wbssa5,
+	sum(win_bid_ele_copper_price) wbiop8,
+	sum(win_bid_ele_copper_amount) wbioa9,
+	sum(win_bid_insulating_oil_price) wwbrsp10,
+	sum(win_bid_insulating_oil_amount) wbrsa11,
+	sum(win_bid_cardboard_price) wbcp12,
+	sum(win_bid_cardboard_amount) wbca13,
+	sum(win_bid_rolled_steel_price) wbcp14,
+	sum(win_bid_rolled_steel_amount) wbca15,
+	
+	sum(win_bid_casing_unit_price) wbcup1,	
+	sum(win_bid_casing_quantity) wbcq2,
+	sum(win_bid_switch_unit_price) wbsup3,
+	sum(win_bid_number_of_switches) wbnos4,
+	sum(win_bid_cooler_unit_price) wbcup5,
+	sum(win_bid_number_of_cooler) wbnoc6,
+	sum(win_bid_online_monitoring_unit_price) wbomup7,
+	sum(win_bid_online_monitoring_quantity) wbomq8,
+	
+	sum(win_bid_other_material_cost) womc16,
+	sum(labour_cost) lc,
+	sum(manufacturing_cost) mc,
+	sum(win_bid_material_total) wbmt17
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS
+where
+	company_name in ${dwmcs} and model = ${product_model}
+group by
+	company_name</sql>
+  <sql id="zbddhzhj">select 
+	'合计',
+	sum(not_tax_inclusive_price) ntip1,
+	sum(win_bid_gross_profit_amount) wbgpa2,
+	sum(win_bid_gross_profit_amount) / nullif(sum(not_tax_inclusive_price),0) mll3,
+	sum(win_bid_silicon_steel_price) wbssp4,
+	sum(win_bid_silicon_steel_amount) wbssa5,
+	sum(win_bid_ele_copper_price) wbiop8,
+	sum(win_bid_ele_copper_amount) wbioa9,
+	sum(win_bid_insulating_oil_price) wwbrsp10,
+	sum(win_bid_insulating_oil_amount) wbrsa11,
+	sum(win_bid_cardboard_price) wbcp12,
+	sum(win_bid_cardboard_amount) wbca13,
+	sum(win_bid_rolled_steel_price) wbcp14,
+	sum(win_bid_rolled_steel_amount) wbca15,
+	
+	sum(win_bid_casing_unit_price) wbcup1,	
+	sum(win_bid_casing_quantity) wbcq2,
+	sum(win_bid_switch_unit_price) wbsup3,
+	sum(win_bid_number_of_switches) wbnos4,
+	sum(win_bid_cooler_unit_price) wbcup5,
+	sum(win_bid_number_of_cooler) wbnoc6,
+	sum(win_bid_online_monitoring_unit_price) wbomup7,
+	sum(win_bid_online_monitoring_quantity) wbomq8,
+	
+	sum(win_bid_other_material_cost) womc16,
+	sum(labour_cost) lc,
+	sum(manufacturing_cost) mc,
+	sum(win_bid_material_total) wbmt17
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS
+where
+	company_name in ${dwmcs} and model = ${product_model}</sql>
+  <list id="zbddhz" type="object">
+   <item concat="zbddhzhj"/>
+  </list>
+  <sql id="zxddhzsd" order="dwmcs" by="0" colcount="26">select 
+	convert(varchar(200), company_name) cn,
+	sum(not_tax_inclusive_price) ntip1,
+	sum(op_gross_profit_amount) ogpa2,
+	sum(op_gross_profit_amount) / nullif(sum(not_tax_inclusive_price),0) mll3,
+	sum(op_quantity_of_silicon_steel) wbssp4,
+	sum(op_unit_price_of_silicon_steel) wbssa5,
+	sum(op_copper_price) wbiop8,
+	sum(op_amount_of_copper) wbioa9, 
+	sum(op_unit_price_of_transformer_oil) wwbrsp10,
+	sum(op_transformer_oil_consumption) wbrsa11,
+	sum(op_cardboard_unit_price) wbcp12,
+	sum(op_amount_of_cardboard) wbca13,
+	sum(op_steel_price) wbcp14,
+	sum(op_steel_dosage) wbca15,
+	
+	sum(op_casing_unit_price) ocup1,	
+	sum(op_casing_quantity) ocq2,
+	sum(op_switch_unit_price) osup3,	
+	sum(op_number_of_switches) onos4,	
+	sum(op_cooler_unit_price) ocup5,	
+	sum(op_number_of_cooler) onoc6,
+	sum(op_online_monitoring_unit_price) oomup7,	
+	sum(op_online_monitoring_quantity) oomq8,
+	
+	sum(op_other_materials) womc16,	
+	sum(op_labor_cost) olc,
+	sum(op_production_costs) opc,
+	sum(op_total_tax_material) wbmt17
+from
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS
+where
+	company_name in ${dwmcs} and model = ${product_model}
+group by
+	company_name</sql>
+  <sql id="zxddhzsdhj">select 
+	'合计',
+	sum(not_tax_inclusive_price) ntip1,
+	sum(op_gross_profit_amount) ogpa2,
+	sum(op_gross_profit_amount) / nullif(sum(not_tax_inclusive_price),0) mll3,
+	sum(op_quantity_of_silicon_steel) wbssp4,
+	sum(op_unit_price_of_silicon_steel) wbssa5,
+	sum(op_copper_price) wbiop8,
+	sum(op_amount_of_copper) wbioa9,
+	sum(op_unit_price_of_transformer_oil) wwbrsp10,
+	sum(op_transformer_oil_consumption) wbrsa11,
+	sum(op_cardboard_unit_price) wbcp12,
+	sum(op_amount_of_cardboard) wbca13,
+	sum(op_steel_price) wbcp14,
+	sum(op_steel_dosage) wbca15,
+	
+	sum(op_casing_unit_price) ocup1,	
+	sum(op_casing_quantity) ocq2,
+	sum(op_switch_unit_price) osup3,	
+	sum(op_number_of_switches) onos4,	
+	sum(op_cooler_unit_price) ocup5,	
+	sum(op_number_of_cooler) onoc6,
+	sum(op_online_monitoring_unit_price) oomup7,	
+	sum(op_online_monitoring_quantity) oomq8,
+
+	sum(op_other_materials) womc16,
+	sum(op_labor_cost) olc,
+	sum(op_production_costs) opc,
+	sum(op_total_tax_material) wbmt17
+from
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS
+where
+	company_name in ${dwmcs} and model = ${product_model}</sql>
+  <list id="zxddhzsd" type="object">
+   <item concat="zxddhzsdhj"/>
+  </list>
+  <sql id="wgddhz" order="dwmcs" by="0" colcount="26">select 
+	convert(varchar(200), company_name) cn,
+	sum(not_tax_inclusive_price) ntip1,
+	sum(actual_gross_profit) ogpa2,
+	sum(actual_gross_profit) / nullif(sum(not_tax_inclusive_price),0) mll3,
+	sum(actual_price_of_silicon_steel) wbssp4,
+	sum(actual_amount_of_silicon_steel) wbssa5,
+	sum(copper_price) wbiop8,
+	sum(actual_electrolytic_copper_consumption) wbioa9,
+	sum(actual_transformer_oil_unit_price) wwbrsp10,
+	sum(actual_transformer_oil_consumption) wbrsa11,
+	sum(actual_insulation_board_price) wbcp12,
+	sum(actual_insulation_board_usage) wbca13,
+	sum(actual_steel_price) wbcp14,
+	sum(actual_steel_consumption) wbca15,
+	
+	sum(casing_unit_price) cup1,
+	sum(casing_quantity) cq2,
+	sum(switch_unit_price) sup3,
+	sum(number_of_switches) nos4,
+	sum(cooler_unit_price) cup5,
+	sum(number_of_cooler) noc6,	
+	sum(online_monitoring_unit_price) omup7,
+	sum(online_monitoring_quantity) omq8,
+	
+	sum(actual_cost_of_other_materials) womc16,
+	sum(actual_labor_cost) alc,
+	sum(actual_manufacturing_cost) amc,
+	sum(total_material_cost) wbmt17
+from
+	JYGK_SDDB_ORDER_COMPLETION_DETAILS
+where
+	company_name in ${dwmcs}  and model = ${product_model}
+group by
+	company_name</sql>
+  <sql id="wgddhzhj">select 
+	'合计',
+	sum(not_tax_inclusive_price) ntip1,
+	sum(actual_gross_profit) ogpa2,
+	sum(actual_gross_profit) / nullif(sum(not_tax_inclusive_price),0) mll3,
+	sum(actual_price_of_silicon_steel) wbssp4,
+	sum(actual_amount_of_silicon_steel) wbssa5,
+	sum(copper_price) wbiop8,
+	sum(actual_electrolytic_copper_consumption) wbioa9,
+	sum(actual_transformer_oil_unit_price) wwbrsp10,
+	sum(actual_transformer_oil_consumption) wbrsa11,
+	sum(actual_insulation_board_price) wbcp12,
+	sum(actual_insulation_board_usage) wbca13,
+	sum(actual_steel_price) wbcp14,
+	sum(actual_steel_consumption) wbca15,
+	
+	sum(casing_unit_price) cup1,
+	sum(casing_quantity) cq2,
+	sum(switch_unit_price) sup3,
+	sum(number_of_switches) nos4,
+	sum(cooler_unit_price) cup5,
+	sum(number_of_cooler) noc6,	
+	sum(online_monitoring_unit_price) omup7,
+	sum(online_monitoring_quantity) omq8,
+	
+	sum(actual_cost_of_other_materials) womc16,
+	sum(actual_labor_cost) alc,
+	sum(actual_manufacturing_cost) amc,
+	sum(total_material_cost) wbmt17
+from
+	JYGK_SDDB_ORDER_COMPLETION_DETAILS
+where
+	company_name in ${dwmcs} and model = ${product_model}</sql>
+  <list id="wgddhz" type="object">
+   <item concat="wgddhzhj"/>
+  </list>
+  <list id="zxddhz_all" type="object"/>
+  <list id="jds" type="string"/>
+  <list id="dwmcs" type="string">
+   <item>合计</item>
+  </list>
+  <list id="tmpVal" type="double">
+   <item/>
+   <item/>
+   <item/>
+  </list>
+  <list id="mcs" type="object"/>
+  <loop var="i" from="${0}" to="${zbddhz.size - 1}">
+   <list id="zxddhz_all" type="object">
+    <item>${zbddhz[i]}</item>
+    <item>${zxddhzsd[i]}</item>
+    <item>${wgddhz[i]}</item>
+   </list>
+   <list id="jds" type="string">
+    <item>执行阶段</item>
+    <item>锁定阶段</item>
+    <item>完工阶段</item>
+   </list>
+   <list id="tmpVal" type="double">
+    <item index="0">${zbddhz[i][1]}</item>
+    <item index="1">${zxddhzsd[i][1]}</item>
+    <item index="2">${wgddhz[i][1]}</item>
+   </list>
+   <list id="htjes" type="object">
+    <item>${math.sum[tmpVal]}</item>
+    <item>${math.sum[tmpVal]}</item>
+    <item>${math.sum[tmpVal]}</item>
+   </list>
+   <list id="mcs" type="object">
+    <item>${dwmcs[i]}</item>
+    <item>${dwmcs[i]}</item>
+    <item>${dwmcs[i]}</item>
+   </list>
+  </loop>
+  <list id="ids" type="int">
+   <item from="${0}" to="${mcs.size - 1}"/>
+  </list>
+  <context key="counter" value="${counterFactory.newCounter.reset[1]}"/>
+  <table id="result" rowIds="ids" export="true">
+   <col list="mcs"/>
+   <col list="htjes"/>
+   <col list="jds"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+  </table>
+ </service>
+ <controller id="modelFdwCollectionFmtter">
+  <formatter id="dataFmt" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,2"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="modelFdwCollectionParams">
+  <context key="product_model" value="${request.model.asString}"/>
+  <context key="compId" value="${orgs.virtualCYOrg.ids[request.item.asInt]}"/>
+  <if test="${50000 == compId}">
+   <list id="comps" type="int">1,2,3</list>
+   <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[comps]}"/>
+  </if>
+  <if test="${50000 != compId}">
+   <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compId.packAsList]}"/>
+  </if>
+ </controller>
+ <controller id="modelFdwCollectionUpdate">
+  <callcontroller id="modelFdwCollectionParams"/>
+  <callservice id="servModelFdwCollection"/>
+  <callcontroller id="modelFdwCollectionFmtter"/>
+  <formatterServer id="fmtServModelFdwCollection" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>单位</name>
+    </item>
+    <item>
+     <name>合同金额</name>
+    </item>
+    <item>
+     <name>项目阶段</name>
+    </item>
+    <item>
+     <name>毛利额</name>
+    </item>
+    <item>
+     <name>毛利率</name>
+    </item>
+    <item>
+     <name>硅钢</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>电解铜</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>变压器油</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>纸板</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>钢材</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>套管</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>开关</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>冷却器</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>在线监测</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>其他材料成本</name>
+    </item>
+    <item>
+     <name>人工费用</name>
+    </item>
+    <item>
+     <name>制造费用</name>
+    </item>
+    <item>
+     <name>材料成本总计</name>
+    </item>
+   </header>
+   <mergeRows type="array">
+    <item>
+     <col>0</col>
+    </item>
+    <item>
+     <col>1</col>
+     <rowStart>0</rowStart>
+     <step>3</step>
+     <count>${result.ids.size / 3}</count>
+    </item>
+   </mergeRows>
+   <mergeTitle>true</mergeTitle>
+   <data>${fmtServModelFdwCollection.result}</data>
+  </response>
+ </controller>
+ <controller id="modelFdwCollectionExport">
+  <callcontroller id="modelFdwCollectionParams"/>
+  <callservice id="servModelFdwCollection"/>
+  <callcontroller id="modelFdwCollectionFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="型号订单完工三单对比分析表"/>
+  <list id="title1" type="string">单位,合同金额,项目阶段,毛利额,毛利率,硅钢,硅钢,电解铜,电解铜,变压器油,变压器油,纸板,纸板,钢材,钢材,套管,套管,开关,开关,冷却器,冷却器,在线监测,在线监测
+  ,其他材料成本,人工费用,制造费用,材料成本总计</list>
+  <list id="title2" type="string">单位,合同金额,项目阶段,毛利额,毛利率,单价,用量,单价,用量,单价,用量,,单价,用量,单价,用量,单价,用量,单价,用量,单价,用量,单价,用量,其他材料成本,人工费用,制造费用,材料成本总计</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title1"/>
+     <title ref="title2"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="2" width="1" height="${result.ids.size}"/>
+    <MergeRegion x="0" y="0" width="${title1.size}" height="2"/>
+    <MergeRegion x="1" y="2" width="1" height="3" yCount="${result.ids.size / 3}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="servFmt" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="型号订单完工三单对比分析表.xls" serv="servFmt"/>
+ </controller>
+ <controller id="modelFdwCollection">
+  <list id="ids" type="int">1, 2, 3, 4, 5</list>
+  <list id="values" type="string">1, 2, 3, 4, 5</list>
+  <response type="jsp" name="sddb/sddb">
+   <map key="updateUrl" value="modelFdwCollectionUpdate"/>
+   <map key="exportUrl" value="modelFdwCollectionExport"/>
+   <map map="${authMgr[23]}"/>
+   <map key="title" value="型号订单完工三单对比分析表"/>
+   <map key="itemNodes" value="${dataNodeFactory[ids][values].asJson}"/>
+  </response>
+ </controller>
+</components>

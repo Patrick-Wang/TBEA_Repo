@@ -35,6 +35,7 @@ module cpzlqk {
             static ins = new ShowView();
             private mData:Array<string[]>;
             private mAjax:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/update.do", false);
+            private mAjaxStatus:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/updateStatus.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
             getId():number {
@@ -170,6 +171,15 @@ module cpzlqk {
                     }),
                     comment:comment
                 };
+
+                this.mAjaxStatus.get({
+                    date: this.mDt,
+                    companyId:this.mCompType,
+                    zt : Util.IndiStatus.SUBMITTED
+                }).then(()=>{
+
+                });
+
                 this.mCommentSubmit.get({
                     data : JSON.stringify([[param.condition, param.comment]])
                 }).then((jsonData:any)=>{

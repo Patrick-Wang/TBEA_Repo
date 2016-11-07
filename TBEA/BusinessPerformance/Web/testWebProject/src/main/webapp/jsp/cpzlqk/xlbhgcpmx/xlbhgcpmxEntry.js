@@ -117,6 +117,7 @@ var cpzlqk;
                             year: Util.toDate(dt).year,
                             month: Util.toDate(dt).month,
                             pageType: 2,
+                            companyId: compType,
                             tableStatus: JSON.stringify([
                                 {
                                     id: plugin.xlbhgcpmx

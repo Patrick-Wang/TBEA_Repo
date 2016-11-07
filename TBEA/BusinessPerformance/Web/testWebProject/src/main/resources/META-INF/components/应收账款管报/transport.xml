@@ -1,0 +1,223 @@
+<components>
+ <service id="servYszkkxxzOuterToLocal" transaction="transactionManager">
+  <if test="${!yszkkxxz.isEmpty}">
+   <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
+   <context key="counter" value="${counterFactory.newCounter.reset[0]}"/>
+   <sql id="zts">select 
+	top 1 
+	zt
+from 
+	yszkgb_yszkkxxzqk
+where
+	year = ${cal.year} and
+	month = ${cal.month} and
+	dwid = ${dwid}</sql>
+   <context key="zt" value="${2}"/>
+   <if test="${!zts.isEmpty}">
+    <context key="zt" value="${zts[0]}"/>
+   </if>
+   <merge data="${yszkkxxz}" table="yszkgb_yszkkxxzqk">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zt type="int" value="${zt}"/>
+     <yq0z1y type="double" ref="${counter.val}"/>
+     <yq1z3y type="double" ref="${counter.next.val}"/>
+     <yq3z6y type="double" ref="${counter.next.val}"/>
+     <yq6z12y type="double" ref="${counter.next.val}"/>
+     <yq1nys type="double" ref="${counter.next.val}"/>
+     <wdq type="double" ref="${counter.next.val}"/>
+     <wdqzbj type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+  </if>
+ </service>
+ <service id="servYszkkxxzFromOuterDB">
+  <sql id="yszkkxxz" export="true">select
+	yq0z1y,
+	yq1z3y,
+	yq3z6y,
+	yq6z12y,
+	yq1nys,
+	wdq,	
+	wdqzbj
+from 
+	yszkgb_account_rec_nature
+  
+where 
+	year = ${cal.year} and
+	month = ${cal.month}</sql>
+ </service>
+ <service id="servYszkcsysOuterToLocal" transaction="transactionManager">
+  <if test="${!yszkcsys.isEmpty}">
+   <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
+   <context key="counter" value="${counterFactory.newCounter.reset[0]}"/>
+   <sql id="zts">select 
+	top 1 
+	zt
+from 
+	yszkgb_yqyszcsys
+where
+	year = ${cal.year} and
+	month = ${cal.month} and
+	dwid = ${dwid}</sql>
+   <context key="zt" value="${2}"/>
+   <if test="${!zts.isEmpty}">
+    <context key="zt" value="${zts[0]}"/>
+   </if>
+   <merge data="${yszkcsys}" table="yszkgb_yqyszcsys">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zt type="int" value="${zt}"/>
+     <nbys type="double" ref="${counter.val}"/>
+     <khzx type="double" ref="${counter.next.val}"/>
+     <gdfk type="double" ref="${counter.next.val}"/>
+     <xmbh type="double" ref="${counter.next.val}"/>
+     <htys type="double" ref="${counter.next.val}"/>
+     <sxbl type="double" ref="${counter.next.val}"/>
+     <ss type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+  </if>
+ </service>
+ <service id="servYszkcsysFromOuterDB">
+  <sql id="yszkcsys" export="true">select
+	internal_factor,
+	customer_credit,
+	roll,
+	pro_change,
+	contract_factor,
+	procedures,
+	lawsuit
+from 
+	yszkgb_account_rec_factor  
+where 
+	year = ${cal.year} and
+	month = ${cal.month}</sql>
+ </service>
+ <service id="servYszkyjtzOuterToLocal" transaction="transactionManager">
+  <if test="${!yszkyjtz.isEmpty}">
+   <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
+   <context key="counter" value="${counterFactory.newCounter.reset[0]}"/>
+   <sql id="zts">select 
+	top 1 
+	zt
+from 
+	yszkgb_yszkzmyyjtztjqs
+where
+	year = ${cal.year} and
+	month = ${cal.month} and
+	dwid = ${dwid}</sql>
+   <context key="zt" value="${2}"/>
+   <if test="${!zts.isEmpty}">
+    <context key="zt" value="${zts[0]}"/>
+   </if>
+   <merge data="${yszkyjtz}" table="yszkgb_yszkzmyyjtztjqs">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <yf type="int" value="${cal.month}"/>
+     <dwid type="int" value="${dwid}"/>
+     <zt type="int" value="${zt}"/>
+     <cwzmysjsye type="double" ref="${counter.val}"/>
+     <blye type="double" ref="${counter.next.val}"/>
+     <hfpwkje type="double" ref="${counter.next.val}"/>
+     <pkhwfje type="double" ref="${counter.next.val}"/>
+     <yskcjys type="double" ref="${counter.next.val}"/>
+     <xyzcjys type="double" ref="${counter.next.val}"/>
+     <qtyskmyx type="double" ref="${counter.next.val}"/>
+     <yjtzyszkye type="double" ref="${counter.next.val}"/>
+    </set>
+   </merge>
+  </if>
+ </service>
+ <service id="servYszkyjtzFromOuterDB">
+  <sql id="yszkyjtz" export="true">select
+	cwzmysjsye,
+	blye,
+	hfpwkje,
+	pkhwfje,
+	yskcjys,
+	xyzcjys,
+	qtyskmyx,
+	yjtzyszkye
+from 
+	yszkgb_account_rec_adjust  
+where 
+	year = ${cal.year} and
+	month = ${cal.month}</sql>
+ </service>
+ <controller id="yszkgbTransport" cron1="0 0 12 4 * ?">
+  <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
+   <context key="cal" value="${calendar.current}"/>
+  </if>
+  <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
+   <context key="cal" value="${request.date.asCalendar}"/>
+  </if>
+  <!-- <context key="type" value="${CompanyType.SBGS}"/>
+  <callservice id="servYszkkxxzFromOuterDB" transaction="transDl"/>
+  <callservice id="servYszkkxxzOuterToLocal"/>
+  <context key="type" value="${CompanyType.XBC}"/>
+  <callservice id="servYszkkxxzFromOuterDB" transaction="transXb"/>
+  <callservice id="servYszkkxxzOuterToLocal"/>
+  <context key="type" value="${CompanyType.TBGS}">
+   <callservice id="servYszkkxxzFromOuterDB" transaction="transTb"/>
+   <callservice id="servYszkkxxzOuterToLocal"/>
+  </context>
+  <context key="type" value="${CompanyType.LLGS}">
+   <callservice id="servYszkkxxzFromOuterDB" transaction="transLl"/>
+   <callservice id="servYszkkxxzOuterToLocal"/>
+  </context>
+  <context key="type" value="${CompanyType.XLC}">
+   <callservice id="servYszkkxxzFromOuterDB" transaction="transXl"/>
+   <callservice id="servYszkkxxzOuterToLocal"/>
+  </context> -->
+  <context key="type" value="${CompanyType.DLGS}"></context>
+ 
+  <callservice id="servYszkcsysFromOuterDB" transaction="transDl"/>
+  <callservice id="servYszkcsysOuterToLocal"/>
+  <callservice id="servYszkyjtzFromOuterDB" transaction="transDl"/>
+  <callservice id="servYszkyjtzOuterToLocal"/>
+   <callservice id="servYszkkxxzFromOuterDB" transaction="transDl"/>
+  <callservice id="servYszkkxxzOuterToLocal"/>
+  <!-- <context key="type" value="${CompanyType.XNYGS}"/>
+  <callservice id="servDbxqFromNC"/>
+  <callservice id="servDbxqToLocal"/>
+  <context key="type" value="${CompanyType.XTNYGS}"/>
+  <callservice id="servDbxqFromNC"/>
+  <callservice id="servDbxqToLocal"/>
+  <context key="type" value="${CompanyType.TCNY}"/>
+  <callservice id="servDbxqFromNC"/>
+  <callservice id="servDbxqToLocal"/>
+  <context key="type" value="${CompanyType.NDGS}"/>
+  <callservice id="servDbxqFromNC"/>
+  <callservice id="servDbxqToLocal"/>
+  <context key="type" value="${CompanyType.JCKGS_JYDW}"/>
+  <callservice id="servDbxqFromNC"/>
+  <callservice id="servDbxqToLocal"/>
+  <context key="type" value="${CompanyType.GJGCGS_GFGS}"/>
+  <callservice id="servDbxqFromNC"/>
+  <callservice id="servDbxqToLocal"/> -->
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+</components>

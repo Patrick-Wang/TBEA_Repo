@@ -19,9 +19,9 @@ var Util;
                 var strDate = this.curDate.year + "-" + this.curDate.month + "-" + this.curDate.day;
                 var maxDate = dtEnd.year + "-" + dtEnd.month + "-" + dtEnd.day;
                 var minDate = dtStart.year + "-" + dtStart.month + "-" + dtStart.day;
-                $("#" + divId).append("<input id='dtInput' style='width: 100px'>");
-                $("#" + divId + " #dtInput").val(strDate);
-                $("#" + divId + " #dtInput").datepicker({
+                $("#" + divId).append("<input id='" + divId + "dtInput' style='width: 100px'>");
+                $("#" + divId + " #" + divId + "dtInput").val(strDate);
+                $("#" + divId + " #" + divId + "dtInput").datepicker({
                     //            numberOfMonths:1,//显示几个月
                     showButtonPanel: true,
                     dateFormat: 'yy-mm-dd',

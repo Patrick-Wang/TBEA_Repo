@@ -3,16 +3,15 @@ package com.tbea.ic.operation.reportframe.interpreter;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import net.sf.json.JSONArray;
 
+import org.hibernate.SQLQuery;
+import org.hibernate.type.Type;
 import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.Pair;
@@ -21,8 +20,8 @@ import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
 import com.tbea.ic.operation.reportframe.el.ELExpression;
 import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.StringUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
-
 public class SqlXmlInterpreter implements XmlInterpreter {
 
 	
@@ -133,29 +132,34 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		ReportLogger.logger().debug("database : {}", trans);
 		
 		el = new ELParser(component);
-		
-		Query q = parseElSql(
-				e.getFirstChild().getTextContent(),
-				tx.getEntityManager());
-		
-		if (e.hasAttribute("id")){
-			
-			List sqlRet = q.getResultList();
-
-			preHandleResult(sqlRet);
-
+		if (XmlUtil.hasText(e) && !StringUtil.trim(XmlUtil.getText(e)).isEmpty()){
+			Query q = parseElSql(
+					XmlUtil.getText(e),
+					tx.getEntityManager());
+			if (e.hasAttribute("id")){
+				List sqlRet = q.getResultList();
+//				SQLQuery sq = q.unwrap(SQLQuery.class);
+//				String[] alis = sq.getReturnAliases();
+//				Type[] tps = sq.getReturnTypes();
+				preHandleResult(sqlRet);
+				sqlRet = parseOrder(sqlRet, component, e);
+				if (ReportLogger.logger().isDebugEnabled()){
+					ReportLogger.logger().debug(JSONArray.fromObject(sqlRet).toString());
+				}
+				component.put(e, sqlRet);
+			}else{
+				q.executeUpdate();
+			}
+		}else{
+			List sqlRet = (List) component.getVar(e.getAttribute("id"));
 			sqlRet = parseOrder(sqlRet, component, e);
-
+			sqlRet = parseOrder(sqlRet, component, e);
 			if (ReportLogger.logger().isDebugEnabled()){
 				ReportLogger.logger().debug(JSONArray.fromObject(sqlRet).toString());
 			}
-
 			component.put(e, sqlRet);
-			
-		}else{
-			q.executeUpdate();
 		}
-
+		
 		return true;
 	}
 }

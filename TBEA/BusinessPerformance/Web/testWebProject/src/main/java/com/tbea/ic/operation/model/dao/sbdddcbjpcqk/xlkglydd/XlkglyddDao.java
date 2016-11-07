@@ -14,4 +14,6 @@ public interface XlkglyddDao extends AbstractReadWriteDao<XlkglyddEntity> {
 
 	List<XlkglyddEntity> getByDate(Date d, WlyddType type, Company company);
 
+	XlkglyddEntity getKglydd(Date d, WlyddType type, String sclx, Company comp);
+
 }

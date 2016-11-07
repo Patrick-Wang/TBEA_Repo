@@ -142,27 +142,31 @@ public class DashboardController {
 	    synchronized (keys) {
 	        Iterator<String> i = keys.iterator(); // Must be in the synchronized block
 	        while (i.hasNext()){
-	        	HttpSession session = sessions.get(i.next());
-	        	account = SessionManager.getAccount(session);
-				if (null == account || Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())) {
-					continue;
-				}
-				++activeCount;
-				if (null == latestActiveSession) {
-					latestActiveSession = session;
-				} else if (latestActiveSession.getLastAccessedTime() < session
-						.getLastAccessedTime()) {
-					latestActiveSession = session;
-				}
-				JSONObject jUser = new JSONObject();
-				jUser.element("name", account.getName());
-				jUser.element("sid", session.getId());
-				jUser.element("login_time",
-						sdf.format(new Date(session.getCreationTime())));
-				jUser.element("last_accessed_time", sdf.format(new java.util.Date(
-						session.getLastAccessedTime())));
-				jUser.element("ip", session.getAttribute("remoteIP"));
-				arrUsers.add(jUser);
+	        	try{
+		        	HttpSession session = sessions.get(i.next());
+		        	account = SessionManager.getAccount(session);
+					if (null == account || Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())) {
+						continue;
+					}
+					++activeCount;
+					if (null == latestActiveSession) {
+						latestActiveSession = session;
+					} else if (latestActiveSession.getLastAccessedTime() < session
+							.getLastAccessedTime()) {
+						latestActiveSession = session;
+					}
+					JSONObject jUser = new JSONObject();
+					jUser.element("name", account.getName());
+					jUser.element("sid", session.getId());
+					jUser.element("login_time",
+							sdf.format(new Date(session.getCreationTime())));
+					jUser.element("last_accessed_time", sdf.format(new java.util.Date(
+							session.getLastAccessedTime())));
+					jUser.element("ip", session.getAttribute("remoteIP"));
+					arrUsers.add(jUser);
+	        	}catch(Exception e){
+	        		e.printStackTrace();
+	        	}
 	        }
 	    }
 

@@ -10,4 +10,6 @@ public interface LoginService {
 	boolean hasCorpAuth(Account account);
 
 	boolean hasSbdAuth(Account account);
+
+	void logout(Account account, long creationTime, long lastAccessedTime, String ip);
 }

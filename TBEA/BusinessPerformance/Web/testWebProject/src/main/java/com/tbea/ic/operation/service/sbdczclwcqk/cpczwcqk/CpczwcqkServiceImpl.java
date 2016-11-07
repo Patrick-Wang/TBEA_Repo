@@ -25,7 +25,6 @@ import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDaoImpl;
-import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpclwcqkEntity;
 import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
 
 @Service(CpczwcqkServiceImpl.NAME)
@@ -72,7 +71,7 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 		return hjList;
 	}
 	
-	private List<Integer> getCpIdList(SbdczclwcqkType type) {
+	public static List<Integer> getCpIdList(SbdczclwcqkType type) {
 		
 		List<Integer> cpIdList = new ArrayList<Integer>();
 		

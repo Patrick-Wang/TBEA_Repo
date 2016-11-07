@@ -177,6 +177,18 @@ public class EasyCalendar {
 		return (EasyCalendar) cache(KEY_LastWeek, new EasyCalendar(cal));
 	}
 	
+	public Integer getWeek(){
+		return cal.get(Calendar.WEEK_OF_YEAR);
+	}
+	
+	public Integer getWeekYear(){
+		Integer year = getYear();
+		if (getWeek() == 1 && getMonth() == 12){
+			return year + 1;
+		}
+		return year;
+	}
+	
 	public EasyCalendar getNextWeek(){
 		if (cache.containsKey(KEY_NextWeek)){
 			return (EasyCalendar) cache.get(KEY_NextWeek);
@@ -303,6 +315,10 @@ public class EasyCalendar {
 			return (Date) cache.get(KEY_Date);
 		}
 		return (Date) cache(KEY_Date, new Date(cal.getTimeInMillis()));
+	}
+	
+	public Long getTime(){
+		return this.cal.getTimeInMillis();
 	}
 	
 	public Timestamp getTimestamp(){

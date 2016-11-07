@@ -3,6 +3,7 @@ package com.tbea.ic.operation.controller.servlet.wgcpqk.yclbfqk;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -136,5 +138,30 @@ public class YclbfqkServlet {
 			.format(ret);
 
 		template.write(response, name + ".xls");
+	}
+	
+	@RequestMapping(value = "schedule.do")
+	public @ResponseBody byte[] schedule(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		if (request.getParameter("date") != null){
+			d = Date.valueOf(request.getParameter("date"));
+		}
+		
+		yclbfqkService.importDlYclbfqk(d);
+		
+		String result = "{\"result\":\"OK\"}";
+		return result.getBytes("utf-8");
+	}
+	
+	//每月3到五号零点触发
+	@Scheduled(cron="0 0 12 4 * ?")
+	public void scheduleImport(){
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.MONTH, -1);
+		Date d = Util.toDate(cal);
+		yclbfqkService.importDlYclbfqk(d);
 	}
 }

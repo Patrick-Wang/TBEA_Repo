@@ -46,6 +46,13 @@ public class OrgsContextHandlers implements ContextHandler {
 						comps.add(org.getCompany(id));
 					}
 					return comps;
+				} else if ("namesByIds".equals(args.get(0))) {
+					List<Integer> ids = (List) args.get(1);
+					List<String> names = new ArrayList<String>();
+					for (Integer id : ids) {
+						names.add(org.getCompany(id).getName());
+					}
+					return names;
 				} else {
 					return null;
 				}

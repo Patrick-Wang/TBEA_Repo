@@ -29,6 +29,7 @@ public class ELExpression{
 	static final Pattern indexesPattern = Pattern.compile("(\\[[^\\[]+\\])+"); 
 	static final Pattern indexedObjectPattern = Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*(\\[[^\\[]+\\])*"); 
 	static final Set<String> jsKeyWords = new HashSet<String>();
+	static final Pattern varPattern = Pattern.compile("var\\s+"); 
 	
 	static{
 		jsKeyWords.add("indexOf");
@@ -36,6 +37,7 @@ public class ELExpression{
 		jsKeyWords.add("false");
 		jsKeyWords.add("null");
 		jsKeyWords.add("undefined");
+		jsKeyWords.add("var");
 	}
 	
 	int start;
@@ -146,7 +148,7 @@ public class ELExpression{
 	}
 	
 	private boolean isNumber(Object ob){
-		return ob instanceof Integer || ob instanceof Double;  
+		return ob instanceof Integer || ob instanceof Long || ob instanceof Double;  
 	}
 	
 	private boolean isString(Object ob){
@@ -173,7 +175,9 @@ public class ELExpression{
 				}
 			}catch(ELInitObjectNotExist e){
 				if (!jsKeyWords.contains(e.getMessage())){
-					e.printStackTrace();
+					if (!Pattern.compile("var\\s+" + e.getMessage()).matcher(expression).find()){
+						e.printStackTrace();
+					}					
 				}
 			}
 		}
@@ -185,6 +189,11 @@ public class ELExpression{
 				!TypeUtil.isInt(obj.getClass()) &&
 				!TypeUtil.isBoolean(obj.getClass()) &&
 				!TypeUtil.isString(obj.getClass())){
+				
+				if (TypeUtil.isLong(obj.getClass())){
+					return ((Long)obj).intValue();
+				}
+				
 				return expressTmp;
 			}
 		}
@@ -224,32 +233,6 @@ public class ELExpression{
 		return indxs;
 	}
 	
-//	private int nextIndexedObject(String exp, int start){
-//		int len = exp.length();
-//		if (start >= len){
-//			return -1;
-//		}
-//		
-//		int iIndex = -1;
-//		for (int i = start; i < len; ++i){
-//			if (exp.charAt(i) == '.'){
-//				return i;
-//			}else if (exp.charAt(i) == '['){
-//				iIndex = i;
-//				break;
-//			}
-//		}
-//		
-//		if (iIndex == -1){
-//			return len;
-//		}else{
-//			iIndex = exp.indexOf(']', iIndex);
-//			while ((iIndex + 1) < len && exp.charAt(iIndex + 1) == '['){
-//				iIndex = exp.indexOf(']', iIndex);
-//			}
-//			return iIndex + 1;
-//		}
-//	}
 	
 	private Object parseObject(String exp) throws 
 			Exception {
@@ -262,16 +245,17 @@ public class ELExpression{
 			Matcher indexesMatcher = indexesPattern.matcher(objExp);
 			if (obj == null){
 				if (indexesMatcher.find()){
-					obj = loader.onGetObject(objExp.substring(0, indexesMatcher.start()));
-					if (null == obj){
-						throw new ELInitObjectNotExist(objExp.substring(0, indexesMatcher.start()));
+					String key = objExp.substring(0, indexesMatcher.start());
+					if (!loader.hasObject(key)){
+						throw new ELInitObjectNotExist(key);
 					}
+					obj = loader.onGetObject(key);
 					obj = getPropByIndex(obj, getIndexs(indexesMatcher.group()));
 				}else{
-					obj = loader.onGetObject(objExp);
-					if (null == obj){
+					if (!loader.hasObject(objExp)){
 						throw new ELInitObjectNotExist(objExp);
 					}
+					obj = loader.onGetObject(objExp);
 				}
 			}else{
 				if (indexesMatcher.find()){

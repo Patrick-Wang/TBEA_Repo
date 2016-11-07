@@ -55,7 +55,7 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 	    
 		switch (type) {
 
-		case YLFX_WLYMLSP_BYQ_ZH: {
+		case YLFX_WLYMLSP_BYQ_ZXYW: {
 			hjList.add(MLSPCS_BYQ_ZH_Type.MLSPCS_BYQ_ZH_CTXM_GN.value());
 			hjList.add(MLSPCS_BYQ_ZH_Type.MLSPCS_BYQ_ZH_CTXM_GJ.value());
 			hjList.add(MLSPCS_BYQ_ZH_Type.MLSPCS_BYQ_ZH_WLMY.value());
@@ -63,7 +63,7 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 			hjList.add(MLSPCS_BYQ_ZH_Type.MLSPCS_BYQ_ZH_QT.value());
 			break;
 		}
-		case YLFX_WLYMLSP_XL_ZH: {
+		case YLFX_WLYMLSP_XL_ZXYW: {
 			hjList.add(MLSPCS_XL_ZH_Type.MLSPCS_XL_ZH_CTXM_GN.value());
 			hjList.add(MLSPCS_XL_ZH_Type.MLSPCS_XL_ZH_CTXM_GJ.value());
 			hjList.add(MLSPCS_XL_ZH_Type.MLSPCS_XL_ZH_WLMY.value());
@@ -92,13 +92,13 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 	}
 
 	
-	private List<Integer> getCpIdList(WlyddType type) {
+	public static List<Integer> getCpIdList(WlyddType type) {
 		
 		List<Integer> cpIdList = new ArrayList<Integer>();
 	    
 		switch (type) {
 
-		case YLFX_WLYMLSP_BYQ_ZH: {
+		case YLFX_WLYMLSP_BYQ_ZXYW: {
 			for (MLSPCS_BYQ_ZH_Type cp : MLSPCS_BYQ_ZH_Type.values()) {
 				cpIdList.add(cp.value());
 			}
@@ -116,13 +116,13 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 			}
 			break;
 		}
-		case YLFX_WLYMLSP_XL_ZH: {
+		case YLFX_WLYMLSP_XL_ZXYW: {
 			for (MLSPCS_XL_ZH_Type cp : MLSPCS_XL_ZH_Type.values()) {
 				cpIdList.add(cp.value());
 			}
 			break;
 		}
-		case YLFX_WLYMLSP_XL_CPFL: {
+		case YLFX_WLYMLSP_XL_ZZY: {
 			for (MLSPCS_XL_CPFL_Type cp : MLSPCS_XL_CPFL_Type.values()) {
 				cpIdList.add(cp.value());
 			}
@@ -178,7 +178,7 @@ public class WlyddmlspcsServiceImpl implements WlyddmlspcsService {
 				entities = wlyddmlspcsDao.getByDate(new Date(cal.getTimeInMillis()), d, company, type, cpIdList.get(cp));
 			}else{
 				if (company.getType() == CompanyType.SBDCYJT){
-					entities = wlyddmlspcsDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), WlyddType.YLFX_WLYMLSP_BYQ_ZH, WlyddType.YLFX_WLYMLSP_XL_ZH, cpIdList.get(cp));
+					entities = wlyddmlspcsDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), WlyddType.YLFX_WLYMLSP_BYQ_ZXYW, WlyddType.YLFX_WLYMLSP_XL_ZXYW, cpIdList.get(cp));
 				}else{
 					entities = wlyddmlspcsDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies(), type, cpIdList.get(cp));
 				}

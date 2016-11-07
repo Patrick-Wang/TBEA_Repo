@@ -67,8 +67,12 @@
 	NC.xmqc
 from 
 	project_comprehensive_table_nc NC</sql>
-  <list id="xmIds" sql="data" value="0" export="true" type="int">1,2,3,4,5,6,7,8,9,10</list>
-  <list id="xmmcs" sql="data" value="1" export="true" type="string">1,2,3,4,5,6,7,8,9,10</list>
+  <list id="xmIds" sql="data" value="0" export="true" type="int">
+   <item insert="0">0</item>
+  </list>
+  <list id="xmmcs" sql="data" value="1" export="true" type="string">
+   <item insert="0">全部</item>
+  </list>
  </service>
  <controller id="gcyzb">
   <list type="int" id="ids">
@@ -95,7 +99,26 @@ from
   </response>
  </controller>
  <service id="serv_project_basic_info" transaction="transactionManager">
-  <sql id="data" export="true">select 
+  <if test="${'xmmc' == '全部'}">
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.xmlx,
+	PM.project_category,
+	IMP.project_capacity,
+	NC.khqc,
+	PM.contract_amount,
+	PM.contract_date,
+	PM.completion_date,
+	PM.payment_mode,
+	PM.prepayment
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name </sql>
+  </if>
+  <if test="${'xmmc' != '全部'}">
+   <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
 	NC.xmqc,
@@ -113,7 +136,8 @@ left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc
 left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name 
 where
 	NC.xmqc = ${xmmc}</sql>
-  <list id="ids" type="int" from="1" to="${data.size}"/>
+  </if>
+      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="project_basic_info_update">
@@ -204,10 +228,25 @@ where
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}项目基本信息.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="项目基本信息.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_budget_control" transaction="transactionManager">
-  <sql id="data" export="true">select 
+  <if test="${'xmmc' == '全部'}">
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	PM.income,
+	PM.bid_budget_cost,
+	PM.target_cost,
+	PM.dynamic_cost,
+	PM.unit_dynamic_cost
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
+  </if>
+  <if test="${'xmmc' != '全部'}">
+   <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
 	NC.xmqc,
@@ -221,7 +260,8 @@ left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc
 left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
 where
 	NC.xmqc = ${xmmc}</sql>
-  <list id="ids" type="int" from="1" to="${data.size}"/>
+  </if>
+  <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="budget_control_update">
@@ -296,10 +336,41 @@ where
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}项目预算控制情况.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="项目预算控制情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_business_indicator" transaction="transactionManager">
-  <sql id="data" export="true">select 
+  <if test="${'xmmc' == '全部'}">
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	PM.finacial_record_gross_profit_rate,
+	NC.bysjqrsr,
+	NC.bysjkpje,
+	NC.bysjml,
+	NC.bysjrzch,
+	PM.current_month_fund_restream,
+	NC.ljqrsr,
+	NC.ljqrsr/nullif(PM.income,0) as name1,
+	NC.ljtxml,
+	NC.ljkpje,
+	NC.ljkpje/nullif(PM.contract_amount,0)  as name2,
+	PM.cumulative_fund_restream,
+	PM.cumulative_fund_restream/nullif(PM.contract_amount,0)  as name3,
+	NC.zmysye,
+	NC.ljrzch,
+	NC.chye,
+	NC.qzzmch,
+	NC.qzyxmgszcxsxcdchye,
+	NC.yjzch,
+	PM.dynamic_gross_profit_rate,
+	PM.overdue_payment	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
+  </if>
+  <if test="${'xmmc' != '全部'}">
+   <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
 	NC.xmqc,
@@ -329,7 +400,8 @@ left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc
 left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
 where
 	NC.xmqc = ${xmmc}</sql>
-  <list id="ids" type="int" from="1" to="${data.size}"/>
+  </if>
+    <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="business_indicator_update">
@@ -473,10 +545,24 @@ where
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}项目经营指标情况.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="项目经营指标情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_business_indicator_plan" transaction="transactionManager">
-  <sql id="data" export="true">select 
+  <if test="${'xmmc' == '全部'}">
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.xyjhqrsr,
+	IMP.xyjhkpje,
+	IMP.xyjhrzch,
+	PM.next_month_fund_restream	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
+  </if>
+  <if test="${'xmmc' != '全部'}">
+   <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
 	NC.xmqc,
@@ -489,7 +575,8 @@ left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc
 left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
 where
 	NC.xmqc = ${xmmc}</sql>
-  <list id="ids" type="int" from="1" to="${data.size}"/>
+  </if>
+      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="business_indicator_plan_update">
@@ -560,10 +647,31 @@ where
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}项目经营指标规划.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="项目经营指标规划.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_construction" transaction="transactionManager">
-  <sql id="data" export="true">select 
+  <if test="${'xmmc' == '全部'}">
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.jcsgrq,
+	PM.progress_percentage,
+	IMP.installed_capacity,
+	IMP.xmsjjgrq,
+	IMP.xmsjjsrq,
+	IMP.sfzjsyz,
+	IMP.syzdydj,
+	IMP.syzrl,
+	IMP.sfzjwx,
+	IMP.wxdydj,
+	IMP.wxcd	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
+  </if>
+  <if test="${'xmmc' != '全部'}">
+   <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
 	NC.xmqc,
@@ -583,7 +691,8 @@ left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc
 left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
 where
 	NC.xmqc = ${xmmc}</sql>
-  <list id="ids" type="int" from="1" to="${data.size}"/>
+  </if>
+      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="construction_update">
@@ -683,10 +792,28 @@ where
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}建设情况.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="建设情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_electricity" transaction="transactionManager">
-  <sql id="data" export="true">select 
+  <if test="${'xmmc' == '全部'}">
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.qzbwrq,
+	IMP.ybwrl,
+	IMP.njllyxfdxss,
+	IMP.bypjfh,
+	IMP.byjhfdl,
+	IMP.bysjfdl,
+	IMP.ndljswdl,
+	IMP.xyjhfdl	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name </sql>
+  </if>
+  <if test="${'xmmc' != '全部'}">
+   <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
 	NC.xmqc,
@@ -703,7 +830,8 @@ left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc
 left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name 
 where
 	NC.xmqc = ${xmmc}</sql>
-  <list id="ids" type="int" from="1" to="${data.size}"/>
+  </if>
+      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="electricity_update">
@@ -790,10 +918,24 @@ where
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}发电情况.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="发电情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_quality_assurance" transaction="transactionManager">
-  <sql id="data" export="true">select 
+  <if test="${'xmmc' == '全部'}">
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.htydzbq,
+	IMP.zbqqsbz,
+	IMP.zbqqssj,
+	IMP.sfbhhzbj
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
+  </if>
+  <if test="${'xmmc' != '全部'}">
+   <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
 	NC.xmqc,
@@ -806,7 +948,8 @@ left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc
 left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
 where
 	NC.xmqc = ${xmmc}</sql>
-  <list id="ids" type="int" from="1" to="${data.size}"/>
+  </if>
+      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="quality_assurance_update">
@@ -875,10 +1018,30 @@ where
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}质保情况.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="质保情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_risk" transaction="transactionManager">
-  <sql id="data" export="true">select 
+  <if test="${'xmmc' == '全部'}">
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.khzczbj,
+	IMP.khqyxz,
+	IMP.khdbdyfkbhqk,
+	IMP.sfdzyw,
+	IMP.xmsfhfhg,
+	IMP.gqsfywjcsdfx,
+	IMP.gjsbcghtzbqjqssjsffgEPCht,
+	IMP.fdlcnqk,
+	IMP.sfxyzcjgbhbzwj,
+	IMP.xmfxjyh	
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
+  </if>
+  <if test="${'xmmc' != '全部'}">
+   <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
 	NC.xmqc,
@@ -897,7 +1060,8 @@ left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc
 left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
 where
 	NC.xmqc = ${xmmc}</sql>
-  <list id="ids" type="int" from="1" to="${data.size}"/>
+  </if>
+      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="risk_update">
@@ -992,10 +1156,28 @@ where
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}风险情况.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="风险情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_output_value" transaction="transactionManager">
-  <sql id="data" export="true">select 
+  <if test="${'xmmc' == '全部'}">
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	NC.xmqc,
+	IMP.cost_control_plan_amount,
+	IMP.achieve_amount_of_cumup	,
+	IMP.achieve_amount_of_cumua,
+	IMP.achieve_amount_of_curp,
+	IMP.achieve_amount_of_cura,
+	IMP.achieve_amount_of_nextp,
+	IMP.payment_of_current_month,
+	IMP.cumulative_payment
+from project_comprehensive_table_nc NC
+left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
+left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
+  </if>
+  <if test="${'xmmc' != '全部'}">
+   <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
 	NC.xmqc,
@@ -1012,7 +1194,8 @@ left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc
 left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
 where
 	NC.xmqc = ${xmmc}</sql>
-  <list id="ids" type="int" from="1" to="${data.size}"/>
+  </if>
+      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="output_value_update">
@@ -1099,6 +1282,6 @@ where
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}产值情况.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="产值情况.xls" serv="fmtServ"/>
  </controller>
 </components>

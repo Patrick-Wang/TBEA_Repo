@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.cpzlqk.xlacptjjg;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -28,6 +29,7 @@ import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoImpl;
 import com.tbea.ic.operation.model.entity.cpzlqk.ByqYdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.XlAcptjjgEntity;
+import com.tbea.ic.operation.model.entity.cpzlqk.XlBhgwtmxEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
 
 @Service(XlacptjjgServiceImpl.NAME)
@@ -236,6 +238,18 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 				zltjjg.setZt(ZBStatus.SUBMITTED.ordinal());
 				zltjjgDao.merge(zltjjg);
 			}
+		}
+		return ErrorCode.OK;
+	}
+
+	@Override
+	public ErrorCode updateStatus(Date d, Company company, ZBStatus zt) {
+		List<ZltjjgEntity> entities = zltjjgDao.getByDateIgnoreStatus(d, company);
+		Timestamp ts = new Timestamp(Calendar.getInstance().getTimeInMillis());
+		for (ZltjjgEntity entity : entities){
+			entity.setZt(zt.ordinal());
+			entity.setXgsj(ts);
+			zltjjgDao.merge(entity);
 		}
 		return ErrorCode.OK;
 	}

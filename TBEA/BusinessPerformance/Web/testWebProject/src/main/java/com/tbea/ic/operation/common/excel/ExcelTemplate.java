@@ -59,6 +59,7 @@ public class ExcelTemplate {
 		cellStyleDefault = border(workbook
 				.createCellStyle());
 		cellStyleDefault.setAlignment(HSSFCellStyle.ALIGN_RIGHT);
+		cellStyleDefault.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
 		cellStyleDefault.setFont(fontDefault);
 
 		cellStyleHeader = border(workbook

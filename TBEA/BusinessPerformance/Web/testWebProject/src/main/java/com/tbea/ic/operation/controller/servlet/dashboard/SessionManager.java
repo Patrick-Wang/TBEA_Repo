@@ -35,7 +35,11 @@ public class SessionManager implements HttpSessionListener {
 		synchronized (listeners) {
 			Iterator<OnSessionChangedListener> it = listeners.iterator();
 	        while (it.hasNext()){
-	        	it.next().onCreated(session);
+	        	try{
+	        		it.next().onCreated(session);
+	        	}catch(Exception e){
+	        		
+	        	}
 	        }
 	    }
 		onlineSessions.put(session.getId(), session);
@@ -47,7 +51,12 @@ public class SessionManager implements HttpSessionListener {
 		synchronized (listeners) {
 			Iterator<OnSessionChangedListener> it = listeners.iterator();
 	        while (it.hasNext()){
-	        	it.next().onDestroyed(session);
+	        	try{
+	        		it.next().onDestroyed(session);
+	        	}catch(Exception e){
+	        		
+	        	}
+	        	
 	        }
 	    }
 		onlineSessions.remove(session.getId());

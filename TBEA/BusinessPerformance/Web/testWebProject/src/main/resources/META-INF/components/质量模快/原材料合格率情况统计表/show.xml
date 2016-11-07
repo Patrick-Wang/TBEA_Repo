@@ -792,6 +792,12 @@ where
   <list id="byqName" type="string" sql="byqClids" value="1" export="true"/>
   <list id="xlClid" type="int" sql="xlClids" value="0" export="true"/>
   <list id="xlName" type="string" sql="xlClids" value="1" export="true"/>
+  <if test="${'true' == 'request.approve.asString'}">
+   <list type="int" id="auths" export="true">22,53,54,55</list>
+  </if>
+  <if test="${'true' != 'request.approve.asString'}">
+   <context key="auths" value="${20}"/>
+  </if>
  </service>
  <service id="servYclhglqktjChart" transaction="transactionManager">
   <list id="yf" type="string">

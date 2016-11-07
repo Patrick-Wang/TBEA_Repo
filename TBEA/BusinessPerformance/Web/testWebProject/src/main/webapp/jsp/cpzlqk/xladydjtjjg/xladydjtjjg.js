@@ -40,6 +40,7 @@ var cpzlqk;
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../xladydjtjjg/update.do", false);
+                this.mAjaxStatus = new Util.Ajax("../xlacptjjg/updateStatus.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.xladydjtjjg;
@@ -283,6 +284,12 @@ var cpzlqk;
                     }),
                     comment: comment
                 };
+                this.mAjaxStatus.get({
+                    date: this.mDt,
+                    companyId: this.mCompType,
+                    zt: Util.IndiStatus.SUBMITTED
+                }).then(function () {
+                });
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {

@@ -36,7 +36,7 @@ public class TqbzYjjDaoImpl implements TqbzYjjDao {
 	public List<Object[]> getRsByDate(Date d) {
 		EasyCalendar ec = new EasyCalendar(d);
 		String sql = "select * from t_jysj2014_hrrs where " + 
-		"HR_unitcode in('10100','10200','10300','10500','10600','10700','11000','11200','10800','10900','11100','11300','10400') and NF = :nf and YF = :yf ";
+		"HR_unitcode in('10100','10300','10500','10600','11000','11200','10800','10900','11100','11300','10400') and NF = :nf and YF = :yf ";
 		
 		Query q = entityManager.createNativeQuery(sql);
 		q.setParameter("nf", ec.getYear());

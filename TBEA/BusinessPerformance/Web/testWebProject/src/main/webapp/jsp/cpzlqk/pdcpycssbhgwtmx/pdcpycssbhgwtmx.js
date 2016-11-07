@@ -41,6 +41,7 @@ var cpzlqk;
             function ShowView() {
                 _super.apply(this, arguments);
                 this.mAjax = new Util.Ajax("../pdcpycssbhgwtmx/update.do", false);
+                this.mAjaxStatus = new Util.Ajax("../pdcpycssbhgwtmx/updateStatus.do", false);
                 this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
                 this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
             }
@@ -48,9 +49,10 @@ var cpzlqk;
                 return plugin.pdcpycssbhgwtmx;
             };
             ShowView.prototype.isSupported = function (compType) {
-                return compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
+                var isSupport = (compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
                     || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
-                    || compType == Util.CompanyType.XBXBGS || compType == Util.CompanyType.PDCY;
+                    || compType == Util.CompanyType.XBXBGS || compType == Util.CompanyType.PDCY);
+                return isSupport;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
                 return "../pdcpycssbhgwtmx/export.do?" + Util.Ajax.toUrlParam({
@@ -188,6 +190,12 @@ var cpzlqk;
                     }),
                     comment: comment
                 };
+                this.mAjaxStatus.get({
+                    date: this.mDt,
+                    companyId: this.mCompType,
+                    zt: Util.IndiStatus.SUBMITTED
+                }).then(function () {
+                });
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {

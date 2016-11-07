@@ -18,5 +18,7 @@ public interface YclbfqkService {
 
 	List<List<String>> getYclbfqkEntry(Date d, Company company);
 
+	void importDlYclbfqk(Date d);
+
 
 }

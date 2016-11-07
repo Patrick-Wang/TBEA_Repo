@@ -72,7 +72,8 @@ var framework;
             };
             BasicFrameView.prototype.updateTypeSelector = function (width) {
                 if (width === void 0) { width = 285; }
-                var type = this.mCompanySelector.getCompany();
+                var type = this.mCompanySelector != undefined ?
+                    this.mCompanySelector.getCompany() : undefined;
                 var nodes = [];
                 for (var i = 0; i < this.mNodesAll.length; ++i) {
                     if (router.to(this.plugin(this.mNodesAll[i])).send(basic.FrameEvent.FE_IS_COMPANY_SUPPORTED, type)) {

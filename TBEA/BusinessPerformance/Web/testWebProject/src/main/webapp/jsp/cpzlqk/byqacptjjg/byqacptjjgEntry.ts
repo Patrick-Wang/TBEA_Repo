@@ -112,6 +112,7 @@ module cpzlqk {
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                             let param = {
+                                companyId:compType,
                                 year : this.getYear(),
                                 month: this.getMonth(),
                                 pageType:2,

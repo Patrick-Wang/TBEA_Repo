@@ -108,6 +108,7 @@ var cpzlqk;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         var param = {
+                            companyId: compType,
                             year: _this.getYear(),
                             month: _this.getMonth(),
                             pageType: 2,

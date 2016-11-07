@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -26,6 +27,7 @@ import com.tbea.ic.operation.model.dao.identifier.cpzlqk.byqbhglb.ByqBhglbDao;
 import com.tbea.ic.operation.model.dao.identifier.cpzlqk.byqbhglb.ByqBhglbDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.cpzlqk.byqzrlb.ByqZrlbDao;
 import com.tbea.ic.operation.model.entity.cpzlqk.ByqBhgwtmxEntity;
+import com.tbea.ic.operation.model.entity.cpzlqk.XlBhgwtmxEntity;
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.ByqBhglbEntity;
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.ByqZrlbEntity;
 
@@ -103,6 +105,18 @@ public class ByqcpycssbhgwtmxServiceImpl implements ByqcpycssbhgwtmxService {
 		return result;
 	}
 
+	@Override
+	public ErrorCode updateStatus(Date d, Company company, ZBStatus zt) {
+		List<ByqBhgwtmxEntity> entities = byqBhgwtmxDao.getByDate(d, company);
+		Timestamp ts = new Timestamp(Calendar.getInstance().getTimeInMillis());
+		for (ByqBhgwtmxEntity entity : entities){
+			entity.setZt(zt.ordinal());
+			entity.setXgsj(ts);
+			byqBhgwtmxDao.merge(entity);
+		}
+		return ErrorCode.OK;
+	}
+	
 	@Override
 	public ErrorCode approveByqcpycssbhgwtmx(Date d, JSONArray data,
 			Company company) {

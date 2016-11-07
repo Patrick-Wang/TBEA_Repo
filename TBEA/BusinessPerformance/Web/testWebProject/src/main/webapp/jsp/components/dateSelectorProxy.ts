@@ -18,15 +18,15 @@ module Util{
             this.curDate = dtNow;
             if (asSeasonAcc){
                 this.seasonAccSelect = new Util.SeasonAccSelector(dtStart, dtEnd, dtNow, divId, jdName);
-            }else if (asSeason){
+            } else if (asSeason){
                 this.seasonSelect = new Util.DateSeasonSelector(dtStart, dtEnd, dtNow, divId);
             } else if (this.curDate.day != undefined){
                 let strDate = this.curDate.year + "-" + this.curDate.month + "-" + this.curDate.day;
                 let maxDate = dtEnd.year + "-" + dtEnd.month + "-" + dtEnd.day;
                 let minDate = dtStart.year + "-" + dtStart.month + "-" + dtStart.day;
-                $("#" + divId).append("<input id='dtInput' style='width: 100px'>");
-                $("#" + divId + " #dtInput").val(strDate);
-                $("#" + divId + " #dtInput").datepicker({
+                $("#" + divId).append("<input id='" + divId + "dtInput' style='width: 100px'>");
+                $("#" + divId + " #" + divId + "dtInput").val(strDate);
+                $("#" + divId + " #" + divId + "dtInput").datepicker({
                     //            numberOfMonths:1,//显示几个月
                     showButtonPanel:true,//是否显示按钮面板
                     dateFormat: 'yy-mm-dd',//日期格式

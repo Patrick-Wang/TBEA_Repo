@@ -97,7 +97,12 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 //		}
 		Query q = getEntityManager().createQuery(sql);
 		q.setParameter("nf", ec.getYear());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("cpid", cpid);
 		q.setParameter("dwid", company.getId());
@@ -130,7 +135,12 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 //		}
 		Query q = getEntityManager().createQuery(sql);
 		q.setParameter("nf", ec.getYear());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("cpid", cpid);
 		q.setParameter("dwid", company.getId());
@@ -290,7 +300,12 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 //		}
 		Query q = getEntityManager().createQuery(sql);
 		q.setParameter("nf", ec.getYear());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("cpid", cpid);
 		q.setParameter("dwids", ids);
@@ -324,7 +339,12 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 //		}
 		Query q = getEntityManager().createQuery(sql);
 		q.setParameter("nf", ec.getYear());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("cpid", cpid);
 		q.setParameter("dwids", ids);

@@ -89,7 +89,7 @@ public class ReportServlet implements Scheduler {
 	public void onSchedule(
 			Context context,
 			com.tbea.ic.operation.reportframe.component.controller.Controller controller) throws Exception {
-
+			ReportLogger.logger().info(" on schedule " + controller.getId());
 			ContextHandlers handlers = new ContextHandlers();
 			handlers.add(tranContext)
 					.add(utilContext)

@@ -242,6 +242,11 @@ public class Util {
 		try {
 			return Double.valueOf(val);
 		} catch (Exception e) {
+			try {
+				return Double.valueOf(val.replaceAll(",", ""));
+			} catch (Exception e1) {
+				
+			}			
 		}
 		return null;
 	}

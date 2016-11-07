@@ -124,8 +124,8 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	private void parseItems(AbstractXmlComponent component, Element e, List<Object> objs) throws Exception {
 		NodeList children = e.getChildNodes();
 		int type = TypeUtil.typeof(e);
-		if (null != e.getFirstChild()){
-			String text = e.getFirstChild().getTextContent();
+		if (XmlUtil.hasText(e)){
+			String text = XmlUtil.getText(e);
 			if (TypeUtil.STRING == type){
 				objs.addAll(XmlUtil.toStringList(text, elp));
 			} else if (TypeUtil.INT == type){
@@ -176,19 +176,21 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			List<Object> objs, int repeat, int insert) throws Exception {
 		Integer from = XmlUtil.getIntAttr(elem, "from", elp,null);
 		Integer to = XmlUtil.getIntAttr(elem, "to", elp,null);
-		if (null != from && null != to && to > from){
-			String print = elem.getAttribute("print");
-			List list = new ArrayList<Object>(to - from + 1);
-			if (print.isEmpty()){
-				for(int i = from; i <= to; ++i){
-					list.add(i);
+		if (null != from && null != to){
+			if (to >= from){
+				String print = elem.getAttribute("print");
+				List list = new ArrayList<Object>(to - from + 1);
+				if (print.isEmpty()){
+					for(int i = from; i <= to; ++i){
+						list.add(i);
+					}
+				}else{
+					for(int i = from; i <= to; ++i){
+						list.add(print.replace(":i", "" + i));
+					}
 				}
-			}else{
-				for(int i = from; i <= to; ++i){
-					list.add(print.replace(":i", "" + i));
-				}
+				repeatAddList(objs, list, repeat, insert);
 			}
-			repeatAddList(objs, list, repeat, insert);
 			return true;
 		}
 		return false;
@@ -203,8 +205,8 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	private void insertAdd(Element item, List<Object> objs, int repeat, int insert,
 			int type) throws Exception {
 		String val = "";
-		if (null != item.getFirstChild()){
-			val = item.getFirstChild().getTextContent();
+		if (XmlUtil.hasText(item)){
+			val = XmlUtil.getText(item);
 		}
 		if (type == TypeUtil.INT) {
 			if (val.isEmpty()) {

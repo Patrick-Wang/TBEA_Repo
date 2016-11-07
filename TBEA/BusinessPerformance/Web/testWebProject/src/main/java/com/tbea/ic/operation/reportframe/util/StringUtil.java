@@ -17,4 +17,23 @@ public class StringUtil {
 		return null;
 	}
 	
+	public static Integer findClose(String exp, int start, char open, char close){
+		if (start < 0){
+			return -1;
+		}
+		Integer stackCount = 0;
+		for (int i = start + 1, len = exp.length(); i < len; ++i){
+			if (exp.charAt(i) == open){
+				++stackCount;
+			}else if (exp.charAt(i) == close){
+				if (0 == stackCount){
+					return i + 1;
+				}else{
+					--stackCount;
+				}
+			}
+		}
+		return -1;
+	}
+	
 }

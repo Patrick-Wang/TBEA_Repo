@@ -1,0 +1,356 @@
+<components>
+ <service id="servBiddingImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="JYGK_SDDB_BIDDING_ORDER_DETAILS">
+   <where>
+    <bid_id type="string" ref="0"/>
+   </where>
+   <set>
+    <bid_id type="string" ref="${counter.reset[0].val}"/>
+    <company_name type="string" ref="${counter.next.val}"/>
+    <bidding_date type="date" ref="${counter.next.val}"/>
+    <client_name type="string" ref="${counter.next.val}"/>
+    <project_name type="string" ref="${counter.next.val}"/>
+    <ETD_year type="double" ref="${counter.next.val}"/>
+    <ETD_month type="double" ref="${counter.next.val}"/>
+    <model type="string" ref="${counter.next.val}"/>
+    <voltage type="string" ref="${counter.next.val}"/>
+    <capacity type="string" ref="${counter.next.val}"/>
+    <number type="double" ref="${counter.next.val}"/>
+    <tax_inclusive_price type="double" ref="${counter.next.val}"/>
+    <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
+    <bid_opening_year type="double" ref="${counter.next.val}"/>
+    <bid_opening_month type="double" ref="${counter.next.val}"/>
+    <hit_rate type="double" ref="${counter.next.val}"/>
+    <bid_silicon_steel_grades type="string" ref="${counter.next.val}"/>
+    <bid_silicon_steel_amount type="double" ref="${counter.next.val}"/>
+    <bid_silicon_steel_price type="double" ref="${counter.next.val}"/>
+    <bid_ele_copper_amount type="double" ref="${counter.next.val}"/>
+    <bid_ele_copper_price type="double" ref="${counter.next.val}"/>
+    <bid_insulating_oil_amount type="double" ref="${counter.next.val}"/>
+    <bid_insulating_oil_price type="double" ref="${counter.next.val}"/>
+    <bid_rolled_steel_amount type="double" ref="${counter.next.val}"/>
+    <bid_rolled_steel_price type="double" ref="${counter.next.val}"/>
+    <bid_cardboard_amount type="double" ref="${counter.next.val}"/>
+    <bid_cardboard_price type="double" ref="${counter.next.val}"/>
+    <bid_material_total type="double" ref="${counter.next.val}"/>
+    <labour_cost type="double" ref="${counter.next.val}"/>
+    <manufacturing_cost type="double" ref="${counter.next.val}"/>
+    <bid_cost type="double" ref="${counter.next.val}"/>
+    <gross_profit type="double" ref="${counter.next.val}"/>
+    <period type="double" ref="${counter.next.val}"/>
+    <is_new_production type="string" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="biddingImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servBiddingImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="biddingImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="biddingImport"/>
+   <map key="title" value="投标订单"/>
+  </response>
+ </controller>
+ <service id="servWinBiddingImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS">
+   <where>
+    <code type="string" ref="12"/>
+   </where>
+   <set>
+    <company_name type="string" ref="${counter.reset[0].val}"/>
+    <win_bid_year type="double" ref="${counter.next.val}"/>
+    <win_bid_month type="double" ref="${counter.next.val}"/>
+    <client_name type="string" ref="${counter.next.val}"/>
+    <project_name type="string" ref="${counter.next.val}"/>
+    <contract_no type="string" ref="${counter.next.val}"/>
+    <delivery_year type="double" ref="${counter.next.val}"/>
+    <delivery_month type="double" ref="${counter.next.val}"/>
+    <model type="string" ref="${counter.next.val}"/>
+    <voltage type="string" ref="${counter.next.val}"/>
+    <capacity type="string" ref="${counter.next.val}"/>
+    <number type="double" ref="${counter.next.val}"/>
+    <code type="string" ref="${counter.next.val}"/>
+    <tax_inclusive_price type="double" ref="${counter.next.val}"/>
+    <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
+    <win_bid_silicon_steel_grades type="string" ref="${counter.next.val}"/>
+    <win_bid_silicon_steel_amount type="double" ref="${counter.next.val}"/>
+    <win_bid_silicon_steel_price type="double" ref="${counter.next.val}"/>
+    <win_bid_ele_copper_amount type="double" ref="${counter.next.val}"/>
+    <win_bid_ele_copper_price type="double" ref="${counter.next.val}"/>
+    <win_bid_ele_copper_process_cost type="double" ref="${counter.next.val}"/>
+    <win_bid_insulating_oil_amount type="double" ref="${counter.next.val}"/>
+    <win_bid_insulating_oil_price type="double" ref="${counter.next.val}"/>
+    <win_bid_rolled_steel_amount type="double" ref="${counter.next.val}"/>
+    <win_bid_rolled_steel_price type="double" ref="${counter.next.val}"/>
+    <win_bid_cardboard_amount type="double" ref="${counter.next.val}"/>
+    <win_bid_cardboard_price type="double" ref="${counter.next.val}"/>
+    <win_bid_casing_quantity type="double" ref="${counter.next.val}"/>
+    <win_bid_casing_unit_price type="double" ref="${counter.next.val}"/>
+    <win_bid_number_of_switches type="double" ref="${counter.next.val}"/>
+    <win_bid_switch_unit_price type="double" ref="${counter.next.val}"/>
+    <win_bid_number_of_cooler type="double" ref="${counter.next.val}"/>
+    <win_bid_cooler_unit_price type="double" ref="${counter.next.val}"/>
+    <win_bid_online_monitoring_quantity type="double" ref="${counter.next.val}"/>
+    <win_bid_online_monitoring_unit_price type="double" ref="${counter.next.val}"/>
+    <win_bid_other_material_cost type="double" ref="${counter.next.val}"/>
+    <win_bid_material_total type="double" ref="${counter.next.val}"/>
+    <labour_cost type="double" ref="${counter.next.val}"/>
+    <manufacturing_cost type="double" ref="${counter.next.val}"/>
+    <win_bid_cost type="double" ref="${counter.next.val}"/>
+    <win_bid_gross_profit_amount type="double" ref="${counter.next.val}"/>
+    <win_bid_gross_margin type="double" ref="${counter.next.val}"/>
+    <is_new_production type="string" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="winBiddingImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servWinBiddingImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="winBiddingImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="winBiddingImport"/>
+   <map key="title" value="中标订单"/>
+  </response>
+ </controller>
+ <service id="servExecImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="JYGK_SDDB_ORDER_EXECUTION_DETAILS">
+   <where>
+    <code type="string" ref="16"/>
+   </where>
+   <set>
+    <company_name type="string" ref="${counter.reset[0].val}"/>
+    <win_bid_year type="double" ref="${counter.next.val}"/>
+    <win_bid_month type="double" ref="${counter.next.val}"/>
+    <client_name type="string" ref="${counter.next.val}"/>
+    <project_name type="string" ref="${counter.next.val}"/>
+    <contract_no type="string" ref="${counter.next.val}"/>
+    <execution_year type="double" ref="${counter.next.val}"/>
+    <execution_month type="double" ref="${counter.next.val}"/>
+    <completion_year type="double" ref="${counter.next.val}"/>
+    <completion_month type="double" ref="${counter.next.val}"/>
+    <actual_delivery_year_ type="double" ref="${counter.next.val}"/>
+    <actual_delivery_month type="double" ref="${counter.next.val}"/>
+    <model type="string" ref="${counter.next.val}"/>
+    <voltage type="string" ref="${counter.next.val}"/>
+    <capacity type="string" ref="${counter.next.val}"/>
+    <number type="double" ref="${counter.next.val}"/>
+    <code type="string" ref="${counter.next.val}"/>
+    <tax_inclusive_price type="double" ref="${counter.next.val}"/>
+    <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
+    <nc_number type="double" ref="${counter.next.val}"/>
+    <nc_cost type="double" ref="${counter.next.val}"/>
+    <bidding_transportation_fee type="double" ref="${counter.next.val}"/>
+    <optimizing_transportation_cost type="double" ref="${counter.next.val}"/>
+    <win_bid_cost type="double" ref="${counter.next.val}"/>
+    <agency_fee type="double" ref="${counter.next.val}"/>
+    <es_silicon_steel_grades type="string" ref="${counter.next.val}"/>
+    <es_substitute_grade type="string" ref="${counter.next.val}"/>
+    <es_quantity_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <es_unit_price_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <es_amount_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <es_remarks type="string" ref="${counter.next.val}"/>
+    <es_process_cost type="double" ref="${counter.next.val}"/>
+    <es_total_amount_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <es_copper_quantity type="double" ref="${counter.next.val}"/>
+    <es_copper_price type="double" ref="${counter.next.val}"/>
+    <es_copper_processing_fee type="double" ref="${counter.next.val}"/>
+    <es_split_cover type="double" ref="${counter.next.val}"/>
+    <es_copper_amount type="double" ref="${counter.next.val}"/>
+    <es_transformer_oil_specification type="string" ref="${counter.next.val}"/>
+    <es_transformer_oil_quantity type="double" ref="${counter.next.val}"/>
+    <es_unit_price_of_transformer_oil type="double" ref="${counter.next.val}"/>
+    <es_transformer_oil_amount type="double" ref="${counter.next.val}"/>
+    <es_quantity_of_steel type="double" ref="${counter.next.val}"/>
+    <es_steel_price type="double" ref="${counter.next.val}"/>
+    <es_amount_of_steel type="double" ref="${counter.next.val}"/>
+    <es_cardboard_quantity type="double" ref="${counter.next.val}"/>
+    <es_cardboard_unit_price type="double" ref="${counter.next.val}"/>
+    <es_amount_of_cardboard type="double" ref="${counter.next.val}"/>
+    <es_casing_quantity type="double" ref="${counter.next.val}"/>
+    <es_casing_unit_price type="double" ref="${counter.next.val}"/>
+    <es_casing_amount type="double" ref="${counter.next.val}"/>
+    <es_number_of_switches type="double" ref="${counter.next.val}"/>
+    <es_switch_unit_price type="double" ref="${counter.next.val}"/>
+    <es_switch_amount type="double" ref="${counter.next.val}"/>
+    <es_number_of_cooler type="double" ref="${counter.next.val}"/>
+    <es_cooler_unit_price type="double" ref="${counter.next.val}"/>
+    <es_amount_of_cooler type="double" ref="${counter.next.val}"/>
+    <es_online_monitoring_quantity type="double" ref="${counter.next.val}"/>
+    <es_online_monitoring_unit_price type="double" ref="${counter.next.val}"/>
+    <es_online_monitoring_amount type="double" ref="${counter.next.val}"/>
+    <es_other_material_costs type="double" ref="${counter.next.val}"/>
+    <es_total_amount_of_material type="double" ref="${counter.next.val}"/>
+    <es_spare_parts type="string" ref="${counter.next.val}"/>
+    <es_material_cost type="double" ref="${counter.next.val}"/>
+    <es_labor_wages type="double" ref="${counter.next.val}"/>
+    <es_manufacturing_cost type="double" ref="${counter.next.val}"/>
+    <es_total_product_cost type="double" ref="${counter.next.val}"/>
+    <es_gross_profit_amount type="double" ref="${counter.next.val}"/>
+    <es_gross_margin type="double" ref="${counter.next.val}"/>
+    <op_silicon_steel_grades type="string" ref="${counter.next.val}"/>
+    <op_substitute_grade type="string" ref="${counter.next.val}"/>
+    <op_quantity_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <op_unit_price_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <op_amount_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <op_processing_cost_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <op_strip_reduction type="double" ref="${counter.next.val}"/>
+    <op_copper_consumption type="double" ref="${counter.next.val}"/>
+    <op_copper_price type="double" ref="${counter.next.val}"/>
+    <op_amount_of_copper type="double" ref="${counter.next.val}"/>
+    <op_copper_processing_fee type="double" ref="${counter.next.val}"/>
+    <op_copper_allocation type="double" ref="${counter.next.val}"/>
+    <op_transformer_oil_specification type="double" ref="${counter.next.val}"/>
+    <op_transformer_oil_consumption type="double" ref="${counter.next.val}"/>
+    <op_unit_price_of_transformer_oil type="double" ref="${counter.next.val}"/>
+    <op_price_remarks type="double" ref="${counter.next.val}"/>
+    <op_transformer_oil_amount type="double" ref="${counter.next.val}"/>
+    <op_steel_dosage type="double" ref="${counter.next.val}"/>
+    <op_steel_price type="double" ref="${counter.next.val}"/>
+    <op_amount_of_steel type="double" ref="${counter.next.val}"/>
+    <op_cardboard_consumption type="double" ref="${counter.next.val}"/>
+    <op_cardboard_unit_price type="double" ref="${counter.next.val}"/>
+    <op_amount_of_cardboard type="double" ref="${counter.next.val}"/>
+    <op_casing_quantity type="double" ref="${counter.next.val}"/>
+    <op_casing_unit_price type="double" ref="${counter.next.val}"/>
+    <op_casing_subtotal type="double" ref="${counter.next.val}"/>
+    <op_number_of_switches type="double" ref="${counter.next.val}"/>
+    <op_switch_unit_price type="double" ref="${counter.next.val}"/>
+    <op_switch_subtotal type="double" ref="${counter.next.val}"/>
+    <op_number_of_cooler type="double" ref="${counter.next.val}"/>
+    <op_cooler_unit_price type="double" ref="${counter.next.val}"/>
+    <op_cooler_subtotal type="double" ref="${counter.next.val}"/>
+    <op_online_monitoring_quantity type="double" ref="${counter.next.val}"/>
+    <op_online_monitoring_unit_price type="double" ref="${counter.next.val}"/>
+    <op_online_monitoring_subtotal type="double" ref="${counter.next.val}"/>
+    <op_other_materials type="double" ref="${counter.next.val}"/>
+    <op_cost_of_tax_bearing_materials type="double" ref="${counter.next.val}"/>
+    <op_spare_parts type="string" ref="${counter.next.val}"/>
+    <op_total_tax_material type="double" ref="${counter.next.val}"/>
+    <op_labor_cost type="double" ref="${counter.next.val}"/>
+    <op_production_costs type="double" ref="${counter.next.val}"/>
+    <op_gross_profit_amount type="double" ref="${counter.next.val}"/>
+    <op_optimized_gross_margin type="double" ref="${counter.next.val}"/>
+    <review_status type="string" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="execImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servExecImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="execImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="execImport"/>
+   <map key="title" value="执行订单"/>
+  </response>
+ </controller>
+ <service id="servCompletionImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="JYGK_SDDB_ORDER_COMPLETION_DETAILS">
+   <where>
+    <code type="string" ref="10"/>
+   </where>
+   <set>
+    <company_name type="string" ref="${counter.reset[0].val}"/>
+    <completion_year type="double" ref="${counter.next.val}"/>
+    <completion_month type="double" ref="${counter.next.val}"/>
+    <client_name type="string" ref="${counter.next.val}"/>
+    <project_name type="string" ref="${counter.next.val}"/>
+    <contract_no type="string" ref="${counter.next.val}"/>
+    <model type="string" ref="${counter.next.val}"/>
+    <voltage type="string" ref="${counter.next.val}"/>
+    <capacity type="string" ref="${counter.next.val}"/>
+    <number type="double" ref="${counter.next.val}"/>
+    <code type="string" ref="${counter.next.val}"/>
+    <tax_inclusive_price type="double" ref="${counter.next.val}"/>
+    <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
+    <actual_amount_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <actual_price_of_silicon_steel type="double" ref="${counter.next.val}"/>
+    <amount_of_actual_silicon_steel type="double" ref="${counter.next.val}"/>
+    <actual_electrolytic_copper_consumption type="double" ref="${counter.next.val}"/>
+    <copper_price type="double" ref="${counter.next.val}"/>
+    <copper_processing_fee type="double" ref="${counter.next.val}"/>
+    <actual_electrolytic_copper_amount type="double" ref="${counter.next.val}"/>
+    <actual_transformer_oil_consumption type="double" ref="${counter.next.val}"/>
+    <actual_transformer_oil_unit_price type="double" ref="${counter.next.val}"/>
+    <actual_transformer_oil_amount type="double" ref="${counter.next.val}"/>
+    <actual_steel_consumption type="double" ref="${counter.next.val}"/>
+    <actual_steel_price type="double" ref="${counter.next.val}"/>
+    <actual_steel_amount type="double" ref="${counter.next.val}"/>
+    <actual_insulation_board_usage type="double" ref="${counter.next.val}"/>
+    <actual_insulation_board_price type="double" ref="${counter.next.val}"/>
+    <actual_insulation_board_amount type="double" ref="${counter.next.val}"/>
+    <casing_quantity type="double" ref="${counter.next.val}"/>
+    <casing_unit_price type="double" ref="${counter.next.val}"/>
+    <casing_amount type="double" ref="${counter.next.val}"/>
+    <number_of_switches type="double" ref="${counter.next.val}"/>
+    <switch_unit_price type="double" ref="${counter.next.val}"/>
+    <switch_amount type="double" ref="${counter.next.val}"/>
+    <number_of_cooler type="double" ref="${counter.next.val}"/>
+    <cooler_unit_price type="double" ref="${counter.next.val}"/>
+    <amount_of_cooler type="double" ref="${counter.next.val}"/>
+    <online_monitoring_quantity type="double" ref="${counter.next.val}"/>
+    <online_monitoring_unit_price type="double" ref="${counter.next.val}"/>
+    <online_monitoring_amount type="double" ref="${counter.next.val}"/>
+    <the_actual_cost_of_materials type="double" ref="${counter.next.val}"/>
+    <actual_amount_of_other_materials type="double" ref="${counter.next.val}"/>
+    <actual_cost_of_other_materials type="double" ref="${counter.next.val}"/>
+    <the_cost_of_spare_parts type="double" ref="${counter.next.val}"/>
+    <total_material_cost type="double" ref="${counter.next.val}"/>
+    <actual_labor_cost type="double" ref="${counter.next.val}"/>
+    <actual_manufacturing_cost type="double" ref="${counter.next.val}"/>
+    <actual_total_cost type="double" ref="${counter.next.val}"/>
+    <actual_gross_profit type="double" ref="${counter.next.val}"/>
+    <actual_gross_margin type="double" ref="${counter.next.val}"/>
+    <is_new_production type="string" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="completionImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servCompletionImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="completionImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="completionImport"/>
+   <map key="title" value="完工订单"/>
+  </response>
+ </controller>
+</components>

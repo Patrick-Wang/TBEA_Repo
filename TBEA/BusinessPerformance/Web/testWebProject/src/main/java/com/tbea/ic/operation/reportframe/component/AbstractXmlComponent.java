@@ -23,6 +23,11 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	}
 	
 	@Override
+	public boolean hasObject(String key){
+		return local.contains(key) || global.contains(key);
+	}
+	
+	@Override
 	public String getId() {
 		return config.getAttribute("id");
 	}

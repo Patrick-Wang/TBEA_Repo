@@ -38,15 +38,19 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 					JSONArray ja = parseJsonArray(elem);
 					pJson.put(elem.getTagName(), ja);
 				} else if ("jarray".equals(elem.getAttribute("type"))){
-					Object obj = XmlUtil.parseELText(elem.getFirstChild().getTextContent(), elp);
-					pJson.put(elem.getTagName(), JSONArray.fromObject(obj));
+					if (XmlUtil.hasText(elem)){
+						Object obj = XmlUtil.parseELText(XmlUtil.getText(elem), elp);
+						pJson.put(elem.getTagName(), JSONArray.fromObject(obj));
+					}
 				}  else if ("jobject".equals(elem.getAttribute("type"))){
-					Object obj = XmlUtil.parseELText(elem.getFirstChild().getTextContent(), elp);
-					pJson.put(elem.getTagName(), JSONObject.fromObject(obj));
+					if (XmlUtil.hasText(elem)){
+						Object obj = XmlUtil.parseELText(XmlUtil.getText(elem), elp);
+						pJson.put(elem.getTagName(), JSONObject.fromObject(obj));
+					}					
 				} else {
 					String text = null;
-					if (elem.getFirstChild() != null){
-						text = elem.getFirstChild().getTextContent().replaceAll("\\s", "");
+					if (XmlUtil.hasText(elem)){
+						text = XmlUtil.getText(elem).replaceAll("\\s", "");
 					}
 					if (null != text && !text.isEmpty()){
 						pJson.put(elem.getTagName(), XmlUtil.parseELText(text, elp));
@@ -61,7 +65,10 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 	
 	protected JSONArray parseJsonArray(Element elem) throws DOMException, Exception {
 		JSONArray ja = new JSONArray();
-		ja.addAll(XmlUtil.toStringList(StringUtil.shrink(elem.getFirstChild().getTextContent()), elp));
+		if (XmlUtil.hasText(elem)){
+			ja.addAll(XmlUtil.toStringList(StringUtil.shrink(XmlUtil.getText(elem)), elp));
+		}
+		
 		XmlUtil.each(elem.getChildNodes(), new XmlUtil.OnLoop(){
 			@Override
 			public void on(Element el) throws DOMException, Exception {
@@ -69,7 +76,9 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 					if ("array".equals(el.getAttribute("type"))){
 						ja.add(parseJsonArray(el));
 					}else if ("json".equals(el.getAttribute("type"))){
-						ja.add(XmlUtil.parseELText(elem.getFirstChild().getTextContent(), elp));
+						if (XmlUtil.hasText(elem)){
+							ja.add(XmlUtil.parseELText(XmlUtil.getText(elem), elp));
+						}						
 					}else{
 						ja.add(parseJsonObject(el));
 					}
@@ -131,7 +140,9 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				if (!key.isEmpty()){
 					Object val = XmlUtil.getObjectAttr(elem, "value", elp);
 					if (val == null){
-						val = XmlUtil.parseELText(elem.getFirstChild().getTextContent(), elp);
+						if (XmlUtil.hasText(elem)){
+							val = XmlUtil.parseELText(XmlUtil.getText(elem), elp);
+						}
 						if (null != val && val instanceof String){
 							val = ((String)val).replaceAll("\\s", "");
 						}

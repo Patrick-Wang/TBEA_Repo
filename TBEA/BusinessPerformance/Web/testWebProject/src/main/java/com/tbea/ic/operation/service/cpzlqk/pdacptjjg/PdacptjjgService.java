@@ -31,4 +31,6 @@ public interface PdacptjjgService {
 
 	List<WaveItem> getJdWaveValues(Date d, Company company, List<Integer> zts);
 
+	ErrorCode updateStatus(Date d, Company company, ZBStatus zt);
+
 }

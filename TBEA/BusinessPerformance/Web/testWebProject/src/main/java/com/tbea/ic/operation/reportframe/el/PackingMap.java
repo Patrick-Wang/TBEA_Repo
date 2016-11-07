@@ -15,6 +15,8 @@ public class PackingMap extends ClosureMap {
 	private final static String METHOD_ETEND_ISARRAY = "isArray";
 	private final static String METHOD_ETEND_ISLIST = "isList";
 	private final static String METHOD_ETEND_TOJSON = "asJson";
+	private final static String METHOD_ETEND_DISTINCT = "distinct";
+	
 	
 	Object packageObj;
 	int nextSize = 0;
@@ -85,6 +87,18 @@ public class PackingMap extends ClosureMap {
 				return  JSONArray.fromObject(packageObj).toString();
 			}else{
 				return JSONObject.fromObject(packageObj).toString();
+			}
+		}else if (METHOD_ETEND_DISTINCT.equals((String)args.get(0))){
+			if (TypeUtil.instanceOf(packageObj, List.class)){
+				List pkg = (List) packageObj;
+				for (int i = 0; i < pkg.size(); ++i){
+					for (int j = pkg.size() - 1; j > i; --j){
+						if ((pkg.get(i) == null && pkg.get(j) == null) || pkg.get(i).equals(pkg.get(j))){
+							pkg.remove(j);
+						}
+					}
+				}
+				return pkg;
 			}
 		}
 		return null;

@@ -50,7 +50,12 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 
         q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("zt", zts);
 		return q.getResultList();
 	}
@@ -88,7 +93,12 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 		Query q = getEntityManager().createQuery(sql);
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
@@ -103,7 +113,12 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 		Query q = getEntityManager().createQuery(sql);
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
@@ -160,7 +175,12 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
         q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("zt", zts);
 		return q.getResultList();
 	}
@@ -206,7 +226,12 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
         q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
@@ -222,7 +247,12 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
         q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
-		q.setParameter("jdstart", ec.getSeasonFirstMonth());
+		Integer jdStart = 1;
+        if (ec.getSeason() == 3){
+        	jdStart = 7;
+        }
+        
+		q.setParameter("jdstart", jdStart);
 		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;

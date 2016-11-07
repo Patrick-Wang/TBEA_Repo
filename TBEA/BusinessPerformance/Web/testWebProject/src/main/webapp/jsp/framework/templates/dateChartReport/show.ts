@@ -222,7 +222,7 @@ module framework.templates.dateChartReport {
                 chart:nodes[nodes.length - 1].data.id
             }, this.getParams(date))).then((jsonData:any) => {
                 this.mChartResp = jsonData;
-                if (!$("#" + this.option().chartId).is(":hidden")) {
+                if ($("#" + this.option().chartId).css("display") != "none") {
                     this.updateChart();
                 }
             });
@@ -230,7 +230,7 @@ module framework.templates.dateChartReport {
             this.mAjaxUpdate.get(this.getParams(date))
                 .then((jsonData:any) => {
                     this.resp = jsonData;
-                    if (!$("#" + this.option().host).is(":hidden")) {
+                    if ($("#" + this.option().host).css("display") != "none") {
                         this.updateTable();
                     }
                 });

@@ -26,6 +26,8 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.tbea.ic.operation.service.sbdczclwcqk.SbdczclwcqkService;
+import com.tbea.ic.operation.service.sbdczclwcqk.SbdczclwcqkServiceImpl;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.CpclwcqkService;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.CpclwcqkServiceImpl;
 
@@ -41,6 +43,8 @@ public class SbdczclwcqkServlet {
 	@Resource(name=CpclwcqkServiceImpl.NAME)
 	CpclwcqkService cpclwcqkService;
 
+	@Resource(name=SbdczclwcqkServiceImpl.NAME)
+	SbdczclwcqkService sbdczclwcqkService;
 	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getShow(HttpServletRequest request,
@@ -82,18 +86,20 @@ public class SbdczclwcqkServlet {
 			d = Date.valueOf(request.getParameter("date"));
 		}
 		
-		cpclwcqkService.importCl(d);
+		sbdczclwcqkService.importHBCzCl(d);
+		sbdczclwcqkService.importDlCzCl(d);
 		
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
 	}
 	
 	//每月3到五号零点触发
-	@Scheduled(cron="0 0 0 4-5 * ?")
+	@Scheduled(cron="0 0 12 4 * ?")
 	public void scheduleImport(){
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
-		cpclwcqkService.importCl(d);
+		sbdczclwcqkService.importHBCzCl(d);
+		sbdczclwcqkService.importDlCzCl(d);
 	}
 }

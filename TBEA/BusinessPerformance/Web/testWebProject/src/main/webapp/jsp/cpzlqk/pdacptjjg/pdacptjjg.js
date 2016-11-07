@@ -43,6 +43,7 @@ var cpzlqk;
                 this.mAjax = new Util.Ajax("../pdacptjjg/update.do", false);
                 this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
                 this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
+                this.mAjaxStatus = new Util.Ajax("../pdacptjjg/updateStatus.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.pdacptjjg;
@@ -287,6 +288,12 @@ var cpzlqk;
                     }),
                     comment: comment
                 };
+                this.mAjaxStatus.get({
+                    date: this.mDt,
+                    companyId: this.mCompType,
+                    zt: Util.IndiStatus.SUBMITTED
+                }).then(function () {
+                });
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {

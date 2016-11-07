@@ -58,20 +58,20 @@ public class WlyddmlspcsServlet {
 
 	private WlyddType getType(HttpServletRequest request){
 		if (11 == Integer.valueOf(request.getParameter("type"))){
-			return WlyddType.YLFX_WLYMLSP_BYQ_ZH;
+			return WlyddType.YLFX_WLYMLSP_BYQ_ZXYW;
 		} else if (12 == Integer.valueOf(request.getParameter("type"))) {
 			return WlyddType.YLFX_WLYMLSP_BYQ_DYDJ;
 		}else if (13 == Integer.valueOf(request.getParameter("type"))) {
 			return WlyddType.YLFX_WLYMLSP_BYQ_CPFL;
 		}else if (14 == Integer.valueOf(request.getParameter("type"))) {
-			return WlyddType.YLFX_WLYMLSP_XL_ZH;
+			return WlyddType.YLFX_WLYMLSP_XL_ZXYW;
 		}else if (15 == Integer.valueOf(request.getParameter("type"))) {
-			return WlyddType.YLFX_WLYMLSP_XL_CPFL;
+			return WlyddType.YLFX_WLYMLSP_XL_ZZY;
 		}else if (16 == Integer.valueOf(request.getParameter("type"))) {
 			return WlyddType.YLFX_WLYMLSP_BYQ_ZZY;
 		}
 		
-		return WlyddType.YLFX_WLYMLSP_BYQ_ZH;
+		return WlyddType.YLFX_WLYMLSP_BYQ_ZXYW;
 	}
 	
 	@RequestMapping(value = "wlyddmlspcs/update.do")

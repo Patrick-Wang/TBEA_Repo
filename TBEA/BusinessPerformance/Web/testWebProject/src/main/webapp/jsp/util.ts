@@ -63,6 +63,8 @@ module Util {
         width:string;
         pager:string;
         shrinkToFit:string;
+        step:string;
+        count:string;
     }
 
     export interface ChartCtrl{
@@ -106,6 +108,14 @@ module Util {
                         tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col),
                             parseInt(gridCtrl.mergeRows[i].rowStart),
                             parseInt(gridCtrl.mergeRows[i].rowLen));
+                    }else if (gridCtrl.mergeRows[i].rowStart != undefined &&
+                        gridCtrl.mergeRows[i].step != undefined &&
+                        gridCtrl.mergeRows[i].count != undefined){
+                        for (let j = 0; j < gridCtrl.mergeRows[i].count; ++j){
+                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col),
+                                parseInt(gridCtrl.mergeRows[i].rowStart + j * gridCtrl.mergeRows[i].step),
+                                parseInt(gridCtrl.mergeRows[i].step));
+                        }
                     }else if (gridCtrl.mergeRows[i].rowStart != undefined){
                         tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col),
                             parseInt(gridCtrl.mergeRows[i].rowStart));

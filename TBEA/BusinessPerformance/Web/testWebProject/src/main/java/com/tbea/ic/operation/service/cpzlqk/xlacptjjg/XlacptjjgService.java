@@ -29,5 +29,7 @@ public interface XlacptjjgService {
 
 	ErrorCode unapproveXlacptjjg(Date d, JSONArray data, Company company);
 
+	ErrorCode updateStatus(Date d, Company company, ZBStatus zt);
+
 
 }

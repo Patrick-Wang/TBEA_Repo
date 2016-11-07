@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import net.sf.json.JSONArray;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,8 @@ import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.controller.servlet.sbdscqyqk.SbdscqyqkType;
+import com.tbea.ic.operation.model.dao.dl.sbdqy.DlQyDao;
 import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDao;
 import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDao;
@@ -41,6 +44,10 @@ public class XfscqyServiceImpl implements XfscqyService {
 
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
+	
+	@Autowired
+	DlQyDao dlqyDao;
+	
 	
 	@Override
 	public List<List<String>> getXfscqy(Date d, Company company) {
@@ -126,25 +133,38 @@ public class XfscqyServiceImpl implements XfscqyService {
 	public ErrorCode submitXfscqy(Date d, JSONArray data, Company company) {
 		return entryXfscqy(d, data, company, ZBStatus.SUBMITTED);
 	}
-
+	
 	@Override
-	public void importScqy(Date d) {
+	public void importHBScqy(Date d) {
 		HBWebService hbws = new HBWebService();
 		List<String> cols = new ArrayList<String>();
 		cols.add("industry");
 		cols.add("contract_volume");
-		List<List<Object>> result = hbws.getHBScqy(cols, d);
-		EasyCalendar ec = new EasyCalendar(d);
+		List<Object[]> result = hbws.getHBScqy(cols, d);
 		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS);
+		importScqy(d, result, comp);
+	}
+	
+	@Override
+	public void importDLScqy(Date d) {
+		List<Object[]> result = dlqyDao.getScqy(d);
+		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
+		importScqy(d, result, comp);
+	}
+
+
+	public void importScqy(Date d, List<Object[]> result, Company comp) {
+		
+		EasyCalendar ec = new EasyCalendar(d);
 		List<XfscqyEntity> entities = xfscqyDao.getByDate(d, comp);
 		ZBStatus status = ZBStatus.SUBMITTED;
 		if (null != entities && !entities.isEmpty()){
 			status = ZBStatus.valueOf(entities.get(0).getZt());
 		}
-		for (List<Object> r: result){
-			HyEntity mc = hyDao.getByName((String)r.get(0));
+		for (Object[] r: result){
+			HyEntity mc = hyDao.getByName((String)r[0]);
 			if (null == mc){
-				LoggerFactory.getLogger("WEBSERVICE").info("importScqy 系统中无法找到行业 : " + (String)r.get(0));
+				LoggerFactory.getLogger("WEBSERVICE").info("importScqy 系统中无法找到行业 : " + (String)r[0]);
 			}else{
 				XfscqyEntity entity= xfscqyDao.getByDate(d, comp, mc.getId());
 				
@@ -158,7 +178,7 @@ public class XfscqyServiceImpl implements XfscqyService {
 				}
 
 				entity.setZt(status.ordinal());
-				entity.setQye(Util.toDoubleNull(((String)r.get(1)).replaceAll(",", "")));
+				entity.setQye(Util.toDoubleNull((r[1].toString()).replaceAll(",", "")));
 				xfscqyDao.merge(entity);
 			}
 		}

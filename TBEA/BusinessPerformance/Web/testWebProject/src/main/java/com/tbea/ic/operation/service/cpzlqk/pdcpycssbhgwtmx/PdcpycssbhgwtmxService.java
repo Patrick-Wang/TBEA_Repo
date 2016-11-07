@@ -34,6 +34,8 @@ public interface PdcpycssbhgwtmxService {
 	List<List<String>> getPdcpycssbhgwtmx(Date d, YDJDType yjType,
 			Company compan, List<Integer> zts);
 
+	ErrorCode updateStatus(Date d, Company company, ZBStatus zt);
+
 
 
 

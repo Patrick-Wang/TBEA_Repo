@@ -1,20 +1,42 @@
 <components>
  <service id="servGylTransport" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
-  <sql id="nbzlqkResult">select * from zl_nbyclzlwt where issue_type = '原材料质量问题' and suppier_id is not null</sql>
-  <sql id="wbzlqkResult">select * from zl_wbyclzlwt where issue_type = '原材料质量问题' and suppier_id is not null</sql>
+  <sql id="nbzlqkResult">select 
+	substring(serial_num, 0, 3) + '00' GS , 
+	*
+from 
+	zl_nbyclzlwt 
+where 
+	issue_type = '原材料质量问题' and 
+	suppier_id is not null and 
+	category_code is not null and 
+	material_treatment_measure in ('不合格退货','处理后合格','让步接收') and
+	((material_happen_phase = '入场检测质量' and 
+	material_quality_phenomenon in ('包装问题','尺寸匹配问题','外观问题','性能问题')) or
+  	(material_happen_phase = '生产过程质量' and 
+	material_quality_phenomenon in ('尺寸匹配问题','外观问题','性能问题')))</sql>
+  <sql id="wbzlqkResult">select 
+	substring(serial_num, 0, 3) + '00' GS , 
+	*
+from 
+	zl_wbyclzlwt 
+where 
+	issue_type = '原材料质量问题' and 
+	suppier_id is not null and 
+	category_code is not null and 
+	material_treatment_measure in ('不合格退货','处理后合格','让步接收') and
+	quality_phenomenon in ('尺寸匹配问题','外观问题','性能问题')</sql>
   <sql id="batchResult">select count(distinct(BATCH_NO)) as batch_no from CUX_QUALITY_ISSUE_IN_CTRL_T</sql>
   <context key="batch" value="${batchResult[0] + 1}"/>
   <context key="counterBatch" value="${counterFactory.newCounter.reset[batch]}"/>
   <context key="batch" value="${'TBEA' + 'counterBatch.format[20]'}"/>
-  
   <merge data="${nbzlqkResult}" table="CUX_QUALITY_ISSUE_IN_T">
    <set>
     <BATCH_NO type="string" value="${batch}"/>
-    <D_CODE type="string" value="TBEA"/>
-    <ISSUE_NO type="string" ref="${counter.reset[1].val}"/>
+    <D_CODE type="string" ref="0"/>
+    <ISSUE_NO type="string" ref="${counter.reset[2].val}"/>
     <D_NAME type="string" value="TBEA"/>
-    <ISSUE_HAPPEN_DATE type="date" ref="${counter.reset[3].val}"/>
+    <ISSUE_HAPPEN_DATE type="date" ref="${counter.reset[4].val}"/>
     <PRODUCT_TYPE type="string" ref="${counter.next.val}"/>
     <PRODUCTION_NUM type="string" ref="${counter.next.val}"/>
     <PRODUCTION_MODEL type="string" ref="${counter.next.val}"/>
@@ -41,10 +63,10 @@
   <merge data="${wbzlqkResult}" table="CUX_QUALITY_ISSUE_IN_T">
    <set>
     <BATCH_NO type="string" value="${batch}"/>
-    <D_CODE type="string" value="TBEA"/>
-    <ISSUE_NO type="string" ref="${counter.reset[1].val}"/>
+    <D_CODE type="string" ref="0"/>
+    <ISSUE_NO type="string" ref="${counter.reset[2].val}"/>
     <D_NAME type="string" value="TBEA"/>
-    <ISSUE_HAPPEN_DATE type="date" ref="${counter.reset[3].val}"/>
+    <ISSUE_HAPPEN_DATE type="date" ref="${counter.reset[4].val}"/>
     <PRODUCT_TYPE type="string" ref="${counter.next.val}"/>
     <PRODUCTION_NUM type="string" ref="${counter.next.val}"/>
     <PRODUCTION_MODEL type="string" ref="${counter.next.val}"/>
@@ -53,7 +75,7 @@
     <CATEGORY_CODE type="string" ref="${counter.next.val}"/>
     <QUALITY_PHENOMENON type="string" ref="${counter.next.val}"/>
     <DETAIL type="string" ref="${counter.next.val}"/>
-    <MATERIAL_HAPPEN_PHASE type="string" value="客户现场"/>
+    <MATERIAL_HAPPEN_PHASE type="string" value="客户现场质量"/>
     <MATERIAL_COUNT type="double" ref="${counter.next.val}"/>
     <MEASUREMENT_UNITS type="string" ref="${counter.next.val}"/>
     <SCM_V_ID type="double" ref="${counter.next.val}"/>

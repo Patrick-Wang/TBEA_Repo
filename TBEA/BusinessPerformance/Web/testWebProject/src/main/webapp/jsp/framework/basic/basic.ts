@@ -89,7 +89,8 @@ module framework.basic {
         }
 
         protected updateTypeSelector(width:number = 285) :boolean{
-            let type:Util.CompanyType = this.mCompanySelector.getCompany();
+            let type:Util.CompanyType = this.mCompanySelector != undefined ?
+                this.mCompanySelector.getCompany() : undefined;
             let nodes = [];
             for (var i = 0; i < this.mNodesAll.length; ++i) {
                 if (router.to(this.plugin(this.mNodesAll[i])).send(FrameEvent.FE_IS_COMPANY_SUPPORTED, type)) {

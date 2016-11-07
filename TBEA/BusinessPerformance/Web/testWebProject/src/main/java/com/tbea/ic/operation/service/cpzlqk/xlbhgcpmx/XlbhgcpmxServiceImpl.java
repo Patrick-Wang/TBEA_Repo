@@ -3,6 +3,7 @@ package com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -210,6 +211,18 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 			result.add(toList(entity));
 		}
 		return result;
+	}
+
+	@Override
+	public ErrorCode updateStatus(Date d, Company company, ZBStatus zt) {
+		List<XlBhgwtmxEntity> entities = xlBhgwtmxDao.getByDate(d, company);
+		Timestamp ts = new Timestamp(Calendar.getInstance().getTimeInMillis());
+		for (XlBhgwtmxEntity entity : entities){
+			entity.setZt(zt.ordinal());
+			entity.setXgsj(ts);
+			xlBhgwtmxDao.merge(entity);
+		}
+		return ErrorCode.OK;
 	}
 
 }

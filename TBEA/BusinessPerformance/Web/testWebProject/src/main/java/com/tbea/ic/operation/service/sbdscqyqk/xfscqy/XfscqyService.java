@@ -18,7 +18,9 @@ public interface XfscqyService {
 
 	ErrorCode submitXfscqy(Date d, JSONArray data, Company company);
 
-	void importScqy(Date d);
+	void importHBScqy(Date d);
+
+	void importDLScqy(Date d);
 
 
 }

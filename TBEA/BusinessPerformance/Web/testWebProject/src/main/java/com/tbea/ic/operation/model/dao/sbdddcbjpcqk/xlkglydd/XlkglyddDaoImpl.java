@@ -41,4 +41,22 @@ public class XlkglyddDaoImpl extends AbstractReadWriteDaoImpl<XlkglyddEntity> im
 		q.setParameter("dwid", comp.getId());
 		return q.getResultList();
 	}
+
+	@Override
+	public XlkglyddEntity getKglydd(Date d, WlyddType type, String sclx,
+			Company comp) {
+		Query q = this.getEntityManager().createQuery("from XlkglyddEntity where nf=:nf and yf=:yf and type=:type and dwid = :dwid and sclx = :sclx");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("type", type.ordinal());
+		q.setParameter("sclx", sclx);
+		q.setParameter("dwid", comp.getId());
+		List ret = q.getResultList();
+		if (!ret.isEmpty()){
+			return (XlkglyddEntity) ret.get(0);
+		}
+		return null;
+	}
 }

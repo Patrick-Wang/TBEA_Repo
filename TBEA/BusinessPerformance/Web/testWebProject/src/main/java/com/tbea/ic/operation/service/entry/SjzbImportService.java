@@ -10,4 +10,6 @@ import com.tbea.ic.operation.common.companys.Company;
 public interface SjzbImportService {
 
 	Map<Company, JSONArray> getHBSjzb(Date d);
+
+	Map<Company, JSONArray> getDLSjzb(Date d);
 }

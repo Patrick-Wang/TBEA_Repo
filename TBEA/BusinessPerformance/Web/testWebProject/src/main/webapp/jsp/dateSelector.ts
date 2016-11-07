@@ -13,7 +13,7 @@ module Util {
         return {
             year : curDate.getFullYear(),
             month : curDate.getMonth() + 1,
-            day:curDate.getDay()
+            day:curDate.getDate()
         };
     }
 
@@ -29,11 +29,29 @@ module Util {
         return undefined;
     }
 
+    export function addYear(d: Date, count: number): Date {
+        return { year: d.year + count, month: d.month, day: d.day };
+    }
+
     export function addMonth(d: Date, count: number): Date {
         var monthCount = parseInt(d.month + '') + parseInt(d.year + '') * 12 + count;
         var year = parseInt('' + monthCount / 12) + (monthCount % 12 == 0 ? -1 : 0);
         var month = monthCount % 12 == 0 ? 12 : monthCount % 12;
         return { year: year, month: month, day: d.day };
+    }
+
+    export function addDay(dCur: Date, count: number): Date {
+        let d : any = new Date(Date.parse(dCur.year + "/" + dCur.month + "/" + dCur.day));
+        d.setTime(d.getTime() + count * 24 * 60 * 60 * 1000);
+        return {
+            year : d.getFullYear(),
+            month : d.getMonth() + 1,
+            day:d.getDate()
+        };
+    }
+
+    export function date2Str(dCur: Util.Date): string {
+        return dCur.year + "-" + dCur.month + "-" + (dCur.day == undefined ? 1 : dCur.day);
     }
 
     export class DateSelector {

@@ -6,7 +6,7 @@ var Util;
         return {
             year: curDate.getFullYear(),
             month: curDate.getMonth() + 1,
-            day: curDate.getDay()
+            day: curDate.getDate()
         };
     }
     Util.toDate = toDate;
@@ -22,6 +22,10 @@ var Util;
         return undefined;
     }
     Util.parseDate = parseDate;
+    function addYear(d, count) {
+        return { year: d.year + count, month: d.month, day: d.day };
+    }
+    Util.addYear = addYear;
     function addMonth(d, count) {
         var monthCount = parseInt(d.month + '') + parseInt(d.year + '') * 12 + count;
         var year = parseInt('' + monthCount / 12) + (monthCount % 12 == 0 ? -1 : 0);
@@ -29,6 +33,20 @@ var Util;
         return { year: year, month: month, day: d.day };
     }
     Util.addMonth = addMonth;
+    function addDay(dCur, count) {
+        var d = new Date(Date.parse(dCur.year + "/" + dCur.month + "/" + dCur.day));
+        d.setTime(d.getTime() + count * 24 * 60 * 60 * 1000);
+        return {
+            year: d.getFullYear(),
+            month: d.getMonth() + 1,
+            day: d.getDate()
+        };
+    }
+    Util.addDay = addDay;
+    function date2Str(dCur) {
+        return dCur.year + "-" + dCur.month + "-" + (dCur.day == undefined ? 1 : dCur.day);
+    }
+    Util.date2Str = date2Str;
     var DateSelector = (function () {
         function DateSelector(start, end, divId, asSeason) {
             if (asSeason === void 0) { asSeason = false; }

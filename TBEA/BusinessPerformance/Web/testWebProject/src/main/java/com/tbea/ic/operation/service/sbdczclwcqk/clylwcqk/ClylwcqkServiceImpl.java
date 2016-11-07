@@ -39,7 +39,7 @@ public class ClylwcqkServiceImpl implements ClylwcqkService {
 	
 	public final static String NAME = "ClylwcqkServiceImpl";
 
-	private List<Integer> getCpIdList(SbdczclwcqkType type) {
+	public static List<Integer> getCpIdList(SbdczclwcqkType type) {
 		
 		List<Integer> cpIdList = new ArrayList<Integer>();
 		

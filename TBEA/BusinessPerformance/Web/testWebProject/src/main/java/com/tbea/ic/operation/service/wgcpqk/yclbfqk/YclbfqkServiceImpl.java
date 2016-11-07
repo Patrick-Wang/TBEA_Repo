@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +21,15 @@ import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
+import com.tbea.ic.operation.model.dao.dl.yclbfqk.DlYclbfqkDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.yclbfqk.YclbfqkDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.yclbfqk.YclbfqkDaoImpl;
 import com.tbea.ic.operation.model.dao.wgcpqk.yclbfqk.dwxxrefclmc.DwxxRefClmcDao;
+import com.tbea.ic.operation.model.entity.identifier.common.ClmcEntity;
+import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
 import com.tbea.ic.operation.model.entity.wgcpqk.YclbfqkEntity;
-import com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs.WgcpylnlspcsEntity;
 import com.tbea.ic.operation.model.entity.wgcpqk.yclbfqk.DwxxRefClmcEntity;
+import com.tbea.ic.operation.model.entity.wlydd.wlyddmslspcs.WlyddmlspcsEntity;
 
 @Service(YclbfqkServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -36,6 +39,10 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 
 	@Autowired
 	DwxxRefClmcDao dwrefclDao;
+	
+	
+	@Autowired
+	DlYclbfqkDao dlyclbfqkDao;
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -162,6 +169,58 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 		}
 
 		return result;
+	}
+
+	@Override
+	public void importDlYclbfqk(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("DL 原材料报废导入");
+		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
+		List<Object[]> rows = dlyclbfqkDao.getYclbfqk(d);
+		importYclbfqk(d, rows, company);
+	}
+
+	private void importYclbfqk(Date d, List<Object[]> rows, Company company) {
+		List<ClmcEntity> clmcs = getClmc(dwrefclDao.getByCompany(company));
+
+		EasyCalendar ec = new EasyCalendar(d);
+		for (Object[] row : rows){
+			LoggerFactory.getLogger("WEBSERVICE").info(JSONArray.fromObject(row).toString());
+			ClmcEntity mc = findCp(clmcs, (String)row[0]);
+			if (mc == null){
+				LoggerFactory.getLogger("WEBSERVICE").info("importYclbfqk 无法找到材料名称 : " + row[0]);
+			}else{
+				YclbfqkEntity entity = yclbfqkDao.getByDate(d, company, mc.getId());
+				if (null == entity){
+					entity = new YclbfqkEntity();
+					entity.setNf(ec.getYear());
+					entity.setYf(ec.getMonth());
+					entity.setDwid(company.getId());
+					entity.setClid(mc.getId());
+					entity.setZt(ZBStatus.SUBMITTED.ordinal());
+				}
+				entity.setLyl((Double)row[1]);
+				entity.setFl((Double)row[2]);
+				yclbfqkDao.merge(entity);
+			}
+		}
+		
+	}
+
+	private ClmcEntity findCp(List<ClmcEntity> cps, String name){
+		for (ClmcEntity cp : cps){
+			if (cp.getName().trim().equals(name)){
+				return cp;
+			}
+		}
+		return null;
+	}
+	
+	private List<ClmcEntity> getClmc(List<DwxxRefClmcEntity> byCompany) {
+		List<ClmcEntity> clmcs = new ArrayList<ClmcEntity>();
+		for (DwxxRefClmcEntity drc : byCompany ){
+			clmcs.add(drc.getClmc());
+		}
+		return clmcs;
 	}
 
 }

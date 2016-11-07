@@ -26,7 +26,11 @@ public class CallServiceXmlInterpreter implements XmlInterpreter {
 			serv = component.getCM().createService(component, id);
 		}
 		
+		
 		if (null != serv){
+			if (e.hasAttribute("transaction") && !serv.getConfig().hasAttribute("transaction")){
+				serv.getConfig().setAttribute("transaction", e.getAttribute("transaction"));
+			}
 			serv.run(component.globalContext());
 		}else{
 			System.out.println("call service " + e.getAttribute("id") + " find failed");

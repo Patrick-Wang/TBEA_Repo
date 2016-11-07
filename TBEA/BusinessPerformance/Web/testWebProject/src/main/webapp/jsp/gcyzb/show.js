@@ -114,7 +114,7 @@ var framework;
                         // width: titles.length * 200,
                         rowNum: 1000,
                         height: this.resp.data.length > 25 ? 550 : '100%',
-                        width: this.resp.width == undefined ? 1200 : this.resp.width,
+                        width: this.resp.width == undefined ? 1300 : this.resp.width,
                         shrinkToFit: this.resp.shrinkToFit == undefined ? true : this.resp.shrinkToFit == "true",
                         autoScroll: true
                     }));

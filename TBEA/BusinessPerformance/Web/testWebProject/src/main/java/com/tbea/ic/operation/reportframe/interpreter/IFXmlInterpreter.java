@@ -27,7 +27,8 @@ public class IFXmlInterpreter implements XmlInterpreter {
 				}
 				component.clone(e).run(component.globalContext());
 			}
+			return true;
 		}
-		return true;
+		return false;
 	}
 }

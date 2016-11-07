@@ -138,6 +138,12 @@
 				<li><a href="../NCzb/CompanysNC.do" target="_blank"><img
 						src="../images/charts/scatter4.png"> <span><strong>经营单位财务指标完成情况</strong></span></a>
 				</li>
+				<li><a href="../report/dbxq.do" target="_blank"><img
+				src="../images/charts/bar2.png"> <span><strong>财务对标需求</strong></span></a>
+				</li>
+				<li><a href="../report/jjzjz.do" target="_blank"><img
+				src="../images/charts/bar2.png"> <span><strong>经济增加值</strong></span></a>
+				</li>
 			</ul>
 		</div>
 	</div>

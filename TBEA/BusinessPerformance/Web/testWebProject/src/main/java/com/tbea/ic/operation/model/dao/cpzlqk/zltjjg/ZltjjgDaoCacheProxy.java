@@ -220,7 +220,13 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 //			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
-			q.setParameter("jdstart", ec.getSeasonFirstMonth());
+	        
+	        Integer jdStart = 1;
+	        if (ec.getSeason() == 3){
+	        	jdStart = 7;
+	        }
+	        
+			q.setParameter("jdstart", jdStart);
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
 //			if (zt != ZBStatus.NONE){
@@ -258,7 +264,12 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 //			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
-			q.setParameter("jdstart", ec.getSeasonFirstMonth());
+	        Integer jdStart = 1;
+	        if (ec.getSeason() == 3){
+	        	jdStart = 7;
+	        }
+	        
+			q.setParameter("jdstart", jdStart);
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
 //			if (zt != ZBStatus.NONE){
@@ -351,7 +362,13 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 //			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
-			q.setParameter("jdstart", ec.getSeasonFirstMonth());
+	        
+	        Integer jdStart = 1;
+	        if (ec.getSeason() == 3){
+	        	jdStart = 7;
+	        }
+	        
+			q.setParameter("jdstart", jdStart);
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwids", ids);
 //			if (zt != ZBStatus.NONE){
@@ -394,7 +411,12 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 //			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
-			q.setParameter("jdstart", ec.getSeasonFirstMonth());
+			
+	        Integer jdStart = 1;
+	        if (ec.getSeason() == 3){
+	        	jdStart = 7;
+	        }
+	        q.setParameter("jdstart", jdStart);
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwids", ids);
 //			if (zt != ZBStatus.NONE){

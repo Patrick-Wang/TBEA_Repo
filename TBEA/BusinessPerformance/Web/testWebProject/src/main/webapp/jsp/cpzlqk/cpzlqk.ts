@@ -55,6 +55,15 @@ module cpzlqk {
             }
 
             this.mCompanySelector.change((selector:any, depth:number) => {
+                let compType = this.mCompanySelector.getCompany();
+                let isPd = (compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
+                || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
+                || compType == Util.CompanyType.XBXBGS|| compType == Util.CompanyType.PDCY);
+                if (isPd){
+                    $("#zlAndyclhgl").hide();
+                }else{
+                    $("#zlAndyclhgl").show();
+                }
                 this.updateTypeSelector();
             });
             let inputs = $("#" + (<FrameOption>this.mOpt).contentType).show();
@@ -76,7 +85,7 @@ module cpzlqk {
             pageSlector.change(() => {
                 if (pageSlector.getPath()[0] == 1){
                     if (pageType == 1){
-                        window.location.href="../report/yclhglqktjApprove.do?zt=" + this.mCurZt;
+                        window.location.href="../report/yclhglqktj.do?approve=true";
                     }else{
                         window.location.href="../report/yclhglqktj.do";
                     }
@@ -405,6 +414,7 @@ module cpzlqk {
                     $("#approveComment2").hide();
                     $("#approveComment3").hide();
                     $("#commentText").val("");
+                    $("#comment").hide();
                 }
             }else if (pageType == PageType.ENTRY){//submit
                 $("#approveComment").hide();
@@ -412,6 +422,9 @@ module cpzlqk {
                 $("#approveComment2").hide();
                 $("#approveComment3").hide();
                 $("#commentText").removeAttr("readonly");
+                if (zt == 0){
+                    $("#comment").hide();
+                }
             }else if (pageType == PageType.SHOW){//show
                 $("#approveComment").hide();
                 $("#approveComment1").hide();
