@@ -14,6 +14,21 @@ public class FieldSql{
 	String select;
 	Integer joinType;
 	String oper="=";
+	String test;
+	
+	public boolean test() throws Exception {
+		if (null == test){
+			return true;
+		}else{
+			return XmlUtil.getBoolean(test, elp);
+		}
+	}
+	public String getTest() {
+		return test;
+	}
+	public void setTest(String test) {
+		this.test = test;
+	}
 	public FieldSql(ELParser elp) {
 		this.elp = elp;
 	}

@@ -37,7 +37,7 @@ module framework.templates.dateReport {
                 $(sels[i]) .multiselect({
                     multiple: false,
                     header: false,
-                    minWidth: Util.getUIWidth(items),
+                    minWidth: Util.getUIWidth(items) * 1.2,
                     height: '100%',
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
@@ -103,7 +103,7 @@ module framework.templates.dateReport {
                     rowNum: 1000,
                     height: this.resp.data.length > 25 ? 550 : '100%',
                     width: this.resp.width == undefined ? 1200 : this.resp.width,
-                    shrinkToFit: true,
+                    shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
                     autoScroll: true
                 }));
         }

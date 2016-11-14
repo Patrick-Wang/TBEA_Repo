@@ -8,10 +8,12 @@ import org.springframework.stereotype.Component;
 import com.tbea.ic.operation.common.Company15Code;
 import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.EasyCalendar;
+import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.PropMap;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.report.Arrays;
+import com.tbea.ic.operation.controller.servlet.report.CompanyTypeHelper;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
 import com.tbea.ic.operation.controller.servlet.report.Counter;
 import com.tbea.ic.operation.controller.servlet.report.GroupSum;
@@ -76,6 +78,19 @@ public class UtilContextHandler implements ContextHandler {
 			}
 			
 		});
+		
+		context.put("GSZB", new PropMap(){
+
+			@Override
+			public Object getProperty(Object key) throws Exception {
+				return GSZB.valueOf((String)key);
+			}
+			
+		});
+		
+		context.put("companyTypeHelper", new CompanyTypeHelper());
+		
+		
 		context.put("NCCode", new CompanyNCCode());
 		context.put("Code15", new Company15Code());
 		context.put("math", new ReportMath());

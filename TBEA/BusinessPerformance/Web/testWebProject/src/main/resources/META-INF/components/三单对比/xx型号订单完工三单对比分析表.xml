@@ -1,4 +1,13 @@
 <components>
+ <service id="servModelFdwXh" transaction="transactionManager">
+  <sql id="xhxx">select 
+	row_number() over(order by (select 0)) AS ROWNUM,
+	convert(varchar(200), model) md
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS</sql>
+  <list id="ids" type="int" sql="xhxx" value="0"/>
+  <list id="values" type="string" sql="xhxx" value="1"/>
+ </service>
  <service id="servModelFdwCollection" transaction="transactionManager">
   <sql id="zbddhz" order="dwmcs" by="0" colcount="26">select 
 	convert(varchar(200), company_name) cn,
@@ -498,8 +507,7 @@ where
   <response type="excel" ref="excelTemplate" name="型号订单完工三单对比分析表.xls" serv="servFmt"/>
  </controller>
  <controller id="modelFdwCollection">
-  <list id="ids" type="int">1, 2, 3, 4, 5</list>
-  <list id="values" type="string">1, 2, 3, 4, 5</list>
+  <callservice id="servModelFdwXh" inline="true"/>
   <response type="jsp" name="sddb/sddb">
    <map key="updateUrl" value="modelFdwCollectionUpdate"/>
    <map key="exportUrl" value="modelFdwCollectionExport"/>

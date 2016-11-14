@@ -92,11 +92,11 @@
  </controller>
  <controller id="wbzlqkTransport" cron1="0 0 1 ? * 2">
   <context key="time" value="${calendar.current.secondFormat}"/>
-    <callservice id="servWbzlqkTransTb"/> 
+ <!--   <callservice id="servWbzlqkTransTb"/> -->
  <!--  <callservice id="servWbzlqkTransSb"/> -->
  <!--    <callservice id="servWbzlqkTransXl"/>  -->
- <!--  <callservice id="servWbzlqkTransHb"/> -->
-<!--   <callservice id="servWbzlqkTransDl"/>    -->
+   <callservice id="servWbzlqkTransHb"/>
+ <!--  <callservice id="servWbzlqkTransDl"/>    --> 
   <response type="json">
    <errorCode>0</errorCode>
    <message>OK</message>

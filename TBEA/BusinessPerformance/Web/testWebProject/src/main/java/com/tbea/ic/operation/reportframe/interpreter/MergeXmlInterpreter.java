@@ -372,32 +372,50 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		boolean doInsert = false;
 		String firstWhere = null;
 		component.local("row", row);
-		do{
-			if (where.isEmpty()){
-				break;
-			}
+		if (checkSetTest(row, em)){
+			do{
+				if (where.isEmpty()){
+					break;
+				}
+				
+				Integer ref = where.get(0).getRef();
+				if (null == ref){
+					break;
+				}
+				
+				firstWhere = row.getString(ref);
+				if (null == firstWhere || !firstWhere.startsWith("add")){
+					break;
+				}
+				
+				doInsert(em, table, row, set);
+				doInsert = true;
+			}while(false);
 			
-			Integer ref = where.get(0).getRef();
-			if (null == ref){
-				break;
+			if (!doInsert){
+				doUpdate(em, table, row);
 			}
-			
-			firstWhere = row.getString(ref);
-			if (null == firstWhere || !firstWhere.startsWith("add")){
-				break;
-			}
-			
-			doInsert(em, table, row, set);
-			doInsert = true;
-		}while(false);
-		
-		if (!doInsert){
-			doUpdate(em, table, row);
 		}
-		
 		component.removeLocal("row");
 	}
 
+	private boolean checkSetTest(JSONArray row, EntityManager em){
+		boolean bRet = !set.isEmpty();
+		try{
+			for (FieldSql setSql: set){
+				if (setSql.getTest() != null && setSql.getTest().contains("this")){
+					component.local("this", this.getQueryValue(row, setSql, em));
+				}
+				if (!setSql.test()){
+					return false;
+				}
+			}
+		}catch(Exception e){
+			bRet = false;
+		}
+		return bRet;
+	}
+	
 	private void doInsert(EntityManager em, String table, JSONArray row, List<FieldSql> set) {
 		if (!set.isEmpty()){
 			if (insertValues == null){
@@ -490,6 +508,11 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		if (elem.hasAttribute("op")){
 			fs.setOper(elem.getAttribute("op"));
 		}
+		
+		if (elem.hasAttribute("test")){
+			fs.setTest(elem.getAttribute("test"));
+		}
+		
 		if (elem.hasAttribute("value")){
 			fs.setValue(elem.getAttribute("value"));
 		}else{

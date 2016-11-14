@@ -125,7 +125,11 @@
 										class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 										style="color: rgb(62, 152, 197);">经营分析汇总</a></li>
 								</c:if>
-
+								<c:if test="${scgsdbqx}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#ssgsdbsj"
+										style="color: rgb(62, 152, 197);">上市公司对标数据</a></li>
+								</c:if>
 								<!-- 只有sbd公司权限显示-->
 								<c:if test="${SbdAuth}">
 									<li style="background-color: transparent;"><i
@@ -299,6 +303,10 @@
 						<%-- 						<c:if test="${!(QualityApprove || QualityEntry)}"> --%>
 						<%@include file="index_IndexSummary.jsp"%>
 						<%-- 						</c:if> --%>
+						
+						
+						
+						
 						<c:if test="${PriceLibAuth}">
 							<%@include file="index_IndexPriceLib.jsp"%>
 						</c:if>

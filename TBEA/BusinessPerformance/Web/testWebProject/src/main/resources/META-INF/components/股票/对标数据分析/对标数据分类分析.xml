@@ -1,0 +1,52 @@
+<components>
+ <controller id="fldbfxUpdate">
+  <context key="item" value="${request.item.asInt}"/>
+  <if test="${item==1}">
+   <callcontroller id="rlzyyynlfxUpdate"/>
+  </if>
+  <if test="${item==2}">
+   <callcontroller id="scnlyyfxUpdate"/>
+  </if>
+  <if test="${item==3}">
+   <callcontroller id="dqcznlUpdate"/>
+  </if>
+  <if test="${item==4}">
+   <callcontroller id="cqcznlUpdate"/>
+  </if>
+  <if test="${item==5}">
+   <callcontroller id="zcjgfxUpdate"/>
+  </if>
+ </controller>
+ <controller id="fldbfxExport">
+  <context key="item" value="${request.item.asInt}"/>
+  <if test="${item==1}">
+   <callcontroller id="rlzyyynlfxExport"/>
+  </if>
+  <if test="${item==2}">
+   <callcontroller id="scnlyyfxExport"/>
+  </if>
+  <if test="${item==3}">
+   <callcontroller id="dqcznlExport"/>
+  </if>
+  <if test="${item==4}">
+   <callcontroller id="cqcznlExport"/>
+  </if>
+  <if test="${item==5}">
+   <callcontroller id="zcjgfxExport"/>
+  </if>
+ </controller>
+ <controller id="fldbfx">
+  <list id="ids" type="int">1, 2, 3, 4, 5</list>
+  <list id="values" type="string">人力资源运营能力分析, 生产能力运营分析, 短期偿债能力, 长期偿债能力, 资产结构分析</list>
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="updateUrl" value="fldbfxUpdate"/>
+   <map key="exportUrl" value="fldbfxExport"/>
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="dateEnd" value="${calendar.current.months[12].format}"/>
+   <map key="asSeasonAcc" value="true"/>
+   <map key="nodeData" value="${dataNodeFactory[ids][values].asJson}"/>
+   <map key="jdName" value="[&quot;一季度&quot;, &quot;二季度&quot;,&quot;三季度&quot;,&quot;四季度&quot;]"/>
+   <map key="title" value="对标数据分类分析"/>
+  </response>
+ </controller>
+</components>

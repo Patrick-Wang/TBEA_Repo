@@ -152,10 +152,10 @@ module nwbzlqk {
 
             private splitLongString(val:string): string{
                 return val.replace("特变电工沈阳变压器集团有限公司中特分公司", "沈变中特")
-                    .replace("特变电工衡阳变压器有限公司电气分公司", "衡变电器")
+                    .replace("特变电工衡阳变压器有限公司电气分公司", "衡变电气")
                     .replace("特变电工新疆变压器厂中特公司", "新变中特")
                     .replace("天津市特变电工变压器有限公司", "天变")
-                    .replace("特变电工智能电气有限责任公司", "智能电器");
+                    .replace("特变电工智能电气有限责任公司", "智能电气");
             }
             private findTotal(valShort:string):string{
                 return valShort.replace(/\s/g, "");

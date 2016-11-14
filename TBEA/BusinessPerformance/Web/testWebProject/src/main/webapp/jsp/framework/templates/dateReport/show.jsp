@@ -56,6 +56,7 @@
     <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/components/SeasonAccSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
@@ -253,6 +254,8 @@
             asSeason:"${asSeason}" == "true" ? true : false,
             updateUrl:"${updateUrl}.do",
             exportUrl:"${exportUrl}.do",
+            asSeasonAcc:"${asSeasonAcc}" == "true" ? true : false,
+            jdName:'${jdName}' == "" ? undefined : JSON.parse('${jdName}'),
             itemId:"im",
             itemNodes:JSON.parse('${nodeData}')
         });

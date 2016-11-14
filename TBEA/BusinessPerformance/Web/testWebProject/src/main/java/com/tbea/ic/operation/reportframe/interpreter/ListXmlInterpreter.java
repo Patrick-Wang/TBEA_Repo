@@ -81,9 +81,10 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 			elp = new ELParser(component);
 			List<Object> objs = (List<Object>) component.getVar(XmlUtil.getAttr(e, "id"));
-			if (null == objs){
+			if (null == objs || "true".equals(e.getAttribute("clear"))){
 				objs = new ArrayList<Object>();
 			}
+			
 			
 			parseJson(component, e, objs);
 			

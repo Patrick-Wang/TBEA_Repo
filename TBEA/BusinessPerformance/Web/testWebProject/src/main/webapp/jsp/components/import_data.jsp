@@ -104,7 +104,8 @@
 							compSelctor = new Util.CompanySelector(false, "compid",comps);
 							if (comps.length == 1){
 								compSelctor.hide();
-								$("title").text(compSelctor.getCompanyName() + " " + $("title").text());
+								document.getElementsByTagName("title").innerHTML = compSelctor.getCompanyName() + " " + $("title").text();
+								//$("title").text(compSelctor.getCompanyName() + " " + $("title").text());
 								$("h1").text(compSelctor.getCompanyName() + " " + $("h1").text());
 							}
 						}

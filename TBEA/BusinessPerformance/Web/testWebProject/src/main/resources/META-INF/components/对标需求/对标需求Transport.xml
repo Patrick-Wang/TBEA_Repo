@@ -3,14 +3,14 @@
   <if test="${!ncData.isEmpty}">
    <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
    <context key="counter" value="${counterFactory.newCounter.reset[2]}"/>
-   <context key="counterZb" value="${counterFactory.newCounter.reset[-1]}"/>
+   <context key="counterZb" value="${counterFactory.newCounter.reset[0]}"/>
    <list id="data" type="object">${ncData[0]}</list>
    <merge data="${data}" table="dbxq">
     <where>
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -25,7 +25,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -40,7 +40,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -55,7 +55,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -70,7 +70,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -85,7 +85,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -100,7 +100,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -115,7 +115,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -130,7 +130,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -145,7 +145,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -160,7 +160,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -175,7 +175,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -190,7 +190,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -205,7 +205,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -220,7 +220,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -235,7 +235,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -250,7 +250,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -265,7 +265,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -280,7 +280,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -295,7 +295,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -310,7 +310,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -325,7 +325,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -340,7 +340,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -355,7 +355,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -370,7 +370,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -385,7 +385,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -400,7 +400,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -415,22 +415,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -492,9 +477,9 @@
  and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
  and unit_code = ${NCCode.code[type]}</sql>
  </service>
- <controller id="dbxqTransport" cron1="0 0 2 ？ * 2">
+ <controller id="dbxqTransport" cron1="0 0 0 3 * ?">
   <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
-   <context key="cal" value="${calendar.current}"/>
+   <context key="cal" value="${calendar.current.lastMonth}"/>
   </if>
   <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
    <context key="cal" value="${request.date.asCalendar}"/>

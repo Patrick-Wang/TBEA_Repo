@@ -1,0 +1,209 @@
+<components>
+ <service id="servScnlyyfx" transaction="transactionManager">
+  <sql id="stockCode"> select code, convert(varchar(50), name) from stock_code</sql>
+  <list id="stock" type="string" sql="stockCode" value="0"/>
+  <sql id="dj" order="stock" by="0" colcount="5">select 
+  	sc.code, 
+	stofin.m35 as 应收账款周转率, -- 应收账款周转率
+	stofin.m38 as 存货周转率, -- 存货周转率
+	stofin.m42 as 流动资产周转率, -- 流动资产周转率
+	stofin.m40 as 总资产周转率 -- 总资产周转率
+from 
+	stock_code sc, stock_financial stofin
+where 
+	sc.code = stofin.stockid and
+	sc.startUsing = 1 and 
+	stofin.report_dt =  ${cal.seasonEnd.lastDays.date}</sql>
+  <sql id="qntq" order="stock" by="0" colcount="5">select 
+  	sc.code, 
+	stofin.m35 as 应收账款周转率, -- 应收账款周转率
+	stofin.m38 as 存货周转率, -- 存货周转率
+	stofin.m42 as 流动资产周转率, -- 流动资产周转率
+	stofin.m40 as 总资产周转率 -- 总资产周转率
+from 
+	stock_code sc, stock_financial stofin
+where 
+	sc.code = stofin.stockid and
+	sc.startUsing = 1 and 
+	stofin.report_dt =  ${cal.lastYear.seasonEnd.lastDays.date}</sql>
+  <list type="int" id="ids">
+   <item from="0" to="${dj.size - 1}"/>
+  </list>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string" sql="stockCode" value="1"/>
+   <list type="double" sql="dj" value="1"/>
+   <list type="double" sql="qntq" value="1"/>
+   <col instruction="同比增幅"/>
+   <list type="double" sql="dj" value="2"/>
+   <list type="double" sql="qntq" value="2"/>
+   <col instruction="同比增幅"/>
+   <list type="double" sql="dj" value="3"/>
+   <list type="double" sql="qntq" value="3"/>
+   <col instruction="同比增幅"/>
+   <list type="double" sql="dj" value="4"/>
+   <list type="double" sql="qntq" value="4"/>
+   <col instruction="同比增幅"/>
+   <growthRates toCol="3" sj="1" tq="2"/>
+    <growthRates toCol="6" sj="4" tq="5"/>
+    <growthRates toCol="9" sj="7" tq="8"/>
+    <growthRates toCol="12" sj="10" tq="11"/>
+  </table>
+ </service>
+ <controller id="scnlyyfxFmtter">
+  <formatter id="data" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="2">
+    <DefaultMatcher cols="3,6,9,12"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="2">
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="scnlyyfxUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servScnlyyfx"/>
+  <callcontroller id="scnlyyfxFmtter"/>
+  <formatterServer id="serv" table="${result.matrixNoIds}">
+   <formatter ref="data"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>公司名称</name>
+    </item>
+    <item>
+     <name>应收账款周转率(次)</name>
+     <sub type="array">
+      <item>
+       <name>当季</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>存货周转率(次)</name>
+     <sub type="array">
+      <item>
+       <name>当季</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>流动资产周转率(次)</name>
+     <sub type="array">
+      <item>
+       <name>当季</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>总资产周转率(次)</name>
+     <sub type="array">
+      <item>
+       <name>当季</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <data>${serv.result}</data>
+  </response>
+ </controller>
+ <controller id="scnlyyfxExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servScnlyyfx"/>
+  <callcontroller id="scnlyyfxFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="生产能力运营分析"/>
+  <list id="title" type="string">公司名称,
+应收账款周转率(次),
+应收账款周转率(次),
+应收账款周转率(次),
+存货周转率(次),
+存货周转率(次),
+存货周转率(次),
+流动资产周转率(次),
+流动资产周转率(次),
+流动资产周转率(次),
+总资产周转率(次),
+总资产周转率(次),
+总资产周转率(次)
+		</list>
+  <list id="title1" type="string">公司名称,
+当季,
+去年同期,
+同比增幅,
+当季,
+去年同期,
+同比增幅,
+当季,
+去年同期,
+同比增幅,
+当季,
+去年同期,
+同比增幅,
+		</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="2"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="data"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${cal.year +'年'+ cal.season + '季度'}生产能力运营分析.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="scnlyyfx">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="updateUrl" value="scnlyyfxUpdate"/>
+   <map key="exportUrl" value="scnlyyfxExport"/>
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="dateEnd" value="${calendar.current.months[12].format}"/>
+   <map key="asSeasonAcc" value="true"/>
+   <map key="jdName" value="[&quot;一季度&quot;, &quot;二季度&quot;,&quot;三季度&quot;,&quot;四季度&quot;]"/>
+   <map key="title" value="生产能力运营分析"/>
+  </response>
+ </controller>
+</components>

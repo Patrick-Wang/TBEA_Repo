@@ -218,7 +218,8 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("xtnyrbLookupAuth", extAuthServ.hasAuthority(account, 36))
 		.add("QualityAuth", account.getRole() == 3 || account.getRole() == 4)
 		.add("I_EQualityImport", account.getName().equals("鲁缆质量部") || account.getName().equals("新变质量部"))
-		.add("jyfxEntry", jyfxEntry.value());
+		.add("jyfxEntry", jyfxEntry.value())
+		.add("scgsdbqx", extAuthServ.hasAuthority(account, 56));
 		
 		
 		if (Account.KNOWN_ACCOUNT_AFL.equals(account.getName())){

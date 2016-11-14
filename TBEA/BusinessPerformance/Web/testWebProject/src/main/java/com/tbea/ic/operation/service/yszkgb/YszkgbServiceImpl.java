@@ -180,6 +180,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 				entity.getYq0z1y(),
 				entity.getYq1z3y(),
 				entity.getYq3z6y(),
+				entity.getYq6z12y(),
 				entity.getYq1nys()}));
 		list.add("" + entity.getWdq());
 		list.add("" + entity.getWdqzbj());
@@ -187,6 +188,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 				entity.getYq0z1y(),
 				entity.getYq1z3y(),
 				entity.getYq3z6y(),
+				entity.getYq6z12y(),
 				entity.getYq1nys(),
 				entity.getWdq(),
 				entity.getWdqzbj()}));

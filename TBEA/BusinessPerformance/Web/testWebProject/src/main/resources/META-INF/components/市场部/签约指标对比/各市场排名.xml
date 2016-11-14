@@ -1,0 +1,239 @@
+<components>
+ <service id="servQyzbrankQuery" transaction="transactionManager">
+  <list id="ndjh" type="object">
+   <item>${accFactory.njhAcc.compute
+[0]
+[cal.date]
+[cal.date]
+[GSZB.HTQYE48.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="ndlj" type="object">
+   <item>${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.date]
+[GSZB.HTQYE48.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="dysdndjh" type="object">
+   <item>${accFactory.njhAcc.compute
+[0]
+[cal.date]
+[cal.date]
+[GSZB.SDSCQY294.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="dysdndlj" type="object">
+   <item>${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.date]
+[GSZB.SDSCQY294.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="zzfwyndjh" type="object">
+   <item>${accFactory.njhAcc.compute
+[0]
+[cal.date]
+[cal.date]
+[GSZB.QZ_JCFWYWGNQY300.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="zzfwyndlj" type="object">
+   <item>${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.date]
+[GSZB.QZ_JCFWYWGNQY300.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+ </service>
+ <service id="servQyzbrank" transaction="transactionManager">
+  <list id="comps" type="object">${CompanyType.SBGS},
+${CompanyType.HBGS},
+${CompanyType.XBC},
+${CompanyType.TBGS},
+${CompanyType.LLGS},
+${CompanyType.XLC},
+${CompanyType.DLGS}</list>
+  <list type="int" id="ids"/>
+  <list type="string" id="rankName">第一名,
+第二名,
+第三名,
+第四名,
+第五名,
+第六名,
+第七名
+</list>
+  <loop from="0" to="${comps.size - 1}" var="i">
+   <context key="dwids" value="${orgs.BMDBOrganization.ids[comps[i].ordinal].packAsList}"/>
+   <list id="compNames1" type="object">
+    <item>${comps[i].value}</item>
+   </list>
+   <list id="compNames2" type="object">
+    <item>${comps[i].value}</item>
+   </list>
+   <list id="compNames3" type="object">
+    <item>${comps[i].value}</item>
+   </list>
+   <list id="ids" type="object">
+    <item>${i}</item>
+   </list>
+   <callservice id="servQyzbrankQuery" inline="true"/>
+  </loop>
+  <table id="result1" rowIds="ids" order="1 desc">
+   <col list="compNames1"/>
+   <col intruction="年度完成率"/>
+   <col list="ndjh"/>
+   <col list="ndlj"/>
+   <divCol toCol="1" sub="3" base="2"/>
+  </table>
+  <table id="result2" rowIds="ids" order="1 desc">
+   <col list="compNames2"/>
+   <col intruction="年度完成率"/>
+   <col list="dysdndjh"/>
+   <col list="dysdndlj"/>
+   <divCol toCol="1" sub="3" base="2"/>
+  </table>
+  <table id="result3" rowIds="ids" order="1 desc">
+   <col list="compNames3"/>
+   <col intruction="年度完成率"/>
+   <col list="zzfwyndjh"/>
+   <col list="zzfwyndlj"/>
+   <divCol toCol="1" sub="3" base="2"/>
+  </table>
+  <table id="result" rowIds="ids" export="true">
+   <col list="rankName"/>
+   <col list="${result1.values[0]}"/>
+   <col list="${result1.values[1]}"/>
+   <col list="rankName"/>
+   <col list="${result2.values[0]}"/>
+   <col list="${result2.values[1]}"/>
+   <col list="rankName"/>
+   <col list="${result3.values[0]}"/>
+   <col list="${result3.values[1]}"/>
+  </table>
+ </service>
+ <controller id="qyzbrankFmtter">
+  <formatter id="data" export="true">
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="2,5,8"/>
+   </PercentFormatter>
+   <EmptyFormatter/>
+  </formatter>
+ </controller>
+ <controller id="qyzbrankUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servQyzbrank"/>
+  <callcontroller id="qyzbrankFmtter"/>
+  <formatterServer id="serv" table="${result.matrixNoIds}">
+   <formatter ref="data"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>年度签约完成率排名</name>
+     <sub type="array">
+      <item>
+       <name>排名</name>
+      </item>
+      <item>
+       <name>单位</name>
+      </item>
+      <item>
+       <name>完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>第一属地市场签约完成率排名</name>
+     <sub type="array">
+      <item>
+       <name>排名</name>
+      </item>
+      <item>
+       <name>单位</name>
+      </item>
+      <item>
+       <name>完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>制造服务业市场签约完成率排名</name>
+     <sub type="array">
+      <item>
+       <name>排名</name>
+      </item>
+      <item>
+       <name>单位</name>
+      </item>
+      <item>
+       <name>完成率</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <data>${serv.result}</data>
+  </response>
+ </controller>
+ <controller id="qyzbrankExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servQyzbrank"/>
+  <callcontroller id="qyzbrankFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="市场签约排名情况"/>
+  <list id="title" type="string">年度签约完成率排名,
+年度签约完成率排名,
+年度签约完成率排名,
+第一属地市场签约完成率排名,
+第一属地市场签约完成率排名,
+第一属地市场签约完成率排名,
+制造服务业市场签约完成率排名,
+制造服务业市场签约完成率排名,
+制造服务业市场签约完成率排名
+		</list>
+  <list id="title1" type="string">排名,单位,完成率,
+排名,单位,完成率,
+排名,单位,完成率
+</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+   </ExcelMergeFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="data"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${cal.year +'年'+ cal.month + '月'}市场签约排名情况.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="qyzbrank">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="updateUrl" value="qyzbrankUpdate"/>
+   <map key="exportUrl" value="qyzbrankExport"/>
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="title" value="市场签约排名情况"/>
+  </response>
+ </controller>
+</components>

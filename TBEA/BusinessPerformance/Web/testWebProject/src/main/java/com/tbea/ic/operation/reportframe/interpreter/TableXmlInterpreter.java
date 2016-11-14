@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.entity.Table;
 import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.util.StringUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
@@ -28,13 +30,29 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		if (tempCols == null){
 			tempCols = new ArrayList<Integer>();
 		}
-		tempCols.add(col);
+
+		boolean inserted = false;
+		for (int i = 0; i < tempCols.size(); ++i){
+			if (tempCols.get(i) > col){
+				tempCols.add(i, col);
+				inserted = true;
+				break;
+			}else if (tempCols.get(i).equals(col)){
+				inserted = true;
+				break;
+			}
+		}
+		
+		if (!inserted){
+			tempCols.add(col);
+		}
 	}
 	
 	private void clearTemps(List<List<Object>> tbValues){
 		if (tempCols != null){
-			for(Integer col : tempCols){
-				tbValues.remove(col.intValue());
+			
+			for(int i = tempCols.size() - 1; i >= 0; --i){
+				tbValues.remove(tempCols.get(i).intValue());
 			}
 			tempCols.clear();
 		}
@@ -80,9 +98,84 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			}
 			
 		});
+		
+		
+		if (e.hasAttribute("order") ){
+			parseOrderby(component, tb, e);
+		}
+
+		
 		this.clearTemps(tbValues);
 		component.put(e, tb);
 		return true;
+	}
+
+	private void parseOrderby(AbstractXmlComponent component, Table tb,
+			Element e) throws Exception {
+		String orders = e.getAttribute("order");
+		String[] orderList = orders.split(",");
+		boolean asc = true;
+		if (!orderList[0].contains("asc")){
+			asc = false;
+		}
+		String colVal = orderList[0].replaceAll("asc", "").replaceAll("desc", "");
+		Integer col = Util.toIntNull(StringUtil.trim(colVal));
+		if (null != col){
+			List<Comparable> copies = new ArrayList<Comparable>();
+			copies.addAll((Collection<? extends Comparable>) tb.getValues().get(col));
+			List<Integer> newOrder = null;
+			if (asc){
+				newOrder = parseAscOrder(copies);
+			}else{
+				newOrder = parseDescOrder(copies);
+			}
+			
+			reorderTable(newOrder, tb);
+		}
+	}
+
+	private List<Object> reorderList(List<Integer> newOrder, List oldVals, List target){
+		target.clear();
+		for (int i = 0; i < newOrder.size(); ++i){
+			target.add(oldVals.get(newOrder.get(i)));
+		}
+		return oldVals;
+	}
+	
+	private void reorderTable(List<Integer> newOrder, Table tb) {
+		List workList = new ArrayList();
+		List depList;
+		for (int i = 0; i < tb.getValues().size(); ++i){
+			depList = reorderList(newOrder, tb.getValues().get(i), workList);
+			tb.getValues().set(i, workList);
+			workList = depList;
+		}
+		depList = reorderList(newOrder, tb.getIds(), workList);
+		tb.setIds(workList);
+	}
+
+	private List<Integer> parseDescOrder(List<Comparable> copies) {
+		List<Integer> orders = new ArrayList<Integer>();
+		int index = 0;
+		Set<Integer> excludes = new HashSet<Integer>();
+		for (int i = copies.size() - 1; i >= 0; --i){
+			index = MathUtil.max(copies, excludes);
+			orders.add(index);
+			excludes.add(index);
+		}
+		return orders;
+	}
+
+	private List<Integer> parseAscOrder(List<Comparable> copies) {
+		List<Integer> orders = new ArrayList<Integer>();
+		int index = 0;
+		Set<Integer> excludes = new HashSet<Integer>();
+		for (int i = copies.size() - 1; i >= 0; --i){
+			index = MathUtil.min(copies, excludes);
+			orders.add(index);
+			excludes.add(index);
+		}	
+		return orders;
 	}
 
 	private void parseTable(List rows, Table tb) {
@@ -94,7 +187,6 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			parseList(rows, tb);
 			return;
 		}
-
 		
 		if (rows.get(0) != null && rows.get(0).getClass().isArray()){
 			parseArray(rows, tb);
@@ -193,7 +285,19 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	protected void parseCol(AbstractXmlComponent component, Table tb, Element elem) throws Exception {
 		List list = null;
 		if ("col".equals(elem.getTagName())){
-			list = (List) component.getVar(elem.getAttribute("list"));
+			if (elem.hasAttribute("rank")){
+				int col = XmlUtil.getIntAttr(elem, "rank", elp, -1);
+				if (col >= 0){
+					list = parseRank(tb, col, "true".equals(elem.getAttribute("desc")));
+				}
+			}else{
+				if (component.hasObject(elem.getAttribute("list"))){
+					list = (List) component.getVar(elem.getAttribute("list"));
+				}else{
+					list = (List) XmlUtil.getObjectAttr(elem, "list", elp);
+				}
+				
+			}
 		}else{
 			elem.setAttribute("id", "_tb_col_");
 			listInterpreter.accept(component, elem);
@@ -208,6 +312,45 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		if ("true".equals(elem.getAttribute("temp"))){
 			this.putTemp(tb.getValues().size() - 1);
 		}	
+	}
+
+	private List parseRank(Table tb, int col, boolean desc) {
+		List column = tb.getValues().get(col);
+		List<Comparable> compare = new ArrayList<Comparable>();
+		boolean inserted = false;
+		for (Object obj : column){
+			inserted = false;
+			if (obj != null && obj instanceof Comparable){
+				for (int i = 0; i < compare.size(); ++i){
+					if (compare.get(i).compareTo(obj) > 0){
+						compare.add(i, (Comparable) obj);
+						inserted = true;
+						break;
+					}
+				}
+				if (!inserted){
+					compare.add((Comparable) obj);
+				}
+			}
+		}
+		
+		List<Integer> rank = new ArrayList<Integer>();
+		for (Object obj : column){
+			if (obj != null){
+				int order = compare.indexOf(obj);
+				if (order >= 0){
+					if (desc){
+						rank.add(compare.size() - order);
+					}else{
+						rank.add(order + 1);
+					}					
+					continue;
+				}
+			}
+			rank.add(null);
+		}
+		
+		return rank;
 	}
 
 	private int getTargetIndex(AbstractXmlComponent component, Element item,

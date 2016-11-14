@@ -1,0 +1,118 @@
+<components>
+ <service id="servScjbEntryUpdate" transaction="transactionManager">
+  <sql id="zbs">select id, name from identifier_scfxgb_hy</sql>
+  <list id="ids" sql="zbs" value="0" type="int"/>
+  <sql id="scjbs" order="ids" by="0" colcount="3">select 
+	hyid, tbje, zbje
+from 
+	market_scjb
+where
+	nf = ${cal.year} and
+	yf = ${cal.month} and 
+	dwid = ${compId}</sql>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string">传统电力市场,
+传统电力市场,
+传统电力市场,
+传统电力市场,
+新能源市场,
+新能源市场,
+新能源市场,
+重点领域市场,
+重点领域市场,
+重点领域市场,
+重点领域市场,
+重点领域市场,
+重点领域市场,
+其它,
+连锁经营</list>
+   <list type="string" sql="zbs" value="1"/>
+   <list type="double" sql="scjbs" value="1"/>
+   <list type="double" sql="scjbs" value="2"/>
+  </table>
+ </service>
+ <service id="servScjbEntrySubmit" transaction="transactionManager">
+  <merge data="data" table="market_scjb">
+   <where>
+    <nf type="int" value="${cal.year}"/>
+    <yf type="int" value="${cal.month}"/>
+    <dwid type="int" value="${compId}"/>
+    <hyid type="int" ref="0"/>
+   </where>
+   <set>
+    <tbje type="double" ref="3"/>
+    <zbje type="double" ref="4"/>
+    <zt type="int" value="${zt}"/>
+    <nf type="int" value="${cal.year}"/>
+    <yf type="int" value="${cal.month}"/>
+    <dwid type="int" value="${compId}"/>
+    <hyid type="int" ref="0"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="scjbEntryUpdate">
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servScjbEntryUpdate"/>
+  <formatter id="data">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1,2"/>
+   </EmptyFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+  <formatterServer id="serv" table="${result.matrix}" acceptNullAs="">
+   <formatter ref="data"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>行业</name>
+     <readOnly>true</readOnly>
+    </item>
+    <item>
+     <name>行业</name>
+     <readOnly>true</readOnly>
+    </item>
+    <item>
+     <name>投标金额</name>
+    </item>
+    <item>
+     <name>中标金额</name>
+    </item>
+   </header>
+   <mergeRows type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeRows>
+   <mergeCols type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeCols>
+   <pager>none</pager>
+   <data>${serv.result}</data>
+  </response>
+ </controller>
+ <controller id="scjbEntry">
+  <response type="jsp" name="framework/templates/dateReport/entry">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="scjbEntryUpdate"/>
+   <map key="submitUrl" value="scjbEntrySubmit"/>
+   <map key="title" value="市场竞标"/>
+   <map map="${authMgr[23]}"/>
+  </response>
+ </controller>
+ <controller id="scjbEntrySubmit">
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="data" value="${request.data.asJsonArray}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="zt" value="${2}"/>
+  <callservice id="servScjbEntrySubmit"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+</components>

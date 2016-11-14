@@ -2,7 +2,7 @@
  <service id="servDbxq" transaction="transactionManager">
   <sql id="zbs">select * from identifier_dbxq_zb</sql>
   <list id="ids" sql="zbs" value="0" type="int"/>
-  <sql id="dbxqs" order="ids" by="zbid" colcount="2">select zbid, value from dbxq
+  <sql id="dbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and

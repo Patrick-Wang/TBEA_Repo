@@ -17,7 +17,7 @@ public class StringUtil {
 		return null;
 	}
 	
-	public static Integer findClose(String exp, int start, char open, char close){
+	public static Integer findPair(String exp, int start, char open, char close){
 		if (start < 0){
 			return -1;
 		}

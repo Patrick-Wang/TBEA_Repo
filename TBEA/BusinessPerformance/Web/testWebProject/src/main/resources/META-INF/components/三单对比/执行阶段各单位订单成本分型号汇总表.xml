@@ -1,4 +1,13 @@
 <components>
+ <service id="servExecCostModelCollectionXh" transaction="transactionManager">
+  <sql id="xhxx">select 
+	row_number() over(order by (select 0)) AS ROWNUM,
+	convert(varchar(200), model) md
+from
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS</sql>
+  <list id="ids" type="int" sql="xhxx" value="0"/>
+  <list id="values" type="string" sql="xhxx" value="1"/>
+ </service>
  <service id="servExecCostModelCollection" transaction="transactionManager">
   <sql id="zbddhz" order="dwmcs" by="0" colcount="18">select 
 	convert(varchar(200), company_name) cn,
@@ -111,9 +120,9 @@ where
   </list>
   <list id="htjes" type="double"/>
   <list id="tmpVal" type="double">
-  	<item></item>
-  	<item></item>
-   </list>
+   <item/>
+   <item/>
+  </list>
   <loop var="i" from="${0}" to="${zbddhz.size - 1}">
    <list id="zxddhz_all" type="object">
     <item>${zbddhz[i]}</item>
@@ -128,12 +137,12 @@ where
     <item>${dwmcs[i]}</item>
    </list>
    <list id="tmpVal" type="double">
-  	<item index="0">${zbddhz[i][1]}</item>
-  	<item index="1">${zxddhzsd[i][1]}</item>
+    <item index="0">${zbddhz[i][1]}</item>
+    <item index="1">${zxddhzsd[i][1]}</item>
    </list>
    <list id="htjes" type="object">
-  	<item>${math.sum[tmpVal]}</item>
-  	<item>${math.sum[tmpVal]}</item>
+    <item>${math.sum[tmpVal]}</item>
+    <item>${math.sum[tmpVal]}</item>
    </list>
   </loop>
   <list id="ids" type="int">
@@ -330,8 +339,7 @@ where
   <response type="excel" ref="excelTemplate" name="执行阶段订单成本汇总表.xls" serv="servFmt"/>
  </controller>
  <controller id="execCostModelCollection">
- <list id="ids" type="int">1, 2, 3, 4, 5</list>
- 	<list id="values" type = "string">1, 2, 3, 4, 5</list>
+  <callservice id="servExecCostModelCollectionXh" inline="true"/>
   <response type="jsp" name="sddb/sddb">
    <map key="updateUrl" value="execCostModelCollectionUpdate"/>
    <map key="exportUrl" value="execCostModelCollectionExport"/>

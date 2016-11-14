@@ -290,24 +290,24 @@ public class EasyCalendar {
 	}
 	
 	public EasyCalendar getDays(Integer day){
-		if (cache.containsKey(KEY_Days)){
-			return (EasyCalendar) cache.get(KEY_Days);
-		}
-		
 		Calendar caltmp = Calendar.getInstance();
 		caltmp.setTimeInMillis(cal.getTimeInMillis());
 		caltmp.set(Calendar.DAY_OF_MONTH, day);
-		return (EasyCalendar) cache(KEY_Days, new EasyCalendar(caltmp));
+		return new EasyCalendar(caltmp);
+	}
+	
+	public EasyCalendar getLastDays(){
+		Calendar caltmp = Calendar.getInstance();
+		caltmp.setTimeInMillis(cal.getTimeInMillis());
+		caltmp.set(Calendar.DAY_OF_MONTH, caltmp.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return new EasyCalendar(caltmp);
 	}
 	
 	public EasyCalendar getMonths(Integer month){
-		if (cache.containsKey(KEY_Months)){
-			return (EasyCalendar) cache.get(KEY_Months);
-		}
 		Calendar caltmp = Calendar.getInstance();
 		caltmp.setTimeInMillis(cal.getTimeInMillis());
 		caltmp.set(Calendar.MONTH, month - 1);
-		return (EasyCalendar) cache(KEY_Months, new EasyCalendar(caltmp));
+		return new EasyCalendar(caltmp);
 	}
 	
 	public Date getDate(){

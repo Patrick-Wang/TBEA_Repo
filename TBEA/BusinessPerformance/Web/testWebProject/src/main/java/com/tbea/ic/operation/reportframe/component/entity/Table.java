@@ -6,7 +6,6 @@ import java.util.List;
 public class Table {
 	List<List<Object>> values;
 	List<Integer> ids;
-	
 	public List<List<String>> getMatrix() {
 		List<List<String>> matrix = new ArrayList<List<String>>();
 		if (ids != null){

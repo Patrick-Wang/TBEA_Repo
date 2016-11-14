@@ -63,6 +63,47 @@ public class AuthContextHandler implements ContextHandler {
 			}
 		});
 
+		
+		context.put("authTypes", new ClosureMap(){
+
+			@Override
+			public Object onGetProp(List<Object> args) throws Exception {
+				Integer authType = (Integer)args.get(0);
+				List<Company> comps = extendAuthService.getAuthedCompanies(
+						SessionManager.getAccount(request.getSession()), 
+						authType);
+				List<CompanyType> compIds = new ArrayList<CompanyType>();
+				for (Company comp : comps){
+					compIds.add(comp.getType());
+				}
+				return compIds;
+			}
+			@Override
+			protected boolean validate(List<Object> args) throws Exception {
+				return args.size() == 1;
+			}
+		});
+		
+		context.put("authIds", new ClosureMap(){
+
+			@Override
+			public Object onGetProp(List<Object> args) throws Exception {
+				Integer authType = (Integer)args.get(0);
+				List<Company> comps = extendAuthService.getAuthedCompanies(
+						SessionManager.getAccount(request.getSession()), 
+						authType);
+				List<Integer> compIds = new ArrayList<Integer>();
+				for (Company comp : comps){
+					compIds.add(comp.getId());
+				}
+				return compIds;
+			}
+			@Override
+			protected boolean validate(List<Object> args) throws Exception {
+				return args.size() == 1;
+			}
+		});
+		
 		context.put("auth", new PropMap(){
 
 			@Override

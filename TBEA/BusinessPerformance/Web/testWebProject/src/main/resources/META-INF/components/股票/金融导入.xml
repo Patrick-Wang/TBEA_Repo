@@ -1,0 +1,118 @@
+<components>
+ <service id="servStockJrImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="stock_financial">
+   <where>
+    <stockid type="string" ref="0"/>
+    <report_dt type="date" ref="1"/>
+   </where>
+   <set>
+    <stockid type="string" ref="${counter.reset[0].val}"/>
+    <report_dt type="date" ref="${counter.next.val}"/>
+    <m01 type="double" ref="${counter.next.val}"/>
+    <m02 type="double" ref="${counter.next.val}"/>
+    <m03 type="double" ref="${counter.next.val}"/>
+    <m04 type="double" ref="${counter.next.val}"/>
+    <m05 type="double" ref="${counter.next.val}"/>
+    <m06 type="double" ref="${counter.next.val}"/>
+    <m07 type="double" ref="${counter.next.val}"/>
+    <m08 type="double" ref="${counter.next.val}"/>
+    <m09 type="double" ref="${counter.next.val}"/>
+    <m10 type="double" ref="${counter.next.val}"/>
+    <m11 type="double" ref="${counter.next.val}"/>
+    <m12 type="double" ref="${counter.next.val}"/>
+    <m13 type="double" ref="${counter.next.val}"/>
+    <m14 type="double" ref="${counter.next.val}"/>
+    <m15 type="double" ref="${counter.next.val}"/>
+    <m16 type="double" ref="${counter.next.val}"/>
+    <m17 type="double" ref="${counter.next.val}"/>
+    <m18 type="double" ref="${counter.next.val}"/>
+    <m19 type="double" ref="${counter.next.val}"/>
+    <m20 type="double" ref="${counter.next.val}"/>
+    <m21 type="double" ref="${counter.next.val}"/>
+    <m22 type="double" ref="${counter.next.val}"/>
+    <m23 type="double" ref="${counter.next.val}"/>
+    <m24 type="double" ref="${counter.next.val}"/>
+    <m25 type="double" ref="${counter.next.val}"/>
+    <m26 type="double" ref="${counter.next.val}"/>
+    <m27 type="double" ref="${counter.next.val}"/>
+    <m28 type="double" ref="${counter.next.val}"/>
+    <m29 type="double" ref="${counter.next.val}"/>
+    <m30 type="double" ref="${counter.next.val}"/>
+    <m31 type="double" ref="${counter.next.val}"/>
+    <m32 type="double" ref="${counter.next.val}"/>
+    <m33 type="double" ref="${counter.next.val}"/>
+    <m34 type="double" ref="${counter.next.val}"/>
+    <m35 type="double" ref="${counter.next.val}"/>
+    <m36 type="double" ref="${counter.next.val}"/>
+    <m37 type="double" ref="${counter.next.val}"/>
+    <m38 type="double" ref="${counter.next.val}"/>
+    <m39 type="double" ref="${counter.next.val}"/>
+    <m40 type="double" ref="${counter.next.val}"/>
+    <m41 type="double" ref="${counter.next.val}"/>
+    <m42 type="double" ref="${counter.next.val}"/>
+    <m43 type="double" ref="${counter.next.val}"/>
+    <m44 type="double" ref="${counter.next.val}"/>
+    <m45 type="double" ref="${counter.next.val}"/>
+    <m46 type="double" ref="${counter.next.val}"/>
+    <m47 type="double" ref="${counter.next.val}"/>
+    <m48 type="double" ref="${counter.next.val}"/>
+    <m49 type="double" ref="${counter.next.val}"/>
+    <m50 type="double" ref="${counter.next.val}"/>
+    <m51 type="double" ref="${counter.next.val}"/>
+    <m52 type="double" ref="${counter.next.val}"/>
+    <m53 type="double" ref="${counter.next.val}"/>
+    <m54 type="double" ref="${counter.next.val}"/>
+    <m55 type="double" ref="${counter.next.val}"/>
+    <m56 type="double" ref="${counter.next.val}"/>
+    <m57 type="double" ref="${counter.next.val}"/>
+    <m58 type="double" ref="${counter.next.val}"/>
+    <m59 type="double" ref="${counter.next.val}"/>
+    <m60 type="double" ref="${counter.next.val}"/>
+    <m61 type="double" ref="${counter.next.val}"/>
+    <m62 type="double" ref="${counter.next.val}"/>
+    <m63 type="double" ref="${counter.next.val}"/>
+    <m64 type="double" ref="${counter.next.val}"/>
+    <m65 type="double" ref="${counter.next.val}"/>
+    <m66 type="double" ref="${counter.next.val}"/>
+    <m67 type="double" ref="${counter.next.val}"/>
+    <m68 type="double" ref="${counter.next.val}"/>
+    <m69 type="double" ref="${counter.next.val}"/>
+    <m70 type="double" ref="${counter.next.val}"/>
+    <m71 type="double" ref="${counter.next.val}"/>
+    <m72 type="double" ref="${counter.next.val}"/>
+    <m73 type="double" ref="${counter.next.val}"/>
+    <m74 type="double" ref="${counter.next.val}"/>
+    <m75 type="double" ref="${counter.next.val}"/>
+    <m76 type="double" ref="${counter.next.val}"/>
+    <m77 type="double" ref="${counter.next.val}"/>
+    <m78 type="double" ref="${counter.next.val}"/>
+    <m79 type="double" ref="${counter.next.val}"/>
+    <m80 type="double" ref="${counter.next.val}"/>
+    <m81 type="double" ref="${counter.next.val}"/>
+    <m82 type="double" ref="${counter.next.val}"/>
+    <m83 type="double" ref="${counter.next.val}"/>
+    <m84 type="double" ref="${counter.next.val}"/>
+    <m85 type="double" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="stockJrImport">
+  <context key="data" value="${request.upfile.asCSVUtf8}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servStockJrImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="stockJrImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="stockJrImport"/>
+   <map key="title" value="金融导入"/>
+  </response>
+ </controller>
+</components>

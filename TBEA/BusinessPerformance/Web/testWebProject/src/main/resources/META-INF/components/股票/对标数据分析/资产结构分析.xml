@@ -1,0 +1,152 @@
+<components>
+ <service id="servZcjgfx" transaction="transactionManager">
+  <sql id="stockCode"> select code, convert(varchar(50), name) from stock_code</sql>
+  <list id="stock" type="string" sql="stockCode" value="0"/>
+  <sql id="dj" order="stock" by="0" colcount="4">select 
+	sc.code,
+	sum(m14)/nullif(sum(m33), 0) ld_fld,
+	sum(m04)/nullif(sum(m14), 0) yszk_ld,
+	sum(m10)/nullif(sum(m14), 0) ch_ld
+from 
+	stock_code sc
+	left join stock_zcfzb sz on sc.code = sz.stockid
+where	
+	sc.startUsing = 1 and 
+	dateDiff(mm, sz.report_dt, ${cal.seasonStart.date}) &lt;= 0 and
+	dateDiff(mm, sz.report_dt, ${cal.seasonEnd.date}) &gt;= 0
+group by
+	sc.code</sql>
+  <sql id="qntq" order="stock" by="0" colcount="4">select 
+	sc.code,
+	sum(m14)/nullif(sum(m33), 0) ld_fld,
+	sum(m04)/nullif(sum(m14), 0) yszk_ld,
+	sum(m10)/nullif(sum(m14), 0) ch_ld
+from 
+	stock_code sc
+	left join stock_zcfzb sz on sc.code = sz.stockid
+where	
+	sc.startUsing = 1 and 
+	dateDiff(mm, sz.report_dt, ${cal.lastYear.seasonStart.date}) &lt;= 0 and
+	dateDiff(mm, sz.report_dt, ${cal.lastYear.seasonEnd.date}) &gt;= 0
+group by
+	sc.code</sql>
+  <list type="int" id="ids">
+   <item from="0" to="${dj.size - 1}"/>
+  </list>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string" sql="stockCode" value="1"/>
+   <list type="double" sql="dj" value="1"/>
+   <list type="double" sql="qntq" value="1" temp="true"/>
+   <col instruction="同比增幅"/>
+   <list type="double" sql="dj" value="2"/>
+   <list type="double" sql="qntq" value="2" temp="true"/>
+   <col instruction="同比增幅"/>
+   <list type="double" sql="dj" value="3"/>
+   <list type="double" sql="qntq" value="3" temp="true"/>
+   <col instruction="同比增幅"/>
+   <growthRates toCol="3" sj="1" tq="2"/>
+   <growthRates toCol="6" sj="4" tq="5"/>
+   <growthRates toCol="9" sj="7" tq="8"/>
+  </table>
+ </service>
+ <controller id="zcjgfxlFmtter">
+<formatter id="data" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="2">
+    <DefaultMatcher cols="2,4,6"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="2">
+    <DefaultMatcher/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="zcjgfxUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servZcjgfx"/>
+   <callcontroller id="zcjgfxlFmtter"/>
+  <formatterServer id="serv" table="${result.matrixNoIds}" acceptNullAs="--">
+   <formatter ref="data"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>公司名称</name>
+    </item>
+    <item>
+     <name>流动资产/总资产</name>
+    </item>
+    <item>
+     <name>同比增长</name>
+    </item>
+    <item>
+     <name>应收赃款/流动资产</name>
+    </item>
+    <item>
+     <name>同比增长</name>
+    </item>
+    <item>
+     <name>存货/流动资产</name>
+    </item>
+    <item>
+     <name>同比增长</name>
+    </item>
+   </header>
+   <data>${serv.result}</data>
+  </response> 
+ </controller>
+ <controller id="zcjgfxExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servZcjgfx"/>
+  <callcontroller id="zcjgfxlFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="资产结构分析"/>
+  <list id="title" type="string">
+			公司名称,
+流动资产/总资产,
+同比增长,
+应收赃款/流动资产,
+同比增长,
+存货/流动资产,	 
+同比增长
+		</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="1"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="data"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${cal.year +'年'+ cal.season + '季度'}资产结构分析.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="zcjgfx">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="updateUrl" value="zcjgfxUpdate"/>
+   <map key="exportUrl" value="zcjgfxExport"/>
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="dateEnd" value="${calendar.current.months[12].format}"/>
+   <map key="asSeasonAcc" value="true"/>
+   <map key="jdName" value="[&quot;一季度&quot;, &quot;二季度&quot;,&quot;三季度&quot;,&quot;四季度&quot;]"/>
+   <map key="title" value="资产结构分析"/>
+  </response>
+ </controller>
+</components>

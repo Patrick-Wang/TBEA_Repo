@@ -1,0 +1,321 @@
+<components>
+ <service id="servQyzbwcqkQuery" transaction="transactionManager">
+  <list id="ndjh" type="object">
+   <item>${accFactory.njhAcc.compute
+	[0]
+	[cal.date]
+	[cal.date]
+	[GSZB.HTQYE48.value.packAsList]
+	[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="ydjh" type="object">
+   <item>${accFactory.yjhAcc.compute
+	[0]
+	[cal.date]
+	[cal.date]
+	[GSZB.HTQYE48.value.packAsList]
+	[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="ydsj" type="object">
+   <item>${accFactory.sjAcc.compute
+[0]
+[cal.date]
+[cal.date]
+[GSZB.HTQYE48.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="ndlj" type="object">
+   <item>${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.date]
+[GSZB.HTQYE48.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="dysdndjh" type="object">
+   <item>${accFactory.njhAcc.compute
+[0]
+[cal.date]
+[cal.date]
+[GSZB.SDSCQY294.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="dysdndlj" type="object">
+   <item>${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.date]
+[GSZB.SDSCQY294.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="zzfwyndjh" type="object">
+   <item>${accFactory.njhAcc.compute
+[0]
+[cal.date]
+[cal.date]
+[GSZB.QZ_JCFWYWGNQY300.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+  <list id="zzfwyndlj" type="object">
+   <item>${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.date]
+[GSZB.QZ_JCFWYWGNQY300.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dwids]]
+[0]}</item>
+  </list>
+ </service>
+ <service id="servQyzbwcqk" transaction="transactionManager">
+  <context key="compTypes" value="${authTypes[23]}"/>
+  <list id="comps" type="object">${CompanyType.SBGS},
+${CompanyType.HBGS},
+${CompanyType.XBC},
+${CompanyType.TBGS},
+${CompanyType.LLGS},
+${CompanyType.XLC},
+${CompanyType.DLGS}</list>
+  <if>${
+	compTypes.contains[CompanyType.LLGS] &amp;&amp;  
+	compTypes.contains[CompanyType.XLC] &amp;&amp; 
+	compTypes.contains[CompanyType.DLGS] 
+}<list id="comps" type="object">
+    <item>${CompanyType.XLCY}</item>
+   </list>
+  </if>
+  <if>${
+	compTypes.contains[CompanyType.SBGS] &amp;&amp; 
+	compTypes.contains[CompanyType.HBGS] &amp;&amp; 
+	compTypes.contains[CompanyType.XBC]
+}<list id="comps" type="object">
+    <item insert="4">${CompanyType.BYQCY}</item>
+   </list>
+  </if>
+  <if>${
+	compTypes.contains[CompanyType.SBGS] &amp;&amp;
+	compTypes.contains[CompanyType.HBGS] &amp;&amp; 
+	compTypes.contains[CompanyType.XBC] &amp;&amp; 
+	compTypes.contains[CompanyType.LLGS] &amp;&amp;  
+	compTypes.contains[CompanyType.XLC] &amp;&amp; 
+	compTypes.contains[CompanyType.DLGS]
+}<list id="comps" type="object">
+    <item>${CompanyType.SBDCYJT}</item>
+   </list>
+  </if>
+  <list id="compNames" type="string"/>
+  <list type="int" id="ids"/>
+  <loop from="0" to="${comps.size - 1}" var="i">
+   <if test="${compTypes.contains[comps[i]] &amp;&amp; !comps[i].equals[CompanyType.BYQCY] &amp;&amp; !comps[i].equals[CompanyType.XLCY]}">
+    <context key="dwids" value="${orgs.BMDBOrganization.ids[comps[i].ordinal].packAsList}" export="false"/>
+    <list id="compNames" type="object">
+     <item>${comps[i].value}</item>
+    </list>
+    <list id="ids" type="object">
+     <item>${i}</item>
+    </list>
+   </if>
+   <if test="${comps[i].equals[CompanyType.BYQCY]}">
+    <list id="dwids" type="object" clear="true">${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]}</list>
+    <list id="compNames" type="string">
+     <item>变压器小计</item>
+    </list>
+    <list id="ids" type="object">
+     <item>${i}</item>
+    </list>
+   </if>
+   <if test="${comps[i].equals[CompanyType.XLCY]}">
+    <list id="dwids" type="object" clear="true">${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
+    <list id="compNames" type="string">
+     <item>线缆小计</item>
+    </list>
+    <list id="ids" type="object">
+     <item>${i}</item>
+    </list>
+   </if>
+   <if test="${comps[i].equals[CompanyType.SBDCYJT]}">
+    <list id="dwids" type="object" clear="true">${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
+    <list id="compNames" type="string">
+     <item>合计</item>
+    </list>
+    <list id="ids" type="object">
+     <item>${i}</item>
+    </list>
+   </if>
+   <callservice id="servQyzbwcqkQuery" inline="true"/>
+  </loop>
+  <table id="result" rowIds="ids" export="true">
+   <col list="compNames"/>
+   <col list="ndjh"/>
+   <col list="ydjh"/>
+   <col list="ydsj"/>
+   <col intruction="当月完成率"/>
+   <col list="ndlj"/>
+   <col intruction="年度完成率"/>
+   <col list="dysdndjh"/>
+   <col list="dysdndlj"/>
+   <col intruction="年度完成率"/>
+   <col list="zzfwyndjh"/>
+   <col list="zzfwyndlj"/>
+   <col intruction="年度完成率"/>
+   <divCol toCol="4" sub="3" base="2"/>
+   <divCol toCol="6" sub="5" base="1"/>
+   <divCol toCol="9" sub="8" base="7"/>
+   <divCol toCol="12" sub="11" base="10"/>
+  </table>
+ </service>
+ <controller id="qyzbwcqkFmtter">
+  <formatter id="data" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4,6,9,12"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="qyzbwcqkUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servQyzbwcqk"/>
+  <callcontroller id="qyzbwcqkFmtter"/>
+  <formatterServer id="serv" table="${result.matrixNoIds}">
+   <formatter ref="data"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>单位</name>
+    </item>
+    <item>
+     <name>国内市场整体指标完成情况</name>
+     <sub type="array">
+      <item>
+       <name>年度计划签约指标</name>
+      </item>
+      <item>
+       <name>月度计划指标</name>
+      </item>
+      <item>
+       <name>月度实际签约</name>
+      </item>
+      <item>
+       <name>当月完成率</name>
+      </item>
+      <item>
+       <name>年度累计签约</name>
+      </item>
+      <item>
+       <name>年度完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>第一属地市场指标完成情况</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>年度累计属地签约</name>
+      </item>
+      <item>
+       <name>年度完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>制造服务业指标完成情况</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>年度累计属地签约</name>
+      </item>
+      <item>
+       <name>年度完成率</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <data>${serv.result}</data>
+  </response>
+ </controller>
+ <controller id="qyzbwcqkExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servQyzbwcqk"/>
+  <callcontroller id="qyzbwcqkFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="市场签约指标完成情况"/>
+  <list id="title" type="string">单位,
+国内市场整体指标完成情况,
+国内市场整体指标完成情况,
+国内市场整体指标完成情况,
+国内市场整体指标完成情况,
+国内市场整体指标完成情况,
+国内市场整体指标完成情况,
+第一属地市场指标完成情况,
+第一属地市场指标完成情况,
+第一属地市场指标完成情况,
+制造服务业指标完成情况,
+制造服务业指标完成情况,
+制造服务业指标完成情况
+		</list>
+  <list id="title1" type="string">单位,年度计划签约指标,月度计划指标,月度实际签约,当月完成率,年度累计签约,年度完成率,年度签约指标,年度累计属地签约,年度完成率,年度签约指标,年度累计签约,年度完成率
+	</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="2"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="data"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${cal.year +'年'+ cal.month + '月'}市场签约指标完成情况.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="qyzbwcqk">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="updateUrl" value="qyzbwcqkUpdate"/>
+   <map key="exportUrl" value="qyzbwcqkExport"/>
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="title" value="市场签约指标完成情况"/>
+  </response>
+ </controller>
+</components>

@@ -1,5 +1,8 @@
 package com.tbea.ic.operation.common;
 
+import java.util.List;
+import java.util.Set;
+
 public class MathUtil {
 	public static Double sum(Double[] vals){
 		Double ret = null;
@@ -121,6 +124,8 @@ public class MathUtil {
 			return ((Integer)val).doubleValue();
 		}else if (val instanceof Double){
 			return (Double) val;
+		}else if (val instanceof String){
+			return toDouble((String)val);
 		}
 		return null;
 	}
@@ -168,6 +173,61 @@ public class MathUtil {
 			}
 		}
 		return ret;
+	}
+
+	public static int max(List<Comparable> compares, Set<Integer> excludes) {
+		if (!compares.isEmpty()){
+			int ret = -1;
+			for (int i = 0;i < compares.size(); ++i){
+				if (excludes == null || !excludes.contains(i)){
+					ret = i;
+					break;
+				}
+			}
+			if (ret >= 0){
+				for (int i = ret + 1; i < compares.size(); ++i){
+					if (excludes == null || !excludes.contains(i)){
+						if (null != compares.get(i)){
+							if (compares.get(ret) == null || 
+								compares.get(i).compareTo(compares.get(ret)) > 0){
+								ret = i;
+							}
+						}
+					}
+				}
+			}
+			return ret;
+		}
+		return -1;
+	}
+	
+	public static int min(List<Comparable> compares, Set<Integer> excludes) {
+		if (!compares.isEmpty()){
+			int ret = -1;
+			for (int i = 0;i < compares.size(); ++i){
+				if (excludes == null || !excludes.contains(i)){
+					ret = i;
+					break;
+				}
+			}
+			
+			if (ret >= 0 && compares.get(ret) != null){
+				for (int i = ret + 1; i < compares.size(); ++i){
+					if (excludes == null || !excludes.contains(i)){
+						if (null != compares.get(i)){
+							if (compares.get(i).compareTo(compares.get(ret)) < 0){
+								ret = i;
+							}
+						}else{
+							ret = i;
+							break;
+						}
+					}
+				}
+			}
+			return ret;
+		}
+		return -1;
 	}
 
 }

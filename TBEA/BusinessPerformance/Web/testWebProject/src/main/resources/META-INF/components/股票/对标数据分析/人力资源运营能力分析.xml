@@ -1,0 +1,147 @@
+<components>
+ <service id="servRlzyyynlfx" transaction="transactionManager">
+  <sql id="stockCode"> select code, convert(varchar(50), name) from stock_code</sql>
+  <list id="stock" type="string" sql="stockCode" value="0"/>
+  <sql id="dj" order="stock" by="0" colcount="2">select 
+	sc.code,
+	sum(m01) ld_fld
+from 
+	stock_code sc
+	left join stock_lr sz on sc.code = sz.stockid
+where	
+	sc.startUsing = 1 and 
+	dateDiff(mm, sz.report_dt, ${cal.seasonStart.date}) &lt;= 0 and
+	dateDiff(mm, sz.report_dt, ${cal.seasonEnd.date}) &gt;= 0
+group by
+	sc.code</sql>
+  <sql id="qntq" order="stock" by="0" colcount="2">select 
+	sc.code,
+	sum(m01) ld_fld
+from 
+	stock_code sc
+	left join stock_lr sz on sc.code = sz.stockid
+where	
+	sc.startUsing = 1 and 
+	dateDiff(mm, sz.report_dt, ${cal.lastYear.seasonStart.date}) &lt;= 0 and
+	dateDiff(mm, sz.report_dt, ${cal.lastYear.seasonEnd.date}) &gt;= 0
+group by
+	sc.code</sql>
+  <list type="int" id="ids">
+   <item from="0" to="${dj.size - 1}"/>
+  </list>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string" sql="stockCode" value="1"/>
+   <list type="double" sql="dj" value="1"/>
+   <list type="double" sql="qntq" value="1"/>
+   <col instruction="同比增幅"/>
+   <col rank="1" desc="true"/>
+   <growthRates toCol="3" sj="1" tq="2"/>
+  </table>
+ </service>
+ <controller id="rlzyyynlfxFmtter">
+  <formatter id="data" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="2">
+    <DefaultMatcher cols="3"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="0">
+    <DefaultMatcher cols="4"/>
+   </NumberFormatter>
+   <NumberFormatter reservedCount="2">
+    <DefaultMatcher/>
+   </NumberFormatter>
+  </formatter>
+ </controller>
+ <controller id="rlzyyynlfxUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servRlzyyynlfx"/>
+  <callcontroller id="rlzyyynlfxFmtter"/>
+  <formatterServer id="serv" table="${result.matrixNoIds}">
+   <formatter ref="data"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>公司名称</name>
+    </item>
+    <item>
+     <name>营业收入</name>
+     <sub type="array">
+      <item>
+       <name>当季</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>排名分析</name>
+    </item>
+   </header>
+   <data>${serv.result}</data>
+  </response>
+ </controller>
+ <controller id="rlzyyynlfxExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servRlzyyynlfx"/>
+  <callcontroller id="rlzyyynlfxFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="人力资源运营能力分析"/>
+  <list id="title" type="string">公司名称,
+营业收入,
+营业收入,
+营业收入,
+排名分析
+		</list>
+  <list id="title1" type="string">公司名称,
+当季,
+去年同期,
+同比增幅,
+排名分析
+		</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="2"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="data"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${cal.year +'年'+ cal.season + '季度'}人力资源运营能力分析.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="rlzyyynlfx">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="updateUrl" value="rlzyyynlfxUpdate"/>
+   <map key="exportUrl" value="rlzyyynlfxExport"/>
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="dateEnd" value="${calendar.current.months[12].format}"/>
+   <map key="asSeasonAcc" value="true"/>
+   <map key="jdName" value="[&quot;一季度&quot;, &quot;二季度&quot;,&quot;三季度&quot;,&quot;四季度&quot;]"/>
+   <map key="title" value="人力资源运营能力分析"/>
+  </response>
+ </controller>
+</components>

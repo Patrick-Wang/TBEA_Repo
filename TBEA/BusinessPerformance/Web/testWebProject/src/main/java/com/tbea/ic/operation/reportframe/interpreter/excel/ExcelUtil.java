@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation.ValidationException;
 
 public class ExcelUtil{
@@ -31,6 +32,8 @@ public class ExcelUtil{
 		case XSSFCell.CELL_TYPE_NUMERIC:
 		case XSSFCell.CELL_TYPE_FORMULA:
 			return cell.getNumericCellValue();
+		case XSSFCell.CELL_TYPE_STRING:
+			return Util.toDoubleNull(cell.getStringCellValue());
 		}
 		throw new ValidationException("数值类型解析失败 ，类型编码  " + cell.getCellType());
 	}

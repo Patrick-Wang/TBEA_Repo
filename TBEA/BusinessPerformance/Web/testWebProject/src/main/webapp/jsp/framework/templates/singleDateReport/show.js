@@ -47,7 +47,7 @@ var framework;
                             year: opt.date.year - 3,
                             month: opt.date.month,
                             day: opt.date.day
-                        }, opt.dateEnd, opt.date, opt.asSeason);
+                        }, opt.dateEnd, opt.date, opt.asSeason, opt.asSeasonAcc, opt.jdName);
                         this.update(this.dateSelect.getDate());
                     }
                 };

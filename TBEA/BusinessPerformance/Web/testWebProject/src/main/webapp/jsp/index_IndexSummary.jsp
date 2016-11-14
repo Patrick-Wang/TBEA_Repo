@@ -206,6 +206,28 @@
 						src="../images/charts/bar5.png"> <span><strong>众和分产业关键指标汇报</strong></span></a>
 				</li>
 				</c:if>
+			
+				
+			</ul>
+		</div>
+	</div>
+</div>
+</c:if>
+
+<c:if test="${scgsdbqx}">
+<div>
+	<h3>
+		上市公司对标数据<a name="ssgsdbsj"> </a>
+	</h3>
+	<div class="section">
+		<div class="thumb3">
+			<ul class="slides">				
+				<li><a href="../report/ztdbfx.do" target="_blank"><img
+						src="../images/charts/scatter3.png"> <span><strong>对标数据总体分析</strong></span></a>
+				</li>
+				<li><a href="../report/fldbfx.do" target="_blank"><img
+						src="../images/charts/scatter4.png"> <span><strong>对标数据分类分析</strong></span></a>
+				</li>
 			</ul>
 		</div>
 	</div>

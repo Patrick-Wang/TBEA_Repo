@@ -290,7 +290,7 @@ where
  </controller>
  <controller id="codeCollection">
   <list id="ids" type="int">1, 2, 3, 4, 5</list>
- 	<list id="values" type = "string">1, 2, 3, 4, 5</list>
+  <list id="values" type = "string">1, 2, 3, 4, 5</list>
   <response type="jsp" name="sddb/sddb">
    <map key="updateUrl" value="codeCollectionUpdate"/>
    <map key="exportUrl" value="codeCollectionExport"/>

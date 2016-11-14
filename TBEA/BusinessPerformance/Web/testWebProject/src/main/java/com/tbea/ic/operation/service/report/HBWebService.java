@@ -23,8 +23,8 @@ import com.apex.livebos.ws.ValueOption;
 
 public class HBWebService {
 
-	LBEBusinessWebService service = new LBEBusinessWebService();
-	LBEBusinessService client = service.getLBEBusinessServiceImplPort();
+	LBEBusinessWebService service;
+	LBEBusinessService client;
 
 	private boolean parseQuery(QueryResult queryResult, List<String> cols,
 			List<Object[]> result) {
@@ -57,6 +57,11 @@ public class HBWebService {
 	}
 
 	private LoginResult login(String api) {
+		if (client == null){
+			service = new LBEBusinessWebService();
+			client = service.getLBEBusinessServiceImplPort();
+		}
+		
 		return client.login("web_test", "123456", api, "plain", "");
 	}
 

@@ -10,8 +10,6 @@ import javax.persistence.Query;
 
 import net.sf.json.JSONArray;
 
-import org.hibernate.SQLQuery;
-import org.hibernate.type.Type;
 import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.Pair;
@@ -105,7 +103,9 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 					if (ret >= 0){
 						objs.add((Object[]) sqlRet.get(ret));
 					}else{
-						objs.add(new Object[colcount]);
+						Object[] objArr = new Object[colcount];
+						objArr[by] = order.get(i);
+						objs.add(objArr);
 					}
 				}
 				sqlRet = objs;

@@ -2,7 +2,7 @@
  <service id="servJjzjzToLocal" transaction="transactionManager">
   <if test="${!ncData.isEmpty}">
    <context key="counter" value="${counterFactory.newCounter.reset[2]}"/>
-   <context key="counterZb" value="${counterFactory.newCounter.reset[-1]}"/>
+   <context key="counterZb" value="${counterFactory.newCounter.reset[0]}"/>
    <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
    <list id="data" type="object">${ncData[0]}</list>
    <merge data="${data}" table="jjzjz">
@@ -10,7 +10,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -25,7 +25,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -40,7 +40,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -55,7 +55,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -70,7 +70,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -85,7 +85,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -100,7 +100,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -115,7 +115,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -130,7 +130,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -145,7 +145,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -160,7 +160,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -175,7 +175,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -190,7 +190,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -205,7 +205,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -220,7 +220,7 @@
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" ref="counterZb.next.val"/>
+     <zbid type="int" value="${counterZb.next.val}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
@@ -250,21 +250,21 @@ where
   <sql id="ncData" export="true">select unit_code,
        unit_name,
        inputdate,
-       imdx.m10002 jlr, --净利润数值
-       imdx.m10008 lxzc, --利息支出数值
-       imdx.m10014 yffy, --研发费用数值
-       imdx.m10005 bmyzzc, --变卖优质资产取得的非经营性收益数值
-       imdx.m10011 shjyylr, --税后净营业利润①数值
-       imdx.m10001 pjsyzqy, --平均所有者权益数值
-       imdx.m10007 pjfzhj, --平均负债合计数值
-       imdx.m10013 pjwxldfz, --平均无息流动负债数值
-       imdx.m10004 pjzjgc, --平均在建工程数值
-       imdx.m10010 tzhzb, --调整后资本数值
+       imdx.m10002 / 10000.0 jlr, --净利润数值
+       imdx.m10008 / 10000.0 lxzc, --利息支出数值
+       imdx.m10014 / 10000.0 yffy, --研发费用数值
+       imdx.m10005 / 10000.0 bmyzzc, --变卖优质资产取得的非经营性收益数值
+       imdx.m10011 / 10000.0 shjyylr, --税后净营业利润①数值
+       imdx.m10001 / 10000.0 pjsyzqy, --平均所有者权益数值
+       imdx.m10007 / 10000.0 pjfzhj, --平均负债合计数值
+       imdx.m10013 / 10000.0 pjwxldfz, --平均无息流动负债数值
+       imdx.m10004 / 10000.0 pjzjgc, --平均在建工程数值
+       imdx.m10010 / 10000.0 tzhzb, --调整后资本数值
        imdx.m10000 pjzbcbl, --平均资本成本率数值
-       imdx.m10006 zbcb, --资本成本②数值
+       imdx.m10006 / 10000.0 zbcb, --资本成本②数值
        ${rs}, --人数③数值
-       (shjyylr - zbcb), --经济增加值④=①一②数值
-       (shjyylr - zbcb) / nullif(${rs}, 0) --imdx.m10009 rjjjzjz --人均经济增加值⑤=④÷③数值
+       ((imdx.m10011 - imdx.m10006) / 10000.0) jjzjz, --经济增加值④=①一②数值
+       ((imdx.m10011 - imdx.m10006) / 10000.0) / nullif(${rs}, 0) rjjjzjz --imdx.m10009 rjjjzjz --人均经济增加值⑤=④÷③数值
   from iufo_measure_data_xwv5toc8 imdx
   left join (select alone_id,
                     code,
@@ -283,9 +283,9 @@ where
  and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
  and unit_code = ${NCCode.code[type]}</sql>
  </service>
- <controller id="jjzjzTransport" cron1="0 0 2 ？ * 2">
+ <controller id="jjzjzTransport" cron1="0 0 0 3 * ?">
   <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
-   <context key="cal" value="${calendar.current}"/>
+   <context key="cal" value="${calendar.current.lastMonth}"/>
   </if>
   <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
    <context key="cal" value="${request.date.asCalendar}"/>

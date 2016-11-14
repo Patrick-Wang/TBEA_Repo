@@ -2,8 +2,10 @@ package com.tbea.ic.operation.reportframe.component.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -78,6 +81,19 @@ public class ControllerRequest extends PropMap{
 			CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);
 			return new XSSFWorkbook(file.getInputStream());
 		}
+		
+		public List<String[]> asCSVUtf8() throws IOException{
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req; 
+			CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);
+			String csv = IOUtils.toString(file.getInputStream(), "utf-8");
+			List<String[]> result = new ArrayList<String[]>();
+			String[] rows = csv.split("\n");
+			for (int i = 1; i < rows.length; ++i){
+				result.add(rows[i].split(","));
+			}
+			return result;
+		}
+		
 	}
 	
 	public ControllerRequest(HttpServletRequest req) {

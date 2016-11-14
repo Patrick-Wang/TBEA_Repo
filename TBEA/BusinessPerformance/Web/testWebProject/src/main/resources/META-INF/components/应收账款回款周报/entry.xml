@@ -2,8 +2,8 @@
  <service id="servEntryYszkhkzb" transaction="transactionManager">
   <merge data="${data}" id="0" table="yszkhkzb">
    <set>
-    <ksrq type="date" ref="0"/>
-    <jzrq type="date" ref="1"/>
+    <ksrq type="date" ref="0" test="${this != null}"/>
+    <jzrq type="date" ref="1" test="${this != null}"/>
     <xmgs type="int" value="${compId}"/>
     <xmbh type="string" ref="2"/>
     <xmmc type="string" ref="3"/>

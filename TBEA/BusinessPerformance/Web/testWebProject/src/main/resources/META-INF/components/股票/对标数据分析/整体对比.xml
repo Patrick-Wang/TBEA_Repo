@@ -1,0 +1,798 @@
+<components>
+ <service id="servZtdbfx" transaction="transactionManager">
+  <list type="string" id="s1">第一季度</list>
+  <list type="string" id="s2">第二季度</list>
+  <list type="string" id="s3">第三季度</list>
+  <list type="string" id="s4">第四季度</list>
+  <sql id="season1" order="s1" by="0" colcount="42">select 
+	'第一季度',
+	convert(varchar(50), stolr.m19) as 利润总额, --利润总额
+	convert(varchar(50), stolr.m22) as 净利润,  --净利润
+	convert(varchar(50), stolr.m01) as 营业总收入,  --营业总收入
+	convert(varchar(50), stolr.m01) as 营业收入,  --营业收入
+	--null as 主营业务收入 , --主营业务收入
+	--null as 政府补助 , --政府补助
+	convert(varchar(50), isnull(stolr.m02,0) + isnull(stolr.m03,0) + isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m06,0) + isnull(stolr.m07,0) +  isnull(stolr.m08,0)) as 营业总成本 , --营业总成本
+	convert(varchar(50), stolr.m02) as 营业成本, --营业成本
+	--null as 主营业务成本, --主营业务成本
+	convert(varchar(50), (stolr.m01 - stolr.m02)/nullif(stolr.m02, 0)) as 毛利率, -- 毛利率
+	convert(varchar(50), stolr.m04) as 销售费用, -- 销售费用
+	convert(varchar(50), stolr.m05) as 管理费用, -- 管理费用
+	convert(varchar(50), stolr.m07) as 财务费用, -- 财务费用
+	convert(varchar(50), isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m07,0)) as 三项费用, --三项费用
+	convert(varchar(50), ((isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m07,0))/nullif(stolr.m01, 0))) as 三项费用率, --三项费用率
+	convert(varchar(50), stoxjll.m01) as 销售商品提供劳务收到的现金, --销售商品、提供劳务收到的现金
+	convert(varchar(50), stoxjll.m05) as 购买商品接受劳务支付的现金, --购买商品、接受劳务支付的现金
+	convert(varchar(50), stoxjll.m10) as 经营性净现金流, -- 经营性净现金流
+	convert(varchar(50), stozf.m33) as 总资产, --总资产
+	convert(varchar(50), stozf.m56) as 负债合计, --负债合计
+	convert(varchar(50), stozf.m47) as 流动负债合计, -- 流动负债合计
+	convert(varchar(50), stozf.m55) as 非流动负债合计, -- 非流动负债合计
+	convert(varchar(50), stozf.m33 - stozf.m56) as 净资产, -- 净资产
+	convert(varchar(50), stozf.m20) as 固定资产, -- 固定资产
+	convert(varchar(50), stozf.m21) as 在建工程, -- 在建工程
+	convert(varchar(50), stozf.m22) as 工程物资, -- 工程物资
+	convert(varchar(50), stozf.m03) as 应收票据, -- 应收票据
+	convert(varchar(50), stozf.m04) as 应收账款, -- 应收账款
+	convert(varchar(50), stozf.m05) as 预付款项, -- 预付款项
+	convert(varchar(50), stozf.m10) as 存货, -- 存货
+	convert(varchar(50), stozf.m36) as 应付票据, -- 应付票据
+	convert(varchar(50), stozf.m37) as 应付账款, -- 应付账款
+	convert(varchar(50), stozf.m38) as 预收款项, -- 预收款项
+	--null as 保理 , --保理
+	--null as 应收账款实际, --应收账款（实际）
+	--null as 坏账损失,--坏账损失
+	convert(varchar(50), stofin.m74 ) as OneYS,-- 1年以内应收帐款
+	convert(varchar(50), stofin.m75 ) as OneTwoYS,-- 1-2年以内应收帐款
+	convert(varchar(50), stofin.m76 ) as TwoThreeYS,-- 2-3年以内应收帐款
+	convert(varchar(50), stofin.m77) as MoreThanThreeYS,-- 3年以内应收帐款
+	--null as 存货实际,--存货(实际)
+	--null as 存货跌价损失,--存货跌价损失
+	--null as 原材料,--原材料
+	--null as 在产品,--在产品
+	--null as 产成品,--产成品
+	--null as 其他,--其他
+	--null as 员工总数,--员工总数
+	--null as 行政管理序列,--行政管理序列
+	--null as 技术序列,--技术序列
+	--null as 生产序列,--生产序列
+	--null as 营销序列含国际,--营销序列（含国际）
+	--null as 其他人员,--其他人员
+	--null as 博士,--博士
+	--null as 硕士,--硕士
+	--null as 本科,--本科
+	--null as 大专,--大专
+	--null as 高中及以下,--高中及以下
+	--null as 人均利润,--人均利润
+	--null as 人均收入,--人均收入
+	--null as 加权平均净资产收益率,--加权平均净资产收益率
+	convert(varchar(50), stofin.m45) as 流动比率, --流动比率 
+	convert(varchar(50), stofin.m46) as 速动比率, -- 速动比率
+	convert(varchar(50), stofin.m35) as 应收账款周转率, -- 应收账款周转率
+	convert(varchar(50), stofin.m61) as 资产负债率, -- 资产负债率
+	convert(varchar(50), stofin.m38) as 存货周转率, -- 存货周转率
+	convert(varchar(50), stofin.m39) as 固定资产周转率, -- 固定资产周转率
+	convert(varchar(50), stofin.m40) as 总资产周转率 -- 总资产周转率
+	--null as 费用化研发支出,--费用化研发支出
+	--null as 资本化研发支出,--资本化研发支出
+	--null as 研发支出合计,--研发支出合计
+	--null as 研发支出总额占净资产比例,--研发支出总额占净资产比例
+	--null as 研发支出总额占营业收入比例--研发支出总额占营业收入比例
+from 
+	stock_lr stolr, stock_xjll stoxjll, stock_zcfzb stozf, stock_financial stofin
+where 
+	stolr.stockid = ${stockCode} and 
+	stolr.stockid = stoxjll.stockid and 
+	stolr.stockid = stozf.stockid and 
+	stolr.stockid = stofin.stockid and
+	dateDiff(mm, stolr.report_dt, ${cal.months[1].date}) &lt;= 0 and
+	dateDiff(mm, stolr.report_dt, ${cal.months[3].date}) &gt;= 0 and 
+	dateDiff(mm, stoxjll.report_dt, ${cal.months[1].date}) &lt;= 0 and
+	dateDiff(mm, stoxjll.report_dt, ${cal.months[3].date}) &gt;= 0 and 
+	dateDiff(mm, stozf.report_dt, ${cal.months[1].date}) &lt;= 0 and
+	dateDiff(mm, stozf.report_dt, ${cal.months[3].date}) &gt;= 0 and 
+	dateDiff(mm, stofin.report_dt, ${cal.months[1].date}) &lt;= 0 and
+	dateDiff(mm, stofin.report_dt, ${cal.months[3].date}) &gt;= 0
+</sql>
+  <sql id="season2" order="s2" by="0" colcount="42">select 
+	'第二季度',
+	convert(varchar(50), stolr.m19) as 利润总额, --利润总额
+	convert(varchar(50), stolr.m22) as 净利润,  --净利润
+	convert(varchar(50), stolr.m01) as 营业总收入,  --营业总收入
+	convert(varchar(50), stolr.m01) as 营业收入,  --营业收入
+	--null as 主营业务收入 , --主营业务收入
+	--null as 政府补助 , --政府补助
+	convert(varchar(50), isnull(stolr.m02,0) + isnull(stolr.m03,0) + isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m06,0) + isnull(stolr.m07,0) +  isnull(stolr.m08,0)) as 营业总成本 , --营业总成本
+	convert(varchar(50), stolr.m02) as 营业成本, --营业成本
+	--null as 主营业务成本, --主营业务成本
+	convert(varchar(50), (stolr.m01 - stolr.m02)/nullif(stolr.m02, 0)) as 毛利率, -- 毛利率
+	convert(varchar(50), stolr.m04) as 销售费用, -- 销售费用
+	convert(varchar(50), stolr.m05) as 管理费用, -- 管理费用
+	convert(varchar(50), stolr.m07) as 财务费用, -- 财务费用
+	convert(varchar(50), isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m07,0)) as 三项费用, --三项费用
+	convert(varchar(50), ((isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m07,0))/nullif(stolr.m01, 0))) as 三项费用率, --三项费用率
+	convert(varchar(50), stoxjll.m01) as 销售商品提供劳务收到的现金, --销售商品、提供劳务收到的现金
+	convert(varchar(50), stoxjll.m05) as 购买商品接受劳务支付的现金, --购买商品、接受劳务支付的现金
+	convert(varchar(50), stoxjll.m10) as 经营性净现金流, -- 经营性净现金流
+	convert(varchar(50), stozf.m33) as 总资产, --总资产
+	convert(varchar(50), stozf.m56) as 负债合计, --负债合计
+	convert(varchar(50), stozf.m47) as 流动负债合计, -- 流动负债合计
+	convert(varchar(50), stozf.m55) as 非流动负债合计, -- 非流动负债合计
+	convert(varchar(50), stozf.m33 - stozf.m56) as 净资产, -- 净资产
+	convert(varchar(50), stozf.m20) as 固定资产, -- 固定资产
+	convert(varchar(50), stozf.m21) as 在建工程, -- 在建工程
+	convert(varchar(50), stozf.m22) as 工程物资, -- 工程物资
+	convert(varchar(50), stozf.m03) as 应收票据, -- 应收票据
+	convert(varchar(50), stozf.m04) as 应收账款, -- 应收账款
+	convert(varchar(50), stozf.m05) as 预付款项, -- 预付款项
+	convert(varchar(50), stozf.m10) as 存货, -- 存货
+	convert(varchar(50), stozf.m36) as 应付票据, -- 应付票据
+	convert(varchar(50), stozf.m37) as 应付账款, -- 应付账款
+	convert(varchar(50), stozf.m38) as 预收款项, -- 预收款项
+	--null as 保理 , --保理
+	--null as 应收账款实际, --应收账款（实际）
+	--null as 坏账损失,--坏账损失
+	convert(varchar(50), stofin.m74 ) as OneYS,-- 1年以内应收帐款
+	convert(varchar(50), stofin.m75 ) as OneTwoYS,-- 1-2年以内应收帐款
+	convert(varchar(50), stofin.m76 ) as TwoThreeYS,-- 2-3年以内应收帐款
+	convert(varchar(50), stofin.m77) as MoreThanThreeYS,-- 3年以内应收帐款
+	--null as 存货实际,--存货(实际)
+	--null as 存货跌价损失,--存货跌价损失
+	--null as 原材料,--原材料
+	--null as 在产品,--在产品
+	--null as 产成品,--产成品
+	--null as 其他,--其他
+	--null as 员工总数,--员工总数
+	--null as 行政管理序列,--行政管理序列
+	--null as 技术序列,--技术序列
+	--null as 生产序列,--生产序列
+	--null as 营销序列含国际,--营销序列（含国际）
+	--null as 其他人员,--其他人员
+	--null as 博士,--博士
+	--null as 硕士,--硕士
+	--null as 本科,--本科
+	--null as 大专,--大专
+	--null as 高中及以下,--高中及以下
+	--null as 人均利润,--人均利润
+	--null as 人均收入,--人均收入
+	--null as 加权平均净资产收益率,--加权平均净资产收益率
+	convert(varchar(50), stofin.m45) as 流动比率, --流动比率 
+	convert(varchar(50), stofin.m46) as 速动比率, -- 速动比率
+	convert(varchar(50), stofin.m35) as 应收账款周转率, -- 应收账款周转率
+	convert(varchar(50), stofin.m61) as 资产负债率, -- 资产负债率
+	convert(varchar(50), stofin.m38) as 存货周转率, -- 存货周转率
+	convert(varchar(50), stofin.m39) as 固定资产周转率, -- 固定资产周转率
+	convert(varchar(50), stofin.m40) as 总资产周转率 -- 总资产周转率
+	--null as 费用化研发支出,--费用化研发支出
+	--null as 资本化研发支出,--资本化研发支出
+	--null as 研发支出合计,--研发支出合计
+	--null as 研发支出总额占净资产比例,--研发支出总额占净资产比例
+	--null as 研发支出总额占营业收入比例--研发支出总额占营业收入比例
+from 
+	stock_lr stolr, stock_xjll stoxjll, stock_zcfzb stozf, stock_financial stofin
+where 
+	stolr.stockid = ${stockCode} and 
+	stolr.stockid = stoxjll.stockid and 
+	stolr.stockid = stozf.stockid and 
+	stolr.stockid = stofin.stockid and
+	dateDiff(mm, stolr.report_dt, ${cal.months[4].date}) &lt;= 0 and
+	dateDiff(mm, stolr.report_dt, ${cal.months[6].date}) &gt;= 0 and 
+	dateDiff(mm, stoxjll.report_dt, ${cal.months[4].date}) &lt;= 0 and
+	dateDiff(mm, stoxjll.report_dt, ${cal.months[6].date}) &gt;= 0 and 
+	dateDiff(mm, stozf.report_dt, ${cal.months[4].date}) &lt;= 0 and
+	dateDiff(mm, stozf.report_dt, ${cal.months[6].date}) &gt;= 0 and 
+	dateDiff(mm, stofin.report_dt, ${cal.months[4].date}) &lt;= 0 and
+	dateDiff(mm, stofin.report_dt, ${cal.months[6].date}) &gt;= 0
+</sql>
+  <sql id="season3" order="s3" by="0" colcount="42">select 
+	'第三季度',
+	convert(varchar(50), stolr.m19) as 利润总额, --利润总额
+	convert(varchar(50), stolr.m22) as 净利润,  --净利润
+	convert(varchar(50), stolr.m01) as 营业总收入,  --营业总收入
+	convert(varchar(50), stolr.m01) as 营业收入,  --营业收入
+	--null as 主营业务收入 , --主营业务收入
+	--null as 政府补助 , --政府补助
+	convert(varchar(50), isnull(stolr.m02,0) + isnull(stolr.m03,0) + isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m06,0) + isnull(stolr.m07,0) +  isnull(stolr.m08,0)) as 营业总成本 , --营业总成本
+	convert(varchar(50), stolr.m02) as 营业成本, --营业成本
+	--null as 主营业务成本, --主营业务成本
+	convert(varchar(50), (stolr.m01 - stolr.m02)/nullif(stolr.m02, 0)) as 毛利率, -- 毛利率
+	convert(varchar(50), stolr.m04) as 销售费用, -- 销售费用
+	convert(varchar(50), stolr.m05) as 管理费用, -- 管理费用
+	convert(varchar(50), stolr.m07) as 财务费用, -- 财务费用
+	convert(varchar(50), isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m07,0)) as 三项费用, --三项费用
+	convert(varchar(50), ((isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m07,0))/nullif(stolr.m01, 0))) as 三项费用率, --三项费用率
+	convert(varchar(50), stoxjll.m01) as 销售商品提供劳务收到的现金, --销售商品、提供劳务收到的现金
+	convert(varchar(50), stoxjll.m05) as 购买商品接受劳务支付的现金, --购买商品、接受劳务支付的现金
+	convert(varchar(50), stoxjll.m10) as 经营性净现金流, -- 经营性净现金流
+	convert(varchar(50), stozf.m33) as 总资产, --总资产
+	convert(varchar(50), stozf.m56) as 负债合计, --负债合计
+	convert(varchar(50), stozf.m47) as 流动负债合计, -- 流动负债合计
+	convert(varchar(50), stozf.m55) as 非流动负债合计, -- 非流动负债合计
+	convert(varchar(50), stozf.m33 - stozf.m56) as 净资产, -- 净资产
+	convert(varchar(50), stozf.m20) as 固定资产, -- 固定资产
+	convert(varchar(50), stozf.m21) as 在建工程, -- 在建工程
+	convert(varchar(50), stozf.m22) as 工程物资, -- 工程物资
+	convert(varchar(50), stozf.m03) as 应收票据, -- 应收票据
+	convert(varchar(50), stozf.m04) as 应收账款, -- 应收账款
+	convert(varchar(50), stozf.m05) as 预付款项, -- 预付款项
+	convert(varchar(50), stozf.m10) as 存货, -- 存货
+	convert(varchar(50), stozf.m36) as 应付票据, -- 应付票据
+	convert(varchar(50), stozf.m37) as 应付账款, -- 应付账款
+	convert(varchar(50), stozf.m38) as 预收款项, -- 预收款项
+	--null as 保理 , --保理
+	--null as 应收账款实际, --应收账款（实际）
+	--null as 坏账损失,--坏账损失
+	convert(varchar(50), stofin.m74 ) as OneYS,-- 1年以内应收帐款
+	convert(varchar(50), stofin.m75 ) as OneTwoYS,-- 1-2年以内应收帐款
+	convert(varchar(50), stofin.m76 ) as TwoThreeYS,-- 2-3年以内应收帐款
+	convert(varchar(50), stofin.m77) as MoreThanThreeYS,-- 3年以内应收帐款
+	--null as 存货实际,--存货(实际)
+	--null as 存货跌价损失,--存货跌价损失
+	--null as 原材料,--原材料
+	--null as 在产品,--在产品
+	--null as 产成品,--产成品
+	--null as 其他,--其他
+	--null as 员工总数,--员工总数
+	--null as 行政管理序列,--行政管理序列
+	--null as 技术序列,--技术序列
+	--null as 生产序列,--生产序列
+	--null as 营销序列含国际,--营销序列（含国际）
+	--null as 其他人员,--其他人员
+	--null as 博士,--博士
+	--null as 硕士,--硕士
+	--null as 本科,--本科
+	--null as 大专,--大专
+	--null as 高中及以下,--高中及以下
+	--null as 人均利润,--人均利润
+	--null as 人均收入,--人均收入
+	--null as 加权平均净资产收益率,--加权平均净资产收益率
+	convert(varchar(50), stofin.m45) as 流动比率, --流动比率 
+	convert(varchar(50), stofin.m46) as 速动比率, -- 速动比率
+	convert(varchar(50), stofin.m35) as 应收账款周转率, -- 应收账款周转率
+	convert(varchar(50), stofin.m61) as 资产负债率, -- 资产负债率
+	convert(varchar(50), stofin.m38) as 存货周转率, -- 存货周转率
+	convert(varchar(50), stofin.m39) as 固定资产周转率, -- 固定资产周转率
+	convert(varchar(50), stofin.m40) as 总资产周转率 -- 总资产周转率
+	--null as 费用化研发支出,--费用化研发支出
+	--null as 资本化研发支出,--资本化研发支出
+	--null as 研发支出合计,--研发支出合计
+	--null as 研发支出总额占净资产比例,--研发支出总额占净资产比例
+	--null as 研发支出总额占营业收入比例--研发支出总额占营业收入比例
+from 
+	stock_lr stolr, stock_xjll stoxjll, stock_zcfzb stozf, stock_financial stofin
+where 
+	stolr.stockid = ${stockCode} and 
+	stolr.stockid = stoxjll.stockid and 
+	stolr.stockid = stozf.stockid and 
+	stolr.stockid = stofin.stockid and
+	dateDiff(mm, stolr.report_dt, ${cal.months[7].date}) &lt;= 0 and
+	dateDiff(mm, stolr.report_dt, ${cal.months[9].date}) &gt;= 0 and 
+	dateDiff(mm, stoxjll.report_dt, ${cal.months[7].date}) &lt;= 0 and
+	dateDiff(mm, stoxjll.report_dt, ${cal.months[9].date}) &gt;= 0 and 
+	dateDiff(mm, stozf.report_dt, ${cal.months[7].date}) &lt;= 0 and
+	dateDiff(mm, stozf.report_dt, ${cal.months[9].date}) &gt;= 0 and 
+	dateDiff(mm, stofin.report_dt, ${cal.months[7].date}) &lt;= 0 and
+	dateDiff(mm, stofin.report_dt, ${cal.months[9].date}) &gt;= 0
+</sql>
+  <sql id="season4" order="s4" by="0" colcount="42">select 
+	'第四季度',
+	convert(varchar(50), stolr.m19) as 利润总额, --利润总额
+	convert(varchar(50), stolr.m22) as 净利润,  --净利润
+	convert(varchar(50), stolr.m01) as 营业总收入,  --营业总收入
+	convert(varchar(50), stolr.m01) as 营业收入,  --营业收入
+	--null as 主营业务收入 , --主营业务收入
+	--null as 政府补助 , --政府补助
+	convert(varchar(50), isnull(stolr.m02,0) + isnull(stolr.m03,0) + isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m06,0) + isnull(stolr.m07,0) +  isnull(stolr.m08,0)) as 营业总成本 , --营业总成本
+	convert(varchar(50), stolr.m02) as 营业成本, --营业成本
+	--null as 主营业务成本, --主营业务成本
+	convert(varchar(50), (stolr.m01 - stolr.m02)/nullif(stolr.m02, 0)) as 毛利率, -- 毛利率
+	convert(varchar(50), stolr.m04) as 销售费用, -- 销售费用
+	convert(varchar(50), stolr.m05) as 管理费用, -- 管理费用
+	convert(varchar(50), stolr.m07) as 财务费用, -- 财务费用
+	convert(varchar(50), isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m07,0)) as 三项费用, --三项费用
+	convert(varchar(50), ((isnull(stolr.m04,0) + isnull(stolr.m05,0) + isnull(stolr.m07,0))/nullif(stolr.m01, 0))) as 三项费用率, --三项费用率
+	convert(varchar(50), stoxjll.m01) as 销售商品提供劳务收到的现金, --销售商品、提供劳务收到的现金
+	convert(varchar(50), stoxjll.m05) as 购买商品接受劳务支付的现金, --购买商品、接受劳务支付的现金
+	convert(varchar(50), stoxjll.m10) as 经营性净现金流, -- 经营性净现金流
+	convert(varchar(50), stozf.m33) as 总资产, --总资产
+	convert(varchar(50), stozf.m56) as 负债合计, --负债合计
+	convert(varchar(50), stozf.m47) as 流动负债合计, -- 流动负债合计
+	convert(varchar(50), stozf.m55) as 非流动负债合计, -- 非流动负债合计
+	convert(varchar(50), stozf.m33 - stozf.m56) as 净资产, -- 净资产
+	convert(varchar(50), stozf.m20) as 固定资产, -- 固定资产
+	convert(varchar(50), stozf.m21) as 在建工程, -- 在建工程
+	convert(varchar(50), stozf.m22) as 工程物资, -- 工程物资
+	convert(varchar(50), stozf.m03) as 应收票据, -- 应收票据
+	convert(varchar(50), stozf.m04) as 应收账款, -- 应收账款
+	convert(varchar(50), stozf.m05) as 预付款项, -- 预付款项
+	convert(varchar(50), stozf.m10) as 存货, -- 存货
+	convert(varchar(50), stozf.m36) as 应付票据, -- 应付票据
+	convert(varchar(50), stozf.m37) as 应付账款, -- 应付账款
+	convert(varchar(50), stozf.m38) as 预收款项, -- 预收款项
+	--null as 保理 , --保理
+	--null as 应收账款实际, --应收账款（实际）
+	--null as 坏账损失,--坏账损失
+	convert(varchar(50), stofin.m74 ) as OneYS,-- 1年以内应收帐款
+	convert(varchar(50), stofin.m75 ) as OneTwoYS,-- 1-2年以内应收帐款
+	convert(varchar(50), stofin.m76 ) as TwoThreeYS,-- 2-3年以内应收帐款
+	convert(varchar(50), stofin.m77) as MoreThanThreeYS,-- 3年以内应收帐款
+	--null as 存货实际,--存货(实际)
+	--null as 存货跌价损失,--存货跌价损失
+	--null as 原材料,--原材料
+	--null as 在产品,--在产品
+	--null as 产成品,--产成品
+	--null as 其他,--其他
+	--null as 员工总数,--员工总数
+	--null as 行政管理序列,--行政管理序列
+	--null as 技术序列,--技术序列
+	--null as 生产序列,--生产序列
+	--null as 营销序列含国际,--营销序列（含国际）
+	--null as 其他人员,--其他人员
+	--null as 博士,--博士
+	--null as 硕士,--硕士
+	--null as 本科,--本科
+	--null as 大专,--大专
+	--null as 高中及以下,--高中及以下
+	--null as 人均利润,--人均利润
+	--null as 人均收入,--人均收入
+	--null as 加权平均净资产收益率,--加权平均净资产收益率
+	convert(varchar(50), stofin.m45) as 流动比率, --流动比率 
+	convert(varchar(50), stofin.m46) as 速动比率, -- 速动比率
+	convert(varchar(50), stofin.m35) as 应收账款周转率, -- 应收账款周转率
+	convert(varchar(50), stofin.m61) as 资产负债率, -- 资产负债率
+	convert(varchar(50), stofin.m38) as 存货周转率, -- 存货周转率
+	convert(varchar(50), stofin.m39) as 固定资产周转率, -- 固定资产周转率
+	convert(varchar(50), stofin.m40) as 总资产周转率 -- 总资产周转率
+	--null as 费用化研发支出,--费用化研发支出
+	--null as 资本化研发支出,--资本化研发支出
+	--null as 研发支出合计,--研发支出合计
+	--null as 研发支出总额占净资产比例,--研发支出总额占净资产比例
+	--null as 研发支出总额占营业收入比例--研发支出总额占营业收入比例
+from 
+	stock_lr stolr, stock_xjll stoxjll, stock_zcfzb stozf, stock_financial stofin
+where 
+	stolr.stockid = ${stockCode} and 
+	stolr.stockid = stoxjll.stockid and 
+	stolr.stockid = stozf.stockid and 
+	stolr.stockid = stofin.stockid and
+	dateDiff(mm, stolr.report_dt, ${cal.months[10].date}) &lt;= 0 and
+	dateDiff(mm, stolr.report_dt, ${cal.months[12].date}) &gt;= 0 and 
+	dateDiff(mm, stoxjll.report_dt, ${cal.months[10].date}) &lt;= 0 and
+	dateDiff(mm, stoxjll.report_dt, ${cal.months[12].date}) &gt;= 0 and 
+	dateDiff(mm, stozf.report_dt, ${cal.months[10].date}) &lt;= 0 and
+	dateDiff(mm, stozf.report_dt, ${cal.months[12].date}) &gt;= 0 and 
+	dateDiff(mm, stofin.report_dt, ${cal.months[10].date}) &lt;= 0 and
+	dateDiff(mm, stofin.report_dt, ${cal.months[12].date}) &gt;= 0
+</sql>
+  <list type="object" export="true" id="result">
+   <item>${season1[0]}</item>
+   <item>${season2[0]}</item>
+   <item>${season3[0]}</item>
+   <item>${season4[0]}</item>
+  </list>
+ </service>
+ <controller id="fmtterZtdbfx">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+    <NumberFormatter reservedCount="3">
+     <DefaultMatcher cols="7,12,35,36,37,38,39,40,41"/>
+    </NumberFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="ztdbfxUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="id" value="${request.item.asInt}"/>
+  <callservice id="servStockid"/>
+  <callservice id="servZtdbfx"/>
+  <callcontroller id="fmtterZtdbfx"/>
+  <formatterServer id="fmtServ" table="${result}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>季度</name>
+    </item>
+    <item>
+     <name>利润总额</name>
+    </item>
+    <item>
+     <name>净利润</name>
+    </item>
+    <item>
+     <name>营业总收入</name>
+    </item>
+    <item>
+     <name>营业收入</name>
+    </item>
+   <!--  <item>
+     <name>主营业务收入</name>
+    </item>
+    <item>
+     <name>政府补助</name>
+    </item> -->
+    <item>
+     <name>营业总成本</name>
+    </item>
+    <item>
+     <name>营业成本</name>
+    </item>
+ <!--    <item>
+     <name>主营业务成本</name>
+    </item> -->
+    <item>
+     <name>毛利率(%)</name>
+    </item>
+    <item>
+     <name>销售费用</name>
+    </item>
+    <item>
+     <name>管理费用</name>
+    </item>
+    <item>
+     <name>财务费用</name>
+    </item>
+    <item>
+     <name>三项费用</name>
+    </item>
+    <item>
+     <name>三项费用率(%)</name>
+    </item>
+    <item>
+     <name>销售商品提供劳务收到的现金</name>
+    </item>
+    <item>
+     <name>购买商品接受劳务支付的现金</name>
+    </item>
+    <item>
+     <name>经营性净现金流</name>
+    </item>
+    <item>
+     <name>总资产</name>
+    </item>
+    <item>
+     <name>负债合计</name>
+    </item>
+    <item>
+     <name>流动负债合计</name>
+    </item>
+    <item>
+     <name>非流动负债合计</name>
+    </item>
+    <item>
+     <name>净资产</name>
+    </item>
+    <item>
+     <name>固定资产</name>
+    </item>
+    <item>
+     <name>在建工程</name>
+    </item>
+    <item>
+     <name>工程物资</name>
+    </item>
+    <item>
+     <name>应收票据</name>
+    </item>
+    <item>
+     <name>应收账款</name>
+    </item>
+    <item>
+     <name>预付款项</name>
+    </item>
+    <item>
+     <name>存货</name>
+    </item>
+    <item>
+     <name>应付票据</name>
+    </item>
+    <item>
+     <name>应付账款</name>
+    </item>
+    <item>
+     <name>预收款项</name>
+    </item>
+    <!-- <item>
+     <name>保理</name>
+    </item>
+    <item>
+     <name>应收账款实际</name>
+    </item>
+    <item>
+     <name>坏账损失</name>
+    </item> -->
+    <item>
+     <name>1年以内应收帐款</name>
+    </item>
+    <item>
+     <name>1-2年以内应收帐款</name>
+    </item>
+    <item>
+     <name>2-3年以内应收帐款</name>
+    </item>
+    <item>
+     <name>3年以内应收帐款</name>
+    </item>
+   <!--  <item>
+     <name>存货实际</name>
+    </item>
+    <item>
+     <name>存货跌价损失</name>
+    </item>
+    <item>
+     <name>原材料</name>
+    </item>
+    <item>
+     <name>在产品</name>
+    </item>
+    <item>
+     <name>产成品</name>
+    </item>
+    <item>
+     <name>其他</name>
+    </item>
+    <item>
+     <name>员工总数</name>
+    </item>
+    <item>
+     <name>行政管理序列</name>
+    </item>
+    <item>
+     <name>技术序列</name>
+    </item>
+    <item>
+     <name>生产序列</name>
+    </item>
+    <item>
+     <name>营销序列含国际</name>
+    </item>
+    <item>
+     <name>其他人员</name>
+    </item>
+    <item>
+     <name>博士</name>
+    </item>
+    <item>
+     <name>硕士</name>
+    </item>
+    <item>
+     <name>本科</name>
+    </item>
+    <item>
+     <name>大专</name>
+    </item>
+    <item>
+     <name>高中及以下</name>
+    </item>
+    <item>
+     <name>人均利润</name>
+    </item>
+    <item>
+     <name>人均收入</name>
+    </item>
+    <item>
+     <name>加权平均净资产收益率</name>
+    </item> -->
+    <item>
+     <name>流动比率(%)</name>
+    </item>
+    <item>
+     <name>速动比率(%)</name>
+    </item>
+    <item>
+     <name>应收账款周转率(次)</name>
+    </item>
+    <item>
+     <name>资产负债率(%)</name>
+    </item>
+    <item>
+     <name>存货周转率(次)</name>
+    </item>
+    <item>
+     <name>固定资产周转率(次)</name>
+    </item>
+    <item>
+     <name>总资产周转率(次)</name>
+    </item>
+    <!-- <item>
+     <name>费用化研发支出</name>
+    </item>
+    <item>
+     <name>资本化研发支出</name>
+    </item>
+    <item>
+     <name>研发支出合计</name>
+    </item>
+    <item>
+     <name>研发支出总额占净资产比例</name>
+    </item>
+    <item>
+     <name>研发支出总额占营业收入比例</name>
+    </item> -->
+   </header>
+   <mergeTitle>true</mergeTitle>
+   <data>${fmtServ.result}</data>
+   <shrinkToFit>false</shrinkToFit>
+  </response>
+ </controller>
+ <controller id="ztdbfxExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="id" value="${request.item.asInt}"/>
+  <callservice id="servStockid"/>
+  <callservice id="servZtdbfx"/>
+  <callcontroller id="fmtterZtdbfx"/>
+ <!--  <list id="title" type="object" export="true">季度,
+利润总额,
+净利润,
+营业总收入,
+营业收入,
+主营业务收入,
+政府补助,
+营业总成本,
+营业成本,
+主营业务成本,
+毛利率,
+销售费用,
+管理费用,
+财务费用,
+三项费用,
+三项费用率,
+销售商品提供劳务收到的现金,
+购买商品接受劳务支付的现金,
+经营性净现金流,
+总资产,
+负债合计,
+流动负债合计,
+非流动负债合计,
+净资产,
+固定资产,
+在建工程,
+工程物资,
+应收票据,
+应收账款,
+预付款项,
+存货,
+应付票据,
+应付账款,
+预收款项,
+保理,
+应收账款实际,
+坏账损失,
+1年以内应收帐款,
+1-2年以内应收帐款,
+2-3年以内应收帐款,
+3年以内应收帐款,
+存货实际,
+存货跌价损失,
+原材料,
+在产品,
+产成品,
+其他,
+员工总数,
+行政管理序列,
+技术序列,
+生产序列,
+营销序列含国际,
+其他人员,
+博士,
+硕士,
+本科,
+大专,
+高中及以下,
+人均利润,
+人均收入,
+加权平均净资产收益率,
+流动比率,
+速动比率,
+应收账款周转率,
+资产负债率,
+存货周转率,
+固定资产周转率,
+总资产周转率,
+费用化研发支出,
+资本化研发支出,
+研发支出合计,
+研发支出总额占净资产比例,
+研发支出总额占营业收入比例</list> -->
+ <list id="title" type="object" export="true">季度,
+利润总额,
+净利润,
+营业总收入,
+营业收入,
+营业总成本,
+营业成本,
+毛利率(%),
+销售费用,
+管理费用,
+财务费用,
+三项费用,
+三项费用率(%),
+销售商品提供劳务收到的现金,
+购买商品接受劳务支付的现金,
+经营性净现金流,
+总资产,
+负债合计,
+流动负债合计,
+非流动负债合计,
+净资产,
+固定资产,
+在建工程,
+工程物资,
+应收票据,
+应收账款,
+预付款项,
+存货,
+应付票据,
+应付账款,
+预收款项,
+1年以内应收帐款,
+1-2年以内应收帐款,
+2-3年以内应收帐款,
+3年以内应收帐款,
+流动比率(%),
+速动比率(%),
+应收账款周转率(次),
+资产负债率(%),
+存货周转率(次),
+固定资产周转率(次),
+总资产周转率(次)</list>
+  <ExcelTemplate id="excelTemplate" sheet="对标数据总体分析"/>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="1"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="对标数据总体分析.xls" serv="fmtServ"/>
+ </controller>
+ <service id="servStockdwxx" transaction="transactionManager">
+  <sql id="dwxxs">select 
+	id,
+	convert(varchar(200),name)
+from
+	stock_code
+where
+	startUsing = 1</sql>
+  <list id="dwmcs" sql="dwxxs" value="1"/>
+  <list id="dwids" sql="dwxxs" value="0"/>
+ </service>
+ <service id="servStockid" transaction="transactionManager">
+  <sql id="stock">select 
+	code
+from
+	stock_code
+where
+	startUsing = 1 and
+	id = ${id}</sql>
+  <context key="stockCode" value="${stock[0]}"/>
+ </service>
+ <controller id="ztdbfx">
+  <callservice id="servStockdwxx" inline="true"/>
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="updateUrl" value="ztdbfxUpdate"/>
+   <map key="exportUrl" value="ztdbfxExport"/>
+   <map key="nodeData" value="${dataNodeFactory[dwids][dwmcs].asJson}"/>
+   <map key="title" value="对标数据总体分析"/>
+  </response>
+ </controller>
+</components>

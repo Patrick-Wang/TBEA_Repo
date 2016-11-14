@@ -1,0 +1,1 @@
+alter table yszkhkzb add xmbh varchar(100)

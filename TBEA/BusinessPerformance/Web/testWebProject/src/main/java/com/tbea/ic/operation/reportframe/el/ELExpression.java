@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.script.ScriptEngine;
@@ -17,17 +16,15 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
+import com.tbea.ic.operation.reportframe.el.querier.ExpressionQuerier;
+import com.tbea.ic.operation.reportframe.el.querier.IndexQuerier;
+import com.tbea.ic.operation.reportframe.el.querier.ObjectQuerier;
+import com.tbea.ic.operation.reportframe.el.querier.Querier;
 import com.tbea.ic.operation.reportframe.util.StringUtil;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
 
 public class ELExpression{
 	
-	static final String namePtn = "[a-zA-Z_][a-zA-Z0-9_]*";
-	static final String indexPtn = "\\[[^\\[]+\\]";
-	
-	static final Pattern expPattern = Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*(\\[[^\\[]+\\])*(\\.[a-zA-Z_][a-zA-Z0-9_]*(\\[[^\\[]+\\])*)*");  
-	static final Pattern indexesPattern = Pattern.compile("(\\[[^\\[]+\\])+"); 
-	static final Pattern indexedObjectPattern = Pattern.compile("[a-zA-Z_][a-zA-Z0-9_]*(\\[[^\\[]+\\])*"); 
 	static final Set<String> jsKeyWords = new HashSet<String>();
 	static final Pattern varPattern = Pattern.compile("var\\s+"); 
 	
@@ -148,27 +145,32 @@ public class ELExpression{
 	}
 	
 	private boolean isNumber(Object ob){
-		return ob instanceof Integer || ob instanceof Long || ob instanceof Double;  
+		return ob instanceof Integer || 
+				ob instanceof Long || 
+				ob instanceof Double || 
+				ob instanceof Float;
 	}
 	
 	private boolean isString(Object ob){
 		return ob instanceof String;  
 	}
 
+	//user.take[a.b[]] + user.walk
 	public Object value() throws Exception{
-		Matcher matcher = expPattern.matcher(expression);
+		
 		String expressTmp = expression;
 		int offset = 0;
 		boolean isObject = false;
 		Object obj = null;
-		while (matcher.find()){
+		Querier querier = new ExpressionQuerier(expression);
+		while (querier.hasNext()){
 			try{
-				obj = parseObject(matcher.group());
+				obj = parseObject(querier.next());
 				if (null == obj || isNumber(obj) || isString(obj) || TypeUtil.isBoolean(obj.getClass())){
-					String objVal = expressTmp.substring(0, offset + matcher.start()) + obj;
-					expressTmp = objVal + expressTmp.substring(offset + matcher.end());
+					String objVal = expressTmp.substring(0, querier.start()) + obj;
+					expressTmp = objVal + expressTmp.substring(querier.end());
 					offset = objVal.length();
-					matcher = expPattern.matcher(expressTmp.substring(offset));
+					querier.reset(expressTmp, offset);
 				}else{
 					isObject = true;
 					break;
@@ -202,70 +204,74 @@ public class ELExpression{
 
 	List<Object> getIndexs(String indexs) throws Exception{
 		List<Object> indxs = new ArrayList<Object>();
-		int start = 0;
-		int end = indexs.indexOf(']', start);
-		String val;
-		while (end >= 0){
-			val = StringUtil.trim(indexs.substring(start + 1, end));
-			start = end + 1;
-			end = indexs.indexOf(']', start);
+		Querier querier = new IndexQuerier(indexs);
+		while(querier.hasNext()){
+			String val = StringUtil.trim(querier.next());
 			Object index = TypeUtil.asInt(val);
 			if (null != index){
 				indxs.add(index);
 				continue;
 			}
+			
 			index = TypeUtil.asBoolean(val);
 			if (null != index){
 				indxs.add(index);
 				continue;
 			}
+			
 			index = TypeUtil.asString(val);
 			if (null != index){
 				indxs.add(index);
 				continue;
 			}
 			
-			if (null == index){
-				ELExpression exp = new ELExpression(0, val.length(), val, this.loader);
-				indxs.add(exp.value());
-			}
+			ELExpression exp = new ELExpression(0, val.length(), val, this.loader);
+			indxs.add(exp.value());
 		}
 		return indxs;
 	}
 	
+	private Object loadStartObject(String objExp)
+			throws  Exception {
+		Object ret = null;
+		int index = objExp.indexOf('[');
+		String objName = objExp;
+		if (index > 0){
+			objName = objExp.substring(0, index);
+			if (!loader.hasObject(objName)){
+				throw new ELInitObjectNotExist(objName);
+			}
+			ret = loader.onGetObject(objName);
+			ret = getPropByIndex(ret, getIndexs(objExp.substring(index)));
+		}else{
+			if (!loader.hasObject(objName)){
+				throw new ELInitObjectNotExist(objName);
+			}
+			ret = loader.onGetObject(objName);
+		}
+		return ret;
+	}
 	
 	private Object parseObject(String exp) throws 
 			Exception {
-		Matcher indexedObjMatcher = indexedObjectPattern.matcher(exp);
+		Querier querier = new ObjectQuerier(exp);
 		Object obj = null;
-//		System.out.println("EL : " + exp);
-		while(indexedObjMatcher.find()){
-			String objExp = indexedObjMatcher.group();
-//			System.out.println("obj : " + objExp);
-			Matcher indexesMatcher = indexesPattern.matcher(objExp);
-			if (obj == null){
-				if (indexesMatcher.find()){
-					String key = objExp.substring(0, indexesMatcher.start());
-					if (!loader.hasObject(key)){
-						throw new ELInitObjectNotExist(key);
-					}
-					obj = loader.onGetObject(key);
-					obj = getPropByIndex(obj, getIndexs(indexesMatcher.group()));
-				}else{
-					if (!loader.hasObject(objExp)){
-						throw new ELInitObjectNotExist(objExp);
-					}
-					obj = loader.onGetObject(objExp);
-				}
+		
+		if (querier.hasNext()){
+			 obj = loadStartObject(querier.next());
+		}
+		
+		String objExp = null;
+		int index = -1;
+		while(querier.hasNext()){
+			objExp = querier.next();
+			index = objExp.indexOf('[');
+			if (index > 0){
+				obj = getPropByName(obj,  StringUtil.trim(objExp.substring(0, index)));
+				obj = getPropByIndex(obj, getIndexs(objExp.substring(index)));
 			}else{
-				if (indexesMatcher.find()){
-					obj = getPropByName(obj, objExp.substring(0, indexesMatcher.start()));
-					obj = getPropByIndex(obj, getIndexs(indexesMatcher.group()));
-				}else{
-					obj = getPropByName(obj, objExp);
-				}
+				obj = getPropByName(obj, objExp);
 			}
-//			System.out.println(obj);
 		}
 		return obj;
 	}

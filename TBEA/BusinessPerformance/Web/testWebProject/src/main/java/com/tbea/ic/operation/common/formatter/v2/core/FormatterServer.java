@@ -98,10 +98,14 @@ public class FormatterServer {
 		return table;
 	}
 	
-	public List<List<String>> formatArray(List<String[]> table){
+	public List<List<String>> formatArray(List table){
 		List<List<String>> tableCopy = new ArrayList<List<String>>(table.size());
 		for (int i = 0, len = table.size(); i < len; ++i){
-			tableCopy.add(new EasyList<String>(table.get(i)).toList());
+			if (table.get(i).getClass().isArray()){
+				tableCopy.add(new EasyList((Object[]) table.get(i)).toList());
+			}else{
+				tableCopy.add((List<String>) table.get(i));
+			}
 		}
 		return format(tableCopy);
 	}
@@ -113,12 +117,17 @@ public class FormatterServer {
 		return list;		
 	}
 
-	List<List<String>> table;
+	List table;
 	public void setTable(List<List<String>> value) {
 		this.table = value;
 	}
 
 	public List<List<String>> getResult(){
+		if (!table.isEmpty()){
+			if (table.get(0).getClass().isArray()){
+				return this.formatArray(table);
+			}
+		}
 		return this.format(table);
 	}
 

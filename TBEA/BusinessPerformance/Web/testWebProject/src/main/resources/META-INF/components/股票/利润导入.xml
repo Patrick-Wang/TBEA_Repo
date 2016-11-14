@@ -1,0 +1,61 @@
+<components>
+ <service id="servStockLrImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="stock_lr">
+   <where>
+    <stockid type="string" ref="0"/>
+    <report_dt type="date" ref="1"/>
+   </where>
+   <set>
+    <stockid type="string" ref="${counter.reset[0].val}"/>
+    <report_dt type="date" ref="${counter.next.val}"/>
+    <m01 type="double" ref="${counter.next.val}"/>
+    <m02 type="double" ref="${counter.next.val}"/>
+    <m03 type="double" ref="${counter.next.val}"/>
+    <m04 type="double" ref="${counter.next.val}"/>
+    <m05 type="double" ref="${counter.next.val}"/>
+    <m06 type="double" ref="${counter.next.val}"/>
+    <m07 type="double" ref="${counter.next.val}"/>
+    <m08 type="double" ref="${counter.next.val}"/>
+    <m09 type="double" ref="${counter.next.val}"/>
+    <m10 type="double" ref="${counter.next.val}"/>
+    <m11 type="double" ref="${counter.next.val}"/>
+    <m12 type="double" ref="${counter.next.val}"/>
+    <m13 type="double" ref="${counter.next.val}"/>
+    <m14 type="double" ref="${counter.next.val}"/>
+    <m15 type="double" ref="${counter.next.val}"/>
+    <m16 type="double" ref="${counter.next.val}"/>
+    <m17 type="double" ref="${counter.next.val}"/>
+    <m18 type="double" ref="${counter.next.val}"/>
+    <m19 type="double" ref="${counter.next.val}"/>
+    <m20 type="double" ref="${counter.next.val}"/>
+    <m21 type="double" ref="${counter.next.val}"/>
+    <m22 type="double" ref="${counter.next.val}"/>
+    <m23 type="double" ref="${counter.next.val}"/>
+    <m24 type="double" ref="${counter.next.val}"/>
+    <m25 type="double" ref="${counter.next.val}"/>
+    <m26 type="double" ref="${counter.next.val}"/>
+    <m27 type="double" ref="${counter.next.val}"/>
+    <m28 type="string" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="stockLrImport">
+  <context key="data" value="${request.upfile.asCSVUtf8}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servStockLrImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="stockLrImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="stockLrImport"/>
+   <map key="title" value="利润表导入"/>
+  </response>
+ </controller>
+</components>
