@@ -135,7 +135,7 @@ group by
   <list id="ids" type="int">
    <item from="${0}" to="${companyname.size - 1}"/>
   </list>
-  <context key="counter" value="${counterFactory.newCounter.reset[2]}"/>
+  <context key="counter" value="${counterFactory.newCounter.reset[1]}"/>
   <table id="result" rowIds="ids" export="true">
    <col list="companyname"/>
    <col list="htjes"/>
@@ -268,6 +268,12 @@ group by
     <item>
      <col>0</col>
     </item>
+    <item>
+     <col>1</col>
+     <rowStart>0</rowStart>
+     <step>2</step>
+     <count>${result.ids.size / 2}</count>
+    </item>
    </mergeRows>
    <mergeTitle>true</mergeTitle>
    <data>${fmtServExecCostCollection.result}</data>
@@ -293,7 +299,7 @@ group by
     <ExcelTemplate ref="excelTemplate"/>
     <MergeRegion x="0" y="2" width="1" height="${result.ids.size}"/>
     <MergeRegion x="0" y="0" width="${title1.size}" height="2"/>
-    <MergeRegion x="1" y="0" width="2" height="2"/>
+    <MergeRegion x="1" y="2" width="1" height="2" yCount="${result.ids.size / 2}"/>
    </ExcelMergeFormatter>
    <ExcelHeaderCenterFormatter>
     <DefaultMatcher cols="0"/>

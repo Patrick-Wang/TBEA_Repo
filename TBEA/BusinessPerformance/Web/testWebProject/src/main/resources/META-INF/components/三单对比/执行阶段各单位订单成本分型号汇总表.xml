@@ -320,7 +320,7 @@ where
     <ExcelTemplate ref="excelTemplate"/>
     <MergeRegion x="0" y="2" width="1" height="${result.ids.size}"/>
     <MergeRegion x="0" y="0" width="${title1.size}" height="2"/>
-    <MergeRegion x="1" y="0" width="2" height="2"/>
+    <MergeRegion x="1" y="2" width="1" height="2" yCount="2"/>
    </ExcelMergeFormatter>
    <ExcelHeaderCenterFormatter>
     <DefaultMatcher cols="0"/>

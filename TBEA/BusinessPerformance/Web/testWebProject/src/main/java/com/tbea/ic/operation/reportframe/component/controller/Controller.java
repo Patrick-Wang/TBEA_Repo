@@ -16,6 +16,7 @@ import com.tbea.ic.operation.reportframe.interpreter.FormatterServerXmlInterpret
 import com.tbea.ic.operation.reportframe.interpreter.FormatterXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.IFXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ListXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.LogXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.LoopXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ResponseXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.XmlInterpreter;
@@ -48,7 +49,8 @@ public class Controller extends AbstractXmlComponent {
 			new ListXmlInterpreter(),
 			new CallXmlInterpreter(),
 			new IFXmlInterpreter(),
-			new LoopXmlInterpreter()
+			new LoopXmlInterpreter(),
+			new LogXmlInterpreter()
 	}; 
 	
 	

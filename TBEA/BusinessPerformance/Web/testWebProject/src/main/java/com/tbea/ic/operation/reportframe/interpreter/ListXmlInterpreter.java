@@ -78,7 +78,6 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		boolean bRet= Schema.isList(e);
 		if (bRet) {
-			//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 			elp = new ELParser(component);
 			List<Object> objs = (List<Object>) component.getVar(XmlUtil.getAttr(e, "id"));
 			if (null == objs || "true".equals(e.getAttribute("clear"))){

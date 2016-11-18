@@ -18,6 +18,20 @@ public class MathUtil {
 		return ret;
 	}
 	
+	public static Double sum(List<Double> vals){
+		Double ret = null;
+		for (int i = 0; i < vals.size(); ++i){
+			if (vals.get(i) != null){
+				if (ret == null){
+					ret = vals.get(i);
+				}else{
+					ret += vals.get(i);
+				}
+			}
+		}
+		return ret;
+	}
+	
 	public static Integer sum(Integer[] vals){
 		Integer ret = null;
 		for (int i = 0; i < vals.length; ++i){

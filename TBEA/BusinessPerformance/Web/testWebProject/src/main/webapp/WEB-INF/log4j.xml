@@ -113,7 +113,7 @@
    </logger>  
    
    <logger name="REPORT-TRACE">  
-      <level value="DEBUG" />  
+      <level value="INFO" />  
       <appender-ref ref="REPORT-TRACE-APPENDER" />
    </logger>  
   

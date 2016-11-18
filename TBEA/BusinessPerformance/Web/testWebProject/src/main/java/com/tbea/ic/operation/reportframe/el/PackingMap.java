@@ -12,6 +12,11 @@ import com.tbea.ic.operation.reportframe.util.TypeUtil;
 
 public class PackingMap extends ClosureMap {
 
+	public static interface ExtendMethod{
+		int paramCount(String name);
+		Object invoke(Object stub, List<Object> args);
+	}
+
 	private final static String METHOD_ETEND_ISARRAY = "isArray";
 	private final static String METHOD_ETEND_ISLIST = "isList";
 	private final static String METHOD_ETEND_TOJSON = "asJson";

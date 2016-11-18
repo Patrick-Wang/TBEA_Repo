@@ -1,6 +1,6 @@
 <components>
  <service id="servDqcznl" transaction="transactionManager">
-  <sql id="stockCode"> select code, convert(varchar(50), name) from stock_code</sql>
+  <sql id="stockCode"> select code, name from stock_code</sql>
   <list id="stock" type="string" sql="stockCode" value="0"/>
   <sql id="dj" order="stock" by="0" colcount="3">select 
 	sc.code,

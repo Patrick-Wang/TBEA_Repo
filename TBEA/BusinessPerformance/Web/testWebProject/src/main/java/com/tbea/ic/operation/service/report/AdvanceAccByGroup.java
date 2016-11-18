@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
@@ -39,6 +40,12 @@ public class AdvanceAccByGroup{
 			result.addAll(stub.compute(col, start, end, zbs, companies.get(i)));
 		}
 		return result;
+	}
+	
+	public Double computeSumZbs(int col, Date start, Date end,
+			List<Integer> zbs, List<Company> companies) {
+		List<Double> result = stub.compute(col, start, end, zbs, companies);
+		return MathUtil.sum(result);
 	}
 
 }

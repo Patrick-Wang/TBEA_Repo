@@ -1,40 +1,32 @@
 <components>
  <service id="servQyzbwcqkQuery" transaction="transactionManager">
   <list id="ndjh" type="object">
-   <item>${accFactory.njhAcc.compute
-	[0]
+   <item>${accFactory.njhMixedAcc.sumAll
 	[cal.date]
 	[cal.date]
-	[GSZB.HTQYE48.value.packAsList]
-	[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
+	[qyzbs]
+	[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
   </list>
   <list id="ydjh" type="object">
-   <item>${accFactory.yjhAcc.compute
-	[0]
+   <item>${accFactory.yjhMixedAcc.sumAll
 	[cal.date]
 	[cal.date]
-	[GSZB.HTQYE48.value.packAsList]
-	[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
+	[qyzbs]
+	[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
   </list>
   <list id="ydsj" type="object">
-   <item>${accFactory.sjAcc.compute
-[0]
+   <item>${accFactory.sjMixedAcc.sumAll
 [cal.date]
 [cal.date]
-[GSZB.HTQYE48.value.packAsList]
-[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
+[qyzbs]
+[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
   </list>
   <list id="ndlj" type="object">
-   <item>${accFactory.sjAcc.compute
-[0]
+   <item>${accFactory.sjMixedAcc.sumAll
 [cal.months[1].date]
 [cal.date]
-[GSZB.HTQYE48.value.packAsList]
-[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
+[qyzbs]
+[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
   </list>
   <list id="dysdndjh" type="object">
    <item>${accFactory.njhAcc.compute
@@ -74,7 +66,8 @@
   </list>
  </service>
  <service id="servQyzbwcqk" transaction="transactionManager">
-  <context key="compTypes" value="${authTypes[23]}"/>
+  <context key="compTypes" value="${authTypes[57]}"/>
+  <list id="qyzbs" type="int">291,300,305</list>
   <list id="comps" type="object">${CompanyType.SBGS},
 ${CompanyType.HBGS},
 ${CompanyType.XBC},
@@ -193,6 +186,7 @@ ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
   </formatter>
  </controller>
  <controller id="qyzbwcqkUpdate">
+  <context key="start" value="${calendar.current}"/>
   <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="servQyzbwcqk"/>
   <callcontroller id="qyzbwcqkFmtter"/>
@@ -257,7 +251,8 @@ ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
     </item>
    </header>
    <data>${serv.result}</data>
-  </response>
+  </response>  
+  <log ref="WEBSERVICE" level="debug">${calendar.current.time/1000 - start.time/1000}</log>
  </controller>
  <controller id="qyzbwcqkExport">
   <context key="cal" value="${request.date.asCalendar}"/>

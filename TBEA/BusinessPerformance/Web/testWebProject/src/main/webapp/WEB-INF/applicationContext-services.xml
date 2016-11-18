@@ -54,7 +54,7 @@
 					<property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/> 
 					<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" 
 					/> -->
-				<property name="databasePlatform" value="org.hibernate.dialect.SQLServerDialect" />
+				<property name="databasePlatform" value="com.tbea.ic.operation.reportframe.hibernate.dialect.sqlserver.SQLDialect" />
 				<property name="showSql" value="false" />
 			</bean>
 		</property>

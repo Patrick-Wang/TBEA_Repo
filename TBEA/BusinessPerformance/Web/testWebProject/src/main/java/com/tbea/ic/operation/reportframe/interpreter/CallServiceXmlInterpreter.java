@@ -2,10 +2,8 @@ package com.tbea.ic.operation.reportframe.interpreter;
 
 import org.w3c.dom.Element;
 
-import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Service;
-import com.tbea.ic.operation.reportframe.util.XmlUtil;
 
 
 public class CallServiceXmlInterpreter implements XmlInterpreter {
@@ -16,7 +14,7 @@ public class CallServiceXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isCallService(e)){
 			return false;
 		}
-		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
+		
 		String id = e.getAttribute("id");
 		
 		Service serv = null;
@@ -35,6 +33,7 @@ public class CallServiceXmlInterpreter implements XmlInterpreter {
 		}else{
 			System.out.println("call service " + e.getAttribute("id") + " find failed");
 		}
+		
 		return true;
 	}
 }

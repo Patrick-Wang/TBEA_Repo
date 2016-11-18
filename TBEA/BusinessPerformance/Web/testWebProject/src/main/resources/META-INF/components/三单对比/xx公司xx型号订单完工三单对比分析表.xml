@@ -501,7 +501,7 @@ where
    <formatter ref="dataFmt"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.dStart.asString}到${request.dEnd.asString}公司型号订单完工三单对比分析表.xls" serv="servFmt"/>
+  <response type="excel" ref="excelTemplate" name="公司型号订单完工三单对比分析表.xls" serv="servFmt"/>
  </controller>
  <controller id="modelCollection">
   <response type="jsp" name="sddb/sddb">

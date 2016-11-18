@@ -27,8 +27,6 @@ public class EasyCalendar {
 	private static final Integer KEY_NextMonth = count++;
 	private static final Integer KEY_LasyYear = count++;
 	private static final Integer KEY_NextYear = count++;
-	private static final Integer KEY_Months = count++;
-	private static final Integer KEY_Days = count++;
 	private static final Integer KEY_Date = count++;
 	private static final Integer KEY_Timestamp = count++;
 	private static final Integer KEY_SeasonStart = count++;

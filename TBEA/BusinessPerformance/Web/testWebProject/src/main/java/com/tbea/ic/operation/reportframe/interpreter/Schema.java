@@ -17,6 +17,14 @@ public class Schema {
 	static final String TAG_MERGE = "merge";
 	static final String TAG_CALL = "call";
 	static final String TAG_IF = "if";
+	static final String TAG_ELSE = "else";
+	static final String TAG_ELSEIF = "elseif";
+	static final String TAG_LOG = "log";
+	
+	public static boolean isLog(Element e){
+		return TAG_LOG.equals(e.getTagName());
+	}
+	
 	public static boolean isCallService(Element e){
 		return TAG_CALLSERVICE.equals(e.getTagName());
 	}
@@ -68,6 +76,14 @@ public class Schema {
 	public static boolean isIf(Element e){
 		return TAG_IF.equals(e.getTagName());
 	}
+	
+	public static boolean isElseIf(Element e){
+		return TAG_ELSEIF.equals(e.getTagName());
+	}
+	public static boolean isElse(Element e){
+		return TAG_ELSE.equals(e.getTagName());
+	}
+	
 	public static boolean isLoop(Element e){
 		return TAG_LOOP.equals(e.getTagName());
 	}

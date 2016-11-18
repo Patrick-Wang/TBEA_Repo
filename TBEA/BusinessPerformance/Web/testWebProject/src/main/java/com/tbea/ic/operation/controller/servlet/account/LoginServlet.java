@@ -167,7 +167,8 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("JYAnalysisEntry", drServ.hasJYAnalysisEntryAuthority(account))
 		.add("JYAnalysisSummary", drServ.hasJYAnalysisLookupAuthority(account))
 		.add("YSZKDialyLookup", yszkrb = (drServ.hasYSZKDialyLookupAuthority(account) ||
-				extAuthServ.hasAuthority(account, 28)))
+				extAuthServ.hasAuthority(account, 28) ||
+				extAuthServ.hasAuthority(account, 27)))
 		.add("XJLDialyLookup", drServ.hasXJLDialyLookupAuthority(account))
 		.add("JYAnalysisLookup", yszkrb || drServ.hasJYAnalysisLookupAuthority(account)
 								|| drServ.hasYSZKDialyLookupAuthority(account))

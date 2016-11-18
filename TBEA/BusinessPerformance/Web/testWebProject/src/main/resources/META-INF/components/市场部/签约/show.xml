@@ -754,24 +754,14 @@ ${compType.value}（万元）</list>
   </if>
  </controller>
  <controller id="scqy">
-  <context key="compTypes" value="${authTypes[23]}"/>
-  <if test="${compTypes.contains[CompanyType.SBGS] &amp;&amp; compTypes.contains[CompanyType.HBGS] &amp;&amp; compTypes.contains[CompanyType.XBC] &amp;&amp; compTypes.contains[CompanyType.TBGS]}">
-   <list id="compTypes" type="object">
-    <item insert="0">${CompanyType.BYQCY}</item>
-   </list>
-  </if>
-  <if test="${compTypes.contains[CompanyType.LLGS] &amp;&amp; compTypes.contains[CompanyType.XLC] &amp;&amp; compTypes.contains[CompanyType.DLGS]}">
-   <list id="compTypes" type="object">
-    <item insert="0">${CompanyType.XLCY}</item>
-   </list>
-  </if>
+  <callcontroller id="scbCompTypesShow"/>
   <response type="jsp" name="framework/templates/dateReport/show">
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
    <map key="updateUrl" value="scqyUpdate"/>
    <map key="exportUrl" value="scqyExport"/>
-   <map key="nodeData" value="${dataNodeFactory[companyTypeHelper.ids[compTypes]][companyTypeHelper.values[compTypes]].asJson}"/>
-   <map key="title" value="市场签约"/>
+   <map key="nodeData" value="${nodeData}"/>
+   <map key="title" value="市场重点产品签约"/>
   </response>
  </controller>
 </components>

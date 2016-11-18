@@ -11,6 +11,7 @@ import com.tbea.ic.operation.reportframe.interpreter.CallXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.IFXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ListXmlInterpreter;
+import com.tbea.ic.operation.reportframe.interpreter.LogXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.LoopXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.MergeXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.SqlXmlInterpreter;
@@ -40,7 +41,8 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 			new CallXmlInterpreter(),
 			new CallServiceXmlInterpreter(),
 			new IFXmlInterpreter(),
-			new LoopXmlInterpreter()
+			new LoopXmlInterpreter(),
+			new LogXmlInterpreter()
 	};
 
 

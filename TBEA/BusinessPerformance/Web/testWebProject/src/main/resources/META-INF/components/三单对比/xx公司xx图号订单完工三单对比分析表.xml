@@ -288,9 +288,17 @@ where
   </formatterServer>
   <response type="excel" ref="excelTemplate" name="图号订单完工三单对比分析表.xls" serv="servFmt"/>
  </controller>
+ <service id="servCollectionCode" transaction="transactionManager">
+  <sql id="xhxx">select 
+	row_number() over(order by (select 0)) AS ROWNUM,
+	convert(varchar(200), code) md
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS</sql>
+	<list id="ids" type="int" sql="xhxx" value="0"/>
+  <list id="values" type="string" sql="xhxx" value="1"/>
+ </service>
  <controller id="codeCollection">
-  <list id="ids" type="int">1, 2, 3, 4, 5</list>
-  <list id="values" type = "string">1, 2, 3, 4, 5</list>
+  <callservice id="servCollectionCode" inline="true"/>
   <response type="jsp" name="sddb/sddb">
    <map key="updateUrl" value="codeCollectionUpdate"/>
    <map key="exportUrl" value="codeCollectionExport"/>

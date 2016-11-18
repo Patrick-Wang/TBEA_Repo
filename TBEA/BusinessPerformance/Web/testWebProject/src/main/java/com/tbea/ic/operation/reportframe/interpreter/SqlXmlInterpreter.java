@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.reportframe.interpreter;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,10 @@ import com.tbea.ic.operation.reportframe.util.XmlUtil;
 public class SqlXmlInterpreter implements XmlInterpreter {
 
 	
+	private final static int SQL_RET_TABLE = 0;
+	private final static int SQL_RET_VALUE = 1;
+	private final static int SQL_RET_EMPTY = 2;
+	
 	boolean isInWhereClause(String sqlPrefix){
 		String lower = sqlPrefix.toLowerCase();
 		int index = lower.lastIndexOf("where");
@@ -38,7 +43,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		List<Pair<Integer, Object>> objs = new ArrayList<Pair<Integer, Object>>();
 		for (int i = elexps.size() - 1; i >= 0 ; --i){
 			try {
-				ReportLogger.logger().debug("exp : {}", elexps.get(i).exp());
+				ReportLogger.trace().debug("exp : {}", elexps.get(i).exp());
 				Object obj = elexps.get(i).value();
 				String preFix = sql.substring(0, elexps.get(i).start());
 				if (isInWhereClause(preFix)){
@@ -62,7 +67,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 
 		return q;
 	}
-	
+
 	private int find(List<Object[]> sqlRet, Object val, int by){
 		for (int j = 0; j < sqlRet.size(); ++j){
 			if (val.equals(sqlRet.get(j)[by])){
@@ -71,23 +76,39 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		}
 		return -1;
 	} 
-	
-	private void preHandleResult(List sqlRet){
-		if (!sqlRet.isEmpty() &&
-				null != sqlRet.get(0) &&
-				sqlRet.get(0).getClass().isArray()){
-				for (Object[] objs : (List<Object[]>)sqlRet){
-					for (int i = 0; i < objs.length; ++i){
-						if (objs[i] instanceof BigDecimal){
-							objs[i] = ((BigDecimal)objs[i]).doubleValue();
-						} else if (objs[i] instanceof Long){
-							objs[i] = ((Long)objs[i]).intValue();
-						} else if (objs[i] instanceof Date){
-							objs[i] = new java.util.Date(((Date)objs[i]).getTime());
-						}
+
+	private Object transform(Object obj) {
+		if (null != obj) {
+			if (obj instanceof BigDecimal) {
+				obj = ((BigDecimal) obj).doubleValue();
+			} else if (obj instanceof Long) {
+				obj = ((Long) obj).intValue();
+			} else if (obj instanceof BigInteger) {
+				obj = ((BigInteger) obj).intValue();
+			} else if (obj instanceof Date) {
+				obj = new java.util.Date(((Date) obj).getTime());
+			}
+		}
+		return obj;
+	}
+
+	private int typeTransform(List sqlRet) {
+		if (!sqlRet.isEmpty()) {
+			if (null != sqlRet.get(0) && sqlRet.get(0).getClass().isArray()) {
+				for (Object[] objs : (List<Object[]>) sqlRet) {
+					for (int i = objs.length - 1; i >= 0; --i) {
+						objs[i] = transform(objs[i]);
 					}
 				}
+				return SQL_RET_TABLE;
+			} else {
+				for (int i = sqlRet.size() - 1; i >= 0; --i) {
+					sqlRet.set(i, transform(sqlRet.get(i)));
+				}
+				return SQL_RET_VALUE;
 			}
+		}
+		return SQL_RET_EMPTY;
 	}
 	
 	private List parseOrder(List sqlRet, AbstractXmlComponent component, Element e) throws Exception{
@@ -129,7 +150,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			throw new Exception("请指定 transaction " + e.toString());
 		}
 		
-		ReportLogger.logger().debug("database : {}", trans);
+		ReportLogger.trace().debug("database : {}", trans);
 		
 		el = new ELParser(component);
 		if (XmlUtil.hasText(e) && !StringUtil.trim(XmlUtil.getText(e)).isEmpty()){
@@ -138,11 +159,16 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 					tx.getEntityManager());
 			if (e.hasAttribute("id")){
 				List sqlRet = q.getResultList();
-//				SQLQuery sq = q.unwrap(SQLQuery.class);
+//				QueryImpl sq = q.unwrap(QueryImpl.class);
+//				String[] alis = sq.getHibernateQuery().getReturnAliases();
+//				List<NativeSQLQueryReturn> sr = sq.getQueryReturns();
+//				sq.setResultTransformer()
 //				String[] alis = sq.getReturnAliases();
-//				Type[] tps = sq.getReturnTypes();
-				preHandleResult(sqlRet);
-				sqlRet = parseOrder(sqlRet, component, e);
+//				Type[] tps = sq.getHibernateQuery().getReturnTypes();
+				int retType = typeTransform(sqlRet);
+				if (retType != SQL_RET_VALUE){
+					sqlRet = parseOrder(sqlRet, component, e);
+				}
 				if (ReportLogger.logger().isDebugEnabled()){
 					ReportLogger.logger().debug(JSONArray.fromObject(sqlRet).toString());
 				}
@@ -152,7 +178,6 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			}
 		}else{
 			List sqlRet = (List) component.getVar(e.getAttribute("id"));
-			sqlRet = parseOrder(sqlRet, component, e);
 			sqlRet = parseOrder(sqlRet, component, e);
 			if (ReportLogger.logger().isDebugEnabled()){
 				ReportLogger.logger().debug(JSONArray.fromObject(sqlRet).toString());

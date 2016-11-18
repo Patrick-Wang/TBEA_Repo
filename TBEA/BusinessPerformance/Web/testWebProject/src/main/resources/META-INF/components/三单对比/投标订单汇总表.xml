@@ -12,8 +12,8 @@
    </list>
    <context key="dTmp" value="${dTmp.nextWeek}"/>
   </loop>
-  <sql id="tbddhz" order="weeks" by="0" colCount="17">select 
-	DATEPART(yy, bidding_date) * 100 + period,
+  <sql id="tbddhz" order="weeks" by="0" colcount="17">select 
+	convert(int, DATEPART(yy, bidding_date) * 100 + period) pid,
 	sum(not_tax_inclusive_price) ntip,
 	sum(gross_profit) gp,
 	sum(gross_profit) / nullif(sum(not_tax_inclusive_price),0) mll,
@@ -33,8 +33,7 @@
 from
 	JYGK_SDDB_BIDDING_ORDER_DETAILS
 where
-	dateDiff(yy, bidding_date, ${dStart.date}) &lt; 0 and
-	dateDiff(yy, bidding_date, ${dEnd.date}) &gt; 0 and 
+	bidding_date between ${dStart.monday.date} and ${dEnd.sunday.date} and
 	company_name in ${dwmcs}
 group by
 	DATEPART(yy, bidding_date),
@@ -60,8 +59,7 @@ group by
 from
 	JYGK_SDDB_BIDDING_ORDER_DETAILS
 where
-	dateDiff(yy, bidding_date, ${dStart.date}) &lt; 0 and
-	dateDiff(yy, bidding_date, ${dEnd.date}) &gt; 0 and 
+	bidding_date between ${dStart.monday.date} and ${dEnd.sunday.date} and
 	company_name in ${dwmcs}</sql>
   <list id="tbddhz" type="object">
    <item concat="tbddhzhj"/>
@@ -112,9 +110,9 @@ where
    <list id="comps" type="int">1,2,3</list>
    <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[comps]}"/>
   </if>
-  <if test="${50000 != compId}">
+  <else>
    <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compId.packAsList]}"/>
-  </if>
+  </else>
  </controller>
  <controller id="bidCollectionUpdate">
   <callcontroller id="bidCollectionParams"/>

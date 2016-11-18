@@ -1,0 +1,73 @@
+<components>
+ <service id="servGcyzbNCLoad" transaction="transNc">
+ 	<sql id="ncData" export="true">
+ 	select unit_code,
+       unit_name,
+       inputdate,
+       imdp.m10013 xmmc, --项目名称
+       imdp.m10012 byqrsr, --本月确认收入
+       imdp.m10011 bykpje, --本月开票金额
+       imdp.m10010 byrzch, --本月入账存货
+       imdp.m10009 ljqrsr, --累计确认收入
+       imdp.m10008 ljtxml, --累计体现毛利
+       imdp.m10007 ljkpje, --累计开票金额
+       imdp.m10006 zmysye, --账面应收余额
+       imdp.m10005 ljrzch, --累计入账存货
+       imdp.m10004 chye, --存货余额
+       imdp.m10003 zmch, --其中：账面存货
+       imdp.m10002 xmgschye --其中：已项目公司资产形式形成的存货余额
+--imdp.m10000 gsbm--项目所在公司编码 
+  from iufo_measure_data_pky3ljnq imdp
+  left join (select alone_id, code, inputdate, ver from iufo_measure_pubdata) imp
+    on imdp.alone_id = imp.alone_id
+  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
+    on imdp.m10000 = iui.unit_code
+ where imp.ver in (0, 510)
+   and imdp.m10000 in ('040203010200', '040203010500', '040203010600') and
+   extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year} and
+   extract(month from to_date(inputdate,'yyyy-mm-dd')) = ${cal.month}
+ 	</sql>
+ </service>
+ <service id="servGcyzbTransport" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${ncData}" table="project_comprehensive_table_nc">
+   <where>
+    <xmqc type="string" ref="3"/>
+   </where>
+   <set>
+    <xmqc type="string" ref="${counter.reset[3].val}"/>
+<!--     <khqc type="string" ref="${counter.next.val}"/> -->
+    <bysjqrsr type="double" ref="${counter.next.val}"/>
+    <bysjkpje type="double" ref="${counter.next.val}"/>
+<!--     <bysjml type="double" ref="${counter.next.val}"/> -->
+	<bysjrzch type="double" ref="${counter.next.val}"/>
+	<ljqrsr type="double" ref="${counter.next.val}"/>
+	<ljtxml type="double" ref="${counter.next.val}"/>
+	<ljkpje type="double" ref="${counter.next.val}"/>
+	<zmysye type="double" ref="${counter.next.val}"/>	
+	<ljrzch type="double" ref="${counter.next.val}"/> 
+	<chye type="double" ref="${counter.next.val}"/>
+	<qzzmch type="double" ref="${counter.next.val}"/>   
+    <qzyxmgszcxsxcdchye type="double" ref="${counter.next.val}"/>
+<!--     <yjzch type="double" ref="${counter.next.val}"/> -->
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="gcyzbTransport" cron="0 0 0 3-5 * ?">
+  <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
+   <context key="cal" value="${calendar.current.lastMonth}"/>
+  </if>
+  <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
+   <context key="cal" value="${request.date.asCalendar}"/>
+  </if>
+  <context key="src" value="from NC"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servGcyzbNCLoad"/>
+  <callservice id="servGcyzbTransport"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+</components>

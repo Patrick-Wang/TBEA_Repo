@@ -5,30 +5,30 @@
   <if test="${item == 1}">
    <callcontroller id="project_basic_info_update"/>
   </if>
-  <if test="${item == 2}">
+  <elseif test="${item == 2}">
    <callcontroller id="budget_control_update"/>
-  </if>
-  <if test="${item == 3}">
+  </elseif>
+  <elseif test="${item == 3}">
    <callcontroller id="business_indicator_update"/>
-  </if>
-  <if test="${item == 4}">
+  </elseif>
+  <elseif test="${item == 4}">
    <callcontroller id="business_indicator_plan_update"/>
-  </if>
-  <if test="${item == 5}">
+  </elseif>
+  <elseif test="${item == 5}">
    <callcontroller id="output_value_update"/>
-  </if>
-  <if test="${item == 6}">
+  </elseif>
+  <elseif test="${item == 6}">
    <callcontroller id="construction_update"/>
-  </if>
-  <if test="${item == 7}">
+  </elseif>
+  <elseif test="${item == 7}">
    <callcontroller id="electricity_update"/>
-  </if>
-  <if test="${item == 8}">
+  </elseif>
+  <elseif test="${item == 8}">
    <callcontroller id="quality_assurance_update"/>
-  </if>
-  <if test="${item == 9}">
+  </elseif>
+  <else>
    <callcontroller id="risk_update"/>
-  </if>
+  </else>
  </controller>
  <controller id="gcyzbExport">
   <context key="item" value="${request.item.asInt}"/>
@@ -36,42 +36,46 @@
   <if test="${item == 1}">
    <callcontroller id="project_basic_info_export"/>
   </if>
-  <if test="${item == 2}">
+  <elseif test="${item == 2}">
    <callcontroller id="budget_control_export"/>
-  </if>
-  <if test="${item == 3}">
+  </elseif>
+  <elseif test="${item == 3}">
    <callcontroller id="business_indicator_export"/>
-  </if>
-  <if test="${item == 4}">
+  </elseif>
+  <elseif test="${item == 4}">
    <callcontroller id="business_indicator_plan_export"/>
-  </if>
-  <if test="${item == 5}">
+  </elseif>
+  <elseif test="${item == 5}">
    <callcontroller id="output_value_export"/>
-  </if>
-  <if test="${item == 6}">
+  </elseif>
+  <elseif test="${item == 6}">
    <callcontroller id="construction_export"/>
-  </if>
-  <if test="${item == 7}">
+  </elseif>
+  <elseif test="${item == 7}">
    <callcontroller id="electricity_export"/>
-  </if>
-  <if test="${item == 8}">
+  </elseif>
+  <elseif test="${item == 8}">
    <callcontroller id="quality_assurance_export"/>
-  </if>
-  <if test="${item == 9}">
+  </elseif>
+  <else>
    <callcontroller id="risk_export"/>
-  </if>
+  </else>
  </controller>
  <service id="serv_project_names" transaction="transactionManager">
   <sql id="data">select 
 	NC.id,
-	NC.xmqc
+	PM.project_name
 from 
-	project_comprehensive_table_nc NC</sql>
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   <list id="xmIds" sql="data" value="0" export="true" type="int">
    <item insert="0">0</item>
   </list>
   <list id="xmmcs" sql="data" value="1" export="true" type="string">
-   <item insert="0">全部</item>
+   <item insert="0">全部项目</item>
   </list>
  </service>
  <controller id="gcyzb">
@@ -99,11 +103,11 @@ from
   </response>
  </controller>
  <service id="serv_project_basic_info" transaction="transactionManager">
-  <if test="${'xmmc' == '全部'}">
+  <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
-	NC.xmqc,
+	PM.project_name,
 	IMP.xmlx,
 	PM.project_category,
 	IMP.project_capacity,
@@ -113,31 +117,38 @@ from
 	PM.completion_date,
 	PM.payment_mode,
 	PM.prepayment
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name </sql>
-  </if>
-  <if test="${'xmmc' != '全部'}">
-   <sql id="data" export="true">select 
-	IMP.xmgs,
-	NC.xmbh,
-	NC.xmqc,
-	IMP.xmlx,
-	PM.project_category,
-	IMP.project_capacity,
-	NC.khqc,
-	PM.contract_amount,
-	PM.contract_date,
-	PM.completion_date,
-	PM.payment_mode,
-	PM.prepayment
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name 
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
 where
-	NC.xmqc = ${xmmc}</sql>
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   </if>
-      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
+  <else>
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	PM.project_name,
+	IMP.xmlx,
+	PM.project_category,
+	IMP.project_capacity,
+	NC.khqc,
+	PM.contract_amount,
+	PM.contract_date,
+	PM.completion_date,
+	PM.payment_mode,
+	PM.prepayment
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and
+	PM.project_name = ${xmmc}</sql>
+  </else>
+  <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="project_basic_info_update">
@@ -191,7 +202,7 @@ where
  <controller id="project_basic_info_format">
   <formatter id="fmtData" export="true">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="5,7,10,11"/>
+    <DefaultMatcher cols="5,7,11"/>
    </NumberFormatter>
   </formatter>
  </controller>
@@ -231,37 +242,44 @@ where
   <response type="excel" ref="excelTemplate" name="项目基本信息.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_budget_control" transaction="transactionManager">
-  <if test="${'xmmc' == '全部'}">
+  <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
-	NC.xmqc,
+	PM.project_name,
 	PM.income,
 	PM.bid_budget_cost,
 	PM.target_cost,
 	PM.dynamic_cost,
 	PM.unit_dynamic_cost
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
-  </if>
-  <if test="${'xmmc' != '全部'}">
-   <sql id="data" export="true">select 
-	IMP.xmgs,
-	NC.xmbh,
-	NC.xmqc,
-	PM.income,
-	PM.bid_budget_cost,
-	PM.target_cost,
-	PM.dynamic_cost,
-	PM.unit_dynamic_cost
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
 where
-	NC.xmqc = ${xmmc}</sql>
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   </if>
-  <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
+  <else>
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	PM.project_name,
+	PM.income,
+	PM.bid_budget_cost,
+	PM.target_cost,
+	PM.dynamic_cost,
+	PM.unit_dynamic_cost
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	PM.project_name = ${xmmc}</sql>
+  </else>
+  <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="budget_control_update">
@@ -339,15 +357,15 @@ where
   <response type="excel" ref="excelTemplate" name="项目预算控制情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_business_indicator" transaction="transactionManager">
-  <if test="${'xmmc' == '全部'}">
+  <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
-	NC.xmqc,
+	PM.project_name,
 	PM.finacial_record_gross_profit_rate,
 	NC.bysjqrsr,
 	NC.bysjkpje,
-	NC.bysjml,
+	PM.finacial_record_gross_profit_rate * NC.bysjqrsr,
 	NC.bysjrzch,
 	PM.current_month_fund_restream,
 	NC.ljqrsr,
@@ -365,43 +383,50 @@ where
 	NC.yjzch,
 	PM.dynamic_gross_profit_rate,
 	PM.overdue_payment	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
-  </if>
-  <if test="${'xmmc' != '全部'}">
-   <sql id="data" export="true">select 
-	IMP.xmgs,
-	NC.xmbh,
-	NC.xmqc,
-	PM.finacial_record_gross_profit_rate,
-	NC.bysjqrsr,
-	NC.bysjkpje,
-	NC.bysjml,
-	NC.bysjrzch,
-	PM.current_month_fund_restream,
-	NC.ljqrsr,
-	NC.ljqrsr/nullif(PM.income,0) as name1,
-	NC.ljtxml,
-	NC.ljkpje,
-	NC.ljkpje/nullif(PM.contract_amount,0)  as name2,
-	PM.cumulative_fund_restream,
-	PM.cumulative_fund_restream/nullif(PM.contract_amount,0)  as name3,
-	NC.zmysye,
-	NC.ljrzch,
-	NC.chye,
-	NC.qzzmch,
-	NC.qzyxmgszcxsxcdchye,
-	NC.yjzch,
-	PM.dynamic_gross_profit_rate,
-	PM.overdue_payment	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
 where
-	NC.xmqc = ${xmmc}</sql>
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   </if>
-    <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
+  <else>
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	PM.project_name,
+	PM.finacial_record_gross_profit_rate,
+	NC.bysjqrsr,
+	NC.bysjkpje,
+	PM.finacial_record_gross_profit_rate * NC.bysjqrsr,
+	NC.bysjrzch,
+	PM.current_month_fund_restream,
+	NC.ljqrsr,
+	NC.ljqrsr/nullif(PM.income,0) as name1,
+	NC.ljtxml,
+	NC.ljkpje,
+	NC.ljkpje/nullif(PM.contract_amount,0)  as name2,
+	PM.cumulative_fund_restream,
+	PM.cumulative_fund_restream/nullif(PM.contract_amount,0)  as name3,
+	NC.zmysye,
+	NC.ljrzch,
+	NC.chye,
+	NC.qzzmch,
+	NC.qzyxmgszcxsxcdchye,
+	NC.yjzch,
+	PM.dynamic_gross_profit_rate,
+	PM.overdue_payment	
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	PM.project_name = ${xmmc}</sql>
+  </else>
+  <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="business_indicator_update">
@@ -548,35 +573,42 @@ where
   <response type="excel" ref="excelTemplate" name="项目经营指标情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_business_indicator_plan" transaction="transactionManager">
-  <if test="${'xmmc' == '全部'}">
+  <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
-	NC.xmqc,
+	PM.project_name,
 	IMP.xyjhqrsr,
 	IMP.xyjhkpje,
 	IMP.xyjhrzch,
 	PM.next_month_fund_restream	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
-  </if>
-  <if test="${'xmmc' != '全部'}">
-   <sql id="data" export="true">select 
-	IMP.xmgs,
-	NC.xmbh,
-	NC.xmqc,
-	IMP.xyjhqrsr,
-	IMP.xyjhkpje,
-	IMP.xyjhrzch,
-	PM.next_month_fund_restream	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
 where
-	NC.xmqc = ${xmmc}</sql>
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   </if>
-      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
+  <else>
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	PM.project_name,
+	IMP.xyjhqrsr,
+	IMP.xyjhkpje,
+	IMP.xyjhrzch,
+	PM.next_month_fund_restream	
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	PM.project_name = ${xmmc}</sql>
+  </else>
+  <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="business_indicator_plan_update">
@@ -650,11 +682,11 @@ where
   <response type="excel" ref="excelTemplate" name="项目经营指标规划.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_construction" transaction="transactionManager">
-  <if test="${'xmmc' == '全部'}">
+  <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
-	NC.xmqc,
+	PM.project_name,
 	IMP.jcsgrq,
 	PM.progress_percentage,
 	IMP.installed_capacity,
@@ -666,33 +698,40 @@ where
 	IMP.sfzjwx,
 	IMP.wxdydj,
 	IMP.wxcd	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
-  </if>
-  <if test="${'xmmc' != '全部'}">
-   <sql id="data" export="true">select 
-	IMP.xmgs,
-	NC.xmbh,
-	NC.xmqc,
-	IMP.jcsgrq,
-	PM.progress_percentage,
-	IMP.installed_capacity,
-	IMP.xmsjjgrq,
-	IMP.xmsjjsrq,
-	IMP.sfzjsyz,
-	IMP.syzdydj,
-	IMP.syzrl,
-	IMP.sfzjwx,
-	IMP.wxdydj,
-	IMP.wxcd	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
 where
-	NC.xmqc = ${xmmc}</sql>
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   </if>
-      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
+  <else>
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	PM.project_name,
+	IMP.jcsgrq,
+	PM.progress_percentage,
+	IMP.installed_capacity,
+	IMP.xmsjjgrq,
+	IMP.xmsjjsrq,
+	IMP.sfzjsyz,
+	IMP.syzdydj,
+	IMP.syzrl,
+	IMP.sfzjwx,
+	IMP.wxdydj,
+	IMP.wxcd	
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	PM.project_name = ${xmmc}</sql>
+  </else>
+  <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="construction_update">
@@ -795,11 +834,11 @@ where
   <response type="excel" ref="excelTemplate" name="建设情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_electricity" transaction="transactionManager">
-  <if test="${'xmmc' == '全部'}">
+  <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
-	NC.xmqc,
+	PM.project_name,
 	IMP.qzbwrq,
 	IMP.ybwrl,
 	IMP.njllyxfdxss,
@@ -808,30 +847,37 @@ where
 	IMP.bysjfdl,
 	IMP.ndljswdl,
 	IMP.xyjhfdl	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name </sql>
-  </if>
-  <if test="${'xmmc' != '全部'}">
-   <sql id="data" export="true">select 
-	IMP.xmgs,
-	NC.xmbh,
-	NC.xmqc,
-	IMP.qzbwrq,
-	IMP.ybwrl,
-	IMP.njllyxfdxss,
-	IMP.bypjfh,
-	IMP.byjhfdl,
-	IMP.bysjfdl,
-	IMP.ndljswdl,
-	IMP.xyjhfdl	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name 
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
 where
-	NC.xmqc = ${xmmc}</sql>
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   </if>
-      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
+  <else>
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	PM.project_name,
+	IMP.qzbwrq,
+	IMP.ybwrl,
+	IMP.njllyxfdxss,
+	IMP.bypjfh,
+	IMP.byjhfdl,
+	IMP.bysjfdl,
+	IMP.ndljswdl,
+	IMP.xyjhfdl	
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	PM.project_name = ${xmmc}</sql>
+  </else>
+  <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="electricity_update">
@@ -921,35 +967,42 @@ where
   <response type="excel" ref="excelTemplate" name="发电情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_quality_assurance" transaction="transactionManager">
-  <if test="${'xmmc' == '全部'}">
+  <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
-	NC.xmqc,
+	PM.project_name,
 	IMP.htydzbq,
 	IMP.zbqqsbz,
 	IMP.zbqqssj,
 	IMP.sfbhhzbj
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
-  </if>
-  <if test="${'xmmc' != '全部'}">
-   <sql id="data" export="true">select 
-	IMP.xmgs,
-	NC.xmbh,
-	NC.xmqc,
-	IMP.htydzbq,
-	IMP.zbqqsbz,
-	IMP.zbqqssj,
-	IMP.sfbhhzbj
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
 where
-	NC.xmqc = ${xmmc}</sql>
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   </if>
-      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
+  <else>
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	PM.project_name,
+	IMP.htydzbq,
+	IMP.zbqqsbz,
+	IMP.zbqqssj,
+	IMP.sfbhhzbj
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	PM.project_name = ${xmmc}</sql>
+  </else>
+  <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="quality_assurance_update">
@@ -1021,11 +1074,11 @@ where
   <response type="excel" ref="excelTemplate" name="质保情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_risk" transaction="transactionManager">
-  <if test="${'xmmc' == '全部'}">
+  <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
-	NC.xmqc,
+	PM.project_name,
 	IMP.khzczbj,
 	IMP.khqyxz,
 	IMP.khdbdyfkbhqk,
@@ -1036,32 +1089,39 @@ where
 	IMP.fdlcnqk,
 	IMP.sfxyzcjgbhbzwj,
 	IMP.xmfxjyh	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
-  </if>
-  <if test="${'xmmc' != '全部'}">
-   <sql id="data" export="true">select 
-	IMP.xmgs,
-	NC.xmbh,
-	NC.xmqc,
-	IMP.khzczbj,
-	IMP.khqyxz,
-	IMP.khdbdyfkbhqk,
-	IMP.sfdzyw,
-	IMP.xmsfhfhg,
-	IMP.gqsfywjcsdfx,
-	IMP.gjsbcghtzbqjqssjsffgEPCht,
-	IMP.fdlcnqk,
-	IMP.sfxyzcjgbhbzwj,
-	IMP.xmfxjyh	
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
 where
-	NC.xmqc = ${xmmc}</sql>
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   </if>
-      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
+  <else>
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	PM.project_name,
+	IMP.khzczbj,
+	IMP.khqyxz,
+	IMP.khdbdyfkbhqk,
+	IMP.sfdzyw,
+	IMP.xmsfhfhg,
+	IMP.gqsfywjcsdfx,
+	IMP.gjsbcghtzbqjqssjsffgEPCht,
+	IMP.fdlcnqk,
+	IMP.sfxyzcjgbhbzwj,
+	IMP.xmfxjyh	
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	PM.project_name = ${xmmc}</sql>
+  </else>
+  <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="risk_update">
@@ -1159,11 +1219,11 @@ where
   <response type="excel" ref="excelTemplate" name="风险情况.xls" serv="fmtServ"/>
  </controller>
  <service id="serv_output_value" transaction="transactionManager">
-  <if test="${'xmmc' == '全部'}">
+  <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
 	NC.xmbh,
-	NC.xmqc,
+	PM.project_name,
 	IMP.cost_control_plan_amount,
 	IMP.achieve_amount_of_cumup	,
 	IMP.achieve_amount_of_cumua,
@@ -1172,30 +1232,37 @@ where
 	IMP.achieve_amount_of_nextp,
 	IMP.payment_of_current_month,
 	IMP.cumulative_payment
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name</sql>
-  </if>
-  <if test="${'xmmc' != '全部'}">
-   <sql id="data" export="true">select 
-	IMP.xmgs,
-	NC.xmbh,
-	NC.xmqc,
-	IMP.cost_control_plan_amount,
-	IMP.achieve_amount_of_cumup	,
-	IMP.achieve_amount_of_cumua,
-	IMP.achieve_amount_of_curp,
-	IMP.achieve_amount_of_cura,
-	IMP.achieve_amount_of_nextp,
-	IMP.payment_of_current_month,
-	IMP.cumulative_payment
-from project_comprehensive_table_nc NC
-left join project_comprehensive_table_imported IMP on NC.xmqc = IMP.xmqc 
-left join project_comprehensive_table_pm PM on NC.xmqc = PM.project_name
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
 where
-	NC.xmqc = ${xmmc}</sql>
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
   </if>
-      <list id="ids" type="int" ><item from="1" to="${data.size}"/></list>
+  <else>
+   <sql id="data" export="true">select 
+	IMP.xmgs,
+	NC.xmbh,
+	PM.project_name,
+	IMP.cost_control_plan_amount,
+	IMP.achieve_amount_of_cumup	,
+	IMP.achieve_amount_of_cumua,
+	IMP.achieve_amount_of_curp,
+	IMP.achieve_amount_of_cura,
+	IMP.achieve_amount_of_nextp,
+	IMP.payment_of_current_month,
+	IMP.cumulative_payment
+from 
+	project_comprehensive_table_nc NC, 
+	project_comprehensive_table_pm PM, 
+	project_comprehensive_table_imported IMP
+where
+	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	PM.project_name = ${xmmc}</sql>
+  </else>
+  <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
   <table id="result" table="${data}" export="true" rowIds="ids"/>
  </service>
  <controller id="output_value_update">

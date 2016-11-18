@@ -13,9 +13,9 @@
     <project_name type="string" ref="${counter.next.val}"/>
     <ETD_year type="double" ref="${counter.next.val}"/>
     <ETD_month type="double" ref="${counter.next.val}"/>
-    <model type="string" ref="${counter.next.val}"/>
-    <voltage type="string" ref="${counter.next.val}"/>
-    <capacity type="string" ref="${counter.next.val}"/>
+    <model type="double" ref="${counter.next.val}"/>
+    <voltage type="double" ref="${counter.next.val}"/>
+    <capacity type="double" ref="${counter.next.val}"/>
     <number type="double" ref="${counter.next.val}"/>
     <tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
@@ -27,12 +27,14 @@
     <bid_silicon_steel_price type="double" ref="${counter.next.val}"/>
     <bid_ele_copper_amount type="double" ref="${counter.next.val}"/>
     <bid_ele_copper_price type="double" ref="${counter.next.val}"/>
+    <bid_ele_copper_process_cost type="double" ref="${counter.next.val}"/>
     <bid_insulating_oil_amount type="double" ref="${counter.next.val}"/>
     <bid_insulating_oil_price type="double" ref="${counter.next.val}"/>
     <bid_rolled_steel_amount type="double" ref="${counter.next.val}"/>
     <bid_rolled_steel_price type="double" ref="${counter.next.val}"/>
     <bid_cardboard_amount type="double" ref="${counter.next.val}"/>
     <bid_cardboard_price type="double" ref="${counter.next.val}"/>
+    <other_material_cost type="double" ref="${counter.next.val}"/>
     <bid_material_total type="double" ref="${counter.next.val}"/>
     <labour_cost type="double" ref="${counter.next.val}"/>
     <manufacturing_cost type="double" ref="${counter.next.val}"/>
@@ -136,7 +138,7 @@
   <context key="counter" value="${counterFactory.newCounter}"/>
   <merge data="${data}" table="JYGK_SDDB_ORDER_EXECUTION_DETAILS">
    <where>
-    <code type="string" ref="16"/>
+    <code type="string" ref="14"/>
    </where>
    <set>
     <company_name type="string" ref="${counter.reset[0].val}"/>
@@ -147,9 +149,7 @@
     <contract_no type="string" ref="${counter.next.val}"/>
     <execution_year type="double" ref="${counter.next.val}"/>
     <execution_month type="double" ref="${counter.next.val}"/>
-    <completion_year type="double" ref="${counter.next.val}"/>
-    <completion_month type="double" ref="${counter.next.val}"/>
-    <actual_delivery_year_ type="double" ref="${counter.next.val}"/>
+    <actual_delivery_year type="double" ref="${counter.next.val}"/>
     <actual_delivery_month type="double" ref="${counter.next.val}"/>
     <model type="string" ref="${counter.next.val}"/>
     <voltage type="string" ref="${counter.next.val}"/>
@@ -158,8 +158,6 @@
     <code type="string" ref="${counter.next.val}"/>
     <tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
-    <nc_number type="double" ref="${counter.next.val}"/>
-    <nc_cost type="double" ref="${counter.next.val}"/>
     <bidding_transportation_fee type="double" ref="${counter.next.val}"/>
     <optimizing_transportation_cost type="double" ref="${counter.next.val}"/>
     <win_bid_cost type="double" ref="${counter.next.val}"/>
@@ -169,7 +167,6 @@
     <es_quantity_of_silicon_steel type="double" ref="${counter.next.val}"/>
     <es_unit_price_of_silicon_steel type="double" ref="${counter.next.val}"/>
     <es_amount_of_silicon_steel type="double" ref="${counter.next.val}"/>
-    <es_remarks type="string" ref="${counter.next.val}"/>
     <es_process_cost type="double" ref="${counter.next.val}"/>
     <es_total_amount_of_silicon_steel type="double" ref="${counter.next.val}"/>
     <es_copper_quantity type="double" ref="${counter.next.val}"/>
@@ -208,22 +205,19 @@
     <es_total_product_cost type="double" ref="${counter.next.val}"/>
     <es_gross_profit_amount type="double" ref="${counter.next.val}"/>
     <es_gross_margin type="double" ref="${counter.next.val}"/>
-    <op_silicon_steel_grades type="string" ref="${counter.next.val}"/>
+    <op_silicon_steel_grades type="double" ref="${counter.next.val}"/>
     <op_substitute_grade type="string" ref="${counter.next.val}"/>
     <op_quantity_of_silicon_steel type="double" ref="${counter.next.val}"/>
     <op_unit_price_of_silicon_steel type="double" ref="${counter.next.val}"/>
     <op_amount_of_silicon_steel type="double" ref="${counter.next.val}"/>
     <op_processing_cost_of_silicon_steel type="double" ref="${counter.next.val}"/>
-    <op_strip_reduction type="double" ref="${counter.next.val}"/>
     <op_copper_consumption type="double" ref="${counter.next.val}"/>
     <op_copper_price type="double" ref="${counter.next.val}"/>
     <op_amount_of_copper type="double" ref="${counter.next.val}"/>
     <op_copper_processing_fee type="double" ref="${counter.next.val}"/>
-    <op_copper_allocation type="double" ref="${counter.next.val}"/>
     <op_transformer_oil_specification type="double" ref="${counter.next.val}"/>
     <op_transformer_oil_consumption type="double" ref="${counter.next.val}"/>
     <op_unit_price_of_transformer_oil type="double" ref="${counter.next.val}"/>
-    <op_price_remarks type="double" ref="${counter.next.val}"/>
     <op_transformer_oil_amount type="double" ref="${counter.next.val}"/>
     <op_steel_dosage type="double" ref="${counter.next.val}"/>
     <op_steel_price type="double" ref="${counter.next.val}"/>
@@ -281,7 +275,7 @@
    </where>
    <set>
     <company_name type="string" ref="${counter.reset[0].val}"/>
-    <completion_year type="double" ref="${counter.next.val}"/>
+    <completion_year type="string" ref="${counter.next.val}"/>
     <completion_month type="double" ref="${counter.next.val}"/>
     <client_name type="string" ref="${counter.next.val}"/>
     <project_name type="string" ref="${counter.next.val}"/>

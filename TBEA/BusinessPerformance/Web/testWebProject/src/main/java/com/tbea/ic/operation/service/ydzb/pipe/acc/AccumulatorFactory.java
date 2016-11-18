@@ -8,6 +8,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.service.report.AccByComps;
 import com.tbea.ic.operation.service.report.AdvanceAccByGroup;
+import com.tbea.ic.operation.service.report.MixedAcc;
 import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccDataSource;
 import com.tbea.ic.operation.service.util.pipe.acc.composite.CompositeAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
@@ -24,6 +25,10 @@ public class AccumulatorFactory {
 	private AdvanceAccByGroup njhByGroup;
 	private AdvanceAccByGroup yjhByGroup;
 	
+	private MixedAcc sjMixedAcc;
+	private MixedAcc njhMixedAcc;
+	private MixedAcc yjhMixedAcc;
+	
 	
 	public AccumulatorFactory(SJZBDao sjzbDao, YJ20ZBDao yj20zbDao,
 			YJ28ZBDao yj28zbDao, YDZBZTDao ydzbztDao, YDJHZBDao ydjhzbDao, NDJHZBDao ndjhzbDao){
@@ -36,6 +41,9 @@ public class AccumulatorFactory {
 		sjByGroup = new AdvanceAccByGroup(sjAcc);
 		njhByGroup = new AdvanceAccByGroup(njhAcc);
 		yjhByGroup = new AdvanceAccByGroup(yjhAcc);
+		sjMixedAcc = new MixedAcc(sjAcc);
+		njhMixedAcc = new MixedAcc(njhAcc);
+		yjhMixedAcc = new MixedAcc(yjhAcc);
 	}
 	
 	public IAccumulator getSjAcc(){
@@ -76,6 +84,18 @@ public class AccumulatorFactory {
 
 	public AdvanceAccByGroup getYjhByGroup() {
 		return yjhByGroup;
+	}
+
+	public MixedAcc getSjMixedAcc() {
+		return sjMixedAcc;
+	}
+
+	public MixedAcc getNjhMixedAcc() {
+		return njhMixedAcc;
+	}
+
+	public MixedAcc getYjhMixedAcc() {
+		return yjhMixedAcc;
 	}
 	
 }

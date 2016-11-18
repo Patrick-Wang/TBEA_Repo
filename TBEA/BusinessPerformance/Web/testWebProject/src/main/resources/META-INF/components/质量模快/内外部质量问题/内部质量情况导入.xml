@@ -88,13 +88,13 @@
    <map key="title" value="内部质量情况导入"/>
   </response>
  </controller>
- <controller id="nbzlqkTransport" cron1="0 0 2 ? * 2">
+ <controller id="nbzlqkTransport" cron="0 0 0 * * ?">
   <context key="time" value="${calendar.current.secondFormat}"/>
-  <!--     <callservice id="servNbzlqkTransTb"/>-->
- <!-- <callservice id="servNbzlqkTransSb"/>  -->
- <!--  <callservice id="servNbzlqkTransXl"/>  -->
+      <callservice id="servNbzlqkTransTb"/>
+ <callservice id="servNbzlqkTransSb"/> 
+  <callservice id="servNbzlqkTransXl"/> 
      <callservice id="servNbzlqkTransHb"/> 
-  <!--  <callservice id="servNbzlqkTransDl"/>   -->
+   <callservice id="servNbzlqkTransDl"/>  
   <response type="json">
    <errorCode>0</errorCode>
    <message>OK</message>

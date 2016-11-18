@@ -103,7 +103,7 @@ where
    </merge>
   </if>
  </service>
- <controller id="gylTransport" cron1="0 0 4 ？ * 2">
+ <controller id="gylTransport" cron="0 0 1 * * ?">
   <context key="time" value="${calendar.current.secondFormat}"/>
   <callservice id="servGylTransport"/>
   <response type="json">

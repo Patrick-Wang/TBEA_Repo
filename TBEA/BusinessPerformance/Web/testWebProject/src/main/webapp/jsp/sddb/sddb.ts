@@ -23,7 +23,7 @@ module sddb{
                 $(sels[i]) .multiselect({
                         multiple: false,
                         header: false,
-                        minWidth: width < 80 ? 80 : width,
+                        minWidth: width < 80 ? 80 : width + 20,
                         height: '100%',
                         // noneSelectedText: "请选择月份",
                         selectedList: 1

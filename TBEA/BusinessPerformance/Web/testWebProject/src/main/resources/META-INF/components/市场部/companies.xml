@@ -1,0 +1,23 @@
+<components>
+ <controller id="scbCompTypesShow">
+  <context key="compTypes" value="${authTypes[57]}"/>
+  <if>${
+compTypes.contains[CompanyType.SBGS] &amp;&amp; 
+compTypes.contains[CompanyType.HBGS] &amp;&amp; 
+compTypes.contains[CompanyType.XBC] &amp;&amp; 
+compTypes.contains[CompanyType.TBGS]
+}<list id="compTypes" type="object">
+    <item>${CompanyType.BYQCY}</item>
+   </list>
+  </if>
+  <if>${
+compTypes.contains[CompanyType.LLGS] &amp;&amp; 
+compTypes.contains[CompanyType.XLC] &amp;&amp; 
+compTypes.contains[CompanyType.DLGS]
+}<list id="compTypes" type="object">
+    <item>${CompanyType.XLCY}</item>
+   </list>
+  </if>
+  <context key="nodeData" value="${dataNodeFactory[companyTypeHelper.ids[compTypes]][companyTypeHelper.values[compTypes]].asJson}"/>
+ </controller>
+</components>

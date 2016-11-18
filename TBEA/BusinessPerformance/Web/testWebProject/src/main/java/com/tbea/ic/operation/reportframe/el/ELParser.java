@@ -29,27 +29,6 @@ public class ELParser {
 					querier.next(),
 					loader));
 		}
-//		int start = express.indexOf("${");
-//		int end = -1;
-//		if (start >= 0){
-//			end = StringUtil.findPair(express, start + 1, '{', '}');
-//		}else{
-//			end = -1;
-//		}
-//		while (end >= 0) {
-//			String val = express.substring(start + 2, end - 1);
-//			exps.add(new ELExpression(
-//					start, 
-//					end, 
-//					val,
-//					loader));
-//			start = express.indexOf("${", end + 1);
-//			if (start >= 0){
-//				end = StringUtil.findPair(express, start + 1, '{', '}');
-//			}else{
-//				break;
-//			}
-//		}
 		return exps;
 	}
 }

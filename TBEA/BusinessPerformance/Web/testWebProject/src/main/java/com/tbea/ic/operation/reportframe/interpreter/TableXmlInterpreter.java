@@ -1,5 +1,7 @@
 package com.tbea.ic.operation.reportframe.interpreter;
 
+import java.util.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -199,31 +201,48 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	private void parseRow(List<List<Object>> rows, Table tb) {
 		for (int i = 0; i < rows.size(); ++i){
 			for (int j = 0; j < rows.get(i).size(); ++j){
-				if (tb.getValues().size() >= j){
+				if (tb.getValues().size() <= j){
 					tb.getValues().add(new ArrayList<Object>());
 				}
-				tb.getValues().get(j).add(rows.get(i).get(j));
+				tb.getValues().get(j).add(o2s(rows.get(i).get(j)));
 			}
 		}
 	}
 
+	private String o2s(Object o){
+		String s = null;
+		if (null != o){
+			if (o instanceof Date){
+				s = Util.formatToDay((Date)o);
+			}else if (o instanceof Timestamp){
+				s = Util.formatToSecond((Timestamp)o);
+			}else{
+				s = o.toString();
+			}
+		}
+		return s;
+	}
+	
 	private void parseArray(List<Object[]> rows, Table tb) {
 		for (int i = 0; i < rows.size(); ++i){
 			for (int j = 0; j < rows.get(i).length; ++j){
-				if (tb.getValues().size() >= j){
+				if (tb.getValues().size() <= j){
 					tb.getValues().add(new ArrayList<Object>());
 				}
-				tb.getValues().get(j).add(rows.get(i)[j]);
+				tb.getValues().get(j).add(o2s(rows.get(i)[j]));
 			}
 		}
 	}
 
 	private void parseList(List<Object> row, Table tb) {
 		for (int i = 0; i < row.size(); ++i){
+			if (tb.getValues().size() <= i){
+				tb.getValues().add(new ArrayList<Object>());
+			}
 			List<Object> col = new ArrayList<Object>();
-			col.add(row.get(i));
+			col.add(o2s(row.get(i)));
 			tb.getValues().add(col);
-		}	
+		}
 	}
 
 	protected void parseGrowthRates(AbstractXmlComponent component, Table tb,
@@ -383,94 +402,132 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		return ret;
 	}
 
+	Set<Integer> getAllRows(Element item, Table tb) throws Exception{
+		NodeList list = item.getElementsByTagName("rangeIds");
+		Set<Integer> rows = new HashSet<Integer>();
+		if (list.getLength() > 0) {
+			List<Integer> rangeRow = idsToRows(
+					parserArray(XmlUtil.elementText(list, 0)), tb);
+			for (Integer row : rows) {
+				if (row < rangeRow.get(0) || row > rangeRow.get(1)) {
+					rows.remove(row);
+				}
+			}
+
+			for (int i = rangeRow.get(0); i <= rangeRow.get(1); ++i) {
+				rows.add(i);
+			}
+		}
+
+		list = item.getElementsByTagName("rangeRows");
+		if (list.getLength() > 0) {
+			List<Integer> rangeRow = parserArray(XmlUtil.elementText(list, 0));
+			for (Integer row : rows) {
+				if (row < rangeRow.get(0) || row > rangeRow.get(1)) {
+					rows.remove(row);
+				}
+			}
+
+			for (int i = rangeRow.get(0); i <= rangeRow.get(1); ++i) {
+				rows.add(i);
+			}
+		}
+
+		if (rows.isEmpty()) {
+			list = item.getElementsByTagName("inIds");
+
+			if (list.getLength() > 0) {
+				List<Integer> ids = parserArray(XmlUtil.elementText(list, 0));
+				rows.addAll(idsToRows(ids, tb));
+			}
+
+			list = item.getElementsByTagName("inRows");
+			if (list.getLength() > 0) {
+				rows.addAll(parserArray(XmlUtil.elementText(list, 0)));
+			}
+		}
+
+		list = item.getElementsByTagName("excIds");
+		if (list.getLength() > 0) {
+			List<Integer> excRows = idsToRows(
+					parserArray(XmlUtil.elementText(list, 0)), tb);
+			for (Integer row : excRows) {
+				rows.remove(row);
+			}
+		}
+
+		list = item.getElementsByTagName("excRows");
+		if (list.getLength() > 0) {
+			List<Integer> excRows = parserArray(XmlUtil.elementText(list, 0));
+			for (Integer row : excRows) {
+				rows.remove(row);
+			}
+		}
+		return rows;
+	}
+	
+	
+	Set<Integer> getExcludeCols(Element item) throws Exception{
+		NodeList cols = item.getElementsByTagName("excludeCol");
+		Set<Integer> excludeCols = null;
+		if (cols.getLength() > 0){
+			excludeCols = XmlUtil.toIntSet(XmlUtil.elementText(cols, 0), elp);
+		}
+		return excludeCols;
+	}
+	
 	private void parseSumRow(AbstractXmlComponent component, Table tb,
 			Element item) throws Exception {
-		int index = getTargetIndex(component, item, tb);
-		if (index >= 0) {
-			NodeList list = item.getElementsByTagName("rangeIds");
-			Set<Integer> rows = new HashSet<Integer>();
-			if (list.getLength() > 0) {
-				List<Integer> rangeRow = idsToRows(
-						parserArray(XmlUtil.elementText(list, 0)), tb);
-				for (Integer row : rows) {
-					if (row < rangeRow.get(0) || row > rangeRow.get(1)) {
-						rows.remove(row);
-					}
-				}
-
-				for (int i = rangeRow.get(0); i <= rangeRow.get(1); ++i) {
-					rows.add(i);
-				}
-			}
-
-			list = item.getElementsByTagName("rangeRows");
-			if (list.getLength() > 0) {
-				List<Integer> rangeRow = parserArray(XmlUtil.elementText(list, 0));
-				for (Integer row : rows) {
-					if (row < rangeRow.get(0) || row > rangeRow.get(1)) {
-						rows.remove(row);
-					}
-				}
-
-				for (int i = rangeRow.get(0); i <= rangeRow.get(1); ++i) {
-					rows.add(i);
-				}
-			}
-
-			if (rows.isEmpty()) {
-				list = item.getElementsByTagName("inIds");
-
-				if (list.getLength() > 0) {
-					List<Integer> ids = parserArray(XmlUtil.elementText(list, 0));
-					rows.addAll(idsToRows(ids, tb));
-				}
-
-				list = item.getElementsByTagName("inRows");
-				if (list.getLength() > 0) {
-					rows.addAll(parserArray(XmlUtil.elementText(list, 0)));
-				}
-			}
-
-			list = item.getElementsByTagName("excIds");
-			if (list.getLength() > 0) {
-				List<Integer> excRows = idsToRows(
-						parserArray(XmlUtil.elementText(list, 0)), tb);
-				for (Integer row : excRows) {
-					rows.remove(row);
-				}
-			}
-
-			list = item.getElementsByTagName("excRows");
-			if (list.getLength() > 0) {
-				List<Integer> excRows = parserArray(XmlUtil.elementText(list, 0));
-				for (Integer row : excRows) {
-					rows.remove(row);
-				}
-			}
-
-			list = item.getElementsByTagName("excludeCol");
-			List<Integer> excludeCols = parserArray(XmlUtil.elementText(list, 0));
+		int targetCol = getTargetIndex(component, item, tb);
+		if (targetCol < 0) {
+			return;
+		}
+			Set<Integer> rows = getAllRows(item, tb);
 			
-			for (int i = 0; i < tb.getValues().size(); ++i) {
-				if (excludeCols.indexOf(i) < 0){
+			if (rows.isEmpty()){
+				return;
+			}
+			
+			
+			Set<Integer> excludeCols = getExcludeCols(item);
+			
+			Object val = null;
+			List<Object> tbCol = null;
+			if (excludeCols != null){
+				for (int i = 0, len = tb.getValues().size(); i < len; ++i) {
+					if (excludeCols.contains(i)){
+						continue;
+					}
+					tbCol = tb.getValues().get(i);
 					for (Integer row : rows) {
-						Object val = tb.getValues().get(i).get(row);
+						val = tbCol.get(row);
 						if (val instanceof Double) {
-							tb.getValues().get(i).set(
-									index,
-									MathUtil.sum((Double) tb.getValues().get(i).get(index), 
+							tbCol.set(targetCol,
+							MathUtil.sum((Double) tbCol.get(targetCol), (Double) val));
+						} else if (val instanceof Integer) {
+							tbCol.set(targetCol,
+							MathUtil.sum((Integer) tbCol.get(targetCol), (Integer) val));
+						}
+					}
+				}
+			}else{
+				for (int i = 0, len = tb.getValues().size(); i < len; ++i) {
+					tbCol = tb.getValues().get(i);
+					for (Integer row : rows) {
+						val = tbCol.get(row);
+						if (val instanceof Double) {
+							tbCol.set(targetCol,
+							MathUtil.sum((Double) tbCol.get(targetCol), 
 											(Double) val));
 						} else if (val instanceof Integer) {
-							
-							tb.getValues().get(i).set(
-										index,
-										MathUtil.sum((Integer) tb.getValues().get(i).get(index), 
+							tbCol.set(targetCol,
+							MathUtil.sum((Integer) tbCol.get(targetCol), 
 												(Integer) val));
 						}
 					}
 				}
 			}
-		}
+		
 	}
 	
 	private Double div(Double sub, Double base){

@@ -93,8 +93,8 @@ where
    <map key="month" value="${calendar.current.month}"/>
    <map key="updateUrl" value="scqyEntryUpdate"/>
    <map key="submitUrl" value="scqyEntrySubmit"/>
-   <map key="title" value="市场签约"/>
-   <map map="${authMgr[23]}"/>
+   <map key="title" value="市场重点产品签约"/>
+   <map map="${authMgr[58]}"/>
   </response>
  </controller>
  <controller id="scqyEntrySubmit">

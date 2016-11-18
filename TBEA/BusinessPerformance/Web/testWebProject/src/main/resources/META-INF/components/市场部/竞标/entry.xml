@@ -101,7 +101,7 @@ where
    <map key="updateUrl" value="scjbEntryUpdate"/>
    <map key="submitUrl" value="scjbEntrySubmit"/>
    <map key="title" value="市场竞标"/>
-   <map map="${authMgr[23]}"/>
+   <map map="${authMgr[58]}"/>
   </response>
  </controller>
  <controller id="scjbEntrySubmit">

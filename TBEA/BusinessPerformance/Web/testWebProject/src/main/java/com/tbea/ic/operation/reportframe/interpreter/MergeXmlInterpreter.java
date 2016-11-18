@@ -138,7 +138,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		where = compile(e.getElementsByTagName("where"));
 		set = compile(e.getElementsByTagName("set"));
 		String trans = component.getConfigAttribute("transaction");
-		ReportLogger.logger().debug("database : {}", trans);
+		ReportLogger.trace().debug("database : {}", trans);
 		Transaction tx = (Transaction) component.getVar(trans);
 		EntityManager em = tx.getEntityManager();
 		if (dataObj instanceof JSONArray){
@@ -164,7 +164,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			String insertSql = insertValues.toString();
 			insertValues = null;
 			insertCount = 0;
-			ReportLogger.logger().info(insertSql);
+			ReportLogger.trace().info(insertSql);
 			em.createNativeQuery(insertSql).executeUpdate() ;
 		}
 	}
@@ -248,7 +248,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				jrow.add(obj);
 			}
 		}else{
-			ReportLogger.logger().error("list2Json type error : " + lRow);
+			ReportLogger.trace().error("list2Json type error : " + lRow);
 		}
 		return jrow;
 	}
@@ -472,7 +472,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		if (null != whereSql){
 			String sql = "select count(*) from " + table + whereSql;
 			List ret = em.createNativeQuery(sql).getResultList();
-			ReportLogger.logger().info(sql);
+			ReportLogger.trace().info(sql);
 			count = (Integer) ret.get(0);
 		}
 		if (count > 0){

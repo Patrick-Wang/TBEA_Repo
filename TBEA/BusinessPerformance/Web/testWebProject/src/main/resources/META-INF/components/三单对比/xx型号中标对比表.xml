@@ -1,6 +1,6 @@
 <components>
  <service id="servWinBidModelCollection" transaction="transactionManager">
-  <sql id="tbddhz" order="dwmcs" by="0" colCount="19">select 
+  <sql id="tbddhz" order="dwmcs" by="0" colcount="19">select 
 	convert(varchar(200), company_name) cn,
 	sum(not_tax_inclusive_price) tip,
 	sum(win_bid_gross_profit_amount) gp,

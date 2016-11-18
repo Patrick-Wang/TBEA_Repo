@@ -1,191 +1,476 @@
 <components>
  <service id="servQyzbxmgsQuery" transaction="transactionManager">
-  <list id="ndjh" type="object">
-   <item>${accFactory.njhAcc.compute
-	[0]
-	[cal.date]
-	[cal.date]
-	[GSZB.HTQYE48.value.packAsList]
-	[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
-  </list>
-  <list id="ydjh" type="object">
-   <item>${accFactory.yjhAcc.compute
-	[0]
-	[cal.date]
-	[cal.date]
-	[GSZB.HTQYE48.value.packAsList]
-	[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
-  </list>
   <list id="ydsj" type="object">
-   <item>${accFactory.sjAcc.compute
-[0]
+   <item>${accFactory.sjMixedAcc.sumAll
 [cal.date]
 [cal.date]
-[GSZB.HTQYE48.value.packAsList]
-[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
+[qyzb]
+[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
+  </list>
+  <list id="ydsjQntq" type="object">
+   <item>${accFactory.sjMixedAcc.sumAll
+[cal.lastYear.date]
+[cal.lastYear.date]
+[qyzb]
+[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
+  </list>
+  <list id="jdlj" type="object">
+   <item>${accFactory.sjMixedAcc.sumAll
+[cal.seasonStart.date]
+[cal.date]
+[qyzb]
+[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
+  </list>
+  <list id="jdljQntq" type="object">
+   <item>${accFactory.sjMixedAcc.sumAll
+[cal.lastYear.seasonStart.date]
+[cal.lastYear.date]
+[qyzb]
+[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
   </list>
   <list id="ndlj" type="object">
-   <item>${accFactory.sjAcc.compute
-[0]
+   <item>${accFactory.sjMixedAcc.sumAll
 [cal.months[1].date]
 [cal.date]
-[GSZB.HTQYE48.value.packAsList]
-[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
+[qyzb]
+[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
   </list>
-  <list id="dysdndjh" type="object">
-   <item>${accFactory.njhAcc.compute
-[0]
-[cal.date]
-[cal.date]
-[GSZB.SDSCQY294.value.packAsList]
-[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
-  </list>
-  <list id="dysdndlj" type="object">
-   <item>${accFactory.sjAcc.compute
-[0]
-[cal.months[1].date]
-[cal.date]
-[GSZB.SDSCQY294.value.packAsList]
-[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
-  </list>
-  <list id="zzfwyndjh" type="object">
-   <item>${accFactory.njhAcc.compute
-[0]
-[cal.date]
-[cal.date]
-[GSZB.QZ_JCFWYWGNQY300.value.packAsList]
-[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
-  </list>
-  <list id="zzfwyndlj" type="object">
-   <item>${accFactory.sjAcc.compute
-[0]
-[cal.months[1].date]
-[cal.date]
-[GSZB.QZ_JCFWYWGNQY300.value.packAsList]
-[orgs.BMDBOrganization.companiesByIds[dwids]]
-[0]}</item>
+  <list id="ndljQntq" type="object">
+   <item>${accFactory.sjMixedAcc.sumAll
+[cal.lastYear.months[1].date]
+[cal.lastYear.date]
+[qyzb]
+[orgs.BMDBOrganization.companiesByIds[dwids]]}</item>
   </list>
  </service>
+ <service id="servQyzbxmgsInsert" transaction="transactionManager">
+  <list id="ndjh" type="double">
+   <item isNull="true"/>
+  </list>
+  <list id="ydjh" type="double">
+   <item isNull="true"/>
+  </list>
+  <list id="jdjh" type="double">
+   <item isNull="true"/>
+  </list>
+  <list id="ydsj" type="double">
+   <item isNull="true"/>
+  </list>
+  <list id="ydsjQntq" type="double">
+   <item isNull="true"/>
+  </list>
+  <list id="jdlj" type="double">
+   <item isNull="true"/>
+  </list>
+  <list id="jdljQntq" type="double">
+   <item isNull="true"/>
+  </list>
+  <list id="ndlj" type="double">
+   <item isNull="true"/>
+  </list>
+  <list id="ndljQntq">
+   <item isNull="true"/>
+  </list>
+ </service>
+ <service id="servQyzbxmgsSqlQuery" transaction="transactionManager">
+  <sql id="ndjhSql" order="dwids" by="0" colcount="2">select 
+	dwid,sum(ndjhz) ndz
+from 
+	jygk_ndjhzb
+where 
+	dwid in ${dwids} and
+	zbid = ${qyzb} and
+	nf = ${cal.year}
+group by
+	dwid</sql>
+  <list id="ndjh" type="double" sql="ndjhSql" value="1"/>
+  <sql id="ydjhSql" order="dwids" by="0" colcount="2">select 
+	dwid,sum(ydjhz) ydz
+from 
+	jygk_ydjhzb
+where 
+	dwid in ${dwids} and
+	zbid = ${qyzb} and
+	nf = ${cal.year} and
+	yf = ${cal.month}
+group by
+	dwid</sql>
+  <list id="ydjh" type="double" sql="ydjhSql" value="1"/>
+  <sql id="jdjhSql" order="dwids" by="0" colcount="2">select 
+	dwid,sum(ydjhz) ydz
+from 
+	jygk_ydjhzb
+where 
+	dwid in ${dwids} and
+	zbid = ${qyzb} and
+	dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), ${cal.seasonStart.date}) &lt;= 0 and 
+ 	dateDiff(mm, dateadd(mm, yf - 1, dateadd(yy, nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 
+group by
+	dwid</sql>
+  <list id="jdjh" type="double" sql="jdjhSql" value="1"/>
+ </service>
  <service id="servQyzbxmgs" transaction="transactionManager">
-  <context key="compTypes" value="${authTypes[23]}"/>
-  <list id="comps" type="object">${CompanyType.SBGS},
-${CompanyType.HBGS},
-${CompanyType.XBC},
-${CompanyType.TBGS},
-${CompanyType.LLGS},
-${CompanyType.XLC},
-${CompanyType.DLGS}</list>
-  <if>${
-	compTypes.contains[CompanyType.LLGS] &amp;&amp;  
-	compTypes.contains[CompanyType.XLC] &amp;&amp; 
-	compTypes.contains[CompanyType.DLGS] 
-}<list id="comps" type="object">
-    <item>${CompanyType.XLCY}</item>
-   </list>
-  </if>
-  <if>${
-	compTypes.contains[CompanyType.SBGS] &amp;&amp; 
-	compTypes.contains[CompanyType.HBGS] &amp;&amp; 
-	compTypes.contains[CompanyType.XBC]
-}<list id="comps" type="object">
-    <item insert="4">${CompanyType.BYQCY}</item>
-   </list>
-  </if>
-  <if>${
-	compTypes.contains[CompanyType.SBGS] &amp;&amp;
-	compTypes.contains[CompanyType.HBGS] &amp;&amp; 
-	compTypes.contains[CompanyType.XBC] &amp;&amp; 
-	compTypes.contains[CompanyType.LLGS] &amp;&amp;  
-	compTypes.contains[CompanyType.XLC] &amp;&amp; 
-	compTypes.contains[CompanyType.DLGS]
-}<list id="comps" type="object">
-    <item>${CompanyType.SBDCYJT}</item>
-   </list>
-  </if>
-  <list id="compNames" type="string"/>
+  <list id="qyzb" type="int" export="true">${GSZB.HTQYE48.value}</list>
+  <list id="dwidsTmp" type="int">0</list>
+  <list id="categoryNames" type="string">传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业	,
+传统制造业小计	,
+产业链延伸类	,
+产业链延伸类	,
+产业链延伸类	,
+产业链延伸类	,
+产业链延伸类	,
+产业链延伸类	,
+产业链延伸类	,
+产业链延伸类小计	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）	,
+工程（修试类）小计	,
+物流贸易	,
+物流贸易	,
+物流贸易	,
+物流贸易	,
+物流贸易	,
+物流贸易	,
+物流贸易	,
+物流贸易	,
+物流贸易小计	,
+煤炭业务	,
+煤炭业务	,
+煤炭业务小计	,
+运营商	,
+运营商	,
+运营商	,
+运营商小计	,
+其他	,
+其他	,
+其他	,
+其他小计,
+合计
+</list>
+  <list id="xmgs" type="string">特变电工沈阳变压器集团有限公司中特分公司	,
+特变电工康嘉（沈阳）互感器有限责任公司	,
+沈阳和新套管有限公司	,
+四方特变电工智能电气有限公司	,
+特变电工能源（印度）有限公司	,
+特变电工山东沈变电气设备有限公司	,
+特变电工中发上海高压开关有限公司	,
+特变电工衡阳变压器有限公司电气分公司	,
+特变电工湖南智能电气有限公司	,
+特变电工南京智能电气有限公司	,
+天津市特变电工变压器有限公司	,
+特变电工新疆变压器厂中特公司	,
+特变电工智能电气有限责任公司	,
+特变电工超高压电气有限公司	,
+鲁缆电缆经销事业部	,
+新缆厂特缆项目公司	,
+新缆厂通用项目公司	,
+新缆厂电材公司	,
+德缆特缆公司	,
+德缆新特公司	,
+特变电工西南电气工程有限公司	,
+特变电工西安电气科技有限公司	,
+特变电工新疆新能源股份有限公司硅片事业部	,
+特变电工西安柔性输配电有限公司	,
+新特能源股份有限公司一分公司	,
+新特能源股份有限公司二分公司	,
+高纯铝制品公司	,
+合金材料公司	,
+铝箔公司	,
+电极箔公司	,
+金属结构与炭素材料公司	,
+新疆五元电线电缆有限公司	,
+热电公司	,
+新疆众和动力保障公司	,
+传统制造业小计	,
+特变电工康嘉（沈阳）互感器有限责任公司	,
+沈阳和新套管有限公司	,
+四方特变电工智能电气有限公司	,
+特变电工中发上海高压开关有限公司	,
+特变电工湖南智能电气有限公司	,
+特变电工南京智能电气有限公司	,
+特变电工西南电气工程有限公司	,
+产业链延伸类小计	,
+特变电工沈阳变压器集团有限公司国际贸易成套分公司	,
+特变电工沈阳变压器集团有限公司客户服务中心	,
+特变电工湖南工程有限公司	,
+特变电工湖南园林建设有限公司	,
+特变电工新疆变压器厂国际公司	,
+特变电工新疆变压器厂工程检修公司	,
+西北电线电缆检测中心有限公司	,
+特变电工（德缆）电力工程有限公司	,
+特变电工新疆新能源股份有限公司系统集成事业部	,
+特变电工新疆新能源股份有限公司风电工程事业部	,
+特变电工新疆新能源股份有限公司风能事业部	,
+西安特变电工电力设计有限责任公司	,
+特变电工新疆新能源股份有限公司电力工程事业部	,
+特变电工新疆新能源股份有限公司国际部	,
+新疆知信科技有限公司	,
+新疆经纬众和环保科技有限公司	,
+冶金建设工程公司	,
+电力建设工程公司	,
+工程（修试类）小计	,
+特变电工沈阳现代物流国际贸易有限公司	,
+特变电工湖南国际装备物流贸易有限公司	,
+新疆新特国际物流贸易公司	,
+新疆中特国际物流有限公司	,
+新疆天池能源销售有限公司	,
+特变电工有限公司能源动力分公司工程公司	,
+新疆众和现代物流有限责任公司	,
+新疆众和进出口有限公司	,
+物流贸易小计	,
+新疆天池能源有限责任公司（南露天煤矿）	,
+特变电工新疆能源有限责任公司	,
+煤炭业务小计	,
+特变电工股份有限公司能源动力分公司动力厂	,
+特变电工股份有限公司能源动力分公司总配电车间	,
+新特能源股份有限公司自备热电厂	,
+运营商小计	,
+特变电工沈阳变压器集团有限公司物业分公司	,
+特变电工衡阳变压器有限公司众业分公司	,
+服务公司	,
+其他小计	,
+合计
+</list>
+  <list id="zzys" type="int">102	,
+103	,
+104	,
+105	,
+115	,
+116	,
+106	,
+201	,
+205	,
+206	,
+301	,
+302	,
+303	,
+310	,
+404	,
+501	,
+502	,
+503	,
+601	,
+602	,
+604	,
+903	,
+905	,
+911	,
+1002	,
+1003	,
+1301	,
+1302	,
+1303	,
+1304	,
+1305	,
+1306	,
+1307	,
+1308	
+</list>
+  <list id="cylysl" type="int">103	,
+104	,
+105	,
+106	,
+205	,
+206	,
+604	</list>
+  <list id="gcxsl" type="int">101	,
+107	,
+203	,
+207	,
+304	,
+305	,
+511	,
+603	,
+901	,
+902	,
+906	,
+907	,
+908	,
+910	,
+1008	,
+1311	,
+1312	,
+1313	
+</list>
+  <list id="wlmy" type="int">108	,
+202	,
+306	,
+506	,
+703	,
+803	,
+1309	,
+1310	</list>
+  <list id="mt" type="int">701,
+702
+</list>
+  <list id="yys" type="int">801,
+802,
+1004</list>
+  <list id="qt" type="int">112,
+204,
+1314
+</list>
+  <list id="companies" type="object">
+   <item concat="zzys"/>
+   <item>${zzys}</item>
+   <item concat="cylysl"/>
+   <item>${cylysl}</item>
+   <item concat="gcxsl"/>
+   <item>${gcxsl}</item>
+   <item concat="wlmy"/>
+   <item>${wlmy}</item>
+   <item concat="mt"/>
+   <item>${mt}</item>
+   <item concat="yys"/>
+   <item>${yys}</item>
+   <item concat="qt"/>
+   <item>${qt}</item>
+  </list>
   <list type="int" id="ids"/>
-  <loop from="0" to="${comps.size - 1}" var="i">
-   <if test="${compTypes.contains[comps[i]] &amp;&amp; !comps[i].equals[CompanyType.BYQCY] &amp;&amp; !comps[i].equals[CompanyType.XLCY]}">
-    <context key="dwids" value="${orgs.BMDBOrganization.ids[comps[i].ordinal].packAsList}" export="false"/>
-    <list id="compNames" type="object">
-     <item>${comps[i].value}</item>
-    </list>
-    <list id="ids" type="object">
-     <item>${i}</item>
-    </list>
+  <context key="dwids" value="${companies[ids.size]}"/>
+  <loop from="0" to="${companies.size - 1}" var="i">
+   <list id="ids" type="object">
+    <item>${i}</item>
+   </list>
+   <if test="${companies[i].isList}">
+    <context key="dwids" value="${companies[i]}"/>
+    <callservice id="servQyzbxmgsSqlQuery" inline="true"/>
+    <callservice id="servQyzbxmgsInsert" inline="true"/>
+    <list type="int" id="range">${ids.size - companies[i].size - 1},${i - 1}</list>
    </if>
-   <if test="${comps[i].equals[CompanyType.BYQCY]}">
-    <list id="dwids" type="object" clear="true">${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]},
-${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]},
-${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]}</list>
-    <list id="compNames" type="string">
-     <item>变压器小计</item>
+   <else>
+    <list id="dwidsTmp" type="object">
+     <item index="0">${companies[i]}</item>
     </list>
-    <list id="ids" type="object">
-     <item>${i}</item>
-    </list>
-   </if>
-   <if test="${comps[i].equals[CompanyType.XLCY]}">
-    <list id="dwids" type="object" clear="true">${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]},
-${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]},
-${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
-    <list id="compNames" type="string">
-     <item>线缆小计</item>
-    </list>
-    <list id="ids" type="object">
-     <item>${i}</item>
-    </list>
-   </if>
-   <if test="${comps[i].equals[CompanyType.SBDCYJT]}">
-    <list id="dwids" type="object" clear="true">${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]},
-${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]},
-${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]},
-${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]},
-${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]},
-${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
-    <list id="compNames" type="string">
-     <item>合计</item>
-    </list>
-    <list id="ids" type="object">
-     <item>${i}</item>
-    </list>
-   </if>
-   <callservice id="servQyzbxmgsQuery" inline="true"/>
+    <context key="dwids" value="${dwidsTmp}"/>
+    <callservice id="servQyzbxmgsQuery" inline="true"/>
+   </else>
   </loop>
+  <callservice id="servQyzbxmgsInsert" inline="true"/>
+  <list type="int" id="ids">
+   <item>10000</item>
+  </list>
   <table id="result" rowIds="ids" export="true">
-   <col list="compNames"/>
+   <col list="categoryNames"/>
+   <col list="xmgs"/>
    <col list="ndjh"/>
    <col list="ydjh"/>
    <col list="ydsj"/>
-   <col intruction="当月完成率"/>
+   <col intruction="完成率"/>
+   <col list="ydsjQntq"/>
+   <col intruction="同比增幅"/>
+   <col list="jdjh"/>
+   <col list="jdlj"/>
+   <col intruction="完成率"/>
+   <col list="jdljQntq"/>
+   <col intruction="同比增幅"/>
    <col list="ndlj"/>
-   <col intruction="年度完成率"/>
-   <col list="dysdndjh"/>
-   <col list="dysdndlj"/>
-   <col intruction="年度完成率"/>
-   <col list="zzfwyndjh"/>
-   <col list="zzfwyndlj"/>
-   <col intruction="年度完成率"/>
-   <divCol toCol="4" sub="3" base="2"/>
-   <divCol toCol="6" sub="5" base="1"/>
-   <divCol toCol="9" sub="8" base="7"/>
-   <divCol toCol="12" sub="11" base="10"/>
+   <col intruction="完成率"/>
+   <col list="ndljQntq"/>
+   <col intruction="同比增幅"/>
+   <sumRow toId="${ids[range[1] + 1]}">
+    <excludeCol>0,1,5,7,10,12,14,16</excludeCol>
+    <rangeRows>${range[0]},${range[1]}</rangeRows>
+   </sumRow>
+   <sumRow toId="${ids[range[3] + 1]}">
+    <excludeCol>0,1,5,7,10,12,14,16</excludeCol>
+    <rangeRows>${range[2]},${range[3]}</rangeRows>
+   </sumRow>
+   <sumRow toId="${ids[range[5] + 1]}">
+    <excludeCol>0,1,5,7,10,12,14,16</excludeCol>
+    <rangeRows>${range[4]},${range[5]}</rangeRows>
+   </sumRow>
+   <sumRow toId="${ids[range[7] + 1]}">
+    <excludeCol>0,1,5,7,10,12,14,16</excludeCol>
+    <rangeRows>${range[6]},${range[7]}</rangeRows>
+   </sumRow>
+   <sumRow toId="${ids[range[9] + 1]}">
+    <excludeCol>0,1,5,7,10,12,14,16</excludeCol>
+    <rangeRows>${range[8]},${range[9]}</rangeRows>
+   </sumRow>
+   <sumRow toId="${ids[range[11] + 1]}">
+    <excludeCol>0,1,5,7,10,12,14,16</excludeCol>
+    <rangeRows>${range[10]},${range[11]}</rangeRows>
+   </sumRow>
+   <sumRow toId="${ids[range[13] + 1]}">
+    <excludeCol>0,1,5,7,10,12,14,16</excludeCol>
+    <rangeRows>${range[12]},${range[13]}</rangeRows>
+   </sumRow>
+   <sumRow toId="10000">
+    <excludeCol>0,1,5,7,10,12,14,16</excludeCol>
+    <inIds>
+ ${ids[range[1] + 1]}, 
+ ${ids[range[3] + 1]}, 
+ ${ids[range[5] + 1]}, 
+ ${ids[range[7] + 1]}, 
+ ${ids[range[9] + 1]}, 
+ ${ids[range[11] + 1]}, 
+ ${ids[range[13] + 1]}</inIds>
+   </sumRow>
+   <divCol toCol="5" sub="4" base="3"/>
+   <divCol toCol="10" sub="9" base="8"/>
+   <divCol toCol="14" sub="13" base="2"/>
+   <growthRates toCol="7" sj="4" tq="6"/>
+   <growthRates toCol="12" sj="11" tq="9"/>
+   <growthRates toCol="16" sj="15" tq="13"/>
   </table>
  </service>
  <controller id="qyzbxmgsFmtter">
   <formatter id="data" export="true">
    <EmptyFormatter>
-    <DefaultMatcher cols="0"/>
+    <DefaultMatcher cols="0,1"/>
    </EmptyFormatter>
    <PercentFormatter reservedCount="1">
-    <DefaultMatcher cols="4,6,9,12"/>
+    <DefaultMatcher cols="5,7,10,12,14,16"/>
    </PercentFormatter>
    <NumberFormatter reservedCount="1">
     <DefaultMatcher/>
@@ -194,6 +479,7 @@ ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
  </controller>
  <controller id="qyzbxmgsUpdate">
   <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="start" value="${calendar.current}"/>
   <callservice id="servQyzbxmgs"/>
   <callcontroller id="qyzbxmgsFmtter"/>
   <formatterServer id="serv" table="${result.matrixNoIds}">
@@ -202,83 +488,128 @@ ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
   <response type="json">
    <header type="array">
     <item>
-     <name>单位</name>
+     <name>类型</name>
     </item>
     <item>
-     <name>国内市场整体指标完成情况</name>
+     <name>项目公司</name>
+    </item>
+    <item>
+     <name>全年计划</name>
+    </item>
+    <item>
+     <name>月度</name>
      <sub type="array">
       <item>
-       <name>年度计划签约指标</name>
+       <name>当月计划</name>
       </item>
       <item>
-       <name>月度计划指标</name>
+       <name>当月实际</name>
       </item>
       <item>
-       <name>月度实际签约</name>
+       <name>计划完成率</name>
       </item>
       <item>
-       <name>当月完成率</name>
+       <name>去年同期</name>
       </item>
       <item>
-       <name>年度累计签约</name>
-      </item>
-      <item>
-       <name>年度完成率</name>
+       <name>同比增幅</name>
       </item>
      </sub>
     </item>
     <item>
-     <name>第一属地市场指标完成情况</name>
+     <name>季度</name>
      <sub type="array">
       <item>
-       <name>年度签约指标</name>
+       <name>季度计划</name>
       </item>
       <item>
-       <name>年度累计属地签约</name>
+       <name>季度累计</name>
       </item>
       <item>
-       <name>年度完成率</name>
+       <name>计划完成率</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
       </item>
      </sub>
     </item>
     <item>
-     <name>制造服务业指标完成情况</name>
+     <name>年度</name>
      <sub type="array">
       <item>
-       <name>年度签约指标</name>
+       <name>年度累计</name>
       </item>
       <item>
-       <name>年度累计属地签约</name>
+       <name>计划完成率</name>
       </item>
       <item>
-       <name>年度完成率</name>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
       </item>
      </sub>
     </item>
    </header>
+   <mergeRows type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeRows>
+   <mergeCols type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeCols>
+   <mergeTitle>true</mergeTitle>
+   <width>1300</width>
    <data>${serv.result}</data>
   </response>
+  <log ref="WEBSERVICE" level="debug">${calendar.current.time/1000 - start.time/1000}</log>
  </controller>
  <controller id="qyzbxmgsExport">
   <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="servQyzbxmgs"/>
   <callcontroller id="qyzbxmgsFmtter"/>
   <ExcelTemplate id="excelTemplate" sheet="项目公司市场签约指标完成情况"/>
-  <list id="title" type="string">单位,
-国内市场整体指标完成情况,
-国内市场整体指标完成情况,
-国内市场整体指标完成情况,
-国内市场整体指标完成情况,
-国内市场整体指标完成情况,
-国内市场整体指标完成情况,
-第一属地市场指标完成情况,
-第一属地市场指标完成情况,
-第一属地市场指标完成情况,
-制造服务业指标完成情况,
-制造服务业指标完成情况,
-制造服务业指标完成情况
+  <list id="title" type="string">类型,
+项目公司,
+全年计划,
+月度,
+月度,
+月度,
+月度,
+月度,
+季度,
+季度,
+季度,
+季度,
+季度,
+年度,
+年度,
+年度,
+年度
 		</list>
-  <list id="title1" type="string">单位,年度计划签约指标,月度计划指标,月度实际签约,当月完成率,年度累计签约,年度完成率,年度签约指标,年度累计属地签约,年度完成率,年度签约指标,年度累计签约,年度完成率
+  <list id="title1" type="string">类型,
+项目公司,
+全年计划,
+当月计划,
+当月实际,
+计划完成率,
+去年同期,
+同比增幅,
+季度计划,
+季度累计,
+计划完成率,
+去年同期,
+同比增幅,
+年度累计,
+计划完成率,
+去年同期,
+同比增幅
 	</list>
   <formatter id="excel">
    <ExcelTitleFilter>
@@ -292,6 +623,7 @@ ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
    <ExcelMergeFormatter>
     <ExcelTemplate ref="excelTemplate"/>
     <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+    <MergeRegion x="0" y="2" width="2" height="${result.ids.size}"/>
    </ExcelMergeFormatter>
    <ExcelHeaderCenterFormatter>
     <DefaultMatcher cols="0"/>

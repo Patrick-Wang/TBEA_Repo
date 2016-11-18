@@ -76,19 +76,37 @@
         
         
         .select2-container--default .select2-selection--single .select2-selection__rendered{
-        	height: 24px;
-        	line-height:24px;
+        	height: 23px;
+        	line-height:23px;
         }
         
         .select2-container--default .select2-selection--single .select2-selection__arrow{
-        	height:24px;
+        	height:23px;
+            margin-top:-2px;
         }
         .select2-container .select2-selection--single{
-        	height:24px;
+        	height:23px;
+            margin-top:-1px;
         }
         .select2-container{
             margin-left:8px;
         }
+
+        .select2-selection__rendered{
+            border: 1px solid #c5dbec;
+            background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x;
+            font-weight: bold;
+            color: #2e6e9e;
+    border: solid 1px;
+        }
+
+
+
+
+        .select2-container--open .select2-dropdown--below{
+            margin-top:7px;
+        }
+
         .panel-content-border {
             height: 350px;
             width: 1000px;
@@ -194,7 +212,9 @@
          .ui-widget-content{
             font-size: 12px;
         }
-
+        .select2-selection__rendered{
+            font-size: 12px;
+        }
         #exportButton {
             height: 23px;
             width:100px;

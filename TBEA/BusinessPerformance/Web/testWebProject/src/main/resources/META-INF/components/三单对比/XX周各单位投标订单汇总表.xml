@@ -1,6 +1,6 @@
 <components>
  <service id="servBidWeekCollection" transaction="transactionManager">
-  <sql id="tbddhz" order="dwmcs" by="0" colCount="17">select 
+  <sql id="tbddhz" order="dwmcs" by="0" colcount="17">select 
 	convert(varchar(50),company_name) cn,
 	sum(not_tax_inclusive_price) tip,
 	sum(gross_profit) gp,

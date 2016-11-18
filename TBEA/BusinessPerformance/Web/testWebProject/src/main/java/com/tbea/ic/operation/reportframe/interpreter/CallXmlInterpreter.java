@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
-import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
@@ -20,30 +19,30 @@ public class CallXmlInterpreter implements XmlInterpreter {
 	ELParser elp;
 	
 	private void checkUnmatchedMethod(List<Method> mdList, int index, int tp, Object paramObj){
+		Class types[] = null;
 		for (int i = mdList.size() - 1; i >= 0; --i){
 			if (mdList.get(i).getParameterCount() > index){
-				//System.out.println(mdList.get(i).getParameterTypes()[index].getName());
+				types = mdList.get(i).getParameterTypes();
 				switch (tp){
 				case TypeUtil.DOUBLE:
-					if (!TypeUtil.isDouble(mdList.get(i).getParameterTypes()[index])){
+					if (!TypeUtil.isDouble(types[index])){
 						mdList.remove(i);
 					}
 					break;
 				case TypeUtil.INT:
-					if (!TypeUtil.isInt(mdList.get(i).getParameterTypes()[index])){
+					if (!TypeUtil.isInt(types[index])){
 						mdList.remove(i);
 					}
 					break;
 				case TypeUtil.STRING:
-					if (!TypeUtil.isString(mdList.get(i).getParameterTypes()[index])){
+					if (!TypeUtil.isString(types[index])){
 						mdList.remove(i);
 					}
 					break;
 				case TypeUtil.SQLDATE:
 				case TypeUtil.OBJECT:
 					if (paramObj != null){
-						//System.out.println(paramObj.getClass());
-						if (!TypeUtil.instanceOf(paramObj, mdList.get(i).getParameterTypes()[index])){
+						if (!TypeUtil.instanceOf(paramObj, types[index])){
 							mdList.remove(i);
 						};
 					}

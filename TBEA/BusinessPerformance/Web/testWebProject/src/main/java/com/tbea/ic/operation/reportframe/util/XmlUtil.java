@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.TransformerFactory;
@@ -13,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -35,6 +37,14 @@ public class XmlUtil {
 			return e.getFirstChild().getTextContent();
 		}
 		return "";
+	}
+	
+	public static Element nextElement(Element e) {
+		Node node = e.getNextSibling();
+		while (null != node && !(node instanceof Element)){
+			node = node.getNextSibling();
+		}
+		return (Element)node;
 	}
 	
 	public static Element element(NodeList list, int index) {
@@ -76,6 +86,26 @@ public class XmlUtil {
 		}
 		text = StringUtil.shrink(text);
 		List<Integer> list = new ArrayList<Integer>();
+		if (!text.isEmpty()){
+			String[] items = text.split(",");
+			Integer val = null;
+			for (String item : items){
+				val = getInt(item, elp, null);
+				if (null != val){
+					list.add(val);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	public static Set<Integer> toIntSet(String text, ELParser elp) throws Exception{
+		if(null == text){
+			return null;
+		}
+		text = StringUtil.shrink(text);
+		Set<Integer> list = new HashSet<Integer>();
 		if (!text.isEmpty()){
 			String[] items = text.split(",");
 			Integer val = null;
@@ -364,5 +394,16 @@ public class XmlUtil {
 
 	public static String getText(Element e) {
 		return e.getFirstChild().getTextContent();
+	}
+
+	public static void copyAttr(Element from, Element to) {
+		NamedNodeMap nnm = from.getAttributes();
+		for (int i = 0; i < nnm.getLength(); ++i){
+			String name = nnm.item(i).getNodeName();
+			if (!to.hasAttribute(name)){
+				String value = nnm.item(i).getNodeValue();
+				to.setAttribute(name, value);
+			}
+		}
 	}
 }

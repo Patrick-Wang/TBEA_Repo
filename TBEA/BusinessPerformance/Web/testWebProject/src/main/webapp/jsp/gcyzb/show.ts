@@ -55,7 +55,7 @@ module framework.templates.dateReport {
                     items.push(opts[j].text);
                 }
                 $(sels[i]).css("width", Math.max(Util.getUIWidth(items), 80))
-                          .css("height", "22px")
+                          .css("height", "20px")
                           .select2({
                                 language: "cn"
                             });
