@@ -1,0 +1,330 @@
+<components>
+ <service id="servExecCostCollection" transaction="transactionManager">
+  <sql id="zbddhz" order="dwmcs" by="0" colcount="16">select 
+	convert(varchar(200), jswbod.company_name) cn,
+	sum(jsoed.not_tax_inclusive_price) ntip1,
+	sum(win_bid_gross_profit_amount) wbgpa2,
+	sum(win_bid_gross_profit_amount) / nullif(sum(jsoed.not_tax_inclusive_price),0) mll3,
+	sum(win_bid_silicon_steel_price) wbssp4,
+	sum(win_bid_silicon_steel_amount) wbssa5,
+	sum(win_bid_ele_copper_price) wbiop8,
+	sum(win_bid_ele_copper_amount) wbioa9,
+	sum(win_bid_insulating_oil_price) wwbrsp10,
+	sum(win_bid_insulating_oil_amount) wbrsa11,
+	sum(win_bid_cardboard_price) wbcp12,
+	sum(win_bid_cardboard_amount) wbca13,
+	sum(win_bid_rolled_steel_price) wbcp14,
+	sum(win_bid_rolled_steel_amount) wbca15,
+	sum(win_bid_other_material_cost) womc16,
+	sum(win_bid_material_total) wbmt17
+
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod,JYGK_SDDB_ORDER_EXECUTION_DETAILS jsoed 
+where
+	 jswbod.company_name in ${dwmcs} and jsoed.company_name in ${dwmcs} and jsoed.code = jswbod.code and
+	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
+ 	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 
+group by
+	jswbod.company_name</sql>
+  <sql id="zbddhzhj">select 
+	'合计',
+	sum(jsoed.not_tax_inclusive_price) ntip1,
+	sum(win_bid_gross_profit_amount) wbgpa2,
+	sum(win_bid_gross_profit_amount) / nullif(sum(jsoed.not_tax_inclusive_price),0) mll3,
+	sum(win_bid_silicon_steel_price) wbssp4,
+	sum(win_bid_silicon_steel_amount) wbssa5,
+	sum(win_bid_ele_copper_price) wbiop8,
+	sum(win_bid_ele_copper_amount) wbioa9,
+	sum(win_bid_insulating_oil_price) wwbrsp10,
+	sum(win_bid_insulating_oil_amount) wbrsa11,
+	sum(win_bid_cardboard_price) wbcp12,
+	sum(win_bid_cardboard_amount) wbca13,
+	sum(win_bid_rolled_steel_price) wbcp14,
+	sum(win_bid_rolled_steel_amount) wbca15,
+	sum(win_bid_other_material_cost) womc16,
+	sum(win_bid_material_total) wbmt17
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod,JYGK_SDDB_ORDER_EXECUTION_DETAILS jsoed
+where
+	jswbod.company_name in ${dwmcs} and jsoed.company_name in ${dwmcs} and jsoed.code = jswbod.code and
+	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
+ 	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 </sql>
+  <list id="zbddhz" type="object">
+   <item concat="zbddhzhj"/>
+  </list>
+  <sql id="zxddhzsd" order="dwmcs" by="0" colcount="16">select 
+	convert(varchar(200), jsoed.company_name) cn,
+	sum(jsoed.not_tax_inclusive_price) ntip1,
+	sum(op_gross_profit_amount) ogpa2,
+	sum(op_gross_profit_amount) / nullif(sum(jsoed.not_tax_inclusive_price),0) mll3,
+	sum(op_unit_price_of_silicon_steel) wbssp4,
+	sum(op_quantity_of_silicon_steel) wbssa5,
+	sum(op_copper_price) wbiop8,
+	sum(op_amount_of_copper) wbioa9,
+	sum(op_unit_price_of_transformer_oil) wwbrsp10,
+	sum(op_transformer_oil_consumption) wbrsa11,
+	sum(op_cardboard_unit_price) wbcp12,
+	sum(op_amount_of_cardboard) wbca13,
+	sum(op_steel_price) wbcp14,
+	sum(op_steel_dosage) wbca15,
+	sum(op_other_materials) womc16,
+	sum(op_total_tax_material) wbmt17
+from
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS jsoed,JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod
+where
+	jswbod.company_name in ${dwmcs} and jsoed.company_name in ${dwmcs} and jsoed.code = jswbod.code and
+	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
+ 	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 
+group by
+	jsoed.company_name</sql>
+  <sql id="zxddhzsdhj">select 
+	'合计',
+	sum(jsoed.not_tax_inclusive_price) ntip1,
+	sum(op_gross_profit_amount) ogpa2,
+	sum(op_gross_profit_amount) / nullif(sum(jsoed.not_tax_inclusive_price),0) mll3,
+	sum(op_unit_price_of_silicon_steel) wbssp4,
+	sum(op_quantity_of_silicon_steel) wbssa5,
+	sum(op_copper_price) wbiop8,
+	sum(op_amount_of_copper) wbioa9,
+	sum(op_unit_price_of_transformer_oil) wwbrsp10,
+	sum(op_transformer_oil_consumption) wbrsa11,
+	sum(op_cardboard_unit_price) wbcp12,
+	sum(op_amount_of_cardboard) wbca13,
+	sum(op_steel_price) wbcp14,
+	sum(op_steel_dosage) wbca15,
+	sum(op_other_materials) womc16,
+	sum(op_total_tax_material) wbmt17
+from
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS jsoed,JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod
+where
+	jswbod.company_name in ${dwmcs} and jsoed.company_name in ${dwmcs} and jsoed.code = jswbod.code and
+	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
+ 	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 </sql>
+  <list id="zxddhzsd" type="object">
+   <item concat="zxddhzsdhj"/>
+  </list>
+  <list id="zxddhz_all" type="object"/>
+  <list id="companyname" type="string"/>
+  <list id="jds" type="string"/>
+  <list id="dwmcs" type="string">
+   <item>合计</item>
+  </list>
+  <list id="htjes" type="double"/>
+  <list id="tmpVal" type="double">
+  	<item></item>
+  	<item></item>
+   </list>
+  <loop var="i" from="${0}" to="${zbddhz.size - 1}">
+   <list id="zxddhz_all" type="object">
+    <item>${zbddhz[i]}</item>
+    <item>${zxddhzsd[i]}</item>
+   </list>
+   <list id="jds" type="string">
+    <item>中标阶段</item>
+    <item>锁定阶段</item>
+   </list>
+   <list id="companyname" type="object">
+    <item>${dwmcs[i]}</item>
+    <item>${dwmcs[i]}</item>
+   </list>
+  <list id="tmpVal" type="double">
+  	<item index="0">${zbddhz[i][1]}</item>
+  	<item index="1">${zxddhzsd[i][1]}</item>
+   </list>
+   <list id="htjes" type="object">
+  	<item>${zbddhz[i][1]}</item>
+  	<item>${zxddhzsd[i][1]}</item>
+   </list>
+  </loop>
+  <list id="ids" type="int">
+   <item from="${0}" to="${companyname.size - 1}"/>
+  </list>
+  <context key="counter" value="${counterFactory.newCounter.reset[1]}"/>
+  <table id="result" rowIds="ids" export="true">
+   <col list="companyname"/>
+   <col list="htjes"/>
+   <col list="jds"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+   <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
+  </table>
+ </service>
+ <controller id="execCostCollectionFmtter">
+  <formatter id="dataFmt" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,2"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="execCostCollectionParams">
+  <context key="dStart" value="${request.dStart.asCalendar}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar}"/>
+  <context key="product_model" value="${request.model.asString}"/>
+  <context key="compIds" value="${authIds[61]}"/>
+  <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compIds]}"/>
+ </controller>
+ <controller id="execCostCollectionUpdate">
+  <callcontroller id="execCostCollectionParams"/>
+  <callservice id="servExecCostCollection"/>
+  <callcontroller id="execCostCollectionFmtter"/>
+  <formatterServer id="fmtServExecCostCollection" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>单位名称</name>
+    </item>
+    <item>
+     <name>合同金额</name>
+    </item>
+    <item>
+     <name>项目阶段</name>
+    </item>
+    <item>
+     <name>毛利额</name>
+    </item>
+    <item>
+     <name>毛利率</name>
+    </item>
+    <item>
+     <name>硅钢</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>电解铜</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>变压器油</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>纸板</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>钢材</name>
+     <sub type="array">
+      <item>
+       <name>单价</name>
+      </item>
+      <item>
+       <name>用量</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>其他材料成本</name>
+    </item>
+    <item>
+     <name>材料成本总计</name>
+    </item>
+   </header>
+   <mergeRows type="array">
+    <item>
+     <col>0</col>
+    </item>
+    <item>
+     <col>1</col>
+     <rowStart>0</rowStart>
+     <step>2</step>
+     <count>${result.ids.size / 2}</count>
+    </item>
+   </mergeRows>
+   <width>1300</width>
+   <mergeTitle>true</mergeTitle>
+   <data>${fmtServExecCostCollection.result}</data>
+  </response>
+ </controller>
+ <controller id="execCostCollectionExport">
+  <callcontroller id="execCostCollectionParams"/>
+  <callservice id="servExecCostCollection"/>
+  <callcontroller id="execCostCollectionFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="执行阶段订单汇总表"/>
+  <list id="title1" type="string">交货时间,合同金额,项目阶段,毛利额,毛利率,硅钢,硅钢,电解铜,电解铜,变压器油,变压器油,纸板,纸板,钢材,钢材,其他材料成本,材料成本总计</list>
+  <list id="title2" type="string">交货时间,合同金额,项目阶段,毛利额,毛利率,单价,用量,单价,用量,单价,用量,,单价,用量,单价,用量,其他材料成本,材料成本总计</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title1"/>
+     <title ref="title2"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="2" width="1" height="${result.ids.size}"/>
+    <MergeRegion x="0" y="0" width="${title1.size}" height="2"/>
+    <MergeRegion x="1" y="2" width="1" height="2" yCount="${result.ids.size / 2}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter> 
+  </formatter>
+  <formatterServer id="servFmt" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="执行阶段订单成本汇总表.xls" serv="servFmt"/>
+ </controller>
+ <controller id="execCostCollection">
+  <response type="jsp" name="sddb/sddb">
+   <map key="updateUrl" value="execCostCollectionUpdate"/>
+   <map key="exportUrl" value="execCostCollectionExport"/>
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="dateStart" value="${calendar.current.months[1].days[1].format}"/>
+   <map key="title" value="执行阶段订单成本汇总表"/>
+  </response>
+ </controller>
+</components>

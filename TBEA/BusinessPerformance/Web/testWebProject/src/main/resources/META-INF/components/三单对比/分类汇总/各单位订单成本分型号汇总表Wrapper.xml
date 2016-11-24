@@ -1,0 +1,40 @@
+<components>
+	<controller id="gdwddfxhCollectionUpdate">
+		<context key="item" value="${request.item0.asString}" />
+		<if test="${'item' == '执行阶段各单位订单成本汇总表'}">
+			<callcontroller id="execCostCollectionUpdate" />
+		</if>
+		<else>
+			<callcontroller id="completionFrqCollectionUpdate" />
+		</else>
+
+	</controller>
+	<controller id="gdwddfxhCollectionExport">
+		<context key="item" value="${request.item0.asString}" />
+		<if test="${'item' == '执行阶段各单位订单成本汇总表'}">
+			<callcontroller id="execCostCollectionExport" />
+		</if>
+		<else>
+			<callcontroller id="completionFrqCollectionExport" />
+		</else>
+
+	</controller>
+	<controller id="gdwddfxhCollection">
+		<list id="ids1" type="int">
+			1,2
+		</list>
+		<list id="values1" type="string">
+			执行阶段各单位订单成本汇总表,完工 阶段各单位订单成本汇总表
+		</list>
+		<context key="compIds" value="${authIds[61]}" />
+		<context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compIds]}" />
+		<response type="jsp" name="sddb/sddb">
+			<map key="date" value="${calendar.current.format}" />
+			<map key="dateStart" value="${calendar.current.months[1].days[1].format}" />
+			<map key="updateUrl" value="gdwddfxhCollectionUpdate" />
+			<map key="exportUrl" value="gdwddfxhCollectionExport" />
+			<map key="itemNodes0" value="${dataNodeFactory[ids1][values1].asJson}" />
+			<map key="title" value="分阶段各单位订单成本汇总" />
+		</response>
+	</controller>
+</components> 

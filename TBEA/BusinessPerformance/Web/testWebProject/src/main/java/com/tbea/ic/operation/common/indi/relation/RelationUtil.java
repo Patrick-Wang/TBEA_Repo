@@ -73,14 +73,19 @@ public class RelationUtil {
 		return null;
 	}
 	
-	public static Integer parseIndi(Element elem, Map<String, Integer> indis){
-		return indis.get(elem.getAttribute("indi"));
+	public static Set<Integer> parseIndi(Element elem, Map<String, Integer> indiDelc){
+		String[] inidStrs = elem.getAttribute("indi").replaceAll("\\s+", "").split(",");
+		Set<Integer> indiRet = new HashSet<Integer>();
+		for (String indi : inidStrs){
+			indiRet.add(indiDelc.get(indi));
+		}
+		return indiRet;
 	}
 	
 	public static Set<ZBType> parseTypes(Element elem) {
 		if (elem.hasAttribute("type")){
 			String type = elem.getAttribute("type");
-			String[] typeArr = type.split(",");
+			String[] typeArr = type.replaceAll("\\s+", "").split(",");
 			Set<ZBType> types = new HashSet<ZBType>();
 			for (int i = 0; i < typeArr.length; ++i){
 				if ("年计划".equals(typeArr[i])){

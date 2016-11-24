@@ -273,8 +273,6 @@ class TSPCDefault extends ThirdSeasonPredictionConfigurator {
 				.includeZbs(pipe.getIndicators())
 				.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
 				.excludeZbs(ConfiguratorUtil.getRatioZbs()));
-
-		
 	}
 
 	@Override

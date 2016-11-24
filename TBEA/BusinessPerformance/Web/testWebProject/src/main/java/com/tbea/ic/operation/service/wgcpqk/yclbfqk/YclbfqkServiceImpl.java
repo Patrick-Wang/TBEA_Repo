@@ -25,11 +25,11 @@ import com.tbea.ic.operation.model.dao.dl.yclbfqk.DlYclbfqkDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.yclbfqk.YclbfqkDao;
 import com.tbea.ic.operation.model.dao.wgcpqk.yclbfqk.YclbfqkDaoImpl;
 import com.tbea.ic.operation.model.dao.wgcpqk.yclbfqk.dwxxrefclmc.DwxxRefClmcDao;
+import com.tbea.ic.operation.model.dao.xl.yclbfqk.XlYclbfqkDao;
 import com.tbea.ic.operation.model.entity.identifier.common.ClmcEntity;
-import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
 import com.tbea.ic.operation.model.entity.wgcpqk.YclbfqkEntity;
 import com.tbea.ic.operation.model.entity.wgcpqk.yclbfqk.DwxxRefClmcEntity;
-import com.tbea.ic.operation.model.entity.wlydd.wlyddmslspcs.WlyddmlspcsEntity;
+import com.tbea.ic.operation.reportframe.util.DBUtil;
 
 @Service(YclbfqkServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -43,6 +43,9 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 	
 	@Autowired
 	DlYclbfqkDao dlyclbfqkDao;
+	
+	@Autowired
+	XlYclbfqkDao xlyclbfqkDao;
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -180,6 +183,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 	}
 
 	private void importYclbfqk(Date d, List<Object[]> rows, Company company) {
+		DBUtil.trans2StandardType(rows);
 		List<ClmcEntity> clmcs = getClmc(dwrefclDao.getByCompany(company));
 
 		EasyCalendar ec = new EasyCalendar(d);
@@ -221,6 +225,14 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 			clmcs.add(drc.getClmc());
 		}
 		return clmcs;
+	}
+
+	@Override
+	public void importXlYclbfqk(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("XL 原材料报废导入");
+		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		List<Object[]> rows = xlyclbfqkDao.getYclbfqk(d);
+		importYclbfqk(d, rows, company);
 	}
 
 }

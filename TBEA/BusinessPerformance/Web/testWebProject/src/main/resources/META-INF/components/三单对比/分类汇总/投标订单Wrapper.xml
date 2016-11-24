@@ -1,0 +1,44 @@
+<components>
+ <controller id="bidCollectionWrapperUpdate">
+  <context key="type" value="${request.model.asString}"/>
+  <if>${'type' == '周投标订单汇总'}
+  	<callcontroller id="bidCollectionUpdate"/>
+  </if>
+  <else>
+   <callcontroller id="bidWeekCollectionUpdate"/>
+  </else>
+ </controller>
+ <controller id="bidCollectionWrapperExport">
+  <context key="type" value="${request.model.asString}"/>
+  <if>${'type' == '周投标订单汇总'}
+  	<callcontroller id="bidCollectionExport"/>
+  </if>
+  <else> 
+   <callcontroller id="bidWeekCollectionExport"/>
+  </else>
+ </controller>
+ <controller id="bidCollectionWrapper">
+  <context key="compTypes" value="${authTypes[61]}"/>
+  <if>${
+compTypes.contains[CompanyType.SBGS] &amp;&amp; 
+compTypes.contains[CompanyType.HBGS] &amp;&amp; 
+compTypes.contains[CompanyType.XBC]
+}<list id="compTypes" type="object">
+    <item>${CompanyType.BYQCY}</item>
+   </list>
+  </if>
+  <list id="ids" type="int">1,2</list>
+  <list id="vals" type="string">周投标订单汇总, 各单位投标订单汇总表</list>
+   <context key="nodeData" value="${dataNodeFactory[companyTypeHelper.ids[compTypes]][companyTypeHelper.values[compTypes]].asJson}"/>
+ 
+  
+  <response type="jsp" name="sddb/sddb">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="updateUrl" value="bidCollectionWrapperUpdate"/>
+   <map key="exportUrl" value="bidCollectionWrapperExport"/>
+   <map key="nodeData" value="${nodeData}"/>
+   <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+   <map key="title" value="投标订单汇总"/>
+  </response>
+ </controller>
+</components>

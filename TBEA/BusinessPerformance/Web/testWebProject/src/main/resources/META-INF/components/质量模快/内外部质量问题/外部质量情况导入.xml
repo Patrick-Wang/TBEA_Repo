@@ -90,13 +90,13 @@
    <map key="title" value="外部质量情况导入"/>
   </response>
  </controller>
- <controller id="wbzlqkTransport" cron1="0 0 0 * * ?">
+ <controller id="wbzlqkTransport" cron="0 0 0 * * ?">
   <context key="time" value="${calendar.current.secondFormat}"/>
-   <callservice id="servWbzlqkTransTb"/>
+  <callservice id="servWbzlqkTransTb"/>
   <callservice id="servWbzlqkTransSb"/>
-    <callservice id="servWbzlqkTransXl"/> 
-   <callservice id="servWbzlqkTransHb"/>
-  <callservice id="servWbzlqkTransDl"/>    
+  <callservice id="servWbzlqkTransXl"/>
+  <callservice id="servWbzlqkTransHb"/>
+  <callservice id="servWbzlqkTransDl"/>
   <response type="json">
    <errorCode>0</errorCode>
    <message>OK</message>

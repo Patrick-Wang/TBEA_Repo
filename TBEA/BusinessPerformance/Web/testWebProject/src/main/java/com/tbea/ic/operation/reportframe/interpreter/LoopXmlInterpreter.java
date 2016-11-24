@@ -1,7 +1,5 @@
 package com.tbea.ic.operation.reportframe.interpreter;
 
-import java.util.List;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 

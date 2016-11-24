@@ -22,14 +22,13 @@ import org.w3c.dom.Element;
 import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.DataNode.Visitor;
 import com.tbea.ic.operation.reportframe.ReportLogger;
-import com.tbea.ic.operation.reportframe.component.ComponentLoader.ComponentLoadedListener;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.component.controller.Scheduler;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.component.service.Service;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 
-public class ComponentManager implements ComponentLoadedListener {
+public class ComponentManager implements ConfigLoadedListener {
 
 	public static class Config{
 		Element e;
@@ -53,7 +52,7 @@ public class ComponentManager implements ComponentLoadedListener {
 		}
 	}
 
-	ComponentLoader loader;
+	ConfigLoader loader;
 	ComponentStructureBuilder csb = new ComponentStructureBuilder();
 	Scheduler scheduler;
 	public static class ComponentJob implements Job{
@@ -85,7 +84,7 @@ public class ComponentManager implements ComponentLoadedListener {
 	private static ComponentManager instance;
 	
 	public ComponentManager(Scheduler scheduler) {
- 		loader = new ComponentLoader();
+ 		loader = new WatchConfigLoader();
  		instance = this;
  		loader.addListener(this);
  		loader.addListener(csb);
@@ -106,10 +105,13 @@ public class ComponentManager implements ComponentLoadedListener {
 		if (node.getData().getId() == ComponentStructureBuilder.SERVICE){
 			serviceMap.remove(node.getData().getValue());
 		}else if (node.getData().getId() == ComponentStructureBuilder.CONTROLLER){
-			Element e = (Element) controllerMap.remove(node.getData().getValue());
-			if (e.hasAttribute("cron")){
-				QuartzManager.removeJob(node.getData().getValue());
+			if (controllerMap.containsKey(node.getData().getValue())){
+				Element e = ((Config) controllerMap.remove(node.getData().getValue())).getE();
+				if (e.hasAttribute("cron")){
+					QuartzManager.removeJob(node.getData().getValue());
+				}
 			}
+			
 		}
 	}
 	
@@ -328,5 +330,34 @@ public class ComponentManager implements ComponentLoadedListener {
 	@Override
 	public void onExitFile(String filePath) {
 		
+	}
+
+	@Override
+	public void onDeleteFile(String filePath) {
+		DataNode node = csb.getNode(filePath);
+		if (node != null && node.getSubNodes() != null){
+			clearComponents(node.getSubNodes());
+			csb.getParentNode(filePath).getSubNodes().remove(node);
+		}
+	}
+
+	@Override
+	public void onDeleteFolder(String folderPath) {
+		DataNode node = csb.getNode(folderPath);
+		if (node != null){
+			node.accept(new Visitor(){
+			
+				@Override
+				public boolean visit(DataNode node) {
+					if (node.getData().getId() == ComponentStructureBuilder.SERVICE ||
+						node.getData().getId() == ComponentStructureBuilder.CONTROLLER){
+						clearComponent(node);
+					}
+					return true;
+				}
+				
+			});
+			csb.getParentNode(folderPath).getSubNodes().remove(node);
+		}
 	}
 }

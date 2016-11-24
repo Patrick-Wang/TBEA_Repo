@@ -20,8 +20,10 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.dl.sjzb.DlSjzbDao;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
+import com.tbea.ic.operation.model.dao.xl.sjzb.XlSjzbDao;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
+import com.tbea.ic.operation.reportframe.util.StringUtil;
 import com.tbea.ic.operation.service.report.HBWebService;
 
 
@@ -39,6 +41,9 @@ public class SjzbImportServiceImpl implements SjzbImportService{
 	
 	@Autowired
 	DlSjzbDao dlsjzbDao;
+	
+	@Autowired
+	XlSjzbDao xlsjzbDao;
 
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -56,6 +61,9 @@ public class SjzbImportServiceImpl implements SjzbImportService{
 		for (Object[] row : result){
 			if ("应收账款总计".equals((String) row[1]) && "特变电工衡阳变压器有限公司".equals((String) row[0])){
 				row[1] = "应收账款";
+			}
+			if ("其中：制造业国际签约".equals(StringUtil.trim((String) row[1]))){
+				row[1] = "其中：制造业国际签约(万美元）";
 			}
 			parseRow(retData, row);
 		}
@@ -85,15 +93,25 @@ public class SjzbImportServiceImpl implements SjzbImportService{
 		retData.get(comp).add(ja);
 	}
 
-
-	@Override
-	public Map<Company, JSONArray> getDLSjzb(Date d) {
-		List<Object[]> sjzb = dlsjzbDao.getSjzb(d);
+	private Map<Company, JSONArray> getSjzb(List<Object[]> sjzb){
 		Map<Company, JSONArray> retData = new HashMap<Company, JSONArray>();
 		for (Object[] row : sjzb){
+			if ("其中：制造业国际签约".equals(StringUtil.trim((String) row[1]))){
+				row[1] = "其中：制造业国际签约(万美元）";
+			}
 			parseRow(retData, row);
 		}
 		return retData;
+	}
+	
+	@Override
+	public Map<Company, JSONArray> getDLSjzb(Date d) {
+		return getSjzb( dlsjzbDao.getSjzb(d));
+	}
+
+	@Override
+	public Map<Company, JSONArray> getXLSjzb(Date d) {
+		return getSjzb( xlsjzbDao.getSjzb(d));
 	}
 
 

@@ -26,10 +26,16 @@ public class LogXmlInterpreter implements XmlInterpreter {
 		}else{
 			logger = ReportLogger.logger();
 		}
-		if ("info".equals(e.hasAttribute("level"))){
-			logger.info(XmlUtil.getString(XmlUtil.getText(e), elp));
-		}else{
-			logger.debug(XmlUtil.getString(XmlUtil.getText(e), elp));
+		if (null != logger){
+			if ("info".equals(e.getAttribute("level"))){
+				logger.info(XmlUtil.getString(XmlUtil.getText(e), elp));
+			}else if ("error".equals(e.getAttribute("level"))){
+				logger.error(XmlUtil.getString(XmlUtil.getText(e), elp));
+			}else if ("trace".equals(e.getAttribute("level"))){
+				logger.trace(XmlUtil.getString(XmlUtil.getText(e), elp));
+			}else{
+				logger.debug(XmlUtil.getString(XmlUtil.getText(e), elp));
+			}
 		}
 		return true;
 	}

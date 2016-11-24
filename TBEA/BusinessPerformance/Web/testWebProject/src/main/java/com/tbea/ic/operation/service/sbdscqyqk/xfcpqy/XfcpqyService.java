@@ -26,4 +26,6 @@ public interface XfcpqyService {
 
 	void importDLCpqy(Date d);
 
+	void importXLCpqy(Date d);
+
 }

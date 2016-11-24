@@ -5,17 +5,17 @@
        unit_name,
        inputdate,
        imdp.m10013 xmmc, --项目名称
-       imdp.m10012 byqrsr, --本月确认收入
-       imdp.m10011 bykpje, --本月开票金额
-       imdp.m10010 byrzch, --本月入账存货
-       imdp.m10009 ljqrsr, --累计确认收入
-       imdp.m10008 ljtxml, --累计体现毛利
-       imdp.m10007 ljkpje, --累计开票金额
-       imdp.m10006 zmysye, --账面应收余额
-       imdp.m10005 ljrzch, --累计入账存货
-       imdp.m10004 chye, --存货余额
-       imdp.m10003 zmch, --其中：账面存货
-       imdp.m10002 xmgschye --其中：已项目公司资产形式形成的存货余额
+       imdp.m10012 / 10000 byqrsr, --本月确认收入
+       imdp.m10011 / 10000 bykpje, --本月开票金额
+       imdp.m10010 / 10000 byrzch, --本月入账存货
+       imdp.m10009 / 10000 ljqrsr, --累计确认收入
+       imdp.m10008 / 10000 ljtxml, --累计体现毛利
+       imdp.m10007 / 10000 ljkpje, --累计开票金额
+       imdp.m10006 / 10000 zmysye, --账面应收余额
+       imdp.m10005 / 10000 ljrzch, --累计入账存货
+       imdp.m10004 / 10000 chye, --存货余额
+       imdp.m10003 / 10000 zmch, --其中：账面存货
+       imdp.m10002 / 10000 xmgschye --其中：已项目公司资产形式形成的存货余额
 --imdp.m10000 gsbm--项目所在公司编码 
   from iufo_measure_data_pky3ljnq imdp
   left join (select alone_id, code, inputdate, ver from iufo_measure_pubdata) imp

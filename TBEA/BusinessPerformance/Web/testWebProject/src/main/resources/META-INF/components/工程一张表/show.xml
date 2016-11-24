@@ -106,12 +106,12 @@ where
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.xmlx,
 	PM.project_category,
 	IMP.project_capacity,
-	NC.khqc,
+	PM.customer_name,
 	PM.contract_amount,
 	PM.contract_date,
 	PM.completion_date,
@@ -127,12 +127,12 @@ where
   <else>
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.xmlx,
 	PM.project_category,
 	IMP.project_capacity,
-	NC.khqc,
+	PM.customer_name,
 	PM.contract_amount,
 	PM.contract_date,
 	PM.completion_date,
@@ -245,7 +245,7 @@ where
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	PM.income,
 	PM.bid_budget_cost,
@@ -262,7 +262,7 @@ where
   <else>
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	PM.income,
 	PM.bid_budget_cost,
@@ -360,7 +360,7 @@ where
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	PM.finacial_record_gross_profit_rate,
 	NC.bysjqrsr,
@@ -380,7 +380,6 @@ where
 	NC.chye,
 	NC.qzzmch,
 	NC.qzyxmgszcxsxcdchye,
-	NC.yjzch,
 	PM.dynamic_gross_profit_rate,
 	PM.overdue_payment	
 from 
@@ -393,7 +392,7 @@ where
   <else>
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	PM.finacial_record_gross_profit_rate,
 	NC.bysjqrsr,
@@ -413,7 +412,6 @@ where
 	NC.chye,
 	NC.qzzmch,
 	NC.qzyxmgszcxsxcdchye,
-	NC.yjzch,
 	PM.dynamic_gross_profit_rate,
 	PM.overdue_payment	
 from 
@@ -501,9 +499,6 @@ where
      <name>其中：已项目公司资产形式形成的存货余额</name>
     </item>
     <item>
-     <name>已结转存货</name>
-    </item>
-    <item>
      <name>动态毛利率（%）</name>
     </item>
     <item>
@@ -517,12 +512,13 @@ where
  </controller>
  <controller id="business_indicator_format">
   <formatter id="fmtData" export="true">
-   <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="4,5,6,7,8,9,11,12,13,14,16,17,18,19,20,21,23"/>
-   </NumberFormatter>
+   <EmptyFormatter reservedCount="1">
+    <DefaultMatcher cols="0,1,2"/>
+   </EmptyFormatter>
    <PercentFormatter reservedCount="1">
-    <DefaultMatcher cols="3,10,13,15,22"/>
+    <DefaultMatcher cols="3,10,13,15,21"/>
    </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
   </formatter>
  </controller>
  <controller id="business_indicator_export">
@@ -550,7 +546,6 @@ where
 存货余额（万元）,
 其中：账面存货,
 其中：已项目公司资产形式形成的存货余额,
-已结转存货,
 动态毛利率（%）,
 逾期款金额</list>
   <formatter id="excel">
@@ -576,7 +571,7 @@ where
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.xyjhqrsr,
 	IMP.xyjhkpje,
@@ -592,7 +587,7 @@ where
   <else>
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.xyjhqrsr,
 	IMP.xyjhkpje,
@@ -685,7 +680,7 @@ where
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.jcsgrq,
 	PM.progress_percentage,
@@ -708,7 +703,7 @@ where
   <else>
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.jcsgrq,
 	PM.progress_percentage,
@@ -837,7 +832,7 @@ where
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.qzbwrq,
 	IMP.ybwrl,
@@ -857,7 +852,7 @@ where
   <else>
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.qzbwrq,
 	IMP.ybwrl,
@@ -970,7 +965,7 @@ where
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.htydzbq,
 	IMP.zbqqsbz,
@@ -986,7 +981,7 @@ where
   <else>
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.htydzbq,
 	IMP.zbqqsbz,
@@ -1077,7 +1072,7 @@ where
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.khzczbj,
 	IMP.khqyxz,
@@ -1099,7 +1094,7 @@ where
   <else>
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.khzczbj,
 	IMP.khqyxz,
@@ -1222,7 +1217,7 @@ where
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.cost_control_plan_amount,
 	IMP.achieve_amount_of_cumup	,
@@ -1242,7 +1237,7 @@ where
   <else>
    <sql id="data" export="true">select 
 	IMP.xmgs,
-	NC.xmbh,
+	PM.project_num,
 	PM.project_name,
 	IMP.cost_control_plan_amount,
 	IMP.achieve_amount_of_cumup	,

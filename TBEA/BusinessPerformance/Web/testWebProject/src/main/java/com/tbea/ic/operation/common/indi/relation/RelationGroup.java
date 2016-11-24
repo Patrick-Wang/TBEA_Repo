@@ -1,6 +1,7 @@
 package com.tbea.ic.operation.common.indi.relation;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,14 +10,12 @@ import org.w3c.dom.Element;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
-import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 
 public class RelationGroup {
 	
 	Integer indi;
 	Set<CompanyType> comps;
 	
-	//Map<Integer, Set<CompanyType>> shareIndis = new HashMap<Integer, Set<CompanyType>>();
 	public boolean inGroup(CompanyType comp){
 		return comps.contains(comp);
 	}
@@ -34,9 +33,9 @@ public class RelationGroup {
 	}
 	
 	
-	public static RelationGroup parse(Element e, CompanyManager compMgr, DWXXDao dwxxDao, Map<String, Integer> indis) throws Exception{
-		Integer indi = RelationUtil.parseIndi(e, indis);
-		if (indi == null){
+	public static List<RelationGroup> parse(Element e, CompanyManager compMgr, DWXXDao dwxxDao, Map<String, Integer> indiDelc) throws Exception{
+		Set<Integer> indi = RelationUtil.parseIndi(e, indiDelc);
+		if (indi.isEmpty()){
 			return null;
 		}
 		
@@ -44,9 +43,13 @@ public class RelationGroup {
 		if (comps.isEmpty()){
 			return null;
 		}
-		RelationGroup rg = new RelationGroup();
-		rg.indi = indi;
-		rg.comps = comps;
-		return rg;
+		List<RelationGroup> ret = new ArrayList<RelationGroup>();
+		for (Integer ind : indi){
+			RelationGroup rg = new RelationGroup();
+			rg.indi = ind;
+			rg.comps = comps;
+			ret.add(rg);
+		}
+		return ret;
 	}
 }

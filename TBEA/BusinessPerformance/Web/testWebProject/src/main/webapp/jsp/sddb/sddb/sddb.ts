@@ -44,13 +44,13 @@ module sddb {
                 switch (e.id) {
                     case framework.basic.FrameEvent.FE_UPDATE:
                     {
-                        this.pluginUpdate(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item);
+                        this.pluginUpdate(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item, e.data.item0);
                     }
                         return;
                     case framework.basic.FrameEvent.FE_GET_EXPORTURL:
                     {
 
-                        return this.pluginGetExportUrl(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item);
+                        return this.pluginGetExportUrl(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item, e.data.item0);
                     }
                     default:
                         break;
@@ -58,12 +58,13 @@ module sddb {
                 return super.onEvent(e);
             }
 
-            pluginGetExportUrl(dStart:string, dEnd:string, compType:Util.CompanyType, item:any):string {
+            pluginGetExportUrl(dStart:string, dEnd:string, compType:Util.CompanyType, item:any, item0:any):string {
                 return this.option().exportUrl + "?" +  Util.Ajax.toUrlParam({
                         dStart: dStart,
                         dEnd:dEnd,
                         item: compType,
-                        model:item
+                        model:item,
+                        item0:item0
                     });
             }
 
@@ -71,13 +72,14 @@ module sddb {
                 return <Option>this.mOpt;
             }
 
-            public pluginUpdate(dStart:string, dEnd:string, compType:Util.CompanyType, item:any):void {
+            public pluginUpdate(dStart:string, dEnd:string, compType:Util.CompanyType, item:any, item0:any):void {
                 this.mCompType = compType;
                 this.mAjax.get({
                         dStart: dStart,
                         dEnd:dEnd,
                         item: compType,
-                        model:item
+                        model:item,
+                        item0:item0
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
@@ -152,12 +154,11 @@ module sddb {
                         multiselect: false,
                         drag: false,
                         resize: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 1000,
-                        viewrecords : true
+                        height: this.mData.data.length > 25 ? 550 : '100%',
+                        width: this.mData.width == undefined ? 1300 : this.mData.width,
+                        shrinkToFit: this.mData.shrinkToFit == "false" ? false : true
                     }));
             }
         }

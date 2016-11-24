@@ -1,0 +1,39 @@
+<components>
+ <controller id="scqytjqkUpdate">
+  <context key="tp" value="${request.item.asInt}"/>
+  <if test="${tp == 1}">
+   <callcontroller id="qyzbwcqkUpdate"/>
+  </if>
+  <elseif test="${tp == 2}">
+   <callcontroller id="qyzbxmgsUpdate"/>
+  </elseif>
+  <else>
+   <callcontroller id="qyzbrankUpdate"/>
+  </else>
+ </controller>
+ <controller id="scqytjqkExport">
+  <context key="tp" value="${request.item.asInt}"/>
+  <if test="${tp == 1}">
+   <callcontroller id="qyzbwcqkExport"/>
+  </if>
+  <elseif test="${tp == 2}">
+   <callcontroller id="qyzbxmgsExport"/>
+  </elseif>
+  <else>
+   <callcontroller id="qyzbrankExport"/>
+  </else>
+ </controller>
+ <controller id="scqytjqk">
+ <list id="ids" type="int">1, 2, 3</list>
+ <list id="vals" type="string">各单位整体市场签约情况, 各项目公司市场签约情况, 市场签约排名</list>
+  <context key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="scqytjqkUpdate"/>
+   <map key="exportUrl" value="scqytjqkExport"/>
+   <map key="nodeData" value="${nodeData}"/>
+   <map key="title" value="市场签约统计情况"/>
+  </response>
+ </controller>
+</components>

@@ -66,12 +66,17 @@
 					<c:choose>
 						<c:when test="${MarketAuth}">
 							<ul id="navlistMarket" style="padding: 10px 0; width: 180px;">
-								<li style="background-color: transparent;"><i
+								<c:if test="${scbsjLookup || scbsjEntry}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#scqyxx"
+										style="color: rgb(62, 152, 197);">市场签约信息</a></li>
+								</c:if>
+								<%-- <li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#market"
 									style="color: rgb(62, 152, 197);">市场部数据信息</a></li>
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#market"
-									style="color: rgb(62, 152, 197);">市场部数据分析</a></li>
+									style="color: rgb(62, 152, 197);">市场部数据分析</a></li> --%>
 							</ul>
 						</c:when>
 
@@ -130,8 +135,23 @@
 										class="ec-icon ec-icon-line"></i> <a href="#ssgsdbsj"
 										style="color: rgb(62, 152, 197);">上市公司对标数据</a></li>
 								</c:if>
+								<c:if test="${gcyzbLookup || gcyzbImport}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#gcyzb"
+										style="color: rgb(62, 152, 197);">工程一张表</a></li>
+								</c:if>
+								<c:if test="${sddbLookup || sddbImport}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#sddb"
+										style="color: rgb(62, 152, 197);">订单全过程管控</a></li>
+								</c:if>
+								<c:if test="${scbsjLookup || scbsjEntry}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#scqyxx"
+										style="color: rgb(62, 152, 197);">市场签约信息</a></li>
+								</c:if>
 								<!-- 只有sbd公司权限显示-->
-								<c:if test="${SbdAuth}">
+								<%-- <c:if test="${SbdAuth}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-pie"></i> <a href="#yszk"
 										style="color: rgb(62, 152, 197);">应收账款</a></li>
@@ -145,14 +165,14 @@
 										class="ec-icon ec-icon-radar"></i> <a href="#hk"
 										style="color: rgb(62, 152, 197);">回款</a></li>
 
-									<%-- <li style="background-color: transparent;"><i
+									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-chord"></i> <a href="#cb"
 										style="color: rgb(62, 152, 197);">成本管控</a></li>
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-force"></i> <a href="#tbbzj"
-										style="color: rgb(62, 152, 197);">投标保证金</a></li> --%>
+										style="color: rgb(62, 152, 197);">投标保证金</a></li>
 
-								</c:if>
+								</c:if> --%>
 								<c:if test="${PriceLibAuth}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#jgkxx"
@@ -281,7 +301,38 @@
 			<c:choose>
 				<c:when test="${MarketAuth}">
 					<div id="MarketList" class="col-md-10">
-						<%@include file="index_market.jsp"%>
+						<c:if test="${scbsjLookup || scbsjEntry}">
+<div>
+	<h3>
+		市场签约信息<a name="scqyxx"> </a>
+	</h3>
+	<div class="section">
+		<div class="thumb3">
+			<ul class="slides">		
+			<c:if test="${scbsjLookup}">
+			<li><a href="../report/scqytjqk.do" target="_blank"><img
+						src="../images/charts/bar3.png"> <span><strong>市场签约统计情况</strong></span></a>
+				</li>
+				<li><a href="../report/scqy.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>重点产品签约情况查看</strong></span></a>
+				</li>		
+				<li><a href="../report/scjb.do" target="_blank"><img
+						src="../images/charts/scatter2.png"> <span><strong>行业签约情况查看</strong></span></a>
+				</li>	
+				</c:if>
+				<c:if test="${scbsjEntry}">
+				<li><a href="../report/scqyEntry.do" target="_blank"><img
+						src="../images/charts/scatter4.png"> <span><strong>重点产品签约情况录入</strong></span></a>
+				</li>
+				<li><a href="../report/scjbEntry.do" target="_blank"><img
+						src="../images/charts/bar1.png"> <span><strong>行业签约情况录入</strong></span></a>
+				</li>
+				</c:if>
+			</ul>
+		</div>
+	</div>
+</div>
+</c:if>
 					</div>
 				</c:when>
 

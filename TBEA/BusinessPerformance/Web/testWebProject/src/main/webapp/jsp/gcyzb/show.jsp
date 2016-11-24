@@ -92,13 +92,13 @@
             margin-left:8px;
         }
 
-        .select2-selection__rendered{
+/*         .select2-selection__rendered{
             border: 1px solid #c5dbec;
             background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x;
             font-weight: bold;
             color: #2e6e9e;
     border: solid 1px;
-        }
+        } */
 
 
 
@@ -233,15 +233,19 @@
         <td>
             <div id="dt" style="float: left;margin-right:10px"></div>
             <div  style="float: left;margin-right:10px">
-                <div id="im">
-
-                </div>
+              项目名称:
             </div>
             <div  style="float: left;margin-right:10px">
                 <div id="im2">
 
                 </div>
             </div>
+            <div  style="float: left;margin-right:10px">
+                <div id="im">
+
+                </div>
+            </div>
+            
             <input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
                    onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_UPDATE)" />
         </td>

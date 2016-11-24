@@ -20,5 +20,7 @@ public interface YclbfqkService {
 
 	void importDlYclbfqk(Date d);
 
+	void importXlYclbfqk(Date d);
+
 
 }

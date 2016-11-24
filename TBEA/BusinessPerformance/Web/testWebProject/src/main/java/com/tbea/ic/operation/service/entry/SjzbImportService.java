@@ -12,4 +12,6 @@ public interface SjzbImportService {
 	Map<Company, JSONArray> getHBSjzb(Date d);
 
 	Map<Company, JSONArray> getDLSjzb(Date d);
+	
+	Map<Company, JSONArray> getXLSjzb(Date d);
 }

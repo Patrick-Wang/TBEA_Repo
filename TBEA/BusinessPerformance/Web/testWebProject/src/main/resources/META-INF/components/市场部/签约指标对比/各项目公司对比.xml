@@ -574,7 +574,7 @@ group by
   <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="servQyzbxmgs"/>
   <callcontroller id="qyzbxmgsFmtter"/>
-  <ExcelTemplate id="excelTemplate" sheet="项目公司市场签约指标完成情况"/>
+  <ExcelTemplate id="excelTemplate" sheet="项目公司市场签情况"/>
   <list id="title" type="string">类型,
 项目公司,
 全年计划,
@@ -639,7 +639,7 @@ group by
    <formatter ref="data"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${cal.year +'年'+ cal.month + '月'}项目公司市场签约指标完成情况.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="${cal.year +'年'+ cal.month + '月'}项目公司市场签情况.xls" serv="fmtServ"/>
  </controller>
  <controller id="qyzbxmgs">
   <response type="jsp" name="framework/templates/singleDateReport/show">
@@ -647,7 +647,7 @@ group by
    <map key="exportUrl" value="qyzbxmgsExport"/>
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
-   <map key="title" value="项目公司市场签约指标完成情况"/>
+   <map key="title" value="项目公司市场签情况"/>
   </response>
  </controller>
 </components>

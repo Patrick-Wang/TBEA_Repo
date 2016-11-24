@@ -21,6 +21,7 @@ public class CalculatedZbManager {
 		defaultZbs.add(GSZB.ZZYSXFYL231.value());
 		defaultZbs.add(GSZB.GC_XSYWSXFYL232.value());
 		defaultZbs.add(GSZB.WLMYSXFYL233.value());
+		defaultZbs.add(GSZB.MTXLZH346.value());
 	};
 
 	static {
@@ -30,6 +31,7 @@ public class CalculatedZbManager {
 		jh2016Zbs.add(GSZB.ZZYSXFYL231.value());
 		jh2016Zbs.add(GSZB.GC_XSYWSXFYL232.value());
 		jh2016Zbs.add(GSZB.WLMYSXFYL233.value());
+		jh2016Zbs.add(GSZB.MTXLZH346.value());
 	};
 	
 	

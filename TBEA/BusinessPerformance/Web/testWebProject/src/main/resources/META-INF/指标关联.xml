@@ -29,23 +29,39 @@
 				indi ：指标引用
 -->
 <relationships>
- <indicators>
-<!--   <lrze id="1"/> -->
-<!--   <yszk name="应收账款"/> -->
- </indicators>
-<!--  <share indi="lrze" type="月实际">
-  <company name="沈变公司"/>
-  <company id="2"/>
-  <company type="SBGS"/>
- </share>
- <sum type="月实际">
-  <target indi="lrze">
-   <company type="沈变公司"/>
-  </target>
-  <src indi="lrze">
-   <company name="沈变公司"/>
-   <company name="衡变公司"/>
-   <company name="新变公司"/>
-  </src>
- </sum> -->
+	<indicators>
+		<mtxlzh name="煤炭销量总和" />
+		<jekxl name="将二矿销量" />
+		<nltkxl name="南露天矿销量" />
+		<n1 name="南矿大中块" />
+		<n2 name="南矿三八块" />
+		<n3 name="南矿其他" />
+		<n4 name="南矿末煤" />
+
+		<j1 name="二矿大中块" />
+		<j2 name="二矿三八块" />
+		<j3 name="二矿其他" />
+		<j4 name="二矿末煤" />
+
+	</indicators>
+	<share indi="nltkxl,n1,n2,n3,n4" type="月实际,20预计,28预计,月计划,年计划">
+		<company id="7" />
+		<company id="701" />
+	</share>
+	<share indi="jekxl,j1,j2,j3,j4" type="月实际,20预计,28预计,月计划,年计划">
+		<company id="7" />
+		<company id="702" />
+	</share>
+
+	<sum type="月实际,20预计,28预计,月计划,年计划">
+		<target indi="mtxlzh">
+			<company id="7" />
+		</target>
+		<src indi="nltkxl">
+			<company id="701" />
+		</src>
+		<src indi="jekxl">
+			<company id="702" />
+		</src>
+	</sum>
 </relationships>

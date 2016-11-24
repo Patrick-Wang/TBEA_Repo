@@ -15,7 +15,6 @@ var framework;
     (function (templates) {
         var dateReport;
         (function (dateReport) {
-            var UnitedSelector = Util.UnitedSelector;
             function createInstance() {
                 return new ShowView();
             }
@@ -48,17 +47,25 @@ var framework;
                 };
                 ShowView.prototype.onInitialize = function (opt) {
                     var _this = this;
-                    this.unitedSelector = new UnitedSelector(opt.itemNodes, opt.itemId);
+                    this.unitedSelector = new Util.UnitedSelector(opt.itemNodes, opt.itemId);
                     this.unitedSelector.change(function () {
                         _this.renderItemSelector(opt.itemId);
                     });
                     this.renderItemSelector(opt.itemId);
+                    if (opt.itemNodes2 != undefined) {
+                        this.unitedSelector2 = new Util.UnitedSelector(opt.itemNodes2, opt.itemId2);
+                        this.unitedSelector.change(function () {
+                            _this.renderItemSelector(opt.itemId2);
+                        });
+                        this.renderItemSelector(opt.itemId2);
+                    }
                     _super.prototype.onInitialize.call(this, opt);
                 };
                 ShowView.prototype.getParams = function (date) {
                     return {
                         date: this.getDate(date),
-                        item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
+                        item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id,
+                        item2: this.unitedSelector2 != undefined ? this.unitedSelector2.getDataNode(this.unitedSelector.getPath()).data.id : undefined
                     };
                 };
                 ShowView.prototype.getDate = function (date) {

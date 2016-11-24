@@ -1,0 +1,39 @@
+<components>
+ <controller id="ddfjdCollectionUpdate">
+ <context key="item" value="${request.model.asString}"/>
+ <if test="${'item' == '公司执行阶段订单成本汇总表'}">
+ 	<callcontroller id="execCostFdwCollectionUpdate"/>
+ </if>
+ <else>
+ 	<callcontroller id="completionFdwCollectionUpdate"/>
+ </else>
+ 
+  </controller>
+  <controller id="ddfjdCollectionExport">
+ <context key="item" value="${request.model.asString}"/>
+ <if test="${'item' == '公司执行阶段订单成本汇总表'}">
+ 	<callcontroller id="execCostFdwCollectionExport"/>
+ </if>
+ <else>
+ 	<callcontroller id="completionFdwCollectionExport"/>
+ </else> 
+ 
+  </controller>
+ <controller id="ddfjdCollection">
+ <list id="ids" type="int"> 
+ 1,2
+ </list>
+ <list id="values" type="string">
+ 公司执行阶段订单成本汇总表,公司订单完工阶段汇总分析表
+ </list>
+  <response type="jsp" name="sddb/sddb">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="dateStart" value="${calendar.current.months[1].days[1].format}"/>
+   <map key="updateUrl" value="ddfjdCollectionUpdate"/>
+   <map key="exportUrl" value="ddfjdCollectionExport"/>
+   <map key="itemNodes" value="${dataNodeFactory[ids][values].asJson}"/>
+   <map map="${authMgr[61]}"/>
+   <map key="title" value="公司订单分阶段汇总分析"/>
+  </response>
+ </controller>
+</components>

@@ -116,17 +116,39 @@ public class ZBListenerAggregator implements ZBInjectListener {
 	}
 
 
-	private void parseSharedRelation(RelationGroup rgShared, double val, EasyCalendar ec, Company excludeComp){
+	private void parseSharedRelation(RelationGroup rgShared, double val, EasyCalendar ec, Company srcComp){
+		if (srcComp != null && rgShared != null && rgShared.inGroup(srcComp.getType())){
+			String df = ec.getFormat();
+			JSONArray r = new JSONArray();
+			r.add("" + rgShared.indi());
+			r.add("" + val);
+			for (CompanyType cp : rgShared.companies()){
+				if (srcComp != null && cp == srcComp.getType()){
+					continue;
+				}
+				
+				if (workingIndis.containsKey(df + cp)){
+					IndiValues indiVal = workingIndis.get(df + cp);
+					indiVal.data.add(r);
+				}else{
+					IndiValues indiVal = new IndiValues();
+					indiVal.data = new JSONArray();
+					indiVal.data.add(r);
+					indiVal.date = ec.getDate();
+					indiVal.compType = cp;
+					workingIndis.put(df + cp, indiVal);
+				}
+			}
+		}		
+	}
+	
+	private void parseSharedRelation(RelationGroup rgShared, double val, EasyCalendar ec){
 		if (rgShared != null){
 			String df = ec.getFormat();
 			JSONArray r = new JSONArray();
 			r.add("" + rgShared.indi());
 			r.add("" + val);
 			for (CompanyType cp : rgShared.companies()){
-				if (excludeComp != null && cp == excludeComp.getType()){
-					continue;
-				}
-				
 				if (workingIndis.containsKey(df + cp)){
 					IndiValues indiVal = workingIndis.get(df + cp);
 					indiVal.data.add(r);
@@ -180,28 +202,29 @@ public class ZBListenerAggregator implements ZBInjectListener {
 			RelationGroup rg = entry.getValue();
 			List<Integer> ids = toIds(rg.companies());
 			ids.remove(comp.getId());
-			switch(zbType){
-			case BY20YJ:
-				ret = MathUtil.sum(ret, yj20zbDao.getZb(rg.indi(), d, ids));
-				break;
-			case BY28YJ:
-				ret = MathUtil.sum(ret, yj28zbDao.getZb(rg.indi(), d, ids));
-				break;
-			case BYSJ:
-				ret = MathUtil.sum(ret, sjzbDao.getZb(rg.indi(), d, ids));
-				break;
-			case NDJH:
-				ret = MathUtil.sum(ret, ndjhzbDao.getZb(rg.indi(), d, ids));
-				break;
-			case YDJDMJH:
-				ret = MathUtil.sum(ret, ydjhzbDao.getZb(rg.indi(), d, ids));
-				break;
-			default:
-				break;
+			if (!ids.isEmpty()){
+				switch(zbType){
+				case BY20YJ:
+					ret = MathUtil.sum(ret, yj20zbDao.getZb(rg.indi(), d, ids));
+					break;
+				case BY28YJ:
+					ret = MathUtil.sum(ret, yj28zbDao.getZb(rg.indi(), d, ids));
+					break;
+				case BYSJ:
+					ret = MathUtil.sum(ret, sjzbDao.getZb(rg.indi(), d, ids));
+					break;
+				case NDJH:
+					ret = MathUtil.sum(ret, ndjhzbDao.getZb(rg.indi(), d, ids));
+					break;
+				case YDJDMJH:
+					ret = MathUtil.sum(ret, ydjhzbDao.getZb(rg.indi(), d, ids));
+					break;
+				default:
+					break;
+				}
 			}
 		}
-		
-		parseSharedRelation(rs.target(), ret, ec, null);
+		parseSharedRelation(rs.target(), ret, ec);
 		return ret;
 	}
 

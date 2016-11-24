@@ -7,9 +7,8 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.Data;
 import com.tbea.ic.operation.common.DataNode;
-import com.tbea.ic.operation.reportframe.component.ComponentLoader.ComponentLoadedListener;
 
-public class ComponentStructureBuilder implements ComponentLoadedListener {
+public class ComponentStructureBuilder implements ConfigLoadedListener {
 
 	public final static int FOLDER = 1;
 	public final static int FILE = 2;
@@ -69,6 +68,15 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 		return path.substring(start);
 	}
 	
+	
+	public DataNode getParentNode(String path){
+		if (lastNode != null){
+			int end = path.lastIndexOf("\\");
+			return getNode(path.substring(0, end));
+		}
+		return null;
+	}
+	
 	public DataNode getNode(String path){
 		if (lastNode != null){
 			String subPath = path.substring(basePath.length());
@@ -78,8 +86,8 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 			if (node.getData().getValue().equals(pathSegment)){
 				start += pathSegment.length();
 				while (null != node && null != (pathSegment = nextPathSegment(subPath, start))){
-					node = node.findByValue(pathSegment);
 					start += pathSegment.length();
+					node = node.findByValue(subPath.substring(0, start));
 				}
 				return node;
 			}
@@ -164,6 +172,18 @@ public class ComponentStructureBuilder implements ComponentLoadedListener {
 			node = getControllerNode(id);
 			runStack.peek().getSubNodes().add(node);
 		}
+	}
+
+	@Override
+	public void onDeleteFile(String filePath) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDeleteFolder(String folderPath) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

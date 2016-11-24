@@ -1,6 +1,8 @@
 package com.tbea.ic.operation.common.indi.relation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -8,7 +10,6 @@ import org.w3c.dom.Element;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
-import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
@@ -34,9 +35,9 @@ public class RelationSum {
 		return false;
 	}
 	
-	public static RelationSum parse(Element e, CompanyManager compMgr, DWXXDao dwxxDao, Map<String, Integer> indis) throws Exception{
+	public static List<RelationSum> parse(Element e, CompanyManager compMgr, DWXXDao dwxxDao, Map<String, Integer> indiDelc) throws Exception{
 	
-		RelationGroup target = RelationGroup.parse(XmlUtil.element(e.getElementsByTagName("target"), 0), compMgr, dwxxDao, indis);
+		List<RelationGroup> target = RelationGroup.parse(XmlUtil.element(e.getElementsByTagName("target"), 0), compMgr, dwxxDao, indiDelc);
 		
 		
 		if (null != target){
@@ -46,18 +47,24 @@ public class RelationSum {
 
 				@Override
 				public void on(Element elem) throws Exception {
-					RelationGroup src = RelationGroup.parse(elem, compMgr, dwxxDao, indis);
+					List<RelationGroup> src = RelationGroup.parse(elem, compMgr, dwxxDao, indiDelc);
 					if (src != null){
-						srcs.put(src.indi(), src);
+						for (RelationGroup rl : src){
+							srcs.put(rl.indi(), rl);
+						}
 					}
 				}
 			});
 			
 			if (!srcs.isEmpty()){
-				RelationSum rs = new RelationSum();
-				rs.srcs = srcs;
-				rs.target = target;
-				return rs;
+				List<RelationSum> rss = new ArrayList<RelationSum>();
+				for (RelationGroup rg : target){
+					RelationSum rs = new RelationSum();
+					rs.srcs = srcs;
+					rs.target = rg;
+					rss.add(rs);
+				}
+				return rss;
 			}
 		}
 		return null;

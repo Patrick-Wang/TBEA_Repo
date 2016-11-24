@@ -1,0 +1,271 @@
+<components>
+ <service id="servScjbUpdate" transaction="transactionManager">
+  <sql id="zbs">select id, name from identifier_scfxgb_hy</sql>
+  <list id="ids" sql="zbs" value="0" type="int"/>
+  <sql id="scjbs" order="ids" by="0" colcount="4">select 
+	hyid, 
+	sum(tbje) tb, 
+	sum(zbje) zb,
+	sum(zbje)/nullif(sum(tbje),0) zbl
+from 
+	market_scjb
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and 
+	dwid in ${dwids}
+group by
+	hyid</sql>
+  <sql id="scjbsQntq" order="ids" by="0" colcount="4">select 
+	hyid, 
+	sum(tbje) tb, 
+	sum(zbje) zb,
+	sum(zbje)/nullif(sum(tbje),0) zbl
+from 
+	market_scjb
+where
+	nf = ${cal.lastYear.year} and
+	yf &lt;= ${cal.lastYear.month} and 
+	dwid in ${dwids}
+group by
+	hyid</sql>
+  <list type="int" id="ids">
+   <item>1000</item>
+  </list>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string">传统电力市场,传统电力市场,传统电力市场,传统电力市场,新能源市场,新能源市场,新能源市场,重点领域市场,重点领域市场,重点领域市场,重点领域市场,重点领域市场,重点领域市场,其它,连锁经营,合计</list>
+   <list type="string" sql="zbs" value="1">
+    <item>合计</item>
+   </list>
+   <list type="double" sql="scjbs" value="1"/>
+   <list type="double" sql="scjbs" value="2"/>
+   <list type="double" sql="scjbs" value="3"/>
+   <list type="double" sql="scjbsQntq" value="1"/>
+   <list type="double" sql="scjbsQntq" value="2"/>
+   <list type="double" sql="scjbsQntq" value="3"/>
+   <col intruction="同比增幅"/>
+   <col intruction="同比增幅"/>
+   <col intruction="同比增幅"/>
+   <sumRow toId="1000">
+    <excludeCol>0,1,4,7,10</excludeCol>
+    <rangeRows>0, ${zbs.size - 1}</rangeRows>
+   </sumRow>
+   <divCol toCol="4" sub="3" base="2"/>
+   <divCol toCol="7" sub="6" base="5"/>
+   <growthRates toCol="8" sj="2" tq="5"/>
+   <growthRates toCol="9" sj="3" tq="6"/>
+   <growthRates toCol="10" sj="4" tq="7"/>
+  </table>
+ </service>
+ <controller id="fmtterScjb">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4,7,10"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="scjbExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compType" value="${companyTypeHelper.valueOf[request.item.asInt]}"/>
+  <if test="${compType.equals[CompanyType.BYQCY]}">
+   <list id="dwids" type="string" export="true">${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.TBGS.ordinal]}</list>
+  </if>
+  <if test="${compType.equals[CompanyType.XLCY]}">
+   <list id="dwids" type="string" export="true">${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
+  </if>
+  <if test="${!compType.equals[CompanyType.XLCY] &amp;&amp;!compType.equals[CompanyType.BYQCY]  }">
+   <list id="dwids" type="string" export="true">${orgs.BMDBOrganization.ids[compType.ordinal]}</list>
+  </if>
+  <callservice id="servScjbUpdate"/>
+  <callcontroller id="fmtterScjb"/>
+  <list id="title" type="string" export="true">行业,
+行业,
+今年累计指标情况,
+今年累计指标情况,
+今年累计指标情况,
+去年累计指标情况,
+去年累计指标情况,
+去年累计指标情况,
+同比增幅情况,
+同比增幅情况,
+同比增幅情况</list>
+  <list id="title1" type="string" export="true">行业,行业,投标金额,中标金额,中标率,投标金额,中标金额,中标率,投标金额增幅比例,中标金额增幅比例,中标率增幅比例
+</list>
+  <ExcelTemplate id="excelTemplate" sheet="行业签约情况"/>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="2" y="0" width="${title.size - 2}" height="2"/>
+    <MergeRegion x="0" y="0" width="2" height="2" yCount="1"/>
+    <MergeRegion x="0" y="2" width="2" height="${result.ids.size}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0,1"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}行业签约情况.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="scjbUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compType" value="${companyTypeHelper.valueOf[request.item.asInt]}"/>
+  <if test="${compType.equals[CompanyType.BYQCY]}">
+   <list id="dwids" type="string" export="true">${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]}</list>
+  </if>
+  <elseif test="${compType.equals[CompanyType.XLCY]}">
+   <list id="dwids" type="string" export="true">${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
+  </elseif>
+  <elseif test="${compType.equals[CompanyType.SBDCYJT]}">
+   <list id="dwids" type="string" export="true">
+   ${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]},
+   ${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]},
+${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
+  </elseif>
+  <else>
+   <list id="dwids" type="string" export="true">${orgs.BMDBOrganization.ids[compType.ordinal]}</list>
+  </else>
+  <callservice id="servScjbUpdate"/>
+  <callcontroller id="fmtterScjb"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>行业</name>
+    </item>
+    <item>
+     <name>行业</name>
+    </item>
+    <item>
+     <name>今年累计指标情况</name>
+     <sub type="array">
+      <item>
+       <name>投标金额</name>
+      </item>
+      <item>
+       <name>中标金额</name>
+      </item>
+      <item>
+       <name>中标率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>去年累计指标情况</name>
+     <sub type="array">
+      <item>
+       <name>投标金额</name>
+      </item>
+      <item>
+       <name>中标金额</name>
+      </item>
+      <item>
+       <name>中标率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>同比增幅情况</name>
+     <sub type="array">
+      <item>
+       <name>投标金额增幅比例</name>
+      </item>
+      <item>
+       <name>中标金额增幅比例</name>
+      </item>
+      <item>
+       <name>中标率增幅比例</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <mergeRows type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeRows>
+   <mergeCols type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeCols>
+   <mergeTitle>true</mergeTitle>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="scbCompTypesShow">
+  <context key="compTypes" value="${authTypes[57]}"/>
+  <if>${
+compTypes.contains[CompanyType.SBGS] &amp;&amp; 
+compTypes.contains[CompanyType.HBGS] &amp;&amp; 
+compTypes.contains[CompanyType.XBC]
+}<list id="compTypes" type="object">
+    <item>${CompanyType.BYQCY}</item>
+   </list>
+  </if>
+  <if>${
+compTypes.contains[CompanyType.LLGS] &amp;&amp; 
+compTypes.contains[CompanyType.XLC] &amp;&amp; 
+compTypes.contains[CompanyType.DLGS]
+}<list id="compTypes" type="object">
+    <item>${CompanyType.XLCY}</item>
+   </list>
+  </if>
+    <if>${
+compTypes.contains[CompanyType.SBGS] &amp;&amp; 
+compTypes.contains[CompanyType.HBGS] &amp;&amp; 
+compTypes.contains[CompanyType.XBC] &amp;&amp;
+compTypes.contains[CompanyType.LLGS] &amp;&amp; 
+compTypes.contains[CompanyType.XLC] &amp;&amp; 
+compTypes.contains[CompanyType.DLGS]
+}<list id="compTypes" type="object">
+    <item>${CompanyType.SBDCYJT}</item>
+   </list>
+  </if>
+  <context key="nodeData" value="${dataNodeFactory[companyTypeHelper.ids[compTypes]][companyTypeHelper.values[compTypes]].asJson}"/>
+ </controller>
+ <controller id="scjb">
+  <callcontroller id="scbCompTypesShow"/>
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="scjbUpdate"/>
+   <map key="exportUrl" value="scjbExport"/>
+   <map key="nodeData" value="${nodeData}"/>
+   <map key="title" value="行业签约情况"/>
+  </response>
+ </controller>
+</components>

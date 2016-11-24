@@ -81,6 +81,9 @@ public class WlyddServlet {
 		wlyddService.importDlKglydd(d);
 		wlyddService.importDlMlspcs(d);
 		
+		wlyddService.importXlKglydd(d);
+		wlyddService.importXlMlspcs(d);
+		
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
 	}
@@ -93,6 +96,9 @@ public class WlyddServlet {
 		Date d = Util.toDate(cal);
 		wlyddService.importDlKglydd(d);
 		wlyddService.importDlMlspcs(d);
+		
+		wlyddService.importXlKglydd(d);
+		wlyddService.importXlMlspcs(d);
 	}
 	
 }

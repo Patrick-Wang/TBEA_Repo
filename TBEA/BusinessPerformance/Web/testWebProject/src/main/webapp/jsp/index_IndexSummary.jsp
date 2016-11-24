@@ -7,51 +7,51 @@
 
 
 <c:if test="${admin}">
-<div>
-	<h3>
-		Dashboard<a name="dashboard"> </a>
-	</h3>
-	<div class="section">
-		<div class="thumb3">
-			<ul class="slides">
-				<li><a href="../dashboard/user_status.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>在线用户状态</strong></span></a>
-				</li>
-			</ul>
+	<div>
+		<h3>
+			Dashboard<a name="dashboard"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<li><a href="../dashboard/user_status.do" target="_blank"><img
+							src="../images/charts/bar1.png"> <span><strong>在线用户状态</strong></span></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
 </c:if>
 
 <c:if test="${notSbqgb}">
-<div>
-	<h3>
-		经营指标完成情况<a name="zbhz"> </a>
-	</h3>
-	<div class="section">
-		<div class="thumb3">
-			<ul class="slides">			
-				<c:if test="${CorpAuth}">
-				<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>公司整体指标完成情况</strong></span></a>
-				</li>
-				</c:if>				
-				<li><a href="../ydzb/hzb_companys.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>经营单位及项目公司指标完成情况</strong></span></a>
-				</li>
-				<!--/li-->
-				<c:if test="${CorpAuth}">
-				<li><a href="../ydzb/gcy_zbhz.do" target="_blank"><img
-						src="../images/charts/line2.png"> <span><strong>各产业五大经营指标完成情况</strong></span></a>
-				</li>
-				<!--/li-->
-				<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img
-						src="../images/charts/pie1.png"> <span><strong>各单位五大经营指标完成情况</strong></span></a>
-				</li>
-				<li><a href="../report/acyhzzb.do" target="_blank"><img
-						src="../images/charts/pie2.png"> <span><strong>按照产业汇总指标</strong></span></a>
-				</li>
-<!-- 				/li
+	<div>
+		<h3>
+			经营指标完成情况<a name="zbhz"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<c:if test="${CorpAuth}">
+						<li><a href="../ydzb/hzb_zbhz.do" target="_blank"><img
+								src="../images/charts/bar1.png"> <span><strong>公司整体指标完成情况</strong></span></a>
+						</li>
+					</c:if>
+					<li><a href="../ydzb/hzb_companys.do" target="_blank"><img
+							src="../images/charts/bar1.png"> <span><strong>经营单位及项目公司指标完成情况</strong></span></a>
+					</li>
+					<!--/li-->
+					<c:if test="${CorpAuth}">
+						<li><a href="../ydzb/gcy_zbhz.do" target="_blank"><img
+								src="../images/charts/line2.png"> <span><strong>各产业五大经营指标完成情况</strong></span></a>
+						</li>
+						<!--/li-->
+						<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img
+								src="../images/charts/pie1.png"> <span><strong>各单位五大经营指标完成情况</strong></span></a>
+						</li>
+						<li><a href="../report/acyhzzb.do" target="_blank"><img
+								src="../images/charts/pie2.png"> <span><strong>按照产业汇总指标</strong></span></a>
+						</li>
+						<!-- 				/li
 				<li><a href="../ydzb/gdw_zbhz.do?zb=6" target="_blank"><img
 						src="../images/charts/scatter1.png"> <span><strong>销售收入指标完成情况</strong></span></a>
 				</li>
@@ -68,11 +68,11 @@
 						src="../images/charts/scatter5.png"> <span><strong>存货指标完成情况</strong></span></a>
 						</li>
 				/li -->
-				</c:if>
-			</ul>
+					</c:if>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
 </c:if>
 
 
@@ -85,29 +85,29 @@
 		<div class="thumb3">
 			<ul class="slides">
 				<c:if test="${CorpAuth}">
-				<li><a href="../ydzb/hzb_zbhz_prediction.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>整体指标预测完成情况</strong></span></a>
-				</li>
-				</c:if> 
-				<li><a href="../ydzb/hzb_companys_prediction.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>经营单位及项目公司指标预测完成情况</strong></span></a>
-				</li>
+					<li><a href="../ydzb/hzb_zbhz_prediction.do" target="_blank"><img
+							src="../images/charts/bar1.png"> <span><strong>整体指标预测完成情况</strong></span></a>
+					</li>
+				</c:if>
+				<li><a href="../ydzb/hzb_companys_prediction.do"
+					target="_blank"><img src="../images/charts/scatter2.png">
+						<span><strong>经营单位及项目公司指标预测完成情况</strong></span></a></li>
 				<!--/li-->
 				<c:if test="${CorpAuth}">
-				<li><a href="../ydzb/financial_zbhz_prediction.do" target="_blank"><img
-						src="../images/charts/line2.png"> <span><strong>各产业五大经营指标预测完成情况</strong></span></a>
-				</li>
-				<li><a href="../ydzb/gdw_zbhz_prediction.do" target="_blank"><img
-						src="../images/charts/pie1.png"> <span><strong>各单位五大经营指标预测完成情况</strong></span></a>
-				</li>
+					<li><a href="../ydzb/financial_zbhz_prediction.do"
+						target="_blank"><img src="../images/charts/line2.png"> <span><strong>各产业五大经营指标预测完成情况</strong></span></a>
+					</li>
+					<li><a href="../ydzb/gdw_zbhz_prediction.do" target="_blank"><img
+							src="../images/charts/pie1.png"> <span><strong>各单位五大经营指标预测完成情况</strong></span></a>
+					</li>
 				</c:if>
 				<c:if test="${JYEntryLookup || zhAuth}">
-				<li><a href="../dashboard/status.do" target="_blank"><img
-						src="../images/charts/scatter1.png"> <span><strong>20号/28号/实际指标预测值填报情况</strong></span></a>
-				</li>
+					<li><a href="../dashboard/status.do" target="_blank"><img
+							src="../images/charts/scatter1.png"> <span><strong>20号/28号/实际指标预测值填报情况</strong></span></a>
+					</li>
 				</c:if>
 
-<!-- 	
+				<!-- 	
 				/li
 				<li><a href="../ydzb/gdw_zbhz_prediction.do?zb=29" target="_blank"><img
 						src="../images/charts/scatter2.png"> <span><strong>经营性净现金流预测完成情况</strong></span></a>
@@ -131,18 +131,18 @@
 		<div class="thumb3">
 			<ul class="slides">
 				<c:if test="${CorpAuth}">
-				<li><a href="../NCzb/AllCompanysNC_overview.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>公司整体财务指标完成情况</strong></span></a>
-				</li>
-				</c:if> 
+					<li><a href="../NCzb/AllCompanysNC_overview.do"
+						target="_blank"><img src="../images/charts/scatter2.png">
+							<span><strong>公司整体财务指标完成情况</strong></span></a></li>
+				</c:if>
 				<li><a href="../NCzb/CompanysNC.do" target="_blank"><img
 						src="../images/charts/scatter4.png"> <span><strong>经营单位财务指标完成情况</strong></span></a>
 				</li>
 				<li><a href="../report/dbxq.do" target="_blank"><img
-				src="../images/charts/bar2.png"> <span><strong>财务对标需求</strong></span></a>
+						src="../images/charts/bar2.png"> <span><strong>财务对标需求</strong></span></a>
 				</li>
 				<li><a href="../report/jjzjz.do" target="_blank"><img
-				src="../images/charts/bar2.png"> <span><strong>经济增加值</strong></span></a>
+						src="../images/charts/bar2.png"> <span><strong>经济增加值</strong></span></a>
 				</li>
 			</ul>
 		</div>
@@ -150,90 +150,188 @@
 </div>
 
 <c:if test="${JYAnalysisLookup}">
-<div>
-	<h3>
-		经营指标分析<a name="dashboard"> </a>
-	</h3>
-	<div class="section">
-		<div class="thumb3">
-			<ul class="slides">
-<%-- 				<c:if test="${JYAnalysisSummary}">
+	<div>
+		<h3>
+			经营指标分析<a name="dashboard"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<%-- 				<c:if test="${JYAnalysisSummary}">
 				<li><a href="../fxcpylspdqddmlqk/openview.do" target="_blank"><img
 						src="../images/charts/bar1.png"> <span><strong>经营指标分析</strong></span></a>
 				</li>
 				</c:if> --%>
-				<c:if test="${YSZKDialyLookup}">
-				<%-- <c:if test="${false}"> --%>
-				<li><a href="../yszkrb/yszk.do" target="_blank"><img
-						src="../images/charts/force.png"> <span><strong>应收账款日报</strong></span></a>
-				</li>
-				</c:if>
-				<%-- <c:if test="${false}"> --%>
-			    <c:if test="${XJLDialyLookup}">
-				<li><a href="../ydzb/xjlrb.do" target="_blank"><img
-						src="../images/charts/force1.png"> <span><strong>现金流日报</strong></span></a>
-				</li>
-				</c:if>
-				<c:if test="${CorpAuth}">
-				<li><a href="../ydzbRanking/companys_ranking.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>各单位经营指标排名情况</strong></span></a>
-				</li>
-				</c:if>
-				<c:if test="${xnyJyfxLookupAuth}">
-				<li><a href="../report/yszkhkzb.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>新能源应收账款回款周报</strong></span></a>
-				</li>
-				<li><a href="../report/xnyzb.do" target="_blank"><img
-						src="../images/charts/bar3.png"> <span><strong>新能源生产、发货和价格周报表</strong></span></a>
-				</li>
-				<li><a href="../report/xnyqyzb.do" target="_blank"><img
-						src="../images/charts/bar2.png"> <span><strong>新能源签约周报</strong></span></a>
-				</li>
-				</c:if>
-				<c:if test="${xtnyrbLookupAuth}">
-				<li><a href="../report/xtnyrb.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>新特能源日报</strong></span></a>
-				</li>
-				</c:if>
-				<c:if test="${zhJyfxLookupAuth}">
-				<li><a href="../report/zhgsljzbhz.do" target="_blank"><img
-						src="../images/charts/scatter3.png"> <span><strong>众和分子公司累计汇总</strong></span></a>
-				</li>
-				<li><a href="../report/zhgsydzbhz.do" target="_blank"><img
-						src="../images/charts/scatter4.png"> <span><strong>众和分子公司月度汇总</strong></span></a>
-				</li>
-				<li><a href="../report/zhgsfcyUnion.do" target="_blank"><img
-						src="../images/charts/bar5.png"> <span><strong>众和分产业关键指标汇报</strong></span></a>
-				</li>
-				</c:if>
-			
-				
-			</ul>
+					<c:if test="${YSZKDialyLookup}">
+						<%-- <c:if test="${false}"> --%>
+						<li><a href="../yszkrb/yszk.do" target="_blank"><img
+								src="../images/charts/force.png"> <span><strong>应收账款日报</strong></span></a>
+						</li>
+					</c:if>
+					<%-- <c:if test="${false}"> --%>
+					<c:if test="${XJLDialyLookup}">
+						<li><a href="../ydzb/xjlrb.do" target="_blank"><img
+								src="../images/charts/force1.png"> <span><strong>现金流日报</strong></span></a>
+						</li>
+					</c:if>
+					<c:if test="${CorpAuth}">
+						<li><a href="../ydzbRanking/companys_ranking.do"
+							target="_blank"><img src="../images/charts/scatter2.png">
+								<span><strong>各单位经营指标排名情况</strong></span></a></li>
+					</c:if>
+					<c:if test="${xnyJyfxLookupAuth}">
+						<li><a href="../report/yszkhkzb.do" target="_blank"><img
+								src="../images/charts/bar1.png"> <span><strong>新能源应收账款回款周报</strong></span></a>
+						</li>
+						<li><a href="../report/xnyzb.do" target="_blank"><img
+								src="../images/charts/bar3.png"> <span><strong>新能源生产、发货和价格周报表</strong></span></a>
+						</li>
+						<li><a href="../report/xnyqyzb.do" target="_blank"><img
+								src="../images/charts/bar2.png"> <span><strong>新能源签约周报</strong></span></a>
+						</li>
+					</c:if>
+					<c:if test="${xtnyrbLookupAuth}">
+						<li><a href="../report/xtnyrb.do" target="_blank"><img
+								src="../images/charts/scatter2.png"> <span><strong>新特能源日报</strong></span></a>
+						</li>
+					</c:if>
+					<c:if test="${zhJyfxLookupAuth}">
+						<li><a href="../report/zhgsljzbhz.do" target="_blank"><img
+								src="../images/charts/scatter3.png"> <span><strong>众和分子公司累计汇总</strong></span></a>
+						</li>
+						<li><a href="../report/zhgsydzbhz.do" target="_blank"><img
+								src="../images/charts/scatter4.png"> <span><strong>众和分子公司月度汇总</strong></span></a>
+						</li>
+						<li><a href="../report/zhgsfcyUnion.do" target="_blank"><img
+								src="../images/charts/bar5.png"> <span><strong>众和分产业关键指标汇报</strong></span></a>
+						</li>
+					</c:if>
+
+
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
 </c:if>
 
 <c:if test="${scgsdbqx}">
-<div>
-	<h3>
-		上市公司对标数据<a name="ssgsdbsj"> </a>
-	</h3>
-	<div class="section">
-		<div class="thumb3">
-			<ul class="slides">				
-				<li><a href="../report/ztdbfx.do" target="_blank"><img
-						src="../images/charts/scatter3.png"> <span><strong>对标数据总体分析</strong></span></a>
-				</li>
-				<li><a href="../report/fldbfx.do" target="_blank"><img
-						src="../images/charts/scatter4.png"> <span><strong>对标数据分类分析</strong></span></a>
-				</li>
-			</ul>
+	<div>
+		<h3>
+			上市公司对标数据<a name="ssgsdbsj"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<li><a href="../report/ztdbfx.do" target="_blank"><img
+							src="../images/charts/scatter3.png"> <span><strong>对标数据总体分析</strong></span></a>
+					</li>
+					<li><a href="../report/fldbfx.do" target="_blank"><img
+							src="../images/charts/scatter4.png"> <span><strong>对标数据分类分析</strong></span></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
+</c:if>
+<c:if test="${gcyzbLookup || gcyzbImport}">
+	<div>
+		<h3>
+			工程一张表<a name="gcyzb"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<c:if test="${gcyzbLookup}">
+						<li><a href="../report/gcyzb.do" target="_blank"><img
+								src="../images/charts/scatter1.png"> <span><strong>工程一张表</strong></span></a>
+						</li>
+					</c:if>
+					<c:if test="${gcyzbImport}">
+						<li><a href="../report/gcyzbImportJsp.do" target="_blank"><img
+								src="../images/charts/scatter5.png"> <span><strong>工程一张表数据导入</strong></span></a>
+						</li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
+	</div>
+</c:if>
+<c:if test="${sddbLookup || sddbImport}">
+	<div>
+		<h3>
+			订单全过程管控<a name="sddb"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<c:if test="${sddbLookup}">
+						<li><a href="../report/bidCollectionWrapper.do" target="_blank"><img
+								src="../images/charts/scatter5.png"> <span><strong>投标订单汇总</strong></span></a>
+						</li>
+						<li><a href="../report/WinBidModelCollection.do" target="_blank"><img
+								src="../images/charts/bar8.png"> <span><strong>中标产品分型号汇总</strong></span></a>
+						</li>
+						<li><a href="../report/gdwddfxhCollection.do" target="_blank"><img
+								src="../images/charts/scatter1.png"> <span><strong>分阶段各单位订单成本汇总</strong></span></a>
+						</li>
+						<li><a href="../report/gdwddCollection.do" target="_blank"><img
+								src="../images/charts/scatter3.png"> <span><strong>分阶段订单成本汇总表(按型号)</strong></span></a>
+						</li>
+						<li><a href="../report/ddfjdCollection.do" target="_blank"><img
+								src="../images/charts/bar2.png"> <span><strong>公司订单分阶段汇总分析</strong></span></a>
+						</li>						
+						<li><a href="../report/codeCollection.do" target="_blank"><img
+								src="../images/charts/bar8.png"> <span><strong>完工订单分图号三单对比分析</strong></span></a>
+						</li>
+						<li><a href="../report/modelCollection.do" target="_blank"><img
+								src="../images/charts/bar8.png"> <span><strong>完工订单分型号三单对比分析</strong></span></a>
+						</li>
+					</c:if>
+					<c:if test="${sddbImport}">
+						<li><a href="../report/sddbImportWrapperJsp.do" target="_blank"><img
+								src="../images/charts/scatter5.png"> <span><strong>三单对比数据导入</strong></span></a>
+						</li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
+	</div>
+</c:if>
+<c:if test="${scbsjLookup || scbsjEntry}">
+	<div>
+		<h3>
+			市场签约信息<a name="scqyxx"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<c:if test="${scbsjLookup}">
+						<li><a href="../report/scqytjqk.do" target="_blank"><img
+								src="../images/charts/bar3.png"> <span><strong>市场签约统计情况</strong></span></a>
+						</li>
+						<li><a href="../report/scqy.do" target="_blank"><img
+								src="../images/charts/scatter2.png"> <span><strong>重点产品签约情况查看</strong></span></a>
+						</li>
+						<li><a href="../report/scjb.do" target="_blank"><img
+								src="../images/charts/scatter2.png"> <span><strong>行业签约情况查看</strong></span></a>
+						</li>
+					</c:if>
+					<c:if test="${scbsjEntry}">
+						<li><a href="../report/scqyEntry.do" target="_blank"><img
+								src="../images/charts/scatter4.png"> <span><strong>重点产品签约情况录入</strong></span></a>
+						</li>
+						<li><a href="../report/scjbEntry.do" target="_blank"><img
+								src="../images/charts/bar1.png"> <span><strong>行业签约情况录入</strong></span></a>
+						</li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
+	</div>
 </c:if>
 
+
+<%-- 
 <c:if test="${SbdAuth}">
 <div>
 	<h3>
@@ -332,16 +430,16 @@
 					href="../syhkjhzxqk/syhkjhzxqk.do" target="_blank"><img
 						src="../images/charts/scatter5.png"> <span><strong>上月回款计划执行情况</strong></span></a>
 				</li>
-<%--
+
 				<li data-thumb="asset/img/example/cache.png"><a
 					href="../rhkqk/rhkqk.do" target="_blank"><img
 						src="../images/charts/scatter5.png"> <span><strong>当日回款明细</strong></span></a>
 				</li>
---%>
+
 			</ul>
 		</div>
 	</div>
-</div>
+</div> --%>
 <%-- 
 <div>
 	<h3>
@@ -390,5 +488,5 @@
 		</div>
 	</div>
 </div>
---%>
-</c:if> 
+
+</c:if> --%>

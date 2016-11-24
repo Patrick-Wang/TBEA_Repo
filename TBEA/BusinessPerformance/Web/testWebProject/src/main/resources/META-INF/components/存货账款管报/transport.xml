@@ -8,12 +8,12 @@
 	zt
 from 
 	chgb_jykc
-where
+where 
 	nf = ${cal.year} and
 	yf = ${cal.month} and
 	dwid = ${dwid}</sql>
-   <sql id="jykcxms">select 
-	name
+   <sql id="jykcxms">select  
+	name  
 from 
 	identifier_chgb_jykcxm</sql>
    <list id="xms" sql="jykcxms" value="0" type="string"/>
@@ -165,12 +165,15 @@ where
 	month = ${cal.month}</sql>
  </service>
  <controller id="chgbTransport" cron="0 0 12 4 * ?">
-  <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
-   <context key="cal" value="${calendar.current}"/>
+  <if test="${isSchedule}">
+   <context key="cal" value="${calendar.current.lastMonth}"/>
   </if>
-  <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
+  <elseif test="${request.date.toString == null}">
+   <context key="cal" value="${calendar.current.lastMonth}"/>
+  </elseif>
+  <else>
    <context key="cal" value="${request.date.asCalendar}"/>
-  </if>
+  </else>
   <!-- <context key="type" value="${CompanyType.SBGS}"/>
   <callservice id="servYszkkxxzFromOuterDB" transaction="transDl"/>
   <callservice id="servYszkkxxzOuterToLocal"/>
@@ -195,6 +198,13 @@ where
   <callservice id="servChgbjykcFromOuterDB" transaction="transDl"/>
   <callservice id="servChgkjykcOuterToLocal"/>
   <callservice id="servChxzFromOuterDB" transaction="transDl"/>
+  <callservice id="servChxzOuterToLocal"/>
+  <context key="type" value="${CompanyType.XLC}"/>
+  <callservice id="servChgbzlbhFromOuterDB" transaction="transXl"/>
+  <callservice id="servChgbzlbhOuterToLocal"/>
+  <callservice id="servChgbjykcFromOuterDB" transaction="transXl"/>
+  <callservice id="servChgkjykcOuterToLocal"/>
+  <callservice id="servChxzFromOuterDB" transaction="transXl"/>
   <callservice id="servChxzOuterToLocal"/>
   <!-- <context key="type" value="${CompanyType.XNYGS}"/>
   <callservice id="servDbxqFromNC"/>

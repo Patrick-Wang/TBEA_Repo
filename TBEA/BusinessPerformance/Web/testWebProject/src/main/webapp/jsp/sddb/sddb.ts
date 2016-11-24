@@ -11,6 +11,7 @@ module sddb{
         mDStartSel : Util.DateSelectorProxy;
         mDEndSel : Util.DateSelectorProxy;
         unitedSelector : Util.UnitedSelector;
+        unitedSelector0 : Util.UnitedSelector;
         private renderItemSelector(itemId:string):void{
             let sels = $("#" + itemId + " select");
             for (let i = 0; i < sels.length; ++i){
@@ -43,16 +44,26 @@ module sddb{
                 });
                 this.renderItemSelector(opt.itemId);
             }
+            if (opt.itemNodes0 != '') {
+                this.unitedSelector0 = new Util.UnitedSelector(opt.itemNodes0, opt.itemId0);
+                this.unitedSelector0.change(()=> {
+                    this.renderItemSelector(opt.itemId0);
+                });
+                this.renderItemSelector(opt.itemId0);
+            }
+
+
+
             if (opt.date != undefined) {
                 this.mDStartSel = new Util.DateSelectorProxy("dstart",
-                    Util.addYear(opt.date, -3),
-                    Util.addYear(opt.date, 20),
+                    opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart,
+                    opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd,
                     Util.addDay(opt.date, -5 * 7)
                 );
 
                 this.mDEndSel = new Util.DateSelectorProxy("dEnd",
-                    Util.addYear(opt.date, -3),
-                    Util.addYear(opt.date, 20),
+                    opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart,
+                    opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd,
                     opt.date
                 );
             } else {
@@ -112,6 +123,7 @@ module sddb{
                 dStart:this.mDStartSel == undefined ? undefined : Util.date2Str(this.mDStartSel.getDate()),
                 dEnd:this.mDEndSel == undefined ? undefined : Util.date2Str(this.mDEndSel.getDate()),
                 compType:this.mCurrentComp,
+                item0:this.unitedSelector0 != undefined ? this.unitedSelector0.getDataNode(this.unitedSelector0.getPath()).data.value:undefined,
                 item:this.unitedSelector != undefined ? this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.value:undefined
             });
         }

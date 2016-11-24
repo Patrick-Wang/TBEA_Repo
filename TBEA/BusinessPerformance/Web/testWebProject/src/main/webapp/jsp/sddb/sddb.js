@@ -48,9 +48,16 @@ var sddb;
                 });
                 this.renderItemSelector(opt.itemId);
             }
+            if (opt.itemNodes0 != '') {
+                this.unitedSelector0 = new Util.UnitedSelector(opt.itemNodes0, opt.itemId0);
+                this.unitedSelector0.change(function () {
+                    _this.renderItemSelector(opt.itemId0);
+                });
+                this.renderItemSelector(opt.itemId0);
+            }
             if (opt.date != undefined) {
-                this.mDStartSel = new Util.DateSelectorProxy("dstart", Util.addYear(opt.date, -3), Util.addYear(opt.date, 20), Util.addDay(opt.date, -5 * 7));
-                this.mDEndSel = new Util.DateSelectorProxy("dEnd", Util.addYear(opt.date, -3), Util.addYear(opt.date, 20), opt.date);
+                this.mDStartSel = new Util.DateSelectorProxy("dstart", opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart, opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd, Util.addDay(opt.date, -5 * 7));
+                this.mDEndSel = new Util.DateSelectorProxy("dEnd", opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart, opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd, opt.date);
             }
             else {
                 $("#dstart").css("display", "none");
@@ -102,6 +109,7 @@ var sddb;
                 dStart: this.mDStartSel == undefined ? undefined : Util.date2Str(this.mDStartSel.getDate()),
                 dEnd: this.mDEndSel == undefined ? undefined : Util.date2Str(this.mDEndSel.getDate()),
                 compType: this.mCurrentComp,
+                item0: this.unitedSelector0 != undefined ? this.unitedSelector0.getDataNode(this.unitedSelector0.getPath()).data.value : undefined,
                 item: this.unitedSelector != undefined ? this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.value : undefined
             });
         };

@@ -3,6 +3,10 @@ package com.tbea.ic.operation.common.indi.relation;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchEvent.Kind;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,22 +23,26 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.tbea.ic.operation.common.Pair;
+import com.tbea.ic.operation.common.WatchDirectory;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
-import com.tbea.ic.operation.reportframe.component.ComponentLoader;
+import com.tbea.ic.operation.reportframe.component.TimerConfigLoader;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 @Repository
 public class Relationships {
+	private static String resDir;
 	private static String resPath;
 	static {
 		try {
-			resPath = new URI(ComponentLoader.class.getClassLoader().getResource("")
+			resDir = new URI(TimerConfigLoader.class.getClassLoader().getResource("")
 					.getPath()).getPath().substring(1)
-					+ "META-INF/指标关联.xml";
+					+ "META-INF";
+			resPath = resDir + "/指标关联.xml";
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
@@ -57,13 +65,38 @@ public class Relationships {
 	
 	Map<String, Integer> indis = new HashMap<String, Integer>();
 	
+	private void watch() throws Exception {
+		Iterator<Pair<Kind<Path>, String>> it = new WatchDirectory(Paths.get(resDir), false);
+		while (it.hasNext()) {
+			Pair<Kind<Path>, String> p = it.next();
+			if (p.getFirst() != StandardWatchEventKinds.ENTRY_DELETE &&
+				p.getSecond().endsWith("指标关联.xml")) {
+				this.reload();
+			}
+		}
+	}
+	
 	@Autowired
 	public void init(){
 		try{
-			this.reload();
+			this.reload();			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		new Thread(new Runnable(){
+
+			@Override
+			public void run() {
+				while(true){
+					try{
+						watch();		
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 		
 	}
 	
@@ -86,16 +119,18 @@ public class Relationships {
 					return;
 				}
 				
-				RelationGroup rg = RelationGroup.parse(elem, compMgr, dwxxDao, indis);
-				if (null != rg){
+				List<RelationGroup> rgs = RelationGroup.parse(elem, compMgr, dwxxDao, indis);
+				if (null != rgs){
 					Iterator<ZBType> it = types.iterator();
 					while (it.hasNext()){
 						ZBType type = it.next();
-						if (relaShares.get(type.ordinal()).containsKey(rg.indi())){
-							relaShares.get(type.ordinal()).get(rg.indi()).merge(rg);
-						}else{
-							relaShares.get(type.ordinal()).put(rg.indi(), rg);
-						}  
+						for (RelationGroup rg : rgs){
+							if (relaShares.get(type.ordinal()).containsKey(rg.indi())){
+								relaShares.get(type.ordinal()).get(rg.indi()).merge(rg);
+							}else{
+								relaShares.get(type.ordinal()).put(rg.indi(), rg);
+							}  
+						}						
 					}
 				}
 			}
@@ -139,11 +174,14 @@ public class Relationships {
 					return;
 				}
 				
-				RelationSum rs = RelationSum.parse(elem, compMgr, dwxxDao, indis);
-				if (null != rs){
+				List<RelationSum> rss = RelationSum.parse(elem, compMgr, dwxxDao, indis);
+				if (null != rss){
 					Iterator<ZBType> it = types.iterator();
 					while (it.hasNext()){
-						relaSums.get(it.next().ordinal()).add(rs);
+						ZBType type = it.next();
+						for (RelationSum rs : rss){
+							relaSums.get(type.ordinal()).add(rs);
+						}
 					}
 				}
 			}

@@ -93,7 +93,8 @@ public class SbdscqyqkServlet {
 		xfcpqyService.importDLCpqy(d);
 		xfscqyService.importHBScqy(d);
 		xfscqyService.importDLScqy(d);
-		
+		xfcpqyService.importXLCpqy(d);
+		xfscqyService.importXLScqy(d);
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
 	}
@@ -108,6 +109,8 @@ public class SbdscqyqkServlet {
 		xfcpqyService.importDLCpqy(d);
 		xfscqyService.importHBScqy(d);
 		xfscqyService.importDLScqy(d);
+		xfcpqyService.importXLCpqy(d);
+		xfscqyService.importXLScqy(d);
 	}
 	
 }

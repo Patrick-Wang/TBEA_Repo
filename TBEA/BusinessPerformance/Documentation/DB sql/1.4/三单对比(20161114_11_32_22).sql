@@ -32,10 +32,10 @@ CREATE TABLE [dbo].[JYGK_SDDB_BIDDING_ORDER_DETAILS](
 	bid_rolled_steel_price	[numeric](18, 4)	,--Yes	投标钢材单价
 	bid_cardboard_amount	[numeric](18, 4)	,--Yes	投标纸板用量（单台）
 	bid_cardboard_price	[numeric](18, 4)	,--Yes	投标纸板单价
-	other_material_cost [numeric](18, 4), --其他材料成本
 	bid_material_total	[numeric](18, 4)	,--Yes	投标材料总计
 	labour_cost	[numeric](18, 4)	,--Yes	人工费用
 	manufacturing_cost	[numeric](18, 4)	,--Yes	制造费用
+	other_material_cost [numeric](18, 4), --其他材料成本
 	bid_cost	[numeric](18, 4)	,--Yes	投标制造成本
 	gross_profit	[numeric](18, 4)	,--Yes	投标毛利（单台）
 	period	[numeric](18, 4)	,--Yes	周时间

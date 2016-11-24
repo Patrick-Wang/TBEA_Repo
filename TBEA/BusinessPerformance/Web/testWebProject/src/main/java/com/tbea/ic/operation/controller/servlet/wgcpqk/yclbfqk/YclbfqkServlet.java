@@ -151,7 +151,7 @@ public class YclbfqkServlet {
 		}
 		
 		yclbfqkService.importDlYclbfqk(d);
-		
+		yclbfqkService.importXlYclbfqk(d);
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
 	}
@@ -163,5 +163,6 @@ public class YclbfqkServlet {
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
 		yclbfqkService.importDlYclbfqk(d);
+		yclbfqkService.importXlYclbfqk(d);
 	}
 }

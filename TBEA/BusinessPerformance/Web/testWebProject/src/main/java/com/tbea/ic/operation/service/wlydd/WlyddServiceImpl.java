@@ -34,10 +34,13 @@ import com.tbea.ic.operation.model.dao.sbdddcbjpcqk.xlkglydd.XlkglyddDao;
 import com.tbea.ic.operation.model.dao.sbdddcbjpcqk.xlkglydd.XlkglyddDaoImpl;
 import com.tbea.ic.operation.model.dao.wlydd.wlyddmlspcs.WlyddmlspcsDao;
 import com.tbea.ic.operation.model.dao.wlydd.wlyddmlspcs.WlyddmlspcsDaoImpl;
+import com.tbea.ic.operation.model.dao.xl.kglydd.XlKglyddDao;
+import com.tbea.ic.operation.model.dao.xl.mlspcs.XlMlspcsDao;
 import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
 import com.tbea.ic.operation.model.entity.identifier.sbdddcbjpcqk.XlcplxEntity;
 import com.tbea.ic.operation.model.entity.sbdddcbjpcqk.XlkglyddEntity;
 import com.tbea.ic.operation.model.entity.wlydd.wlyddmslspcs.WlyddmlspcsEntity;
+import com.tbea.ic.operation.reportframe.util.DBUtil;
 import com.tbea.ic.operation.service.wlydd.wlyddmlspcs.WlyddmlspcsServiceImpl;
 
 
@@ -59,6 +62,9 @@ public class WlyddServiceImpl implements WlyddService {
 	@Autowired
 	DlKglyddDao dlKglyddDao;
 	
+	@Autowired
+	XlKglyddDao xlKglyddDao;
+	
 	@Resource(name=XlcplxDaoImpl.NAME)
 	XlcplxDao xlcplxDao;
 
@@ -74,6 +80,9 @@ public class WlyddServiceImpl implements WlyddService {
 	@Autowired
 	DlMlspcsDao dlmlspcsDao;
 	
+	@Autowired
+	XlMlspcsDao xlmlspcsDao;
+	
 	public final static String NAME = "WlyddServiceImpl";
 
 	public List<String> getXlCplb() {
@@ -86,6 +95,7 @@ public class WlyddServiceImpl implements WlyddService {
 	}
 	
 	private void importXlKglydd(Date d, List<Object[]> result, Company comp) {
+		DBUtil.trans2StandardType(result);
 		List<String> xlCplxs = getXlCplb();
 		EasyCalendar ec = new EasyCalendar(d);
 		for (Object[] row : result){
@@ -152,11 +162,11 @@ public class WlyddServiceImpl implements WlyddService {
 		rows = dlmlspcsDao.getZzy(d);
 		LoggerFactory.getLogger("WEBSERVICE").info("DL 盈利分析制造业");
 		importMlspcs(d, rows, WlyddType.YLFX_WLYMLSP_XL_ZZY, company);
-		
 	}
 
 
 	private void importMlspcs(Date d, List<Object[]> rows, WlyddType type,  Company comp) {
+		DBUtil.trans2StandardType(rows);
 		List<CpmcEntity> cpmcs = getCpList(WlyddmlspcsServiceImpl.getCpIdList(type));
 		EasyCalendar ec = new EasyCalendar(d);
 		for (Object[] row : rows){
@@ -197,6 +207,25 @@ public class WlyddServiceImpl implements WlyddService {
 			ret.add(cpmcDao.getById(cp));
 		}
 		return ret;
+	}
+
+	@Override
+	public void importXlKglydd(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("XL 可供履约订单");
+		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		List<Object[]> rows = xlKglyddDao.getKglydd(d);
+		importXlKglydd(d, rows, company);
+	}
+
+	@Override
+	public void importXlMlspcs(Date d) {
+		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		List<Object[]> rows = xlmlspcsDao.getZxyw(d);
+		LoggerFactory.getLogger("WEBSERVICE").info("XL 盈利分析转型业务");
+		importMlspcs(d, rows, WlyddType.YLFX_WLYMLSP_XL_ZXYW, company);
+		rows = xlmlspcsDao.getZzy(d);
+		LoggerFactory.getLogger("WEBSERVICE").info("XL 盈利分析制造业");
+		importMlspcs(d, rows, WlyddType.YLFX_WLYMLSP_XL_ZZY, company);
 	}
 	
 }

@@ -788,7 +788,9 @@ var JQTable;
             if (depth === void 0) { depth = 0; }
             var changed = false;
             for (var i = 0; i < this.mFormula.length; i++) {
-                changed = changed || this.mFormula[i].update();
+                if (this.mFormula[i].update()) {
+                    changed = true;
+                }
             }
             if (changed && depth < 10) {
                 this.invokeFormula(++depth);

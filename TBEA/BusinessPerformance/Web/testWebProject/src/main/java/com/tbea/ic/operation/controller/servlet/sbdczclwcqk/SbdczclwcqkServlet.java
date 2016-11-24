@@ -88,7 +88,7 @@ public class SbdczclwcqkServlet {
 		
 		sbdczclwcqkService.importHBCzCl(d);
 		sbdczclwcqkService.importDlCzCl(d);
-		
+		sbdczclwcqkService.importXlCzCl(d);
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
 	}
@@ -101,5 +101,6 @@ public class SbdczclwcqkServlet {
 		Date d = Util.toDate(cal);
 		sbdczclwcqkService.importHBCzCl(d);
 		sbdczclwcqkService.importDlCzCl(d);
+		sbdczclwcqkService.importXlCzCl(d);
 	}
 }

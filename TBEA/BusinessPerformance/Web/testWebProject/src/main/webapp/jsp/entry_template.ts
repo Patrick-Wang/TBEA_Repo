@@ -601,6 +601,12 @@ module entry_template {
                         }
                     }
                 }
+
+                let cell = this.parseZbxx48();
+                if (cell != undefined){
+                    disabledCell.push(cell);
+                }
+
                 if (disabledCell.length != 0){
                     this.mTableAssist.disableCellEdit(disabledCell);
                 }
@@ -635,12 +641,52 @@ module entry_template {
             for (let j = 0; j < zbxx.children.length; ++j){
                 let row2 = find(this.mTableData, zbxx.children[j].id);
                 if (row2 >= 0){
-                    cells.push(new Cell(row2, 1));
+                    let cel = new Cell(row2, 1);
+                    if (Util.indexOf(this.mExRateZbs, zbxx.children[j].id) >= 0){
+                        cel.rate = this.mRate;
+                    }else{
+                        cel.rate = 1;
+                    }
+                    cells.push(cel);
                 }
             }
             if (cells.length == 0) {
                 return undefined;
             }
+
+            let dst = new Cell(row, 1);
+            let form : Formula  = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=>{
+                let sum : any;
+                for (let i = 0; i < srcs.length; ++i){
+                    let val = srcs[i].getVal();
+                    if ("" != val){
+                        if (sum == undefined){
+                            sum = parseFloat(val) * srcs[i].rate;
+                        }else{
+                            sum += parseFloat(val) * srcs[i].rate;
+                        }
+                    }
+                }
+                if (sum != undefined){
+                    sum = sum.toFixed(4);
+                }
+                return sum;
+
+            });
+            this.mTableAssist.addFormula(form);
+            return dst;
+        }
+
+        private parseZbxx48():Cell {
+            let row = find(this.mTableData, 48);
+            if (row < 0) {
+                return undefined;
+            }
+            let cells : any = [
+                new Cell(find(this.mTableData, 290), 1),
+                new Cell(find(this.mTableData, 299), 1),
+                new Cell(find(this.mTableData, 304), 1)
+            ];
 
             let dst = new Cell(row, 1);
             let form : Formula  = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=>{
@@ -655,9 +701,8 @@ module entry_template {
                         }
                     }
                 }
-
-                if (undefined != sum && this.mExRateZbs.indexOf(zbxx.id) >= 0){
-                    return sum * this.mRate;
+                if (sum != undefined){
+                    sum = sum.toFixed(4);
                 }
                 return sum;
 
@@ -665,6 +710,7 @@ module entry_template {
             this.mTableAssist.addFormula(form);
             return dst;
         }
+
 
         private checkSum(submitData:any): Zbxx[] {
             let zbxxs : Zbxx[] = [];
@@ -697,7 +743,7 @@ module entry_template {
                 if (sum != undefined){
                     if (submitData[row][1] == "" && sum != 0){
                         zbxxs.push(zbxx);
-                    }else if (Math.abs(sum - parseFloat(submitData[row][1])) > 1){
+                    }else if (Math.abs(sum - parseFloat(submitData[row][1])) > 2){
                         zbxxs.push(zbxx);
                     }
                     sum = undefined;

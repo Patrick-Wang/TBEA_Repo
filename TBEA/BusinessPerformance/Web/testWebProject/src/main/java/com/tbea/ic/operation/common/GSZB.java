@@ -554,7 +554,8 @@ public enum GSZB {
 	YYSRS333(333), // 运营商人数
 	MTYWRS334(334), // 煤炭业务人数
 	QTRS335(335), // 其他人数
-
+	MTXLZH346(346), // 其他人数
+	
 	YSZK_DAILY_REPORT(-1);// 应收账款日报
 
 	private Integer value;

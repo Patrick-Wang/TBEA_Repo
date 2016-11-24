@@ -1,0 +1,784 @@
+<components>
+ <service id="servByqScqy" transaction="transactionManager">
+  <sql id="zbs">select * from identifier_zdcpdl where lb = 0</sql>
+  <list id="ids" sql="zbs" value="0" type="int"/>
+  <sql id="scqysNdSB" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]}</sql>
+  <sql id="scqysNdHB" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]}</sql>
+  <sql id="scqysNdXB" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]}</sql>
+  <sql id="scqysNdTB" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.TBGS.ordinal]}</sql>
+  <sql id="scqysYdSB" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf = ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]}</sql>
+  <sql id="scqysYdHB" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf = ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]}</sql>
+  <sql id="scqysYdXB" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf = ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]}</sql>
+  <sql id="scqysYdTB" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf = ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.TBGS.ordinal]}</sql>
+  <sql id="scqysYdljSB" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]}
+group by
+	zbid</sql>
+  <sql id="scqysYdljHB" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]}
+group by
+	zbid</sql>
+  <sql id="scqysYdljXB" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]}
+group by
+	zbid</sql>
+  <sql id="scqysYdljTB" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.TBGS.ordinal]}
+group by
+	zbid</sql>
+  <sql id="scqysNdhj" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and (
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]} or
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]} or
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]} )
+group by
+	zbid</sql>
+  <sql id="scqysYdljhj" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and (
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]} or
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]} or
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]} )
+group by
+	zbid</sql>
+  <list type="int" id="ids">
+   <item>1000</item>
+  </list>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string" sql="zbs" value="1">
+    <item>合计</item>
+   </list>
+   <list type="double" sql="scqysNdSB" value="1"/>
+   <list type="double" sql="scqysYdSB" value="1"/>
+   <list type="double" sql="scqysYdljSB" value="1"/>
+   <col instruction="指标完成率"/>
+   <list type="double" sql="scqysNdHB" value="1"/>
+   <list type="double" sql="scqysYdHB" value="1"/>
+   <list type="double" sql="scqysYdljHB" value="1"/>
+   <col instruction="指标完成率"/>
+   <list type="double" sql="scqysNdXB" value="1"/>
+   <list type="double" sql="scqysYdXB" value="1"/>
+   <list type="double" sql="scqysYdljXB" value="1"/>
+   <col instruction="指标完成率"/>
+   <list type="double" sql="scqysNdTB" value="1"/>
+   <list type="double" sql="scqysYdTB" value="1"/>
+   <list type="double" sql="scqysYdljTB" value="1"/>
+   <col instruction="指标完成率"/>
+   <list type="double" sql="scqysNdhj" value="1"/>
+   <list type="double" sql="scqysYdljhj" value="1"/>
+   <col instruction="指标完成率"/>
+   <sumRow toId="1000">
+    <excludeCol>0,4,8,12,16,19</excludeCol>
+    <rangeRows>0, ${zbs.size - 1}</rangeRows>
+   </sumRow>
+   <divCol toCol="4" sub="3" base="1"/>
+   <divCol toCol="8" sub="7" base="5"/>
+   <divCol toCol="12" sub="11" base="9"/>
+   <divCol toCol="16" sub="15" base="13"/>
+   <divCol toCol="19" sub="18" base="17"/>
+  </table>
+ </service>
+ <service id="servXlScqy" transaction="transactionManager">
+  <sql id="zbs">select * from identifier_zdcpdl where lb = 1</sql>
+  <list id="ids" sql="zbs" value="0" type="int"/>
+  <sql id="scqysNdLL" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]}</sql>
+  <sql id="scqysNdXL" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]}</sql>
+  <sql id="scqysNdDL" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</sql>
+  <sql id="scqysYdLL" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf = ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]}</sql>
+  <sql id="scqysYdXL" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf = ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]}</sql>
+  <sql id="scqysYdDL" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf = ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</sql>
+  <sql id="scqysYdljLL" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]}
+group by
+	zbid</sql>
+  <sql id="scqysYdljXL" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]}
+group by
+	zbid</sql>
+  <sql id="scqysYdljDL" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}
+group by
+	zbid</sql>
+  <sql id="scqysNdhj" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and (
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]} or
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]} or
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]} )
+group by
+	zbid</sql>
+  <sql id="scqysYdljhj" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and (
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]} or
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]} or
+	dwid = ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]} )
+group by
+	zbid</sql>
+  <list type="int" id="ids">
+   <item>1000</item>
+  </list>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string" sql="zbs" value="1">
+    <item>合计</item>
+   </list>
+   <list type="double" sql="scqysNdLL" value="1"/>
+   <list type="double" sql="scqysYdLL" value="1"/>
+   <list type="double" sql="scqysYdljLL" value="1"/>
+   <col instruction="指标完成率"/>
+   <list type="double" sql="scqysNdXL" value="1"/>
+   <list type="double" sql="scqysYdXL" value="1"/>
+   <list type="double" sql="scqysYdljXL" value="1"/>
+   <col instruction="指标完成率"/>
+   <list type="double" sql="scqysNdDL" value="1"/>
+   <list type="double" sql="scqysYdDL" value="1"/>
+   <list type="double" sql="scqysYdljDL" value="1"/>
+   <col instruction="指标完成率"/>
+   <list type="double" sql="scqysNdhj" value="1"/>
+   <list type="double" sql="scqysYdljhj" value="1"/>
+   <col instruction="指标完成率"/>
+   <sumRow toId="1000">
+    <excludeCol>0,4,8,12,15</excludeCol>
+    <rangeRows>0, ${zbs.size - 1}</rangeRows>
+   </sumRow>
+   <divCol toCol="4" sub="3" base="1"/>
+   <divCol toCol="8" sub="7" base="5"/>
+   <divCol toCol="12" sub="11" base="9"/>
+   <divCol toCol="15" sub="14" base="13"/>
+  </table>
+ </service>
+ <service id="servJydwScqy" transaction="transactionManager">
+  <context key="lb" value="${0}"/>
+  <if test="${compType.equals[CompanyType.XLC] || compType.equals[CompanyType.LLGS]  || compType.equals[CompanyType.DLGS]}">
+   <context key="lb" value="${1}"/>
+  </if>
+  <sql id="zbs">select * from identifier_zdcpdl where lb = ${lb}</sql>
+  <list id="ids" sql="zbs" value="0" type="int"/>
+  <sql id="scqysNd" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ndqy
+where
+	nf = ${cal.year} and
+	dwid = ${orgs.BMDBOrganization.ids[compType.ordinal]}</sql>
+  <sql id="scqysYd" order="ids" by="0" colcount="2">select 
+	zbid, qye 
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf = ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[compType.ordinal]}</sql>
+  <sql id="scqysYdlj" order="ids" by="0" colcount="2">select 
+	zbid, 
+	sum(qye) qys
+from 
+	market_ydqy
+where
+	nf = ${cal.year} and
+	yf &lt;= ${cal.month} and
+	dwid = ${orgs.BMDBOrganization.ids[compType.ordinal]}
+group by
+	zbid</sql>
+  <list type="int" id="ids">
+   <item>1000</item>
+  </list>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string" sql="zbs" value="1">
+    <item>合计</item>
+   </list>
+   <list type="double" sql="scqysNd" value="1"/>
+   <list type="double" sql="scqysYd" value="1"/>
+   <list type="double" sql="scqysYdlj" value="1"/>
+   <col instruction="指标完成率"/>
+   <sumRow toId="1000">
+    <excludeCol>0,4</excludeCol>
+    <rangeRows>0, ${zbs.size - 1}</rangeRows>
+   </sumRow>
+   <divCol toCol="4" sub="3" base="1"/>
+  </table>
+ </service>
+ <controller id="fmtterByqScqy">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4,8,12,16,19"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="fmtterXlScqy">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4,8,12,15"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="fmtterJydwScqy">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="scqyByqUpdate">
+  <callcontroller id="fmtterByqScqy"/>
+  <callservice id="servByqScqy"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>重点产品大类</name>
+    </item>
+    <item>
+     <name>沈变（万元）</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>本月签约</name>
+      </item>
+      <item>
+       <name>年度累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>衡变（万元）</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>本月签约</name>
+      </item>
+      <item>
+       <name>年度累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>新变（万元）</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>本月签约</name>
+      </item>
+      <item>
+       <name>年度累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>天变（万元）</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>本月签约</name>
+      </item>
+      <item>
+       <name>年度累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>年度累计合计（万元）</name>
+     <sub type="array">
+      <item>
+       <name>指标计划合计</name>
+      </item>
+      <item>
+       <name>累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <mergeTitle>true</mergeTitle>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="scqyXlUpdate">
+  <callcontroller id="fmtterXlScqy"/>
+  <callservice id="servXlScqy"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>重点产品大类</name>
+    </item>
+    <item>
+     <name>鲁缆（万元）</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>本月签约</name>
+      </item>
+      <item>
+       <name>年度累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>新缆（万元）</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>本月签约</name>
+      </item>
+      <item>
+       <name>年度累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>德缆（万元）</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>本月签约</name>
+      </item>
+      <item>
+       <name>年度累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>年度累计合计（万元）</name>
+     <sub type="array">
+      <item>
+       <name>指标计划合计</name>
+      </item>
+      <item>
+       <name>累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <mergeTitle>true</mergeTitle>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="scqyJydwUpdate">
+  <callcontroller id="fmtterJydwScqy"/>
+  <callservice id="servJydwScqy"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>重点产品大类</name>
+    </item>
+    <item>
+     <name>${compType.value}（万元）</name>
+     <sub type="array">
+      <item>
+       <name>年度签约指标</name>
+      </item>
+      <item>
+       <name>本月签约</name>
+      </item>
+      <item>
+       <name>年度累计签约</name>
+      </item>
+      <item>
+       <name>指标完成率</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <mergeTitle>true</mergeTitle>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="scqyByqExport">
+  <callcontroller id="fmtterByqScqy"/>
+  <callservice id="servByqScqy"/>
+  <list id="title" type="string" export="true">重点产品大类,
+沈变（万元）,
+沈变（万元）,
+沈变（万元）,
+沈变（万元）,
+衡变（万元）,
+衡变（万元）,
+衡变（万元）,
+衡变（万元）,
+新变（万元）,
+新变（万元）,
+新变（万元）,
+新变（万元）,
+天变（万元）,
+天变（万元）,
+天变（万元）,
+天变（万元）,
+年度累计合计（万元）,
+年度累计合计（万元）,
+年度累计合计（万元）</list>
+  <list id="title1" type="string" export="true">重点产品大类,
+年度签约指标,
+本月签约,
+年度累计签约,
+指标完成率,
+年度签约指标,
+本月签约,
+年度累计签约,
+指标完成率,
+年度签约指标,
+本月签约,
+年度累计签约,
+指标完成率,
+年度签约指标,
+本月签约,
+年度累计签约,
+指标完成率,
+指标计划合计,
+累计签约,
+指标完成率
+</list>
+ </controller>
+ <controller id="scqyXlExport">
+  <callcontroller id="fmtterXlScqy"/>
+  <callservice id="servXlScqy"/>
+  <list id="title" type="string" export="true">重点产品大类,
+鲁缆（万元）,
+鲁缆（万元）,
+鲁缆（万元）,
+鲁缆（万元）,
+新缆（万元）,
+新缆（万元）,
+新缆（万元）,
+新缆（万元）,
+德缆（万元）,
+德缆（万元）,
+德缆（万元）,
+德缆（万元）,
+年度累计合计（万元）,
+年度累计合计（万元）,
+年度累计合计（万元）</list>
+  <list id="title1" type="string" export="true">重点产品大类,
+年度签约指标,
+本月签约,
+年度累计签约,
+指标完成率,
+年度签约指标,
+本月签约,
+年度累计签约,
+指标完成率,
+年度签约指标,
+本月签约,
+年度累计签约,
+指标完成率,
+指标计划合计,
+累计签约,
+指标完成率
+</list>
+ </controller>
+ <controller id="scqyJydwExport">
+  <callcontroller id="fmtterJydwScqy"/>
+  <callservice id="servJydwScqy"/>
+  <list id="title" type="object" export="true">重点产品大类,
+${compType.value}（万元）,
+${compType.value}（万元）,
+${compType.value}（万元）,
+${compType.value}（万元）</list>
+  <list id="title1" type="string" export="true">重点产品大类,
+年度签约指标,
+本月签约,
+年度累计签约,
+指标完成率</list>
+ </controller>
+ <controller id="scqyExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compType" value="${companyTypeHelper.valueOf[request.item.asInt]}"/>
+  <if test="${compType.equals[CompanyType.BYQCY]}">
+   <callcontroller id="scqyByqExport"/>
+  </if>
+  <if test="${compType.equals[CompanyType.XLCY]}">
+   <callcontroller id="scqyXlExport"/>
+  </if>
+  <if test="${!compType.equals[CompanyType.XLCY] &amp;&amp;!compType.equals[CompanyType.BYQCY]  }">
+   <callcontroller id="scqyJydwExport"/>
+  </if>
+  <ExcelTemplate id="excelTemplate" sheet="重点产品签约情况"/>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}重点产品签约情况.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="scqyUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compType" value="${companyTypeHelper.valueOf[request.item.asInt]}"/>
+  <if test="${compType.equals[CompanyType.BYQCY]}">
+   <callcontroller id="scqyByqUpdate"/>
+  </if>
+  <if test="${compType.equals[CompanyType.XLCY]}">
+   <callcontroller id="scqyXlUpdate"/>
+  </if>
+  <if test="${!compType.equals[CompanyType.XLCY] &amp;&amp;!compType.equals[CompanyType.BYQCY]  }">
+   <callcontroller id="scqyJydwUpdate"/>
+  </if>
+ </controller>
+ <controller id="scqy">
+  <context key="compTypes" value="${authTypes[57]}"/>
+  <if>${
+compTypes.contains[CompanyType.SBGS] &amp;&amp; 
+compTypes.contains[CompanyType.HBGS] &amp;&amp; 
+compTypes.contains[CompanyType.XBC]
+}<list id="compTypes" type="object">
+    <item>${CompanyType.BYQCY}</item>
+   </list>
+  </if>
+  <if>${
+compTypes.contains[CompanyType.LLGS] &amp;&amp; 
+compTypes.contains[CompanyType.XLC] &amp;&amp; 
+compTypes.contains[CompanyType.DLGS]
+}<list id="compTypes" type="object">
+    <item>${CompanyType.XLCY}</item>
+   </list>
+  </if>
+  <context key="nodeData" value="${dataNodeFactory[companyTypeHelper.ids[compTypes]][companyTypeHelper.values[compTypes]].asJson}"/>
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="scqyUpdate"/>
+   <map key="exportUrl" value="scqyExport"/>
+   <map key="nodeData" value="${nodeData}"/>
+   <map key="title" value="重点产品签约情况"/>
+  </response>
+ </controller>
+</components>

@@ -45,7 +45,68 @@ public class EasyCalendar {
  	public EasyCalendar getCurrent(){
 		return new EasyCalendar();
 	}
+ 	
+ 	public int minusByWeek(EasyCalendar ec){
+ 		int curWeek = this.getWeek();
+ 		int otherWeek = ec.getWeek();
+ 		int yearCount = this.getYear() - ec.getYear();
+ 		if(yearCount > 0){
+ 			int wkCount = ec.getYearWeekCount() - otherWeek + curWeek;
+ 			for (int i = 1; i < yearCount; ++i){
+ 				ec = ec.getNextYear();
+ 				wkCount += ec.getYearWeekCount();
+ 			}
+ 			return wkCount; 			
+ 		}else if(yearCount < 0){
+ 			int wkCount = this.getYearWeekCount() - curWeek + otherWeek;
+ 			for (int i = -1; i > yearCount; --i){
+ 				ec = ec.getLastYear();
+ 				wkCount += ec.getYearWeekCount();
+ 			}
+ 			return -1 * wkCount; 	
+ 		}else{
+ 			return curWeek - otherWeek;
+ 		}
+ 	}
 	
+	
+ 	public int getYearWeekCount(){
+ 		return cal.getActualMaximum(Calendar.WEEK_OF_YEAR);
+ 	}
+ 	
+ 	public EasyCalendar getWeekStart(){
+ 		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		int weekCount = cal.get(Calendar.WEEK_OF_YEAR);
+		EasyCalendar ec = null;
+		if (weekCount == 1){
+			ec = new EasyCalendar(cal);
+			ec.setMonth(1);
+			ec.setDay(1);
+		}else{
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+			ec = new EasyCalendar(cal);
+		}
+		return ec;
+ 	}
+ 	
+ 	public EasyCalendar getWeekEnd(){
+ 		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		int weekCount = cal.get(Calendar.WEEK_OF_YEAR);
+		int maxCount = cal.getActualMaximum(Calendar.WEEK_OF_YEAR);
+		EasyCalendar ec = null;
+		if (weekCount == maxCount){
+			ec = new EasyCalendar(cal);
+			ec.setMonth(12);
+			ec.setDay(31);
+		}else{
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
+			ec = new EasyCalendar(cal);
+		}
+		return ec;
+ 	}
+ 	
 	public EasyCalendar(Calendar cal) {
 		super();
 		this.cal = cal;

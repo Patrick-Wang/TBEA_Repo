@@ -6,21 +6,21 @@
     <bid_id type="string" ref="0"/>
    </where>
    <set>
-    <bid_id type="string" ref="${counter.reset[0].val}"/>
-    <company_name type="string" ref="${counter.next.val}"/>
-    <bidding_date type="date" ref="${counter.next.val}"/>
+    <bid_id type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+    <company_name type="string" ref="${counter.next.val}" test="${this != null}"/>
+    <bidding_date type="date" ref="${counter.next.val}" test="${this != null}"/>
     <client_name type="string" ref="${counter.next.val}"/>
     <project_name type="string" ref="${counter.next.val}"/>
-    <ETD_year type="double" ref="${counter.next.val}"/>
-    <ETD_month type="double" ref="${counter.next.val}"/>
+    <ETD_year type="int" ref="${counter.next.val}"/>
+    <ETD_month type="int" ref="${counter.next.val}"/>
     <model type="double" ref="${counter.next.val}"/>
     <voltage type="double" ref="${counter.next.val}"/>
     <capacity type="double" ref="${counter.next.val}"/>
     <number type="double" ref="${counter.next.val}"/>
     <tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
-    <bid_opening_year type="double" ref="${counter.next.val}"/>
-    <bid_opening_month type="double" ref="${counter.next.val}"/>
+    <bid_opening_year type="int" ref="${counter.next.val}"/>
+    <bid_opening_month type="int" ref="${counter.next.val}"/>
     <hit_rate type="double" ref="${counter.next.val}"/>
     <bid_silicon_steel_grades type="string" ref="${counter.next.val}"/>
     <bid_silicon_steel_amount type="double" ref="${counter.next.val}"/>
@@ -34,10 +34,10 @@
     <bid_rolled_steel_price type="double" ref="${counter.next.val}"/>
     <bid_cardboard_amount type="double" ref="${counter.next.val}"/>
     <bid_cardboard_price type="double" ref="${counter.next.val}"/>
-    <other_material_cost type="double" ref="${counter.next.val}"/>
     <bid_material_total type="double" ref="${counter.next.val}"/>
     <labour_cost type="double" ref="${counter.next.val}"/>
     <manufacturing_cost type="double" ref="${counter.next.val}"/>
+    <other_material_cost type="double" ref="${counter.next.val}"/>
     <bid_cost type="double" ref="${counter.next.val}"/>
     <gross_profit type="double" ref="${counter.next.val}"/>
     <period type="double" ref="${counter.next.val}"/>
@@ -70,19 +70,19 @@
     <code type="string" ref="12"/>
    </where>
    <set>
-    <company_name type="string" ref="${counter.reset[0].val}"/>
-    <win_bid_year type="double" ref="${counter.next.val}"/>
-    <win_bid_month type="double" ref="${counter.next.val}"/>
+    <company_name type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+    <win_bid_year type="int" ref="${counter.next.val}"/>
+    <win_bid_month type="int" ref="${counter.next.val}"/>
     <client_name type="string" ref="${counter.next.val}"/>
     <project_name type="string" ref="${counter.next.val}"/>
     <contract_no type="string" ref="${counter.next.val}"/>
-    <delivery_year type="double" ref="${counter.next.val}"/>
-    <delivery_month type="double" ref="${counter.next.val}"/>
-    <model type="string" ref="${counter.next.val}"/>
+    <delivery_year type="int" ref="${counter.next.val}"/>
+    <delivery_month type="int" ref="${counter.next.val}"/>
+    <model type="string" ref="${counter.next.val}" test="${this != null}"/>
     <voltage type="string" ref="${counter.next.val}"/>
     <capacity type="string" ref="${counter.next.val}"/>
     <number type="double" ref="${counter.next.val}"/>
-    <code type="string" ref="${counter.next.val}"/>
+    <code type="string" ref="${counter.next.val}" test="${this != null}"/>
     <tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <win_bid_silicon_steel_grades type="string" ref="${counter.next.val}"/>
@@ -141,21 +141,21 @@
     <code type="string" ref="14"/>
    </where>
    <set>
-    <company_name type="string" ref="${counter.reset[0].val}"/>
-    <win_bid_year type="double" ref="${counter.next.val}"/>
-    <win_bid_month type="double" ref="${counter.next.val}"/>
+    <company_name type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+    <win_bid_year type="int" ref="${counter.next.val}"/>
+    <win_bid_month type="int" ref="${counter.next.val}"/>
     <client_name type="string" ref="${counter.next.val}"/>
     <project_name type="string" ref="${counter.next.val}"/>
     <contract_no type="string" ref="${counter.next.val}"/>
-    <execution_year type="double" ref="${counter.next.val}"/>
-    <execution_month type="double" ref="${counter.next.val}"/>
-    <actual_delivery_year type="double" ref="${counter.next.val}"/>
-    <actual_delivery_month type="double" ref="${counter.next.val}"/>
-    <model type="string" ref="${counter.next.val}"/>
+    <execution_year type="int" ref="${counter.next.val}"/>
+    <execution_month type="int" ref="${counter.next.val}"/>
+    <actual_delivery_year type="int" ref="${counter.next.val}"/>
+    <actual_delivery_month type="int" ref="${counter.next.val}"/>
+    <model type="string" ref="${counter.next.val}" test="${this != null}"/>
     <voltage type="string" ref="${counter.next.val}"/>
     <capacity type="string" ref="${counter.next.val}"/>
     <number type="double" ref="${counter.next.val}"/>
-    <code type="string" ref="${counter.next.val}"/>
+    <code type="string" ref="${counter.next.val}" test="${this != null}"/>
     <tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <bidding_transportation_fee type="double" ref="${counter.next.val}"/>
@@ -274,17 +274,17 @@
     <code type="string" ref="10"/>
    </where>
    <set>
-    <company_name type="string" ref="${counter.reset[0].val}"/>
-    <completion_year type="string" ref="${counter.next.val}"/>
-    <completion_month type="double" ref="${counter.next.val}"/>
+    <company_name type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+    <completion_year type="int" ref="${counter.next.val}"/>
+    <completion_month type="int" ref="${counter.next.val}"/>
     <client_name type="string" ref="${counter.next.val}"/>
     <project_name type="string" ref="${counter.next.val}"/>
     <contract_no type="string" ref="${counter.next.val}"/>
-    <model type="string" ref="${counter.next.val}"/>
+    <model type="string" ref="${counter.next.val}" test="${this != null}"/>
     <voltage type="string" ref="${counter.next.val}"/>
     <capacity type="string" ref="${counter.next.val}"/>
     <number type="double" ref="${counter.next.val}"/>
-    <code type="string" ref="${counter.next.val}"/>
+    <code type="string" ref="${counter.next.val}" test="${this != null}"/>
     <tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <actual_amount_of_silicon_steel type="double" ref="${counter.next.val}"/>
@@ -345,6 +345,38 @@
   <response type="jsp" name="components/import_data">
    <map key="importUrl" value="completionImport"/>
    <map key="title" value="完工订单"/>
+  </response>
+ </controller>
+ <controller id="completionImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="completionImport"/>
+   <map key="title" value="完工订单"/>
+  </response>
+ </controller>
+ <controller id="sddbImportWrapper">
+  <context key="item" value="${request.item.asInt}"/>
+  <if test="${item == 1}">
+   <callcontroller id="biddingImport"/>
+  </if>
+  <elseif test="${item == 2}">
+   <callcontroller id="winBiddingImport"/>
+  </elseif>
+  <elseif test="${item == 3}">
+   <callcontroller id="execImport"/>
+  </elseif>
+  <else>
+   <callcontroller id="completionImport"/>
+  </else>
+ </controller>
+ <controller id="sddbImportWrapperJsp">
+  <list id="ids" type="int">1,2,3,4</list>
+  <list id="vals" type="string">
+	投标订单,中标订单,执行订单,完工订单
+</list>
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="sddbImportWrapper"/>
+   <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+   <map key="title" value="三单对比导入"/>
   </response>
  </controller>
 </components>

@@ -21,12 +21,12 @@ import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
-import com.tbea.ic.operation.controller.servlet.sbdscqyqk.SbdscqyqkType;
 import com.tbea.ic.operation.model.dao.dl.sbdqy.DlQyDao;
 import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDao;
 import com.tbea.ic.operation.model.dao.identifier.scfxgb.hy.HyDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfscqy.XfscqyDaoImpl;
+import com.tbea.ic.operation.model.dao.xl.sbdqy.XlQyDao;
 import com.tbea.ic.operation.model.entity.identifier.scfxgb.HyEntity;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfscqyEntity;
 import com.tbea.ic.operation.service.report.HBWebService;
@@ -48,6 +48,8 @@ public class XfscqyServiceImpl implements XfscqyService {
 	@Autowired
 	DlQyDao dlqyDao;
 	
+	@Autowired
+	XlQyDao xlqyDao;
 	
 	@Override
 	public List<List<String>> getXfscqy(Date d, Company company) {
@@ -136,6 +138,7 @@ public class XfscqyServiceImpl implements XfscqyService {
 	
 	@Override
 	public void importHBScqy(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("importHBScqy");
 		HBWebService hbws = new HBWebService();
 		List<String> cols = new ArrayList<String>();
 		cols.add("industry");
@@ -147,6 +150,7 @@ public class XfscqyServiceImpl implements XfscqyService {
 	
 	@Override
 	public void importDLScqy(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("importDLScqy");
 		List<Object[]> result = dlqyDao.getScqy(d);
 		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
 		importScqy(d, result, comp);
@@ -182,6 +186,14 @@ public class XfscqyServiceImpl implements XfscqyService {
 				xfscqyDao.merge(entity);
 			}
 		}
+	}
+
+	@Override
+	public void importXLScqy(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("importXLScqy");
+		List<Object[]> result = xlqyDao.getScqy(d);
+		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		importScqy(d, result, comp);
 	}
 
 }

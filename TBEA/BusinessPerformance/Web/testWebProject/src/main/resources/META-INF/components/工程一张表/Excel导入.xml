@@ -7,7 +7,7 @@
    </where>
    <set>
     <lsh type="string" ref="${counter.reset[0].val}"/>
-    <xmqc type="string" ref="${counter.next.val}"/>
+    <xmqc type="string" ref="${counter.next.val}" test="${this != null}"/>
     <xmgs type="string" ref="${counter.next.val}"/>
     <xmlx type="string" ref="${counter.next.val}"/>
     <project_capacity type="string" ref="${counter.next.val}"/>

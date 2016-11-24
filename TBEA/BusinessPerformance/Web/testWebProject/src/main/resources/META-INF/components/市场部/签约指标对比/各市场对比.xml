@@ -258,7 +258,7 @@ ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
   <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="servQyzbwcqk"/>
   <callcontroller id="qyzbwcqkFmtter"/>
-  <ExcelTemplate id="excelTemplate" sheet="市场签约指标完成情况"/>
+  <ExcelTemplate id="excelTemplate" sheet="各单位整体市场签约情况"/>
   <list id="title" type="string">单位,
 国内市场整体指标完成情况,
 国内市场整体指标完成情况,
@@ -302,7 +302,7 @@ ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
    <formatter ref="data"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${cal.year +'年'+ cal.month + '月'}市场签约指标完成情况.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="${cal.year +'年'+ cal.month + '月'}各单位整体市场签约情况.xls" serv="fmtServ"/>
  </controller>
  <controller id="qyzbwcqk">
   <response type="jsp" name="framework/templates/singleDateReport/show">
@@ -310,7 +310,7 @@ ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</list>
    <map key="exportUrl" value="qyzbwcqkExport"/>
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
-   <map key="title" value="市场签约指标完成情况"/>
+   <map key="title" value="各单位整体市场签约情况"/>
   </response>
  </controller>
 </components>

@@ -200,6 +200,11 @@
 
                 </div>
             </div>
+            <div  style="float: left;margin-right:10px">
+                <div id="im2">
+
+                </div>
+            </div>
             <input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
                    onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_UPDATE)" />
         </td>
@@ -245,6 +250,8 @@
             }
         }
 
+        var nd2 = '${nodeData2}';
+        
         framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
             dtId:"dt",
             date: date,
@@ -257,7 +264,9 @@
             asSeasonAcc:"${asSeasonAcc}" == "true" ? true : false,
             jdName:'${jdName}' == "" ? undefined : JSON.parse('${jdName}'),
             itemId:"im",
-            itemNodes:JSON.parse('${nodeData}')
+            itemNodes:JSON.parse('${nodeData}'),
+            itemId2:"im2",
+            itemNodes2: nd2 == '' ? undefined : JSON.parse(nd2)
         });
         $("#exportButton")
             .css("height", "23px")

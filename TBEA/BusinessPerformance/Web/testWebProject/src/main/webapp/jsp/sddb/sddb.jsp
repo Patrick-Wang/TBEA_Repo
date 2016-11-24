@@ -181,10 +181,13 @@ th.ui-th-ltr {
 				<div id="dstart" style="float: left;width: 100px;margin-right:10px"></div>
 				<div id="dEndLabel" style="float: left;margin-right:5px;padding-top:3px">截至日期: </div>
 				<div id="dEnd" style="float: left;width: 100px;margin-right:10px"></div>
-				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
+				<div id="item0" style="float: left"></div>
+				<div id="itemLabel" style="float: left;margin-right:5px;padding-top:3px"></div>
 				<div id="item" style="float: left"></div>
-				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
+				<div id="compid" style="float: left"></div>
+
+				<input id="doUpdate" type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
 		</tr>
@@ -208,8 +211,16 @@ th.ui-th-ltr {
     $(document).ready(function () {
 
 
-		var date = undefined;
+		var itemLabel = '${itemLabel}';
+		if (itemLabel == ''){
+			$("#itemLabel").css("display", "none");
+		}else{
+			$("#itemLabel")[0].innerHTML = itemLabel;
+		}
 
+		var date = undefined;
+		var dateStart = undefined;
+		var dateEnd = undefined;
 		if ('${date}' != ''){
 			var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
 				date = {month: dt.getMonth() + 1,
@@ -218,13 +229,41 @@ th.ui-th-ltr {
 			}
 		}
 
+		if ('${dateStart}' != ''){
+			var dt = new Date(Date.parse('${dateStart}'.replace(/-/g, '/')));
+			dateStart = {month: dt.getMonth() + 1,
+						year: dt.getFullYear(),
+						day: dt.getDate()
+				}
+		}
+
+		if ('${dateEnd}' != ''){
+			var dt = new Date(Date.parse('${dateEnd}'.replace(/-/g, '/')));
+			dateEnd = {month: dt.getMonth() + 1,
+				year: dt.getFullYear(),
+				day: dt.getDate()
+			}
+		}
+
 		var items = '${itemNodes}';
+		var items0 = '${itemNodes0}';
 		var comps = '${nodeData}';
+
+
+
+		if (items == '' && comps == '' && '${date}' == ''){
+			$("#doUpdate").css("display", "none");
+		}
+
 		framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
 			type: "type",
 			comp:"compid",
 			comps : comps == '' ? comps : JSON.parse(comps),
 			date: date,
+			dateStart : dateStart,
+			dateEnd:dateEnd,
+			itemId0:"item0",
+			itemNodes0:items0 == '' ? items0 : JSON.parse(items0),
 			itemId:"item",
 			itemNodes:items == '' ? items : JSON.parse(items)
 		});

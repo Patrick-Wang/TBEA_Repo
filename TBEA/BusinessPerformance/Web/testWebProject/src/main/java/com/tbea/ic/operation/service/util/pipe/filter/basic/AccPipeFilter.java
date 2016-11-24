@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sf.json.JSONArray;
+
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
@@ -134,6 +136,7 @@ public class AccPipeFilter implements IPipeFilter {
 	
 	protected void computeCacheValue(List<Integer> zbs, List<Company> companies){
 		cacheValues = accumulator.compute(col, dateStart, dateEnd, zbs, companies);
+//		System.out.println(JSONArray.fromObject(cacheValues).toString());
 	}
 	
 	private void updateCacheValues(IPipe pipe) {

@@ -44,37 +44,39 @@ var sddb;
                 switch (e.id) {
                     case framework.basic.FrameEvent.FE_UPDATE:
                         {
-                            this.pluginUpdate(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item);
+                            this.pluginUpdate(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item, e.data.item0);
                         }
                         return;
                     case framework.basic.FrameEvent.FE_GET_EXPORTURL:
                         {
-                            return this.pluginGetExportUrl(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item);
+                            return this.pluginGetExportUrl(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item, e.data.item0);
                         }
                     default:
                         break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
-            ShowView.prototype.pluginGetExportUrl = function (dStart, dEnd, compType, item) {
+            ShowView.prototype.pluginGetExportUrl = function (dStart, dEnd, compType, item, item0) {
                 return this.option().exportUrl + "?" + Util.Ajax.toUrlParam({
                     dStart: dStart,
                     dEnd: dEnd,
                     item: compType,
-                    model: item
+                    model: item,
+                    item0: item0
                 });
             };
             ShowView.prototype.option = function () {
                 return this.mOpt;
             };
-            ShowView.prototype.pluginUpdate = function (dStart, dEnd, compType, item) {
+            ShowView.prototype.pluginUpdate = function (dStart, dEnd, compType, item, item0) {
                 var _this = this;
                 this.mCompType = compType;
                 this.mAjax.get({
                     dStart: dStart,
                     dEnd: dEnd,
                     item: compType,
-                    model: item
+                    model: item,
+                    item0: item0
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
@@ -140,12 +142,11 @@ var sddb;
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    height: '100%',
-                    width: 1200,
-                    shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 1000,
-                    viewrecords: true
+                    height: this.mData.data.length > 25 ? 550 : '100%',
+                    width: this.mData.width == undefined ? 1300 : this.mData.width,
+                    shrinkToFit: this.mData.shrinkToFit == "false" ? false : true
                 }));
             };
             ShowView.ins = new ShowView();

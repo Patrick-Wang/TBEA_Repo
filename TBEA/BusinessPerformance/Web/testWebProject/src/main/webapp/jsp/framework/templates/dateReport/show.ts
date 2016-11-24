@@ -20,11 +20,13 @@ module framework.templates.dateReport {
     export interface ShowOption extends framework.templates.singleDateReport.ShowOption{
         itemNodes:IDataNode[];
         itemId:string;
+        itemNodes2:IDataNode[];
+        itemId2:string;
     }
 
     export class ShowView extends framework.templates.singleDateReport.ShowView{
         unitedSelector : Util.UnitedSelector;
-
+        unitedSelector2 : Util.UnitedSelector;
 
         private renderItemSelector(itemId:string):void{
             let sels = $("#" + itemId + " select");
@@ -49,11 +51,19 @@ module framework.templates.dateReport {
         }
 
         onInitialize(opt:any):void{
-            this.unitedSelector = new UnitedSelector(opt.itemNodes,opt.itemId);
+            this.unitedSelector = new Util.UnitedSelector(opt.itemNodes,opt.itemId);
             this.unitedSelector.change(()=>{
                 this.renderItemSelector(opt.itemId);
             });
             this.renderItemSelector(opt.itemId);
+
+            if (opt.itemNodes2 != undefined){
+                this.unitedSelector2 = new Util.UnitedSelector(opt.itemNodes2,opt.itemId2);
+                this.unitedSelector.change(()=>{
+                    this.renderItemSelector(opt.itemId2);
+                });
+                this.renderItemSelector(opt.itemId2);
+            }
             super.onInitialize(opt);
         }
 
@@ -61,7 +71,8 @@ module framework.templates.dateReport {
         getParams(date:Util.Date):any{
             return {
                 date: this.getDate(date),
-                item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
+                item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id,
+                item2: this.unitedSelector2 != undefined ? this.unitedSelector2.getDataNode(this.unitedSelector.getPath()).data.id:undefined
             };
         }
 

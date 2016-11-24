@@ -32,6 +32,7 @@ import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpclwcqk.CpclwcqkDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpclwcqk.CpclwcqkDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDaoImpl;
+import com.tbea.ic.operation.model.dao.xl.czcl.XlCzClDao;
 import com.tbea.ic.operation.model.entity.identifier.common.ClmcEntity;
 import com.tbea.ic.operation.model.entity.identifier.common.CpmcEntity;
 import com.tbea.ic.operation.model.entity.sbdczclwcqk.ClylwcqkEntity;
@@ -68,7 +69,10 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 	DWXXDao dwxxDao;
 	
 	@Autowired
-	DlCzClDao czclDao;
+	DlCzClDao dlCzclDao;
+	
+	@Autowired
+	XlCzClDao xlCzclDao;
 	
 	public final static String NAME = "SbdczclwcqkServiceImpl";
 
@@ -77,6 +81,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 	
 	@Override
 	public void importHBCzCl(java.sql.Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("importHBCzCl");
 		HBWebService hbws = new HBWebService();
 		List<String> cols = new ArrayList<String>();
 		cols.add("statistical_type");
@@ -89,7 +94,8 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 	
 	@Override
 	public void importDlCzCl(java.sql.Date d) {
-		List<Object[]> result = czclDao.getCzCl(d);
+		LoggerFactory.getLogger("WEBSERVICE").info("importDlCzCl");
+		List<Object[]> result = dlCzclDao.getCzCl(d);
 		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
 		importXlCzCl(d, result, comp);
 	}
@@ -264,5 +270,13 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 			ret.add(cpmcDao.getById(cp));
 		}
 		return ret;
+	}
+
+	@Override
+	public void importXlCzCl(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("importXlCzCl");
+		List<Object[]> result = xlCzclDao.getCzCl(d);
+		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		importXlCzCl(d, result, comp);
 	}
 }

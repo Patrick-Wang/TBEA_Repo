@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -129,7 +130,7 @@ public class EntryController {
 						", \"values\":" + zb +
 						", \"zbxx\":" + JSONArray.fromObject(zbxx2).toString() +
 						", \"exchangeRate\":" + (rate == null ? "1" : rate.getRate()) +
-						", \"exRateZbs\" : " + "[1]"+
+						", \"exRateZbs\" : " + "[295]"+
 						", \"isJydw\":" + ((2 == company.level() && !zhgs.contains(company)) || comp == CompanyType.ZHGS) + "}"; 
 		
 		return result.getBytes("utf-8");
@@ -177,11 +178,20 @@ public class EntryController {
 	private void transport(Date d){
 		Map<Company, JSONArray> data = sjzbImportService.getHBSjzb(d);
 		
+
+		LoggerFactory.getLogger("WEBSERVICE").info("transport HB sjzb");
 		for (Entry<Company, JSONArray> entry : data.entrySet()){
 			importData(entry, d);
 		}		
 		
+		LoggerFactory.getLogger("WEBSERVICE").info("transport DL sjzb");
 		data = sjzbImportService.getDLSjzb(d);
+		for (Entry<Company, JSONArray> entry : data.entrySet()){
+			importData(entry, d);
+		}
+		
+		LoggerFactory.getLogger("WEBSERVICE").info("transport XL sjzb");
+		data = sjzbImportService.getXLSjzb(d);
 		for (Entry<Company, JSONArray> entry : data.entrySet()){
 			importData(entry, d);
 		}

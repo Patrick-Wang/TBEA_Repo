@@ -7,4 +7,8 @@ public interface WlyddService {
 	void importDlKglydd(Date d);
 
 	void importDlMlspcs(Date d);
+
+	void importXlKglydd(Date d);
+
+	void importXlMlspcs(Date d);
 }

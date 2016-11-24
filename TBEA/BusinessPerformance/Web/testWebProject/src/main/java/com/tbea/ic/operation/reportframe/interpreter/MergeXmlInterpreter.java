@@ -407,6 +407,8 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 					component.local("this", this.getQueryValue(row, setSql, em));
 				}
 				if (!setSql.test()){
+					ReportLogger.logger().info(setSql.getProp() + " 未通过  " + setSql.getTest() + " 测试条件 ，导入失败 ：");
+					ReportLogger.logger().info(row.toString());
 					return false;
 				}
 			}
