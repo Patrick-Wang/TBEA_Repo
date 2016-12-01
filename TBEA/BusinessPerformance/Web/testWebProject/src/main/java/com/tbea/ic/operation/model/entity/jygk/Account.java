@@ -45,6 +45,16 @@ public class Account extends AbstractReadWriteEntity implements Serializable {
 
 	private Set<DWXX> dwxxs;
 	
+	private Integer deprecated;
+	
+	public Integer getDeprecated() {
+		return deprecated;
+	}
+
+	public void setDeprecated(Integer deprecated) {
+		this.deprecated = deprecated;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")

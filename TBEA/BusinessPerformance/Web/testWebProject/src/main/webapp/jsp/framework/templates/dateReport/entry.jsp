@@ -56,7 +56,11 @@
 	<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
+
+    <script src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/components/SeasonAccSelector.js" type="text/javascript"></script>
+
     <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
@@ -240,12 +244,14 @@
                 year: dt.getFullYear(),
                 day: dt.getDate()
             }
-            dt = new Date(Date.parse('${dateEnd}'.replace(/-/g, '/')));
-            dateEnd = {
-                month: dt.getMonth() + 1,
-                year: dt.getFullYear(),
-                day: dt.getDate()
-            }
+    if ('${dateEnd}' != ''){
+    dt = new Date(Date.parse('${dateEnd}'.replace(/-/g, '/')));
+    dateEnd = {
+    month: dt.getMonth() + 1,
+    year: dt.getFullYear(),
+    day: dt.getDate()
+    }
+    }
         }
 
         framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
@@ -255,6 +261,8 @@
             host:"table",
             title:"${title}",
             asSeason:"${asSeason}" == "true" ? true : false,
+            asSeasonAcc:"${asSeasonAcc}" == "true" ? true : false,
+            jdName:'${jdName}' == "" ? undefined : JSON.parse('${jdName}'),
             updateUrl:"${updateUrl}.do",
             submitUrl:"${submitUrl}.do",
             itemId:"im",

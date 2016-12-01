@@ -1,0 +1,157 @@
+<components>
+ <service id="servZhzlEntryUpdate" transaction="transactionManager">
+  <sql id="zbs">select 
+	zbxx.id, zbxx.name  
+from 
+	jygk_dw_ref_zb_zhzl zl, 
+	jygk_zbxx zbxx 
+where 
+	zl.zbid = zbxx.id and
+	zl.dwid = ${compId}
+</sql>
+  <list id="ids" sql="zbs" value="0" type="int"/>
+  <sql id="zhzljdz" order="ids" by="0" colcount="3">select 
+	zbid, jdjhz, jdljz
+from 
+	jygk_zhjdzb
+where
+	nf = ${cal.year} and
+	jd = ${cal.season} and 
+	dwid = ${compId}</sql>
+  <if test="${4 == cal.season}">
+   <sql id="zhzlndz" order="ids" by="0" colcount="2">select 
+	zbid, ndljz
+from 
+	jygk_zhndljzb
+where
+	nf = ${cal.year} and
+	dwid = ${compId}</sql>
+   <table id="result" rowIds="ids" export="true">
+    <list type="string" sql="zbs" value="1"/>
+    <list type="double" sql="zhzljdz" value="1"/>
+    <list type="double" sql="zhzljdz" value="2"/>
+    <list type="double" sql="zhzlndz" value="1"/>
+   </table>
+  </if>
+  <else>
+   <table id="result" rowIds="ids" export="true">
+    <list type="string" sql="zbs" value="1"/>
+    <list type="double" sql="zhzljdz" value="1"/>
+    <list type="double" sql="zhzljdz" value="2"/>
+   </table>
+  </else>
+ </service>
+ <service id="servZhzlEntrySubmit" transaction="transactionManager">
+  <merge data="data" table="jygk_zhjdzb">
+   <where>
+    <nf type="int" value="${cal.year}"/>
+    <jd type="int" value="${cal.season}"/>
+    <dwid type="int" value="${compId}"/>
+    <zbid type="int" ref="0"/>
+   </where>
+   <set>
+    <nf type="int" value="${cal.year}"/>
+    <jd type="int" value="${cal.season}"/>
+    <dwid type="int" value="${compId}"/>
+    <zbid type="int" ref="0"/>
+    <jdjhz type="double" ref="2"/>
+    <jdljz type="double" ref="3"/>
+    <zt type="int" value="${zt}"/>
+    <xgsj type="date" value="${xgsj}"/>
+   </set>
+  </merge>
+  <if test="${4 == cal.season}">
+   <merge data="data" table="jygk_zhndljzb">
+    <where>
+     <nf type="int" value="${cal.year}"/>
+     <dwid type="int" value="${compId}"/>
+     <zbid type="int" ref="0"/>
+    </where>
+    <set>
+     <nf type="int" value="${cal.year}"/>
+     <dwid type="int" value="${compId}"/>
+     <zbid type="int" ref="0"/>
+     <ndljz type="double" ref="4"/>
+     <zt type="int" value="${zt}"/>
+     <xgsj type="date" value="${xgsj}"/>
+    </set>
+   </merge>
+  </if>
+ </service>
+ <controller id="zhzlEntryUpdate">
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servZhzlEntryUpdate"/>
+  <formatter id="data">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1"/>
+   </EmptyFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+  <formatterServer id="serv" table="${result.matrix}" acceptNullAs="">
+   <formatter ref="data"/>
+  </formatterServer>
+  <if test="${4 == cal.season}">
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>项目</name>
+      <readOnly>true</readOnly>
+     </item>
+     <item>
+      <name>季度目标</name>
+     </item>
+     <item>
+      <name>季度累计完成</name>
+     </item>
+     <item>
+      <name>年度累计完成</name>
+     </item>
+    </header>
+    <pager>none</pager>
+    <data>${serv.result}</data>
+   </response>
+  </if>
+  <else>
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>项目</name>
+      <readOnly>true</readOnly>
+     </item>
+     <item>
+      <name>季度目标</name>
+     </item>
+     <item>
+      <name>季度累计完成</name>
+     </item>
+    </header>
+    <pager>none</pager>
+    <data>${serv.result}</data>
+   </response>
+  </else>
+ </controller>
+ <controller id="zhzlEntry">
+  <response type="jsp" name="framework/templates/dateReport/entry">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="updateUrl" value="zhzlEntryUpdate"/>
+   <map key="submitUrl" value="zhzlEntrySubmit"/>
+   <map key="title" value="质量指标录入"/>
+   <map key="asSeasonAcc" value="true"/>
+   <map key="jdName" value="[&quot;第一季度&quot;,&quot;第二季度&quot;,&quot;第三季度&quot;,&quot;第四季度&quot;]"/>
+   <map map="${authMgr[63]}"/>
+  </response>
+ </controller>
+ <controller id="zhzlEntrySubmit">
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="data" value="${request.data.asJsonArray}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="xgsj" value="${calendar.current.secondFormat}"/>
+  <context key="zt" value="${2}"/>
+  <callservice id="servZhzlEntrySubmit"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+</components>

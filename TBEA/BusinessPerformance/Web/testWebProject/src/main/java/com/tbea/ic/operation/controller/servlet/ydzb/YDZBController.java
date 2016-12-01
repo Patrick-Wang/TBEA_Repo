@@ -393,7 +393,13 @@ public class YDZBController {
 		 "委托加工化成箔符单率（%）", 
 		 "架空电缆（1KV、10KV）合格率（%）", 
 		 "钢芯铝绞线合格率（%）", 
-		 "布电线合格率（%）"};
+		 "布电线合格率（%）",
+		 "失败成本率1（%）",
+         "外部客诉率(合金材料公司)（%）",
+         "外部客诉率(铝箔公司)（%）",
+         "外部客诉率(电极箔公司)（%）",
+         "失败成本率(金属结构与炭素材料公司)（%）"
+    };
 	
 	private FormatterHandler getFormatterChainWithHeader(Integer[] percentCols, Integer[] jhCols){
 		FormatterHandler formatterChain = new HeaderFormatterHandler(null, new Integer[]{0});

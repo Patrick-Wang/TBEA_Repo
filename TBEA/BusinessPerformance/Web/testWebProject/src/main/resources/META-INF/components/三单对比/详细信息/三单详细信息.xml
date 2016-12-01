@@ -1,0 +1,69 @@
+<components>
+ <controller id="ddDetailParams">
+  <context key="dStart" value="${request.dStart.asCalendar}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar}"/>
+  <context key="type" value="${request.model.asString}"/>
+   <context key="compId" value="${orgs.virtualCYOrg.ids[request.item.asInt]}"/>
+  <if test="${50000 == compId}">
+   <list id="comps" type="int">1,2,3</list>
+   <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[comps]}"/>
+  </if>
+  <else>
+   <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compId.packAsList]}"/>
+  </else>
+ </controller>
+ <controller id="ddDetailUpdate">
+  <callcontroller id="ddDetailParams"/>
+  <if test="${'type' == '投标订单详细信息'}">
+   <callcontroller id="bidDetailUpdate"/>
+  </if>
+  <elseif test="${'type' == '中标订单详细信息'}">
+   <callcontroller id="winDetailUpdate"/>
+  </elseif>
+  <elseif test="${'type' == '执行订单详细信息'}">
+   <callcontroller id="execDetailUpdate"/>
+  </elseif>
+  <elseif test="${'type' == '完工订单详细信息'}">
+   <callcontroller id="completionDetailUpdate"/>
+  </elseif>
+ </controller>
+ <controller id="ddDetailExport">
+  <callcontroller id="ddDetailParams"/>
+  <if test="${'type' == '投标订单详细信息'}">
+   <callcontroller id="bidDetailExport"/>
+  </if>
+  <elseif test="${'type' == '中标订单详细信息'}">
+   <callcontroller id="winDetailExport"/>
+  </elseif>
+  <elseif test="${'type' == '执行订单详细信息'}">
+   <callcontroller id="execDetailExport"/>
+  </elseif>
+  <elseif test="${'type' == '完工订单详细信息'}">
+   <callcontroller id="completionDetailExport"/>
+  </elseif>
+ </controller>
+ <controller id="ddDetailJsp">
+  <list id="ids" type="int">1, 2, 3, 4</list>
+  <list id="vals" type="string">投标订单详细信息, 中标订单详细信息, 执行订单详细信息, 完工订单详细信息</list>
+   <context key="compTypes" value="${authTypes[61]}"/>
+  <if>${
+compTypes.contains[CompanyType.SBGS] &amp;&amp; 
+compTypes.contains[CompanyType.HBGS] &amp;&amp; 
+compTypes.contains[CompanyType.XBC]
+}<list id="compTypes" type="object">
+    <item>${CompanyType.BYQCY}</item>
+   </list>
+  </if>
+  
+ <context key="nodeData" value="${dataNodeFactory[companyTypeHelper.ids[compTypes]][companyTypeHelper.values[compTypes]].asJson}"/>
+ 
+  <response type="jsp" name="sddb/sddb">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="updateUrl" value="ddDetailUpdate"/>
+   <map key="exportUrl" value="ddDetailExport"/>
+   <map key="title" value="订单信息明细"/>
+    <map key="nodeData" value="${nodeData}"/>
+   <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+  </response>
+ </controller>
+</components>

@@ -101,6 +101,7 @@ public class Relationships {
 	}
 	
 	private void buildSharedIndis(){
+		indis.clear();
 		relaShares.clear();
 		relaSums.clear();
 		for (int i = 0; i <= ZBType.BYSJ.ordinal(); ++i){

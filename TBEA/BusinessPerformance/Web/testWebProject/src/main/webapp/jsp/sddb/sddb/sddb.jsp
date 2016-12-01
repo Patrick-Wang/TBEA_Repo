@@ -4,6 +4,7 @@
             <div id="table" align="center"></div>
         </td>
     </tr>
+
 </Table>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/sddb/sddb/sddb.js"></script>
 <script type="text/javascript">
@@ -14,6 +15,7 @@ $(document).ready(function(){
                 tb: "table",
                 host: "xnyzb",
                 tbarea:"tbarea",
+                chartId:"chart",
                 title:"${title}",
                 updateUrl:"${updateUrl}.do",
                 exportUrl:"${exportUrl}.do"

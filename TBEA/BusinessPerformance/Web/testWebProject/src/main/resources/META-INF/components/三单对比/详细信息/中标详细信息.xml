@@ -1,0 +1,287 @@
+<components>
+ <service id="servWinDetail" transaction="transactionManager">
+  <sql id="zbddhz">select 
+  	company_name	,
+	win_bid_year	,
+	win_bid_month	,
+	client_name	,
+	project_name	,
+	contract_no	,
+	delivery_year	,
+	delivery_month	,
+	model	,
+	voltage	,
+	capacity	,
+	number	,
+	code	,
+	tax_inclusive_price	,
+	not_tax_inclusive_price	,
+	win_bid_silicon_steel_grades	,
+	win_bid_silicon_steel_amount	,
+	win_bid_silicon_steel_price	,
+	win_bid_ele_copper_amount	,
+	win_bid_ele_copper_price	,
+	win_bid_ele_copper_process_cost	,
+	win_bid_insulating_oil_amount	,
+	win_bid_insulating_oil_price	,
+	win_bid_rolled_steel_amount	,
+	win_bid_rolled_steel_price	,
+	win_bid_cardboard_amount	,
+	win_bid_cardboard_price	,
+	win_bid_casing_quantity	,
+	win_bid_casing_unit_price	,
+	win_bid_number_of_switches	,
+	win_bid_switch_unit_price	,
+	win_bid_number_of_cooler	,
+	win_bid_cooler_unit_price	,
+	win_bid_online_monitoring_quantity	,
+	win_bid_online_monitoring_unit_price	,
+	win_bid_other_material_cost	,
+	win_bid_material_total	,
+	labour_cost	,
+	manufacturing_cost	,
+	win_bid_cost	,
+	win_bid_gross_profit_amount	,
+	win_bid_gross_margin	,
+	is_new_production
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS
+where
+	company_name in ${dwmcs} and
+	dateDiff(mm, dateadd(mm, win_bid_month - 1, dateadd(yy, win_bid_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
+ 	dateDiff(mm, dateadd(mm, win_bid_month - 1, dateadd(yy, win_bid_year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 
+</sql>
+  <list id="ids" type="int">
+   <item from="0" to="${zbddhz.size - 1}"/>
+  </list>
+  <table id="result" rowIds="ids" export="true" table="${zbddhz}"/>
+ </service>
+ <controller id="winDetailFmtter">
+  <formatter id="dataFmt" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,3,4,5,8,9,10,12,15,42"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="41"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="0">
+    <DefaultMatcher cols="1,2,6,7"/>
+   </NumberFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="winDetailUpdate">
+  <callservice id="servWinDetail"/>
+  <callcontroller id="winDetailFmtter"/>
+  <formatterServer id="fmtServWinDetail" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>投标单位</name>
+    </item>
+    <item>
+     <name>中标年份</name>
+    </item>
+    <item>
+     <name>中标月份</name>
+    </item>
+    <item>
+     <name>用户名称</name>
+    </item>
+    <item>
+     <name>项目名称</name>
+    </item>
+    <item>
+     <name>合同编号</name>
+    </item>
+    <item>
+     <name>交货年份</name>
+    </item>
+    <item>
+     <name>交货月份</name>
+    </item>
+    <item>
+     <name>型号</name>
+    </item>
+    <item>
+     <name>电压</name>
+    </item>
+    <item>
+     <name>容量</name>
+    </item>
+    <item>
+     <name>台数</name>
+    </item>
+    <item>
+     <name>图号/技术代号</name>
+    </item>
+    <item>
+     <name>合同金额</name>
+    </item>
+    <item>
+     <name>合同金额（不含税）</name>
+    </item>
+    <item>
+     <name>中标硅钢牌号</name>
+    </item>
+    <item>
+     <name>中标硅钢用量</name>
+    </item>
+    <item>
+     <name>中标硅钢单价</name>
+    </item>
+    <item>
+     <name>中标电解铜用量</name>
+    </item>
+    <item>
+     <name>中标电解铜单价</name>
+    </item>
+    <item>
+     <name>中标电解铜加工费</name>
+    </item>
+    <item>
+     <name>中标变压器油用量</name>
+    </item>
+    <item>
+     <name>中标变压器油单价</name>
+    </item>
+    <item>
+     <name>中标钢材用量</name>
+    </item>
+    <item>
+     <name>中标钢材单价</name>
+    </item>
+    <item>
+     <name>中标纸板用量</name>
+    </item>
+    <item>
+     <name>中标纸板单价</name>
+    </item>
+    <item>
+     <name>中标套管数量</name>
+    </item>
+    <item>
+     <name>中标套管单价</name>
+    </item>
+    <item>
+     <name>中标开关数量</name>
+    </item>
+    <item>
+     <name>中标开关单价</name>
+    </item>
+    <item>
+     <name>中标冷却器数量</name>
+    </item>
+    <item>
+     <name>中标冷却器单价</name>
+    </item>
+    <item>
+     <name>中标在线监测数量</name>
+    </item>
+    <item>
+     <name>中标在线监测单价</name>
+    </item>
+    <item>
+     <name>中标其他材料成本</name>
+    </item>
+    <item>
+     <name>中标材料总计</name>
+    </item>
+    <item>
+     <name>人工费用</name>
+    </item>
+    <item>
+     <name>制造费用</name>
+    </item>
+    <item>
+     <name>中标材料成本总计</name>
+    </item>
+    <item>
+     <name>中标毛利额</name>
+    </item>
+    <item>
+     <name>中标毛利率</name>
+    </item>
+    <item>
+     <name>是否新产品</name>
+    </item>
+   </header>
+   <shrinkToFit>false</shrinkToFit>
+   <data>${fmtServWinDetail.result}</data>
+  </response>
+ </controller>
+ <controller id="winDetailExport">
+  <callcontroller id="winDetailParams"/>
+  <callservice id="servWinDetail"/>
+  <callcontroller id="winDetailFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="中标订单详细信息"/>
+  <list id="title1" type="string">投标单位	,
+中标年份	,
+中标月份	,
+用户名称	,
+项目名称	,
+合同编号	,
+交货年份	,
+交货月份	,
+型号	,
+电压	,
+容量	,
+台数	,
+图号/技术代号	,
+合同金额	,
+合同金额（不含税）	,
+中标硅钢牌号	,
+中标硅钢用量	,
+中标硅钢单价	,
+中标电解铜用量	,
+中标电解铜单价	,
+中标电解铜加工费	,
+中标变压器油用量	,
+中标变压器油单价	,
+中标钢材用量	,
+中标钢材单价	,
+中标纸板用量	,
+中标纸板单价	,
+中标套管数量	,
+中标套管单价	,
+中标开关数量	,
+中标开关单价	,
+中标冷却器数量	,
+中标冷却器单价	,
+中标在线监测数量	,
+中标在线监测单价	,
+中标其他材料成本	,
+中标材料总计	,
+人工费用	,
+制造费用	,
+中标材料成本总计	,
+中标毛利额	,
+中标毛利率	,
+是否新产品</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="servFmt" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="中标订单详细信息.xls" serv="servFmt"/>
+ </controller>
+</components>

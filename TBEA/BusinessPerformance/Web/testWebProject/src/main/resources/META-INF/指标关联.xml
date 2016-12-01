@@ -43,6 +43,14 @@
 		<j3 name="二矿其他" />
 		<j4 name="二矿末煤" />
 
+		<zh1 name="产量-发电量（万度）" />
+		<zh2 name="产量-电子铝箔（吨）" />
+		<zh3 name="产量-非电子箔（吨）" />
+		
+		<zh4 name="产量-化成箔（万平米）" />
+		<zh5 name="销量-电子铝箔（吨）" />
+		<zh6 name="销量-非电子箔（吨）" />
+		<zh7 name="销量-化成箔（万平米）" />
 	</indicators>
 	<share indi="nltkxl,n1,n2,n3,n4" type="月实际,20预计,28预计,月计划,年计划">
 		<company id="7" />
@@ -51,6 +59,21 @@
 	<share indi="jekxl,j1,j2,j3,j4" type="月实际,20预计,28预计,月计划,年计划">
 		<company id="7" />
 		<company id="702" />
+	</share>
+	
+	<share indi="zh1" type="月实际,20预计,28预计,月计划,年计划">
+		<company id="13" />
+		<company id="1307" />
+	</share>
+	
+	<share indi="zh4,zh7" type="月实际,20预计,28预计,月计划,年计划">
+		<company id="13" />
+		<company id="1304" />
+	</share>
+	
+	<share indi="zh2,zh3,zh5,zh6" type="月实际,20预计,28预计,月计划,年计划">
+		<company id="13" />
+		<company id="1303" />
 	</share>
 
 	<sum type="月实际,20预计,28预计,月计划,年计划">

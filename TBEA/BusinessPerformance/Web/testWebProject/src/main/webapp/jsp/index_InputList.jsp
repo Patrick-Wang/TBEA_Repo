@@ -64,7 +64,7 @@
 
 <c:if test="${jyfxEntry}">
 	<h3>
-		经营分析录入<a name="inputDaily"> </a>
+		经营分析录入<a name="inputJyfx"> </a>
 	</h3>
 	<div class="section">
 		<div class="thumb4">
@@ -102,6 +102,23 @@
 						src="../images/charts/force.png"> <span><strong>新特能源日报录入</strong></span></a>
 				</li>
 				</c:if>
+			</ul>
+		</div>
+	</div>
+</c:if>
+<c:if test="${zhzlEntry}">
+	<h3>
+		质量信息指标录入<a name="inputZhzl"> </a>
+	</h3>
+	<div class="section">
+		<div class="thumb4">
+			<ul class="slides">
+
+				<li data-thumb="asset/img/example/bar1.png"><a
+					href="../report/zhzlEntry.do" target="_blank"><img
+						src="../images/charts/force.png"> <span><strong>质量信息指标录入</strong></span></a>
+				</li>
+			
 			</ul>
 		</div>
 	</div>

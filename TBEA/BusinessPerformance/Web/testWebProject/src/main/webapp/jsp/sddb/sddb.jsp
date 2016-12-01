@@ -26,7 +26,9 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.js"></script>
 
-
+	<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/components/select2/css/select2.min.css">
+	<script src="${pageContext.request.contextPath}/jsp/components/select2/js/select2.min.js" type="text/javascript"></script>
 <!-- jqgrid --> 
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.jqgrid.css">
@@ -166,8 +168,43 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
+	.select2-selection__rendered{
+	font-size: 12px;
+	}
 
-</style>
+	.select2-container--default .select2-selection--single .select2-selection__rendered{
+	height: 23px;
+	line-height:23px;
+	}
+
+	.select2-container--default .select2-selection--single .select2-selection__arrow{
+	height:23px;
+	margin-top:-2px;
+	}
+	.select2-container .select2-selection--single{
+	height:23px;
+	margin-top:-1px;
+	}
+	.select2-container{
+	margin-left:8px;
+	}
+
+	/*         .select2-selection__rendered{
+	border: 1px solid #c5dbec;
+	background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x;
+	font-weight: bold;
+	color: #2e6e9e;
+	border: solid 1px;
+	} */
+
+
+
+
+	.select2-container--open .select2-dropdown--below{
+	margin-top:7px;
+	}
+
+	</style>
 </head>
 <body >
 	<div class="header">
@@ -203,6 +240,17 @@ th.ui-th-ltr {
 						   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
 				</form> 
 			</td>
+		</tr>
+
+		<tr id="ctTitle">
+		<td>
+		<div id="chartName"  align="center" style="display: none;margin-top:23px;margin-left:10px;font-size:24px;font-weight:bold;"></div>
+		</td>
+		</tr>
+		<tr id="ctarea">
+		<td>
+		<div id="chart" align="center" style="display: none;margin-top:10px"></div>
+		</td>
 		</tr>
 	</Table>
 	<script type="text/javascript">

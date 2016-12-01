@@ -120,11 +120,12 @@
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
 								<%-- 								</c:if> --%>
-								<%-- 								<c:if test="${!(QualityApprove|| QualityEntry)}"> --%>
+																<c:if test="${isJydw}">
+								
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
-								<%-- 								</c:if> --%>
+																</c:if>
 								<c:if test="${JYAnalysisLookup}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#zbhz"
@@ -149,6 +150,11 @@
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#scqyxx"
 										style="color: rgb(62, 152, 197);">市场签约信息</a></li>
+								</c:if>
+								<c:if test="${zhzlLookup}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#zhzl"
+										style="color: rgb(62, 152, 197);">众和质量指标</a></li>
 								</c:if>
 								<!-- 只有sbd公司权限显示-->
 								<%-- <c:if test="${SbdAuth}">
@@ -226,10 +232,14 @@
 
 								<c:if test="${isJydw}">
 									<li style="background-color: transparent"><i
-										class="ec-icon ec-icon-force"></i> <a href="#inputPrediction"
+										class="ec-icon ec-icon-force"></i> <a href="#inputJyfx"
 										style="color: rgb(62, 152, 197);">经营分析录入</a></li>
 								</c:if>
-
+								<c:if test="${zhzlEntry}">
+									<li style="background-color: transparent"><i
+										class="ec-icon ec-icon-force"></i> <a href="#inputZhzl"
+										style="color: rgb(62, 152, 197);">质量信息录入</a></li>
+								</c:if>
 
 							</ul>
 

@@ -1,5 +1,11 @@
 package com;
 
+import java.util.List;
+
+import com.tbea.ic.operation.reportframe.el.ELExpression;
+import com.tbea.ic.operation.reportframe.el.ELParser;
+import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
+
 public class Test {
 
 	public static void main(String[] args) throws Exception {
@@ -68,35 +74,35 @@ public class Test {
 //		while (it.hasNext()){
 //			System.out.println(it.next());
 //		}
-//		ELParser elp = new ELParser(new ObjectLoader(){
-//
-//			@Override
-//			public Object onGetObject(String key) {
-//				// TODO Auto-generated method stub
-//				if (key.equals("usk")){
-//					return new abc[]{new abc(), new abc(), new abc()};
-//				}
-//				if (key.equals("kk")){
-//					return new abc[]{new abc(), new abc(), new abc()};
-//				}
-//				
-//				if (key.equals("ff")){
-//					return new abc[]{new abc(), new abc(), new abc()};
-//				}
-//				
-//				return null;
-//			}
-//
-//			@Override
-//			public boolean hasObject(String key) {
-//				// TODO Auto-generated method stub
-//				return true;
-//			}
-//			
-//		});
-//		List<ELExpression> els = elp.parser("${(usk[kk[1].bac[1]].bac[0] + usk[kk[1].bac[1]].bac[usk[kk[1].bac[1]].bac[1]]) * usk[kk[1].bac[usk[kk[1].bac[usk[kk[1].bac[1]].bac[0]]].bac[0]]].bac[1]}");
-//		Object val = els.get(0).value();
-//		System.out.println(val);
+		ELParser elp = new ELParser(new ObjectLoader(){
+
+			@Override
+			public Object onGetObject(String key) {
+				// TODO Auto-generated method stub
+				if (key.equals("usk")){
+					return new abc[]{new abc(), new abc(), new abc()};
+				}
+				if (key.equals("kk")){
+					return new abc[]{new abc(), new abc(), new abc()};
+				}
+				
+				if (key.equals("ff")){
+					return new abc[]{new abc(), new abc(), new abc()};
+				}
+				
+				return null;
+			}
+
+			@Override
+			public boolean hasObject(String key) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+			
+		});
+		List<ELExpression> els = elp.parser("${usk[kk[1].bac[1]].bac[0].test['152'].asdfasdf.packAsList}");
+		Object val = els.get(0).value();
+		System.out.println(val);
 	}
 
 }

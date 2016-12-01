@@ -49,6 +49,11 @@ public class DataNode {
 		this.subNodes = subNodes;
 	}
 	
+	public DataNode append(List<DataNode> subNodes) {
+		this.subNodes.addAll(subNodes);
+		return this;
+	}
+	
 	public DataNode findByValue(String value){
 		if (null != this.subNodes){
 			for (DataNode node : this.subNodes){

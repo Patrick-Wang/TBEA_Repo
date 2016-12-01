@@ -56,7 +56,11 @@
 	<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
+
+    <script src="${pageContext.request.contextPath}/jsp/components/dateSeasonSelector.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/components/SeasonAccSelector.js" type="text/javascript"></script>
+
     <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
@@ -203,23 +207,32 @@
 <script type="text/javascript">
     $(document).ready(function () {
         framework.templates.singleDateReport.createInstance();
-        var date;
-        if ('${date}' == ""){
-            if ("" != '${year}') {
-                date = {
-                    month: '${month}' == '' ? undefined : parseInt('${month}'),
-                    year: '${year}' == '' ? undefined : parseInt('${year}'),
-                    day: '${day}' == '' ? undefined : parseInt('${day}')
-                }
-            }
-        }else{
-            var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
-            date = {
-                month: dt.getMonth() + 1,
-                year: dt.getFullYear(),
-                day: dt.getDate()
-            }
-        }
+    var dateEnd;
+    var date;
+    if ('${date}' == ""){
+    if ("" != '${year}'){
+    date = {
+    month:'${month}' == ''?undefined:parseInt('${month}'),
+    year:'${year}' == ''?undefined:parseInt('${year}'),
+    day:'${day}' == ''?undefined:parseInt('${day}')
+    }
+    }
+    }else{
+    var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
+    date = {
+    month: dt.getMonth() + 1,
+    year: dt.getFullYear(),
+    day: dt.getDate()
+    }
+    if ('${dateEnd}' != ''){
+    dt = new Date(Date.parse('${dateEnd}'.replace(/-/g, '/')));
+    dateEnd = {
+    month: dt.getMonth() + 1,
+    year: dt.getFullYear(),
+    day: dt.getDate()
+    }
+    }
+    }
 
         framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
             dtId:"dt",
@@ -227,7 +240,11 @@
             host:"table",
             title:"${title}",
             updateUrl:"${updateUrl}.do",
-            submitUrl:"${submitUrl}.do"
+            submitUrl:"${submitUrl}.do",
+            asSeason:"${asSeason}" == "true" ? true : false,
+            asSeasonAcc:"${asSeasonAcc}" == "true" ? true : false,
+            jdName:'${jdName}' == "" ? undefined : JSON.parse('${jdName}'),
+            dateEnd:dateEnd
         });
         $(document.body).css("visibility", "visible");
     });

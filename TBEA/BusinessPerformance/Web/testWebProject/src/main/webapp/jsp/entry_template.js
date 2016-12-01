@@ -49,7 +49,7 @@ var entry_template;
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, Util.addMonth({ year: this.mOpt.date.year, month: this.mOpt.date.month }, 3), this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.QNJH:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, { year: this.mOpt.date.year }, this.mOpt.dateId, true);
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, { year: this.mOpt.date.year + 1 }, this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.BY20YJ:
                 case Util.ZBType.BY28YJ:

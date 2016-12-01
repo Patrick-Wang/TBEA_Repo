@@ -92,9 +92,9 @@ public class ELExpression{
 			String getMdName = makeGetMethodName(propName);
 			md = getMethod(obj, getMdName);
 			if (null == md){
-				result = new PackingMap(obj).get(propName);
+				result = new PackingMap2(obj).get(propName);
 				if (null == result){
-					result = new PackingMap(obj).get(getMdName);
+					result = new PackingMap2(obj).get(getMdName);
 				}
 			}else{
 				result = md.invoke(obj);
@@ -105,14 +105,26 @@ public class ELExpression{
 		return result;
 	}
 	
+	private int getInt(Object obj){
+		if (obj instanceof Integer){
+			return ((Integer) obj).intValue();
+		} else if (obj instanceof Double){
+			return ((Double) obj).intValue();
+		} else if (obj instanceof Long){
+			return ((Long) obj).intValue();
+		} else{
+			return (int) obj;
+		} 
+	}
+	
 	private Object getPropByIndex(Object obj, List<Object> indexs) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		for (int i = 0; i < indexs.size() && null != obj; ++i){
 			if (obj instanceof List){
-				obj = ((List) obj).get((Integer) indexs.get(i));
+				obj = ((List) obj).get(getInt(indexs.get(i)));
 			}else if (obj.getClass().isArray()){
-				obj = ((Object[])obj)[(Integer)indexs.get(i)];
+				obj = ((Object[])obj)[getInt(indexs.get(i))];
 			}else if (obj instanceof JSONArray){
-				obj = ((JSONArray) obj).get((Integer)indexs.get(i));
+				obj = ((JSONArray) obj).get(getInt(indexs.get(i)));
 			}else if (obj instanceof JSONObject){
 				JSONObject jsonObj = (JSONObject) obj;
 	 			obj = jsonObj.get(indexs.get(i));
@@ -133,10 +145,6 @@ public class ELExpression{
 	 			propValue = jsonObj.get(propName);
 			}else if (obj instanceof Map){
 				propValue = ((Map) obj).get(propName);
-			}else if ("packAsList".equals(propName)){
-				List list = new ArrayList();
-				list.add(obj);
-	 			propValue = list;
 			}else { 
 				propValue = getObjectProp(obj, propName);
 			}

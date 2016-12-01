@@ -1,0 +1,182 @@
+<components>
+ <service id="servZhzlUpdate" transaction="transactionManager">
+  <sql id="dwzbs">select 
+	dwxx.name dwmc, 
+	zbxx.name zbmc,
+	(dwid * 1000 + zbid) uid
+from 
+	jygk_dw_ref_zb_zhzl ref,
+	jygk_dwxx dwxx,
+	jygk_zbxx zbxx
+where 
+	ref.dwid = dwxx.id and
+	ref.zbid = zbxx.id and
+	dwid in ${dwids}</sql>
+  <list id="uids" sql="dwzbs" value="2" type="int"/>
+  <sql id="zhzljdz" order="uids" by="0" colcount="3">select 
+	dwid * 1000 + zbid uid, 
+	jdjhz, 
+	jdljz
+from 
+	jygk_zhjdzb
+where
+	nf = ${cal.year} and
+	jd = ${cal.season} and 
+	dwid in ${dwids}</sql>
+  <list id="ids" sql="zbs" value="0" type="int">
+   <item from="0" to="${dwzbs.size - 1}"/>
+  </list>
+  <if test="${cal.season == 4}">
+   <sql id="zhzlndz" order="uids" by="0" colcount="2">select 
+	(dwid * 1000 + zbid) uid, 
+	ndljz
+from 
+	jygk_zhndljzb
+where
+	nf = ${cal.year} and
+	dwid in ${dwids}</sql>
+   <table id="result" rowIds="ids" export="true">
+    <list sql="dwzbs" value="0" type="string"/>
+    <list sql="dwzbs" value="1" type="string"/>
+    <list sql="zhzljdz" value="1" type="double"/>
+    <list sql="zhzljdz" value="2" type="double"/>
+    <list sql="zhzlndz" value="1" type="double"/>
+   </table>
+  </if>
+  <else>
+   <table id="result" rowIds="ids" export="true">
+    <list sql="dwzbs" value="0" type="string"/>
+    <list sql="dwzbs" value="1" type="string"/>
+    <list sql="zhzljdz" value="1" type="double"/>
+    <list sql="zhzljdz" value="2" type="double"/>
+   </table>
+  </else>
+ </service>
+ <controller id="fmtterZhzl">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1"/>
+   </EmptyFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="zhzlExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="dwids" value="${authIds[64]}"/>
+  <callservice id="servZhzlUpdate"/>
+  <callcontroller id="fmtterZhzl"/>
+  <if test="${4 == cal.season}">
+   <list id="title" type="string" export="true">单位,
+项目,
+季度目标,
+季度累计完成,
+年度累计完成</list>
+  </if>
+  <else>
+   <list id="title" type="string" export="true">单位,
+项目,
+季度目标,
+季度累计完成</list>
+  </else>
+  <ExcelTemplate id="excelTemplate" sheet="众合公司质量指标"/>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="1" width="1" height="${result.ids.size}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0,1"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${cal.year}年${cal.season}季度众合公司质量指标.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="zhzlUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="dwids" value="${authIds[64]}"/>
+  <callservice id="servZhzlUpdate"/>
+  <callcontroller id="fmtterZhzl"/>
+  <formatterServer id="serv" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <if test="${4 == cal.season}">
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>单位</name>
+     </item>
+     <item>
+      <name>项目</name>
+      <align>left</align>
+     </item>
+     <item>
+      <name>季度目标</name>
+     </item>
+     <item>
+      <name>季度累计完成</name>
+     </item>
+     <item>
+      <name>年度累计完成</name>
+     </item>
+    </header>
+    <mergeRows type="array">
+     <item>
+      <col>0</col>
+     </item>
+    </mergeRows>
+    <data>${serv.result}</data>
+   </response>
+  </if>
+  <else>
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>单位</name>
+     </item>
+     <item>
+      <name>项目</name>
+      <align>left</align>
+     </item>
+     <item>
+      <name>季度目标</name>
+     </item>
+     <item>
+      <name>季度累计完成</name>
+     </item>
+    </header>
+     <mergeRows type="array">
+     <item>
+      <col>0</col>
+     </item>
+    </mergeRows>
+    <data>${serv.result}</data>
+   </response>
+  </else>
+ </controller>
+ <controller id="zhzl">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="updateUrl" value="zhzlUpdate"/>
+   <map key="exportUrl" value="zhzlExport"/>
+   <map key="title" value="众合公司质量指标"/>
+   <map key="asSeasonAcc" value="true"/>
+   <map key="jdName" value="[&quot;第一季度&quot;,&quot;第二季度&quot;,&quot;第三季度&quot;,&quot;第四季度&quot;]"/>
+  </response>
+ </controller>
+</components>

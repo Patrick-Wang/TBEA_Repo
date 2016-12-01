@@ -11,42 +11,88 @@ var sddb;
 (function (sddb) {
     var router = framework.router;
     var FrameEvent = framework.basic.FrameEvent;
+    var SDDBEvent;
+    (function (SDDBEvent) {
+        SDDBEvent.FE_SHOWTIME = FrameEvent.lastEvent();
+        SDDBEvent.FE_HIDETIME = FrameEvent.lastEvent();
+    })(SDDBEvent = sddb.SDDBEvent || (sddb.SDDBEvent = {}));
     var SddbShowView = (function (_super) {
         __extends(SddbShowView, _super);
         function SddbShowView() {
             _super.apply(this, arguments);
         }
+        SddbShowView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case SDDBEvent.FE_SHOWTIME:
+                    if (this.mOpt.date != undefined) {
+                        $("#dstart").css("display", "");
+                        $("#dEnd").css("display", "");
+                        $("#dstartLabel").css("display", "");
+                        $("#dEndLabel").css("display", "");
+                    }
+                    break;
+                case SDDBEvent.FE_HIDETIME:
+                    if (this.mOpt.date != undefined) {
+                        $("#dstart").css("display", "none");
+                        $("#dEnd").css("display", "none");
+                        $("#dstartLabel").css("display", "none");
+                        $("#dEndLabel").css("display", "none");
+                    }
+                    break;
+            }
+            return _super.prototype.onEvent.call(this, e);
+        };
         SddbShowView.prototype.renderItemSelector = function (itemId) {
             var sels = $("#" + itemId + " select");
             for (var i = 0; i < sels.length; ++i) {
-                var opts = $("#" + itemId + " select:eq(" + i + ") option");
-                var items = [];
-                for (var j = 0; j < opts.length; ++j) {
-                    items.push(opts[j].text);
+                if (sels.length == i + 1 && sels.length > 1) {
+                    this.renderSelector2(sels[i]);
                 }
-                var width = Util.getUIWidth(items);
-                $(sels[i]).multiselect({
-                    multiple: false,
-                    header: false,
-                    minWidth: width < 80 ? 80 : width + 20,
-                    height: '100%',
-                    // noneSelectedText: "请选择月份",
-                    selectedList: 1
-                })
-                    .css("padding", "2px 0 2px 4px")
-                    .css("text-align", "left")
-                    .css("font-size", "12px");
+                else {
+                    var opts = $("#" + itemId + " select:eq(" + i + ") option");
+                    var items = [];
+                    for (var j = 0; j < opts.length; ++j) {
+                        items.push(opts[j].text);
+                    }
+                    var width = Util.getUIWidth(items);
+                    $(sels[i]).multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth: width < 80 ? 80 : width + 20,
+                        height: '100%',
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    })
+                        .css("padding", "2px 0 2px 4px")
+                        .css("text-align", "left")
+                        .css("font-size", "12px");
+                }
             }
+        };
+        SddbShowView.prototype.renderSelector2 = function (sels) {
+            var opts = $(sels).find("option");
+            var items = [];
+            for (var j = 0; j < opts.length; ++j) {
+                items.push(opts[j].text);
+            }
+            $(sels).css("width", Math.max(Util.getUIWidth(items), 80))
+                .css("height", "20px")
+                .select2({
+                language: "cn"
+            });
         };
         SddbShowView.prototype.init = function (opt) {
             var _this = this;
             this.mOpt = opt;
-            if (opt.itemNodes != '') {
+            if (opt.itemNodes != '' && opt.itemNodes.length != 0) {
                 this.unitedSelector = new Util.UnitedSelector(opt.itemNodes, opt.itemId);
                 this.unitedSelector.change(function () {
                     _this.renderItemSelector(opt.itemId);
                 });
                 this.renderItemSelector(opt.itemId);
+            }
+            else {
+                $("#itemLabel").css("display", "none");
             }
             if (opt.itemNodes0 != '') {
                 this.unitedSelector0 = new Util.UnitedSelector(opt.itemNodes0, opt.itemId0);
@@ -66,7 +112,7 @@ var sddb;
                 $("#dEndLabel").css("display", "none");
             }
             $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
-            if (this.mOpt.comp != '') {
+            if (this.mOpt.comps != '') {
                 this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
                 if (opt.comps.length == 1) {
                     this.mCompanySelector.hide();
@@ -77,6 +123,9 @@ var sddb;
             }
             else {
                 $("#" + this.mOpt.comp).hide();
+            }
+            if ((opt.itemNodes == '' || opt.itemNodes.length == 0) && opt.itemNodes0 == '' && opt.date == undefined && this.mOpt.comps == '') {
+                $("#doUpdate").css("display", "none");
             }
             this.mCurrentDate = { year: 2010, month: 1, day: 1 };
             this.updateTypeSelector();

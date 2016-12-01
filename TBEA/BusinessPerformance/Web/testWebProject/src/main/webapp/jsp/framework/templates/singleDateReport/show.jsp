@@ -237,12 +237,15 @@
                 year: dt.getFullYear(),
                 day: dt.getDate()
             }
-            dt = new Date(Date.parse('${dateEnd}'.replace(/-/g, '/')));
-            dateEnd = {
-                month: dt.getMonth() + 1,
-                year: dt.getFullYear(),
-                day: dt.getDate()
+            if ('${dateEnd}' != ''){
+    dt = new Date(Date.parse('${dateEnd}'.replace(/-/g, '/')));
+    dateEnd = {
+    month: dt.getMonth() + 1,
+    year: dt.getFullYear(),
+    day: dt.getDate()
+    }
             }
+
         }
 
         framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{

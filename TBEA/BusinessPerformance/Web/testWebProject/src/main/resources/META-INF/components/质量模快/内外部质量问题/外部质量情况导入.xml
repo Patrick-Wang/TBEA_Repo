@@ -3,7 +3,7 @@
   <context key="counter" value="${counterFactory.newCounter.reset[0]}"/>
   <context key="counterSerial" value="${counterFactory.newCounter.reset[0]}"/>
   <merge data="${data}" table="zl_wbyclzlwt">
-   <set>
+   <set> 
     <serial_num type="string" value="${'gs' + '1' + 'counterSerial.next.format[7]'}"/>
     <company_name type="string" ref="${counter.reset[0].val}"/>
     <issue_happen_date type="date" ref="${counter.next.val}"/>
@@ -42,9 +42,9 @@
     <serial_num type="string" ref="0"/>
    </where>
    <set>
-    <serial_num type="string" ref="${counter.reset[0].val}"/>
-    <company_name type="string" ref="${counter.next.val}"/>
-    <issue_happen_date type="date" ref="${counter.next.val}"/>
+    <serial_num type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+    <company_name type="string" ref="${counter.next.val}" test="${this != null}"/>
+    <issue_happen_date type="date" ref="${counter.next.val}" test="${this != null}"/>
     <product_type type="string" ref="${counter.next.val}"/>
     <production_num type="string" ref="${counter.next.val}"/>
     <production_model type="string" ref="${counter.next.val}"/>

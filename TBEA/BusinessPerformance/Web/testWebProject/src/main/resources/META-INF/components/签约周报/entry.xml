@@ -81,8 +81,8 @@
 	</controller>
 	
 	<controller id="xnyqyzbEntryUpdate">
-		<context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-		<context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+		<context key="dStart" value="${request.dStart.asCalendar.sunday}"/>
+		<context key="dEnd" value="${request.dEnd.asCalendar.satuday}"/>
 		<callservice id="servCompTypeToId"/>
 		<callservice id="servXnyqyEntry"/>
 

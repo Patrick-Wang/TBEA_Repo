@@ -51,14 +51,14 @@
   </response>
  </controller>
  <controller id="xnyzbEntryUpdate">
-  <context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-  <context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+  <context key="dStart" value="${request.dStart.asCalendar.sunday}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar.satuday}"/>
   <callservice id="servCompTypeToId"/>
   <callservice id="servXnyzb"/>
   <callservice id="servXnyzbCpzl"/>
   <formatter id="data">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="5,6"/>
+    <DefaultMatcher cols="5"/>
    </NumberFormatter>
   </formatter>
   <formatterServer id="serv" table="${result.matrix}" acceptNullAs="">

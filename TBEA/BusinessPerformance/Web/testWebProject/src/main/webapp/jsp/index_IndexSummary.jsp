@@ -122,33 +122,33 @@
 		</div>
 	</div>
 </div>
-
-<div>
-	<h3>
-		财务指标情况<a name="NChz"> </a>
-	</h3>
-	<div class="section">
-		<div class="thumb3">
-			<ul class="slides">
-				<c:if test="${CorpAuth}">
-					<li><a href="../NCzb/AllCompanysNC_overview.do"
-						target="_blank"><img src="../images/charts/scatter2.png">
-							<span><strong>公司整体财务指标完成情况</strong></span></a></li>
-				</c:if>
-				<li><a href="../NCzb/CompanysNC.do" target="_blank"><img
-						src="../images/charts/scatter4.png"> <span><strong>经营单位财务指标完成情况</strong></span></a>
-				</li>
-				<li><a href="../report/dbxq.do" target="_blank"><img
-						src="../images/charts/bar2.png"> <span><strong>财务对标需求</strong></span></a>
-				</li>
-				<li><a href="../report/jjzjz.do" target="_blank"><img
-						src="../images/charts/bar2.png"> <span><strong>经济增加值</strong></span></a>
-				</li>
-			</ul>
+<c:if test="${isJydw}">
+	<div>
+		<h3>
+			财务指标情况<a name="NChz"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<c:if test="${CorpAuth}">
+						<li><a href="../NCzb/AllCompanysNC_overview.do"
+							target="_blank"><img src="../images/charts/scatter2.png">
+								<span><strong>公司整体财务指标完成情况</strong></span></a></li>
+					</c:if>
+					<li><a href="../NCzb/CompanysNC.do" target="_blank"><img
+							src="../images/charts/scatter4.png"> <span><strong>经营单位财务指标完成情况</strong></span></a>
+					</li>
+					<li><a href="../report/dbxq.do" target="_blank"><img
+							src="../images/charts/bar2.png"> <span><strong>财务对标需求</strong></span></a>
+					</li>
+					<li><a href="../report/jjzjz.do" target="_blank"><img
+							src="../images/charts/bar2.png"> <span><strong>经济增加值</strong></span></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
-
+</c:if>
 <c:if test="${JYAnalysisLookup}">
 	<div>
 		<h3>
@@ -265,11 +265,11 @@
 			<div class="thumb3">
 				<ul class="slides">
 					<c:if test="${sddbLookup}">
-						<li><a href="../report/bidCollectionWrapper.do" target="_blank"><img
-								src="../images/charts/scatter5.png"> <span><strong>投标订单汇总</strong></span></a>
-						</li>
-						<li><a href="../report/WinBidModelCollection.do" target="_blank"><img
-								src="../images/charts/bar8.png"> <span><strong>中标产品分型号汇总</strong></span></a>
+						<li><a href="../report/bidCollectionWrapper.do"
+							target="_blank"><img src="../images/charts/scatter5.png">
+								<span><strong>投标订单汇总</strong></span></a></li>
+						<li><a href="../report/WinBidModelCollection.do"
+							target="_blank"><img src="../images/charts/bar3.png"> <span><strong>中标产品分型号汇总</strong></span></a>
 						</li>
 						<li><a href="../report/gdwddfxhCollection.do" target="_blank"><img
 								src="../images/charts/scatter1.png"> <span><strong>分阶段各单位订单成本汇总</strong></span></a>
@@ -279,18 +279,21 @@
 						</li>
 						<li><a href="../report/ddfjdCollection.do" target="_blank"><img
 								src="../images/charts/bar2.png"> <span><strong>公司订单分阶段汇总分析</strong></span></a>
-						</li>						
+						</li>
 						<li><a href="../report/codeCollection.do" target="_blank"><img
-								src="../images/charts/bar8.png"> <span><strong>完工订单分图号三单对比分析</strong></span></a>
+								src="../images/charts/bar4.png"> <span><strong>完工订单分图号三单对比分析</strong></span></a>
 						</li>
 						<li><a href="../report/modelCollection.do" target="_blank"><img
 								src="../images/charts/bar8.png"> <span><strong>完工订单分型号三单对比分析</strong></span></a>
 						</li>
+						<li><a href="../report/ddDetailJsp.do" target="_blank"><img
+								src="../images/charts/bar9.png"> <span><strong>订单信息明细</strong></span></a>
+						</li>
 					</c:if>
 					<c:if test="${sddbImport}">
-						<li><a href="../report/sddbImportWrapperJsp.do" target="_blank"><img
-								src="../images/charts/scatter5.png"> <span><strong>三单对比数据导入</strong></span></a>
-						</li>
+						<li><a href="../report/sddbImportWrapperJsp.do"
+							target="_blank"><img src="../images/charts/scatter5.png">
+								<span><strong>订单信息导入</strong></span></a></li>
 					</c:if>
 				</ul>
 			</div>
@@ -329,7 +332,24 @@
 		</div>
 	</div>
 </c:if>
+<c:if test="${zhzlLookup}">
+	<div>
+		<h3>
+			众和质量指标<a name="zhzl"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
 
+					<li><a href="../report/zhzl.do" target="_blank"><img
+							src="../images/charts/bar3.png"> <span><strong>众和质量指标</strong></span></a>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+</c:if>
 
 <%-- 
 <c:if test="${SbdAuth}">

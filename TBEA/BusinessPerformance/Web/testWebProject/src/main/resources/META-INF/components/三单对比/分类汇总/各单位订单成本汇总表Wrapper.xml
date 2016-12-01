@@ -31,8 +31,6 @@
 		<callservice id="servExecCostModelCollectionXh" inline="true" />
 		<callservice id="servModelFdwXh" inline="true" />
 		<response type="jsp" name="sddb/sddb">
-			<map key="date" value="${calendar.current.format}" />
-			<map key="dateStart" value="${calendar.current.months[1].days[1].format}" />
 			<map key="updateUrl" value="gdwddCollectionUpdate" />
 			<map key="exportUrl" value="gdwddCollectionExport" />
 			<map key="itemNodes0"

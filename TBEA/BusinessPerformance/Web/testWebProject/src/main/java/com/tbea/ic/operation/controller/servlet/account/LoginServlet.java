@@ -226,7 +226,9 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("gcyzbLookup", extAuthServ.hasAuthority(account, 59))
 		.add("gcyzbImport", extAuthServ.hasAuthority(account, 60))
 		.add("sddbLookup", extAuthServ.hasAuthority(account, 61))
-		.add("sddbImport", extAuthServ.hasAuthority(account, 62));
+		.add("sddbImport", extAuthServ.hasAuthority(account, 62))
+		.add("zhzlEntry", extAuthServ.hasAuthority(account, 63))
+		.add("zhzlLookup", extAuthServ.hasAuthority(account, 64));
 		
 		
 		if (Account.KNOWN_ACCOUNT_AFL.equals(account.getName())){

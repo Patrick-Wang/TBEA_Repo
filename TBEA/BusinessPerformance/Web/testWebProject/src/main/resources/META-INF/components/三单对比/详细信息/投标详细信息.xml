@@ -1,0 +1,247 @@
+<components>
+ <service id="servBidDetail" transaction="transactionManager">
+  <sql id="zbddhz">select 
+company_name	,
+convert(varchar(10), DATEPART(year, bidding_date)) + '年' + 
+convert(varchar(10), DATEPART(month, bidding_date)) + '月' + 
+convert(varchar(10), DATEPART(day, bidding_date)) + '日' as bd,
+client_name	,
+project_name	,
+ETD_year	,
+ETD_month	,
+model	,
+voltage	,
+capacity	,
+number	,
+tax_inclusive_price	,
+not_tax_inclusive_price	,
+bid_opening_year	,
+bid_opening_month	,
+hit_rate	,
+bid_silicon_steel_grades	,
+bid_silicon_steel_amount	,
+bid_silicon_steel_price	,
+bid_ele_copper_amount	,
+bid_ele_copper_price	,
+bid_ele_copper_process_cost	,
+bid_insulating_oil_amount	,
+bid_insulating_oil_price	,
+bid_rolled_steel_amount	,
+bid_rolled_steel_price	,
+bid_cardboard_amount	,
+bid_cardboard_price	,
+bid_material_total	,
+labour_cost	,
+manufacturing_cost	,
+other_material_cost	,
+bid_cost	,
+gross_profit	,
+period	,
+is_new_production	
+from
+	JYGK_SDDB_BIDDING_ORDER_DETAILS
+where
+	company_name in ${dwmcs} and
+	dateDiff(mm, bidding_date, ${dStart.date}) &lt;= 0 and 
+ 	dateDiff(mm, bidding_date, ${dEnd.date}) &gt;= 0 
+</sql>
+  <list id="ids" type="int">
+   <item from="0" to="${zbddhz.size - 1}"/>
+  </list>
+  <table id="result" rowIds="ids" export="true" table="${zbddhz}"/>
+ </service>
+ <controller id="bidDetailFmtter">
+  <formatter id="dataFmt" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1,2,3,15,34"/>
+   </EmptyFormatter>
+   <NumberFormatter reservedCount="0">
+    <DefaultMatcher cols="4,5,12,13"/>
+   </NumberFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="bidDetailUpdate">
+  <callservice id="servBidDetail"/>
+  <callcontroller id="bidDetailFmtter"/>
+  <formatterServer id="fmtServBidDetail" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>投标单位</name>
+    </item>
+    <item>
+     <name>投标报价日期</name>
+    </item>
+    <item>
+     <name>用户名称</name>
+    </item>
+    <item>
+     <name>项目名称</name>
+    </item>
+    <item>
+     <name>预计交货年份</name>
+    </item>
+    <item>
+     <name>预计交货月份</name>
+    </item>
+    <item>
+     <name>型号</name>
+    </item>
+    <item>
+     <name>电压</name>
+    </item>
+    <item>
+     <name>容量</name>
+    </item>
+    <item>
+     <name>台数</name>
+    </item>
+    <item>
+     <name>合同金额</name>
+    </item>
+    <item>
+     <name>合同金额（不含税）</name>
+    </item>
+    <item>
+     <name>预计开标年份</name>
+    </item>
+    <item>
+     <name>预计开标月份</name>
+    </item>
+    <item>
+     <name>销售部门预测的中标概率(%)</name>
+    </item>
+    <item>
+     <name>投标硅钢牌号</name>
+    </item>
+    <item>
+     <name>投标硅钢用量（单台）</name>
+    </item>
+    <item>
+     <name>投标硅钢单价</name>
+    </item>
+    <item>
+     <name>投标电解铜用量（单台）</name>
+    </item>
+    <item>
+     <name>投标电解铜单价</name>
+    </item>
+    <item>
+     <name>电解铜加工费</name>
+    </item>
+    <item>
+     <name>投标变压器油用量（单台）</name>
+    </item>
+    <item>
+     <name>投标变压器油单价</name>
+    </item>
+    <item>
+     <name>投标钢材用量（单台）</name>
+    </item>
+    <item>
+     <name>投标钢材单价</name>
+    </item>
+    <item>
+     <name>投标纸板用量（单台）</name>
+    </item>
+    <item>
+     <name>投标纸板单价</name>
+    </item>
+    <item>
+     <name>投标材料总计</name>
+    </item>
+    <item>
+     <name>人工费用</name>
+    </item>
+    <item>
+     <name>制造费用</name>
+    </item>
+    <item>
+     <name>其他材料成本</name>
+    </item>
+    <item>
+     <name>投标制造成本</name>
+    </item>
+    <item>
+     <name>投标毛利（单台）</name>
+    </item>
+    <item>
+     <name>周时间</name>
+    </item>
+    <item>
+     <name>是否新产品</name>
+    </item>
+   </header>
+   <shrinkToFit>false</shrinkToFit>
+   <data>${fmtServBidDetail.result}</data>
+  </response>
+ </controller>
+ <controller id="bidDetailExport">
+  <callcontroller id="bidDetailParams"/>
+  <callservice id="servBidDetail"/>
+  <callcontroller id="bidDetailFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="投标订单详细信息"/>
+  <list id="title1" type="string">投标单位,
+投标报价日期,
+用户名称,
+项目名称,
+预计交货年份,
+预计交货月份,
+型号,
+电压,
+容量,
+台数,
+合同金额,
+合同金额（不含税）,
+预计开标年份,
+预计开标月份,
+销售部门预测的中标概率(%),
+投标硅钢牌号,
+投标硅钢用量（单台）,
+投标硅钢单价,
+投标电解铜用量（单台）,
+投标电解铜单价,
+电解铜加工费,
+投标变压器油用量（单台）,
+投标变压器油单价,
+投标钢材用量（单台）,
+投标钢材单价,
+投标纸板用量（单台）,
+投标纸板单价,
+投标材料总计,
+人工费用,
+制造费用,
+其他材料成本,
+投标制造成本,
+投标毛利（单台）,
+周时间,
+是否新产品
+</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="servFmt" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="投标订单详细信息.xls" serv="servFmt"/>
+ </controller>
+</components>

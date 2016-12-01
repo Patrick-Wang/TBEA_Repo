@@ -544,14 +544,14 @@
    <callservice id="servZhgsfcySeasonStart"/>
    <callcontroller id="clrFmtterSeasonStart"/>
   </if>
-  <if test="${isSeasonMid}">
+  <elseif test="${isSeasonMid}">
    <callservice id="servZhgsfcySeasonMid"/>
    <callcontroller id="clrFmtterSeasonMid"/>
-  </if>
-  <if test="${isSeasonEnd}">
+  </elseif>
+  <elseif test="${isSeasonEnd}">
    <callservice id="servZhgsfcySeasonEnd"/>
    <callcontroller id="clrFmtterSeasonEnd"/>
-  </if>
+  </elseif>
  </controller>
  <controller id="zhgsfcyUpdate">
   <callcontroller id="servUpdateInternal" inline="true"/>
@@ -649,7 +649,7 @@
     <data>${fmtServ.result}</data>
    </response>
   </if>
-  <if test="${isSeasonMid}">
+  <elseif test="${isSeasonMid}">
    <response type="json">
     <header type="array">
      <item>
@@ -753,8 +753,8 @@
     <mergeTitle>true</mergeTitle>
     <data>${fmtServ.result}</data>
    </response>
-  </if>
-  <if test="${isSeasonEnd}">
+  </elseif>
+  <elseif test="${isSeasonEnd}">
    <response type="json">
     <header type="array">
      <item>
@@ -873,7 +873,7 @@
     <width>1330</width>
     <data>${fmtServ.result}</data>
    </response>
-  </if>
+  </elseif>
  </controller>
  <controller id="zhgsfcyExport">
   <callcontroller id="servUpdateInternal" inline="true"/>
@@ -884,21 +884,21 @@
    <list id="title2" type="string">产业,单位,年度计划,本季度计划,本月计划值,当月预计值,计划完成率,去年同期,同比增幅,次月预计,末月预计,季度预计合计,季度预计完成率,去年同期,同比增幅,累计完成值,年度指标完成率,去年同期值,同比增幅
 			</list>
   </if>
-  <if test="${isSeasonMid}">
+  <elseif test="${isSeasonMid}">
    <list id="title1" type="string">产业,单位,年度计划,本季度计划,当月完成,当月完成,当月完成,当月完成,当月完成,季度累计完成,季度累计完成,季度累计完成,季度累计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,季度预计完成,年度累计完成,年度累计完成,年度累计完成,年度累计完成
 			</list>
    <list id="title2" type="string">
 				产业,单位,年度计划,本季度计划,本月计划值,当月预计值,计划完成率,去年同期,同比增幅,季度累计,季度计划完成率,去年同期值,同比增幅,末月预计,季度预计合计,季度预计完成率,去年同期,同比增幅,累计完成值,年度指标完成率,去年同期值,同比增幅
 			</list>
-  </if>
-  <if test="${isSeasonEnd}">
+  </elseif>
+  <elseif test="${isSeasonEnd}">
    <list id="title1" type="string">
 				产业,单位,年度计划,本季度计划,下季度计划,当月完成,当月完成,当月完成,当月完成,当月完成,季度累计完成,季度累计完成,季度累计完成,季度累计完成,年度累计完成,年度累计完成,年度累计完成,年度累计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成,下季度预计完成
 			</list>
    <list id="title2" type="string">
 				产业,单位,年度计划,本季度计划,下季度计划,本月计划值,当月预计值,计划完成率,去年同期,同比增幅,季度累计,季度计划完成率,去年同期值,同比增幅,累计完成值,年度指标完成率,去年同期值,同比增幅,下季度首月预计,下季度次月预计,下季度末月预计,季度预计合计,季度预计完成率,年度累计,年度累计完成率,去年同期,同比增幅
 			</list>
-  </if>
+  </elseif>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -977,10 +977,14 @@
    <context key="zb" value="${1}"/>
    <context key="zbname" value="利润总额"/>
   </if>
-  <if test="${request.item.asInt == 1}">
+  <elseif test="${request.item.asInt == 1}">
    <context key="zb" value="${6}"/>
    <context key="zbname" value="销售收入"/>
-  </if>
+  </elseif>
+  <elseif test="${2==request.item.asInt}">
+   <context key="zb" value="${336}"/>
+   <context key="zbname" value="外销收入"/>
+  </elseif>
   <callcontroller id="zhgsfcyExport"/>
  </controller>
  <controller id="zhgsfcyUpdateUnion">
@@ -988,20 +992,26 @@
    <context key="zb" value="${1}"/>
    <context key="zbname" value="利润总额"/>
   </if>
-  <if test="${1==request.item.asInt}">
+  <elseif test="${1==request.item.asInt}">
    <context key="zb" value="${6}"/>
    <context key="zbname" value="销售收入"/>
-  </if>
+  </elseif>
+  <elseif test="${2==request.item.asInt}">
+   <context key="zb" value="${336}"/>
+   <context key="zbname" value="外销收入"/>
+  </elseif>
   <callcontroller id="zhgsfcyUpdate"/>
  </controller>
  <controller id="zhgsfcyUnion">
+ 	<list id="ids" type="int">0, 1, 2</list>
+ 	<list id="vals" type="string">利润总额, 销售收入, 外销收入</list>
   <response type="jsp" name="framework/templates/dateReport/show">
    <map key="date" value="${calendar.current.format}"/>
    <map key="dateEnd" value="${calendar.current.months[12].format}"/>
    <map key="updateUrl" value="zhgsfcyUpdateUnion"/>
    <map key="exportUrl" value="zhgsfcyExportUnion"/>
    <map key="asSeason" value="true"/>
-   <map key="nodeData" value="[{&quot;data&quot;:{&quot;id&quot;:0,&quot;value&quot;:&quot;利润总额&quot;}},{&quot;data&quot;:{&quot;id&quot;:1,&quot;value&quot;:&quot;销售收入&quot;}}]"/>
+   <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
    <map key="title" value="众和分产业关键指标汇报"/>
   </response>
  </controller>

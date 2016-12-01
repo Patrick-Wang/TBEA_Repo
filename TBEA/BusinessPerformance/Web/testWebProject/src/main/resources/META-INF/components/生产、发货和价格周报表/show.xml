@@ -42,13 +42,13 @@
   <context key="result" value="${result}"/>
  </service>
  <controller id="xnyzbUpdate">
-  <context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-  <context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+  <context key="dStart" value="${request.dStart.asCalendar.sunday}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar.satuday}"/>
   <callservice id="servCompTypeToId"/>
   <callservice id="servXnyzb"/>
   <formatter id="data">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="6,7"/>
+    <DefaultMatcher cols="6"/>
    </NumberFormatter>
   </formatter>
   <formatterServer id="serv" table="${result.matrix}">
@@ -105,8 +105,8 @@
   </response>
  </controller>
  <controller id="xnyzbExport">
-  <context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-  <context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+  <context key="dStart" value="${request.dStart.asCalendar.sunday}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar.satuday}"/>
   <callservice id="servCompTypeToId"/>
   <callservice id="servXnyzb"/>
   <context key="tbs" value="${result.matrixNoIds}"/>
@@ -132,7 +132,7 @@
    <ExcelMergeFormatter>
     <ExcelTemplate ref="excelTemplate"/>
     <MergeRegion x="0" y="0" width="7" height="2"/>
-    <MergeRegion x="0" y="2" width="4" height="${tbs.size}"/>
+    <MergeRegion x="0" y="2" width="2" height="${tbs.size}"/>
    </ExcelMergeFormatter>
    <ExcelTextFormatter>
     <DefaultMatcher cols="0, 1, 2, 3,6"/>

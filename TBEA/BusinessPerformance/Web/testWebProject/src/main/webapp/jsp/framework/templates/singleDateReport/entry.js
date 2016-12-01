@@ -36,11 +36,14 @@ var framework;
                         this.update(({}));
                     }
                     else {
+                        if (opt.dateEnd == undefined) {
+                            opt.dateEnd = $.extend({}, opt.date);
+                        }
                         this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
                             year: opt.date.year - 3,
                             month: opt.date.month,
                             day: opt.date.day
-                        }, opt.date, opt.date);
+                        }, opt.dateEnd, opt.date, opt.asSeason, opt.asSeasonAcc, opt.jdName);
                         this.update(this.dateSelect.getDate());
                     }
                 };

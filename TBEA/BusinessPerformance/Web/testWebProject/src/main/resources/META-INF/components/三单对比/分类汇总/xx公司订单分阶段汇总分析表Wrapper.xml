@@ -21,10 +21,10 @@
   </controller>
  <controller id="ddfjdCollection">
  <list id="ids" type="int"> 
- 1,2
+ 2,1
  </list>
  <list id="values" type="string">
- 公司执行阶段订单成本汇总表,公司订单完工阶段汇总分析表
+ 公司订单完工阶段汇总分析表,公司执行阶段订单成本汇总表
  </list>
   <response type="jsp" name="sddb/sddb">
    <map key="date" value="${calendar.current.format}"/>

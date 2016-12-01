@@ -69,8 +69,8 @@
   <context key="result" value="${result}"/>
  </service>
  <controller id="xnyqyzbUpdate">
-  <context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-  <context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+  <context key="dStart" value="${request.dStart.asCalendar.sunday}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar.satuday}"/>
   <callservice id="servCompTypeToId"/>
   <callservice id="servXnyqyzb"/>
   <formatter id="data">
@@ -124,8 +124,8 @@
   </response>
  </controller>
  <controller id="xnyqyzbExport">
-  <context key="dStart" value="${request.dStart.asCalendar.monday}"/>
-  <context key="dEnd" value="${request.dEnd.asCalendar.sunday}"/>
+  <context key="dStart" value="${request.dStart.asCalendar.sunday}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar.satuday}"/>
   <callservice id="servCompTypeToId"/>
   <callservice id="servXnyqyzb"/>
   <context key="tbs" value="${result.matrixNoIds}"/>

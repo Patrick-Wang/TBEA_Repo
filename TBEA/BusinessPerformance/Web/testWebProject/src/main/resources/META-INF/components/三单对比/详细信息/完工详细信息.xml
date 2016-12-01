@@ -1,0 +1,334 @@
+<components>
+ <service id="servCompletionDetail" transaction="transactionManager">
+  <sql id="zbddhz">select 
+	company_name	,
+	completion_year	,
+	completion_month	,
+	client_name	,
+	project_name	,
+	contract_no	,
+	model	,
+	voltage	,
+	capacity	,
+	number	,
+	code	,
+	tax_inclusive_price	,
+	not_tax_inclusive_price	,
+	actual_amount_of_silicon_steel	,
+	actual_price_of_silicon_steel	,
+	amount_of_actual_silicon_steel	,
+	actual_electrolytic_copper_consumption	,
+	copper_price	,
+	copper_processing_fee	,
+	actual_electrolytic_copper_amount	,
+	actual_transformer_oil_consumption	,
+	actual_transformer_oil_unit_price	,
+	actual_transformer_oil_amount	,
+	actual_steel_consumption	,
+	actual_steel_price	,
+	actual_steel_amount	,
+	actual_insulation_board_usage	,
+	actual_insulation_board_price	,
+	actual_insulation_board_amount	,
+	casing_quantity	,
+	casing_unit_price	,
+	casing_amount	,
+	number_of_switches	,
+	switch_unit_price	,
+	switch_amount	,
+	number_of_cooler	,
+	cooler_unit_price	,
+	amount_of_cooler	,
+	online_monitoring_quantity	,
+	online_monitoring_unit_price	,
+	online_monitoring_amount	,
+	the_actual_cost_of_materials	,
+	actual_amount_of_other_materials	,
+	actual_cost_of_other_materials	,
+	the_cost_of_spare_parts	,
+	total_material_cost	,
+	actual_labor_cost	,
+	actual_manufacturing_cost	,
+	actual_total_cost	,
+	actual_gross_profit	,
+	actual_gross_margin	,
+	is_new_production
+from
+	JYGK_SDDB_ORDER_COMPLETION_DETAILS
+where
+	company_name in ${dwmcs} and
+	dateDiff(mm, dateadd(mm, completion_month - 1, dateadd(yy, completion_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
+ 	dateDiff(mm, dateadd(mm, completion_month - 1, dateadd(yy, completion_year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 
+</sql>
+  <list id="ids" type="int">
+   <item from="0" to="${zbddhz.size - 1}"/>
+  </list>
+  <table id="result" rowIds="ids" export="true" table="${zbddhz}"/>
+ </service>
+ <controller id="completionDetailFmtter">
+  <formatter id="dataFmt" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,3,4,5,6,7,8,10,51"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="50"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="0">
+    <DefaultMatcher cols="1,2"/>
+   </NumberFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="completionDetailUpdate">
+  <callservice id="servCompletionDetail"/>
+  <callcontroller id="completionDetailFmtter"/>
+  <formatterServer id="fmtServCompletionDetail" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>投标单位</name>
+    </item>
+    <item>
+     <name>完工年份</name>
+    </item>
+    <item>
+     <name>完工月份</name>
+    </item>
+    <item>
+     <name>用户名称</name>
+    </item>
+    <item>
+     <name>项目名称</name>
+    </item>
+    <item>
+     <name>合同编号</name>
+    </item>
+    <item>
+     <name>型号</name>
+    </item>
+    <item>
+     <name>电压</name>
+    </item>
+    <item>
+     <name>容量</name>
+    </item>
+    <item>
+     <name>台数</name>
+    </item>
+    <item>
+     <name>图号/技术代号</name>
+    </item>
+    <item>
+     <name>合同金额</name>
+    </item>
+    <item>
+     <name>合同金额
+（不含税）</name>
+    </item>
+    <item>
+     <name>实际硅钢片用量</name>
+    </item>
+    <item>
+     <name>实际硅钢片单价</name>
+    </item>
+    <item>
+     <name>实际硅钢片金额</name>
+    </item>
+    <item>
+     <name>实际电解铜用量</name>
+    </item>
+    <item>
+     <name>铜单价（含税，无加工费</name>
+    </item>
+    <item>
+     <name>铜加工费(含税)</name>
+    </item>
+    <item>
+     <name>实际电解铜金额（含税，含加工费）</name>
+    </item>
+    <item>
+     <name>实际变压器油用量</name>
+    </item>
+    <item>
+     <name>实际变压器油单价</name>
+    </item>
+    <item>
+     <name>实际变压器油金额</name>
+    </item>
+    <item>
+     <name>实际钢材用量</name>
+    </item>
+    <item>
+     <name>实际钢材单价</name>
+    </item>
+    <item>
+     <name>实际钢材金额</name>
+    </item>
+    <item>
+     <name>实际绝缘纸板用量</name>
+    </item>
+    <item>
+     <name>实际绝缘纸板单价</name>
+    </item>
+    <item>
+     <name>实际绝缘纸板金额</name>
+    </item>
+    <item>
+     <name>套管数量</name>
+    </item>
+    <item>
+     <name>套管单价</name>
+    </item>
+    <item>
+     <name>套管金额</name>
+    </item>
+    <item>
+     <name>开关数量</name>
+    </item>
+    <item>
+     <name>开关单价</name>
+    </item>
+    <item>
+     <name>开关金额</name>
+    </item>
+    <item>
+     <name>冷却器数量</name>
+    </item>
+    <item>
+     <name>冷却器单价</name>
+    </item>
+    <item>
+     <name>冷却器金额</name>
+    </item>
+    <item>
+     <name>在线监测数量</name>
+    </item>
+    <item>
+     <name>在线监测单价</name>
+    </item>
+    <item>
+     <name>在线监测金额</name>
+    </item>
+    <item>
+     <name>实际主材成本</name>
+    </item>
+    <item>
+     <name>实际其他材料金额</name>
+    </item>
+    <item>
+     <name>实际其他材料成本</name>
+    </item>
+    <item>
+     <name>备品备件成本</name>
+    </item>
+    <item>
+     <name>实际材料成本总计</name>
+    </item>
+    <item>
+     <name>实际人工费用</name>
+    </item>
+    <item>
+     <name>实际制造费用</name>
+    </item>
+    <item>
+     <name>实际总成本</name>
+    </item>
+    <item>
+     <name>实际毛利额</name>
+    </item>
+    <item>
+     <name>实际毛利率</name>
+    </item>
+    <item>
+     <name>是否新产品</name>
+    </item>
+   </header>
+   <shrinkToFit>false</shrinkToFit>
+   <data>${fmtServCompletionDetail.result}</data>
+  </response>
+ </controller>
+ <controller id="completionDetailExport">
+  <callcontroller id="completionDetailParams"/>
+  <callservice id="servCompletionDetail"/>
+  <callcontroller id="completionDetailFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="完工订单详细信息"/>
+  <list id="title1" type="string">投标单位,
+完工年份,
+完工月份,
+用户名称,
+项目名称,
+合同编号,
+型号,
+电压,
+容量,
+台数,
+图号/技术代号,
+合同金额,
+合同金额
+（不含税）,
+实际硅钢片用量,
+实际硅钢片单价,
+实际硅钢片金额,
+实际电解铜用量,
+铜单价（含税，无加工费,
+铜加工费(含税),
+实际电解铜金额（含税，含加工费）,
+实际变压器油用量,
+实际变压器油单价,
+实际变压器油金额,
+实际钢材用量,
+实际钢材单价,
+实际钢材金额,
+实际绝缘纸板用量,
+实际绝缘纸板单价,
+实际绝缘纸板金额,
+套管数量,
+套管单价,
+套管金额,
+开关数量,
+开关单价,
+开关金额,
+冷却器数量,
+冷却器单价,
+冷却器金额,
+在线监测数量,
+在线监测单价,
+在线监测金额,
+实际主材成本,
+实际其他材料金额,
+实际其他材料成本,
+备品备件成本,
+实际材料成本总计,
+实际人工费用,
+实际制造费用,
+实际总成本,
+实际毛利额,
+实际毛利率,
+是否新产品</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="servFmt" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="完工订单详细信息.xls" serv="servFmt"/>
+ </controller>
+</components>

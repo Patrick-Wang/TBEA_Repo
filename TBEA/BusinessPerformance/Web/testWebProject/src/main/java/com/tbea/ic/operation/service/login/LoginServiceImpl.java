@@ -48,11 +48,13 @@ public class LoginServiceImpl implements LoginService {
 		return null;
 	}
 
+	private final static Integer DEPRECATED = 1;
+	
 	public Account Login(String usrName, String psw) {
 		if (usrName != null && !usrName.isEmpty() && psw != null
 				&& !psw.isEmpty()) {
 			Account account = accountDao.getAccount(usrName);
-			if (null != account) {
+			if (null != account && !DEPRECATED.equals(account.getDeprecated())) {
 				if (psw.equals(account.getPassword())) {
 					return account;
 				}
@@ -96,7 +98,10 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public Account SSOLogin(String usrName) {
 		if (usrName != null && !usrName.isEmpty()) {
-			return accountDao.getAccount(usrName);
+			Account account = accountDao.getAccount(usrName);
+			if (null != account && !DEPRECATED.equals(account.getDeprecated())){
+				return account;
+			}	
 		}
 		return null;
 	}

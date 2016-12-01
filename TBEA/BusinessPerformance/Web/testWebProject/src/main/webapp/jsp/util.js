@@ -63,8 +63,8 @@ var Util;
                     else if (gridCtrl.mergeRows[i].rowStart != undefined &&
                         gridCtrl.mergeRows[i].step != undefined &&
                         gridCtrl.mergeRows[i].count != undefined) {
-                        for (var j = 0; j < gridCtrl.mergeRows[i].count; ++j) {
-                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col), parseInt(gridCtrl.mergeRows[i].rowStart + j * gridCtrl.mergeRows[i].step), parseInt(gridCtrl.mergeRows[i].step));
+                        for (var j = 0; j < parseInt(gridCtrl.mergeRows[i].count); ++j) {
+                            tableAssist.mergeRow(parseInt(gridCtrl.mergeRows[i].col), parseInt(gridCtrl.mergeRows[i].rowStart) + j * parseInt(gridCtrl.mergeRows[i].step), parseInt(gridCtrl.mergeRows[i].step));
                         }
                     }
                     else if (gridCtrl.mergeRows[i].rowStart != undefined) {
@@ -693,7 +693,12 @@ var Util;
             '委托加工化成箔符单率（%）',
             '架空电缆（1KV、10KV）合格率（%）',
             '钢芯铝绞线合格率（%）',
-            '布电线合格率（%）'];
+            '布电线合格率（%）',
+            "失败成本率1（%）",
+            "外部客诉率(合金材料公司)（%）",
+            "外部客诉率(铝箔公司)（%）",
+            "外部客诉率(电极箔公司)（%）",
+        ];
         var formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
         formaterChain.next(new Util.FormatIntHandler(['人数', '制造业人数', '工程、修试业务人数', '物流贸易人数']))
             .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))

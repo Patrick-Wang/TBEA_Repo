@@ -126,7 +126,7 @@ where
    	<item>${zxddhzsd[i]}</item>
    </list>
    <list id="jds" type="string">
-   	<item>执行阶段</item>
+   	<item>中标阶段</item>
    	<item>锁定阶段</item>
    </list>
    <list id="rqs" type="object">

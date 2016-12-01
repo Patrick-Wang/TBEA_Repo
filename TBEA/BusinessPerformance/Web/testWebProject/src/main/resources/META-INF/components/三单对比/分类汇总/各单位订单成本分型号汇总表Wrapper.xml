@@ -21,10 +21,10 @@
 	</controller>
 	<controller id="gdwddfxhCollection">
 		<list id="ids1" type="int">
-			1,2
+			2,1
 		</list>
 		<list id="values1" type="string">
-			执行阶段各单位订单成本汇总表,完工 阶段各单位订单成本汇总表
+			完工 阶段各单位订单成本汇总表,执行阶段各单位订单成本汇总表
 		</list>
 		<context key="compIds" value="${authIds[61]}" />
 		<context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compIds]}" />

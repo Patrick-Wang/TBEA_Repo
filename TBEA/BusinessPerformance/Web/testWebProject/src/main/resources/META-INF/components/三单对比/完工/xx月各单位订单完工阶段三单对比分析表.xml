@@ -114,8 +114,6 @@ where
   <list id="zxddhzsd" type="object">
    <item concat="zxddhzsdhj"/>
   </list>
-  
-  
   <sql id="wgddhz" order="dwmcs" by="0" colcount="16">select 
 	convert(varchar(200), wg.company_name) cn,
 	sum(wg.not_tax_inclusive_price) ntip1,
@@ -173,45 +171,42 @@ where
   <list id="wgddhz" type="object">
    <item concat="wgddhzhj"/>
   </list>
-  
   <list id="zxddhz_all" type="object"/>
-  <list id="jds" type="string">
-  </list>
-  <list id="jds" type="string">
-  </list>
+  <list id="jds" type="string"/>
+  <list id="jds" type="string"/>
   <list id="dwmcs" type="string">
    <item>合计</item>
   </list>
- <list id="tmpVal" type="double">
-  	<item></item>
-  	<item></item>
-  	<item></item>
-   </list>
+  <list id="tmpVal" type="double">
+   <item/>
+   <item/>
+   <item/>
+  </list>
   <loop var="i" from="${0}" to="${zbddhz.size - 1}">
    <list id="zxddhz_all" type="object">
     <item>${zbddhz[i]}</item>
-   	<item>${zxddhzsd[i]}</item>
-	<item>${wgddhz[i]}</item>
+    <item>${zxddhzsd[i]}</item>
+    <item>${wgddhz[i]}</item>
    </list>
    <list id="jds" type="string">
-   	<item>执行阶段</item>
-   	<item>锁定阶段</item>
-	<item>完工阶段</item>
+    <item>中标阶段</item>
+    <item>锁定阶段</item>
+    <item>完工阶段</item>
    </list>
    <list id="tmpVal" type="object">
-  	<item index="0">${zbddhz[i][1]}</item>
-  	<item index="1">${zxddhzsd[i][1]}</item>
-  	<item index="2">${wgddhz[i][1]}</item>
+    <item index="0">${zbddhz[i][1]}</item>
+    <item index="1">${zxddhzsd[i][1]}</item>
+    <item index="2">${wgddhz[i][1]}</item>
    </list>
    <list id="htjes" type="object">
-  	<item>${zbddhz[i][1]}</item>
-  	<item>${zxddhzsd[i][1]}</item>
-  	<item>${wgddhz[i][1]}</item>
+    <item>${zbddhz[i][1]}</item>
+    <item>${zxddhzsd[i][1]}</item>
+    <item>${wgddhz[i][1]}</item>
    </list>
    <list id="mcs" type="object">
-  	<item>${dwmcs[i]}</item>
-  	<item>${dwmcs[i]}</item>
-	<item>${dwmcs[i]}</item>
+    <item>${dwmcs[i]}</item>
+    <item>${dwmcs[i]}</item>
+    <item>${dwmcs[i]}</item>
    </list>
   </loop>
   <list id="ids" type="int">
@@ -270,6 +265,105 @@ where
   <formatterServer id="fmtServCompletionFdwCollection" table="${result.matrixNoIds}">
    <formatter ref="dataFmt"/>
   </formatterServer>
+  <context key="ret" value="${fmtServCompletionFdwCollection.result}"/>
+  <list id="zhCtData" type="object"/>
+  <list id="empty" type="object">
+   <item/>
+   <item/>
+   <item/>
+   <item/>
+   <item/>
+  </list>
+  <if test="${compIds.contains[1]}">
+   <context key="index" value="${compIds.indexOf[1]}"/>
+   <list id="sbzbCtData" type="object">
+    <item>${ret[index*3+1][6]}</item>
+    <item>${ret[index*3+1][8]}</item>
+    <item>${ret[index*3+1][10]}</item>
+    <item>${ret[index*3+1][14]}</item>
+    <item>${ret[index*3+1][12]}</item>
+   </list>
+   <list id="sbwgCtData" type="object">
+    <item>${ret[index*3+2][6]}</item>
+    <item>${ret[index*3+2][8]}</item>
+    <item>${ret[index*3+2][10]}</item>
+    <item>${ret[index*3+2][14]}</item>
+    <item>${ret[index*3+2][12]}</item>
+   </list>
+   <list id="sbCtData" type="object">
+    <item>${sbzbCtData}</item>
+    <item>${sbwgCtData}</item>
+   </list>
+   <list id="zhCtData" type="object">
+    <item>${sbwgCtData}</item>
+   </list>
+  </if>
+  <else>
+   <list id="zhCtData" type="object">
+    <item>${empty}</item>
+   </list>
+  </else>
+  <if test="${compIds.contains[2]}">
+   <context key="index" value="${compIds.indexOf[2]}"/>
+   <list id="hbzbCtData" type="object">
+    <item>${ret[index*3+1][6]}</item>
+    <item>${ret[index*3+1][8]}</item>
+    <item>${ret[index*3+1][10]}</item>
+    <item>${ret[index*3+1][14]}</item>
+    <item>${ret[index*3+1][12]}</item>
+   </list>
+   <list id="hbwgCtData" type="object">
+    <item>${ret[index*3+2][6]}</item>
+    <item>${ret[index*3+2][8]}</item>
+    <item>${ret[index*3+2][10]}</item>
+    <item>${ret[index*3+2][14]}</item>
+    <item>${ret[index*3+2][12]}</item>
+   </list>
+   <list id="hbCtData" type="object">
+    <item>${hbzbCtData}</item>
+    <item>${hbwgCtData}</item>
+   </list>
+   <list id="zhCtData" type="object">
+    <item>${hbwgCtData}</item>
+   </list>
+  </if>
+  <else>
+   <list id="zhCtData" type="object">
+    <item>${empty}</item>
+   </list>
+  </else>
+  <list id="sbCtData" type="object"/>
+  <list id="hbCtData" type="object"/>
+  <list id="xbCtData" type="object"/>
+  <if test="${compIds.contains[3]}">
+   <context key="index" value="${compIds.indexOf[3]}"/>
+   <list id="xbzbCtData" type="object">
+    <item>${ret[index*3+0][6]}</item>
+    <item>${ret[index*3+0][8]}</item>
+    <item>${ret[index*3+0][10]}</item>
+    <item>${ret[index*3+0][14]}</item>
+    <item>${ret[index*3+0][12]}</item>
+   </list>
+   <list id="xbwgCtData" type="object">
+    <item>${ret[index*3+2][6]}</item>
+    <item>${ret[index*3+2][8]}</item>
+    <item>${ret[index*3+2][10]}</item>
+    <item>${ret[index*3+2][14]}</item>
+    <item>${ret[index*3+2][12]}</item>
+   </list>
+   <list id="xbCtData" type="object">
+    <item>${xbzbCtData}</item>
+    <item>${xbwgCtData}</item>
+   </list>
+   <list id="zhCtData" type="object">
+    <item>${xbwgCtData}</item>
+   </list>
+  </if>
+  <else>
+   <list id="zhCtData" type="object">
+    <item>${empty}</item>
+   </list>
+  </else>
   <response type="json">
    <header type="array">
     <item>
@@ -358,10 +452,66 @@ where
      <rowStart>0</rowStart>
      <step>3</step>
      <count>${result.ids.size / 3}</count>
-    </item> 
+    </item>
    </mergeRows>
-    <mergeTitle>true</mergeTitle>
-   <data>${fmtServCompletionFdwCollection.result}</data>
+   <mergeTitle>true</mergeTitle>
+   <data>${ret}</data>
+   <chartName>完工用量对比图</chartName>
+   <charts type="array">
+    <item>
+     <boundaryGap>${true}</boundaryGap>
+     <isValid>${!sbCtData.isEmpty}</isValid>
+     <type>bar</type>
+     <xNames type="array">硅钢用量,
+铜用量,
+油用量,
+钢板用量,
+纸板用量</xNames>
+     <yNames type="array">沈变中标,
+沈变完工</yNames>
+     <data>${sbCtData}</data>
+    </item>
+    <item>
+     <boundaryGap>${true}</boundaryGap>
+     <isValid>${!hbCtData.isEmpty}</isValid>
+     <type>bar</type>
+     <xNames type="array">硅钢用量,
+铜用量,
+油用量,
+钢板用量,
+纸板用量</xNames>
+     <yNames type="array">衡变中标,
+衡变完工</yNames>
+     <data>${hbCtData}</data>
+    </item>
+    <item>
+     <boundaryGap>${true}</boundaryGap>
+     <isValid>${!xbCtData.isEmpty}</isValid>
+     <type>bar</type>
+     <xNames type="array">硅钢用量,
+铜用量,
+油用量,
+钢板用量,
+纸板用量</xNames>
+     <yNames type="array">新变中标,
+新变完工</yNames>
+     <data>${xbCtData}</data>
+    </item>
+    <item>
+     <isValid>${compIds.size > 1}</isValid>
+     <boundaryGap>${true}</boundaryGap>
+     <type>bar</type>
+     <xNames type="array">硅钢用量,
+铜用量,
+油用量,
+钢板用量,
+纸板用量</xNames>
+     <yNames type="array">沈变完工,
+衡变完工,
+新变完工</yNames>
+     <data>${zhCtData}</data>
+    </item>
+   </charts>
   </response>
  </controller>
  <controller id="completionFrqCollectionExport">
@@ -404,7 +554,7 @@ where
  </controller>
  <controller id="completionFrqCollection">
   <response type="jsp" name="sddb/sddb">
-    <map key="date" value="${calendar.current.format}"/>
+   <map key="date" value="${calendar.current.format}"/>
    <map key="dateStart" value="${calendar.current.months[1].days[1].format}"/>
    <map key="updateUrl" value="completionFrqCollectionUpdate"/>
    <map key="exportUrl" value="completionFrqCollectionExport"/>

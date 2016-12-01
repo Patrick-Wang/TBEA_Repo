@@ -1,0 +1,597 @@
+<components>
+ <service id="servExecDetail" transaction="transactionManager">
+ <sql id="maxTime">select max(time) from JYGK_SDDB_ORDER_EXECUTION_DETAILS where company_name in ${dwmcs}</sql>
+  <sql id="zbddhz">select 
+	company_name	,
+	win_bid_year	,
+	win_bid_month	,
+	client_name	,
+	project_name	,
+	contract_no	,
+	execution_year	,
+	execution_month	,
+	actual_delivery_year	,
+	actual_delivery_month	,
+	model	,
+	voltage	,
+	capacity	,
+	number	,
+	code	,
+	tax_inclusive_price	,
+	not_tax_inclusive_price	,
+	bidding_transportation_fee	,
+	optimizing_transportation_cost	,
+	win_bid_cost	,
+	agency_fee	,
+	es_silicon_steel_grades	,
+	es_substitute_grade	,
+	es_quantity_of_silicon_steel	,
+	es_unit_price_of_silicon_steel	,
+	es_amount_of_silicon_steel	,
+	es_process_cost	,
+	es_total_amount_of_silicon_steel	,
+	es_copper_quantity	,
+	es_copper_price	,
+	es_copper_processing_fee	,
+	es_split_cover	,
+	es_copper_amount	,
+	es_transformer_oil_specification	,
+	es_transformer_oil_quantity	,
+	es_unit_price_of_transformer_oil	,
+	es_transformer_oil_amount	,
+	es_quantity_of_steel	,
+	es_steel_price	,
+	es_amount_of_steel	,
+	es_cardboard_quantity	,
+	es_cardboard_unit_price	,
+	es_amount_of_cardboard	,
+	es_casing_quantity	,
+	es_casing_unit_price	,
+	es_casing_amount	,
+	es_number_of_switches	,
+	es_switch_unit_price	,
+	es_switch_amount	,
+	es_number_of_cooler	,
+	es_cooler_unit_price	,
+	es_amount_of_cooler	,
+	es_online_monitoring_quantity	,
+	es_online_monitoring_unit_price	,
+	es_online_monitoring_amount	,
+	es_other_material_costs	,
+	es_total_amount_of_material	,
+	es_spare_parts	,
+	es_material_cost	,
+	es_labor_wages	,
+	es_manufacturing_cost	,
+	es_total_product_cost	,
+	es_gross_profit_amount	,
+	es_gross_margin	,
+	op_silicon_steel_grades	,
+	op_substitute_grade	,
+	op_quantity_of_silicon_steel	,
+	op_unit_price_of_silicon_steel	,
+	op_amount_of_silicon_steel	,
+	op_processing_cost_of_silicon_steel	,
+	op_copper_consumption	,
+	op_copper_price	,
+	op_amount_of_copper	,
+	op_copper_processing_fee	,
+	op_transformer_oil_specification	,
+	op_transformer_oil_consumption	,
+	op_unit_price_of_transformer_oil	,
+	op_transformer_oil_amount	,
+	op_steel_dosage	,
+	op_steel_price	,
+	op_amount_of_steel	,
+	op_cardboard_consumption	,
+	op_cardboard_unit_price	,
+	op_amount_of_cardboard	,
+	op_casing_quantity	,
+	op_casing_unit_price	,
+	op_casing_subtotal	,
+	op_number_of_switches	,
+	op_switch_unit_price	,
+	op_switch_subtotal	,
+	op_number_of_cooler	,
+	op_cooler_unit_price	,
+	op_cooler_subtotal	,
+	op_online_monitoring_quantity	,
+	op_online_monitoring_unit_price	,
+	op_online_monitoring_subtotal	,
+	op_other_materials	,
+	op_cost_of_tax_bearing_materials	,
+	op_spare_parts	,
+	op_total_tax_material	,
+	op_labor_cost	,
+	op_production_costs	,
+	op_gross_profit_amount	,
+	op_optimized_gross_margin	,
+	review_status	
+from
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS
+where
+	company_name in ${dwmcs} and
+ 	time = ${maxTime[0]}
+</sql>
+  <list id="ids" type="int">
+   <item from="0" to="${zbddhz.size - 1}"/>
+  </list>
+  <table id="result" rowIds="ids" export="true" table="${zbddhz}"/>
+ </service>
+ <controller id="execDetailFmtter">
+  <formatter id="dataFmt" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,3,4,5,10,11,12,14,21,22,33,57,65,98,104"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="103"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="0">
+    <DefaultMatcher cols="1,2,6,7,8,9"/>
+   </NumberFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="execDetailUpdate">
+  <callservice id="servExecDetail"/>
+  <callcontroller id="execDetailFmtter"/>
+  <formatterServer id="fmtServExecDetail" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>投标单位</name>
+    </item>
+    <item>
+     <name>中标年份</name>
+    </item>
+    <item>
+     <name>中标月份</name>
+    </item>
+    <item>
+     <name>用户名称</name>
+    </item>
+    <item>
+     <name>项目名称</name>
+    </item>
+    <item>
+     <name>合同编号</name>
+    </item>
+    <item>
+     <name>排产年份</name>
+    </item>
+    <item>
+     <name>排产月份</name>
+    </item>
+    <item>
+     <name>具体交货年份</name>
+    </item>
+    <item>
+     <name>具体交货月份</name>
+    </item>
+    <item>
+     <name>型号</name>
+    </item>
+    <item>
+     <name>电压</name>
+    </item>
+    <item>
+     <name>容量</name>
+    </item>
+    <item>
+     <name>台数</name>
+    </item>
+    <item>
+     <name>图号/技术代号</name>
+    </item>
+    <item>
+     <name>合同金额</name>
+    </item>
+    <item>
+     <name>合同金额（不含税）</name>
+    </item>
+    <item>
+     <name>费用_投标运输费</name>
+    </item>
+    <item>
+     <name>费用_优化运输费</name>
+    </item>
+    <item>
+     <name>费用_中标费</name>
+    </item>
+    <item>
+     <name>费用_代理费</name>
+    </item>
+    <item>
+     <name>测算_硅钢牌号</name>
+    </item>
+    <item>
+     <name>测算_代用牌号</name>
+    </item>
+    <item>
+     <name>测算_硅钢数量</name>
+    </item>
+    <item>
+     <name>测算_硅钢单价</name>
+    </item>
+    <item>
+     <name>测算_硅钢金额</name>
+    </item>
+    <item>
+     <name>测算_加工费</name>
+    </item>
+    <item>
+     <name>测算_硅钢总金额</name>
+    </item>
+    <item>
+     <name>测算_铜数量</name>
+    </item>
+    <item>
+     <name>测算_铜单价</name>
+    </item>
+    <item>
+     <name>测算_铜加工费</name>
+    </item>
+    <item>
+     <name>测算_分摊套保</name>
+    </item>
+    <item>
+     <name>测算_铜线金额</name>
+    </item>
+    <item>
+     <name>测算_变压器油规格</name>
+    </item>
+    <item>
+     <name>测算_变压器油数量</name>
+    </item>
+    <item>
+     <name>测算_变压器油单价</name>
+    </item>
+    <item>
+     <name>测算_变压器油金额</name>
+    </item>
+    <item>
+     <name>测算_钢材数量</name>
+    </item>
+    <item>
+     <name>测算_钢材单价</name>
+    </item>
+    <item>
+     <name>测算_钢材金额</name>
+    </item>
+    <item>
+     <name>测算_纸板数量</name>
+    </item>
+    <item>
+     <name>测算_纸板单价</name>
+    </item>
+    <item>
+     <name>测算_纸板金额</name>
+    </item>
+    <item>
+     <name>测算_套管数量</name>
+    </item>
+    <item>
+     <name>测算_套管单价</name>
+    </item>
+    <item>
+     <name>测算_套管金额</name>
+    </item>
+    <item>
+     <name>测算_开关数量</name>
+    </item>
+    <item>
+     <name>测算_开关单价</name>
+    </item>
+    <item>
+     <name>测算_开关金额</name>
+    </item>
+    <item>
+     <name>测算_冷却器数量</name>
+    </item>
+    <item>
+     <name>测算_冷却器单价</name>
+    </item>
+    <item>
+     <name>测算_冷却器金额</name>
+    </item>
+    <item>
+     <name>测算_在线监测数量</name>
+    </item>
+    <item>
+     <name>测算_在线监测单价</name>
+    </item>
+    <item>
+     <name>测算_在线监测金额</name>
+    </item>
+    <item>
+     <name>测算_其他材料成本</name>
+    </item>
+    <item>
+     <name>测算_材料总金额</name>
+    </item>
+    <item>
+     <name>测算_备品备件</name>
+    </item>
+    <item>
+     <name>测算_材料成本</name>
+    </item>
+    <item>
+     <name>测算_人工工资</name>
+    </item>
+    <item>
+     <name>测算_制造费用</name>
+    </item>
+    <item>
+     <name>测算_产品成本合计</name>
+    </item>
+    <item>
+     <name>测算_毛利额</name>
+    </item>
+    <item>
+     <name>测算_毛利率</name>
+    </item>
+    <item>
+     <name>优化阶段_硅钢牌号</name>
+    </item>
+    <item>
+     <name>优化阶段_代用牌号</name>
+    </item>
+    <item>
+     <name>优化阶段_硅钢数量</name>
+    </item>
+    <item>
+     <name>优化阶段_硅钢单价</name>
+    </item>
+    <item>
+     <name>优化阶段_硅钢金额</name>
+    </item>
+    <item>
+     <name>优化阶段_硅钢加工费</name>
+    </item>
+    <item>
+     <name>优化阶段_铜用量</name>
+    </item>
+    <item>
+     <name>优化阶段_铜单价</name>
+    </item>
+    <item>
+     <name>优化阶段_铜金额</name>
+    </item>
+    <item>
+     <name>优化阶段_铜加工费</name>
+    </item>
+    <item>
+     <name>优化阶段_变压器油规格</name>
+    </item>
+    <item>
+     <name>优化阶段_变压器油用量</name>
+    </item>
+    <item>
+     <name>优化阶段_变压器油单价</name>
+    </item>
+    <item>
+     <name>优化阶段_变压器油金额</name>
+    </item>
+    <item>
+     <name>优化阶段_钢材用量</name>
+    </item>
+    <item>
+     <name>优化阶段_钢材单价</name>
+    </item>
+    <item>
+     <name>优化阶段_钢材金额</name>
+    </item>
+    <item>
+     <name>优化阶段_纸板用量</name>
+    </item>
+    <item>
+     <name>优化阶段_纸板单价</name>
+    </item>
+    <item>
+     <name>优化阶段_纸板金额</name>
+    </item>
+    <item>
+     <name>优化阶段_套管数量</name>
+    </item>
+    <item>
+     <name>优化阶段_套管单价</name>
+    </item>
+    <item>
+     <name>优化阶段_套管小计</name>
+    </item>
+    <item>
+     <name>优化阶段_开关数量</name>
+    </item>
+    <item>
+     <name>优化阶段_开关单价</name>
+    </item>
+    <item>
+     <name>优化阶段_开关小计</name>
+    </item>
+    <item>
+     <name>优化阶段_冷却器数量</name>
+    </item>
+    <item>
+     <name>优化阶段_冷却器单价</name>
+    </item>
+    <item>
+     <name>优化阶段_冷却器小计</name>
+    </item>
+    <item>
+     <name>优化阶段_在线监测数量</name>
+    </item>
+    <item>
+     <name>优化阶段_在线监测单价</name>
+    </item>
+    <item>
+     <name>优化阶段_在线监测小计</name>
+    </item>
+    <item>
+     <name>优化阶段_其他材料</name>
+    </item>
+    <item>
+     <name>优化阶段_含税材料成本</name>
+    </item>
+    <item>
+     <name>优化阶段_备品备件</name>
+    </item>
+    <item>
+     <name>优化阶段_不含税材料合计</name>
+    </item>
+    <item>
+     <name>优化阶段_人工制造费用</name>
+    </item>
+    <item>
+     <name>优化阶段_生产成本</name>
+    </item>
+    <item>
+     <name>优化阶段_毛利额</name>
+    </item>
+    <item>
+     <name>优化阶段_优化毛利率</name>
+    </item>
+    <item>
+     <name>评审状态</name>
+    </item>
+   </header>
+   <shrinkToFit>false</shrinkToFit>
+   <data>${fmtServExecDetail.result}</data>
+  </response>
+ </controller>
+ <controller id="execDetailExport">
+  <callcontroller id="execDetailParams"/>
+  <callservice id="servExecDetail"/>
+  <callcontroller id="execDetailFmtter"/>
+  <ExcelTemplate id="excelTemplate" sheet="执行订单详细信息"/>
+  <list id="title1" type="string">投标单位,
+中标年份,
+中标月份,
+用户名称,
+项目名称,
+合同编号,
+排产年份,
+排产月份,
+具体交货年份,
+具体交货月份,
+型号,
+电压,
+容量,
+台数,
+图号/技术代号,
+合同金额,
+合同金额（不含税）,
+费用_投标运输费,
+费用_优化运输费,
+费用_中标费,
+费用_代理费,
+测算_硅钢牌号,
+测算_代用牌号,
+测算_硅钢数量,
+测算_硅钢单价,
+测算_硅钢金额,
+测算_加工费,
+测算_硅钢总金额,
+测算_铜数量,
+测算_铜单价,
+测算_铜加工费,
+测算_分摊套保,
+测算_铜线金额,
+测算_变压器油规格,
+测算_变压器油数量,
+测算_变压器油单价,
+测算_变压器油金额,
+测算_钢材数量,
+测算_钢材单价,
+测算_钢材金额,
+测算_纸板数量,
+测算_纸板单价,
+测算_纸板金额,
+测算_套管数量,
+测算_套管单价,
+测算_套管金额,
+测算_开关数量,
+测算_开关单价,
+测算_开关金额,
+测算_冷却器数量,
+测算_冷却器单价,
+测算_冷却器金额,
+测算_在线监测数量,
+测算_在线监测单价,
+测算_在线监测金额,
+测算_其他材料成本,
+测算_材料总金额,
+测算_备品备件,
+测算_材料成本,
+测算_人工工资,
+测算_制造费用,
+测算_产品成本合计,
+测算_毛利额,
+测算_毛利率,
+优化阶段_硅钢牌号,
+优化阶段_代用牌号,
+优化阶段_硅钢数量,
+优化阶段_硅钢单价,
+优化阶段_硅钢金额,
+优化阶段_硅钢加工费,
+优化阶段_铜用量,
+优化阶段_铜单价,
+优化阶段_铜金额,
+优化阶段_铜加工费,
+优化阶段_变压器油规格,
+优化阶段_变压器油用量,
+优化阶段_变压器油单价,
+优化阶段_变压器油金额,
+优化阶段_钢材用量,
+优化阶段_钢材单价,
+优化阶段_钢材金额,
+优化阶段_纸板用量,
+优化阶段_纸板单价,
+优化阶段_纸板金额,
+优化阶段_套管数量,
+优化阶段_套管单价,
+优化阶段_套管小计,
+优化阶段_开关数量,
+优化阶段_开关单价,
+优化阶段_开关小计,
+优化阶段_冷却器数量,
+优化阶段_冷却器单价,
+优化阶段_冷却器小计,
+优化阶段_在线监测数量,
+优化阶段_在线监测单价,
+优化阶段_在线监测小计,
+优化阶段_其他材料,
+优化阶段_含税材料成本,
+优化阶段_备品备件,
+优化阶段_不含税材料合计,
+优化阶段_人工制造费用,
+优化阶段_生产成本,
+优化阶段_毛利额,
+优化阶段_优化毛利率,
+评审状态</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="servFmt" table="${result.matrixNoIds}">
+   <formatter ref="dataFmt"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="执行订单详细信息.xls" serv="servFmt"/>
+ </controller>
+</components>

@@ -94,7 +94,7 @@ where
    <item>${wgddhz[0]}</item>
   </list>
   <list id="jds" type="string">
-   <item>执行阶段</item>
+   <item>中标阶段</item>
    <item>锁定阶段</item>
    <item>完工阶段</item>
    <list id="tmpVal" type="double">
@@ -310,18 +310,31 @@ from
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and
-	wg.code = zb.code</sql>
-	<list id="ids" type="int" sql="xhxx" value="0"/>
-  <list id="values" type="string" sql="xhxx" value="1"/>
+	wg.code = zb.code and 
+	wg.company_name = ${dwmc}</sql>
+	<list id="ids" clear="true" type="int" sql="xhxx" value="0"/>
+  <list id="values" clear="true" type="string" sql="xhxx" value="1"/>
  </service>
  <controller id="codeCollection">
-  <callservice id="servCollectionCode" inline="true"/>
+  <context key="compIds" value="${authIds[61]}"/>
+  <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compIds]}"/>
+  <context key="compNodes" value="${dataNodeFactory[compIds][dwmcs]}"/>
+   <list type="object" id="retNodes"></list>
+  <loop from="0" to="${dwmcs.size - 1}" var="i">
+   <context key="dwmc" value="${dwmcs[i]}"/>
+   <callservice id="servCollectionCode" inline="true"></callservice>
+   <if test="${!ids.isEmpty}">
+   <context value="${compNodes[i].append[dataNodeFactory[ids][values]]}"/>
+   <list type="object" id="retNodes">
+   	<item>${compNodes[i]}</item>
+   </list>
+   </if>
+  </loop>
   <response type="jsp" name="sddb/sddb">
    <map key="updateUrl" value="codeCollectionUpdate"/>
    <map key="exportUrl" value="codeCollectionExport"/>
    <map key="title" value="完工订单分图号三单对比分析"/>
-   <map key="itemLabel" value="产品图号:"/>
-   <map key="itemNodes" value="${dataNodeFactory[ids][values].asJson}"/>
+   <map key="itemNodes" value="${retNodes.asJson}"/>
   </response>
  </controller>
 </components>

@@ -1,0 +1,1 @@
+alter table jygk_account add deprecated int default 0 not null

@@ -189,7 +189,7 @@ where
     <item>${wgddhz[i]}</item>
    </list>
    <list id="jds" type="string">
-    <item>执行阶段</item>
+    <item>中标阶段</item>
     <item>锁定阶段</item>
     <item>完工阶段</item>
    </list>
@@ -233,6 +233,108 @@ where
    <list type="double" sql="zxddhz_all" value="${counter.next.val}"/>
   </table>
  </service>
+ <service id="servCompletionFdwMllCollection" transaction="transactionManager">
+  <sql id="zbddhz" order="dates" by="0" colcount="4">select 
+	(convert(varchar(10), completion_year) + '年' + convert(varchar(10), completion_month) + '月') ny,
+	sum(win_bid_gross_profit_amount) / nullif(sum(wg.not_tax_inclusive_price),0) * 100.0 mll3,
+	sum(op_gross_profit_amount) / nullif(sum(wg.not_tax_inclusive_price),0) * 100.0 mll4,
+	sum(actual_gross_profit) / nullif(sum(wg.not_tax_inclusive_price),0) * 100.0 mll5
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb, 
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd, 
+	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
+where
+	wg.code = sd.code and
+	wg.code = zb.code and
+	(convert(varchar(10), completion_year) + '年' + convert(varchar(10), completion_month) + '月') in ${dates} and
+	wg.company_name in ${dwmcs}
+group by
+	completion_year, completion_month</sql>
+  <context key="compIds" value="${authIds[61]}"/>
+  <list id="dqgsCtData" type="object" export="true">
+   <item>${zbddhz.transpose[1]}</item>
+   <item>${zbddhz.transpose[2]}</item>
+   <item>${zbddhz.transpose[3]}</item>
+  </list>
+  <loop from="0" to="${dates.size - 1}">
+   <list id="empty" type="object">
+    <item/>
+   </list>
+  </loop>
+  <list id="gdwCtData" type="object" export="true"/>
+  <if test="${compIds.contains[1]}">
+   <sql id="sbddhz" order="dates" by="0" colcount="2">select 
+	(convert(varchar(10), completion_year) + '年' + convert(varchar(10), completion_month) + '月') ny,
+	sum(actual_gross_profit) / nullif(sum(wg.not_tax_inclusive_price),0) * 100.0 mll3
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
+where
+	wg.code = sd.code and
+	wg.code = zb.code and
+	(convert(varchar(10), completion_year) + '年' + convert(varchar(10), completion_month) + '月') in ${dates} and
+	wg.company_name = ${CompanyType.SBGS.value}
+group by
+	completion_year, completion_month</sql>
+   <list id="gdwCtData" type="object">
+    <item>${sbddhz.transpose[1]}</item>
+   </list>
+  </if>
+  <else>
+   <list id="gdwCtData" type="object">
+    <item>${empty}</item>
+   </list>
+  </else>
+  <if test="${compIds.contains[2]}">
+   <sql id="hbddhz" order="dates" by="0" colcount="2">select 
+	(convert(varchar(10), completion_year) + '年' + convert(varchar(10), completion_month) + '月') ny,
+	sum(actual_gross_profit) / nullif(sum(wg.not_tax_inclusive_price),0) mll3
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
+where
+	wg.code = sd.code and
+	wg.code = zb.code and
+	(convert(varchar(10), completion_year) + '年' + convert(varchar(10), completion_month) + '月') in ${dates} and
+	wg.company_name = ${CompanyType.HBGS.value}
+group by
+	completion_year, completion_month</sql>
+   <list id="gdwCtData" type="object">
+    <item>${hbddhz.transpose[1]}</item>
+   </list>
+  </if>
+  <else>
+   <list id="gdwCtData" type="object">
+    <item>${empty}</item>
+   </list>
+  </else>
+  <if test="${compIds.contains[3]}">
+   <sql id="xbddhz" order="dates" by="0" colcount="2">select 
+	(convert(varchar(10), completion_year) + '年' + convert(varchar(10), completion_month) + '月') ny,
+	sum(actual_gross_profit) / nullif(sum(wg.not_tax_inclusive_price),0) mll3
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
+	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
+where
+	wg.code = sd.code and
+	wg.code = zb.code and
+	(convert(varchar(10), completion_year) + '年' + convert(varchar(10), completion_month) + '月') in ${dates} and
+	wg.company_name = ${CompanyType.XBC.value}
+group by
+	completion_year, completion_month</sql>
+   <list id="gdwCtData" type="object">
+    <item>${xbddhz.transpose[1]}</item>
+   </list>
+  </if>
+  <else>
+   <list id="gdwCtData" type="object">
+    <item>${empty}</item>
+   </list>
+  </else>
+ </service>
  <controller id="completionFdwCollectionFmtter">
   <formatter id="dataFmt" export="true">
    <EmptyFormatter>
@@ -253,6 +355,9 @@ where
    <list id="dates" type="object" export="true">
     <item>${dTmp.year+&quot;年&quot;+dTmp.month+&quot;月&quot;}</item>
    </list>
+   <list id="dates1" type="object" export="true">
+    <item>${dTmp.year+&quot;年&quot;+dTmp.month+&quot;月&quot;}</item>
+   </list>
    <context key="dTmp" value="${dTmp.nextMonth}"/>
   </loop>
   <context key="compId" value="${orgs.virtualCYOrg.ids[request.item.asInt]}"/>
@@ -266,6 +371,7 @@ where
  </controller>
  <controller id="completionFdwCollectionUpdate">
   <callcontroller id="completionFdwCollectionParams"/>
+  <callservice id="servCompletionFdwMllCollection"/>
   <callservice id="servCompletionFdwCollection"/>
   <callcontroller id="completionFdwCollectionFmtter"/>
   <formatterServer id="fmtServCompletionFdwCollection" table="${result.matrixNoIds}">
@@ -364,6 +470,31 @@ where
    <mergeTitle>true</mergeTitle>
    <width>1300</width>
    <data>${fmtServCompletionFdwCollection.result}</data>
+   <chartName>毛利率情况趋势图</chartName>
+   <charts type="array">
+    <item>
+     <isValid>${true}</isValid>
+     <boundaryGap>${false}</boundaryGap>
+     <type>line</type>
+     <xNames type="jarray">${dates1.asJson}</xNames>
+     <yNames type="array">中标,
+执行,
+完工</yNames>
+     <data>${dqgsCtData}</data>
+     <percentage>${true}</percentage>
+    </item>
+    <item>
+     <isValid>${compIds.size > 1}</isValid>
+     <boundaryGap>${false}</boundaryGap>
+     <type>line</type>
+     <xNames type="jarray">${dates1.asJson}</xNames>
+     <yNames type="array">沈变,
+衡变,
+新变</yNames>
+	 <percentage>${true}</percentage>
+     <data>${gdwCtData}</data>
+    </item>
+   </charts>
   </response>
  </controller>
  <controller id="completionFdwCollectionExport">
