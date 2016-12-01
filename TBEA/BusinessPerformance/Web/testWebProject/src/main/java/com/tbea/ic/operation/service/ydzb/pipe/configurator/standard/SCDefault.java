@@ -135,6 +135,7 @@ class SCDefault extends StandardConfigurator {
 						.includeZbs(pipe.getIndicators())
 						.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
 						.excludeZbs(ConfiguratorUtil.getRatioZbs())
+						.excludeZbs(ConfiguratorUtil.getZhHiddenZbs())
 						.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs())).add(
 				copyFilter.add(ConfiguratorUtil.getTimePointNumberZbs(),
 						ColumnType.dyjh.ordinal(), ColumnType.jdjh.ordinal()));

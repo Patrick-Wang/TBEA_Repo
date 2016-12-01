@@ -164,7 +164,7 @@ where
 	year = ${cal.year} and
 	month = ${cal.month}</sql>
  </service>
- <controller id="yszkgbTransport" cron1="0 0 12 4 * ?">
+ <controller id="yszkgbTransport" cron="0 0 12 4 * ?">
   <if test="${isSchedule}">
    <context key="cal" value="${calendar.current.lastMonth}"/>
   </if>
