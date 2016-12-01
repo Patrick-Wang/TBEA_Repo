@@ -698,6 +698,7 @@ var Util;
             "外部客诉率(合金材料公司)（%）",
             "外部客诉率(铝箔公司)（%）",
             "外部客诉率(电极箔公司)（%）",
+            "失败成本率(金属结构与炭素材料公司)（%）"
         ];
         var formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
         formaterChain.next(new Util.FormatIntHandler(['人数', '制造业人数', '工程、修试业务人数', '物流贸易人数']))

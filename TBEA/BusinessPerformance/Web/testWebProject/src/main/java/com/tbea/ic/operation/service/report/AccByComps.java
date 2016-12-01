@@ -24,6 +24,7 @@ public class AccByComps implements IAccumulator {
 				|| tp == CompanyType.JWZHGS;
 	}
 	
+	private boolean isDeprecated(CompanyType tp){
 		return tp == CompanyType.RDGS || tp == CompanyType.DLBZGS;
 	}
 	
@@ -54,6 +55,7 @@ public class AccByComps implements IAccumulator {
 					int size = result.size();
 					int index  = zbs.indexOf(336);
 					result.addAll(stub.compute(col, start, end, zbs, compsTmp));
+					if(isDeprecated(companies.get(i).getType()) && index >= 0){
 						result.set(size + index, null);
 					}
 				}
