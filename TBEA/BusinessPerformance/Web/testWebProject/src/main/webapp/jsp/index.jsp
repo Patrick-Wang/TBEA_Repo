@@ -89,16 +89,16 @@
 										style="color: rgb(62, 152, 197);">质量信息录入</a></li>
 								</c:if>
 							</ul>
-							
+
 							<ul id="navlistQualityLookup"
 								style="padding: 10px 0; width: 180px; display: none">
-<%-- 								<c:if test="${QualityLookup || QualityApprove}"> --%>
-									<li style="background-color: transparent;"><i
-										class="ec-icon ec-icon-line"></i> <a href="#zlgb"
-										style="color: rgb(62, 152, 197);">质量信息汇总</a></li>
-<%-- 								</c:if> --%>
+								<%-- 								<c:if test="${QualityLookup || QualityApprove}"> --%>
+								<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-line"></i> <a href="#zlgb"
+									style="color: rgb(62, 152, 197);">质量信息汇总</a></li>
+								<%-- 								</c:if> --%>
 							</ul>
-							
+
 						</c:when>
 
 						<c:otherwise>
@@ -120,12 +120,11 @@
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
 								<%-- 								</c:if> --%>
-																<c:if test="${isJydw}">
-								
-								<li style="background-color: transparent;"><i
-									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
-									style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
-																</c:if>
+								<c:if test="${isJydw || scgsdbqx}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#zbhz"
+										style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
+								</c:if>
 								<c:if test="${JYAnalysisLookup}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#zbhz"
@@ -295,11 +294,11 @@
 
 							<ul id="navlistQualityLookup"
 								style="padding: 10px 0; width: 180px; display: none">
-<%-- 								<c:if test="${QualityLookup || QualityApprove}"> --%>
-									<li style="background-color: transparent;"><i
-										class="ec-icon ec-icon-line"></i> <a href="#zlgb"
-										style="color: rgb(62, 152, 197);">质量信息汇总</a></li>
-<%-- 								</c:if> --%>
+								<%-- 								<c:if test="${QualityLookup || QualityApprove}"> --%>
+								<li style="background-color: transparent;"><i
+									class="ec-icon ec-icon-line"></i> <a href="#zlgb"
+									style="color: rgb(62, 152, 197);">质量信息汇总</a></li>
+								<%-- 								</c:if> --%>
 							</ul>
 
 
@@ -312,37 +311,37 @@
 				<c:when test="${MarketAuth}">
 					<div id="MarketList" class="col-md-10">
 						<c:if test="${scbsjLookup || scbsjEntry}">
-<div>
-	<h3>
-		市场签约信息<a name="scqyxx"> </a>
-	</h3>
-	<div class="section">
-		<div class="thumb3">
-			<ul class="slides">		
-			<c:if test="${scbsjLookup}">
-			<li><a href="../report/scqytjqk.do" target="_blank"><img
-						src="../images/charts/bar3.png"> <span><strong>市场签约统计情况</strong></span></a>
-				</li>
-				<li><a href="../report/scqy.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>重点产品签约情况查看</strong></span></a>
-				</li>		
-				<li><a href="../report/scjb.do" target="_blank"><img
-						src="../images/charts/scatter2.png"> <span><strong>行业签约情况查看</strong></span></a>
-				</li>	
-				</c:if>
-				<c:if test="${scbsjEntry}">
-				<li><a href="../report/scqyEntry.do" target="_blank"><img
-						src="../images/charts/scatter4.png"> <span><strong>重点产品签约情况录入</strong></span></a>
-				</li>
-				<li><a href="../report/scjbEntry.do" target="_blank"><img
-						src="../images/charts/bar1.png"> <span><strong>行业签约情况录入</strong></span></a>
-				</li>
-				</c:if>
-			</ul>
-		</div>
-	</div>
-</div>
-</c:if>
+							<div>
+								<h3>
+									市场签约信息<a name="scqyxx"> </a>
+								</h3>
+								<div class="section">
+									<div class="thumb3">
+										<ul class="slides">
+											<c:if test="${scbsjLookup}">
+												<li><a href="../report/scqytjqk.do" target="_blank"><img
+														src="../images/charts/bar3.png"> <span><strong>市场签约统计情况</strong></span></a>
+												</li>
+												<li><a href="../report/scqy.do" target="_blank"><img
+														src="../images/charts/scatter2.png"> <span><strong>重点产品签约情况查看</strong></span></a>
+												</li>
+												<li><a href="../report/scjb.do" target="_blank"><img
+														src="../images/charts/scatter2.png"> <span><strong>行业签约情况查看</strong></span></a>
+												</li>
+											</c:if>
+											<c:if test="${scbsjEntry}">
+												<li><a href="../report/scqyEntry.do" target="_blank"><img
+														src="../images/charts/scatter4.png"> <span><strong>重点产品签约情况录入</strong></span></a>
+												</li>
+												<li><a href="../report/scjbEntry.do" target="_blank"><img
+														src="../images/charts/bar1.png"> <span><strong>行业签约情况录入</strong></span></a>
+												</li>
+											</c:if>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</c:if>
 					</div>
 				</c:when>
 
@@ -358,16 +357,16 @@
 						</c:if>
 					</div>
 				</c:when>
-				
+
 				<c:otherwise>
 					<div id="IndexSummary" class="col-md-10">
 						<%-- 						<c:if test="${!(QualityApprove || QualityEntry)}"> --%>
 						<%@include file="index_IndexSummary.jsp"%>
 						<%-- 						</c:if> --%>
-						
-						
-						
-						
+
+
+
+
 						<c:if test="${PriceLibAuth}">
 							<%@include file="index_IndexPriceLib.jsp"%>
 						</c:if>
@@ -412,7 +411,7 @@
 							<%@include file="index_IndexBusinessReportsEntryCW.jsp"%>
 						</c:if>
 					</div>
-					
+
 					<div id="QualityLookup" class="col-md-10" style="display: none">
 						<c:if test="${QualityLookup || QualityApprove}">
 							<%@include file="index_IndexBusinessReportsZLWT.jsp"%>
@@ -437,17 +436,15 @@
 	<script src="../jsp/json2.js" type="text/javascript"></script>
 	<script src="../jsp/util.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	
-	function logout(){
-		var logoutAjax = new Util.Ajax("exitSystem.do");
-		logoutAjax.get().then(function onSuccess(){
-			
-		}, function onFailed(){
-			alert("网络错误");
-		});
-	}
-	
-	
+		function logout() {
+			var logoutAjax = new Util.Ajax("exitSystem.do");
+			logoutAjax.get().then(function onSuccess() {
+
+			}, function onFailed() {
+				alert("网络错误");
+			});
+		}
+
 		var funResize;
 		$(window)
 				.load(
@@ -600,7 +597,9 @@
 
 		function delegateCall(obj) {
 			clickli(obj);
-			funResize();
+			if (funResize != undefined){
+				funResize();
+			}
 		}
 	</script>
 

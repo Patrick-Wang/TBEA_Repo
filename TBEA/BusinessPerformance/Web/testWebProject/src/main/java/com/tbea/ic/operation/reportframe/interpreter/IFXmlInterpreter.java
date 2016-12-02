@@ -8,6 +8,22 @@ import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 
+/***********************************
+ * tagName : if/elseif
+ * text	: EL Object 判断条件
+ * attributes :
+ * 		test : EL Object 判断条件
+ * 	
+ * 
+ * tagName : if/elseif
+ * text	: EL Object 判断条件
+ * attributes :
+ * 		test : EL Object 判断条件
+ * 
+ * 
+ * tagName : else
+ * 
+ * ************************************/
 
 public class IFXmlInterpreter implements XmlInterpreter {
 

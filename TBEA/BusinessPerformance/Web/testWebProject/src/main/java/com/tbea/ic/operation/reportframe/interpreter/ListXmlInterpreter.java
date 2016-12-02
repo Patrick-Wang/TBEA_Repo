@@ -13,7 +13,38 @@ import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.TypeUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
-
+/***********************************
+ * tagName : list
+ * text	: 已逗号分隔的数组 
+ * 		int eg. 1,2,3,4,${num1}
+ * 		string eg. abc, ${str}, d423
+ * 		date eg. 2016-1-1, ${cal.date}
+ * 		double eg. 2.4, ${floatVal}
+ * 		object eg. ${obj1}, ${obj2}
+ * attributes :
+ * 		id : list 对象标识
+ * 		type : [int, string, double, date, object]
+ * 		clear : [true, false]		
+ * 		{
+ * 			json : 二维 JSONArray EL Object
+ * 			col	: 数字，指定装载 JSONArray 第几列
+ * 		}
+ *		{
+ *			sql : sql 返回结果对象
+ *			value : 指定装载sql第几列
+ *			{
+ *				order : 排序被参照的list
+ *				by : 指定sql中参照列
+ *			}
+ *		}
+ *
+ **************** sub nodes*************
+ * 	tagName : item
+ * 	attributes :
+ * 		concat : 指定要连接的 list id
+ * 		insert : 元素插入位置
+ * 		index : 指定替换元素索引
+ * ************************************/
 public class ListXmlInterpreter implements XmlInterpreter {
 	
 	private void repeatAdd(List<Object> objs, Object obj, int repeat, int insert) {

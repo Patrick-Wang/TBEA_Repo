@@ -122,7 +122,7 @@
 		</div>
 	</div>
 </div>
-<c:if test="${isJydw}">
+<c:if test="${isJydw || scgsdbqx}">
 	<div>
 		<h3>
 			财务指标情况<a name="NChz"> </a>
