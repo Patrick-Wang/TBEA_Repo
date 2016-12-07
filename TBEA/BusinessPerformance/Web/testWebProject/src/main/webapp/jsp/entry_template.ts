@@ -321,21 +321,21 @@ module entry_template {
                     }
                 }
             }
-            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
-                let zbxxs:Zbxx[] = this.checkSum(submitData);
-                if (zbxxs.length != 0) {
-                    let zbxxs:Zbxx[] = this.checkSum(submitData);
-                    if (zbxxs.length != 0) {
-                        let msg = "";
-                        for (let i = 0; i < zbxxs.length; ++i){
-                            msg += "、" + zbxxs[i].name;
-                        }
-
-                        Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
-                        return;
-                    }
-                }
-            }
+            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+            //    let zbxxs:Zbxx[] = this.checkSum(submitData);
+            //    if (zbxxs.length != 0) {
+            //        let zbxxs:Zbxx[] = this.checkSum(submitData);
+            //        if (zbxxs.length != 0) {
+            //            let msg = "";
+            //            for (let i = 0; i < zbxxs.length; ++i){
+            //                msg += "、" + zbxxs[i].name;
+            //            }
+            //
+            //            Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+            //            return;
+            //        }
+            //    }
+            //}
 
             this.mSave.post({
                 year: date.year,
@@ -378,22 +378,19 @@ module entry_template {
             }
 
             if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                //let zbxxs:Zbxx[] = this.checkSum(submitData);
+                //if (zbxxs.length != 0) {
                 let zbxxs:Zbxx[] = this.checkSum(submitData);
                 if (zbxxs.length != 0) {
-                    let zbxxs:Zbxx[] = this.checkSum(submitData);
-                    if (zbxxs.length != 0) {
-                        let zbxxs:Zbxx[] = this.checkSum(submitData);
-                        if (zbxxs.length != 0) {
-                            let msg = "";
-                            for (let i = 0; i < zbxxs.length; ++i){
-                                msg += "、" + zbxxs[i].name;
-                            }
-
-                            Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
-                            return;
-                        }
+                    let msg = "";
+                    for (let i = 0; i < zbxxs.length; ++i){
+                        msg += "、" + zbxxs[i].name;
                     }
+
+                    Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                    return;
                 }
+                //}
             }
             
             this.mSubmit.post({
@@ -436,8 +433,8 @@ module entry_template {
             }
 
             if (Util.ZBType.BYSJ == this.mOpt.entryType) {
-                let zbxxs:Zbxx[] = this.checkSum(submitData);
-                if (zbxxs.length != 0) {
+                //let zbxxs:Zbxx[] = this.checkSum(submitData);
+                //if (zbxxs.length != 0) {
                     let zbxxs:Zbxx[] = this.checkSum(submitData);
                     if (zbxxs.length != 0) {
                         let msg = "";
@@ -448,7 +445,7 @@ module entry_template {
                         Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
                         return;
                     }
-                }
+                //}
             }
 
             this.mSubmitToDeputy.post({
@@ -682,11 +679,25 @@ module entry_template {
             if (row < 0) {
                 return undefined;
             }
-            let cells : any = [
-                new Cell(find(this.mTableData, 290), 1),
-                new Cell(find(this.mTableData, 299), 1),
-                new Cell(find(this.mTableData, 304), 1)
-            ];
+
+
+            let cells : any = [];
+            let cellTmp =  new Cell(find(this.mTableData, 290), 1);
+            if (cellTmp.row() >= 0){
+                cells.push(cellTmp);
+            }
+            cellTmp =  new Cell(find(this.mTableData, 299), 1);
+            if (cellTmp.row() >= 0){
+                cells.push(cellTmp);
+            }
+            cellTmp =  new Cell(find(this.mTableData, 304), 1);
+            if (cellTmp.row() >= 0){
+                cells.push(cellTmp);
+            }
+
+            if(cells.length == 0){
+                return undefined;
+            }
 
             let dst = new Cell(row, 1);
             let form : Formula  = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=>{

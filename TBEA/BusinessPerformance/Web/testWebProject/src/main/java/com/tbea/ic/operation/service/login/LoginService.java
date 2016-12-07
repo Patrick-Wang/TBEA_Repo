@@ -1,5 +1,7 @@
 package com.tbea.ic.operation.service.login;
 
+import net.sf.json.JSONArray;
+
 import com.tbea.ic.operation.model.entity.jygk.Account;
 
 public interface LoginService {
@@ -11,5 +13,5 @@ public interface LoginService {
 
 	boolean hasSbdAuth(Account account);
 
-	void logout(Account account, long creationTime, long lastAccessedTime, String ip);
+	void logout(Account account, long creationTime, long lastAccessedTime, String ip, JSONArray reqs);
 }

@@ -264,7 +264,7 @@ public class EntryController {
 			break;
 		}
 	}
-	
+		
 	private void importData(Entry<Company, JSONArray> entry, Date d) {
 		ZBStatus zbStatus = entryService.getZbStatus(d, entry.getKey().getType(),
 				ZBType.BYSJ).get(0);

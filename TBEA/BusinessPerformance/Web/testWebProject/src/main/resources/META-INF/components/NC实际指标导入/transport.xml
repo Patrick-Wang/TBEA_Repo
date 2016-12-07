@@ -1,0 +1,198 @@
+<components>
+ <service id="servNcsjzbToLocal" transaction="transactionManager">
+  <context value="${sjImporter.impData[cal.date][type][glfy]}"/>
+  <context value="${sjImporter.impData[cal.date][type][gdglfy]}"/>
+  <context value="${sjImporter.impData[cal.date][type][bdglfy]}"/>
+  <context value="${sjImporter.impData[cal.date][type][xsfy]}"/>
+  <context value="${sjImporter.impData[cal.date][type][gdxsfy]}"/>
+  <context value="${sjImporter.impData[cal.date][type][bdxsfy]}"/>
+  <context value="${sjImporter.impData[cal.date][type][cwfy]}"/>
+ </service>
+ <service id="servNcsjzbFromNC" transaction="transNc">
+  <sql id="xsfy" maxResult="1" export="true">select 
+		'224',
+		to_char((imdz.mjqy71q + imdz.mhq4l2r) / 10000) glfy --合计费用本月数
+  from iufo_measure_data_zc3382um imdz
+  left join (select alone_id,
+                    code,
+                    inputdate,
+                    keyword2,
+                    keyword3,
+                    time_code,
+                    ts,
+                    ver
+               from iufo_measure_pubdata) imp
+    on imdz.alone_id = imp.alone_id
+  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
+    on imp.code = iui.unit_id
+ where imp.ver in (0,510)
+ and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
+ and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
+ and unit_code = ${NCCode.code[type]}</sql>
+  <sql id="gdxsfy" maxResult="1" export="true">select  
+		'225',
+		to_char(imdz.mjqy71q / 10000) hjgdfyby --合计固定费用本月数
+  from iufo_measure_data_zc3382um imdz
+  left join (select alone_id,
+                    code,
+                    inputdate,
+                    keyword2,
+                    keyword3,
+                    time_code,
+                    ts,
+                    ver
+               from iufo_measure_pubdata) imp
+    on imdz.alone_id = imp.alone_id
+  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
+    on imp.code = iui.unit_id
+ where imp.ver in (0,510)
+ and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
+ and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
+ and unit_code = ${NCCode.code[type]}</sql>
+  <sql id="bdxsfy" maxResult="1" export="true">select  
+		'226'，
+		to_char(imdz.mhq4l2r/ 10000) hjbdfyby --合计变动费用本月数
+  from iufo_measure_data_zc3382um imdz
+  left join (select alone_id,
+                    code,
+                    inputdate,
+                    keyword2,
+                    keyword3,
+                    time_code,
+                    ts,
+                    ver
+               from iufo_measure_pubdata) imp
+    on imdz.alone_id = imp.alone_id
+  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
+    on imp.code = iui.unit_id
+ where imp.ver in (0,510)
+ and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
+ and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
+ and unit_code = ${NCCode.code[type]}</sql>
+  <sql id="glfy" maxResult="1" export="true">select   
+		'221',
+       to_char((imdr.mfzv5xp + imdr.m018v98)/ 10000) hj --合计固定费用本月数
+  from iufo_measure_data_r0sskck5 imdr
+  left join (select alone_id,
+                    code,
+                    inputdate,
+                    keyword2,
+                    keyword3,
+                    time_code,
+                    ts,
+                    ver
+               from iufo_measure_pubdata) imp
+    on imdr.alone_id = imp.alone_id
+  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
+    on imp.code = iui.unit_id
+ where imp.ver in (0,510)
+ and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
+ and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
+ and unit_code = ${NCCode.code[type]}</sql>
+  <sql id="gdglfy" maxResult="1" export="true">select   
+		'222',
+       to_char(imdr.mfzv5xp/ 10000) hjgdfyby --合计固定费用本月数
+  from iufo_measure_data_r0sskck5 imdr
+  left join (select alone_id,
+                    code,
+                    inputdate,
+                    keyword2,
+                    keyword3,
+                    time_code,
+                    ts,
+                    ver
+               from iufo_measure_pubdata) imp
+    on imdr.alone_id = imp.alone_id
+  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
+    on imp.code = iui.unit_id
+ where imp.ver in (0,510)
+ and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
+ and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
+ and unit_code = ${NCCode.code[type]}</sql>
+  <sql id="bdglfy" maxResult="1" export="true">select   
+		'223',
+        to_char(imdr.m018v98/ 10000) hjbdfyby --合计变动费用本月数
+  from iufo_measure_data_r0sskck5 imdr
+  left join (select alone_id,
+                    code,
+                    inputdate,
+                    keyword2,
+                    keyword3,
+                    time_code,
+                    ts,
+                    ver
+               from iufo_measure_pubdata) imp
+    on imdr.alone_id = imp.alone_id
+  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
+    on imp.code = iui.unit_id
+ where imp.ver in (0,510)
+ and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
+ and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
+ and unit_code = ${NCCode.code[type]}</sql>
+  <sql id="cwfy" maxResult="1" export="true">select  
+		'227',
+       to_char(imd5.m10006/ 10000) hjcwfyby --合计财务费用本月数
+  from iufo_measure_data_5lmvdjo0 imd5
+  left join (select alone_id,
+                    code,
+                    inputdate,
+                    keyword2,
+                    keyword3,
+                    time_code,
+                    ts,
+                    ver
+               from iufo_measure_pubdata) imp
+    on imd5.alone_id = imp.alone_id
+  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
+    on imp.code = iui.unit_id
+ where imp.ver in (0,510)
+ and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
+ and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
+ and unit_code = ${NCCode.code[type]}</sql>
+ </service>
+ <controller id="ncsjzbTransport" cron="0 0 12 4 * ?">
+  <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
+   <context key="cal" value="${calendar.current.lastMonth}"/>
+  </if>
+  <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
+   <context key="cal" value="${request.date.asCalendar}"/>
+  </if>
+  <context key="type" value="${CompanyType.SBGS}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.XBC}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.TBGS}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.LLGS}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.XLC}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.XNYGS}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.XTNYGS}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.TCNY}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.NDGS}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.JCKGS_JYDW}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <context key="type" value="${CompanyType.GJGCGS_GFGS}"/>
+  <callservice id="servNcsjzbFromNC"/>
+  <callservice id="servNcsjzbToLocal"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+</components>

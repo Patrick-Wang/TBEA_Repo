@@ -2,7 +2,6 @@ package com.tbea.ic.operation.controller.servlet.account;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +9,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONArray;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,6 @@ import com.tbea.ic.operation.service.entry.DailyReportService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.login.LoginService;
-import com.tbea.ic.operation.service.report.HBWebService;
 
 @Controller
 @RequestMapping(value = "Login")
@@ -293,7 +293,8 @@ public class LoginServlet implements OnSessionChangedListener {
 					SessionManager.getAccount(session), 
 					session.getCreationTime(), 
 					session.getLastAccessedTime(),
-					(String) session.getAttribute("remoteIP"));
+					(String) session.getAttribute("remoteIP"),
+					(JSONArray)session.getAttribute("reqs"));
 		}else{
 			LoggerFactory.getLogger("ACCOUNT").info("onDestroyed is not online");
 		}

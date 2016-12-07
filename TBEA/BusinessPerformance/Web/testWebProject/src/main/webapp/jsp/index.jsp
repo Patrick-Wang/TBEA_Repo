@@ -120,10 +120,10 @@
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
 								<%-- 								</c:if> --%>
-								<c:if test="${isJydw || scgsdbqx}">
+								<c:if test="${isJydw || scgsdbqx || FinanceLookup}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#zbhz"
-										style="color: rgb(62, 152, 197);">财务指标完成情况</a></li>
+										style="color: rgb(62, 152, 197);">财务分析</a></li>
 								</c:if>
 								<c:if test="${JYAnalysisLookup}">
 									<li style="background-color: transparent;"><i
@@ -150,10 +150,10 @@
 										class="ec-icon ec-icon-line"></i> <a href="#scqyxx"
 										style="color: rgb(62, 152, 197);">市场签约信息</a></li>
 								</c:if>
-								<c:if test="${zhzlLookup}">
+								<c:if test="${zhzlLookup || zhJyfxLookupAuth}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#zhzl"
-										style="color: rgb(62, 152, 197);">众和质量指标</a></li>
+										style="color: rgb(62, 152, 197);">众和指标</a></li>
 								</c:if>
 								<!-- 只有sbd公司权限显示-->
 								<%-- <c:if test="${SbdAuth}">
@@ -203,11 +203,11 @@
 										class="ec-icon ec-icon-line"></i> <a href="#xnycyjybb"
 										style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
 								</c:if>
-								<c:if test="${FinanceLookup}">
+<%-- 								<c:if test="${FinanceLookup}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#cwbb"
 										style="color: rgb(62, 152, 197);">财务管报汇总</a></li>
-								</c:if>
+								</c:if> --%>
 
 							</ul>
 							<ul id="navlist1" style="padding: 10px 0; display: none">
@@ -382,9 +382,9 @@
 						<c:if test="${XnygbLookup}">
 							<%@include file="index_IndexBusinessReportsXNY.jsp"%>
 						</c:if>
-						<c:if test="${FinanceLookup}">
+	<%-- 					<c:if test="${FinanceLookup}">
 							<%@include file="index_IndexBusinessReportsCW.jsp"%>
-						</c:if>
+						</c:if> --%>
 					</div>
 					<div id="InputList" class="col-md-10" style="display: none">
 						<%@include file="index_InputList.jsp"%>

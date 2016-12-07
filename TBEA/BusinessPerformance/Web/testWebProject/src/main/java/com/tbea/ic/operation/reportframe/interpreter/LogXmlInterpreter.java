@@ -9,31 +9,31 @@ import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.util.XmlUtil;
 
+public class LogXmlInterpreter implements XmlInterpreter {
 
-public class LogXmlInterpreter implements XmlInterpreter {	
-	
 	ELParser elp;
-	
+
 	@Override
-	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
-		if (!Schema.isLog(e)){
+	public boolean accept(AbstractXmlComponent component, Element e)
+			throws Exception {
+		if (!Schema.isLog(e)) {
 			return false;
 		}
 		elp = new ELParser(component);
 		Logger logger = null;
-		if (e.hasAttribute("ref")){
+		if (e.hasAttribute("ref")) {
 			logger = LoggerFactory.getLogger(e.getAttribute("ref"));
-		}else{
+		} else {
 			logger = ReportLogger.logger();
 		}
-		if (null != logger){
-			if ("info".equals(e.getAttribute("level"))){
+		if (null != logger) {
+			if ("info".equals(e.getAttribute("level"))) {
 				logger.info(XmlUtil.getString(XmlUtil.getText(e), elp));
-			}else if ("error".equals(e.getAttribute("level"))){
+			} else if ("error".equals(e.getAttribute("level"))) {
 				logger.error(XmlUtil.getString(XmlUtil.getText(e), elp));
-			}else if ("trace".equals(e.getAttribute("level"))){
+			} else if ("trace".equals(e.getAttribute("level"))) {
 				logger.trace(XmlUtil.getString(XmlUtil.getText(e), elp));
-			}else{
+			} else {
 				logger.debug(XmlUtil.getString(XmlUtil.getText(e), elp));
 			}
 		}

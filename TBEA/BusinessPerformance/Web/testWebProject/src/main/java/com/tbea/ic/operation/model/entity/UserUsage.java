@@ -24,6 +24,15 @@ public class UserUsage extends AbstractReadWriteEntity implements Serializable {
 	Timestamp logoutTime;
 	Timestamp lastAccessedTime;
 	String ip;
+	String reqs;
+	public String getReqs() {
+		return reqs;
+	}
+
+	public void setReqs(String reqs) {
+		this.reqs = reqs;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")

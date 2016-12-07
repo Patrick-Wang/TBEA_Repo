@@ -51,7 +51,7 @@
 			60000
 		</list>
   <context key="companies" value="${orgs.BMDBOrganization.companiesByIds[dwids]}"/>
-  <call id="ndjh" object="${accFactory.njhAcc" method="compute">
+  <call id="ndjh" object="${accFactory.njhAcc}" method="compute">
    <param type="int">0</param>
    <param type="date">${cal.date}</param>
    <param type="date">${cal.date}</param>

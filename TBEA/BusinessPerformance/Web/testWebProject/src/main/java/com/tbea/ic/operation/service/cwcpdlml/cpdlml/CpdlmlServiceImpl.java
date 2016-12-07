@@ -40,7 +40,7 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 		for (int i = end; i >= 0; --i){
 			List<String> line = result.get(i);
 			line.set(3, "" + MathUtil.division(MathUtil.toDouble(line.get(2)), MathUtil.toDouble(hj.get(2))));
-			line.set(5, "" + MathUtil.minus(MathUtil.toDouble(line.get(4)), MathUtil.toDouble(line.get(2))));
+			line.set(5, "" + MathUtil.minus(MathUtil.toDouble(line.get(2)), MathUtil.toDouble(line.get(4))));
 			line.set(6, "" + MathUtil.division(MathUtil.toDouble(line.get(5)), MathUtil.toDouble(hj.get(5))));
 			line.set(7, "" + MathUtil.division(MathUtil.toDouble(line.get(5)), MathUtil.toDouble(line.get(2))));
 			line.set(10, "" + MathUtil.division(

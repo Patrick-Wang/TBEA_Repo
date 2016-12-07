@@ -21,41 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="entry.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/entry.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.1">
-              <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="show.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts">
+      <file leaf-file-name="yszkrb.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/yszkrb.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="61" column="51" selection-start-line="61" selection-start-column="51" selection-end-line="61" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="util.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/jsp/util.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0529595">
-              <caret line="766" column="31" selection-start-line="766" selection-start-column="31" selection-end-line="766" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="entry.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.466666">
-              <caret line="23" column="14" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="14" />
+              <caret line="55" column="33" selection-start-line="55" selection-start-column="23" selection-end-line="55" selection-end-column="33" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -63,14 +33,36 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dateSelectorProxy.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/components/dateSelectorProxy.ts">
+      <file leaf-file-name="jquery-1.12.3.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/jquery/jquery-1.12.3.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="58" selection-start-line="21" selection-start-column="58" selection-end-line="21" selection-end-column="58" />
+            <state vertical-scroll-proportion="0.33333334">
+              <caret line="614" column="37" selection-start-line="614" selection-start-column="33" selection-end-line="614" selection-end-column="37" />
               <folding>
-                <marker date="1478050820599" expanded="true" signature="1383:1395" placeholder="..." />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jquery.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/jqgrid/js/jquery.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="yszkrb.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/yszkrb.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-19.428572">
+              <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -78,7 +70,7 @@
       <file leaf-file-name="dateSeasonSelector.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/components/dateSeasonSelector.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.5">
+            <state vertical-scroll-proportion="0.0">
               <caret line="183" column="29" selection-start-line="183" selection-start-column="29" selection-end-line="183" selection-end-column="29" />
               <folding />
             </state>
@@ -88,7 +80,7 @@
       <file leaf-file-name="entry.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.267857">
+            <state vertical-scroll-proportion="0.0">
               <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
               <folding />
             </state>
@@ -98,7 +90,7 @@
       <file leaf-file-name="entry.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/entry.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.192307">
+            <state vertical-scroll-proportion="0.0">
               <caret line="74" column="31" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="31" />
               <folding />
             </state>
@@ -108,7 +100,7 @@
       <file leaf-file-name="show.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/show.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.961538">
+            <state vertical-scroll-proportion="0.0">
               <caret line="58" column="81" selection-start-line="58" selection-start-column="81" selection-end-line="58" selection-end-column="81" />
               <folding />
             </state>
@@ -118,7 +110,7 @@
       <file leaf-file-name="show.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.1785715">
+            <state vertical-scroll-proportion="0.0">
               <caret line="56" column="121" selection-start-line="56" selection-start-column="121" selection-end-line="58" selection-end-column="0" />
               <folding />
             </state>
@@ -141,7 +133,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/index_IndexSummary.jsp" />
         <option value="$PROJECT_DIR$/jsp/sddb/sddb/sddb.js" />
         <option value="$PROJECT_DIR$/jsp/xnyzb/xnyzb/xnyzb.js" />
         <option value="$PROJECT_DIR$/jsp/sddb/sddbdef.ts" />
@@ -185,13 +176,14 @@
         <option value="$PROJECT_DIR$/jsp/sddb/sddb.jsp" />
         <option value="$PROJECT_DIR$/jsp/sddb/sddb/sddb.ts" />
         <option value="$PROJECT_DIR$/jsp/sddb/sddb.ts" />
-        <option value="$PROJECT_DIR$/jsp/entry_template.ts" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.ts" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/dateReport/show.jsp" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.jsp" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/dateReport/entry.jsp" />
         <option value="$PROJECT_DIR$/jsp/util.ts" />
+        <option value="$PROJECT_DIR$/jsp/entry_template.ts" />
+        <option value="$PROJECT_DIR$/jsp/yszkrb.ts" />
       </list>
     </option>
   </component>
@@ -256,6 +248,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -302,7 +295,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="util.ts" />
+              <option name="myItemId" value="yszkrb.ts" />
               <option name="myItemType" value="com.intellij.lang.typescript.compiler.ui.projectView.TypeScriptNestingTreeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -320,15 +313,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="singleDateReport" />
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -346,15 +331,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dateReport" />
+              <option name="myItemId" value="jqgrid" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -372,11 +349,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
+              <option name="myItemId" value="jqgrid" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
+              <option name="myItemId" value="themes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -394,13 +371,92 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="framework" />
+              <option name="myItemId" value="jqgrid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="themes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jquery-ui-1.11.1.custom" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jqgrid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsx" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jquery" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -504,17 +560,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="1" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16180556" sideWeight="0.6900149" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16180556" sideWeight="0.66766024" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12516297" sideWeight="0.4721166" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24380705" sideWeight="0.5278834" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17473118" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" x="3" y="335" width="1594" height="168" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16180556" sideWeight="0.3099851" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16180556" sideWeight="0.3323398" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -568,48 +624,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/byqcpycssbhgxxfb/byqcpycssbhgxxfb.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="407" column="19" selection-start-line="407" selection-start-column="19" selection-end-line="407" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/pdacptjjg/pdacptjjg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="94" selection-start-line="38" selection-start-column="94" selection-end-line="39" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/pdadwtjjg/pdadwtjjg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="97" selection-start-line="37" selection-start-column="97" selection-end-line="37" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/pdcpycssbhgwtmx/pdcpycssbhgwtmx.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="39" selection-end-column="103" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/pdcpycssbhgxxfb/pdcpycssbhgxxfb.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="103" selection-start-line="50" selection-start-column="103" selection-end-line="50" selection-end-column="103" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xlacptjjg/xlacptjjg.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="37" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/cpzlqk/xladydjtjjg/xladydjtjjg.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -705,9 +719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="53" selection-start-line="55" selection-start-column="53" selection-end-line="55" selection-end-column="53" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -715,7 +726,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="48" column="20" selection-start-line="48" selection-start-column="20" selection-end-line="48" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -723,15 +733,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.769231">
           <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/jqgrid/jqassist.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="882" column="0" selection-start-line="882" selection-start-column="0" selection-end-line="882" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -739,7 +740,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.982143">
           <caret line="226" column="72" selection-start-line="226" selection-start-column="12" selection-end-line="226" selection-end-column="72" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -747,14 +747,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29872206">
           <caret line="11" column="71" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="71" />
-          <folding>
-            <marker date="1478240199343" expanded="true" signature="6767:6780" placeholder="..." />
-            <marker date="1478240199343" expanded="true" signature="6837:6847" placeholder="..." />
-            <marker date="1478240199343" expanded="true" signature="8353:8366" placeholder="..." />
-            <marker date="1478240199343" expanded="true" signature="8427:8437" placeholder="..." />
-            <marker date="1478240199343" expanded="true" signature="11035:11048" placeholder="..." />
-            <marker date="1478240199343" expanded="true" signature="11109:11119" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -769,10 +761,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="272" column="9" selection-start-line="272" selection-start-column="9" selection-end-line="272" selection-end-column="9" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <marker date="1478225557154" expanded="true" signature="3640:3665" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -780,10 +768,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="293" column="34" selection-start-line="293" selection-start-column="25" selection-end-line="293" selection-end-column="34" />
-          <folding>
-            <marker date="1471226829184" expanded="true" signature="10123:10137" placeholder="..." />
-            <marker date="1471226829184" expanded="true" signature="10194:10204" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -791,7 +775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="62" column="9" selection-start-line="48" selection-start-column="8" selection-end-line="62" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -799,9 +782,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.35303515">
           <caret line="2947" column="7" selection-start-line="2947" selection-start-column="7" selection-end-line="2947" selection-end-column="7" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -816,7 +796,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="218" column="34" selection-start-line="218" selection-start-column="25" selection-end-line="218" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -824,7 +803,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="42" column="5" selection-start-line="18" selection-start-column="4" selection-end-line="42" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -832,7 +810,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -840,10 +817,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="134" column="66" selection-start-line="134" selection-start-column="55" selection-end-line="134" selection-end-column="66" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <marker date="1480405852321" expanded="true" signature="6688:6721" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -858,9 +831,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -868,19 +838,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="150" column="25" selection-start-line="150" selection-start-column="25" selection-end-line="150" selection-end-column="25" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/entry_template.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="40" selection-start-line="99" selection-start-column="40" selection-end-line="99" selection-end-column="40" />
-          <folding>
-            <marker date="1480493061409" expanded="true" signature="22155:22169" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -888,15 +845,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/entry.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.1">
+        <state vertical-scroll-proportion="0.0">
           <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -904,7 +859,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="61" column="51" selection-start-line="61" selection-start-column="51" selection-end-line="61" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -912,9 +866,52 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.211838">
           <caret line="115" column="50" selection-start-line="115" selection-start-column="50" selection-end-line="115" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/jqgrid/jqassist.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4657321">
+          <caret line="407" column="30" selection-start-line="407" selection-start-column="24" selection-end-line="407" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/util.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="766" column="31" selection-start-line="766" selection-start-column="31" selection-end-line="766" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/entry_template.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="330" column="47" selection-start-line="330" selection-start-column="47" selection-end-line="330" selection-end-column="47" />
           <folding>
-            <marker date="1476940906662" expanded="true" signature="1110:1120" placeholder="..." />
-            <marker date="1476940906662" expanded="true" signature="1195:1205" placeholder="..." />
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1480909121149" expanded="true" signature="22004:22018" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/entry_template.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="265" column="13" selection-start-line="265" selection-start-column="13" selection-end-line="265" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1481086836524" expanded="true" signature="21123:21137" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="14" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="14" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -931,59 +928,89 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/components/dateSeasonSelector.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5">
+        <state vertical-scroll-proportion="0.0">
           <caret line="183" column="29" selection-start-line="183" selection-start-column="29" selection-end-line="183" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.466666">
-          <caret line="23" column="14" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="14" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.1785715">
-          <caret line="56" column="121" selection-start-line="56" selection-start-column="121" selection-end-line="58" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/entry.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.267857">
+        <state vertical-scroll-proportion="0.0">
           <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/show.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.961538">
-          <caret line="58" column="81" selection-start-line="58" selection-start-column="81" selection-end-line="58" selection-end-column="81" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/entry.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.192307">
+        <state vertical-scroll-proportion="0.0">
           <caret line="74" column="31" selection-start-line="74" selection-start-column="31" selection-end-line="74" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/util.ts">
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/show.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0529595">
-          <caret line="766" column="31" selection-start-line="766" selection-start-column="31" selection-end-line="766" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="81" selection-start-line="58" selection-start-column="81" selection-end-line="58" selection-end-column="81" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="56" column="121" selection-start-line="56" selection-start-column="121" selection-end-line="58" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/yszkrb.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="33" selection-start-line="55" selection-start-column="23" selection-end-line="55" selection-end-column="33" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/yszkrb.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.428572">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/jqgrid/js/jquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/jqgrid/js/jquery-ui-custom.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2739726">
+          <caret line="5" column="45501" selection-start-line="5" selection-start-column="45501" selection-end-line="5" selection-end-column="45501" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/jquery/jquery-1.12.3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="614" column="37" selection-start-line="614" selection-start-column="33" selection-end-line="614" selection-end-column="37" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

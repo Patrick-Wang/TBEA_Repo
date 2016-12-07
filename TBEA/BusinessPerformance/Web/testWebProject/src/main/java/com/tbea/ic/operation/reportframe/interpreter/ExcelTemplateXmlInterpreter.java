@@ -17,8 +17,7 @@ public class ExcelTemplateXmlInterpreter implements XmlInterpreter {
 		if (!Schema.isExcelTemplate(e)){
 			return false;
 		}
-		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
-		
+	
 		String sheetName = XmlUtil.getString(e.getAttribute("sheet"), new ELParser(component));
 		HSSFWorkbook workbook = new HSSFWorkbook();
 		workbook.createSheet(sheetName);

@@ -51,6 +51,19 @@
 		<zh5 name="销量-电子铝箔（吨）" />
 		<zh6 name="销量-非电子箔（吨）" />
 		<zh7 name="销量-化成箔（万平米）" />
+		
+		<xny1 name="逆变器产值"/>
+		<xny2 name="销量-逆变器（MW）"/>
+		<xny3 name="产量-逆变器（MW）"/>
+		
+		<xny4 name="SVG产值"/>
+		<xny5 name="产量-SVG（Mvar）"/>
+		<xny6 name="销量-SVG（Mvar）"/>
+		
+		<xny7 name="硅片产值"/>
+		<xny8 name="产量-硅片（万片）"/>
+		<xny9 name="销量-硅片（万片）"/>
+		
 	</indicators>
 	<share indi="nltkxl,n1,n2,n3,n4" type="月实际,20预计,28预计,月计划,年计划">
 		<company id="7" />
@@ -75,7 +88,20 @@
 		<company id="13" />
 		<company id="1303" />
 	</share>
-
+	
+	<share indi="xny1,xny2,xny3" type="月实际,20预计,28预计,月计划,年计划">
+		<company id="9" />
+		<company id="903" />
+	</share>
+	<share indi="xny4,xny5,xny6" type="月实际,20预计,28预计,月计划,年计划">
+		<company id="9" />
+		<company id="911" />
+	</share>
+	<share indi="xny7,xny8,xny9" type="月实际,20预计,28预计,月计划,年计划">
+		<company id="9" />
+		<company id="905" />
+	</share>
+	
 	<sum type="月实际,20预计,28预计,月计划,年计划">
 		<target indi="mtxlzh">
 			<company id="7" />

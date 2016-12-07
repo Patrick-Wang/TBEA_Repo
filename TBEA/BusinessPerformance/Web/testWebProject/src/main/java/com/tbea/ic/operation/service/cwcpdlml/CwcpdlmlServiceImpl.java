@@ -74,7 +74,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imdu.m10038 dkq500cb,	" +	//今年累计500kV电销售成本
 	"	       imdu.m10012 dkq750cb,	" +	//今年累计750kV电销售成本
 	"	       imdz.m10341 dkq1000cb,	" +	//今年累计1000kV电销售成本
-	"	       imdz.m10315 dydjljcb	" +	//今年累计小计销售成本（按产品电压等级分类）
+	"	       (imd7.m10099 + imdu.m10246 + imdu.m10090) dydjljcb	" +	//今年累计小计销售成本（按产品电压等级分类）
 	"	  from iufo_measure_data_7zz4hjkz imd7	" +	
 	"	  left join iufo_measure_data_ukdj7hhy imdu	" +	
 	"	    on imd7.alone_id = imdu.alone_id	" +	
@@ -257,7 +257,7 @@ public class CwcpdlmlServiceImpl implements CwcpdlmlService {
 	"	       imdu.m10039 dkq500sr,	" +	//今年累计500kV电销售收入
 	"	       imdu.m10013 dkq750sr,	" +	//今年累计750kV电销售收入
 	"	       imdz.m10342 dkq1000sr,	" +	//今年累计1000kV电销售收入
-	"	       imdz.m10316 dydjljsr	" +	//今年累计小计销售收入(按电压等级分类)
+	"	       (imd7.m10100 +  imdu.m10247 + imdu.m10091) dydjljsr	" +	//今年累计小计销售收入(按电压等级分类)
 	"	  from iufo_measure_data_7zz4hjkz imd7	" +	
 	"	  left join iufo_measure_data_ukdj7hhy imdu	" +	
 	"	    on imd7.alone_id = imdu.alone_id	" +	

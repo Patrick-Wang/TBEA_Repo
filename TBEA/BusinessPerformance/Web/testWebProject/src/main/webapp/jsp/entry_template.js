@@ -264,20 +264,21 @@ var entry_template;
                     }
                 }
             }
-            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
-                var zbxxs = this.checkSum(submitData);
-                if (zbxxs.length != 0) {
-                    var zbxxs_1 = this.checkSum(submitData);
-                    if (zbxxs_1.length != 0) {
-                        var msg = "";
-                        for (var i_1 = 0; i_1 < zbxxs_1.length; ++i_1) {
-                            msg += "、" + zbxxs_1[i_1].name;
-                        }
-                        Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
-                        return;
-                    }
-                }
-            }
+            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+            //    let zbxxs:Zbxx[] = this.checkSum(submitData);
+            //    if (zbxxs.length != 0) {
+            //        let zbxxs:Zbxx[] = this.checkSum(submitData);
+            //        if (zbxxs.length != 0) {
+            //            let msg = "";
+            //            for (let i = 0; i < zbxxs.length; ++i){
+            //                msg += "、" + zbxxs[i].name;
+            //            }
+            //
+            //            Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+            //            return;
+            //        }
+            //    }
+            //}
             this.mSave.post({
                 year: date.year,
                 month: date.month,
@@ -317,20 +318,16 @@ var entry_template;
                 }
             }
             if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                //let zbxxs:Zbxx[] = this.checkSum(submitData);
+                //if (zbxxs.length != 0) {
                 var zbxxs = this.checkSum(submitData);
                 if (zbxxs.length != 0) {
-                    var zbxxs_2 = this.checkSum(submitData);
-                    if (zbxxs_2.length != 0) {
-                        var zbxxs_3 = this.checkSum(submitData);
-                        if (zbxxs_3.length != 0) {
-                            var msg = "";
-                            for (var i_2 = 0; i_2 < zbxxs_3.length; ++i_2) {
-                                msg += "、" + zbxxs_3[i_2].name;
-                            }
-                            Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
-                            return;
-                        }
+                    var msg = "";
+                    for (var i_1 = 0; i_1 < zbxxs.length; ++i_1) {
+                        msg += "、" + zbxxs[i_1].name;
                     }
+                    Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                    return;
                 }
             }
             this.mSubmit.post({
@@ -372,17 +369,16 @@ var entry_template;
                 }
             }
             if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                //let zbxxs:Zbxx[] = this.checkSum(submitData);
+                //if (zbxxs.length != 0) {
                 var zbxxs = this.checkSum(submitData);
                 if (zbxxs.length != 0) {
-                    var zbxxs_4 = this.checkSum(submitData);
-                    if (zbxxs_4.length != 0) {
-                        var msg = "";
-                        for (var i_3 = 0; i_3 < zbxxs_4.length; ++i_3) {
-                            msg += "、" + zbxxs_4[i_3].name;
-                        }
-                        Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
-                        return;
+                    var msg = "";
+                    for (var i_2 = 0; i_2 < zbxxs.length; ++i_2) {
+                        msg += "、" + zbxxs[i_2].name;
                     }
+                    Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                    return;
                 }
             }
             this.mSubmitToDeputy.post({
@@ -519,8 +515,8 @@ var entry_template;
             }
             if (Util.ZBType.BYSJ == this.mOpt.entryType) {
                 var disabledCell = [];
-                for (var i_4 = 0; i_4 < this.mZbxxs.length; ++i_4) {
-                    var zbxx = this.mZbxxs[i_4];
+                for (var i_3 = 0; i_3 < this.mZbxxs.length; ++i_3) {
+                    var zbxx = this.mZbxxs[i_3];
                     if (find(this.mTableData, zbxx.id) >= 0) {
                         for (var j_1 = 0; j_1 < zbxx.children.length; ++j_1) {
                             var cell_1 = this.parseZbxx(zbxx.children[j_1]);
@@ -605,11 +601,22 @@ var entry_template;
             if (row < 0) {
                 return undefined;
             }
-            var cells = [
-                new Cell(find(this.mTableData, 290), 1),
-                new Cell(find(this.mTableData, 299), 1),
-                new Cell(find(this.mTableData, 304), 1)
-            ];
+            var cells = [];
+            var cellTmp = new Cell(find(this.mTableData, 290), 1);
+            if (cellTmp.row() >= 0) {
+                cells.push(cellTmp);
+            }
+            cellTmp = new Cell(find(this.mTableData, 299), 1);
+            if (cellTmp.row() >= 0) {
+                cells.push(cellTmp);
+            }
+            cellTmp = new Cell(find(this.mTableData, 304), 1);
+            if (cellTmp.row() >= 0) {
+                cells.push(cellTmp);
+            }
+            if (cells.length == 0) {
+                return undefined;
+            }
             var dst = new Cell(row, 1);
             var form = new Formula(dst, cells, function (dest, srcs) {
                 var sum;

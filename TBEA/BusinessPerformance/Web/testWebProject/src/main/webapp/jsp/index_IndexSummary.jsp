@@ -122,10 +122,10 @@
 		</div>
 	</div>
 </div>
-<c:if test="${isJydw || scgsdbqx}">
+<c:if test="${isJydw || scgsdbqx || FinanceLookup}">
 	<div>
 		<h3>
-			财务指标情况<a name="NChz"> </a>
+			财务分析<a name="NChz"> </a>
 		</h3>
 		<div class="section">
 			<div class="thumb3">
@@ -144,6 +144,17 @@
 					<li><a href="../report/jjzjz.do" target="_blank"><img
 							src="../images/charts/bar2.png"> <span><strong>经济增加值</strong></span></a>
 					</li>
+					<c:if test="${FinanceLookup}">
+						<li><a href="../cwyjsf/show.do" target="_blank"><img
+								src="../images/charts/bar5.png"> <span><strong>财务-应交税费</strong></span></a>
+						</li>
+						<li><a href="../cwcpdlml/show.do" target="_blank"><img
+								src="../images/charts/bar8.png"> <span><strong>财务-产品大类毛利表</strong></span></a>
+						</li>
+						<li><a href="../cwgbjyxxjl/show.do" target="_blank"><img
+								src="../images/charts/bar4.png"> <span><strong>财务-经营性现金流</strong></span></a>
+						</li>
+					</c:if>
 				</ul>
 			</div>
 		</div>
@@ -195,19 +206,6 @@
 								src="../images/charts/scatter2.png"> <span><strong>新特能源日报</strong></span></a>
 						</li>
 					</c:if>
-					<c:if test="${zhJyfxLookupAuth}">
-						<li><a href="../report/zhgsljzbhz.do" target="_blank"><img
-								src="../images/charts/scatter3.png"> <span><strong>众和分子公司累计汇总</strong></span></a>
-						</li>
-						<li><a href="../report/zhgsydzbhz.do" target="_blank"><img
-								src="../images/charts/scatter4.png"> <span><strong>众和分子公司月度汇总</strong></span></a>
-						</li>
-						<li><a href="../report/zhgsfcyUnion.do" target="_blank"><img
-								src="../images/charts/bar5.png"> <span><strong>众和分产业关键指标汇报</strong></span></a>
-						</li>
-					</c:if>
-
-
 				</ul>
 			</div>
 		</div>
@@ -332,18 +330,31 @@
 		</div>
 	</div>
 </c:if>
-<c:if test="${zhzlLookup}">
+<c:if test="${zhzlLookup || zhJyfxLookupAuth}">
 	<div>
 		<h3>
-			众和质量指标<a name="zhzl"> </a>
+			众和指标<a name="zhzl"> </a>
 		</h3>
 		<div class="section">
 			<div class="thumb3">
 				<ul class="slides">
+					<c:if test="${zhzlLookup}">
+						<li><a href="../report/zhzl.do" target="_blank"><img
+								src="../images/charts/bar3.png"> <span><strong>众和质量指标</strong></span></a>
+						</li>
+					</c:if>
 
-					<li><a href="../report/zhzl.do" target="_blank"><img
-							src="../images/charts/bar3.png"> <span><strong>众和质量指标</strong></span></a>
-					</li>
+					<c:if test="${zhJyfxLookupAuth}">
+						<li><a href="../report/zhgsljzbhz.do" target="_blank"><img
+								src="../images/charts/scatter3.png"> <span><strong>众和分子公司累计汇总</strong></span></a>
+						</li>
+						<li><a href="../report/zhgsydzbhz.do" target="_blank"><img
+								src="../images/charts/scatter4.png"> <span><strong>众和分子公司月度汇总</strong></span></a>
+						</li>
+						<li><a href="../report/zhgsfcyUnion.do" target="_blank"><img
+								src="../images/charts/bar5.png"> <span><strong>众和分产业关键指标汇报</strong></span></a>
+						</li>
+					</c:if>
 
 				</ul>
 			</div>

@@ -50,7 +50,7 @@ public class CpdlmlDaoImpl extends AbstractReadWriteDaoImpl<CpdlmlEntity> implem
 	public CpdlmlEntity getSumByDate(Date d, Integer cpid, List<Company> comps) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
-		Query q = this.getEntityManager().createQuery("select sum(ljsr) as sr, sum(ljcb) as cb from CpdlmlEntity where nf=:nf and yf=:yf and cpdl = :cpid and dwid in :dwids");
+		Query q = this.getEntityManager().createQuery("select sum(ljcb) as cb, sum(ljsr) as sr from CpdlmlEntity where nf=:nf and yf=:yf and cpdl = :cpid and dwid in :dwids");
 		q.setParameter("nf", cal.get(Calendar.YEAR));
 		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
 		q.setParameter("cpid", cpid);

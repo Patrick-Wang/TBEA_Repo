@@ -48,7 +48,7 @@ var yszkrb;
                 showMonthAfterYear: true,
                 defaultDate: year + "/" + month + "/" + day,
                 //            minDate:'2011-03-05',//最小日期  
-                maxDate: year + "/" + month + "/" + day,
+                // maxDate: year + "/" + month + "/" + day,//最大日期
                 monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
                 dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
                 dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],

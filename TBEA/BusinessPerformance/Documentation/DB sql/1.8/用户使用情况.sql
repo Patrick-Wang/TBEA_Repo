@@ -1,0 +1,1 @@
+alter table user_usage add reqs text

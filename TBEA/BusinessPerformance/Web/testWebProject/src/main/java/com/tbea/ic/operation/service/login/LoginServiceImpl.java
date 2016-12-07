@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import javax.annotation.Resource;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.slf4j.LoggerFactory;
@@ -108,7 +109,7 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public void logout(Account account, long creationTime,
-			long lastAccessedTime, String ip) {
+			long lastAccessedTime, String ip, JSONArray reqs) {
 		LoggerFactory.getLogger("ACCOUNT").info("logout");
 		UserUsage userUsage = new UserUsage();
 		userUsage.setUserId(account.getId());
@@ -117,6 +118,7 @@ public class LoginServiceImpl implements LoginService {
 		userUsage.setLastAccessedTime(new Timestamp(lastAccessedTime));
 		userUsage.setLogoutTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 		userUsage.setIp(ip);
+		userUsage.setReqs(reqs.toString());
 //		LoggerFactory.getLogger("ACCOUNT").info(JSONObject.fromObject(userUsage).toString());
 		userUsageDao.merge(userUsage);
 	}
