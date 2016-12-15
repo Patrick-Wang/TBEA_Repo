@@ -18,6 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.Session;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -65,11 +66,19 @@ import com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation.Validat
 
 public class MergeXmlInterpreter implements XmlInterpreter {
 
+	
+	private final int UPDATE_COUNT = 200;
+	private final int INSERT_COUNT = 200;
+	private final int FLUSH_COUNT = 400;
+	
 	ELParser elp;
 	List<FieldSql> where;
 	List<FieldSql> set;
 	StringBuilder insertValues;
+	StringBuilder updateValues;
 	int insertCount;
+	int updateCount;
+	int flushCount;
 	AbstractXmlComponent component;
 
 	private int getTypes(Map<Integer, Integer> types) {
@@ -184,19 +193,31 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			mergeIterator((Iterator) dataObj, em, table);
 		}
 
+		completeUpdate(em);
 		completeInsert(em);
 
 		this.component.removeLocal("i");
 		return true;
 	}
 
+	
+	private void updateSql(EntityManager em, String sql){
+		ReportLogger.trace().info(sql);
+		em.createNativeQuery(sql).executeUpdate();
+		if (flushCount % FLUSH_COUNT == 0){
+			em.flush();
+			Session session = (Session)em.getDelegate();
+			session.clear();
+			ReportLogger.trace().info("flush count " + flushCount);
+		}
+	}
+	
 	private void completeInsert(EntityManager em) {
 		if (null != insertValues) {
 			String insertSql = insertValues.toString();
 			insertValues = null;
-			insertCount = 0;
-			ReportLogger.trace().info(insertSql);
-			em.createNativeQuery(insertSql).executeUpdate();
+			updateSql(em, insertSql);	
+			ReportLogger.trace().info("insert count " + updateCount);
 		}
 	}
 
@@ -423,7 +444,12 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			} while (false);
 
 			if (!doInsert) {
-				doUpdate(em, table, row);
+				String whereSql = parseWhereSql(em, row);
+				if (null != whereSql){
+					doUpdate(em, table, whereSql, row);
+				}else{
+					doInsert(em, table, row, set);
+				}				
 			}
 		}
 		component.removeLocal("row");
@@ -452,6 +478,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		return bRet;
 	}
 
+	
 	private void doInsert(EntityManager em, String table, JSONArray row,
 			List<FieldSql> set) {
 		if (!set.isEmpty()) {
@@ -480,7 +507,8 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			}
 			insertValues.append(")");
 			++insertCount;
-			if (insertCount == 200) {
+			++flushCount;
+			if (insertCount % INSERT_COUNT == 0) {
 				completeInsert(em);
 			}
 		}
@@ -503,37 +531,68 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		return null;
 	}
 
-	private void doUpdate(EntityManager em, String table, JSONArray row) {
-		String whereSql = parseWhereSql(em, row);
-		Integer count = 0;
-		if (null != whereSql) {
-			String sql = "select count(*) from " + table + whereSql;
-			List ret = em.createNativeQuery(sql).getResultList();
-			ReportLogger.trace().info(sql);
-			count = (Integer) ret.get(0);
-		}
-		if (count > 0) {
-			StringBuilder sb = new StringBuilder();
-			sb.append(" UPDATE ");
-			sb.append(table);
-			sb.append(" ");
-			if (!set.isEmpty()) {
-				sb.append(" SET ");
-				for (FieldSql setSql : set) {
-					sb.append(setSql.getProp());
-					sb.append("=");
-					sb.append(getQueryValue(row, setSql, em));
-					if (setSql != set.get(set.size() - 1)) {
-						sb.append(", ");
-					}
-				}
+	private void doUpdate(EntityManager em, String table, String whereSql, JSONArray row) {
+		StringBuilder sbUpdate = new StringBuilder();
+		sbUpdate.append(" UPDATE ")
+		.append(table)
+		.append(" set ");
+
+		StringBuilder sbInsert = new StringBuilder();	
+		sbInsert.append(" INSERT INTO ");
+		sbInsert.append(table);
+		sbInsert.append(" (");
+		
+		StringBuilder sbInsertValues = new StringBuilder();
+		sbInsertValues.append(") VALUES ( ");	
+
+		String prop = null;
+		String value = null;
+		for (FieldSql setSql : set) {
+			prop = setSql.getProp();
+			value = getQueryValue(row, setSql, em);
+			
+			sbInsert.append(prop);
+			sbInsertValues.append(value);
+			
+			sbUpdate.append(prop);
+			sbUpdate.append("=");
+			sbUpdate.append(value);
+			
+			if (setSql != set.get(set.size() - 1)) {
+				sbInsert.append(", ");
+				sbInsertValues.append(", ");
+				sbUpdate.append(", ");
 			}
-			sb.append(whereSql);
-			String sql = sb.toString();
-			ReportLogger.logger().info(sql);
-			em.createNativeQuery(sql).executeUpdate();
-		} else {
-			doInsert(em, table, row, set);
+		}
+		sbInsert
+		.append(sbInsertValues.toString())
+		.append(")");
+		if (updateValues == null){
+			updateValues = new StringBuilder();
+		}
+
+		updateValues.append("\r\nif exists (select * from ")
+		.append(table)
+		.append(whereSql)
+		.append(")\r\n\t")
+		.append(sbUpdate.toString())
+		.append("\r\nelse \r\n\t")
+		.append(sbInsert.toString());
+		
+		++flushCount;
+		++updateCount;
+
+		if (this.updateCount % UPDATE_COUNT == 0){
+			completeUpdate(em);
+		}
+	}
+
+	private void completeUpdate(EntityManager em) {
+		if (null != updateValues) {
+			String sql = updateValues.toString();
+			updateValues = null;
+			updateSql(em, sql);	
+			ReportLogger.trace().info("update count " + updateCount);			
 		}
 	}
 

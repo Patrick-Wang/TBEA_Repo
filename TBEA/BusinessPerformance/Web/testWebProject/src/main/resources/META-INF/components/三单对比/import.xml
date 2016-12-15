@@ -82,7 +82,7 @@
     <voltage type="string" ref="${counter.next.val}"/>
     <capacity type="string" ref="${counter.next.val}"/>
     <number type="double" ref="${counter.next.val}"/>
-    <code type="string" ref="${counter.next.val}" test="${this != null}"/>
+    <code type="string" ref="${counter.next.val}"/>
     <tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <win_bid_silicon_steel_grades type="string" ref="${counter.next.val}"/>

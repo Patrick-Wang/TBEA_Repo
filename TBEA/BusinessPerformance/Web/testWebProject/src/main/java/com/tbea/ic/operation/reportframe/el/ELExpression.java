@@ -186,7 +186,7 @@ public class ELExpression{
 			}catch(ELInitObjectNotExist e){
 				if (!jsKeyWords.contains(e.getMessage())){
 					if (!Pattern.compile("var\\s+" + e.getMessage()).matcher(expression).find()){
-						e.printStackTrace();
+//						e.printStackTrace();
 					}					
 				}
 			}

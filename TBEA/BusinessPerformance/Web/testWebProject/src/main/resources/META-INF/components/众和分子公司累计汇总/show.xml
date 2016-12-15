@@ -120,7 +120,7 @@
 		<context key="wxsr" value="${336}"/>
 		<context key="yszk" value="${32}"/>
 		<context key="ch" value="${35}"/>
-		<context key="fdl" value="${85}"/>
+		<context key="fdl" value="${73}"/>
 		
 		<list id="lrxswxys" type="int">
 			${lrze},${xssr},${wxsr},${yszk}
@@ -132,8 +132,8 @@
 		<list id="xswxysch" type="int">
 			${xssr},${wxsr},${yszk},${ch}
 		</list>
-		<list id="lrxsysch" type="int">
-			${lrze},${xssr},${yszk},${ch}
+		<list id="lrwxysch" type="int">
+			${lrze},${wxsr},${yszk},${ch}
 		</list>
 		<list id="fdlr" type="int">
 			${fdl},${lrze}
@@ -198,7 +198,6 @@
 			<item index="26">${var njh = ndjh[26]; njh == null ? null : njh * 0.15}</item>
 			<item index="40">${var njh = ndjh[40]; njh == null ? null : njh * 0.1}</item>
 		</list>
-		
 		<call id="jdjh" object="${accFactory.yjhByGroup}" method="computeByCompanies">
 			<param type="int">0</param>
 			<param type="date">${cal.seasonStart.date}</param>
@@ -239,42 +238,42 @@
 			<param type="int">0</param>
 			<param type="date">${cal.date}</param>
 			<param type="date">${cal.date}</param>
-			<param type="object">${lrxsysch}</param>
+			<param type="object">${lrwxysch}</param>
 			<param type="object">${comps}</param>
 		</call>
 		<call id="jdjhhj" object="${accFactory.yjhByGroup}" method="computeByZbs">
 			<param type="int">0</param>
 			<param type="date">${cal.seasonStart.date}</param>
 			<param type="date">${cal.date}</param>
-			<param type="object">${lrxsysch}</param>
+			<param type="object">${lrwxysch}</param>
 			<param type="object">${comps}</param>
 		</call>
 		<call id="jdljhj" object="${accFactory.sjByGroup}" method="computeByZbs">
 			<param type="int">0</param>
 			<param type="date">${cal.seasonStart.date}</param>
 			<param type="date">${cal.date}</param>
-			<param type="object">${lrxsysch}</param>
+			<param type="object">${lrwxysch}</param>
 			<param type="object">${comps}</param>
 		</call>
 		<call id="jdljqntqhj" object="${accFactory.sjByGroup}" method="computeByZbs">
 			<param type="int">0</param>
 			<param type="date">${cal.lastYear.seasonStart.date}</param>
 			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${lrxsysch}</param>
+			<param type="object">${lrwxysch}</param>
 			<param type="object">${comps}</param>
 		</call>
 		<call id="ndljhj" object="${accFactory.sjByGroup}" method="computeByZbs">
 			<param type="int">0</param>
 			<param type="date">${cal.months[1].date}</param>
 			<param type="date">${cal.date}</param>
-			<param type="object">${lrxsysch}</param>
+			<param type="object">${lrwxysch}</param>
 			<param type="object">${comps}</param>
 		</call>
 		<call id="ndljqntqhj" object="${accFactory.sjByGroup}" method="computeByZbs">
 			<param type="int">0</param>
 			<param type="date">${cal.lastYear.months[1].date}</param>
 			<param type="date">${cal.lastYear.date}</param>
-			<param type="object">${lrxsysch}</param>
+			<param type="object">${lrwxysch}</param>
 			<param type="object">${comps}</param>
 		</call> 
 
@@ -298,26 +297,98 @@
 				<item concat="jdlj"/>
 				<item concat="jdljhj"/>
 			</list>
-			<col instruction="季度计划完成率" />
+			<col instruction="完成率">${
+	function wcl(){
+		var sub = cols[4][i];
+		var base = cols[3][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
 			<list type="double"> 
 				<item concat="jdljqntq"/>
 				<item concat="jdljqntqhj"/>
 			</list>
-			<col instruction="同比增幅" />
+			<col instruction="同比增幅" >${
+	function tbzf(){
+		var sj = cols[4][i];
+		var tq = cols[6][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
 			<list type="double">
 				<item concat="ndlj"></item>
 				<item concat="ndljhj"></item>
 			</list>
-			<col instruction="年计划完成率" />
+			<col instruction="年计划完成率" >${
+	function wcl(){
+		var sub = cols[8][i];
+		var base = cols[2][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
 			<list type="double">
 				<item concat="ndljqntq"></item>
 				<item concat="ndljqntqhj"></item>
 			</list>
-			<col instruction="同比增幅" />
-			<divCol toCol="5" sub="4" base="3" />
-			<growthRates toCol="7" sj="4" tq="6" />
-			<divCol toCol="9" sub="8" base="2" />
-			<growthRates toCol="11" sj="8" tq="10" />
+			<col instruction="同比增幅" >${
+	function tbzf(){
+		var sj = cols[8][i];
+		var tq = cols[10][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
 		</table>
 	</service>
 

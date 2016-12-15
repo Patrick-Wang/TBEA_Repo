@@ -5,16 +5,16 @@
 	sum(not_tax_inclusive_price) tip,
 	sum(win_bid_gross_profit_amount) gp,
 	sum(win_bid_gross_profit_amount) / nullif(sum(not_tax_inclusive_price),0) mll,
-	sum(win_bid_silicon_steel_price) wbssp,
+	sum(win_bid_silicon_steel_price * win_bid_silicon_steel_amount) / nullif(sum(win_bid_silicon_steel_amount), 0) wbssp,
 	sum(win_bid_silicon_steel_amount) wbssa,
-	sum(win_bid_ele_copper_price) wbecp,
+	sum(win_bid_ele_copper_price * win_bid_ele_copper_amount) / nullif(sum(win_bid_ele_copper_amount), 0) wbecp,
 	sum(win_bid_ele_copper_amount) wbeca,
 	sum(win_bid_ele_copper_process_cost) wbecpc,
-	sum(win_bid_insulating_oil_price) wbiop,
+	sum(win_bid_insulating_oil_price * win_bid_insulating_oil_amount) / nullif(sum(win_bid_insulating_oil_amount), 0) wbiop,
 	sum(win_bid_insulating_oil_amount) wbioa,
-	sum(win_bid_cardboard_price) wbcp,
+	sum(win_bid_cardboard_price * win_bid_cardboard_amount) / nullif(sum(win_bid_cardboard_amount), 0) wbcp,
 	sum(win_bid_cardboard_amount) wbca,
-	sum(win_bid_rolled_steel_price) wbrsp,
+	sum(win_bid_rolled_steel_price * win_bid_rolled_steel_amount) / nullif(sum(win_bid_rolled_steel_amount), 0) wbrsp,
 	sum(win_bid_rolled_steel_amount) wbrsa,
 	sum(win_bid_other_material_cost) wbomc,
 	sum(labour_cost) lc,
@@ -32,16 +32,16 @@ group by
 	sum(not_tax_inclusive_price) tip,
 	sum(win_bid_gross_profit_amount) gp,
 	sum(win_bid_gross_profit_amount) / nullif(sum(not_tax_inclusive_price),0) mll,
-	sum(win_bid_silicon_steel_price) wbssp,
+	sum(win_bid_silicon_steel_price * win_bid_silicon_steel_amount) / nullif(sum(win_bid_silicon_steel_amount), 0) wbssp,
 	sum(win_bid_silicon_steel_amount) wbssa,
-	sum(win_bid_ele_copper_price) wbecp,
+	sum(win_bid_ele_copper_price * win_bid_ele_copper_amount) / nullif(sum(win_bid_ele_copper_amount), 0) wbecp,
 	sum(win_bid_ele_copper_amount) wbeca,
 	sum(win_bid_ele_copper_process_cost) wbecpc,
-	sum(win_bid_insulating_oil_price) wbiop,
+	sum(win_bid_insulating_oil_price * win_bid_insulating_oil_amount) / nullif(sum(win_bid_insulating_oil_amount), 0) wbiop,
 	sum(win_bid_insulating_oil_amount) wbioa,
-	sum(win_bid_cardboard_price) wbcp,
+	sum(win_bid_cardboard_price * win_bid_cardboard_amount) / nullif(sum(win_bid_cardboard_amount), 0) wbcp,
 	sum(win_bid_cardboard_amount) wbca,
-	sum(win_bid_rolled_steel_price) wbrsp,
+	sum(win_bid_rolled_steel_price * win_bid_rolled_steel_amount) / nullif(sum(win_bid_rolled_steel_amount), 0) wbrsp,
 	sum(win_bid_rolled_steel_amount) wbrsa,
 	sum(win_bid_other_material_cost) wbomc,
 	sum(labour_cost) lc,
@@ -232,10 +232,22 @@ where
   <response type="excel" ref="excelTemplate" name="中标产品型号汇总表 .xls" serv="servFmt"/>
  </controller>
  
+  <service id="servModelZbFdwXh" transaction="transactionManager">
+  <sql id="xhxx">select 
+	row_number() over(order by (select 0)) AS ROWNUM,
+	convert(varchar(200), model) md
+from
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS
+where
+	company_name in ${dwmcs}</sql>
+  <list id="ids" type="int" sql="xhxx" value="0"/>
+  <list id="values" type="string" sql="xhxx" value="1"/>
+ </service>
+ 
  <controller id="WinBidModelCollection">
   <context key="compIds" value="${authIds[61]}"/>
   <context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compIds]}"/>
-  <callservice id="servModelFdwXh" inline="true"/>
+  <callservice id="servModelZbFdwXh" inline="true"/>
   <response type="jsp" name="sddb/sddb">   
    <map key="itemLabel" value="产品型号:"/>
    <map key="date" value="${calendar.current.format}"/>

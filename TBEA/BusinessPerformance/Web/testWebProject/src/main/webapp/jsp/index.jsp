@@ -135,11 +135,11 @@
 										class="ec-icon ec-icon-line"></i> <a href="#ssgsdbsj"
 										style="color: rgb(62, 152, 197);">上市公司对标数据</a></li>
 								</c:if>
-								<c:if test="${gcyzbLookup || gcyzbImport}">
+								<%-- <c:if test="${gcyzbLookup || gcyzbImport}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#gcyzb"
 										style="color: rgb(62, 152, 197);">工程一张表</a></li>
-								</c:if>
+								</c:if> --%>
 								<c:if test="${sddbLookup || sddbImport}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#sddb"
@@ -198,7 +198,7 @@
 										class="ec-icon ec-icon-line"></i> <a href="#nycyjybb"
 										style="color: rgb(62, 152, 197);">能源产业经营报表</a></li>
 								</c:if>
-								<c:if test="${XnygbLookup}">
+								<c:if test="${XnygbLookup || gcyzbLookup || gcyzbImport || xnyJyfxLookupAuth}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#xnycyjybb"
 										style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
@@ -379,7 +379,7 @@
 						<c:if test="${NygbLookup}">
 							<%@include file="index_IndexBusinessReportsNY.jsp"%>
 						</c:if>
-						<c:if test="${XnygbLookup}">
+						<c:if test="${XnygbLookup  || gcyzbLookup || gcyzbImport || xnyJyfxLookupAuth}">
 							<%@include file="index_IndexBusinessReportsXNY.jsp"%>
 						</c:if>
 	<%-- 					<c:if test="${FinanceLookup}">

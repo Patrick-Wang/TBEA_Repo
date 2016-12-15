@@ -12,6 +12,9 @@ insert into system_extend_auth (account_id, company_id, auth_type) values
 (106, 1305,63),
 (107, 1306,63),
 
+((select id from jygk_account where name = '629061'), 13, 34),
+((select id from jygk_account where name = '538890'), 13, 34),
+
 ((select id from jygk_account where name = '130182'), 1301,64),
 ((select id from jygk_account where name = '130182'), 1302,64),
 ((select id from jygk_account where name = '130182'), 1303,64),

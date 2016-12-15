@@ -21,7 +21,7 @@ var xjlrb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -106,7 +106,7 @@ var xjlrb;
                 ["国际工程公司"],
                 ["工程小计"],
                 ["机关本部"],
-                ["采购中心"],
+                //["采购中心"],
                 ["资金中心"],
                 ["公司机关小计"],
                 ["香港公司"],
@@ -149,6 +149,6 @@ var xjlrb;
             }));
         };
         return View;
-    }());
+    })();
     xjlrb.View = View;
 })(xjlrb || (xjlrb = {}));

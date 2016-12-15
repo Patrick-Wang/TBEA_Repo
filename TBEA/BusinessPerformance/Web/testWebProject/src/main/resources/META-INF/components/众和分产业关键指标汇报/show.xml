@@ -147,19 +147,133 @@
    <col list="jdjh"/>
    <col list="dyjh"/>
    <col list="dysj"/>
-   <col instruction="计划完成率"/>
+   <col instruction="计划完成率">${
+	function wcl(){
+		var sub = cols[5][i];
+		var base = cols[4][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="dyqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[5][i];
+		var tq = cols[7][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <col list="cyyj"/>
    <col list="myyj"/>
    <col list="jdyjhj"/>
-   <col instruction="季度预计完成率"/>
+   <col instruction="季度预计完成率">${
+	function wcl(){
+		var sub = cols[11][i];
+		var base = cols[3][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="jdyjhjqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[11][i];
+		var tq = cols[13][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <col list="ndljwc"/>
-   <col instruction="年度指标完成率"/>
+   <col instruction="年度指标完成率">${
+	function wcl(){
+		var sub = cols[15][i];
+		var base = cols[2][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="ndljwcqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[15][i];
+		var tq = cols[17][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <sumRow toId="20000">
     <excludeCol>0,1,6,8,12,14,16,18</excludeCol>
     <rangeRows>0, ${zzy.size - 1}</rangeRows>
@@ -178,12 +292,6 @@
     <excludeCol>0,1,6,12,16,18</excludeCol>
     <inIds>20000,20001,20002</inIds>
    </sumRow>
-   <divCol toCol="6" sub="5" base="4"/>
-   <growthRates toCol="8" sj="5" tq="7"/>
-   <divCol toCol="12" sub="11" base="3"/>
-   <growthRates toCol="14" sj="11" tq="13"/>
-   <divCol toCol="16" sub="15" base="2"/>
-   <growthRates toCol="18" sj="15" tq="17"/>
   </table>
  </service>
  <service id="servZhgsfcySeasonMid" transaction="transactionManager">
@@ -279,22 +387,174 @@
    <col list="jdjh"/>
    <col list="dyjh"/>
    <col list="dysj"/>
-   <col instruction="计划完成率"/>
+   <col instruction="计划完成率">${
+	function wcl(){
+		var sub = cols[5][i];
+		var base = cols[4][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="dyqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[5][i];
+		var tq = cols[7][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <col list="jdlj"/>
-   <col instruction="季度累计完成率"/>
+   <col instruction="季度累计完成率">${
+	function wcl(){
+		var sub = cols[9][i];
+		var base = cols[3][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="jdljqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[9][i];
+		var tq = cols[11][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <col list="myyj"/>
    <col list="jdyjhj"/>
-   <col instruction="季度预计完成率"/>
+   <col instruction="季度预计完成率">${
+	function wcl(){
+		var sub = cols[14][i];
+		var base = cols[3][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="jdyjhjqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[14][i];
+		var tq = cols[16][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <col list="ndljwc"/>
-   <col instruction="年度指标完成率"/>
+   <col instruction="年度指标完成率">${
+	function wcl(){
+		var sub = cols[18][i];
+		var base = cols[2][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="ndljwcqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[18][i];
+		var tq = cols[20][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <sumRow toId="20000">
     <excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
     <rangeRows>0, ${zzy.size - 1}</rangeRows>
@@ -313,14 +573,6 @@
     <excludeCol>0,1,6,8,10,12,15,17,19,21</excludeCol>
     <inIds>20000,20001,20002</inIds>
    </sumRow>
-   <divCol toCol="6" sub="5" base="4"/>
-   <growthRates toCol="8" sj="5" tq="7"/>
-   <divCol toCol="10" sub="9" base="3"/>
-   <growthRates toCol="12" sj="9" tq="11"/>
-   <divCol toCol="15" sub="14" base="3"/>
-   <growthRates toCol="17" sj="14" tq="16"/>
-   <divCol toCol="19" sub="18" base="2"/>
-   <growthRates toCol="21" sj="18" tq="20"/>
   </table>
  </service>
  <service id="servZhgsfcySeasonEnd" transaction="transactionManager">
@@ -452,26 +704,197 @@
    <col list="xjdjh"/>
    <col list="dyjh"/>
    <col list="dysj"/>
-   <col instruction="计划完成率"/>
+   <col instruction="计划完成率">${
+	function wcl(){
+		var sub = cols[6][i];
+		var base = cols[5][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="dyqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[6][i];
+		var tq = cols[8][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <col list="jdlj"/>
-   <col instruction="季度累计完成率"/>
+   <col instruction="季度累计完成率">${
+	function wcl(){
+		var sub = cols[10][i];
+		var base = cols[3][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="jdljqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[10][i];
+		var tq = cols[12][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <col list="ndljwc"/>
-   <col instruction="年度累计完成率"/>
+   <col instruction="年度累计完成率">${
+	function wcl(){
+		var sub = cols[14][i];
+		var base = cols[3][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="ndljwcqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[14][i];
+		var tq = cols[16][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <col list="xjdsyyj"/>
    <col list="xjdcyyj"/>
    <col list="xjdmyyj"/>
    <col list="xjdyjhj"/>
-   <col instruction="季度预计完成率"/>
+   <col instruction="季度预计完成率">${
+	function wcl(){
+		var sub = cols[21][i];
+		var base = cols[4][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="xjdndljwc"/>
-   <col instruction="年度累计完成率"/>
+   <col instruction="年度累计完成率">${
+	function wcl(){
+		var sub = cols[23][i];
+		var base = cols[27][i];
+		if (sub == null || base == null){
+			return null;
+		}
+		
+		if (base &gt; 0){
+			return sub / base;
+		}
+		
+		if (base &lt; 0){
+			return 2 - sub / base;
+		}
+		
+		return null;
+	}
+	wcl();
+}</col>
    <col list="xjdndljwcqntq"/>
-   <col instruction="同比增幅"/>
+   <col instruction="同比增幅">${
+	function tbzf(){
+		var sj = cols[23][i];
+		var tq = cols[25][i];
+		if (sj == null || tq == null){
+			return null;
+		}
+		
+		if (tq &gt; 0){
+			return sj / tq - 1;
+		}
+		
+		if (tq &lt; 0){
+			return 1 - sj / tq;
+		}
+		
+		return null;
+	}
+	tbzf();
+}</col>
    <col list="xjdndjh" temp="true"/>
    <sumRow toId="20000">
     <excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
@@ -491,15 +914,6 @@
     <excludeCol>0,1,7,9,11,13,15,17,22,24,26</excludeCol>
     <inIds>20000,20001,20002</inIds>
    </sumRow>
-   <divCol toCol="7" sub="6" base="5"/>
-   <growthRates toCol="9" sj="6" tq="8"/>
-   <divCol toCol="11" sub="10" base="3"/>
-   <growthRates toCol="13" sj="10" tq="12"/>
-   <divCol toCol="15" sub="14" base="3"/>
-   <growthRates toCol="17" sj="14" tq="16"/>
-   <divCol toCol="22" sub="21" base="4"/>
-   <divCol toCol="24" sub="23" base="27"/>
-   <growthRates toCol="26" sj="23" tq="25"/>
   </table>
  </service>
  <controller id="clrFmtterSeasonStart">
@@ -1003,8 +1417,8 @@
   <callcontroller id="zhgsfcyUpdate"/>
  </controller>
  <controller id="zhgsfcyUnion">
- 	<list id="ids" type="int">0, 1, 2</list>
- 	<list id="vals" type="string">利润总额, 销售收入, 外销收入</list>
+  <list id="ids" type="int">0, 1, 2</list>
+  <list id="vals" type="string">利润总额, 销售收入, 外销收入</list>
   <response type="jsp" name="framework/templates/dateReport/show">
    <map key="date" value="${calendar.current.format}"/>
    <map key="dateEnd" value="${calendar.current.months[12].format}"/>

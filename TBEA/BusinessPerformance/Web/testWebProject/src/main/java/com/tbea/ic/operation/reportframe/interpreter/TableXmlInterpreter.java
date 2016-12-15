@@ -1,9 +1,9 @@
 package com.tbea.ic.operation.reportframe.interpreter;
 
-import java.util.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,6 +12,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.MathUtil;
+import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.entity.Table;
@@ -27,7 +28,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	ListXmlInterpreter listInterpreter = new ListXmlInterpreter();
 	
 	List<Integer> tempCols;
-	
+	List<Pair<Integer, Element>> delayCols = new ArrayList<Pair<Integer, Element>>();
 	private void putTemp(Integer col){
 		if (tempCols == null){
 			tempCols = new ArrayList<Integer>();
@@ -101,15 +102,21 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			
 		});
 		
+		handleDelays(component, tb);
 		
 		if (e.hasAttribute("order") ){
 			parseOrderby(component, tb, e);
 		}
 
-		
 		this.clearTemps(tbValues);
 		component.put(e, tb);
 		return true;
+	}
+
+	private void handleDelays(AbstractXmlComponent component, Table tb) throws Exception {
+		for (Pair<Integer, Element> p : delayCols){
+			this.invokeFormul(tb.getValues().get(p.getFirst()), component, tb, p.getSecond());
+		}
 	}
 
 	private void parseOrderby(AbstractXmlComponent component, Table tb,
@@ -304,7 +311,9 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	protected void parseCol(AbstractXmlComponent component, Table tb, Element elem) throws Exception {
 		List list = null;
 		if ("col".equals(elem.getTagName())){
-			if (elem.hasAttribute("rank")){
+			if (elem.hasAttribute("formul") || XmlUtil.hasText(elem)){
+				list = parseFormul(component, tb, elem);
+			}else if (elem.hasAttribute("rank")){
 				int col = XmlUtil.getIntAttr(elem, "rank", elp, -1);
 				if (col >= 0){
 					list = parseRank(tb, col, "true".equals(elem.getAttribute("desc")));
@@ -315,7 +324,6 @@ public class TableXmlInterpreter implements XmlInterpreter {
 				}else{
 					list = (List) XmlUtil.getObjectAttr(elem, "list", elp);
 				}
-				
 			}
 		}else{
 			elem.setAttribute("id", "_tb_col_");
@@ -331,6 +339,31 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		if ("true".equals(elem.getAttribute("temp"))){
 			this.putTemp(tb.getValues().size() - 1);
 		}	
+	}
+
+	private void invokeFormul(List ret, AbstractXmlComponent component, Table tb, Element elem) throws Exception{
+		String formul = elem.getAttribute("formul");
+		if (formul.isEmpty()){
+			formul = XmlUtil.getText(elem);
+		}
+		component.local("cols", tb.getValues());
+		for (int i = 0; i < tb.getIds().size(); ++i){
+			component.local("i", i);
+			ret.set(i, XmlUtil.parseELText(formul, elp));
+		}
+		component.removeLocal("cols");
+	}
+	
+	private List parseFormul(AbstractXmlComponent component, Table tb, Element elem) throws Exception {
+		List ret = null;
+		if ("false".equals(elem.getAttribute("delay"))){
+			ret = Util.resize(new ArrayList(), tb.getIds().size());
+			this.invokeFormul(ret, component, tb, elem);
+		}else{
+			ret = Util.resize(new ArrayList(), tb.getIds().size());
+			this.delayCols.add(new Pair(tb.getValues().size(), elem));
+		}
+		return ret;		
 	}
 
 	private List parseRank(Table tb, int col, boolean desc) {

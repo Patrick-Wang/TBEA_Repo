@@ -190,17 +190,7 @@
 							target="_blank"><img src="../images/charts/scatter2.png">
 								<span><strong>各单位经营指标排名情况</strong></span></a></li>
 					</c:if>
-					<c:if test="${xnyJyfxLookupAuth}">
-						<li><a href="../report/yszkhkzb.do" target="_blank"><img
-								src="../images/charts/bar1.png"> <span><strong>新能源应收账款回款周报</strong></span></a>
-						</li>
-						<li><a href="../report/xnyzb.do" target="_blank"><img
-								src="../images/charts/bar3.png"> <span><strong>新能源生产、发货和价格周报表</strong></span></a>
-						</li>
-						<li><a href="../report/xnyqyzb.do" target="_blank"><img
-								src="../images/charts/bar2.png"> <span><strong>新能源签约周报</strong></span></a>
-						</li>
-					</c:if>
+					
 					<c:if test="${xtnyrbLookupAuth}">
 						<li><a href="../report/xtnyrb.do" target="_blank"><img
 								src="../images/charts/scatter2.png"> <span><strong>新特能源日报</strong></span></a>
@@ -231,7 +221,7 @@
 		</div>
 	</div>
 </c:if>
-<c:if test="${gcyzbLookup || gcyzbImport}">
+<%-- <c:if test="${gcyzbLookup || gcyzbImport}">
 	<div>
 		<h3>
 			工程一张表<a name="gcyzb"> </a>
@@ -253,7 +243,7 @@
 			</div>
 		</div>
 	</div>
-</c:if>
+</c:if> --%>
 <c:if test="${sddbLookup || sddbImport}">
 	<div>
 		<h3>
@@ -352,7 +342,7 @@
 								src="../images/charts/scatter4.png"> <span><strong>众和分子公司月度汇总</strong></span></a>
 						</li>
 						<li><a href="../report/zhgsfcyUnion.do" target="_blank"><img
-								src="../images/charts/bar5.png"> <span><strong>众和分产业关键指标汇报</strong></span></a>
+								src="../images/charts/bar5.png"> <span><strong>众和分产业关键指标汇总</strong></span></a>
 						</li>
 					</c:if>
 

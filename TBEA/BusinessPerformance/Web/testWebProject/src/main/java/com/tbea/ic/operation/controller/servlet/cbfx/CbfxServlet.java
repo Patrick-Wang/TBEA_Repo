@@ -87,7 +87,7 @@ public class CbfxServlet {
 	@Scheduled(cron="0 0 0 3-5 * ?")
 	public void scheduleImport(){
 		Calendar cal = Calendar.getInstance();
-		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
+		//System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
 		dmcbfxService.importFromNC(d, COMPS);

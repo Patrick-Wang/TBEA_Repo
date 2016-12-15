@@ -303,7 +303,8 @@ th.ui-th-ltr {
 
 						fileVal : 'upfile',
 						// 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-						resize : false
+						resize : false,
+						timeout:false
 					});
 
 			uploader.on('beforeFileQueued', function(file) {

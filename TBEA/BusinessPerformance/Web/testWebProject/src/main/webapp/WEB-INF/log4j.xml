@@ -114,7 +114,7 @@
    
    <logger name="REPORT-TRACE">  
       <level value="INFO" />  
-      <appender-ref ref="REPORT-TRACE-APPENDER" />
+      <appender-ref ref="console" />
    </logger>  
   
    <!-- Root Logger -->  
