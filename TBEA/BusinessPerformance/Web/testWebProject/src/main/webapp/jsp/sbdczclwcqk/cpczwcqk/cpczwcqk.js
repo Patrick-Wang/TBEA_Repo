@@ -35,9 +35,9 @@ var sbdczclwcqk;
                 for (var i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "cpczwcqk_snd_" + i));
                 }
-                if (month != 12) {
-                    titleNodes.push(node);
-                }
+                //if (month != 12) {
+                titleNodes.push(node);
+                // }
                 node = new JQTable.Node("本年度", "cpczwcqk_bnd", true, TextAlign.Center);
                 for (var i = 1; i <= month; ++i) {
                     node.append(new JQTable.Node(i + "月", "cpczwcqk_bnd_" + i));

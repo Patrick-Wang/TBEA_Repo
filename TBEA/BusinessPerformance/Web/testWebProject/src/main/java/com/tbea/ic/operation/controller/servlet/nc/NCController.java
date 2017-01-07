@@ -498,6 +498,7 @@ public class NCController {
 		cal.setTime(d);
 		cal.add(Calendar.MONTH, -1);
 		d = Util.toDate(cal);
+		Date targetDate = d;
 		List<Object[]> rs = ncService.get15DBRs(d);
 		if (rs.isEmpty()) {
 			cal.add(Calendar.MONTH, -1);
@@ -512,7 +513,7 @@ public class NCController {
 				comp = companyManager
 						.getBMDBOrganization().getCompany(type);
 				if (null != type && comp != null) {
-					ZBStatus zbStatus = entryService.getZbStatus(d, type,
+					ZBStatus zbStatus = entryService.getZbStatus(targetDate, type,
 							ZBType.BYSJ).get(0);
 					JSONArray ja = new JSONArray();
 					JSONArray jar = new JSONArray();
@@ -522,9 +523,9 @@ public class NCController {
 					jar.add("");
 					jar.add("");
 					ja.add(jar);
-					this.importData(zbStatus, ja, d, comp, ZBType.BY20YJ);
-					this.importData(zbStatus, ja, d, comp, ZBType.BY28YJ);
-					this.importData(zbStatus, ja, d, comp, ZBType.BYSJ);
+//					this.importData(zbStatus, ja, d, comp, ZBType.BY20YJ);
+//					this.importData(zbStatus, ja, d, comp, ZBType.BY28YJ);
+					this.importData(zbStatus, ja, targetDate, comp, ZBType.BYSJ);
 				}else{
 					
 				}

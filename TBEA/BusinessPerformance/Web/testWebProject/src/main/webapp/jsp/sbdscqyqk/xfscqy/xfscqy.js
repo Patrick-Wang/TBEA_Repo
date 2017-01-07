@@ -118,16 +118,28 @@ var sbdscqyqk;
                     ["连锁经营"],
                     ["其它"],
                     ["合计"]];
-                for (var i = 0; i < data.length; ++i) {
-                    if (i == data.length - 3) {
-                        data[i] = data[i].concat(this.mData[i + 1]);
+                for (var i_1 = 0; i_1 < data.length; ++i_1) {
+                    if (i_1 == data.length - 3) {
+                        data[i_1] = data[i_1].concat(this.mData[i_1 + 1]);
                     }
-                    else if (i == data.length - 2) {
-                        data[i] = data[i].concat(this.mData[i - 1]);
+                    else if (i_1 == data.length - 2) {
+                        data[i_1] = data[i_1].concat(this.mData[i_1 - 1]);
                     }
                     else {
-                        data[i] = data[i].concat(this.mData[i]);
+                        data[i_1] = data[i_1].concat(this.mData[i_1]);
                     }
+                }
+                var dOut = [];
+                var vec = new std.vector();
+                vec.push(-1);
+                var formaterChain = new Util.FormatFordotHandler(1, []);
+                var row = [];
+                for (var j = 0; j < data.length; ++j) {
+                    row = [].concat(data[j]);
+                    for (var i = 2; i < row.length; ++i) {
+                        row[i] = formaterChain.handle(row[0], i, row[i]);
+                    }
+                    dOut.push(row);
                 }
                 tableAssist.mergeColum(0);
                 tableAssist.mergeRow(0);
@@ -141,7 +153,7 @@ var sbdscqyqk;
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: 1000,
-                    data: tableAssist.getData(data),
+                    data: tableAssist.getData(dOut),
                     datatype: "local",
                     viewrecords: true
                 }));

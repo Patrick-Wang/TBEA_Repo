@@ -20,8 +20,9 @@ var Util;
                 var maxDate = dtEnd.year + "-" + dtEnd.month + "-" + dtEnd.day;
                 var minDate = dtStart.year + "-" + dtStart.month + "-" + dtStart.day;
                 $("#" + divId).append("<input id='" + divId + "dtInput' style='width: 100px'>");
-                $("#" + divId + " #" + divId + "dtInput").val(strDate);
-                $("#" + divId + " #" + divId + "dtInput").datepicker({
+                this.datePicker = $("#" + divId + " #" + divId + "dtInput");
+                this.datePicker.val(strDate);
+                this.datePicker.datepicker({
                     //            numberOfMonths:1,//显示几个月
                     showButtonPanel: true,
                     dateFormat: 'yy-mm-dd',
@@ -43,6 +44,7 @@ var Util;
                             month: (d.getMonth() + 1),
                             day: d.getDate()
                         };
+                        _this.triggerOnChange();
                     }
                 });
             }
@@ -51,6 +53,30 @@ var Util;
                 this.dateSelect.select(dtNow);
             }
         }
+        DateSelectorProxy.prototype.triggerOnChange = function () {
+            var _this = this;
+            if (this.changeFn != undefined) {
+                setTimeout(function () {
+                    _this.changeFn(_this.curDate);
+                }, 1);
+            }
+        };
+        DateSelectorProxy.prototype.change = function (changeFn) {
+            this.changeFn = changeFn;
+        };
+        DateSelectorProxy.prototype.setDate = function (date) {
+            if (this.dateSelect != undefined) {
+            }
+            else if (this.seasonSelect != undefined) {
+            }
+            else if (this.seasonAccSelect != undefined) {
+            }
+            else {
+                this.datePicker.datepicker('setDate', Util.uDate2sDate(date));
+                this.curDate = date;
+                this.triggerOnChange();
+            }
+        };
         DateSelectorProxy.prototype.getDate = function () {
             if (this.dateSelect != undefined) {
                 this.curDate = this.dateSelect.getDate();

@@ -5,7 +5,7 @@
 	convert(varchar(200), sd.model) md
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd
 where
 	sd.code = zb.code and
 	sd.company_name in ${dwmcs}
@@ -36,7 +36,7 @@ where
 
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd
 where
 	sd.code = zb.code and
 	sd.company_name in ${dwmcs} and sd.model = ${product_model}
@@ -63,7 +63,7 @@ group by
 	sum(win_bid_material_total) wbmt19
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd
 where
 	sd.code = zb.code and
 	sd.company_name in ${dwmcs} and sd.model = ${product_model}</sql>
@@ -91,7 +91,7 @@ where
 	sum(op_total_tax_material) wbmt19
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd
 where
 	sd.code = zb.code and
 	sd.company_name in ${dwmcs} and sd.model = ${product_model}
@@ -118,7 +118,7 @@ group by
 	sum(op_total_tax_material) wbmt19
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd
 where
 	sd.code = zb.code and
 	sd.company_name in ${dwmcs} and sd.model = ${product_model}</sql>

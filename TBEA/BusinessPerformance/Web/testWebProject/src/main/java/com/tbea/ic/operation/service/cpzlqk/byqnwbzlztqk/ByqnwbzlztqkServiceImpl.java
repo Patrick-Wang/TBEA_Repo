@@ -670,18 +670,18 @@ public class ByqnwbzlztqkServiceImpl implements ByqnwbzlztqkService {
 					nbyclzlwtDao.getYclzlRcjcwtCount(d, comps.get(i), zts),
 					nbyclzlwtDao.getYclzlCnzzwtCount(d, comps.get(i), zts),
 					wbyclzlwtDao.getYclzlCwxcwtCount(d, comps.get(i), zts), 
-					nbyclzlwtDao.getYclzlRcjcwtCount(cal.getLastYear().getDate(), comps.get(i), zts),
-					nbyclzlwtDao.getYclzlCnzzwtCount(cal.getLastYear().getDate(), comps.get(i), zts),
-					wbyclzlwtDao.getYclzlCwxcwtCount(cal.getLastYear().getDate(), comps.get(i), zts))); 
+					nbyclzlwtDao.getYclzlRcjcwtCount(cal.getMonths(1).getDate(), d, comps.get(i), zts),
+					nbyclzlwtDao.getYclzlCnzzwtCount(cal.getMonths(1).getDate(), d,  comps.get(i), zts),
+					wbyclzlwtDao.getYclzlCwxcwtCount(cal.getMonths(1).getDate(), d,  comps.get(i), zts))); 
 		}
 		result.add(toList(
 				"合计", 
 				nbyclzlwtDao.getYclzlRcjcwtCount(d, comps, zts),
 				nbyclzlwtDao.getYclzlCnzzwtCount(d, comps, zts),
 				wbyclzlwtDao.getYclzlCwxcwtCount(d, comps, zts), 
-				nbyclzlwtDao.getYclzlRcjcwtCount(cal.getLastYear().getDate(), comps, zts),
-				nbyclzlwtDao.getYclzlCnzzwtCount(cal.getLastYear().getDate(), comps, zts),
-				wbyclzlwtDao.getYclzlCwxcwtCount(cal.getLastYear().getDate(), comps, zts))); 
+				nbyclzlwtDao.getYclzlRcjcwtCount(cal.getMonths(1).getDate(), d,  comps, zts),
+				nbyclzlwtDao.getYclzlCnzzwtCount(cal.getMonths(1).getDate(), d,  comps, zts),
+				wbyclzlwtDao.getYclzlCwxcwtCount(cal.getMonths(1).getDate(), d,  comps, zts))); 
 		return result;
 	}
 

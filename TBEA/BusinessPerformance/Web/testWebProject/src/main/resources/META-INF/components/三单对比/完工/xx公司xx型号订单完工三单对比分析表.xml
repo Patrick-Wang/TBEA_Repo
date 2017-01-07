@@ -31,7 +31,7 @@
 	sum(win_bid_material_total) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and
@@ -72,7 +72,7 @@ group by
 	sum(win_bid_material_total) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and
@@ -111,7 +111,7 @@ where
 	sum(op_total_tax_material) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and
@@ -152,7 +152,7 @@ group by
 	sum(op_total_tax_material) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and
@@ -191,7 +191,7 @@ where
 	sum(total_material_cost) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and
@@ -232,7 +232,7 @@ group by
 	sum(total_material_cost) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and

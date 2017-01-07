@@ -133,7 +133,7 @@ module entry_template {
                     this.mTableData = data.values;
                     this.mZbxxs = data.zbxx;
                     this.mRate = data.exchangeRate;
-                    this.mExRateZbs = data.exRateZbs;
+                    this.mExRateZbs = [295,302,306];
                     this.updateTitle();
                     this.updateTable(this.mOpt.tableId);
                     this.updateApproveStatusFromDeputy(date.year, date.month, this.mOpt.entryType);

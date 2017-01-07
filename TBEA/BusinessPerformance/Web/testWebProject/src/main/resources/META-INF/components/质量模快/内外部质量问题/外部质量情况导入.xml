@@ -103,8 +103,33 @@
   </response>
  </controller>
  <service id="servWbzlqkTrans" transaction="transactionManager">
+ <sql id="rawZts">select 
+	company_name,
+	DATEPART(yyyy, issue_happen_date) year, 
+	DATEPART(mm, issue_happen_date) month, 
+	max(zt) zt
+from 
+	zl_wbyclzlwt 
+where 
+	source=${src}
+group by
+	company_name,
+ 	DATEPART(yyyy, issue_happen_date),
+ 	DATEPART(mm, issue_happen_date)
+ </sql>
   <sql>delete from zl_wbyclzlwt where source = ${src}</sql>
   <callservice id="servWbzlqkEntry"/>
+  <loop from="${0}" to="${rawZts.size - 1}" var="i">
+   <sql>update 
+	zl_nbyclzlwt 
+set 
+	zt=${rawZts[i][3]} 
+where 
+	DATEPART(yyyy, issue_happen_date) = ${rawZts[i][1]} and
+	DATEPART(mm, issue_happen_date) = ${rawZts[i][2]} and
+	company_name = ${rawZts[i][0]}
+ </sql>
+  </loop>
  </service>
  <service id="servWbzlqkTransLl" transaction="transLl">
   <context key="src" value="鲁缆数据库收集"/>

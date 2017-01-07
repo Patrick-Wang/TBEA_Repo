@@ -23,7 +23,7 @@ public class SessionManager implements HttpSessionListener {
 	public static void onChange(OnSessionChangedListener listener){
 		listeners.add(listener);
 	}
-	
+
 	public interface OnSessionChangedListener{
 		void onCreated(HttpSession session);
 		void onDestroyed(HttpSession session);

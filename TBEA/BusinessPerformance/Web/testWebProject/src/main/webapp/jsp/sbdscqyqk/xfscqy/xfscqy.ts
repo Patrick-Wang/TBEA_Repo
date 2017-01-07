@@ -136,6 +136,18 @@ module sbdscqyqk {
                         data[i] = data[i].concat(this.mData[i]);
                     }
                 }
+                let dOut = [];
+                let vec = new std.vector();
+                vec.push(-1);
+                var formaterChain: Util.FormatHandler = new Util.FormatFordotHandler(1, []);
+                var row = [];
+                for (var j = 0; j < data.length; ++j) {
+                    row = [].concat(data[j]);
+                    for (var i = 2; i < row.length; ++i) {
+                        row[i] = formaterChain.handle(row[0], i, row[i]);
+                    }
+                    dOut.push(row);
+                }
                 tableAssist.mergeColum(0);
                 tableAssist.mergeRow(0);
                 tableAssist.mergeTitle();
@@ -149,7 +161,7 @@ module sbdscqyqk {
                         shrinkToFit: true,
                         autoScroll: true,
                         rowNum: 1000,
-                        data: tableAssist.getData(data),
+                        data: tableAssist.getData(dOut),
                         datatype: "local",
                         viewrecords : true
                     }));

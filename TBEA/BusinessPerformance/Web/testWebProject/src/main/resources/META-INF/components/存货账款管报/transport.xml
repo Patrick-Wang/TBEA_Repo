@@ -50,7 +50,6 @@ from
 	ending_balance
 from 
 	chgb_stock
-  
 where 
 	year = ${cal.year} and
 	month = ${cal.month}</sql>
@@ -103,7 +102,6 @@ where
 	zl1nyn
 from 
 	chgb_stock_aging_change
-  
 where 
 	year = ${cal.year} and
 	month = ${cal.month}</sql>
@@ -206,6 +204,9 @@ where
   <callservice id="servChgkjykcOuterToLocal"/>
   <callservice id="servChxzFromOuterDB" transaction="transXl"/>
   <callservice id="servChxzOuterToLocal"/>
+  <context key="type" value="${CompanyType.LLGS}"/>
+  <callservice id="servChgbjykcFromOuterDB" transaction="transLl"/>
+  <callservice id="servChgkjykcOuterToLocal"/>
   <!-- <context key="type" value="${CompanyType.XNYGS}"/>
   <callservice id="servDbxqFromNC"/>
   <callservice id="servDbxqToLocal"/>

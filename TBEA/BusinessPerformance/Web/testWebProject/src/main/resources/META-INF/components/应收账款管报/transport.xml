@@ -206,6 +206,13 @@ where
   <callservice id="servYszkyjtzOuterToLocal"/>
   <callservice id="servYszkkxxzFromOuterDB" transaction="transXl"/>
   <callservice id="servYszkkxxzOuterToLocal"/>
+  <context key="type" value="${CompanyType.LLGS}"/>
+  <callservice id="servYszkcsysFromOuterDB" transaction="transLl"/>
+  <callservice id="servYszkcsysOuterToLocal"/>
+  <callservice id="servYszkyjtzFromOuterDB" transaction="transLl"/>
+  <callservice id="servYszkyjtzOuterToLocal"/>
+  <callservice id="servYszkkxxzFromOuterDB" transaction="transLl"/>
+  <callservice id="servYszkkxxzOuterToLocal"/>
   <!-- <context key="type" value="${CompanyType.XNYGS}"/>
   <callservice id="servDbxqFromNC"/>
   <callservice id="servDbxqToLocal"/>

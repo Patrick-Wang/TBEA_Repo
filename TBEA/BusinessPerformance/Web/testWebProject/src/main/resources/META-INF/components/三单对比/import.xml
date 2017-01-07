@@ -138,10 +138,11 @@
   <context key="counter" value="${counterFactory.newCounter}"/>
   <merge data="${data}" table="JYGK_SDDB_ORDER_EXECUTION_DETAILS">
    <where>
-    <code type="string" ref="14"/>
+    <serial_num type="string" ref="0"/>
    </where>
    <set>
-    <company_name type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+    <serial_num type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+    <company_name type="string" ref="${counter.next.val}" test="${this != null}"/>
     <win_bid_year type="int" ref="${counter.next.val}"/>
     <win_bid_month type="int" ref="${counter.next.val}"/>
     <client_name type="string" ref="${counter.next.val}"/>
@@ -151,11 +152,11 @@
     <execution_month type="int" ref="${counter.next.val}"/>
     <actual_delivery_year type="int" ref="${counter.next.val}"/>
     <actual_delivery_month type="int" ref="${counter.next.val}"/>
-    <model type="string" ref="${counter.next.val}" test="${this != null}"/>
+    <model type="string" ref="${counter.next.val}"/>
     <voltage type="string" ref="${counter.next.val}"/>
     <capacity type="string" ref="${counter.next.val}"/>
     <number type="double" ref="${counter.next.val}"/>
-    <code type="string" ref="${counter.next.val}" test="${this != null}"/>
+    <code type="string" ref="${counter.next.val}"/>
     <tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <not_tax_inclusive_price type="double" ref="${counter.next.val}"/>
     <bidding_transportation_fee type="double" ref="${counter.next.val}"/>

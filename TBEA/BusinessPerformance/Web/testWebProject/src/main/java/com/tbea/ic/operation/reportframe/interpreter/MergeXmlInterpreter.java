@@ -473,6 +473,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				}
 			}
 		} catch (Exception e) {
+			ReportLogger.logger().info("checkSetTest error", e);
 			bRet = false;
 		}
 		return bRet;
@@ -576,6 +577,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		.append(whereSql)
 		.append(")\r\n\t")
 		.append(sbUpdate.toString())
+		.append(whereSql)
 		.append("\r\nelse \r\n\t")
 		.append(sbInsert.toString());
 		

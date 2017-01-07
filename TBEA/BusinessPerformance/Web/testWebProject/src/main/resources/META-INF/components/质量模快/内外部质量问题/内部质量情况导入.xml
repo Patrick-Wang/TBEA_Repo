@@ -31,7 +31,7 @@
     <source type="string" value="${src}"/>
     <time type="date" value="${time}"/>
     <zt type="int" value="2"/>
-   </set> 
+   </set>
   </merge>
  </service>
  <service id="servNbzlqkImportEntry" transaction="transactionManager">
@@ -101,8 +101,33 @@
   </response>
  </controller>
  <service id="servNbzlqkTrans" transaction="transactionManager">
+  <sql id="rawZts">select 
+	company_name,
+	DATEPART(yyyy, issue_happen_date) year, 
+	DATEPART(mm, issue_happen_date) month, 
+	max(zt) zt
+from 
+	zl_nbyclzlwt 
+where 
+	source=${src}
+group by
+	company_name,
+ 	DATEPART(yyyy, issue_happen_date),
+ 	DATEPART(mm, issue_happen_date)
+ </sql>
   <sql>delete from zl_nbyclzlwt where source = ${src}</sql>
   <callservice id="servNbzlqkEntry"/>
+  <loop from="${0}" to="${rawZts.size - 1}" var="i">
+   <sql>update 
+	zl_nbyclzlwt 
+set 
+	zt=${rawZts[i][3]} 
+where 
+	DATEPART(yyyy, issue_happen_date) = ${rawZts[i][1]} and
+	DATEPART(mm, issue_happen_date) = ${rawZts[i][2]} and
+	company_name = ${rawZts[i][0]}
+ </sql>
+  </loop>
  </service>
  <service id="servNbzlqkTransLl" transaction="transLl">
   <context key="src" value="鲁缆数据库收集"/>

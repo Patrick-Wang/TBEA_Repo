@@ -85,10 +85,11 @@ public class SbdczclwcqkServlet {
 		if (request.getParameter("date") != null){
 			d = Date.valueOf(request.getParameter("date"));
 		}
-		
+		sbdczclwcqkService.importLlCzCl(d);
 		sbdczclwcqkService.importHBCzCl(d);
 		sbdczclwcqkService.importDlCzCl(d);
 		sbdczclwcqkService.importXlCzCl(d);
+		
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
 	}
@@ -99,8 +100,10 @@ public class SbdczclwcqkServlet {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
+		sbdczclwcqkService.importLlCzCl(d);
 		sbdczclwcqkService.importHBCzCl(d);
 		sbdczclwcqkService.importDlCzCl(d);
 		sbdczclwcqkService.importXlCzCl(d);
+		
 	}
 }

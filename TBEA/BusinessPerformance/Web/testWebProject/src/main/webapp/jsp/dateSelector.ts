@@ -8,6 +8,11 @@ module Util {
         day?: number;
     }
 
+    export function uDate2sDate(date:Util.Date) : any{
+        let sd = new Date (Date.parse(date.year + "/" + date.month + "/" + date.day));
+        return sd;
+    }
+
     export function toDate(dt:string): Date{
         let curDate : any = new Date(Date.parse(dt.replace(/-/g, '/')));
         return {

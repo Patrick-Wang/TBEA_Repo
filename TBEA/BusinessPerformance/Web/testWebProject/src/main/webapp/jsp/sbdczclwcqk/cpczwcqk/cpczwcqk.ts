@@ -30,9 +30,9 @@ module sbdczclwcqk {
                     node.append(new JQTable.Node(i + "月", "cpczwcqk_snd_" + i));
                 }
 
-                if (month != 12) {
+                //if (month != 12) {
                     titleNodes.push(node);
-                }
+               // }
 
                 node = new JQTable.Node("本年度", "cpczwcqk_bnd", true, TextAlign.Center);
                 for (let i = 1; i <= month; ++i) {

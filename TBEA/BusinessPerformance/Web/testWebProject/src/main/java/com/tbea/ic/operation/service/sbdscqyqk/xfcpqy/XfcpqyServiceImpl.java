@@ -27,6 +27,7 @@ import com.tbea.ic.operation.model.dao.dl.sbdqy.DlQyDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
+import com.tbea.ic.operation.model.dao.ll.sbdqy.LlQyDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDao;
 import com.tbea.ic.operation.model.dao.sbdscqyqk.xfcpqy.XfcpqyDaoImpl;
 import com.tbea.ic.operation.model.dao.xl.sbdqy.XlQyDao;
@@ -52,6 +53,9 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 	
 	@Autowired
 	XlQyDao xlqyDao;
+	
+	@Autowired
+	LlQyDao llqyDao;
 	
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -417,6 +421,14 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		LoggerFactory.getLogger("WEBSERVICE").info("importXLCpqy");
 		List<Object[]> result = xlqyDao.getCpqy(d);
 		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		importCpqy(d, result, comp, SbdscqyqkType.YLFX_WGCPYLNL_XL);
+	}
+
+	@Override
+	public void importLLCpqy(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("importLLCpqy");
+		List<Object[]> result = llqyDao.getCpqy(d);
+		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS);
 		importCpqy(d, result, comp, SbdscqyqkType.YLFX_WGCPYLNL_XL);
 	}
 	

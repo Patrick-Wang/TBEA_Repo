@@ -77,7 +77,7 @@ var sddb;
                 if (undefined != dStart) {
                     var dS = new Date(Date.parse(dStart.replace(/-/g, '/'))).getTime();
                     var dE = new Date(Date.parse(dEnd.replace(/-/g, '/'))).getTime();
-                    if (dS < dE) {
+                    if (dS <= dE) {
                         this.mAjax.get({
                             dStart: dStart,
                             dEnd: dEnd,

@@ -81,7 +81,7 @@ var entry_template;
                 _this.mTableData = data.values;
                 _this.mZbxxs = data.zbxx;
                 _this.mRate = data.exchangeRate;
-                _this.mExRateZbs = data.exRateZbs;
+                _this.mExRateZbs = [295, 302, 306];
                 _this.updateTitle();
                 _this.updateTable(_this.mOpt.tableId);
                 _this.updateApproveStatusFromDeputy(date.year, date.month, _this.mOpt.entryType);

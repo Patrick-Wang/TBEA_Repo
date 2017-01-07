@@ -26,6 +26,7 @@ import com.tbea.ic.operation.model.dao.identifier.common.CpmcDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.common.clmc.ClmcDao;
 import com.tbea.ic.operation.model.dao.identifier.common.clmc.ClmcDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
+import com.tbea.ic.operation.model.dao.ll.czcl.LlCzClDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.clylwcqk.ClylwcqkDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.clylwcqk.ClylwcqkDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpclwcqk.CpclwcqkDao;
@@ -73,6 +74,9 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 	
 	@Autowired
 	XlCzClDao xlCzclDao;
+	
+	@Autowired
+	LlCzClDao llCzclDao;
 	
 	public final static String NAME = "SbdczclwcqkServiceImpl";
 
@@ -277,6 +281,14 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 		LoggerFactory.getLogger("WEBSERVICE").info("importXlCzCl");
 		List<Object[]> result = xlCzclDao.getCzCl(d);
 		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		importXlCzCl(d, result, comp);
+	}
+
+	@Override
+	public void importLlCzCl(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("importLlCzCl");
+		List<Object[]> result = llCzclDao.getCzCl(d);
+		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS);
 		importXlCzCl(d, result, comp);
 	}
 }

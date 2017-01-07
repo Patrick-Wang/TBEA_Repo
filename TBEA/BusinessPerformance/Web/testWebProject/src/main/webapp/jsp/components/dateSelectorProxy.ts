@@ -8,6 +8,8 @@ module Util{
         dateSelect : Util.DateSelector;
         seasonSelect : Util.DateSeasonSelector;
         seasonAccSelect : Util.SeasonAccSelector;
+        datePicker:any;
+        changeFn : (date:Util.Date) => void;
         public constructor(divId:string,
                            dtStart : Util.Date,
                            dtEnd : Util.Date,
@@ -25,8 +27,9 @@ module Util{
                 let maxDate = dtEnd.year + "-" + dtEnd.month + "-" + dtEnd.day;
                 let minDate = dtStart.year + "-" + dtStart.month + "-" + dtStart.day;
                 $("#" + divId).append("<input id='" + divId + "dtInput' style='width: 100px'>");
-                $("#" + divId + " #" + divId + "dtInput").val(strDate);
-                $("#" + divId + " #" + divId + "dtInput").datepicker({
+                this.datePicker =  $("#" + divId + " #" + divId + "dtInput");
+                this.datePicker.val(strDate);
+                this.datePicker.datepicker({
                     //            numberOfMonths:1,//显示几个月
                     showButtonPanel:true,//是否显示按钮面板
                     dateFormat: 'yy-mm-dd',//日期格式
@@ -48,11 +51,40 @@ module Util{
                             month: (d.getMonth() + 1),
                             day: d.getDate()
                         }
+                        this.triggerOnChange();
                     }
                 });
             }else{
                 this.dateSelect = new Util.DateSelector(dtStart, dtEnd, divId);
                 this.dateSelect.select(dtNow);
+            }
+        }
+
+        private triggerOnChange(){
+            if (this.changeFn != undefined){
+                setTimeout(()=>{
+                    this.changeFn(this.curDate);
+                }, 1)
+            }
+        }
+
+        public change(changeFn : (date:Util.Date) => void){
+            this.changeFn = changeFn;
+        }
+
+        public setDate(date:Util.Date){
+            if (this.dateSelect != undefined){
+
+            }else if (this.seasonSelect != undefined){
+
+            }else if (this.seasonAccSelect != undefined){
+
+            }else{
+                this.datePicker.datepicker(
+                    'setDate' ,
+                    Util.uDate2sDate(date));
+                this.curDate = date;
+                this.triggerOnChange();
             }
         }
 

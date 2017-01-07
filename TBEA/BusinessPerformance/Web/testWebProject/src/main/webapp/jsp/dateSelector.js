@@ -1,6 +1,11 @@
 /// <reference path="util.ts" />
 var Util;
 (function (Util) {
+    function uDate2sDate(date) {
+        var sd = new Date(Date.parse(date.year + "/" + date.month + "/" + date.day));
+        return sd;
+    }
+    Util.uDate2sDate = uDate2sDate;
     function toDate(dt) {
         var curDate = new Date(Date.parse(dt.replace(/-/g, '/')));
         return {

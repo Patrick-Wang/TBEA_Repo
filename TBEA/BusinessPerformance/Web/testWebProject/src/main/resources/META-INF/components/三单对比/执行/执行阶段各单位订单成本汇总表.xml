@@ -19,7 +19,7 @@
 	sum(win_bid_material_total) wbmt17
 
 from
-	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod,JYGK_SDDB_ORDER_EXECUTION_DETAILS jsoed 
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod,JYGK_SDDB_ORDER_EXECUTION_VIEW jsoed 
 where
 	 jswbod.company_name in ${dwmcs} and jsoed.company_name in ${dwmcs} and jsoed.code = jswbod.code and
 	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
@@ -44,7 +44,7 @@ group by
 	sum(win_bid_other_material_cost) womc16,
 	sum(win_bid_material_total) wbmt17
 from
-	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod,JYGK_SDDB_ORDER_EXECUTION_DETAILS jsoed
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod,JYGK_SDDB_ORDER_EXECUTION_VIEW jsoed
 where
 	jswbod.company_name in ${dwmcs} and jsoed.company_name in ${dwmcs} and jsoed.code = jswbod.code and
 	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
@@ -70,7 +70,7 @@ where
 	sum(op_other_materials) womc16,
 	sum(op_total_tax_material) wbmt17
 from
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS jsoed,JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod
+	JYGK_SDDB_ORDER_EXECUTION_VIEW jsoed,JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod
 where
 	jswbod.company_name in ${dwmcs} and jsoed.company_name in ${dwmcs} and jsoed.code = jswbod.code and
 	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
@@ -95,7 +95,7 @@ group by
 	sum(op_other_materials) womc16,
 	sum(op_total_tax_material) wbmt17
 from
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS jsoed,JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod
+	JYGK_SDDB_ORDER_EXECUTION_VIEW jsoed,JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod
 where
 	jswbod.company_name in ${dwmcs} and jsoed.company_name in ${dwmcs} and jsoed.code = jswbod.code and
 	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 

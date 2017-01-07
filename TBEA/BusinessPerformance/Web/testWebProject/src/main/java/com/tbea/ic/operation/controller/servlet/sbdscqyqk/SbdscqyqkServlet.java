@@ -88,7 +88,9 @@ public class SbdscqyqkServlet {
 		if (request.getParameter("date") != null){
 			d = Date.valueOf(request.getParameter("date"));
 		}
-		
+
+		xfcpqyService.importLLCpqy(d);
+		xfscqyService.importLLScqy(d);
 		xfcpqyService.importHBCpqy(d);
 		xfcpqyService.importDLCpqy(d);
 		xfscqyService.importHBScqy(d);
@@ -105,6 +107,9 @@ public class SbdscqyqkServlet {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
+
+		xfcpqyService.importLLCpqy(d);
+		xfscqyService.importLLScqy(d);
 		xfcpqyService.importHBCpqy(d);
 		xfcpqyService.importDLCpqy(d);
 		xfscqyService.importHBScqy(d);

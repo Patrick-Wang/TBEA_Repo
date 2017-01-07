@@ -175,6 +175,10 @@ public class ELExpression{
 			try{
 				obj = parseObject(querier.next());
 				if (null == obj || isNumber(obj) || isString(obj) || TypeUtil.isBoolean(obj.getClass())){
+					if (isString(obj)){
+						obj = ((String)obj).replaceAll("\r", "\\\\r");
+						obj = ((String)obj).replaceAll("\n", "\\\\n");
+					}
 					String objVal = expressTmp.substring(0, querier.start()) + obj;
 					expressTmp = objVal + expressTmp.substring(querier.end());
 					offset = objVal.length();

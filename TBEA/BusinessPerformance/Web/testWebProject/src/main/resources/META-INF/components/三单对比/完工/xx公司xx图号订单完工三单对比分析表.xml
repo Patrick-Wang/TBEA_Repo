@@ -24,7 +24,7 @@
 	win_bid_material_total wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and
@@ -51,7 +51,7 @@ where
 	op_total_tax_material 
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and
@@ -78,7 +78,7 @@ where
 	total_material_cost
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and
@@ -306,7 +306,7 @@ where
 	convert(varchar(200), wg.code) md
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd,
 	JYGK_SDDB_ORDER_COMPLETION_DETAILS wg
 where
 	wg.code = sd.code and

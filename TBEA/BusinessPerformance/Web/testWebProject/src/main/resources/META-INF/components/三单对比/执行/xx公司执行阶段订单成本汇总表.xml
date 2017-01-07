@@ -19,7 +19,7 @@
 	sum(win_bid_material_total) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd
 where
 	sd.code = zb.code and
 	(convert(varchar(10), actual_delivery_year) + '年' + convert(varchar(10), actual_delivery_month) + '月') in ${dates} and
@@ -45,7 +45,7 @@ group by
 	sum(win_bid_material_total) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd
 where
 	sd.code = zb.code and 
 	(convert(varchar(10), actual_delivery_year) + '年' + convert(varchar(10), actual_delivery_month) + '月') in ${dates} and
@@ -72,7 +72,7 @@ where
 	sum(op_total_tax_material) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd
 where
 	sd.code = zb.code and 
 	(convert(varchar(10), actual_delivery_year) + '年' + convert(varchar(10), actual_delivery_month) + '月') in ${dates} and
@@ -98,7 +98,7 @@ group by
 	sum(op_total_tax_material) wbmt17
 from
 	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS zb,
-	JYGK_SDDB_ORDER_EXECUTION_DETAILS sd
+	JYGK_SDDB_ORDER_EXECUTION_VIEW sd
 where
 	sd.code = zb.code and 
 	(convert(varchar(10), actual_delivery_year) + '年' + convert(varchar(10), actual_delivery_month) + '月') in ${dates} and

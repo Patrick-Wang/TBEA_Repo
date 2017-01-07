@@ -42,6 +42,8 @@ public class SessionCheckFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
+		JSONObject oper = null;
+		Calendar current = Calendar.getInstance();
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			HttpServletResponse httpResp = (HttpServletResponse) resp;
@@ -75,15 +77,20 @@ public class SessionCheckFilter implements Filter {
 						session.setAttribute("reqs", new JSONArray());
 					}
 					JSONArray reqs = (JSONArray) session.getAttribute("reqs");
-					JSONObject oper = new JSONObject();
+					oper = new JSONObject();
 					oper.put("url", url);
-					oper.put("time", Calendar.getInstance().getTimeInMillis());
+					oper.put("requestTime", current.getTimeInMillis());
 					oper.put("isAjax", isAjaxRequest(httpRequest));
 					reqs.add(oper);
 				}
 			}
 		}
 		chain.doFilter(request, resp);
+		if (oper != null){
+			Calendar respTime = Calendar.getInstance();
+			oper.put("responseTime", respTime.getTimeInMillis());
+			oper.put("elapse", respTime.getTimeInMillis() - current.getTimeInMillis());
+		}
 	}
 
 	@Override

@@ -115,6 +115,15 @@ module sddb{
                     opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd,
                     opt.date
                 );
+
+                this.mDEndSel.change((date:any)=>{
+                    let d = this.mDStartSel.getDate();
+                    let dS = Util.uDate2sDate(d).getTime();
+                    let dE = Util.uDate2sDate(date).getTime();
+                    if (dS > dE){
+                        this.mDStartSel.setDate(date);
+                    }
+                });
             } else {
                 $("#dstart").css("display", "none");
                 $("#dEnd").css("display", "none");

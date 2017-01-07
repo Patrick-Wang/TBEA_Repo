@@ -24,5 +24,7 @@ public interface XfscqyService {
 
 	void importXLScqy(Date d);
 
+	void importLLScqy(Date d);
+
 
 }

@@ -104,6 +104,14 @@ var sddb;
             if (opt.date != undefined) {
                 this.mDStartSel = new Util.DateSelectorProxy("dstart", opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart, opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd, Util.addDay(opt.date, -5 * 7));
                 this.mDEndSel = new Util.DateSelectorProxy("dEnd", opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart, opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd, opt.date);
+                this.mDEndSel.change(function (date) {
+                    var d = _this.mDStartSel.getDate();
+                    var dS = Util.uDate2sDate(d).getTime();
+                    var dE = Util.uDate2sDate(date).getTime();
+                    if (dS > dE) {
+                        _this.mDStartSel.setDate(date);
+                    }
+                });
             }
             else {
                 $("#dstart").css("display", "none");

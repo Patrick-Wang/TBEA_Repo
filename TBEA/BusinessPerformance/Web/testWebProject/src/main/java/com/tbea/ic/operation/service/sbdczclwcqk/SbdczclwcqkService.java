@@ -11,4 +11,6 @@ public interface SbdczclwcqkService {
 
 	void importXlCzCl(Date d);
 
+	void importLlCzCl(Date d);
+
 }
