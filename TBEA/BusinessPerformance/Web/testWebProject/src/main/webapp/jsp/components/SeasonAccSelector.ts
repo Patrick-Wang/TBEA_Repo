@@ -29,10 +29,22 @@ module Util {
                 })
             }
 
+            let seasonsAll:Util.IDataNode[] = [];
+            for (let i = 0; i <= 3; ++i){
+                seasonsAll.push({
+                    data:{
+                        id:i,
+                        value:jdNames[i]
+                    }
+                })
+            }
+
             let seasonNow : number = parseInt("" + (now.month - 1) / 3);
 
             $("#" + id).append("<div style='float:left' id='" + id +"year'></div>");
             $("#" + id).append("<div style='float:left' id='" + id +"season'></div>");
+
+            let lastYear = now.year;
 
             this.yearSelector = new UnitedSelector(dates, id + "year", [now.year - start.year]);
             this.seasonSelector = new UnitedSelector(seasons, id + "season", [seasonNow]);
@@ -55,7 +67,40 @@ module Util {
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 }).css("text-align:center");
+
+                let year:Util.Date = this.getDate();
+                if (year.year != lastYear){
+                    lastYear = year.year;
+                    let path = this.seasonSelector.getPath();
+                    if (lastYear == end.year){
+                        if (path[0] > (seasons.length - 1)){
+                            path = [seasonNow];
+                        }
+                        this.seasonSelector.refresh(seasons, path)
+                    }else{
+                        this.seasonSelector.refresh(seasonsAll, path)
+                    }
+                    $("#" + id + " select").css("width", "100px");
+                    sel = this.seasonSelector.getSelect();
+                    $(sel).multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth: 80,
+                        height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    }).css("text-align:center");
+                    $(sel[1]).multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth: 100,
+                        height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    }).css("text-align:center");
+                }
             });
+
             let sel = this.yearSelector.getSelect();
             $(sel).multiselect({
                 multiple: false,

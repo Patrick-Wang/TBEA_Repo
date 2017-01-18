@@ -302,7 +302,7 @@ var gdw_zbhz_prediciton;
                 data = this.formatThirdMonthData(data);
             }
             for (var i = 0; i < data.length; ++i) {
-                if (data[i][0].lastIndexOf("计") >= 0) {
+                if (data[i][0].lastIndexOf("计") >= 0 && outputData[i][0].lastIndexOf("审计") < 0) {
                     tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
             }

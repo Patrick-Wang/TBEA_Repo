@@ -68,7 +68,7 @@ module entry_template {
         private mRate:number;
         private mZbxxs:Array<Zbxx>;
         private mStatusList: Array<string>;
-        private mTableData: Array<string[]>;
+        private mTableData: Array<any[]>;
         private mDateSelector: Util.DateSelector;
         private mCompanySelector: Util.CompanySelector;
         private mOpt: IViewOption;
@@ -94,7 +94,7 @@ module entry_template {
                 case Util.ZBType.QNJH:
                     this.mDateSelector = new Util.DateSelector(
                         { year: this.mOpt.date.year - 3 },
-                        { year: this.mOpt.date.year + 1 },
+                        { year: this.mOpt.date.year },
                         this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.BY20YJ:
@@ -581,6 +581,14 @@ module entry_template {
                 for (var j = 2; j < this.mTableData[i].length; ++j) {
                     if ("" != this.mTableData[i][j]) {
                         this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+                    }else{
+                        if (347 == this.mTableData[i][0]){
+                            if (this.mOpt.entryType == Util.ZBType.BYSJ ||
+                                this.mOpt.entryType == Util.ZBType.BY28YJ ||
+                                this.mOpt.entryType == Util.ZBType.BY20YJ){
+                                this.mTableData[i][j] = 0;
+                            }
+                        }
                     }
                 }
             }

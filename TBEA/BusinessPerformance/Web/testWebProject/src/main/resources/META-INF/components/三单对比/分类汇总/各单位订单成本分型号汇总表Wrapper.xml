@@ -30,7 +30,7 @@
 		<context key="dwmcs" value="${orgs.virtualCYOrg.namesByIds[compIds]}" />
 		<response type="jsp" name="sddb/sddb">
 			<map key="date" value="${calendar.current.format}" />
-			<map key="dateStart" value="${calendar.current.months[1].days[1].format}" />
+			<map key="dateStart" value="2014-1-1" />
 			<map key="updateUrl" value="gdwddfxhCollectionUpdate" />
 			<map key="exportUrl" value="gdwddfxhCollectionExport" />
 			<map key="itemNodes0" value="${dataNodeFactory[ids1][values1].asJson}" />

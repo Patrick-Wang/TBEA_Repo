@@ -11,4 +11,6 @@ public interface WlyddService {
 	void importXlKglydd(Date d);
 
 	void importXlMlspcs(Date d);
+
+	void importLlKglydd(Date d);
 }

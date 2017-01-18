@@ -49,7 +49,7 @@ var entry_template;
                     this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, Util.addMonth({ year: this.mOpt.date.year, month: this.mOpt.date.month }, 3), this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.QNJH:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, { year: this.mOpt.date.year + 1 }, this.mOpt.dateId, true);
+                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, { year: this.mOpt.date.year }, this.mOpt.dateId, true);
                     break;
                 case Util.ZBType.BY20YJ:
                 case Util.ZBType.BY28YJ:
@@ -510,6 +510,15 @@ var entry_template;
                 for (var j = 2; j < this.mTableData[i].length; ++j) {
                     if ("" != this.mTableData[i][j]) {
                         this.mTableData[i][j] = parseFloat(this.mTableData[i][j]) + "";
+                    }
+                    else {
+                        if (347 == this.mTableData[i][0]) {
+                            if (this.mOpt.entryType == Util.ZBType.BYSJ ||
+                                this.mOpt.entryType == Util.ZBType.BY28YJ ||
+                                this.mOpt.entryType == Util.ZBType.BY20YJ) {
+                                this.mTableData[i][j] = 0;
+                            }
+                        }
                     }
                 }
             }

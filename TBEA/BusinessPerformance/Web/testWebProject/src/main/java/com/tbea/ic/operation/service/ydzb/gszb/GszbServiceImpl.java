@@ -85,6 +85,7 @@ public class GszbServiceImpl implements GszbService {
 	private static List<Integer> gsztzbs = new ArrayList<Integer>();
 	static {
 		gsztzbs.add(GSZB.LRZE1.value());
+		gsztzbs.add(GSZB.KHLR.value());
 		gsztzbs.add(GSZB.XSSR6.value());
 		gsztzbs.add(GSZB.XSLRL_28.value()); //三期加入指标
 		gsztzbs.add(GSZB.JYXJXJL29.value());

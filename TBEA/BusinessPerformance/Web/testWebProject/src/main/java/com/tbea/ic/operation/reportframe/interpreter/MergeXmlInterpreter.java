@@ -217,7 +217,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			String insertSql = insertValues.toString();
 			insertValues = null;
 			updateSql(em, insertSql);	
-			ReportLogger.trace().info("insert count " + updateCount);
+			ReportLogger.trace().info("insert count " + insertCount);
 		}
 	}
 

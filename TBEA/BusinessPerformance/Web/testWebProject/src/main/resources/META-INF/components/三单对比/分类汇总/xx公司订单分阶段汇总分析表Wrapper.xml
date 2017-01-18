@@ -28,7 +28,7 @@
  </list>
   <response type="jsp" name="sddb/sddb">
    <map key="date" value="${calendar.current.format}"/>
-   <map key="dateStart" value="${calendar.current.months[1].days[1].format}"/>
+   <map key="dateStart" value="2014-1-1"/>
    <map key="updateUrl" value="ddfjdCollectionUpdate"/>
    <map key="exportUrl" value="ddfjdCollectionExport"/>
    <map key="itemNodes" value="${dataNodeFactory[ids][values].asJson}"/>

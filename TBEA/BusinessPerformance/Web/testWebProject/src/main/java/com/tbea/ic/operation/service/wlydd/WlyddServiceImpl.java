@@ -28,6 +28,7 @@ import com.tbea.ic.operation.model.dao.identifier.sbdddcbjpcqk.byqcplx.ByqcplxDa
 import com.tbea.ic.operation.model.dao.identifier.sbdddcbjpcqk.xlcplx.XlcplxDao;
 import com.tbea.ic.operation.model.dao.identifier.sbdddcbjpcqk.xlcplx.XlcplxDaoImpl;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
+import com.tbea.ic.operation.model.dao.ll.kglydd.LlKglyddDao;
 import com.tbea.ic.operation.model.dao.sbdddcbjpcqk.byqkglydd.ByqkglyddDao;
 import com.tbea.ic.operation.model.dao.sbdddcbjpcqk.byqkglydd.ByqkglyddDaoImpl;
 import com.tbea.ic.operation.model.dao.sbdddcbjpcqk.xlkglydd.XlkglyddDao;
@@ -61,6 +62,9 @@ public class WlyddServiceImpl implements WlyddService {
 	
 	@Autowired
 	DlKglyddDao dlKglyddDao;
+	
+	@Autowired
+	LlKglyddDao llKglyddDao;
 	
 	@Autowired
 	XlKglyddDao xlKglyddDao;
@@ -152,7 +156,14 @@ public class WlyddServiceImpl implements WlyddService {
 		importXlKglydd(d, rows, company);
 	}
 
-
+	@Override
+	public void importLlKglydd(Date d) {
+		LoggerFactory.getLogger("WEBSERVICE").info("LL 可供履约订单");
+		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS);
+		List<Object[]> rows = llKglyddDao.getKglydd(d);
+		importXlKglydd(d, rows, company);
+	}
+	
 	@Override
 	public void importDlMlspcs(Date d) {
 		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);

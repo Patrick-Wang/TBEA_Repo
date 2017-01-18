@@ -194,12 +194,14 @@ module Util {
 
         public refresh(data?: IDataNode[],  path?: number[]){
             if (data != undefined){
+                this.mPath = [];
                 this.mRoot = new DataNode(null);
                 this.mRoot.appendAll(DataNode.valueOfAll(data));
-            }
-
-            if (this.mRoot.childCount() > 0) {
-                this.update();
+                $("#" + this.mCtrlId).empty();
+                $("#" + this.mCtrlId).append('<tr></tr>');
+                if (Util.isExist(data) && this.mRoot.childCount() > 0) {
+                    this.update(path);
+                }
             }
         }
 

@@ -546,7 +546,7 @@ where
    <map key="updateUrl" value="modelCollectionUpdate"/>
    <map key="exportUrl" value="modelCollectionExport"/>
    <map key="date" value="${calendar.current.format}"/>
-   <map key="dateStart" value="${calendar.current.months[1].days[1].format}"/>
+   <map key="dateStart" value="2014-1-1"/>
    <map map="${authMgr[61]}"/>
    <map key="title" value="完工订单分型号三单对比分析"/>
   </response> 

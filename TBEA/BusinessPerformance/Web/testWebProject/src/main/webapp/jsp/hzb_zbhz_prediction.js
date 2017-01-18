@@ -276,7 +276,7 @@ var hzb_zbhz_prediciton;
                 this.formatThirdMonthData(outputData);
             }
             for (var i = 0; i < outputData.length; ++i) {
-                if (outputData[i][0].lastIndexOf("计") >= 0) {
+                if (outputData[i][0].lastIndexOf("计") >= 0 && outputData[i][0].lastIndexOf("审计") < 0) {
                     tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
             }

@@ -65,8 +65,8 @@ group by
    <list type="double" sql="djgnjh" value="1" order="dwid" by="0"/>
    <list type="double" sql="djgnlj" value="1" order="dwid" by="0"/>
    <col/>
-   <divCol toCol="5" sub="3" base="4"/>
-   <divCol toCol="8" sub="6" base="7"/>
+   <divCol toCol="5" sub="4" base="3"/>
+   <divCol toCol="8" sub="7" base="6"/>
   </table>
   <sql id="zbdcrb">
 			select 
@@ -132,8 +132,8 @@ group by
    <list type="double" sql="zbdcnjh" value="1" order="zbmc" by="0"/>
    <list type="double" sql="zbdcnlj" value="1" order="zbmc" by="0"/>
    <col/>
-   <divCol toCol="4" sub="2" base="3"/>
-   <divCol toCol="7" sub="5" base="6"/>
+   <divCol toCol="4" sub="3" base="2"/>
+   <divCol toCol="7" sub="6" base="5"/>
   </table>
  </service>
  <controller id="xtnyrbFmtter">

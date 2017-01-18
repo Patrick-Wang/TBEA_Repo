@@ -13,12 +13,16 @@
     <yqkje type="double" ref="7"/>
     <yqksj type="string" ref="8"/>
     <zt type="int" value="${zt}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
    </set>
   </merge>
  </service>
  <controller id="yszkhkzbImport">
   <context key="data" value="${request.upfile.asExcel}"/>
   <context key="zt" value="${2}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
   <callservice id="servCompTypeToId"/>
   <callservice id="servEntryYszkhkzb"/>
   <response type="json">

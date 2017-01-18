@@ -54,12 +54,14 @@ var sddb;
                     for (var j = 0; j < opts.length; ++j) {
                         items.push(opts[j].text);
                     }
+                    var hasScroll = $(sels).find("option").length > 10;
+                    var extendWidth = hasScroll ? 27 : 0;
                     var width = Util.getUIWidth(items);
                     $(sels[i]).multiselect({
                         multiple: false,
                         header: false,
-                        minWidth: width < 80 ? 80 : width + 20,
-                        height: '100%',
+                        minWidth: width < 80 ? 80 + extendWidth : width + 20 + extendWidth,
+                        height: hasScroll ? 270 : '100%',
                         // noneSelectedText: "请选择月份",
                         selectedList: 1
                     })

@@ -1,0 +1,1 @@
+﻿alter table yszkhkzb add source varchar(100) default null, time datetime default null

@@ -555,7 +555,7 @@ where
  <controller id="completionFrqCollection">
   <response type="jsp" name="sddb/sddb">
    <map key="date" value="${calendar.current.format}"/>
-   <map key="dateStart" value="${calendar.current.months[1].days[1].format}"/>
+   <map key="dateStart" value="2014-1-1"/>
    <map key="updateUrl" value="completionFrqCollectionUpdate"/>
    <map key="exportUrl" value="completionFrqCollectionExport"/>
    <map key="title" value="订单完工阶段汇总分析表"/>

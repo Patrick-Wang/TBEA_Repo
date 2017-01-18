@@ -1,0 +1,67 @@
+<components>
+ <service id="servInvisibles" transaction="transactionManager">
+  <sql id="invisibleZb" export="true">select 
+	zbid
+from 
+	user_invisible_indicator
+where
+	dwid = ${compId} and
+	account_id = ${account}</sql>
+  <sql id="invisibleCol" export="true">select 
+	col,
+	CN.name
+from 
+	user_invisible_column UIC,
+	column_name CN
+where
+	UIC.col = CN.id and
+	UIC.dwid = ${compId} and
+	UIC.account_id = ${account}</sql>
+ </service>
+  <service id="servEntryInvisibles" transaction="transactionManager">
+  <sql>delete from 
+  	user_invisible_indicator 
+  where 
+  	account_id=${compId} and
+  	dwid=${compId}</sql>
+  <sql>delete from 
+  	user_invisible_column 
+  where 
+  	account_id=${compId} and
+  	dwid=${compId}</sql>
+  <merge data="invisibleZb" table="user_invisible_indicator">
+   <set>
+    <account_id type="int" value="${account}"/>
+    <dwid type="int" value="${compId}"/>
+    <zbid type="int" ref="0"/>
+   </set>
+  </merge>
+  <merge data="invisibleCol" table="user_invisible_column">
+   <set>
+    <account_id type="int" value="${account}"/>
+    <dwid type="int" value="${compId}"/>
+    <col type="int" ref="0"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="invisiblesSave">
+  <context key="account" value="${request.account.id}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="invisibleZb" value="${request.invisibleZb.asJsonArray}"/>
+  <context key="invisibleCol" value="${request.invisibleCol.asJsonArray}"/>
+  <callservice id="servInvisibles"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+  <controller id="invisiblesUpdate">
+  <context key="account" value="${request.account.id}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <callservice id="servInvisibles"/>
+  <response type="json">
+   <invisiableZb>${invisibleZb}</invisiableZb>
+   <invisibleCol>${invisibleCol}</invisibleCol>
+  </response>
+ </controller>
+</components>

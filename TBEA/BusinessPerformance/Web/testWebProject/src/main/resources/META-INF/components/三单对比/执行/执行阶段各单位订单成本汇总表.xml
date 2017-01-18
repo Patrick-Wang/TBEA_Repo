@@ -323,7 +323,7 @@ where
    <map key="updateUrl" value="execCostCollectionUpdate"/>
    <map key="exportUrl" value="execCostCollectionExport"/>
    <map key="date" value="${calendar.current.format}"/>
-   <map key="dateStart" value="${calendar.current.months[1].days[1].format}"/>
+   <map key="dateStart" value="2014-1-1"/>
    <map key="title" value="执行阶段订单成本汇总表"/>
   </response>
  </controller>

@@ -8,7 +8,9 @@ import java.util.List;
 import com.tbea.ic.operation.common.ClosureMap;
 import com.tbea.ic.operation.reportframe.el.em.EMArrayJudge;
 import com.tbea.ic.operation.reportframe.el.em.EMAsJson;
+import com.tbea.ic.operation.reportframe.el.em.EMAsTimestamp;
 import com.tbea.ic.operation.reportframe.el.em.EMDistinct;
+import com.tbea.ic.operation.reportframe.el.em.EMJsonString2Json;
 import com.tbea.ic.operation.reportframe.el.em.EMListJudge;
 import com.tbea.ic.operation.reportframe.el.em.EMListPack;
 import com.tbea.ic.operation.reportframe.el.em.EMTest;
@@ -33,6 +35,8 @@ public class PackingMap2 extends ClosureMap {
 		extendMethods.add(new EMTranspose());
 		extendMethods.add(new EMTest());
 		extendMethods.add(new EMListPack());
+		extendMethods.add(new EMAsTimestamp());
+		extendMethods.add(new EMJsonString2Json());
 	}
 	
 	public Object unpack(){

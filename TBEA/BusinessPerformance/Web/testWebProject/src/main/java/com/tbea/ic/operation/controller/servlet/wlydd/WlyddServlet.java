@@ -78,11 +78,15 @@ public class WlyddServlet {
 			d = Date.valueOf(request.getParameter("date"));
 		}
 		
+		wlyddService.importLlKglydd(d);
+		
 		wlyddService.importDlKglydd(d);
 		wlyddService.importDlMlspcs(d);
 		
 		wlyddService.importXlKglydd(d);
 		wlyddService.importXlMlspcs(d);
+		
+		
 		
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
@@ -94,6 +98,9 @@ public class WlyddServlet {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
+		
+		wlyddService.importLlKglydd(d);
+		
 		wlyddService.importDlKglydd(d);
 		wlyddService.importDlMlspcs(d);
 		

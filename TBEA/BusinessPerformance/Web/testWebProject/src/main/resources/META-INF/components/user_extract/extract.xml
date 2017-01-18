@@ -1,0 +1,68 @@
+<components>
+	<service id="servExtractUserusage" transaction="transactionManager">
+		<sql id="reqs">
+			select
+				id,
+				convert(nvarchar(MAX), reqs)
+			from
+				user_usage
+			where
+				extracted is null and
+				reqs is not null
+		</sql>
+				
+		<list id="data" type="object"></list>
+		<loop from="0" to="${reqs.size - 1}" var="i">
+			<context key="jsTmpArr" value="${reqs[i][1].json}"></context>
+			<loop from="0" to="${jsTmpArr.size - 1}" var="j">
+				<list id="tmp" clear="true" type="object">
+					<item>${reqs[i][0]}</item>
+					<item>${jsTmpArr[j]['url']}</item>
+					<item isNull="true"></item>
+					<item>${jsTmpArr[j]['isAjax']}</item>
+				</list>
+
+				<if test="${jsTmpArr[j]['requestTime'] != null}">
+					<log ref="REPORT-FRAME" level="debug">${jsTmpArr[j]['requestTime'].asTimestamp}</log>
+					<list id="tmp" type='object'>
+						<item index="2">${jsTmpArr[j]['requestTime'].asTimestamp}</item>
+					</list>
+				</if>
+				<if test="${jsTmpArr[j]['time'] != null}">
+					<log ref="REPORT-FRAME" level="debug">${jsTmpArr[j]['time'].asTimestamp}</log>
+					<list id="tmp" type='object'>
+						<item index="2">${jsTmpArr[j]['time'].asTimestamp}</item>
+					</list>
+				</if>
+				
+				<list id="data" type="object">
+					<item>${tmp}</item>
+				</list>
+				<log ref="REPORT-FRAME" level="debug">${tmp.asJson}</log>
+			</loop>
+		</loop>
+		<merge data="${data}" table="user_usage_ex">
+			<set>
+				<usageid type="int" ref="0" />
+				<url type="string" ref="1" />
+				<requestTime type="date" ref="2"/>
+				<isAjax type="string" ref="3" />
+			</set>
+		</merge>
+		
+		<list id="ids" type="int" sql="reqs" value="0"></list>
+		<context key="now" value="${calendar.current.timestamp}"></context>
+		<if test="${!ids.isEmpty}">
+			<sql>
+				update user_usage set extracted='${now}' where id in ${ids}
+			</sql>	
+		</if>
+	</service>
+	<controller id="user_usage_extract" cron="0 0 0 3-5 * ?">
+		<callservice id="servExtractUserusage" />
+		<response type="json">
+			<errorCode>0</errorCode>
+			<message>OK</message>
+		</response>
+	</controller>
+</components>

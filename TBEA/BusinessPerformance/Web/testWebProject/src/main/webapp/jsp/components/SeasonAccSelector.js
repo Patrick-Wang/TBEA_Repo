@@ -24,9 +24,19 @@ var Util;
                     }
                 });
             }
+            var seasonsAll = [];
+            for (var i = 0; i <= 3; ++i) {
+                seasonsAll.push({
+                    data: {
+                        id: i,
+                        value: jdNames[i]
+                    }
+                });
+            }
             var seasonNow = parseInt("" + (now.month - 1) / 3);
             $("#" + id).append("<div style='float:left' id='" + id + "year'></div>");
             $("#" + id).append("<div style='float:left' id='" + id + "season'></div>");
+            var lastYear = now.year;
             this.yearSelector = new Util.UnitedSelector(dates, id + "year", [now.year - start.year]);
             this.seasonSelector = new Util.UnitedSelector(seasons, id + "season", [seasonNow]);
             $("#" + id + " select").css("width", "100px");
@@ -48,6 +58,38 @@ var Util;
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 }).css("text-align:center");
+                var year = _this.getDate();
+                if (year.year != lastYear) {
+                    lastYear = year.year;
+                    var path = _this.seasonSelector.getPath();
+                    if (lastYear == end.year) {
+                        if (path[0] > (seasons.length - 1)) {
+                            path = [seasonNow];
+                        }
+                        _this.seasonSelector.refresh(seasons, path);
+                    }
+                    else {
+                        _this.seasonSelector.refresh(seasonsAll, path);
+                    }
+                    $("#" + id + " select").css("width", "100px");
+                    sel = _this.seasonSelector.getSelect();
+                    $(sel).multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth: 80,
+                        height: '100%',
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    }).css("text-align:center");
+                    $(sel[1]).multiselect({
+                        multiple: false,
+                        header: false,
+                        minWidth: 100,
+                        height: '100%',
+                        // noneSelectedText: "请选择月份",
+                        selectedList: 1
+                    }).css("text-align:center");
+                }
             });
             var sel = this.yearSelector.getSelect();
             $(sel).multiselect({
