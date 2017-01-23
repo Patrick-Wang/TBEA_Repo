@@ -23,14 +23,14 @@ public abstract class RequestHandler<T> {
 	}
 
 	abstract protected boolean onHandle(T request);
-	abstract protected void onReset();
+//	abstract protected void onReset();
 	
-	public void reset(){
-		this.onReset();
-		if (next != null){
-			next.reset();
-		}
-	}
+//	public void reset(){
+//		this.onReset();
+//		if (next != null){
+//			next.reset();
+//		}
+//	}
 
 	
 }

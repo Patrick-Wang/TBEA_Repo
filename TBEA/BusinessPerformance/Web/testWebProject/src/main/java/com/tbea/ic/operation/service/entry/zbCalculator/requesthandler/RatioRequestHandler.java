@@ -45,9 +45,9 @@ public class RatioRequestHandler extends RequestHandler<Request>{
 		return false;
 	}
 
-	@Override
-	protected void onReset() {
-		sub = null;
-		base = null;
-	}
+//	@Override
+//	protected void onReset() {
+//		sub = null;
+//		base = null;
+//	}
 };

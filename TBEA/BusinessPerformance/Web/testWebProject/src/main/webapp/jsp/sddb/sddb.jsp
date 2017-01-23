@@ -293,8 +293,8 @@ th.ui-th-ltr {
 			}
 		}
 
-		var items = '${itemNodes}';
-		var items0 = '${itemNodes0}';
+		var items = '${itemNodes}'.replace(/\n/g, "");
+		var items0 = '${itemNodes0}'.replace('/\n/g', "");
 		var comps = '${nodeData}';
 
 

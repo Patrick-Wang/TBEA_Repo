@@ -23,8 +23,8 @@ public abstract class ZbInjector {
 		this.listener = listener;
 	}
 	
-	abstract public void inject(Integer zbId, double val, Calendar cal, Company comp, ZBStatus status, Calendar time);	
+	abstract public void inject(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status, Calendar time);	
 	
-	abstract public void remove(Integer zbId, Calendar cal, Company comp);
+	abstract public Double remove(Integer zbId, Calendar cal, Company comp);
 
 }

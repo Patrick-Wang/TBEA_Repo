@@ -39,8 +39,8 @@ public class SumRequestHandler extends RequestHandler<Request>{
 		return false;
 	}
 
-	@Override
-	protected void onReset() {
-		destVal = null;
-	}
+//	@Override
+//	protected void onReset() {
+//		destVal = null;
+//	}
 };

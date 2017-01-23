@@ -6,7 +6,9 @@ import java.util.Set;
 
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.RequestHandler;
+import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.service.entry.zbCalculator.Request;
+import com.tbea.ic.operation.service.entry.zbCalculator.requesthandler.NdjhzbStatusUpdaterFilter;
 import com.tbea.ic.operation.service.entry.zbCalculator.requesthandler.RatioRequestHandler;
 
 public class CalculatedZbManager {
@@ -47,8 +49,9 @@ public class CalculatedZbManager {
 	}
 	
 	public static RequestHandler<Request> getJHHandler(Calendar cal){
-		RequestHandler<Request> handler = new RatioRequestHandler(GSZB.RJLR62,GSZB.LRZE1, GSZB.RS61);
-		handler.add(new RatioRequestHandler(GSZB.RJSR63,GSZB.XSSR6, GSZB.RS61))
+		RequestHandler<Request> handler = new NdjhzbStatusUpdaterFilter(GSZB.MTXLZH346, CompanyType.TCNY); 
+		handler.add(new RatioRequestHandler(GSZB.RJLR62,GSZB.LRZE1, GSZB.RS61))
+			.add(new RatioRequestHandler(GSZB.RJSR63,GSZB.XSSR6, GSZB.RS61))
 			.add(new RatioRequestHandler(GSZB.SXFYL_65,GSZB.SXFY64, GSZB.XSSR6))
 			.add(new RatioRequestHandler(GSZB.GC_XSYWSXFYL232,GSZB.GC_XSYW229, GSZB.XSSR_GCXMSR12))
 			.add(new RatioRequestHandler(GSZB.WLMYSXFYL233,GSZB.WLMY230, GSZB.XSSR_WLMYSR16))

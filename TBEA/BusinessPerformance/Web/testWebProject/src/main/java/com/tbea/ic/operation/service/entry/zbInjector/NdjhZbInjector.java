@@ -22,7 +22,7 @@ class NdjhZbInjector extends ZbInjector {
 	}
 
 	@Override
-	public void inject(Integer zbId, double val, Calendar cal, Company comp, ZBStatus status, Calendar time) {
+	public void inject(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status, Calendar time) {
 		boolean newEntity = false;
 		NDJHZB zb = ndjhzbDao.getZb(zbId, Util.toDate(cal), comp);
 		if (null == zb){
@@ -41,7 +41,9 @@ class NdjhZbInjector extends ZbInjector {
 		}
 		
 		zb.setNf(cal.get(Calendar.YEAR));
-		zb.setNdjhz(val);
+		if (val != null){
+			zb.setNdjhz(val);
+		}
 		
 		if (newEntity) {
 			ndjhzbDao.create(zb);
@@ -52,11 +54,14 @@ class NdjhZbInjector extends ZbInjector {
 	}
 
 	@Override
-	public void remove(Integer zbId, Calendar cal, Company comp) {
+	public Double remove(Integer zbId, Calendar cal, Company comp) {
 		NDJHZB zb = ndjhzbDao.getZb(zbId, Util.toDate(cal), comp);
+		Double ret = null;
 		if (null != zb){
+			ret = zb.getNdjhz();
 			ndjhzbDao.delete(zb);
 		}
+		return ret;
 	}
 
 }

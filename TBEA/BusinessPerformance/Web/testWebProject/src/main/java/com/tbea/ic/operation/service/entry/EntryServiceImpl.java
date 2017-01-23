@@ -961,52 +961,52 @@ public class EntryServiceImpl implements EntryService{
 			ZBType entryType, JSONArray data, Calendar time) {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		boolean bRet = false;
-		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
-				sjzbDao, yj20zbDao,
-				yj28zbDao, ydjhzbDao,
-				ndjhzbDao, companyManager,
-				indiRelations, entryType);
-		Calendar keyTime = Calendar.getInstance();
+//		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
+//				sjzbDao, yj20zbDao,
+//				yj28zbDao, ydjhzbDao,
+//				ndjhzbDao, companyManager,
+//				indiRelations, entryType);
+//		Calendar keyTime = Calendar.getInstance();
 		switch (entryType){
 		case BY20YJ:
-			this.yj20Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.yj20Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update20YJ(date, company, data, ZBStatus.SAVED, time);
-			this.yj20Listener.removeListener(keyTime.getTimeInMillis());
+//			this.yj20Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BY28YJ:
-			this.yj28Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.yj28Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update28YJ(date, company, data, ZBStatus.SAVED, time);
-			this.yj28Listener.removeListener(keyTime.getTimeInMillis());
+//			this.yj28Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BYSJ:
-			this.sjzbListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.sjzbListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateBYSJ(date, company, data, ZBStatus.SAVED, time);
-			this.sjzbListener.removeListener(keyTime.getTimeInMillis());
+//			this.sjzbListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case NDJH:
-			this.njhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.njhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateNDJH(date, company, data, ZBStatus.SAVED, time);
-			this.njhListener.removeListener(keyTime.getTimeInMillis());
+//			this.njhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case YDJDMJH:
-			this.ydjhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.ydjhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateYDJDMJH(date, company, data, ZBStatus.SAVED, time);
-			this.ydjhListener.removeListener(keyTime.getTimeInMillis());
+//			this.ydjhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		default:
 			break;
 		}
 		
-		Organization org = companyManager.getBMDBOrganization();
-		Map<String, IndiValues> indis = lsnAggr.getShareIndis();
-		for (Entry<String, IndiValues> entry : indis.entrySet()){
-			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
-		}
-		
-		indis = lsnAggr.getSumIndis();
-		for (Entry<String, IndiValues> entry : indis.entrySet()){
-			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
-		}
+//		Organization org = companyManager.getBMDBOrganization();
+//		Map<String, IndiValues> indis = lsnAggr.getShareIndis();
+//		for (Entry<String, IndiValues> entry : indis.entrySet()){
+//			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+//		}
+//		
+//		indis = lsnAggr.getSumIndis();
+//		for (Entry<String, IndiValues> entry : indis.entrySet()){
+//			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+//		}
 
 		return bRet;
 	}
@@ -1016,52 +1016,52 @@ public class EntryServiceImpl implements EntryService{
 			ZBType entryType, JSONArray data, Calendar time) {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		boolean bRet = false;
-		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
-				sjzbDao, yj20zbDao,
-				yj28zbDao, ydjhzbDao,
-				ndjhzbDao, companyManager,
-				indiRelations, entryType);
-		Calendar keyTime = Calendar.getInstance();
+//		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
+//				sjzbDao, yj20zbDao,
+//				yj28zbDao, ydjhzbDao,
+//				ndjhzbDao, companyManager,
+//				indiRelations, entryType);
+//		Calendar keyTime = Calendar.getInstance();
 		switch (entryType){
 		case BY20YJ:
-			this.yj20Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.yj20Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update20YJ(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.yj20Listener.removeListener(keyTime.getTimeInMillis());
+//			this.yj20Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BY28YJ:
-			this.yj28Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.yj28Listener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = update28YJ(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.yj28Listener.removeListener(keyTime.getTimeInMillis());
+//			this.yj28Listener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case BYSJ:
-			this.sjzbListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.sjzbListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateBYSJ(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.sjzbListener.removeListener(keyTime.getTimeInMillis());
+//			this.sjzbListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case NDJH:
-			this.njhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.njhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateNDJH(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.njhListener.removeListener(keyTime.getTimeInMillis());
+//			this.njhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		case YDJDMJH:
-			this.ydjhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
+//			this.ydjhListener.addListener(keyTime.getTimeInMillis(), lsnAggr);
 			bRet = updateYDJDMJH(date, company, data, ZBStatus.SUBMITTED_2, time);
-			this.ydjhListener.removeListener(keyTime.getTimeInMillis());
+//			this.ydjhListener.removeListener(keyTime.getTimeInMillis());
 			break;
 		default:
 			break;
 		}
 
-		Organization org = companyManager.getBMDBOrganization();
-		Map<String, IndiValues> indis = lsnAggr.getShareIndis();
-		for (Entry<String, IndiValues> entry : indis.entrySet()){
-			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
-		}
-		
-		indis = lsnAggr.getSumIndis();
-		for (Entry<String, IndiValues> entry : indis.entrySet()){
-			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
-		}
+//		Organization org = companyManager.getBMDBOrganization();
+//		Map<String, IndiValues> indis = lsnAggr.getShareIndis();
+//		for (Entry<String, IndiValues> entry : indis.entrySet()){
+//			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+//		}
+//		
+//		indis = lsnAggr.getSumIndis();
+//		for (Entry<String, IndiValues> entry : indis.entrySet()){
+//			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+//		}
 		
 //		Map<String, JSONArray> indis = lsnAggr.getIndis();
 //		for (Entry<String, JSONArray> entry : indis.entrySet()){

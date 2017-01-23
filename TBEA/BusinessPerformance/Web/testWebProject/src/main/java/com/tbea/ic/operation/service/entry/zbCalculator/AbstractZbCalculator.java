@@ -22,9 +22,9 @@ abstract class AbstractZbCalculator implements ZbCalculator{
 		return injector;
 	}
 	
-	public void reset(){
-		this.handler.reset();
-	}
+//	public void reset(){
+//		this.handler.reset();
+//	}
 
 	abstract protected void onHandling(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status, Calendar time);
 	
