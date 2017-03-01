@@ -74,7 +74,7 @@ var cpzlqk;
                 }], "zlAndyclhgl");
             pageSlector.change(function () {
                 if (pageSlector.getPath()[0] == 1) {
-                    if (pageType == 1) {
+                    if (pageType == cpzlqk.PageType.APPROVE) {
                         window.location.href = "../report/yclhglqktj.do?approve=true";
                     }
                     else {

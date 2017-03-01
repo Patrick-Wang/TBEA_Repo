@@ -640,7 +640,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 
 			@Override
 			public void on(Element e) throws Exception {
-				XmlUtil.each(e.getChildNodes(), new OnLoop() {
+				XmlUtil.eachChildren(e, new OnLoop() {
 
 					@Override
 					public void on(Element elem) throws Exception {

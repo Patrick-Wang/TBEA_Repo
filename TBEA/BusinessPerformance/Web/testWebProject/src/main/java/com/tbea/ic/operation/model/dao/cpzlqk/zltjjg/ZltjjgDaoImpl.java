@@ -78,10 +78,10 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
 		if (ret.get(0)[0] != null){
-			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setBhgs(((Double)ret.get(0)[0]));
 		}
 		if (ret.get(0)[1] != null){
-			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			entity.setZs(((Double)ret.get(0)[1]));
 		}
 		return entity;
 	}
@@ -115,10 +115,10 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
 		if (ret.get(0)[0] != null){
-			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setBhgs(((Double)ret.get(0)[0]));
 		}
 		if (ret.get(0)[1] != null){
-			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			entity.setZs(((Double)ret.get(0)[1]));
 		}
 		return entity;
 	}
@@ -153,10 +153,10 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
 		if (ret.get(0)[0] != null){
-			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setBhgs(((Double)ret.get(0)[0]));
 		}
 		if (ret.get(0)[1] != null){
-			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			entity.setZs(((Double)ret.get(0)[1]));
 		}
 		return entity;
 	}
@@ -178,10 +178,10 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
 		if (ret.get(0)[0] != null){
-			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setBhgs(((Double)ret.get(0)[0]));
 		}
 		if (ret.get(0)[1] != null){
-			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			entity.setZs(((Double)ret.get(0)[1]));
 		}
 		return entity;
 	}
@@ -246,10 +246,10 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
 		if (ret.get(0)[0] != null){
-			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setBhgs(((Double)ret.get(0)[0]));
 		}
 		if (ret.get(0)[1] != null){
-			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			entity.setZs(((Double)ret.get(0)[1]));
 		}
 		
 		return entity;
@@ -281,10 +281,10 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
 		if (ret.get(0)[0] != null){
-			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setBhgs(((Double)ret.get(0)[0]));
 		}
 		if (ret.get(0)[1] != null){
-			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			entity.setZs(((Double)ret.get(0)[1]));
 		}
 		return entity;
 	}
@@ -318,10 +318,10 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
 		if (ret.get(0)[0] != null){
-			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setBhgs(((Double)ret.get(0)[0]));
 		}
 		if (ret.get(0)[1] != null){
-			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			entity.setZs(((Double)ret.get(0)[1]));
 		}
 		return entity;
 	}
@@ -357,10 +357,10 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
 		if (ret.get(0)[0] != null){
-			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setBhgs(((Double)ret.get(0)[0]));
 		}
 		if (ret.get(0)[1] != null){
-			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			entity.setZs(((Double)ret.get(0)[1]));
 		}
 		return entity;
 	}
@@ -389,10 +389,10 @@ public class ZltjjgDaoImpl extends AbstractReadWriteDaoImpl<ZltjjgEntity> implem
 		}
 		ZltjjgEntity entity = new ZltjjgEntity();
 		if (ret.get(0)[0] != null){
-			entity.setBhgs(((Long)ret.get(0)[0]).intValue());
+			entity.setBhgs(((Double)ret.get(0)[0]));
 		}
 		if (ret.get(0)[1] != null){
-			entity.setZs(((Long)ret.get(0)[1]).intValue());
+			entity.setZs(((Double)ret.get(0)[1]));
 		}
 		return entity;
 	}

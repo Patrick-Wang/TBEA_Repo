@@ -152,7 +152,7 @@ var nwbzlqk;
                     drag: false,
                     resize: false,
                     height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
-                    width: 1200,
+                    width: 1300,
                     shrinkToFit: true,
                     autoScroll: true,
                     rowNum: this.mData.tjjg.length + 10,

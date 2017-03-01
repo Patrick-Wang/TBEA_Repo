@@ -26,7 +26,7 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var LzbbView = (function (_super) {
             __extends(LzbbView, _super);
             function LzbbView() {
@@ -77,7 +77,7 @@ var jcycljg;
                         data[j].push(_this.mData[i][1 + j]);
                     }
                 });
-                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, items, data);
+                this.updateEchart("冷轧薄板（元/吨）", this.option().ct, items, data);
             };
             LzbbView.prototype.getDateType = function () {
                 return jcycljg.DateType.DAY;
@@ -119,7 +119,7 @@ var jcycljg;
                         data: legend
                     },
                     toolbox: {
-                        show: true,
+                        show: true
                     },
                     calculable: false,
                     xAxis: [
@@ -160,7 +160,7 @@ var jcycljg;
                 }));
             };
             return LzbbView;
-        }(jcycljg.BasePluginView));
+        })(jcycljg.BasePluginView);
         lzbb.pluginView = LzbbView.newInstance();
     })(lzbb = jcycljg.lzbb || (jcycljg.lzbb = {}));
 })(jcycljg || (jcycljg = {}));

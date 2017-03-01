@@ -106,22 +106,22 @@ class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 			pair = server.getCache(id);
 			if (null != pair){
 				if (null != pair.getFirst()){
-					formula.setParameter(id, 0, MathUtil.toDouble(pair.getFirst().getBhgs()));
-					formula.setParameter(id, 1, MathUtil.toDouble(pair.getFirst().getZs()));
+					formula.setParameter(id, 0, pair.getFirst().getBhgs());
+					formula.setParameter(id, 1, pair.getFirst().getZs());
 				}
 				if (null != pair.getSecond()){
-					formula.setParameter(id, 2, MathUtil.toDouble(pair.getSecond().getBhgs()));
-					formula.setParameter(id, 3, MathUtil.toDouble(pair.getSecond().getZs()));
+					formula.setParameter(id, 2, pair.getSecond().getBhgs());
+					formula.setParameter(id, 3, pair.getSecond().getZs());
 				}
 			}
 		}
 		
 		ZltjjgEntity dj = new ZltjjgEntity();
-		dj.setBhgs(MathUtil.toInteger(formula.compute(0)));
-		dj.setZs(MathUtil.toInteger(formula.compute(1)));
+		dj.setBhgs(formula.compute(0));
+		dj.setZs(formula.compute(1));
 		ZltjjgEntity tq = new ZltjjgEntity();
-		tq.setBhgs(MathUtil.toInteger(formula.compute(2)));
-		tq.setZs(MathUtil.toInteger(formula.compute(3)));
+		tq.setBhgs(formula.compute(2));
+		tq.setZs(formula.compute(3));
 		this.pdacptjjgServiceImpl.setRow(r, forMap.get(formula), dj, tq);
 		
 		return new Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>>(

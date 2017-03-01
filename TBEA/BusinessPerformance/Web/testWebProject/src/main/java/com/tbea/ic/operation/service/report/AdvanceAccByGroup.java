@@ -9,6 +9,7 @@ import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.service.util.pipe.configurator.ConfiguratorUtil;
 import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 
 public class AdvanceAccByGroup{
@@ -29,11 +30,8 @@ public class AdvanceAccByGroup{
 			return tp == CompanyType.RDGS || tp == CompanyType.DLBZGS;
 		}
 		
-		@Override
-		public List<Double> compute(int col, Date start, Date end,
-				List<Integer> zbs, List<Company> companies) {
-			List<Double> result = stub.compute(col, start, end, zbs, companies);
-			
+		private void postHandleWxsr(List<Double> result, int col, Date start, Date end,
+				List<Integer> zbs, List<Company> companies){
 			if (zbs.contains(336)){
 				int index = zbs.indexOf(336);
 				if (index >= 0){
@@ -68,6 +66,33 @@ public class AdvanceAccByGroup{
 					
 				}
 			}
+		}
+		
+		
+		private void postHandleTimepoint(List<Double> result, int col, Date start, Date end,
+				List<Integer> zbs, List<Company> companies){
+			List<Integer> tmpZbs = null;
+			for (int i = zbs.size() - 1; i >= 0; --i){
+				if (ConfiguratorUtil.getTimePointNumberZbs().contains(zbs.get(i))){
+					if (tmpZbs == null){
+						tmpZbs = new ArrayList<Integer>();
+						tmpZbs.add(null);
+					}
+					tmpZbs.set(0, zbs.get(i));
+					Double value = stub.compute(col, end, end, tmpZbs, companies).get(0);
+					result.set(i, value);
+				}
+			}
+		}
+		
+		@Override
+		public List<Double> compute(int col, Date start, Date end,
+				List<Integer> zbs, List<Company> companies) {
+			List<Double> result = stub.compute(col, start, end, zbs, companies);
+
+			postHandleWxsr(result, col, start, end, zbs, companies);
+			
+			postHandleTimepoint(result, col, start, end, zbs, companies);
 			
 			return result;
 		}

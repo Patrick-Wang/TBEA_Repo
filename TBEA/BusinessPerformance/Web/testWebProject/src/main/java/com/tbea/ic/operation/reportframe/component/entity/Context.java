@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Context {
-	Map<String, Object> objMap = new HashMap<String, Object>();
+	Map<String, Object> objMap =new HashMap<String, Object>();
 	public void put(String key, LasyObject value){
 		objMap.put(key, value);
 	}

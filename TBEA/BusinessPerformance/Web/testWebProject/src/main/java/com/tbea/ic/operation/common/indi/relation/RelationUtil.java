@@ -21,7 +21,7 @@ import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 public class RelationUtil {
 	public static Set<CompanyType> parseCompanySet(Element elem, CompanyManager compMgr, DWXXDao dwxxDao) throws Exception {
 		Set<CompanyType> comps = new HashSet<CompanyType>();
-		XmlUtil.each(elem.getChildNodes(), new OnLoop(){
+		XmlUtil.eachChildren(elem, new OnLoop(){
 
 			@Override
 			public void on(Element elem) throws Exception {

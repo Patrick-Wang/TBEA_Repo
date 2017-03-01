@@ -34,8 +34,8 @@ public class ZltjjgEntity extends AbstractReadWriteEntity implements Serializabl
 	Integer yf;
 	Integer dwid;
 	Integer cpid;
-	Integer bhgs;
-	Integer zs;
+	Double bhgs;
+	Double zs;
 	Timestamp xgsj;
 	Timestamp shsj;
 	Integer zt;
@@ -63,16 +63,16 @@ public class ZltjjgEntity extends AbstractReadWriteEntity implements Serializabl
 	public void setCpid(Integer cpid) {
 		this.cpid = cpid;
 	}
-	public Integer getBhgs() {
+	public Double getBhgs() {
 		return bhgs;
 	}
-	public void setBhgs(Integer bhgs) {
+	public void setBhgs(Double bhgs) {
 		this.bhgs = bhgs;
 	}
-	public Integer getZs() {
+	public Double getZs() {
 		return zs;
 	}
-	public void setZs(Integer zs) {
+	public void setZs(Double zs) {
 		this.zs = zs;
 	}
 	public Integer getZt() {

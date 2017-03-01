@@ -70,7 +70,7 @@ public class PdcpycssbhgwtmxServlet {
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		CpzlqkResp resp = new CpzlqkResp();
+		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
 			zts.add(ZBStatus.APPROVED.ordinal());
@@ -181,7 +181,7 @@ public class PdcpycssbhgwtmxServlet {
 		}
 		
 		
-		return JSONObject.fromObject(new CpzlqkResp(result, status)).toString().getBytes("utf-8");
+		return JSONObject.fromObject(new CpzlqkResp(false, result, status)).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "approve/approve.do")

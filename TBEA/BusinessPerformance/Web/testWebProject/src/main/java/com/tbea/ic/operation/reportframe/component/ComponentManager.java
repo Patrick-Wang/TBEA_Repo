@@ -21,12 +21,10 @@ import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.DataNode.Visitor;
-import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.controller.Controller;
 import com.tbea.ic.operation.reportframe.component.controller.Scheduler;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.reportframe.component.service.Service;
-import com.tbea.ic.operation.reportframe.util.XmlUtil;
 
 public class ComponentManager implements ConfigLoadedListener {
 
@@ -75,7 +73,8 @@ public class ComponentManager implements ConfigLoadedListener {
 		}
 	};
 	
-	
+//	Map<Node, String> debugMap = Collections
+//			.synchronizedMap(new HashMap<Node, String>());
 	Map<String, Config> serviceMap = Collections
 			.synchronizedMap(new HashMap<String, Config>());
 	Map<String, Config> controllerMap = Collections
@@ -238,14 +237,22 @@ public class ComponentManager implements ConfigLoadedListener {
 		}
 	}
 
+	
+	
 	public Controller createController(AbstractXmlComponent preComponent,String id) {
 		if (controllerMap.containsKey(id)){
 			Element eCopy = null;
 			synchronized(controllerMap.keySet()){
 				eCopy = (Element) controllerMap.get(id).getE().cloneNode(true);
-				if (ReportLogger.trace().isDebugEnabled()){
-					ReportLogger.trace().debug(XmlUtil.toStringFromDoc(eCopy));
-				}
+//				if (!debugMap.containsKey(controllerMap.get(id).getE())){
+//					debugMap.put(controllerMap.get(id).getE(), XmlUtil.toStringFromDoc(eCopy));
+//				}else{
+//					String newCopyText = XmlUtil.toStringFromDoc(eCopy);
+//					if (!debugMap.get(controllerMap.get(id).getE()).equals(newCopyText)){
+//						ReportLogger.trace().info(debugMap.get(controllerMap.get(id).getE()));
+//						ReportLogger.trace().info(newCopyText);
+//					}
+//				}
 			}
 			return new Controller(preComponent, eCopy, this);
 		}
@@ -257,9 +264,15 @@ public class ComponentManager implements ConfigLoadedListener {
 			Element eCopy = null;
 			synchronized(controllerMap.keySet()){
 				eCopy = (Element) controllerMap.get(id).getE().cloneNode(true);
-				if (ReportLogger.trace().isDebugEnabled()){
-					ReportLogger.trace().debug(XmlUtil.toStringFromDoc(eCopy));
-				}
+//				if (!debugMap.containsKey(controllerMap.get(id).getE())){
+//					debugMap.put(controllerMap.get(id).getE(), XmlUtil.toStringFromDoc(eCopy));
+//				}else{
+//					String newCopyText = XmlUtil.toStringFromDoc(eCopy);
+//					if (!debugMap.get(controllerMap.get(id).getE()).equals(newCopyText)){
+//						ReportLogger.trace().info(debugMap.get(controllerMap.get(id).getE()));
+//						ReportLogger.trace().info(newCopyText);
+//					}
+//				}
 			}
 			return new Controller(preComponent, eCopy, this, local);
 		}
@@ -275,11 +288,20 @@ public class ComponentManager implements ConfigLoadedListener {
 	public Service createService(AbstractXmlComponent preComponent,String id, Context local){
 		if (serviceMap.containsKey(id)){
 			Element eCopy = null;
-			synchronized(controllerMap.keySet()){
+			synchronized(serviceMap.keySet()){
 				eCopy = (Element) serviceMap.get(id).getE().cloneNode(true);
-				if (ReportLogger.trace().isDebugEnabled()){
-					ReportLogger.trace().debug(XmlUtil.toStringFromDoc(eCopy));
-				}
+//				if (!debugMap.containsKey(serviceMap.get(id).getE())){
+//					debugMap.put(serviceMap.get(id).getE(), XmlUtil.toStringFromDoc(eCopy));
+//				}else{
+//					String newCopyText = XmlUtil.toStringFromDoc(eCopy);
+//					if (!debugMap.get(serviceMap.get(id).getE()).equals(newCopyText)){
+//						ReportLogger.trace().info(debugMap.get(serviceMap.get(id).getE()));
+//						ReportLogger.trace().info(newCopyText);
+//					}
+//				}
+//				if (ReportLogger.trace().isDebugEnabled()){
+//					ReportLogger.trace().debug(XmlUtil.toStringFromDoc(eCopy));
+//				}
 			}
 			return new Service(preComponent,eCopy, this, local);
 		}
@@ -289,11 +311,17 @@ public class ComponentManager implements ConfigLoadedListener {
 	public Service createService(AbstractXmlComponent preComponent,String id) {
 		if (serviceMap.containsKey(id)){
 			Element eCopy = null;
-			synchronized(controllerMap.keySet()){
+			synchronized(serviceMap.keySet()){
 				eCopy = (Element) serviceMap.get(id).getE().cloneNode(true);
-				if (ReportLogger.trace().isDebugEnabled()){
-					ReportLogger.trace().debug(XmlUtil.toStringFromDoc(eCopy));
-				}
+//				if (!debugMap.containsKey(serviceMap.get(id).getE())){
+//					debugMap.put(serviceMap.get(id).getE(), XmlUtil.toStringFromDoc(eCopy));
+//				}else{
+//					String newCopyText = XmlUtil.toStringFromDoc(eCopy);
+//					if (!debugMap.get(serviceMap.get(id).getE()).equals(newCopyText)){
+//						ReportLogger.trace().info(debugMap.get(serviceMap.get(id).getE()));
+//						ReportLogger.trace().info(newCopyText);
+//					}
+//				}
 			}
 			return createService(preComponent, eCopy);
 		}

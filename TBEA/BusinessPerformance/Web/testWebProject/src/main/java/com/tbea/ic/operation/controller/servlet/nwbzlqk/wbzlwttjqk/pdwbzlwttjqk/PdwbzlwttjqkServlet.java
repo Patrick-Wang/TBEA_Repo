@@ -26,7 +26,7 @@ import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.querier.QuerierFactory;
 import com.tbea.ic.operation.common.querier.ZBStatusQuerier;
-import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
+import com.tbea.ic.operation.controller.servlet.nwbzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.PageType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;

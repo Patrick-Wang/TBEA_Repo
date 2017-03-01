@@ -43,13 +43,12 @@ public class QualityHandler implements ContextHandler {
 
 			@Override
 			protected boolean validate(List<Object> args) throws Exception {
-				return args.size() == 2;
+				return args.size() == 1;
 			}
 
 			@Override
 			protected Object onGetProp(List<Object> args) throws Exception {
-				ZBStatus status = ZBStatus.valueOf(Integer.valueOf((Integer) args.get(0)));
-				CompanyType comp = CompanyType.valueOf((Integer) args.get(1));
+				CompanyType comp = CompanyType.valueOf((Integer) args.get(0));
 				Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 				HttpServletRequest request = (
 						(ControllerRequest) context.get(

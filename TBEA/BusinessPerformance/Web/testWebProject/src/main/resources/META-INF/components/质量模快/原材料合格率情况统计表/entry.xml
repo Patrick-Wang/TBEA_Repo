@@ -38,8 +38,8 @@ where
     <clid type="int" ref="0"/>
    </where>
    <set>
-    <hgs type="int" ref="3"/>
-    <zs type="int" ref="4"/>
+    <hgs type="double" ref="3"/>
+    <zs type="double" ref="4"/>
     <zt type="int" value="${zt}"/>
     <nf type="int" value="${cal.year}"/>
     <yf type="int" value="${cal.month}"/>
@@ -53,12 +53,25 @@ where
   <context key="cal" value="${request.date.asCalendar}"/>
   <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
   <callservice id="servYclhglqktjEntryUpdate"/>
-  <formatter id="data">
-   <EmptyFormatter>
-    <DefaultMatcher cols="0, 1, 2"/>
-   </EmptyFormatter>
-   <NumberFormatter reservedCount="0"/>
-  </formatter>
+  <if test="${cy==0}">
+   <formatter id="data">
+    <EmptyFormatter>
+     <DefaultMatcher cols="0, 1, 2"/>
+    </EmptyFormatter>
+    <NumberFormatter reservedCount="2">
+     <DefaultMatcher rows="0,1,3,4,5"/>
+    </NumberFormatter>
+    <NumberFormatter reservedCount="0"/>
+   </formatter>
+  </if>
+  <else>
+   <formatter id="data">
+    <EmptyFormatter>
+     <DefaultMatcher cols="0, 1, 2"/>
+    </EmptyFormatter>
+    <NumberFormatter reservedCount="2"/>
+   </formatter>
+  </else>
   <formatterServer id="serv" table="${result.matrix}" acceptNullAs="">
    <formatter ref="data"/>
   </formatterServer>

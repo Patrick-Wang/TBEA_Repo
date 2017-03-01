@@ -81,7 +81,7 @@ module jcycljg {
                         data[j].push(this.mData[i][1 + j])
                     }
                 });
-                this.updateEchart("废钢材价格趋势（元/吨）", this.option().ct, items, data);
+                this.updateEchart("中厚板（元/吨）", this.option().ct, items, data);
             }
 
             public  getDateType():DateType {

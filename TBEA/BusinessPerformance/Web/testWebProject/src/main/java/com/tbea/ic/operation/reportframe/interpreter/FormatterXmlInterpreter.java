@@ -35,7 +35,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	AbstractXmlComponent component;
 	FormatterMatcher parserMatcher(Element handler) throws Exception{
 		FormatterMatcher[] mRet = new FormatterMatcher[]{null};
-		XmlUtil.each(handler.getChildNodes(), new XmlUtil.OnEach(){
+		XmlUtil.eachChildren(handler, new XmlUtil.OnEach(){
 
 			@Override
 			public boolean on(Element elem) throws Exception {
@@ -78,7 +78,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		this.component = component;
 		elp = new ELParser(component);
 		List<FormatterHandler> handlers = new ArrayList<FormatterHandler>();
-		XmlUtil.each(e.getChildNodes(), new OnLoop(){
+		XmlUtil.eachChildren(e, new OnLoop(){
 
 			@Override
 			public void on(Element elem) throws Exception {
@@ -148,7 +148,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	private List<List<String>> parserTitles(Element item) throws Exception {
 		List<List<String>> titles = new ArrayList<List<String>>();
 		Element ts = XmlUtil.element(item.getElementsByTagName("titles"), 0);
-		XmlUtil.each(ts.getChildNodes(), new OnLoop(){
+		XmlUtil.eachChildren(ts, new OnLoop(){
 			@Override
 			public void on(Element elem) {
 				Object obj = component.getVar(elem.getAttribute("ref"));
@@ -165,7 +165,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	}
 	
 	private void parserMergeRegion(ExcelMergeFormatter handler, Element item) throws Exception {
-		XmlUtil.each(item.getChildNodes(), new OnLoop(){
+		XmlUtil.eachChildren(item, new OnLoop(){
 			
 			@Override
 			public void on(Element elem) throws Exception {
@@ -197,7 +197,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 
 	private ExcelTemplate parserExcelTemplate(AbstractXmlComponent component,
 			Element item) {
-		Element e = XmlUtil.element(item.getChildNodes(), "ExcelTemplate");
+		Element e = XmlUtil.child(item, "ExcelTemplate");
 		if (null != e){
 			String refId = e.getAttribute("ref");
 			return (ExcelTemplate) component.getVar(refId);
@@ -206,7 +206,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	}
 
 	private Offset parserOffset(Element item) throws Exception {
-		Element e = XmlUtil.element(item.getChildNodes(), "Offset");
+		Element e = XmlUtil.child(item, "Offset");
 		if (null != e){
 			return new Offset(getIntAttribute(e, "row", 0), 
 					getIntAttribute(e, "col", 0));

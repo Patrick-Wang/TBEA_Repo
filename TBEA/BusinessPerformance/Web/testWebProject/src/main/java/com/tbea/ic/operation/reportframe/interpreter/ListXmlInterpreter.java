@@ -153,7 +153,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 
 	
 	private void parseItems(AbstractXmlComponent component, Element e, List<Object> objs) throws Exception {
-		NodeList children = e.getChildNodes();
+		//NodeList children = e.getChildNodes();
 		int type = TypeUtil.typeof(e);
 		if (XmlUtil.hasText(e)){
 			String text = XmlUtil.getText(e);
@@ -170,7 +170,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			}   
 		}
 		
-		XmlUtil.each(children, new OnLoop(){
+		XmlUtil.eachChildren(e, new OnLoop(){
 			@Override
 			public void on(Element elem) throws Exception {
 				if (elem.getTagName().equals("item")) {

@@ -8,6 +8,10 @@ import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
+import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
+import com.tbea.ic.operation.common.formatter.v2.core.FormatterHandler;
+import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
 
 
 
@@ -16,6 +20,8 @@ public class CpzlqkResp {
 	List<List<String>> tjjg;
 	ZBStatus status;
 	Integer zt;
+	Boolean isXl;
+	
 	public Integer getZt() {
 		return zt;
 	}
@@ -45,32 +51,37 @@ public class CpzlqkResp {
 		this.zrlb = zrlb;
 		this.bhglx = bhglx;
 	}
-	public CpzlqkResp() {
+	public CpzlqkResp(Boolean isXl) {
 		super();
+		this.isXl = isXl;
 	}
 
-	public CpzlqkResp(List<List<String>> tjjg, ZBStatus status) {
+	public CpzlqkResp(Boolean isXl,List<List<String>> tjjg, ZBStatus status) {
 		super();
 		this.tjjg = tjjg;
 		this.status = status;
+		this.isXl = isXl;
 	}
 	
-	public CpzlqkResp(List<List<String>> tjjg, List<WaveItem> waveItems) {
+	public CpzlqkResp(Boolean isXl,List<List<String>> tjjg, List<WaveItem> waveItems) {
 		super();
 		this.tjjg = tjjg;
 		this.waveItems = waveItems;
+		this.isXl = isXl;
 	}
 
-	public CpzlqkResp(List<List<String>> tjjg, List<WaveItem> waveItems,
+	public CpzlqkResp(Boolean isXl,List<List<String>> tjjg, List<WaveItem> waveItems,
 			List<String> waveX) {
 		super();
 		this.tjjg = tjjg;
+		this.isXl = isXl;
 		this.waveItems = waveItems;
 		this.waveX = waveX;
 	}
 
-	public CpzlqkResp(List<List<String>> tjjg) {
+	public CpzlqkResp(Boolean isXl,List<List<String>> tjjg) {
 		this.tjjg = tjjg;
+		this.isXl = isXl;
 	}
 
 	public CpzlqkResp format(){
@@ -82,8 +93,12 @@ public class CpzlqkResp {
 		
 		if (null != tjjg){
 			RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
-			handler.next(new RawPercentFormatterHandler(2, null, new Integer[]{4, 7}))
-				.next(new RawNumberFormatterHandler(0));
+			RawFormatterHandler handlerPer = handler.next(new RawPercentFormatterHandler(2, null, new Integer[]{4, 7}));
+			if (isXl){
+				handlerPer.next(new RawNumberFormatterHandler(2));
+			}else{
+				handlerPer.next(new RawNumberFormatterHandler(0));
+			}
 			RawFormatterServer serv = new RawFormatterServer(handler);
 			serv.acceptNullAs("--").format(tjjg);
 		}

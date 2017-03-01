@@ -22,7 +22,7 @@ public class FormatterServerXmlInterpreter implements XmlInterpreter {
 		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 		FormatterServer serv = new FormatterServer();
 		
-		XmlUtil.each(e.getChildNodes(), new OnLoop(){
+		XmlUtil.eachChildren(e, new OnLoop(){
 			
 			private int group = 0;
 			

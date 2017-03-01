@@ -50,7 +50,8 @@ public class IFXmlInterpreter implements XmlInterpreter {
 			if (hasNextCase(e)){
 				conditionStack.add(condition);
 			}
-			if (condition){  
+			if (condition){ 
+				e = (Element) e.cloneNode(true);
 				XmlUtil.copyAttr(component.getConfig(), e);
 				component.clone(e).run(component.globalContext());
 			}
@@ -66,6 +67,7 @@ public class IFXmlInterpreter implements XmlInterpreter {
 						conditionStack.pop();
 						conditionStack.push(condition);
 					}
+					e = (Element) e.cloneNode(true);
 					XmlUtil.copyAttr(component.getConfig(), e);
 					component.clone(e).run(component.globalContext());
 				}
@@ -77,6 +79,7 @@ public class IFXmlInterpreter implements XmlInterpreter {
 			return true;
 		} else if (Schema.isElse(e)){
 			if (!conditionStack.pop()){
+				e = (Element) e.cloneNode(true);
 				XmlUtil.copyAttr(component.getConfig(), e);
 				component.clone(e).run(component.globalContext());
 			}

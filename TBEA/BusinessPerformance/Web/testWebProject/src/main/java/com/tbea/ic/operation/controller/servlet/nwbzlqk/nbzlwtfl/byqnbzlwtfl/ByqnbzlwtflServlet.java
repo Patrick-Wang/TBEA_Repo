@@ -26,7 +26,7 @@ import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
 import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.querier.QuerierFactory;
 import com.tbea.ic.operation.common.querier.ZBStatusQuerier;
-import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
+import com.tbea.ic.operation.controller.servlet.nwbzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.PageType;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
@@ -75,7 +75,7 @@ public class ByqnbzlwtflServlet {
 			if (pageType == PageType.ENTRY){
 				ZBStatusQuerier querier = QuerierFactory.createZlEntryQuerier();			
 				zts = querier.queryStatus(auths);
-			}  else if (pageType == PageType.APPROVE){
+			} else if (pageType == PageType.APPROVE){
 				ZBStatusQuerier querier = QuerierFactory.createZlApproveQuerier();			
 				zts = querier.queryStatus(auths);
 			}
@@ -109,6 +109,4 @@ public class ByqnbzlwtflServlet {
 		resp.setWaveItems(wis);
 		return JSONObject.fromObject(resp).toString().getBytes("utf-8");
 	}
-
-
 }

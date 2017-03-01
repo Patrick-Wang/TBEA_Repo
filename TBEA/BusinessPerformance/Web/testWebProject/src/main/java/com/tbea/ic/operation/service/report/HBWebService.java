@@ -87,7 +87,7 @@ public class HBWebService {
 		LbParameter lbParameter = new LbParameter();
 		lbParameter.setName("P1");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		lbParameter.setValue(sdf.format(d));
+		lbParameter.setValue("2017-1-1");
 		lbParameterList.add(lbParameter);
 		QueryResult queryResult = client.query(loginResult.getSessionId(),
 				schema, lbParameterList, "", queryOption);
@@ -116,6 +116,9 @@ public class HBWebService {
 
 	public List<Object[]> getHBNbzlqk(List<String> cols) {
 		LoggerFactory.getLogger("WEBSERVICE").info("getHBNbzlqk");
+//		Calendar cal = Calendar.getInstance();
+//		Calendar now = Calendar.getInstance();
+//		cal.setTime(java.sql.Date.valueOf('2014-1-1'));
 		return getHBData(cols, "nbzlwt_jkSql", new Date());
 	}
 

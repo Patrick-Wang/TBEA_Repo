@@ -240,6 +240,8 @@
 </Table>
 <script type="text/javascript">
 
+    var isApproveShow = '${approve}' == 'true';
+
     $(document).ready(function () {
     	
         var pageSlector = new Util.UnitedSelector([{
@@ -255,8 +257,14 @@
         }],"zlAndyclhgl", [1]);
 
         pageSlector.change(function(){
+
             if (pageSlector.getPath()[0] == 0){
-                window.location.href="${pageContext.request.contextPath}/cpzlqk/show.do";
+                if (isApproveShow){
+                    window.location.href="${pageContext.request.contextPath}/cpzlqk/approve.do";
+                }else{
+                    window.location.href="${pageContext.request.contextPath}/cpzlqk/show.do";
+                }
+
             }
         });
         

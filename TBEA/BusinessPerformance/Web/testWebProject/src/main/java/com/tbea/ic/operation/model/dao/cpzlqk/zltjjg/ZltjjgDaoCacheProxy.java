@@ -194,8 +194,8 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 					ZltjjgEntity entity = new ZltjjgEntity();
 					entity.setDwid((Integer) objs[0]);
 					entity.setCpid((Integer) objs[1]);
-					entity.setBhgs(objs[2] == null ? null : ((Long)objs[2]).intValue());
-					entity.setZs(objs[3] == null ? null : ((Long)objs[3]).intValue());
+					entity.setBhgs(objs[2] == null ? null : ((Double)objs[2]));
+					entity.setZs(objs[3] == null ? null : ((Double)objs[3]));
 					yearAcc.add(entity);
 				}
 			}
@@ -238,8 +238,8 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 					ZltjjgEntity entity = new ZltjjgEntity();
 					entity.setDwid((Integer) objs[0]);
 					entity.setCpid((Integer) objs[1]);
-					entity.setBhgs(objs[2] == null ? null : ((Long)objs[2]).intValue());
-					entity.setZs(objs[3] == null ? null : ((Long)objs[3]).intValue());
+					entity.setBhgs(objs[2] == null ? null : ((Double)objs[2]));
+					entity.setZs(objs[3] == null ? null : ((Double)objs[3]));
 					jdAcc.add(entity);
 				}
 			}
@@ -281,8 +281,8 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 					ZltjjgEntity entity = new ZltjjgEntity();
 					entity.setDwid((Integer) objs[0]);
 					entity.setCpid((Integer) objs[1]);
-					entity.setBhgs(objs[2] == null ? null : ((Long)objs[2]).intValue());
-					entity.setZs(objs[3] == null ? null : ((Long)objs[3]).intValue());
+					entity.setBhgs(objs[2] == null ? null : ((Double)objs[2]));
+					entity.setZs(objs[3] == null ? null : ((Double)objs[3]));
 					jdAccQntq.add(entity);
 				}
 			}
@@ -330,10 +330,10 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			for (Object[] row : ret){
 				ZltjjgEntity entity = new ZltjjgEntity();
 				if (row[0] != null){
-					entity.setBhgs(((Long)row[0]).intValue());
+					entity.setBhgs(((Double)row[0]));
 				}
 				if (row[1] != null){
-					entity.setZs(((Long)row[1]).intValue());
+					entity.setZs(((Double)row[1]));
 				}
 				entity.setCpid((Integer)row[2]);
 				cache.put("YearAcc" + row[2], entity);
@@ -378,10 +378,10 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			for (Object[] row : ret){
 				ZltjjgEntity entity = new ZltjjgEntity();
 				if (row[0] != null){
-					entity.setBhgs(((Long)row[0]).intValue());
+					entity.setBhgs(((Double)row[0]));
 				}
 				if (row[1] != null){
-					entity.setZs(((Long)row[1]).intValue());
+					entity.setZs(((Double)row[1]));
 				}
 				entity.setCpid((Integer)row[2]);
 				cache.put("JdAcc" + row[2], entity);
@@ -426,10 +426,10 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			for (Object[] row : ret){
 				ZltjjgEntity entity = new ZltjjgEntity();
 				if (row[0] != null){
-					entity.setBhgs(((Long)row[0]).intValue());
+					entity.setBhgs(((Double)row[0]));
 				}
 				if (row[1] != null){
-					entity.setZs(((Long)row[1]).intValue());
+					entity.setZs(((Double)row[1]));
 				}
 				entity.setCpid((Integer)row[2]);
 				cache.put("JdAccQntq" + row[2], entity);

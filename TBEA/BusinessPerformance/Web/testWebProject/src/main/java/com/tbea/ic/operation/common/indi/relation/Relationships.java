@@ -152,7 +152,7 @@ public class Relationships {
 
 	private void parseIndis(Document doc) throws Exception {
 		NodeList indicators = doc.getElementsByTagName("indicators");
-		XmlUtil.each(XmlUtil.element(indicators, 0).getChildNodes(), new OnLoop(){
+		XmlUtil.eachChildren(XmlUtil.element(indicators, 0), new OnLoop(){
 
 			@Override
 			public void on(Element elem) throws Exception {

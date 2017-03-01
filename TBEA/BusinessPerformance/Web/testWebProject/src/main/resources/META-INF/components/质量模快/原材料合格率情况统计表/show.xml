@@ -207,26 +207,58 @@ where
   <context key="result" value="${result}"/>
  </service>
  <controller id="jydwYclhglqktjDataFmtter">
-  <formatter id="data">
-   <EmptyFormatter>
-    <DefaultMatcher cols="0,1"/>
-   </EmptyFormatter>
-   <PercentFormatter reservedCount="2">
-    <DefaultMatcher cols="4,7"/>
-   </PercentFormatter>
-   <NumberFormatter reservedCount="0"/>
-  </formatter>
+  <if test="${cy==0}">
+   <formatter id="data">
+    <EmptyFormatter>
+     <DefaultMatcher cols="0,1"/>
+    </EmptyFormatter>
+    <PercentFormatter reservedCount="2">
+     <DefaultMatcher cols="4,7"/>
+    </PercentFormatter>
+    <NumberFormatter reservedCount="2">
+     <DefaultMatcher rows="0,1,3,4,5"/>
+    </NumberFormatter>
+    <NumberFormatter reservedCount="0"/>
+   </formatter>
+  </if>
+  <else>
+   <formatter id="data">
+    <EmptyFormatter>
+     <DefaultMatcher cols="0,1"/>
+    </EmptyFormatter>
+    <PercentFormatter reservedCount="2">
+     <DefaultMatcher cols="4,7"/>
+    </PercentFormatter>
+    <NumberFormatter reservedCount="2"/>
+   </formatter>
+  </else>
  </controller>
  <controller id="yclhglqktjHjDataFmtter">
-  <formatter id="data">
-   <EmptyFormatter>
-    <DefaultMatcher cols="0,1"/>
-   </EmptyFormatter>
-   <PercentFormatter reservedCount="2">
-    <DefaultMatcher cols="4,7,10,13,16,19,22,25"/>
-   </PercentFormatter>
-   <NumberFormatter reservedCount="0"/>
-  </formatter>
+  <if test="${cy==0}">
+   <formatter id="data">
+    <EmptyFormatter>
+     <DefaultMatcher cols="0,1"/>
+    </EmptyFormatter>
+    <PercentFormatter reservedCount="2">
+     <DefaultMatcher cols="4,7,10,13,16,19,22,25"/>
+    </PercentFormatter>
+    <NumberFormatter reservedCount="2">
+     <DefaultMatcher rows="0,1,3,4,5"/>
+    </NumberFormatter>
+    <NumberFormatter reservedCount="0"/>
+   </formatter>
+  </if>
+  <else>
+   <formatter id="data">
+    <EmptyFormatter>
+     <DefaultMatcher cols="0,1"/>
+    </EmptyFormatter>
+    <PercentFormatter reservedCount="2">
+     <DefaultMatcher cols="4,7,10,13,16,19,22,25"/>
+    </PercentFormatter>
+    <NumberFormatter reservedCount="2"/>
+   </formatter>
+  </else>
  </controller>
  <controller id="clrYclhglqkParams">
   <context key="cal" value="${request.date.asCalendar}"/>
@@ -242,8 +274,8 @@ where
  <controller id="yclhglqktjUpdate">
   <callcontroller id="clrYclhglqkParams"/>
   <if test="${isByqcy}">
-   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <callservice id="servByqzyYclhglqktj"/>
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <formatterServer id="serv" table="${result.matrixNoIds}">
     <formatter ref="data"/>
    </formatterServer>
@@ -393,8 +425,361 @@ where
    </response>
   </if>
   <if test="${isXlcy}">
-   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <callservice id="servXlcyYclhglqktj"/>
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
+   <formatterServer id="serv" table="${result.matrixNoIds}">
+    <formatter ref="data"/>
+   </formatterServer>
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>材料大类</name>
+     </item>
+     <item>
+      <name>单位</name>
+     </item>
+     <item>
+      <name>鲁缆</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>新缆</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>德缆</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>合计</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+    </header>
+    <mergeTitle type="array">true</mergeTitle>
+    <data>${serv.result}</data>
+   </response>
+  </if>
+  <if test="${isJydw}">
+   <callservice id="servJydwzyYclhglqktj"/>
+   <callcontroller id="jydwYclhglqktjDataFmtter" inline="true"/>
+   <formatterServer id="serv" table="${result.matrixNoIds}">
+    <formatter ref="data"/>
+   </formatterServer>
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>材料大类</name>
+     </item>
+     <item>
+      <name>单位</name>
+     </item>
+     <item>
+      <name>当月</name>
+      <sub type="array">
+       <item>
+        <name>合格数</name>
+       </item>
+       <item>
+        <name>总数</name>
+       </item>
+       <item>
+        <name>合格率％</name>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>年度累计</name>
+      <sub type="array">
+       <item>
+        <name>合格数</name>
+       </item>
+       <item>
+        <name>总数</name>
+       </item>
+       <item>
+        <name>合格率％</name>
+       </item>
+      </sub>
+     </item>
+    </header>
+    <mergeTitle type="array">true</mergeTitle>
+    <data>${serv.result}</data>
+   </response>
+  </if>
+ </controller>
+ <controller id="yclhglqktjUpdateOnApprove">
+  <callcontroller id="clrYclhglqkParams"/>
+  <context key="zt" value="${zlzts[request.item.asInt]}"/>
+  <if test="${isByqcy}">
+   <callservice id="servByqzyYclhglqktj"/>
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
+   <formatterServer id="serv" table="${result.matrixNoIds}">
+    <formatter ref="data"/>
+   </formatterServer>
+   <response type="json">
+    <header type="array">
+     <item>
+      <name>材料大类</name>
+     </item>
+     <item>
+      <name>单位</name>
+     </item>
+     <item>
+      <name>沈变</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>衡变</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>新变</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+     <item>
+      <name>合计</name>
+      <sub type="array">
+       <item>
+        <name>当月</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+       <item>
+        <name>年度累计</name>
+        <sub type="array">
+         <item>
+          <name>合格数</name>
+         </item>
+         <item>
+          <name>总数</name>
+         </item>
+         <item>
+          <name>合格率％</name>
+         </item>
+        </sub>
+       </item>
+      </sub>
+     </item>
+    </header>
+    <mergeTitle type="array">true</mergeTitle>
+    <data>${serv.result}</data>
+   </response>
+  </if>
+  <if test="${isXlcy}">
+   <callservice id="servXlcyYclhglqktj"/>
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <formatterServer id="serv" table="${result.matrixNoIds}">
     <formatter ref="data"/>
    </formatterServer>
@@ -596,8 +981,8 @@ where
   <context key="cal" value="${request.date.asCalendar}"/>
   <ExcelTemplate id="excelTemplate" sheet="原材料合格率"/>
   <if test="${isByqcy}">
-   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <callservice id="servByqzyYclhglqktj"/>
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <list id="title" type="string">材料大类,单位,
 沈变,沈变,沈变,沈变,沈变,沈变,
 衡变,衡变,衡变,衡变,衡变,衡变,
@@ -641,8 +1026,8 @@ where
    </formatter>
   </if>
   <if test="${isXlcy}">
-   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <callservice id="servXlcyYclhglqktj"/>
+   <callcontroller id="yclhglqktjHjDataFmtter" inline="true"/>
    <list id="title" type="string">材料大类,单位,
 鲁缆,鲁缆,鲁缆,鲁缆,鲁缆,鲁缆,
 新缆,新缆,新缆,新缆,新缆,新缆,
@@ -746,10 +1131,14 @@ where
  </controller>
  <controller id="yclhglqktj">
   <callservice id="servYclhglqkCldlItems"/>
+  <context key="updateUrlWrapper" value="yclhglqktjUpdate"/>
+  <if test="${'request.approve.asString' == 'true'}">
+   <context key="updateUrlWrapper" value="yclhglqktjUpdateOnApprove"/>
+  </if>
   <response type="jsp" name="framework/templates/dateChartReport/show">
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
-   <map key="updateUrl" value="yclhglqktjUpdate"/>
+   <map key="updateUrl" value="${updateUrlWrapper}"/>
    <map key="exportUrl" value="yclhglqktjExport"/>
    <map key="title" value="原材料合格率"/>
    <map map="${authMgr[43]}"/>
@@ -769,6 +1158,7 @@ where
 ]</map>
    <map key="chartUrl" value="yclhglqktjChart"/>
    <map key="relateZl" value="${true}"/>
+   <map key="approve" value="${request.approve.asString}"/>
   </response>
  </controller>
  <service id="servYclhglqkCldlItems" transaction="transactionManager">

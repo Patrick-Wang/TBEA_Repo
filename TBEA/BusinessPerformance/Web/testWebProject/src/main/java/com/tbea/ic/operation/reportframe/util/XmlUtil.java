@@ -18,6 +18,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.el.ELExpression;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 
@@ -64,6 +65,24 @@ public class XmlUtil {
 		}
 	}
 	
+	
+	public static Element child(Node elem, String tagName) {
+		try {
+			return eachChildren(elem, new OnEach(){
+				@Override
+				public boolean on(Element elem) {
+					if (elem.getTagName().equals(tagName)){
+						return true;
+					}
+					return false;
+				}
+			});
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	@Deprecated
 	public static Element element(NodeList list, String tagName) {
 		try {
 			return each(list, new OnEach(){
@@ -263,13 +282,49 @@ public class XmlUtil {
 		return null;
 	}
 	
+	public static void eachChildren(Node elem, OnLoop onLoop) throws Exception{
+		try{
+			Node node = elem.getFirstChild();
+			while (node != null){
+				if (node instanceof Element){
+					onLoop.on((Element) node);
+				}
+				node = node.getNextSibling();
+			}
+		}catch(java.lang.NullPointerException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static Element eachChildren(Node elem, OnEach onEach) throws Exception{
+		try{
+			Node node = elem.getFirstChild();
+			while (node != null){
+				if (node instanceof Element){
+					if (onEach.on((Element) node)){
+						return (Element)node;
+					}
+				}
+				node = node.getNextSibling();
+			}
+		}catch(java.lang.NullPointerException e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Deprecated
 	public static void each(NodeList list, OnLoop onLoop) throws Exception{
+		try{
 		Node node = null;
 		for (int i = 0, len = list.getLength(); i < len; ++i){
 			node = list.item(i);
 			if (node instanceof Element){
 				onLoop.on((Element) node);
 			}
+		}
+		}catch(java.lang.NullPointerException e){
+			e.printStackTrace();
 		}
 	}
 	
@@ -303,7 +358,7 @@ public class XmlUtil {
 
         return result;
     }
-	
+	@Deprecated
 	public static Element each(NodeList list, OnEach onEach) throws Exception{
 		Node node = null;
 		for (int i = 0, len = list.getLength(); i < len; ++i){

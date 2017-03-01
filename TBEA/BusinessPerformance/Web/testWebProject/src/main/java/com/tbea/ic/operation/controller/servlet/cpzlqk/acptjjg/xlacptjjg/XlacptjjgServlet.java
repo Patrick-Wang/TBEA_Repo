@@ -72,7 +72,7 @@ public class XlacptjjgServlet {
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		CpzlqkResp resp = new CpzlqkResp();
+		CpzlqkResp resp = new CpzlqkResp(true);
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
 			zts.add(ZBStatus.APPROVED.ordinal());
@@ -132,7 +132,7 @@ public class XlacptjjgServlet {
 		RawFormatterHandler handler = new RawNumberFormatterHandler(4, null, new Integer[]{3, 4}).trimZero(true);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("").format(result);
-		CpzlqkResp resp = new CpzlqkResp(result, status);
+		CpzlqkResp resp = new CpzlqkResp(true, result, status);
 		return JSONObject.fromObject(resp).toString().getBytes("utf-8");
 	}
 	
@@ -178,7 +178,7 @@ public class XlacptjjgServlet {
 			serv.acceptNullAs("--").format(result);
 		}
 		
-		return JSONObject.fromObject(new CpzlqkResp(result, status)).toString().getBytes("utf-8");
+		return JSONObject.fromObject(new CpzlqkResp(true, result, status)).toString().getBytes("utf-8");
 	}
 	
 	@RequestMapping(value = "approve/approve.do")

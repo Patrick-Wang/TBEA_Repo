@@ -53,6 +53,8 @@ public class SessionCheckFilter implements Filter {
 					&& url.indexOf("/Login/ssoLogout.do")  < 0 
 					&& url.indexOf("/Login/validate.do") < 0
 					&& url.indexOf("/Login/login.do") < 0
+					&& url.indexOf("/Login/v2/validate.do") < 0
+					&& url.indexOf("/Login/v2/login.do") < 0
 					&& url.indexOf("/Account/resetPassword.do") < 0) {
 				HttpSession session = httpRequest.getSession(false);
 				if (!SessionManager.isOnline(session)) {
@@ -60,6 +62,9 @@ public class SessionCheckFilter implements Filter {
 					int rootPos = rootUrl.indexOf('/');
 					rootUrl = rootUrl.substring(0, rootPos);
 					String redirUrl = "/" + rootUrl + "/Login/login.do";
+					if (url.contains("v2")){
+						redirUrl = "/" + rootUrl + "/Login/v2/login.do";
+					}
 					if (isAjaxRequest(httpRequest)) {
 						PrintWriter pw = httpResp.getWriter();
 						pw.print(JSONObject.fromObject(new AjaxRedirect(redirUrl)));

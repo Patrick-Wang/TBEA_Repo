@@ -64,19 +64,32 @@ where
   <context key="cal" value="${request.date.asCalendar}"/>
   <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
   <if test="${request.zt.toString != null}">
-   <context key="zts" value="${zlzts[request.zt.asInt][request.item.asInt]}"/>
+   <context key="zts" value="${zlzts[request.item.asInt]}"/>
   </if>
   <if test="${request.zt.toString == null}">
    <list type="int" id="zts" export="true"/>
   </if>
   <callservice id="servYclhglqktjApproveStatus"/>
   <callservice id="servYclhglqktjApproveUpdate"/>
-  <formatter id="data">
-   <EmptyFormatter>
-    <DefaultMatcher cols="0, 1, 2"/>
-   </EmptyFormatter>
-   <NumberFormatter reservedCount="0"/>
-  </formatter>
+  <if test="${cy==0}">
+   <formatter id="data">
+    <EmptyFormatter>
+     <DefaultMatcher cols="0, 1, 2"/>
+    </EmptyFormatter>
+    <NumberFormatter reservedCount="2">
+     <DefaultMatcher rows="0,1,3,4,5"/>
+    </NumberFormatter>
+    <NumberFormatter reservedCount="0"/>
+   </formatter>
+  </if>
+  <else>
+   <formatter id="data">
+    <EmptyFormatter>
+     <DefaultMatcher cols="0, 1, 2"/>
+    </EmptyFormatter>
+    <NumberFormatter reservedCount="2"/>
+   </formatter>
+  </else>
   <formatterServer id="serv" table="${result.matrix}" acceptNullAs="">
    <formatter ref="data"/>
   </formatterServer>

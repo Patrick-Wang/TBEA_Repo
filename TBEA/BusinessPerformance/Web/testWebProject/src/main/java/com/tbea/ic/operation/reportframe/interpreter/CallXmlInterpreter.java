@@ -63,7 +63,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 			}
 		}
 
-		XmlUtil.each(e.getChildNodes(), new OnLoop() {
+		XmlUtil.eachChildren(e, new OnLoop() {
 			int index = 0;
 
 			@Override

@@ -19,6 +19,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
+import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
 
 public abstract class AbstractConfigLoader implements ConfigLoader{
 
@@ -89,18 +91,19 @@ public abstract class AbstractConfigLoader implements ConfigLoader{
 				DocumentBuilder builder = getBuilder();
 				Document doc = builder.parse(file);
 				NodeList nl = doc.getElementsByTagName("components");
-				Element e = (Element) nl.item(0);
-				nl = e.getChildNodes();
-				for (int i = 0; i < nl.getLength(); i++) {
-					if (nl.item(i) instanceof Element){
-						e = (Element) nl.item(i);
+
+				XmlUtil.eachChildren(nl.item(0), new OnLoop(){
+
+					@Override
+					public void on(Element e) throws Exception {
 						if (e.getTagName().equals("service")) {
 							notifyOnService(e.getAttribute("id"), e, path);
 						} else if (e.getTagName().equals("controller")) {
 							notifyOnController(e.getAttribute("id"), e, path);
 						}
 					}
-				}
+					
+				});
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

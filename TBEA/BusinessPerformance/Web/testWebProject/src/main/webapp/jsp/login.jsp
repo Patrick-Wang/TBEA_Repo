@@ -64,7 +64,7 @@
 		<div style="height: 50px;"></div>
 		<div align="center">
 
-			<form id="loginForm" action="/BusinessManagement/Login/validate.do"
+			<form id="loginForm" action="validate.do"
 				method="post">
 				<fieldset>
 					<label for="j_username">用户名：</label> <input type="text"

@@ -65,8 +65,7 @@ public class Controller extends AbstractXmlComponent {
 	
 	@Override
 	protected void onRun() throws Exception {		
-		NodeList children = this.config.getChildNodes();
-		XmlUtil.each(children, new OnLoop(){
+		XmlUtil.eachChildren(this.config, new OnLoop(){
 			@Override
 			public void on(Element elem) throws Exception  {
 				for (XmlInterpreter interpreter : interpreters){

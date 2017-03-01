@@ -758,7 +758,7 @@ public class XlnwbzlztqkServiceImpl implements XlnwbzlztqkService {
 		result.add(compName);
 		result.add(dynb + "");
 		result.add(dywb + "");
-		result.add(MathUtil.sum(dywb, dywb) + "");
+		result.add(MathUtil.sum(dynb, dywb) + "");
 		return result;
 	}  
 
@@ -781,7 +781,7 @@ public class XlnwbzlztqkServiceImpl implements XlnwbzlztqkService {
 		result.add(compName);
 		result.add(dynb + "");
 		result.add(dywb + "");
-		result.add(MathUtil.sum(dywb, dywb) + "");
+		result.add(MathUtil.sum(dynb, dywb) + "");
 		result.add(ljnb + "");
 		result.add(ljwb + "");
 		result.add(MathUtil.sum(ljnb, ljwb) + "");

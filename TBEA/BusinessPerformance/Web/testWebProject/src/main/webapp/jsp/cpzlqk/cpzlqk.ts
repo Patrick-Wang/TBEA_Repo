@@ -84,7 +84,7 @@ module cpzlqk {
 
             pageSlector.change(() => {
                 if (pageSlector.getPath()[0] == 1){
-                    if (pageType == 1){
+                    if (pageType == PageType.APPROVE){
                         window.location.href="../report/yclhglqktj.do?approve=true";
                     }else{
                         window.location.href="../report/yclhglqktj.do";

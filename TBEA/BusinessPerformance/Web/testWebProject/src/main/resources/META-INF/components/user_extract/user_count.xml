@@ -1,0 +1,64 @@
+<components>
+ <service id="servUserUsageCount" transaction="transactionManager">
+  <sql id="userCounts" export="true">select 
+	CONVERT(varchar(100), loginTime, 23) rq, 
+	count(*) 
+from 
+	user_usage 
+where
+	loginTime between ${dStart.date} and ${dEnd.date}
+group by
+	 CONVERT(varchar(100), loginTime, 23)
+order by
+	 CONVERT(varchar(100), loginTime, 23) asc
+	</sql>
+ </service> 
+  <service id="servUserAvgTime" transaction="transactionManager">
+  <sql id="userAvgtime" export="true">select 
+	CONVERT(varchar(100), loginTime, 23) , 
+	sum(datediff(ms, loginTime, logoutTime)) / count(*) /1000 / 60.0 avgTime
+from 
+	user_usage 
+where
+	loginTime between ${dStart.date} and ${dEnd.date}
+group by
+	 CONVERT(varchar(100), loginTime, 23)
+order by
+	 CONVERT(varchar(100), loginTime, 23) asc
+	</sql>
+ </service> 
+  <service id="servModuleUsage" transaction="transactionManager">
+  <sql id='total'>
+  	select count(*) from user_usage_category where category != '未分类'
+  </sql>
+  <sql id="moduleUsage" export="true">select 
+	category, 
+	count(*) * 1.0 / ${total[0]} ct
+	from user_usage_category  
+		where category != '未分类' 
+	group by category
+	</sql>
+ </service> 
+ <controller id="user_count">
+  <context key="dStart" value="${request.dStart.asCalendar}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar}"/>
+  <callservice id="servUserUsageCount"/>
+  <response type="json">
+   <data>${userCounts}</data>
+  </response>
+ </controller>
+  <controller id="user_avg_time">
+  <context key="dStart" value="${request.dStart.asCalendar}"/>
+  <context key="dEnd" value="${request.dEnd.asCalendar}"/>
+  <callservice id="servUserAvgTime"/>
+  <response type="json">
+   <data>${userAvgtime}</data>
+  </response>
+ </controller>
+  <controller id="user_module_usage">
+  <callservice id="servModuleUsage"/>
+  <response type="json">
+   <data>${moduleUsage}</data>
+  </response>
+ </controller>
+</components>

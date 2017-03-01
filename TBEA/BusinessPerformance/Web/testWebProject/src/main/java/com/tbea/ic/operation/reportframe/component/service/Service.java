@@ -63,7 +63,7 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 
 	@Override
 	public void run() throws Exception{
-		XmlUtil.each(config.getChildNodes(), new OnLoop() {
+		XmlUtil.eachChildren(config, new OnLoop() {
 			@Override
 			public void on(Element elem) throws Exception {
 				for (XmlInterpreter interpreter : interpreters) {

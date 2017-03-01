@@ -1,21 +1,51 @@
 package com;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import net.sf.json.JSONArray;
 
 import com.tbea.ic.operation.reportframe.el.ELExpression;
 import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
+import com.tbea.ic.operation.service.report.HBWebService;
 
 public class Test {
 
 	public static void main(String[] args) throws Exception {
-//		HBWebService hbws = new HBWebService();
+		HBWebService hbws = new HBWebService();
 		
+		List<String> list = new ArrayList<String>();
+		list.add("company_name");
+		list.add("issue_happen_date");
+		list.add("product_type");
+		list.add("production_num");
+		list.add("production_model");
+		list.add("issue_type");
+		list.add("sub_issue_type");
+		list.add("category_code");
+		list.add("material_quality_phenomenon");
+		list.add("detail");
+		list.add("material_happen_phase");
+		list.add("material_count");
+		list.add("measurement_units");
+		list.add("suppier_id");
+		list.add("suppier");
+		list.add("issue_process");
+		list.add("responsibility_department");
+		list.add("material_treatment_measure");
+		list.add("onsite_treatmen_measure");
+		list.add("onsite_treatment_result");
+		list.add("causa_analysis");
+		list.add("assessment");
+		list.add("filling_personnel");
+		
+		List<Object[]> result = hbws.getHBNbzlqk(list);
 //		System.out.println("getHBSjzb++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		List<List<Object>> result = hbws.getHBSjzb(new ArrayList<String>(), Date.valueOf("2016-9-1"));
-//		for (List<Object> r: result){
-//			System.out.println(JSONArray.fromObject(r).toString());
-//		}
+		for (Object[] r: result){
+			System.out.println(JSONArray.fromObject(r).toString());
+		}
 //		System.out.println("getHBCpqy++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 //		result = hbws.getHBCpqy(new ArrayList<String>(), Date.valueOf("2016-9-1"));
 //		for (List<Object> r: result){
@@ -74,35 +104,35 @@ public class Test {
 //		while (it.hasNext()){
 //			System.out.println(it.next());
 //		}
-		ELParser elp = new ELParser(new ObjectLoader(){
-
-			@Override
-			public Object onGetObject(String key) {
-				// TODO Auto-generated method stub
-				if (key.equals("usk")){
-					return new abc[]{new abc(), new abc(), new abc()};
-				}
-				if (key.equals("kk")){
-					return new abc[]{new abc(), new abc(), new abc()};
-				}
-				
-				if (key.equals("ff")){
-					return new abc[]{new abc(), new abc(), new abc()};
-				}
-				
-				return null;
-			}
-
-			@Override
-			public boolean hasObject(String key) {
-				// TODO Auto-generated method stub
-				return true;
-			}
-			
-		});
-		List<ELExpression> els = elp.parser("${usk[kk[1].bac[1]].bac[0].test['152'].asdfasdf.packAsList}");
-		Object val = els.get(0).value();
-		System.out.println(val);
+//		ELParser elp = new ELParser(new ObjectLoader(){
+//
+//			@Override
+//			public Object onGetObject(String key) {
+//				// TODO Auto-generated method stub
+//				if (key.equals("usk")){
+//					return new abc[]{new abc(), new abc(), new abc()};
+//				}
+//				if (key.equals("kk")){
+//					return new abc[]{new abc(), new abc(), new abc()};
+//				}
+//				
+//				if (key.equals("ff")){
+//					return new abc[]{new abc(), new abc(), new abc()};
+//				}
+//				
+//				return null;
+//			}
+//
+//			@Override
+//			public boolean hasObject(String key) {
+//				// TODO Auto-generated method stub
+//				return true;
+//			}
+//			
+//		});
+//		List<ELExpression> els = elp.parser("${usk[kk[1].bac[1]].bac[0].test['152'].asdfasdf.packAsList}");
+//		Object val = els.get(0).value();
+//		System.out.println(val);
 	}
 
 }

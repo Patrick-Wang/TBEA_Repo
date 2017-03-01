@@ -81,7 +81,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			}
 		}
 
-		XmlUtil.each(e.getChildNodes(), new OnLoop(){
+		XmlUtil.eachChildren(e, new OnLoop(){
 
 			@Override
 			public void on(Element elem) throws Exception {

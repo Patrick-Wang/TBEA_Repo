@@ -70,7 +70,7 @@ public class ByqcpycssbhgwtmxServlet {
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		CpzlqkResp resp = new CpzlqkResp();
+		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
 			zts.add(ZBStatus.APPROVED.ordinal());

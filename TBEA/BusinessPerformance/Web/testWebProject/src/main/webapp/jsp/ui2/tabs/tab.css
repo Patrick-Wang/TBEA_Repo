@@ -1,0 +1,190 @@
+.tab{
+  float:left;
+  border-bottom: 1px solid #ddd;
+  width:100%;
+  padding-left:0px;
+  margin-bottom:0px;
+}
+
+.tab a{
+  text-decoration:none;
+  color:black;
+}
+
+.tab li{
+  list-style:none
+}
+
+.tab-home{
+  float:left;
+  cursor : pointer;
+}
+
+.tab-normal{
+  float:left;
+  margin-left:1px;
+  overflow:hidden;
+}
+
+.tab-normal>div>div{
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.tab-home, .tab-normal{
+  border:1px solid transparent;
+  border-bottom: 0px ;
+}
+
+.tab-home, .tab-normal, .tab-more a{
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.tab-normal>div{
+  padding:7px 3px 7px 15px;
+  overflow:hidden;
+
+}
+
+.tab-home, .tab-normal{
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(245, 245, 245);
+  border-bottom: 0px;
+}
+
+.tab-more>a{
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-bottom: 0px;
+}
+
+
+.open>a{
+  background-color: rgb(245, 245, 245);
+  border: 1px solid rgb(245, 245, 245);
+  border-bottom: 0px;
+}
+
+.tab-normal .active:hover{
+  background-color: #fff;
+}
+
+.tab-more>a{
+  float:right;
+  border:1px solid transparent;
+  border-bottom: 0px;
+}
+
+.tab-home>div, .tab-more>a{
+  padding:7px 15px 7px 15px
+}
+
+.tab .active{
+  border: 1px solid #ddd;
+  border-bottom: 0px;
+  background-color: #fff;
+}
+
+.tab .active:hover{
+  border: 1px solid #ddd;
+  border-bottom: 0px;
+  background-color: #fff;
+}
+
+
+.tab-more{
+  float:right;
+  cursor:pointer;
+}
+
+.tab-more .divider {
+  height: 1px;
+  margin: 9px 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+
+.tab-more li{
+  cursor:pointer;
+}
+
+.tab-more, .tab-normal div, .tab-home{
+  -moz-user-select:none;/*火狐*/
+  -webkit-user-select:none;/*webkit浏览器*/
+  -ms-user-select:none;/*IE10*/
+  -khtml-user-select:none;/*早期浏览器*/
+  user-select:none;
+}
+
+.tab-more-normal{
+
+}
+
+.tab .disable>a:focus{
+  color:gray;
+  background:none;
+  cursor:default;
+}
+
+.tab .disable>a{
+  color:gray;
+  background:none;
+  cursor:default;
+}
+
+
+.tab .disable>a:hover{
+  background:none;
+  color:gray;
+  cursor:default;
+}
+
+.tab-close{
+  margin-left:4px;
+  width:14px;
+}
+
+.tab table{
+  border:none;
+  margin:0px;
+  padding:0px;
+  overflow:hidden;
+}
+
+.tab-close:before{
+  content:"\00D7";
+  visibility:hidden;
+}
+
+.tab-close:hover:before{
+  cursor:default;
+}
+
+.tab-normal:hover .tab-close:before{
+  content:"\00D7";
+  visibility:visible;
+}
+
+.tab-normal div{
+  float:left;
+  cursor : pointer;
+}
+
+.tab-normal .tab-close{
+  float:right;
+}
+
+.tab-more-menu-fixed > a, .tab-more-menu-extend > a{
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333;
+  white-space: nowrap;
+}
+
+.tab-more ul{
+  overflow:auto;
+}

@@ -141,8 +141,8 @@ public class ByqacptjjgServiceImpl implements ByqacptjjgService {
 				zltjjg.setCpid(cpid);
 			}
 			zltjjg.setZt(zt.ordinal());
-			zltjjg.setBhgs(Util.toIntNull(row.getString(1)));
-			zltjjg.setZs(Util.toIntNull(row.getString(2)));
+			zltjjg.setBhgs(Util.toDoubleNull(row.getString(1)));
+			zltjjg.setZs(Util.toDoubleNull(row.getString(2)));
 			zltjjg.setXgsj(ts);
 			zltjjgDao.merge(zltjjg);
 		}

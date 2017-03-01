@@ -72,7 +72,7 @@ public class ByqacptjjgServlet {
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		CpzlqkResp resp = new CpzlqkResp();
+		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
 			zts.add(ZBStatus.APPROVED.ordinal());
@@ -141,7 +141,7 @@ public class ByqacptjjgServlet {
 		RawFormatterHandler handler = new RawEmptyHandler();
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("").format(result);
-		CpzlqkResp resp = new CpzlqkResp(result, status);
+		CpzlqkResp resp = new CpzlqkResp(false, result, status);
 		return JSONObject.fromObject(resp).toString().getBytes("utf-8");
 	}
 	
