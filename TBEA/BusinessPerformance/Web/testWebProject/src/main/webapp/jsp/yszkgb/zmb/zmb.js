@@ -22,7 +22,7 @@ var yszkgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var ZMBView = (function (_super) {
             __extends(ZMBView, _super);
             function ZMBView() {
@@ -83,7 +83,7 @@ var yszkgb;
                 }));
             };
             return ZMBView;
-        }(yszkgb.BasePluginView));
+        })(yszkgb.BasePluginView);
         zmb.pluginView = ZMBView.newInstance();
     })(zmb = yszkgb.zmb || (yszkgb.zmb = {}));
 })(yszkgb || (yszkgb = {}));

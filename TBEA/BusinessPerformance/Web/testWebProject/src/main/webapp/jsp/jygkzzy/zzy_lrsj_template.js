@@ -21,7 +21,7 @@ var zzy_lrsj_template;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zb_update.do", false);
@@ -449,6 +449,6 @@ var zzy_lrsj_template;
         };
         View.instance = new View();
         return View;
-    }());
+    })();
     zzy_lrsj_template.View = View;
 })(zzy_lrsj_template || (zzy_lrsj_template = {}));

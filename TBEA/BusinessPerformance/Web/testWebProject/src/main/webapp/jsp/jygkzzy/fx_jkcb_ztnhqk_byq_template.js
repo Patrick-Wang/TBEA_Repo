@@ -28,7 +28,7 @@ var fx_jkcb_ztnhqk_byq_template;
             ], name);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readviewbyq.do", false);
@@ -119,6 +119,6 @@ var fx_jkcb_ztnhqk_byq_template;
             }));
         };
         return View;
-    }());
+    })();
     fx_jkcb_ztnhqk_byq_template.View = View;
 })(fx_jkcb_ztnhqk_byq_template || (fx_jkcb_ztnhqk_byq_template = {}));

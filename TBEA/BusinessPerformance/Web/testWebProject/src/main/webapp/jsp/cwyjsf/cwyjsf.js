@@ -29,6 +29,6 @@ var cwyjsf;
             _super.prototype.init.call(this, opt);
         };
         return CwyjsfFrameView;
-    }(framework.basic.ShowFrameView));
+    })(framework.basic.ShowFrameView);
     var ins = new CwyjsfFrameView();
 })(cwyjsf || (cwyjsf = {}));

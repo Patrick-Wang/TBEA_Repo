@@ -87,6 +87,8 @@ public class BMDepartmentDB extends AbstractOrganization {
 		id_typeMap.put(702, CompanyType.XJNY);
 		id_typeMap.put(703, CompanyType.YXGS);
 		id_typeMap.put(704, CompanyType.MYGS_TCNY);
+		id_typeMap.put(705, CompanyType.CJRDC);
+		id_typeMap.put(706, CompanyType.RLGS);
 		id_typeMap.put(801, CompanyType.DLC);
 		id_typeMap.put(802, CompanyType.ZPDCJ);
 		id_typeMap.put(803, CompanyType.GCGS_ND);

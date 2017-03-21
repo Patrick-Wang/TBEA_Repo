@@ -85,6 +85,8 @@ public enum CompanyType {
 	LLGS		("鲁缆公司"),
 	LYWYGS		("铝苑物业公司"),
 	MYGS_TCNY		("贸易公司"),
+	CJRDC			("昌吉热电厂"),
+	RLGS			("热力公司"),
 	NDGS		("能动公司"),
 	NJZNDQGS		("南京智能电气公司"),
 	NLTK		("南露天矿"),

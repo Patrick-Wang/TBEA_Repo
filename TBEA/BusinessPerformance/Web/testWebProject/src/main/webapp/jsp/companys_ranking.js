@@ -167,7 +167,7 @@ var companys_ranking;
             }
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -351,6 +351,6 @@ var companys_ranking;
             $("#export").css('display', 'block');
         };
         return View;
-    }());
+    })();
     companys_ranking.View = View;
 })(companys_ranking || (companys_ranking = {}));

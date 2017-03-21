@@ -3,7 +3,7 @@
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
-/// <reference path="../sddbdef.ts"/>
+/// <reference path="../xnyzbdef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }

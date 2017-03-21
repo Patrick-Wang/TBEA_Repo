@@ -45,7 +45,7 @@ var cb_zx_xl;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
         }
@@ -149,7 +149,7 @@ var cb_zx_xl;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: false,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -196,7 +196,7 @@ var cb_zx_xl;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateGstbTable = function () {
@@ -261,6 +261,6 @@ var cb_zx_xl;
             }));
         };
         return View;
-    }());
+    })();
     cb_zx_xl.View = View;
 })(cb_zx_xl || (cb_zx_xl = {}));

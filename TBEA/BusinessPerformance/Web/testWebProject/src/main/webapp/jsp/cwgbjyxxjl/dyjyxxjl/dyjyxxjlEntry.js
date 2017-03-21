@@ -37,7 +37,7 @@ var cwgbjyxxjl;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -161,6 +161,6 @@ var cwgbjyxxjl;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(framework.basic.EntryPluginView));
+        })(framework.basic.EntryPluginView);
     })(dyjyxxjlEntry = cwgbjyxxjl.dyjyxxjlEntry || (cwgbjyxxjl.dyjyxxjlEntry = {}));
 })(cwgbjyxxjl || (cwgbjyxxjl = {}));

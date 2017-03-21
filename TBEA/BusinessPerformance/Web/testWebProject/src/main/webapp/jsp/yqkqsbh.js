@@ -16,7 +16,7 @@ var yqkqsbh;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqkbhqs_update.do");
@@ -93,7 +93,7 @@ var yqkqsbh;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -154,10 +154,10 @@ var yqkqsbh;
                 height: '100%',
                 width: 1000,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     yqkqsbh.View = View;
 })(yqkqsbh || (yqkqsbh = {}));

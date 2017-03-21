@@ -170,7 +170,7 @@ var financial_zbhz_prediciton;
             }
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -346,6 +346,6 @@ var financial_zbhz_prediciton;
             $("#export").css('display', 'block');
         };
         return View;
-    }());
+    })();
     financial_zbhz_prediciton.View = View;
 })(financial_zbhz_prediciton || (financial_zbhz_prediciton = {}));

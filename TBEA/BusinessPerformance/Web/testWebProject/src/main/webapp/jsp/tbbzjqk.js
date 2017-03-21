@@ -15,7 +15,7 @@ var tbbzjqk;
             return new JQTable.JQGridAssistant(cols, gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
@@ -83,7 +83,7 @@ var tbbzjqk;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -176,10 +176,10 @@ var tbbzjqk;
                 cellEdit: true,
                 height: '100%',
                 shrinkToFit: true,
-                width: 12 * 90,
+                width: 12 * 90
             }));
         };
         return View;
-    }());
+    })();
     tbbzjqk.View = View;
 })(tbbzjqk || (tbbzjqk = {}));

@@ -329,35 +329,31 @@ public class XmlUtil {
 	}
 	
 	public static String toStringFromDoc(Element elem) {
-        String result = null;
+		String result = null;
 
+		StringWriter strWtr = new StringWriter();
+		StreamResult strResult = new StreamResult(strWtr);
+		TransformerFactory tfac = TransformerFactory.newInstance();
+		try {
+			javax.xml.transform.Transformer t = tfac.newTransformer();
+			t.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+			t.setOutputProperty(OutputKeys.INDENT, "yes");
+			t.setOutputProperty(OutputKeys.METHOD, "xml"); // xml, html,
+			// text
+			t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+			t.transform(new DOMSource(elem), strResult);
+		} catch (Exception e) {
+			System.err.println("XML.toString(Document): " + e);
+		}
+		result = strResult.getWriter().toString();
+		try {
+			strWtr.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-            StringWriter strWtr = new StringWriter();
-            StreamResult strResult = new StreamResult(strWtr);
-            TransformerFactory tfac = TransformerFactory.newInstance();
-            try {
-                javax.xml.transform.Transformer t = tfac.newTransformer();
-                t.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-                t.setOutputProperty(OutputKeys.INDENT, "yes");
-                t.setOutputProperty(OutputKeys.METHOD, "xml"); // xml, html,
-                // text
-                t.setOutputProperty(
-                        "{http://xml.apache.org/xslt}indent-amount", "4");
-                t.transform(new DOMSource(elem),
-                        strResult);
-            } catch (Exception e) {
-                System.err.println("XML.toString(Document): " + e);
-            }
-            result = strResult.getWriter().toString();
-            try {
-                strWtr.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-     
-
-        return result;
-    }
+		return result;
+	}
 	@Deprecated
 	public static Element each(NodeList list, OnEach onEach) throws Exception{
 		Node node = null;

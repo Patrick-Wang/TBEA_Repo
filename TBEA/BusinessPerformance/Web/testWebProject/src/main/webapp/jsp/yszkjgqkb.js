@@ -25,7 +25,7 @@ var yszkjgqkb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mCurrentSelected = 0;
@@ -128,7 +128,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [{
@@ -189,7 +189,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -238,7 +238,7 @@ var yszkjgqkb;
                     data: legend
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: false,
                 xAxis: [
@@ -365,10 +365,10 @@ var yszkjgqkb;
                 height: '100%',
                 width: 1300,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     yszkjgqkb.View = View;
 })(yszkjgqkb || (yszkjgqkb = {}));

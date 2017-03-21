@@ -19,7 +19,7 @@ var yqysysfx;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqysysfx_update.do");
@@ -91,7 +91,7 @@ var yqysysfx;
                     data: ['总金额', '其中法律清收']
                 },
                 toolbox: {
-                    show: true,
+                    show: true
                 },
                 calculable: true,
                 xAxis: [
@@ -111,7 +111,7 @@ var yqysysfx;
                 ],
                 yAxis: [
                     {
-                        type: 'value',
+                        type: 'value'
                     }
                 ],
                 series: [
@@ -177,6 +177,6 @@ var yqysysfx;
             }));
         };
         return View;
-    }());
+    })();
     yqysysfx.View = View;
 })(yqysysfx || (yqysysfx = {}));

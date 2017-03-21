@@ -57,7 +57,7 @@ var cb_xl;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             //      private mfdwData : string[];
@@ -232,7 +232,7 @@ var cb_xl;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.format = function (row) {
@@ -280,10 +280,10 @@ var cb_xl;
                 height: height,
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     cb_xl.View = View;
 })(cb_xl || (cb_xl = {}));

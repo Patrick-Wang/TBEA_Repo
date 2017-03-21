@@ -18,8 +18,8 @@ public class SessionManager implements HttpSessionListener {
 
 	private static Map<String, HttpSession> onlineSessions = Collections.synchronizedMap(new HashMap<String, HttpSession>());
 	private static List<OnSessionChangedListener> listeners = Collections.synchronizedList(new ArrayList<OnSessionChangedListener>());
-	
-	
+
+
 	public static void onChange(OnSessionChangedListener listener){
 		listeners.add(listener);
 	}

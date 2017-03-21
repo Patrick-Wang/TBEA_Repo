@@ -3,6 +3,7 @@
 	<name>BusinessManagement</name>
 	<comment></comment>
 	<projects>
+		<project>TestWebService</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

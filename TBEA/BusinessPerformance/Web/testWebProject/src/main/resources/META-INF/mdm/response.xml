@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RESPONSE>
+	<RETURN_CODE>S（成功）/E（失败）</RETURN_CODE>
+	<RETURN_DATA><![CDATA[
+			<?xml version="1.0" encoding="UTF-8"?>
+			<DATAINFOS UUID="UUID的值">
+				<DATAINFO uuid="uuid的值"  status="1" errorText="网络原因"></DATAINFO>
+				<DATAINFO uuid="uuid的值"  status="0" errorText=""></DATAINFO>
+			</DATAINFOS>
+		]]> 
+	</RETURN_DATA>
+	<RETURN_DESC>如果成功则空，失败则填写描述</RETURN_DESC>
+</RESPONSE>

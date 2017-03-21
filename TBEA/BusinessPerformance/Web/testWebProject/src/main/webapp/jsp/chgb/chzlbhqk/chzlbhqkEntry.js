@@ -34,7 +34,7 @@ var chgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        }());
+        })();
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
@@ -166,6 +166,6 @@ var chgb;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        }(framework.basic.EntryPluginView));
+        })(framework.basic.EntryPluginView);
     })(chzlbhqkEntry = chgb.chzlbhqkEntry || (chgb.chzlbhqkEntry = {}));
 })(chgb || (chgb = {}));

@@ -38,7 +38,7 @@ var fx_sxfykz;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readview.do", false);
@@ -134,6 +134,6 @@ var fx_sxfykz;
             }));
         };
         return View;
-    }());
+    })();
     fx_sxfykz.View = View;
 })(fx_sxfykz || (fx_sxfykz = {}));

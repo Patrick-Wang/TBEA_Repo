@@ -25,7 +25,7 @@ var rhkqk;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mData = [];
@@ -156,10 +156,10 @@ var rhkqk;
                 height: '100%',
                 width: 1200,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     rhkqk.View = View;
 })(rhkqk || (rhkqk = {}));

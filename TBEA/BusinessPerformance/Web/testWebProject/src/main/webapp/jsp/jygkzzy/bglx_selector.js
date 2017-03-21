@@ -73,7 +73,7 @@ var Util;
             return $("#" + this.bglxId).val();
         };
         return BglxSelector;
-    }());
+    })();
     Util.BglxSelector = BglxSelector;
     var BglxViewSelector = (function () {
         function BglxViewSelector(mCtrlId, curbglx, isByq, isXl, isSbdcy) {
@@ -261,6 +261,6 @@ var Util;
             return $("#" + this.bglxId).val();
         };
         return BglxViewSelector;
-    }());
+    })();
     Util.BglxViewSelector = BglxViewSelector;
 })(Util || (Util = {}));

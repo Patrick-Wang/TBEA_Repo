@@ -52,7 +52,7 @@ var mkt_region_analysis;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mSelCompanys = [];
@@ -200,6 +200,6 @@ var mkt_region_analysis;
             }
         };
         return View;
-    }());
+    })();
     mkt_region_analysis.View = View;
 })(mkt_region_analysis || (mkt_region_analysis = {}));

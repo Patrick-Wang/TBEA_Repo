@@ -22,7 +22,7 @@ var cc_ccwcqk_xl_template;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readviewxl.do", false);
@@ -118,6 +118,6 @@ var cc_ccwcqk_xl_template;
             }));
         };
         return View;
-    }());
+    })();
     cc_ccwcqk_xl_template.View = View;
 })(cc_ccwcqk_xl_template || (cc_ccwcqk_xl_template = {}));

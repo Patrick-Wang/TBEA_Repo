@@ -61,7 +61,7 @@ var cb_zx_byq;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zx_update.do");
@@ -189,7 +189,7 @@ var cb_zx_byq;
                 height: 250,
                 width: 1250,
                 shrinkToFit: false,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -261,7 +261,7 @@ var cb_zx_byq;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         View.prototype.updateGstbTable = function () {
@@ -329,10 +329,10 @@ var cb_zx_byq;
                 width: 1250,
                 rowNum: 200,
                 shrinkToFit: true,
-                autoScroll: true,
+                autoScroll: true
             }));
         };
         return View;
-    }());
+    })();
     cb_zx_byq.View = View;
 })(cb_zx_byq || (cb_zx_byq = {}));

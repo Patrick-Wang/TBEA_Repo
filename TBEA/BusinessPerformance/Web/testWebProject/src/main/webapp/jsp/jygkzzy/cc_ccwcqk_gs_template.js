@@ -18,7 +18,7 @@ var cc_ccwcqk_gs_template;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    }());
+    })();
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readview.do", false);
@@ -114,6 +114,6 @@ var cc_ccwcqk_gs_template;
             }));
         };
         return View;
-    }());
+    })();
     cc_ccwcqk_gs_template.View = View;
 })(cc_ccwcqk_gs_template || (cc_ccwcqk_gs_template = {}));
