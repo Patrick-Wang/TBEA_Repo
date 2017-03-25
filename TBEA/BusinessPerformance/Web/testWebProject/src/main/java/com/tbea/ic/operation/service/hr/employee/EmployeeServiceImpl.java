@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.hr;
+package com.tbea.ic.operation.service.hr.employee;
 
 import java.util.Calendar;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.model.dao.hr.EmployeeDao;
+import com.tbea.ic.operation.model.dao.hr.employee.EmployeeDao;
 import com.tbea.ic.operation.model.entity.hr.Employee;
 
 @Service

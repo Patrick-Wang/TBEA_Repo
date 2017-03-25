@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.controller.webservice.mdm.person;
+package com.tbea.ic.operation.controller.webservice.mdm.org;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,18 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.w3c.dom.Document;
 
-import com.tbea.ic.operation.model.entity.hr.Employee;
+import com.tbea.ic.operation.model.entity.hr.Org;
 import com.tbea.ic.operation.reportframe.component.AbstractConfigLoader;
-import com.tbea.ic.operation.service.hr.employee.EmployeeService;
+import com.tbea.ic.operation.service.hr.org.OrgService;
 import com.tbea.mdm.ws.MDMResponse;
 import com.tbea.mdm.ws.RecordStatus;
 
 @Controller
 @WebService
-public class PersonPushServiceImpl implements PersonPushService {
+public class OrgPushServiceImpl implements OrgPushService {
 
 	@Autowired
-	EmployeeService employeeService;
+	OrgService orgService;
 
 	protected static String mdmResPath;
 	static {
@@ -66,14 +66,14 @@ public class PersonPushServiceImpl implements PersonPushService {
 	}
 	
 	@Override
-	public MDMResponse push(String batch, List<Employee> employees) {
-		employeeService.saveEmployee(batch, employees);
+	public MDMResponse push(String batch, List<Org> orgs) {
+		orgService.saveOrg(batch, orgs);
 		MDMResponse resp = new MDMResponse();
 		resp.setCode("S");
 		resp.setDesc("成功");
 		resp.setBatchNo(batch);
 		List<RecordStatus> records = new ArrayList<RecordStatus>();
-		for (Employee employee : employees){
+		for (Org employee : orgs){
 			RecordStatus rec = new RecordStatus();
 			rec.setErrorText("");
 			rec.setStatus("0");
@@ -84,6 +84,7 @@ public class PersonPushServiceImpl implements PersonPushService {
 		return resp;
 	}
 
+	
 	
 
 } 

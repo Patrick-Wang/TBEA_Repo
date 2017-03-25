@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.List;
 
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.entity.YDHKJHJG;
 import com.tbea.ic.operation.model.entity.YDSJHKQK;
 
 public interface HKJHZXQKDao {

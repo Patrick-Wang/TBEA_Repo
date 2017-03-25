@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.model.dao.hr;
+package com.tbea.ic.operation.model.dao.hr.employee;
 
 import java.util.List;
 
