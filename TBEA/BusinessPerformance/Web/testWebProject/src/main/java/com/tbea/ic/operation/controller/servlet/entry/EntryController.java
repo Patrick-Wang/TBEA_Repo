@@ -126,6 +126,9 @@ public class EntryController {
 		}
 		ExchangeRate rate = entryService.getExchangeRate(date);
 		
+		
+		//295 QZ_GJQY295(295), // 其中_国际签约
+		//录入显示时候，界面会自动将 295 指标乘以汇率累加到其父指标中，295指标本身不会乘以汇率
 		String result = "{\"status\":" + JSONArray.fromObject(approved).toString() +
 						", \"values\":" + zb +
 						", \"zbxx\":" + JSONArray.fromObject(zbxx2).toString() +

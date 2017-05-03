@@ -9,6 +9,8 @@ import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.RatioPipeFilter;
 
+
+//单个公司的全年计划和当月计划 的 销售利润率 为从数据库实际获取的值 
 class SC2016SingleCompany extends SC2016 {
 
 	public SC2016SingleCompany(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc,

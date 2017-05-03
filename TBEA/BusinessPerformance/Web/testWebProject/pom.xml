@@ -12,11 +12,11 @@
 	</build>
 	<dependencies>
 	<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-		<dependency>
+	<!-- 	<dependency>
 		    <groupId>org.apache.poi</groupId>
 		    <artifactId>poi</artifactId>
 		    <version>3.15</version>
-		</dependency>
+		</dependency> -->
 	
 		<dependency>
 			<groupId>com.tbea.mdm</groupId>

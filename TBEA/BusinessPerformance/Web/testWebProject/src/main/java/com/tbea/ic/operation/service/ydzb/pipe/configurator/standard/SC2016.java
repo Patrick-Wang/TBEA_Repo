@@ -5,6 +5,8 @@ import com.tbea.ic.operation.service.util.pipe.configurator.ConfiguratorUtil;
 import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
 
+
+//多个公司时，销售利润率为综合计算结果
 class SC2016 extends SCDefault {
 
 	public SC2016(SbdNdjhZbDao sbdzbDao, IAccumulator sjAcc,
