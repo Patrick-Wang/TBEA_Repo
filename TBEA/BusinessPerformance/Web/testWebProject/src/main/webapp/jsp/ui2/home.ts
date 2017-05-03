@@ -71,9 +71,9 @@ module home{
             $("#tabContent #home").active(()=>{
                 $("body").click();
             });
-            $("iframe").css("display", "none");
+            $("iframe").css("height", "0px").css("width", "0px");
         }
-        homeFrame.css("display", "");
+        homeFrame.css("height", "100%").css("width", "100%");
         topTab.disableMore("closeCurrent");
     });
 
@@ -116,8 +116,8 @@ module home{
 
     topTab.setTabClickListener(function (data:any) {
         topTab.enableMore("closeCurrent");
-        $("iframe").css("display", "none");
-        $("#tabContent #" + data.id).css("display", "");
+        $("iframe").css("height", "0px").css("width", "0px");
+        $("#tabContent #" + data.id).css("width", "100%").css("height", "100%");
     });
 
     topTab.setCloseTabClickListener(function (data) {
@@ -143,7 +143,7 @@ module home{
                     id: node.data.id + "tab"
                 });
 
-                $("iframe").css("display", "none");
+                //$("iframe").css("display", "none");
                 let tabFrame = $("#tabContent #" + node.data.id + "tab");
                 if (tabFrame.length == 0){
                     $("#tabContent").append(

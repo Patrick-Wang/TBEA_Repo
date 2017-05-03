@@ -9,14 +9,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONArray;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
@@ -40,6 +40,8 @@ import com.tbea.ic.operation.model.entity.jygk.NCZB;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.nc.NCService;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "nc")
@@ -221,8 +223,8 @@ public class NCController {
 		
 		unitList.add(CompanyNCCode.getCode(CompanyType.SBGS));//CompanyType.SBGS);
 		unitList.add(CompanyNCCode.getCode(CompanyType.LLGS));//CompanyType.LLGS);
-//		unitList.add(CompanyNCCode.getCode(CompanyType.DLGS));//CompanyType.DLGS);
-//		unitList.add(CompanyNCCode.getCode(CompanyType.HBGS));//CompanyType.HBGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.DLGS));//CompanyType.DLGS);
+		unitList.add(CompanyNCCode.getCode(CompanyType.HBGS));//CompanyType.HBGS);
 		unitList.add(CompanyNCCode.getCode(CompanyType.XBC));//CompanyType.XBC);
 		unitList.add(CompanyNCCode.getCode(CompanyType.XLC));//CompanyType.XLC);
 		unitList.add(CompanyNCCode.getCode(CompanyType.XNYGS));//CompanyType.XNYGS);
@@ -260,24 +262,27 @@ public class NCController {
 		JSONArray zbArray = null;
 		int zbid = 0;
 		System.out.println("size" + NCZBList.size());
-		List<Company> comps = new ArrayList<Company>();
+		Set<Company> comps = new HashSet<Company>();
 		for (NCZB nczb : NCZBList) {
 			zbid = nczb.getZbxx().getId();
 			if (zbList.contains(zbid)) {
 				comp = companyManager.getBMDBOrganization().getCompany(
 						nczb.getDwxx().getId());
-				comps.add(comp);
-				zbStatus = entryService.getZbStatus(date, comp.getType(),
-						ZBType.BYSJ).get(0);
-				zbArray = createIndicator(String.valueOf(zbid),
-						String.valueOf(nczb.getNczbz()));
-				jsonArray = new JSONArray();
-				jsonArray.add(zbArray);
-				System.out.println("comp: " + comp.getName());
-				System.out.println("json: " + jsonArray);
-				System.out.println("date: " + date);
-				System.out.println("zbStatus: " + zbStatus);
-				importData(zbStatus, jsonArray, date, comp);
+				if (comp.getType() != CompanyType.DLGS && 
+						comp.getType() != CompanyType.HBGS){
+					comps.add(comp);
+					zbStatus = entryService.getZbStatus(date, comp.getType(),
+							ZBType.BYSJ).get(0);
+					zbArray = createIndicator(String.valueOf(zbid),
+							String.valueOf(nczb.getNczbz()));
+					jsonArray = new JSONArray();
+					jsonArray.add(zbArray);
+					System.out.println("comp: " + comp.getName());
+					System.out.println("json: " + jsonArray);
+					System.out.println("date: " + date);
+					System.out.println("zbStatus: " + zbStatus);
+					importData(zbStatus, jsonArray, date, comp);
+				}
 			}
 		}
 
@@ -292,6 +297,12 @@ public class NCController {
 	}
 	
 	private void importLocalNC2Local(Date d, CompanyType cp) {
+		if (cp == CompanyType.DLGS || 
+				cp == CompanyType.HBGS){
+			return;
+		}
+		
+		
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		// Calendar.MONTH获得月份正常情况下为自然月-1,
@@ -309,7 +320,7 @@ public class NCController {
 		JSONArray zbArray = null;
 		int zbid = 0;
 		System.out.println("size" + NCZBList.size());
-		List<Company> comps = new ArrayList<Company>();
+		Set<Company> comps = new HashSet<Company>();
 		for (NCZB nczb : NCZBList) {
 			zbid = nczb.getZbxx().getId();
 			if (zbList.contains(zbid)) {

@@ -129,7 +129,7 @@ var dzwzgb;
                     width: 1200,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 20,
+                    rowNum: 1000,
                     data: tableAssist.getData(data),
                     datatype: "local",
                     viewrecords: true
