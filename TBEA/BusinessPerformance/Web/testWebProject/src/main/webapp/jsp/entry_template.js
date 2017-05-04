@@ -317,22 +317,21 @@ var entry_template;
                     }
                 }
             }
-            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
-            //let zbxxs:Zbxx[] = this.checkSum(submitData);
-            //if (zbxxs.length != 0) {
-            for (var i_1 = 1; i_1 < submitData[0].length; ++i_1) {
-                var zbxxs = this.checkSum(submitData, i_1);
-                if (zbxxs.length != 0) {
-                    var msg = "";
-                    for (var i_2 = 0; i_2 < zbxxs.length; ++i_2) {
-                        msg += "、" + zbxxs[i_2].name;
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                //let zbxxs:Zbxx[] = this.checkSum(submitData);
+                //if (zbxxs.length != 0) {
+                for (var i_1 = 1; i_1 < submitData[0].length; ++i_1) {
+                    var zbxxs = this.checkSum(submitData, i_1);
+                    if (zbxxs.length != 0) {
+                        var msg = "";
+                        for (var i_2 = 0; i_2 < zbxxs.length; ++i_2) {
+                            msg += "、" + zbxxs[i_2].name;
+                        }
+                        Util.MessageBox.tip("第" + i_1 + "列 " + msg.substr(1) + " 指标值与子项和不匹配");
+                        return;
                     }
-                    Util.MessageBox.tip("第" + i_1 + "列 " + msg.substr(1) + " 指标值与子项和不匹配");
-                    return;
                 }
             }
-            //}
-            //}
             this.mSubmit.post({
                 year: date.year,
                 month: date.month,
@@ -371,22 +370,21 @@ var entry_template;
                     }
                 }
             }
-            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
-            //let zbxxs:Zbxx[] = this.checkSum(submitData);
-            //if (zbxxs.length != 0) {
-            for (var i_3 = 1; i_3 < submitData[0].length; ++i_3) {
-                var zbxxs = this.checkSum(submitData, i_3);
-                if (zbxxs.length != 0) {
-                    var msg = "";
-                    for (var i_4 = 0; i_4 < zbxxs.length; ++i_4) {
-                        msg += "、" + zbxxs[i_4].name;
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                //let zbxxs:Zbxx[] = this.checkSum(submitData);
+                //if (zbxxs.length != 0) {
+                for (var i_3 = 1; i_3 < submitData[0].length; ++i_3) {
+                    var zbxxs = this.checkSum(submitData, i_3);
+                    if (zbxxs.length != 0) {
+                        var msg = "";
+                        for (var i_4 = 0; i_4 < zbxxs.length; ++i_4) {
+                            msg += "、" + zbxxs[i_4].name;
+                        }
+                        Util.MessageBox.tip("第" + i_3 + "列" + msg.substr(1) + " 指标值与子项和不匹配");
+                        return;
                     }
-                    Util.MessageBox.tip("第" + i_3 + "列" + msg.substr(1) + " 指标值与子项和不匹配");
-                    return;
                 }
             }
-            //}
-            //}
             this.mSubmitToDeputy.post({
                 year: date.year,
                 month: date.month,
@@ -528,27 +526,27 @@ var entry_template;
                     }
                 }
             }
-            //if (Util.ZBType.BYSJ == this.mOpt.entryType){
-            var disabledCell = [];
-            for (var i_5 = 0; i_5 < this.mZbxxs.length; ++i_5) {
-                var zbxx = this.mZbxxs[i_5];
-                if (find(this.mTableData, zbxx.id) >= 0) {
-                    for (var j_1 = 0; j_1 < zbxx.children.length; ++j_1) {
-                        var cells_1 = this.parseZbxx(zbxx.children[j_1]);
-                        if (cells_1.length > 0) {
-                            disabledCell = disabledCell.concat(cells_1);
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+                var disabledCell = [];
+                for (var i_5 = 0; i_5 < this.mZbxxs.length; ++i_5) {
+                    var zbxx = this.mZbxxs[i_5];
+                    if (find(this.mTableData, zbxx.id) >= 0) {
+                        for (var j_1 = 0; j_1 < zbxx.children.length; ++j_1) {
+                            var cells_1 = this.parseZbxx(zbxx.children[j_1]);
+                            if (cells_1.length > 0) {
+                                disabledCell = disabledCell.concat(cells_1);
+                            }
                         }
                     }
                 }
+                var cells = this.parseZbxx48();
+                if (cells.length > 0) {
+                    disabledCell = disabledCell.concat(cells);
+                }
+                if (disabledCell.length != 0) {
+                    this.mTableAssist.disableCellEdit(disabledCell);
+                }
             }
-            var cells = this.parseZbxx48();
-            if (cells.length > 0) {
-                disabledCell = disabledCell.concat(cells);
-            }
-            if (disabledCell.length != 0) {
-                this.mTableAssist.disableCellEdit(disabledCell);
-            }
-            //}
             var data = this.mTableData;
             $("#" + name).jqGrid(this.mTableAssist.decorate({
                 data: this.mTableAssist.getDataWithId(data),

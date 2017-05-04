@@ -377,7 +377,7 @@ module entry_template {
                 }
             }
 
-            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
                 //let zbxxs:Zbxx[] = this.checkSum(submitData);
                 //if (zbxxs.length != 0) {
                 for (let i = 1; i < submitData[0].length; ++i){
@@ -393,7 +393,7 @@ module entry_template {
                     }
                 }
                 //}
-            //}
+            }
 
             this.mSubmit.post({
                 year: date.year,
@@ -434,7 +434,7 @@ module entry_template {
                 }
             }
 
-            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
                 //let zbxxs:Zbxx[] = this.checkSum(submitData);
                 //if (zbxxs.length != 0) {
                 for (let i = 1; i < submitData[0].length; ++i) {
@@ -450,7 +450,7 @@ module entry_template {
                     }
                 }
                 //}
-            //}
+            }
 
             this.mSubmitToDeputy.post({
                 year: date.year,
@@ -597,7 +597,7 @@ module entry_template {
                 }
             }
 
-            //if (Util.ZBType.BYSJ == this.mOpt.entryType){
+            if (Util.ZBType.BYSJ == this.mOpt.entryType){
                 let disabledCell = [];
                 for (let i = 0; i < this.mZbxxs.length; ++i){
                     let zbxx : Zbxx = this.mZbxxs[i];
@@ -619,7 +619,7 @@ module entry_template {
                 if (disabledCell.length != 0){
                     this.mTableAssist.disableCellEdit(disabledCell);
                 }
-            //}
+            }
 
             var data = this.mTableData;
             $("#" + name).jqGrid(

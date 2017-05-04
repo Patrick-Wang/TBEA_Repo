@@ -10,7 +10,7 @@
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
  
-     <Resource name="jdbc/dbNc" auth="Container" type="javax.sql.DataSource"
+    <!--  <Resource name="jdbc/dbNc" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		url="jdbc:sqlserver://localhost:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
@@ -44,8 +44,8 @@
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		url="jdbc:sqlserver://localhost:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
-		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />   
-  <!-- <Resource name="jdbc/dbNc" auth="Container" type="javax.sql.DataSource"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />    -->
+  <Resource name="jdbc/dbNc" auth="Container" type="javax.sql.DataSource"
 		username="iufo" password="cwf5e7n9" driverClassName="oracle.jdbc.driver.OracleDriver"
 		url="jdbc:oracle:thin:@dm01-scan.tbea.com.cn:1521/orcl" initialSize="35"
 		maxActive="70" maxIdle="10" validationQuery="select 1 from dual"
@@ -74,7 +74,7 @@
 		username="gfgs" password="gfgs2016" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		url="jdbc:sqlserver://172.21.1.10:1433; DatabaseName=LLJYGK"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
-		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />  -->
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" /> 
 
 	<!-- 连接Test数据库 -->
 	<Resource name="jdbc/dbXb" auth="Container" type="javax.sql.DataSource"
