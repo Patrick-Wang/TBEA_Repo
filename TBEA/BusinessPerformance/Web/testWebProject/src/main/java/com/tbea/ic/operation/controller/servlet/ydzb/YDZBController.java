@@ -411,8 +411,8 @@ public class YDZBController {
 		FormatterHandler formatterChain = new PercentFormatterHandler(null, percentCols);
 		formatterChain
 			.next(new NumberFormatterHandler(0, new String[]{"人数"}))
-			.next(new PercentSingleFormatterHandler(new String[]{"净资产收益率(%)"}))
-			.next(new PercentFormatterHandler(new String[]{"三项费用率(%)", "销售利润率(%)"}))
+			//.next(new PercentSingleFormatterHandler(new String[]{"净资产收益率(%)"}))
+			.next(new PercentFormatterHandler(new String[]{"净资产收益率(%)", "三项费用率(%)", "销售利润率(%)"}))
 			.next(new NumberFormatterHandler(1, new String[]{"人均利润", "人均收入", "精铝块13项元素和值（ppm）"}))
 			.next(new NumberFormatterHandler(0, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}, jhCols))
 			.next(new NumberFormatterHandler(2, new String[]{"标煤单耗（g/度）", "厂用电率（%）"}))

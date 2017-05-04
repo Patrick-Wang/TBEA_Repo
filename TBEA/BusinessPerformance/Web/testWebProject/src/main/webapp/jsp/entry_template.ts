@@ -112,7 +112,7 @@ module entry_template {
             }
 
             this.updateTitle();
-            
+
             //this.updateUI();
         }
 
@@ -171,7 +171,7 @@ module entry_template {
                 }
                 this.addContent(isShowapprove_2, isShowSubmit_2, approve_2Content, submit_2Content);
             }
-            
+
             //月度-季度计划数经营副总审核状态
             if (Util.ZBType.YDJDMJH == entryType && this.mStatusList.length == 3) {
                 //Init MatchArray for Month
@@ -354,8 +354,8 @@ module entry_template {
             });
         }
 
-        
-        
+
+
         public submit() {
             var date = this.mDateSelector.getDate();
             if (this.mOpt.entryType == Util.ZBType.YDJDMJH) {
@@ -377,22 +377,24 @@ module entry_template {
                 }
             }
 
-            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
                 //let zbxxs:Zbxx[] = this.checkSum(submitData);
                 //if (zbxxs.length != 0) {
-                let zbxxs:Zbxx[] = this.checkSum(submitData);
-                if (zbxxs.length != 0) {
-                    let msg = "";
-                    for (let i = 0; i < zbxxs.length; ++i){
-                        msg += "、" + zbxxs[i].name;
-                    }
+                for (let i = 1; i < submitData[0].length; ++i){
+                    let zbxxs:Zbxx[] = this.checkSum(submitData, i);
+                    if (zbxxs.length != 0) {
+                        let msg = "";
+                        for (let i = 0; i < zbxxs.length; ++i){
+                            msg += "、" + zbxxs[i].name;
+                        }
 
-                    Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
-                    return;
+                        Util.MessageBox.tip("第" + i + "列 " + msg.substr(1) + " 指标值与子项和不匹配");
+                        return;
+                    }
                 }
                 //}
-            }
-            
+            //}
+
             this.mSubmit.post({
                 year: date.year,
                 month: date.month,
@@ -432,21 +434,23 @@ module entry_template {
                 }
             }
 
-            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
                 //let zbxxs:Zbxx[] = this.checkSum(submitData);
                 //if (zbxxs.length != 0) {
-                    let zbxxs:Zbxx[] = this.checkSum(submitData);
+                for (let i = 1; i < submitData[0].length; ++i) {
+                    let zbxxs:Zbxx[] = this.checkSum(submitData, i);
                     if (zbxxs.length != 0) {
                         let msg = "";
-                        for (let i = 0; i < zbxxs.length; ++i){
+                        for (let i = 0; i < zbxxs.length; ++i) {
                             msg += "、" + zbxxs[i].name;
                         }
 
-                        Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                        Util.MessageBox.tip("第" + i + "列" + msg.substr(1) + " 指标值与子项和不匹配");
                         return;
                     }
+                }
                 //}
-            }
+            //}
 
             this.mSubmitToDeputy.post({
                 year: date.year,
@@ -593,29 +597,29 @@ module entry_template {
                 }
             }
 
-            if (Util.ZBType.BYSJ == this.mOpt.entryType){
+            //if (Util.ZBType.BYSJ == this.mOpt.entryType){
                 let disabledCell = [];
                 for (let i = 0; i < this.mZbxxs.length; ++i){
                     let zbxx : Zbxx = this.mZbxxs[i];
                     if (find(this.mTableData, zbxx.id) >= 0){
                         for (let j = 0; j < zbxx.children.length; ++j){
-                            let cell = this.parseZbxx(zbxx.children[j]);
-                            if (cell != undefined){
-                                disabledCell.push(cell);
+                            let cells = this.parseZbxx(zbxx.children[j]);
+                            if (cells.length > 0){
+                                disabledCell = disabledCell.concat(cells);
                             }
                         }
                     }
                 }
 
-                let cell = this.parseZbxx48();
-                if (cell != undefined){
-                    disabledCell.push(cell);
+                let cells = this.parseZbxx48();
+                if (cells.length > 0){
+                    disabledCell = disabledCell.concat(cells);
                 }
 
                 if (disabledCell.length != 0){
                     this.mTableAssist.disableCellEdit(disabledCell);
                 }
-            }
+            //}
 
             var data = this.mTableData;
             $("#" + name).jqGrid(
@@ -637,101 +641,109 @@ module entry_template {
                 }));
         }
 
-        private parseZbxx(zbxx:Zbxx):Cell {
+        private parseZbxx(zbxx:Zbxx):Cell[] {
             let row = find(this.mTableData, zbxx.id);
             if (row < 0) {
-                return undefined;
-            }
-            let cells = [];
-            for (let j = 0; j < zbxx.children.length; ++j){
-                let row2 = find(this.mTableData, zbxx.children[j].id);
-                if (row2 >= 0){
-                    let cel = new Cell(row2, 1);
-                    if (Util.indexOf(this.mExRateZbs, zbxx.children[j].id) >= 0){
-                        cel.rate = this.mRate;
-                    }else{
-                        cel.rate = 1;
-                    }
-                    cells.push(cel);
-                }
-            }
-            if (cells.length == 0) {
-                return undefined;
+                return [];
             }
 
-            let dst = new Cell(row, 1);
-            let form : Formula  = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=>{
-                let sum : any;
-                for (let i = 0; i < srcs.length; ++i){
-                    let val = srcs[i].getVal();
-                    if ("" != val){
-                        if (sum == undefined){
-                            sum = parseFloat(val) * srcs[i].rate;
+            let dsts:Cell[] = [];
+            for (let i = 1; i < this.mTableData[0].length - 1; ++i){
+                let cells = [];
+                for (let j = 0; j < zbxx.children.length; ++j){
+                    let row2 = find(this.mTableData, zbxx.children[j].id);
+                    if (row2 >= 0){
+                        let cel = new Cell(row2, i);
+                        if (Util.indexOf(this.mExRateZbs, zbxx.children[j].id) >= 0){
+                            cel.rate = this.mRate;
                         }else{
-                            sum += parseFloat(val) * srcs[i].rate;
+                            cel.rate = 1;
+                        }
+                        cells.push(cel);
+                    }
+                }
+                if (cells.length == 0) {
+                    return [];
+                }
+
+                let dst = new Cell(row, i);
+                dsts.push(dst);
+                let form : Formula  = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=>{
+                    let sum : any;
+                    for (let i = 0; i < srcs.length; ++i){
+                        let val = srcs[i].getVal();
+                        if ("" != val){
+                            if (sum == undefined){
+                                sum = parseFloat(val) * srcs[i].rate;
+                            }else{
+                                sum += parseFloat(val) * srcs[i].rate;
+                            }
                         }
                     }
-                }
-                if (sum != undefined){
-                    sum = sum.toFixed(4);
-                }
-                return sum;
-
-            });
-            this.mTableAssist.addFormula(form);
-            return dst;
+                    if (sum != undefined){
+                        sum = sum.toFixed(4);
+                    }
+                    return sum;
+                });
+                this.mTableAssist.addFormula(form);
+            }
+            return dsts;
         }
 
-        private parseZbxx48():Cell {
+        private parseZbxx48():Cell[] {
+            let dsts:Cell[] = [];
             let row = find(this.mTableData, 48);
-            if (row < 0) {
-                return undefined;
+            if (row >= 0) {
+                return [];
             }
 
 
-            let cells : any = [];
-            let cellTmp =  new Cell(find(this.mTableData, 290), 1);
-            if (cellTmp.row() >= 0){
-                cells.push(cellTmp);
-            }
-            cellTmp =  new Cell(find(this.mTableData, 299), 1);
-            if (cellTmp.row() >= 0){
-                cells.push(cellTmp);
-            }
-            cellTmp =  new Cell(find(this.mTableData, 304), 1);
-            if (cellTmp.row() >= 0){
-                cells.push(cellTmp);
-            }
+            for (let i = 1; i < this.mTableData[0].length - 1; ++i) {
+                let cells:any = [];
+                let cellTmp = new Cell(find(this.mTableData, 290), 1);
+                if (cellTmp.row() >= 0) {
+                    cells.push(cellTmp);
+                }
+                cellTmp = new Cell(find(this.mTableData, 299), 1);
+                if (cellTmp.row() >= 0) {
+                    cells.push(cellTmp);
+                }
+                cellTmp = new Cell(find(this.mTableData, 304), 1);
+                if (cellTmp.row() >= 0) {
+                    cells.push(cellTmp);
+                }
 
-            if(cells.length == 0){
-                return undefined;
-            }
+                if (cells.length == 0) {
+                    return [];
+                }
 
-            let dst = new Cell(row, 1);
-            let form : Formula  = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=>{
-                let sum : any;
-                for (let i = 0; i < srcs.length; ++i){
-                    let val = srcs[i].getVal();
-                    if ("" != val){
-                        if (sum == undefined){
-                            sum = parseFloat(val);
-                        }else{
-                            sum += parseFloat(val);
+                let dst = new Cell(row, 1);
+                dsts.push(dst);
+                let form:Formula = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=> {
+                    let sum:any;
+                    for (let i = 0; i < srcs.length; ++i) {
+                        let val = srcs[i].getVal();
+                        if ("" != val) {
+                            if (sum == undefined) {
+                                sum = parseFloat(val);
+                            } else {
+                                sum += parseFloat(val);
+                            }
                         }
                     }
-                }
-                if (sum != undefined){
-                    sum = sum.toFixed(4);
-                }
-                return sum;
+                    if (sum != undefined) {
+                        sum = sum.toFixed(4);
+                    }
+                    return sum;
 
-            });
-            this.mTableAssist.addFormula(form);
-            return dst;
+                });
+                this.mTableAssist.addFormula(form);
+            }
+            return dsts;
         }
 
 
-        private checkSum(submitData:any): Zbxx[] {
+        private checkSum(submitData:any, col:number): Zbxx[] {
             let zbxxs : Zbxx[] = [];
             let zbxx:Zbxx;
             for (let i = 0; i < this.mZbxxs.length; ++i){
@@ -741,6 +753,7 @@ module entry_template {
                     continue;
                 }
 
+
                 let sum : number;
                 for(let j = 0; j < zbxx.children.length; ++j){
                     let row2 = find(submitData, zbxx.children[j].id);
@@ -749,9 +762,9 @@ module entry_template {
                     }
                     if (submitData[row2][1] != ""){
                         if (sum == undefined){
-                            sum = parseFloat(submitData[row2][1]);
+                            sum = parseFloat(submitData[row2][col]);
                         }else{
-                            sum += parseFloat(submitData[row2][1]);
+                            sum += parseFloat(submitData[row2][col]);
                         }
                     }else{
                         if (sum == undefined){
@@ -760,9 +773,9 @@ module entry_template {
                     }
                 }
                 if (sum != undefined){
-                    if (submitData[row][1] == "" && sum != 0){
+                    if (submitData[row][col] == "" && sum != 0){
                         zbxxs.push(zbxx);
-                    }else if (Math.abs(sum - parseFloat(submitData[row][1])) > 2){
+                    }else if (Math.abs(sum - parseFloat(submitData[row][col])) > 2){
                         zbxxs.push(zbxx);
                     }
                     sum = undefined;

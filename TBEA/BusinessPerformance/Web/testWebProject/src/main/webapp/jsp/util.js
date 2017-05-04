@@ -704,8 +704,7 @@ var Util;
         ];
         var formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
         formaterChain.next(new Util.FormatIntHandler(['人数', '制造业人数', '工程、修试业务人数', '物流贸易人数']))
-            .next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
-            .next(new Util.FormatPercentHandler(['三项费用率(%)', '销售利润率(%)', '负债率', '制造业三项费用率', '工程、修试业务三项费用率', '物流贸易三项费用率']))
+            .next(new Util.FormatPercentHandler(['净资产收益率(%)', '三项费用率(%)', '销售利润率(%)', '负债率', '制造业三项费用率', '工程、修试业务三项费用率', '物流贸易三项费用率']))
             .next(new Util.FormatFordotHandler(1, ['人均利润', '人均收入', '精铝块13项元素和值（ppm）']))
             .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols))
             .next(new Util.FormatFordotHandler(2, zhZb))

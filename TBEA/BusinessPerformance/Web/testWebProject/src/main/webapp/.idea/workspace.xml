@@ -25,9 +25,19 @@
         <entry file="file://$PROJECT_DIR$/jsp/hzb_zbhz.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="23" selection-start-line="84" selection-start-column="23" selection-end-line="84" selection-end-column="23" />
+              <caret line="69" column="23" selection-start-line="69" selection-start-column="23" selection-end-line="69" selection-end-column="23" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1493773347189" expanded="true" signature="579:1432" placeholder="{...}" />
+                <marker date="1493773347189" expanded="true" signature="628:1410" placeholder="[...]" />
+                <marker date="1493773347189" expanded="true" signature="1525:2721" placeholder="{...}" />
+                <marker date="1493773347189" expanded="true" signature="1574:2699" placeholder="[...]" />
+                <marker date="1493773347189" expanded="true" signature="2751:10854" placeholder="{...}" />
+                <marker date="1493773347189" expanded="true" signature="2830:2964" placeholder="{...}" />
+                <marker date="1493773347189" expanded="true" signature="2871:2925" placeholder="{...}" />
+                <marker date="1493773347189" expanded="true" signature="3472:3574" placeholder="{...}" />
+                <marker date="1493773347189" expanded="true" signature="10778:10834" placeholder="{&quot;datatype&quot;: &quot;local&quot;...}" />
+                <marker date="1493773347189" expanded="true" signature="10778:10848" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -36,7 +46,7 @@
       <file leaf-file-name="home.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/ui2/home.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
+            <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -46,7 +56,7 @@
       <file leaf-file-name="home.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/ui2/home.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.733333">
+            <state vertical-scroll-proportion="0.0">
               <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -60,7 +70,7 @@
       <file leaf-file-name="navigator.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/ui2/navigator.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.785714">
+            <state vertical-scroll-proportion="0.0">
               <caret line="16" column="62" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
               <folding />
             </state>
@@ -80,7 +90,7 @@
       <file leaf-file-name="tab.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/ui2/tabs/tab.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
+            <state vertical-scroll-proportion="0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -100,28 +110,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hzb_zbhz.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hzb_zbhz.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/hzb_zbhz.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7234469">
-              <caret line="291" column="37" selection-start-line="291" selection-start-column="37" selection-end-line="291" selection-end-column="37" />
+            <state vertical-scroll-proportion="-13.178572">
+              <caret line="164" column="28" selection-start-line="164" selection-start-column="28" selection-end-line="164" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/entry_template.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-22.933332">
+              <caret line="449" column="21" selection-start-line="449" selection-start-column="21" selection-end-line="449" selection-end-column="21" />
               <folding>
-                <element signature="e#7821#8290#2#HTML" expanded="true" />
+                <element signature="n#!!doc" expanded="true" />
+                <marker date="1493863797497" expanded="true" signature="22193:22207" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deepgreen.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/jedate/skin/deepgreen.css">
+      <file leaf-file-name="util.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/util.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.87931037">
-              <caret line="23" column="41" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
-              <folding>
-                <element signature="e#9467#10976#2" expanded="true" />
-                <element signature="e#11024#12533#2" expanded="true" />
-                <element signature="e#12747#14252#2" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.4804992">
+              <caret line="782" column="52" selection-start-line="782" selection-start-column="52" selection-end-line="782" selection-end-column="52" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -147,7 +164,6 @@
         <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/clylwcqk/clylwcqk.ts" />
         <option value="$PROJECT_DIR$/jsp/wlyddqk/ylfxwlyddmlspcs/wlyddmlspcs.ts" />
         <option value="$PROJECT_DIR$/jsp/sbdscqyqk/xfscqy/xfscqy.ts" />
-        <option value="$PROJECT_DIR$/jsp/entry_template.ts" />
         <option value="$PROJECT_DIR$/jsp/hzb_zbhz_prediction.ts" />
         <option value="$PROJECT_DIR$/jsp/unitedSelector.ts" />
         <option value="$PROJECT_DIR$/jsp/components/SeasonAccSelector.ts" />
@@ -182,7 +198,6 @@
         <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdnbzlwttjqk/pdnbzlwttjqk.ts" />
         <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqnbzlwttjqk/byqnbzlwttjqk.ts" />
         <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqwbzlwttjqk/byqwbzlwttjqk.ts" />
-        <option value="$PROJECT_DIR$/jsp/util.ts" />
         <option value="$PROJECT_DIR$/jsp/util.js" />
         <option value="$PROJECT_DIR$/jsp/dzwzgb/dzclcb/dzclcb.ts" />
         <option value="$PROJECT_DIR$/jsp/My97DatePicker/skin/WdatePicker.css" />
@@ -193,6 +208,8 @@
         <option value="$PROJECT_DIR$/jsp/ui2/home.js" />
         <option value="$PROJECT_DIR$/jsp/ui2/home.ts" />
         <option value="$PROJECT_DIR$/jsp/hzb_zbhz.jsp" />
+        <option value="$PROJECT_DIR$/jsp/entry_template.ts" />
+        <option value="$PROJECT_DIR$/jsp/util.ts" />
       </list>
     </option>
   </component>
@@ -257,6 +274,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -289,50 +308,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="home.ts" />
-              <option name="myItemType" value="com.intellij.lang.typescript.compiler.ui.projectView.TypeScriptNestingTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -439,15 +416,15 @@
     <frame x="-8" y="-8" width="1456" height="886" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23888889" sideWeight="0.614726" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23836389" sideWeight="0.6085714" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3293011" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24742268" sideWeight="0.4721166" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.071618035" sideWeight="0.4721166" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24380705" sideWeight="0.5278834" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17473118" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" x="3" y="335" width="1594" height="168" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23888889" sideWeight="0.38527396" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23836389" sideWeight="0.39142856" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -481,20 +458,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/approve.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.9482758">
-          <caret line="168" column="23" selection-start-line="168" selection-start-column="20" selection-end-line="168" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/approve.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3321033">
-          <caret line="123" column="19" selection-start-line="123" selection-start-column="18" selection-end-line="123" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/framework/templates/dateReport/approve.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.9666667">
@@ -667,7 +630,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="214" column="36" selection-start-line="214" selection-start-column="25" selection-end-line="214" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -689,13 +651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="104" column="13" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/util.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="475" column="13" selection-start-line="475" selection-start-column="8" selection-end-line="475" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -732,7 +687,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -747,18 +701,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="89.75">
           <caret line="103" column="34" selection-start-line="103" selection-start-column="34" selection-end-line="103" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/jedate/skin/deepgreen.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.87931037">
+        <state vertical-scroll-proportion="0.0">
           <caret line="23" column="41" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
           <folding>
-            <element signature="e#9467#10976#2" expanded="true" />
-            <element signature="e#11024#12533#2" expanded="true" />
-            <element signature="e#12747#14252#2" expanded="true" />
+            <element signature="e#9467#10976#2" expanded="false" />
+            <element signature="e#11024#12533#2" expanded="false" />
+            <element signature="e#12747#14252#2" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -767,7 +720,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4495238">
           <caret line="23" column="13" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -775,7 +727,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2054054">
           <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -800,7 +751,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/ui2/navigator.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.785714">
+        <state vertical-scroll-proportion="0.0">
           <caret line="16" column="62" selection-start-line="16" selection-start-column="62" selection-end-line="16" selection-end-column="62" />
           <folding />
         </state>
@@ -826,11 +777,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47927928">
           <caret line="113" column="7" selection-start-line="113" selection-start-column="7" selection-end-line="113" selection-end-column="7" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1490685217283" expanded="true" signature="1963:1985" placeholder="..." />
-            <marker date="1490685217283" expanded="true" signature="5016:5038" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -838,13 +784,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.038229376">
           <caret line="1" column="9" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/ui2/home.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.733333">
+        <state vertical-scroll-proportion="0.0">
           <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -857,20 +802,55 @@
     <entry file="file://$PROJECT_DIR$/jsp/hzb_zbhz.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="23" selection-start-line="84" selection-start-column="23" selection-end-line="84" selection-end-column="23" />
+          <caret line="69" column="23" selection-start-line="69" selection-start-column="23" selection-end-line="69" selection-end-column="23" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1493773347189" expanded="true" signature="579:1432" placeholder="{...}" />
+            <marker date="1493773347189" expanded="true" signature="628:1410" placeholder="[...]" />
+            <marker date="1493773347189" expanded="true" signature="1525:2721" placeholder="{...}" />
+            <marker date="1493773347189" expanded="true" signature="1574:2699" placeholder="[...]" />
+            <marker date="1493773347189" expanded="true" signature="2751:10854" placeholder="{...}" />
+            <marker date="1493773347189" expanded="true" signature="2830:2964" placeholder="{...}" />
+            <marker date="1493773347189" expanded="true" signature="2871:2925" placeholder="{...}" />
+            <marker date="1493773347189" expanded="true" signature="3472:3574" placeholder="{...}" />
+            <marker date="1493773347189" expanded="true" signature="10778:10834" placeholder="{&quot;datatype&quot;: &quot;local&quot;...}" />
+            <marker date="1493773347189" expanded="true" signature="10778:10848" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/hzb_zbhz.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7234469">
-          <caret line="291" column="37" selection-start-line="291" selection-start-column="37" selection-end-line="291" selection-end-column="37" />
+        <state vertical-scroll-proportion="-13.178572">
+          <caret line="164" column="28" selection-start-line="164" selection-start-column="28" selection-end-line="164" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/jqgrid/jqassist.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4739195">
+          <caret line="407" column="41" selection-start-line="407" selection-start-column="41" selection-end-line="407" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/entry_template.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-22.933332">
+          <caret line="449" column="21" selection-start-line="449" selection-start-column="21" selection-end-line="449" selection-end-column="21" />
           <folding>
-            <element signature="e#7821#8290#2#HTML" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1493863797497" expanded="true" signature="22193:22207" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/util.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4804992">
+          <caret line="782" column="52" selection-start-line="782" selection-start-column="52" selection-end-line="782" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>

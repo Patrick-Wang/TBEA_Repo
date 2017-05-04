@@ -317,19 +317,22 @@ var entry_template;
                     }
                 }
             }
-            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
-                //let zbxxs:Zbxx[] = this.checkSum(submitData);
-                //if (zbxxs.length != 0) {
-                var zbxxs = this.checkSum(submitData);
+            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+            //let zbxxs:Zbxx[] = this.checkSum(submitData);
+            //if (zbxxs.length != 0) {
+            for (var i_1 = 1; i_1 < submitData[0].length; ++i_1) {
+                var zbxxs = this.checkSum(submitData, i_1);
                 if (zbxxs.length != 0) {
                     var msg = "";
-                    for (var i_1 = 0; i_1 < zbxxs.length; ++i_1) {
-                        msg += "、" + zbxxs[i_1].name;
+                    for (var i_2 = 0; i_2 < zbxxs.length; ++i_2) {
+                        msg += "、" + zbxxs[i_2].name;
                     }
-                    Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                    Util.MessageBox.tip("第" + i_1 + "列 " + msg.substr(1) + " 指标值与子项和不匹配");
                     return;
                 }
             }
+            //}
+            //}
             this.mSubmit.post({
                 year: date.year,
                 month: date.month,
@@ -368,19 +371,22 @@ var entry_template;
                     }
                 }
             }
-            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
-                //let zbxxs:Zbxx[] = this.checkSum(submitData);
-                //if (zbxxs.length != 0) {
-                var zbxxs = this.checkSum(submitData);
+            //if (Util.ZBType.BYSJ == this.mOpt.entryType) {
+            //let zbxxs:Zbxx[] = this.checkSum(submitData);
+            //if (zbxxs.length != 0) {
+            for (var i_3 = 1; i_3 < submitData[0].length; ++i_3) {
+                var zbxxs = this.checkSum(submitData, i_3);
                 if (zbxxs.length != 0) {
                     var msg = "";
-                    for (var i_2 = 0; i_2 < zbxxs.length; ++i_2) {
-                        msg += "、" + zbxxs[i_2].name;
+                    for (var i_4 = 0; i_4 < zbxxs.length; ++i_4) {
+                        msg += "、" + zbxxs[i_4].name;
                     }
-                    Util.MessageBox.tip(msg.substr(1) + " 指标值与子项和不匹配");
+                    Util.MessageBox.tip("第" + i_3 + "列" + msg.substr(1) + " 指标值与子项和不匹配");
                     return;
                 }
             }
+            //}
+            //}
             this.mSubmitToDeputy.post({
                 year: date.year,
                 month: date.month,
@@ -522,27 +528,27 @@ var entry_template;
                     }
                 }
             }
-            if (Util.ZBType.BYSJ == this.mOpt.entryType) {
-                var disabledCell = [];
-                for (var i_3 = 0; i_3 < this.mZbxxs.length; ++i_3) {
-                    var zbxx = this.mZbxxs[i_3];
-                    if (find(this.mTableData, zbxx.id) >= 0) {
-                        for (var j_1 = 0; j_1 < zbxx.children.length; ++j_1) {
-                            var cell_1 = this.parseZbxx(zbxx.children[j_1]);
-                            if (cell_1 != undefined) {
-                                disabledCell.push(cell_1);
-                            }
+            //if (Util.ZBType.BYSJ == this.mOpt.entryType){
+            var disabledCell = [];
+            for (var i_5 = 0; i_5 < this.mZbxxs.length; ++i_5) {
+                var zbxx = this.mZbxxs[i_5];
+                if (find(this.mTableData, zbxx.id) >= 0) {
+                    for (var j_1 = 0; j_1 < zbxx.children.length; ++j_1) {
+                        var cells_1 = this.parseZbxx(zbxx.children[j_1]);
+                        if (cells_1.length > 0) {
+                            disabledCell = disabledCell.concat(cells_1);
                         }
                     }
                 }
-                var cell = this.parseZbxx48();
-                if (cell != undefined) {
-                    disabledCell.push(cell);
-                }
-                if (disabledCell.length != 0) {
-                    this.mTableAssist.disableCellEdit(disabledCell);
-                }
             }
+            var cells = this.parseZbxx48();
+            if (cells.length > 0) {
+                disabledCell = disabledCell.concat(cells);
+            }
+            if (disabledCell.length != 0) {
+                this.mTableAssist.disableCellEdit(disabledCell);
+            }
+            //}
             var data = this.mTableData;
             $("#" + name).jqGrid(this.mTableAssist.decorate({
                 data: this.mTableAssist.getDataWithId(data),
@@ -564,91 +570,99 @@ var entry_template;
         View.prototype.parseZbxx = function (zbxx) {
             var row = find(this.mTableData, zbxx.id);
             if (row < 0) {
-                return undefined;
+                return [];
             }
-            var cells = [];
-            for (var j = 0; j < zbxx.children.length; ++j) {
-                var row2 = find(this.mTableData, zbxx.children[j].id);
-                if (row2 >= 0) {
-                    var cel = new Cell(row2, 1);
-                    if (Util.indexOf(this.mExRateZbs, zbxx.children[j].id) >= 0) {
-                        cel.rate = this.mRate;
-                    }
-                    else {
-                        cel.rate = 1;
-                    }
-                    cells.push(cel);
-                }
-            }
-            if (cells.length == 0) {
-                return undefined;
-            }
-            var dst = new Cell(row, 1);
-            var form = new Formula(dst, cells, function (dest, srcs) {
-                var sum;
-                for (var i = 0; i < srcs.length; ++i) {
-                    var val = srcs[i].getVal();
-                    if ("" != val) {
-                        if (sum == undefined) {
-                            sum = parseFloat(val) * srcs[i].rate;
+            var dsts = [];
+            for (var i = 1; i < this.mTableData[0].length - 1; ++i) {
+                var cells = [];
+                for (var j = 0; j < zbxx.children.length; ++j) {
+                    var row2 = find(this.mTableData, zbxx.children[j].id);
+                    if (row2 >= 0) {
+                        var cel = new Cell(row2, i);
+                        if (Util.indexOf(this.mExRateZbs, zbxx.children[j].id) >= 0) {
+                            cel.rate = this.mRate;
                         }
                         else {
-                            sum += parseFloat(val) * srcs[i].rate;
+                            cel.rate = 1;
                         }
+                        cells.push(cel);
                     }
                 }
-                if (sum != undefined) {
-                    sum = sum.toFixed(4);
+                if (cells.length == 0) {
+                    return [];
                 }
-                return sum;
-            });
-            this.mTableAssist.addFormula(form);
-            return dst;
+                var dst = new Cell(row, i);
+                dsts.push(dst);
+                var form = new Formula(dst, cells, function (dest, srcs) {
+                    var sum;
+                    for (var i_6 = 0; i_6 < srcs.length; ++i_6) {
+                        var val = srcs[i_6].getVal();
+                        if ("" != val) {
+                            if (sum == undefined) {
+                                sum = parseFloat(val) * srcs[i_6].rate;
+                            }
+                            else {
+                                sum += parseFloat(val) * srcs[i_6].rate;
+                            }
+                        }
+                    }
+                    if (sum != undefined) {
+                        sum = sum.toFixed(4);
+                    }
+                    return sum;
+                });
+                this.mTableAssist.addFormula(form);
+            }
+            return dsts;
         };
         View.prototype.parseZbxx48 = function () {
+            var dsts = [];
             var row = find(this.mTableData, 48);
-            if (row < 0) {
-                return undefined;
+            if (row >= 0) {
+                return [];
             }
-            var cells = [];
-            var cellTmp = new Cell(find(this.mTableData, 290), 1);
-            if (cellTmp.row() >= 0) {
-                cells.push(cellTmp);
-            }
-            cellTmp = new Cell(find(this.mTableData, 299), 1);
-            if (cellTmp.row() >= 0) {
-                cells.push(cellTmp);
-            }
-            cellTmp = new Cell(find(this.mTableData, 304), 1);
-            if (cellTmp.row() >= 0) {
-                cells.push(cellTmp);
-            }
-            if (cells.length == 0) {
-                return undefined;
-            }
-            var dst = new Cell(row, 1);
-            var form = new Formula(dst, cells, function (dest, srcs) {
-                var sum;
-                for (var i = 0; i < srcs.length; ++i) {
-                    var val = srcs[i].getVal();
-                    if ("" != val) {
-                        if (sum == undefined) {
-                            sum = parseFloat(val);
-                        }
-                        else {
-                            sum += parseFloat(val);
+            for (var i = 1; i < this.mTableData[0].length - 1; ++i) {
+                var cells = [];
+                var cellTmp = new Cell(find(this.mTableData, 290), 1);
+                if (cellTmp.row() >= 0) {
+                    cells.push(cellTmp);
+                }
+                cellTmp = new Cell(find(this.mTableData, 299), 1);
+                if (cellTmp.row() >= 0) {
+                    cells.push(cellTmp);
+                }
+                cellTmp = new Cell(find(this.mTableData, 304), 1);
+                if (cellTmp.row() >= 0) {
+                    cells.push(cellTmp);
+                }
+                if (cells.length == 0) {
+                    return [];
+                }
+                var dst = new Cell(row, 1);
+                dsts.push(dst);
+                var form = new Formula(dst, cells, function (dest, srcs) {
+                    var sum;
+                    for (var i_7 = 0; i_7 < srcs.length; ++i_7) {
+                        var val = srcs[i_7].getVal();
+                        if ("" != val) {
+                            if (sum == undefined) {
+                                sum = parseFloat(val);
+                            }
+                            else {
+                                sum += parseFloat(val);
+                            }
                         }
                     }
-                }
-                if (sum != undefined) {
-                    sum = sum.toFixed(4);
-                }
-                return sum;
-            });
-            this.mTableAssist.addFormula(form);
-            return dst;
+                    if (sum != undefined) {
+                        sum = sum.toFixed(4);
+                    }
+                    return sum;
+                });
+                this.mTableAssist.addFormula(form);
+            }
+            return dsts;
         };
-        View.prototype.checkSum = function (submitData) {
+        View.prototype.checkSum = function (submitData, col) {
             var zbxxs = [];
             var zbxx;
             for (var i = 0; i < this.mZbxxs.length; ++i) {
@@ -665,10 +679,10 @@ var entry_template;
                     }
                     if (submitData[row2][1] != "") {
                         if (sum == undefined) {
-                            sum = parseFloat(submitData[row2][1]);
+                            sum = parseFloat(submitData[row2][col]);
                         }
                         else {
-                            sum += parseFloat(submitData[row2][1]);
+                            sum += parseFloat(submitData[row2][col]);
                         }
                     }
                     else {
@@ -678,10 +692,10 @@ var entry_template;
                     }
                 }
                 if (sum != undefined) {
-                    if (submitData[row][1] == "" && sum != 0) {
+                    if (submitData[row][col] == "" && sum != 0) {
                         zbxxs.push(zbxx);
                     }
-                    else if (Math.abs(sum - parseFloat(submitData[row][1])) > 2) {
+                    else if (Math.abs(sum - parseFloat(submitData[row][col])) > 2) {
                         zbxxs.push(zbxx);
                     }
                     sum = undefined;

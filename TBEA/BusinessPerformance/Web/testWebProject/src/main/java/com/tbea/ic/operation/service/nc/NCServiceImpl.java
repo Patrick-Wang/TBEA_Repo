@@ -177,8 +177,12 @@ public class NCServiceImpl implements NCService {
 				mergeNCZB(companyType, GSZB.JLR183, nf, yf, jlr);
 				mergeNCZB(companyType, GSZB.FZZEQMS184, nf, yf, rs.getObject(12));
 				mergeNCZB(companyType, GSZB.SXFY64, nf, yf, rs.getObject(13));
+				
+//				jzcsyl = CommonMethod.divideDouble(jlr,
+//						(jzcqcs + jzcqms) / 2.0D) * 100.0D;
+// UI显示时转换为百分数
 				jzcsyl = CommonMethod.divideDouble(jlr,
-						(jzcqcs + jzcqms) / 2.0D) * 100.0D;
+						(jzcqcs + jzcqms) / 2.0D);
 				mergeNCZB(companyType, GSZB.JZCSYL_66, nf, yf, jzcsyl);
 			}
 			if (null != rs) {
