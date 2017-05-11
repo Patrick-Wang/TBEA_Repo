@@ -184,18 +184,24 @@ public class EntryController {
 
 		LoggerFactory.getLogger("WEBSERVICE").info("transport HB sjzb");
 		for (Entry<Company, JSONArray> entry : data.entrySet()){
+			LoggerFactory.getLogger("WEBSERVICE").info(entry.getKey().getName());
+			LoggerFactory.getLogger("WEBSERVICE").info(entry.getValue().toString());
 			importData(entry, d);
 		}		
 		
 		LoggerFactory.getLogger("WEBSERVICE").info("transport DL sjzb");
 		data = sjzbImportService.getDLSjzb(d);
 		for (Entry<Company, JSONArray> entry : data.entrySet()){
+			LoggerFactory.getLogger("WEBSERVICE").info(entry.getKey().getName());
+			LoggerFactory.getLogger("WEBSERVICE").info(entry.getValue().toString());
 			importData(entry, d);
 		}
 		
 		LoggerFactory.getLogger("WEBSERVICE").info("transport XL sjzb");
 		data = sjzbImportService.getXLSjzb(d);
 		for (Entry<Company, JSONArray> entry : data.entrySet()){
+			LoggerFactory.getLogger("WEBSERVICE").info(entry.getKey().getName());
+			LoggerFactory.getLogger("WEBSERVICE").info(entry.getValue().toString());
 			importData(entry, d);
 		}
 	}

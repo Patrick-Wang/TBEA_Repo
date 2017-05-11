@@ -1,0 +1,403 @@
+<components>
+ <service id="servZk" transaction="transactionManager">
+  <if test="${item == 0}">
+   <list id="xmmc" type="string">制造业</list>
+   <list id="gsmc" type="string">制造业</list>
+  </if>
+  <if test="${item == 1}">
+   <list id="xmmc" type="string">集成服务业</list>
+   <list id="gsmc" type="string">集成服务业</list>
+  </if>
+  <if test="${item == 2}">
+   <list id="xmmc" type="string">物流贸易业务</list>
+   <list id="gsmc" type="string">物流贸易业务</list>
+  </if>
+  <list id="zbs" type="int">${zb}</list>
+  <context key="jydw" value="${BMDBJydw}"/>
+  <context key="xmgs" value="${BMDBXmgs[jydw]}"/>
+  <list id="companies" type="object">
+   <item>${jydw}</item>
+   <item concat="jydw"/>
+   <item concat="xmgs"/>
+  </list>
+  <loop var="i" from="${0}" to="${companies.size - 1}">
+   <list id="ids">${i}</list>
+   <if test="${i &gt; 0 &amp;&amp; i &lt;= jydw.size}">
+    <list id="xmmc" type="string">其中：经营单位</list>
+    <list id="gsmc" type="string">${companies[i].name}</list>
+    <context key="dws" value="${companies[i].packAsList}"/>
+   </if>
+   <elseif test="${i &gt; jydw.size}">
+    <list id="xmmc" type="string">其中：项目公司</list>
+    <list id="gsmc" type="string">${companies[i].name}</list>
+    <context key="dws" value="${companies[i].packAsList}"/>
+   </elseif>
+   <else>
+    <context key="dws" value="${companies[i]}"/>
+   </else>
+   <list id="ndjh" type="object">${accFactory.njhAcc.compute[0][cal.date][cal.date][zbs][dws][0]}</list>
+   <list id="dyjh" type="object">${accFactory.yjhAcc.compute[0][cal.date][cal.date][zbs][dws][0]}</list>
+   <list id="dysj" type="object">${accFactory.sjAcc.compute[0][cal.date][cal.date][zbs][dws][0]}</list>
+   <list id="dysjqntq" type="object">${accFactory.sjAcc.compute[0][cal.lastYear.date][cal.lastYear.date][zbs][dws][0]}</list>
+   <list id="jdjh" type="object">${accFactory.yjhAcc.compute[0][cal.seasonStart.date][cal.date][zbs][dws][0]}</list>
+   <list id="jdlj" type="object">${accFactory.sjAcc.compute[0][cal.seasonStart.date][cal.date][zbs][dws][0]}</list>
+   <list id="jdljqntq" type="object">${accFactory.sjAcc.compute[0][cal.lastYear.seasonStart.date][cal.lastYear.date][zbs][dws][0]}</list>
+   <list id="ndljwc" type="object">${accFactory.sjAcc.compute[0][cal.months[1].date][cal.date][zbs][dws][0]}</list>
+   <list id="ndljwcqntq" type="object">${accFactory.sjAcc.compute[0][cal.lastYear.months[1].date][cal.lastYear.date][zbs][dws][0]}</list>
+  </loop>
+  <table id="result" rowIds="ids" export="true">
+   <col list="xmmc"/>
+   <col list="gsmc"/>
+   <col list="ndjh"/>
+   <col list="dyjh"/>
+   <col list="dysj"/>
+   <col instruction="计划完成率"/>
+   <col list="dysjqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="jdjh"/>
+   <col list="jdlj"/>
+   <col instruction="计划完成率"/>
+   <col list="jdljqntq"/>
+   <col instruction="同比增幅"/>
+   <col list="ndljwc"/>
+   <col instruction="年度完成率"/>
+   <col list="ndljwcqntq"/>
+   <col instruction="同比增幅"/>
+   <divCol toCol="5" sub="4" base="3"/>
+   <growthRates toCol="7" sj="4" tq="5"/>
+   <divCol toCol="10" sub="9" base="8"/>
+   <growthRates toCol="12" sj="9" tq="11"/>
+   <divCol toCol="14" sub="13" base="2"/>
+   <growthRates toCol="16" sj="13" tq="15"/>
+  </table>
+ </service>
+ <controller id="servFmtterZk">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="5,7,10,12,14,16"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="zkUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="item" value="${request.item.asInt % 10}"/>
+  <context key="zb" value="${request.item.asInt / 10}"/>
+  <callservice id="servZk"/>
+  <callcontroller id="servFmtterZk"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>项目</name>
+     <align>left</align>
+     <width>180</width>
+    </item>
+    <item>
+     <name>项目</name>
+     <align>left</align>
+     <width>400</width>
+    </item>
+    <item>
+     <name>年度计划</name>
+    </item>
+    <item>
+     <name>月度</name>
+     <sub type="array">
+      <item>
+       <name>当月计划</name>
+      </item>
+      <item>
+       <name>当月实际</name>
+      </item>
+      <item>
+       <name>计划完成率</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>季度</name>
+     <sub type="array">
+      <item>
+       <name>季度计划</name>
+      </item>
+      <item>
+       <name>季度累计</name>
+      </item>
+      <item>
+       <name>季度计划完成率</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>年度</name>
+     <sub type="array">
+      <item>
+       <name>年度累计</name>
+      </item>
+      <item>
+       <name>累计计划完成率</name>
+      </item>
+      <item>
+       <name>去年同期</name>
+      </item>
+      <item>
+       <name>同比增幅</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <mergeCols type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeCols>
+   <mergeRows type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeRows>
+   <mergeTitle>true</mergeTitle>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="zkExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="item" value="${request.item.asInt % 10}"/>
+  <context key="zb" value="${request.item.asInt / 10}"/>
+  <callservice id="servZk"/>
+  <callcontroller id="servFmtterZk" inline="true"/>
+  <ExcelTemplate id="excelTemplate" sheet="子库"/>
+  <list id="title" type="string">项目,项目,全年计划,月度,月度,月度,月度,月度,季度,季度,季度,季度,季度,年度,年度,年度,年度</list>
+  <list id="title1" type="string">项目,项目,全年计划,当月计划,当月实际,计划完成率,去年同期,同比增幅,季度计划,季度累计,季度计划完成率,去年同期,同比增幅,年度累计,累计计划完成率,去年同期,同比增幅
+</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="2" y="0" width="${title.size}" height="2"/>
+    <MergeRegion x="0" y="0" width="2" height="2" yCount="1"/>
+    <MergeRegion x="0" y="2" width="2" height="${result.ids.size}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}按照产业汇总指标.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="zk">
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="zkUpdate"/>
+   <map key="exportUrl" value="zkExport"/>
+   <map key="nodeData">[
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 1,
+      &quot;value&quot;: &quot;利润&quot;
+    },
+    &quot;subNodes&quot;: [
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 10,
+          &quot;value&quot;: &quot;制造业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 11,
+          &quot;value&quot;: &quot;集成服务业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 12,
+          &quot;value&quot;: &quot;物流贸易&quot;
+        }
+      }
+    ]
+  },
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 6,
+      &quot;value&quot;: &quot;销售收入&quot;
+    },
+    &quot;subNodes&quot;: [
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 60,
+          &quot;value&quot;: &quot;制造业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 61,
+          &quot;value&quot;: &quot;集成服务业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 62,
+          &quot;value&quot;: &quot;物流贸易&quot;
+        }
+      }
+    ]
+  },
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 32,
+      &quot;value&quot;: &quot;应收账款&quot;
+    },
+    &quot;subNodes&quot;: [
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 320,
+          &quot;value&quot;: &quot;制造业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 321,
+          &quot;value&quot;: &quot;集成服务业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 322,
+          &quot;value&quot;: &quot;物流贸易&quot;
+        }
+      }
+    ]
+  },
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 35,
+      &quot;value&quot;: &quot;存货&quot;
+    },
+    &quot;subNodes&quot;: [
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 350,
+          &quot;value&quot;: &quot;制造业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 351,
+          &quot;value&quot;: &quot;集成服务业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 352,
+          &quot;value&quot;: &quot;物流贸易&quot;
+        }
+      }
+    ]
+  },
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 61,
+      &quot;value&quot;: &quot;人数&quot;
+    },
+    &quot;subNodes&quot;: [
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 610,
+          &quot;value&quot;: &quot;制造业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 611,
+          &quot;value&quot;: &quot;集成服务业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 612,
+          &quot;value&quot;: &quot;物流贸易&quot;
+        }
+      }
+    ]
+  },
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 48,
+      &quot;value&quot;: &quot;合同签约额&quot;
+    },
+    &quot;subNodes&quot;: [
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 480,
+          &quot;value&quot;: &quot;制造业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 481,
+          &quot;value&quot;: &quot;集成服务业&quot;
+        }
+      }
+    ]
+  },
+  {
+    &quot;data&quot;: {
+      &quot;id&quot;: 64,
+      &quot;value&quot;: &quot;三项费用&quot;
+    },
+    &quot;subNodes&quot;: [
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 640,
+          &quot;value&quot;: &quot;制造业&quot;
+        }
+      },
+      {
+        &quot;data&quot;: {
+          &quot;id&quot;: 641,
+          &quot;value&quot;: &quot;集成服务业&quot;
+        }
+      }
+    ]
+  }
+]</map>
+   <map key="title" value="子库"/>
+  </response>
+ </controller>
+</components>

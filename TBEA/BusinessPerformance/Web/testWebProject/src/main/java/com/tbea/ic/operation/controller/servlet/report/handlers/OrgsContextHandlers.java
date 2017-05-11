@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.tbea.ic.operation.common.ClosureMap;
+import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -62,6 +64,29 @@ public class OrgsContextHandlers implements ContextHandler {
 			protected boolean onValidating(List<Object> args) {
 				return args.size() == 2;
 			}
+		});
+		
+		context.put("BMDBJydw", BMDepartmentDB.getMainlyJydw(companyManager));
+		
+		context.put("BMDBXmgs", new ClosureMap(){
+
+			@Override
+			protected boolean validate(List<Object> args) throws Exception {
+				return args.size() == 1;
+			}
+
+			@Override
+			protected Object onGetProp(List<Object> args) throws Exception {
+				List<Company> jydws =  (List) args.get(0);
+				List<Company> xmgs = new ArrayList<Company>();
+				for (Company jydw : jydws){
+					if (!jydw.getSubCompanies().isEmpty()){
+						xmgs.addAll(jydw.getSubCompanies());
+					}
+				}
+				return xmgs;
+			}
+			
 		});
 
 	}

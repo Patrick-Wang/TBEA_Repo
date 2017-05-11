@@ -162,6 +162,7 @@ var Util;
             node = JQTable.Node.create({
                 name: header.name,
                 align: align,
+                width: header.width,
                 isReadOnly: readOnly,
                 isSortable: sortable });
         }
