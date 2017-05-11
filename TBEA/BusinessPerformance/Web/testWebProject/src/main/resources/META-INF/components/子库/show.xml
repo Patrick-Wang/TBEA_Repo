@@ -64,7 +64,7 @@
    <col list="ndljwcqntq"/>
    <col instruction="同比增幅"/>
    <divCol toCol="5" sub="4" base="3"/>
-   <growthRates toCol="7" sj="4" tq="5"/>
+   <growthRates toCol="7" sj="4" tq="6"/>
    <divCol toCol="10" sub="9" base="8"/>
    <growthRates toCol="12" sj="9" tq="11"/>
    <divCol toCol="14" sub="13" base="2"/>
@@ -199,7 +199,7 @@
    </ExcelTitleFilter>
    <ExcelMergeFormatter>
     <ExcelTemplate ref="excelTemplate"/>
-    <MergeRegion x="2" y="0" width="${title.size}" height="2"/>
+    <MergeRegion x="2" y="0" width="${title.size - 2}" height="2"/>
     <MergeRegion x="0" y="0" width="2" height="2" yCount="1"/>
     <MergeRegion x="0" y="2" width="2" height="${result.ids.size}"/>
    </ExcelMergeFormatter>
@@ -217,7 +217,7 @@
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}按照产业汇总指标.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}子库.xls" serv="fmtServ"/>
  </controller>
  <controller id="zk">
   <response type="jsp" name="framework/templates/dateReport/show">
