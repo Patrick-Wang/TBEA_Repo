@@ -107,14 +107,18 @@ public class AdvanceAccByGroup{
 
 	
 	public List<Double> computeByCompanies(int col, Date start, Date end,
-			List<List<Integer>> zbs, List<Company> companies) {
+			List<List<Integer>> zbs, List companies) {
 		List<Double> result = new ArrayList<Double>();
 		List<Company> compsTmp = new ArrayList<Company>();
 		compsTmp.add(null);
 		for (int i = 0; i < companies.size(); ++i){
 			if (companies.get(i) != null){
-				compsTmp.set(0, companies.get(i));
-				result.addAll(proxy.compute(col, start, end, zbs.get(i), compsTmp));
+				if (companies.get(i) instanceof Company){
+					compsTmp.set(0, (Company) companies.get(i));
+					result.addAll(proxy.compute(col, start, end, zbs.get(i), compsTmp));
+				}else{
+					result.addAll(proxy.compute(col, start, end, zbs.get(i), (List<Company>) companies.get(i)));
+				}
 			}else{
 				result.addAll(Util.resize(new ArrayList<Double>(), zbs.get(i).size()));
 			}
@@ -130,6 +134,7 @@ public class AdvanceAccByGroup{
 		}
 		return result;
 	}
+
 	
 	public Double computeSumZbs(int col, Date start, Date end,
 			List<Integer> zbs, List<Company> companies) {

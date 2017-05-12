@@ -351,7 +351,22 @@
 		</div>
 	</div>
 </c:if>
-
+<c:if test="${zk}">
+	<div>
+		<h3>
+			数据子库<a name="zk"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<li><a href="../report/zk.do" target="_blank"><img
+							src="../images/charts/bar3.png"> <span><strong>数据子库</strong></span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</c:if>
 <%-- 
 <c:if test="${SbdAuth}">
 <div>

@@ -155,6 +155,11 @@
 										class="ec-icon ec-icon-line"></i> <a href="#zhzl"
 										style="color: rgb(62, 152, 197);">众和指标</a></li>
 								</c:if>
+								<c:if test="${zk}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#zk"
+										style="color: rgb(62, 152, 197);">数据子库</a></li>
+								</c:if>
 								<!-- 只有sbd公司权限显示-->
 								<%-- <c:if test="${SbdAuth}">
 									<li style="background-color: transparent;"><i
@@ -203,6 +208,7 @@
 										class="ec-icon ec-icon-line"></i> <a href="#xnycyjybb"
 										style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
 								</c:if>
+								
 <%-- 								<c:if test="${FinanceLookup}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#cwbb"

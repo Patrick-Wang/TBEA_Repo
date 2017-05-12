@@ -225,13 +225,14 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("sddbLookup", extAuthServ.hasAuthority(account, 61))
 		.add("sddbImport", extAuthServ.hasAuthority(account, 62))
 		.add("zhzlEntry", extAuthServ.hasAuthority(account, 63))
-		.add("zhzlLookup", extAuthServ.hasAuthority(account, 64));
-		
+		.add("zhzlLookup", extAuthServ.hasAuthority(account, 64))
+		.add("zk", extAuthServ.hasAuthority(account, 65));
 		
 		if (Account.KNOWN_ACCOUNT_AFL.equals(account.getName())){
 			acl.openAll();
 			acl.close("MarketAuth");
 		}
+
 	}
 
 	@RequestMapping(value = "validate.do")

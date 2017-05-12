@@ -18,7 +18,7 @@ public class EMListPack  extends NamedEM{
 
 	@Override
 	public Object invoke(Object stub, List<Object> args) {
-		List list = new ArrayList();
+		List list = new ArrayList(1);
 		list.add(stub);
 		return list;
 	}
