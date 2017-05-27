@@ -1,0 +1,201 @@
+<components>
+ <service id="servXsfyToLocal" transaction="transactionManager">
+  <if test="${!(ncDataNlj.isEmpty || ncDataYsj.isEmpty)}">
+   <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
+   <sql id="zbCount">select count(*) from identifier_xsfy_zb</sql>
+ 
+   <list id="data" type="object" clear="true">${ncDataNlj[0]}</list>
+   <loop from="${0}" to="${zbCount[0] - 1}" var="k">
+    <merge data="${data}" table="xsfy">
+     <where>
+      <nf type="int" value="${cal.year}"/>
+      <yf type="int" value="${cal.month}"/>
+      <dwid type="int" value="${dwid}"/>
+      <zbid type="int" value="${k + 1}"/>
+     </where>
+     <set>
+      <nf type="int" value="${cal.year}"/>
+      <yf type="int" value="${cal.month}"/>
+      <dwid type="int" value="${dwid}"/>
+      <zbid type="int" value="${k + 1}"/>
+      <ljz type="double" ref="${k}"/>
+     </set>
+    </merge>
+   </loop>
+   <list id="data" type="object">${ncDataYsj[0]}</list>
+   <loop from="${0}" to="${zbCount[0] - 1}" var="j">
+    <merge data="${data}" table="xsfy">
+     <where>
+      <nf type="int" value="${cal.year}"/>
+      <yf type="int" value="${cal.month}"/>
+      <dwid type="int" value="${dwid}"/>
+      <zbid type="int" value="${j + 1}"/>
+     </where>
+     <set>
+      <nf type="int" value="${cal.year}"/>
+      <yf type="int" value="${cal.month}"/>
+      <dwid type="int" value="${dwid}"/>
+      <zbid type="int" value="${j + 1}"/>
+      <sjz type="double" ref="${j}"/>
+     </set>
+    </merge>
+   </loop>
+   
+  </if>
+ </service>
+ <service id="servXsfyFromNC" transaction="transNc">
+  <sql id="ncDataYsj" export="true">select
+  m10085,--//销售费用合计本月数
+  m10081,--//工资本月数
+  m10060,--//奖金本月数
+  m10039,--//福利费本月数
+  m10018,--//工会经费本月数
+  myk99it,--//职工教育经费本月数
+  m10108,--//社会保险金本月数
+  m10063,--//办公费本月数
+  m10042,--//差旅费本月数
+  m10021,--//车辆费本月数
+  mhlwy6u,--//业务招待费本月数
+  mpou45u,--//折旧费本月数
+  m7bsc7n,--//采暖费本月数
+  m10000,--//广告费本月数
+  m10090,--//宣传费本月数
+  m10066,--//会务费本月数
+  m10045,--//培训费本月数
+  m10069,--//劳保费本月数
+  m10024,--//运输费本月数
+  m10038,--//23水费本月数
+  m10093 ,--//24电费本月数
+  m10075 ,--//25保险费本月数
+  m10048 ,--//26咨询费本月数
+  m10027 ,--//27代理费本月数
+  m10006 ,--//28劳务费本月数
+  m10003 ,--//29质量成本本月数
+  m10051 ,--//30标书费本月数
+  m10030 ,--//31中标费本月数
+  m10009 ,--//32押运费本月数
+  m10099 ,--//33低耗摊销费本月数
+  m10054 ,--//34物料消耗本月数
+  m10033 ,--//35修理费本月数
+  m10012 ,--//36租车费本月数
+  m10102 ,--//37入网费本月数
+  m10079 ,--//38商检费本月数
+  m10059 ,--//39安装费本月数
+  m10017 ,--//40仓储费本月数
+  m10072 ,--//41包装费本月数
+  mefuwz4,--//42商标许可费本月数
+  m10096 ,--//43网络视频通讯费本月数
+  m10087 ,--//44翻译费本月数
+  m9v6uwn,--//45租赁费本月数
+  m10107--//其他本月数
+from 
+  iufo.v_uf_xsfy_jt
+where 
+  VER in(0,510) and 
+  UNIT_CODE=${NCCode.code[type]} and
+  extract(year from to_date(INPUTDATE,'yyyy-mm-dd')) = ${cal.year} and
+  extract(month from to_date(INPUTDATE,'yyyy-mm-dd')) =  ${cal.month}</sql>
+  <sql id="ncDataNlj" export="true">select
+  m10083, --销售费用合计本年累计数
+  m10080, --工资本年累计数
+  m10058, --奖金本年累计数
+  m10037, --福利费本年累计数
+  m10016, --C08工会经费本年累计数
+  mbsul9g, --C09职工教育经费本年累计数
+  m10106  , --10社会保险金本年累计数
+  m10062  , --11办公费本年累计数
+  m10041  , --12差旅费本年累计数
+  m10020  , --13车辆费本年累计数
+  mvz8t5s  , --14业务招待费本年累计数
+  mep2lz6  , --15折旧费本年累计数
+  mu8qrhv  , --16采暖费本年累计数
+  m10110  , --17广告费本年累计数
+  m10089  , --18宣传费本年累计数
+  m10065  , --19会务费本年累计数
+  m10044  , --20培训费本年累计数
+  m10068  , --21劳保费本年累计数
+  m10023  , --22运输费本年累计数
+  m10036  , --23水费本年累计数
+  m10092  , --24电费本年累计数
+  m10074  , --25保险费本年累计数
+  m10047  , --26咨询费本年累计数
+  m10026  , --27代理费本年累计数
+  m10005  , --28劳务费本年累计数
+  m10002  , --29质量成本本年累计数
+  m10050  , --30标书费本年累计数
+  m10029  , --31中标费本年累计数
+  m10008  , --32押运费本年累计数
+  m10098  , --33低耗摊销费本年累计数
+  m10053  , --34物料消耗本年累计数
+  m10032  , --35修理费本年累计数
+  m10011  , --36租车费本年累计数
+  m10101  , --37入网费本年累计数
+  m10077  , --38商检费本年累计数
+  m10057  , --39安装费本年累计数
+  m10015  , --40仓储费本年累计数
+  m10071  , --41包装费本年累计数
+  m488zp9  , --42商标许可费本年累计数
+  m10095  , --43网络视频通讯费本年累计数
+  m10086  , --44翻译费本年累计数
+  mjo6o5n  , --45租赁费本年累计数
+  m10105   --其他本年累计
+from 
+  iufo.v_uf_xsfy_jt
+where 
+  VER in(0,510) and 
+  UNIT_CODE=${NCCode.code[type]} and
+  extract(year from to_date(INPUTDATE,'yyyy-mm-dd')) = ${cal.year} and
+  extract(month from to_date(INPUTDATE,'yyyy-mm-dd')) =  ${cal.month}</sql>
+ </service>
+ <controller id="xsfyTransport">
+  <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
+   <context key="cal" value="${calendar.current.lastMonth}"/>
+  </if>
+  <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
+   <context key="cal" value="${request.date.asCalendar}"/>
+  </if>
+  <context key="type" value="${CompanyType.SBGS}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.HBGS}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.XBC}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.TBGS}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.LLGS}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.XLC}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.DLGS}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.XNYGS}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.XTNYGS}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.TCNY}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.NDGS}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.JCKGS_JYDW}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/>
+  <context key="type" value="${CompanyType.GJGCGS_GFGS}"/>
+  <callservice id="servXsfyFromNC"/>
+  <callservice id="servXsfyToLocal"/> 
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+</components>

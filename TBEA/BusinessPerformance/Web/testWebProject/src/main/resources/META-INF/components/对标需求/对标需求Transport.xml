@@ -1,481 +1,211 @@
 <components>
  <service id="servDbxqToLocal" transaction="transactionManager">
   <if test="${!ncData.isEmpty}">
+   <sql id="ids">select id from identifier_dbxq_zb where SN is not null order by SN asc</sql>
    <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
-   <context key="counter" value="${counterFactory.newCounter.reset[2]}"/>
-   <context key="counterZb" value="${counterFactory.newCounter.reset[0]}"/>
    <list id="data" type="object">${ncData[0]}</list>
-   <merge data="${data}" table="dbxq">
+   <loop from="${0}" to="${ids.size - 1}" var="index">
+   	<merge data="${data}" table="dbxq">
     <where>
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
+     <zbid type="int" value="${ids[index]}"/>
     </where>
     <set>
      <nf type="int" value="${cal.year}"/>
      <yf type="int" value="${cal.month}"/>
      <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
+     <zbid type="int" value="${ids[index]}"/>
+     <value type="double" ref="${index}"/>
     </set>
    </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
-   <merge data="${data}" table="dbxq">
-    <where>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.next.val}"/>
-    </where>
-    <set>
-     <nf type="int" value="${cal.year}"/>
-     <yf type="int" value="${cal.month}"/>
-     <dwid type="int" value="${dwid}"/>
-     <zbid type="int" value="${counterZb.val}"/>
-     <value type="double" ref="${counter.next.val}"/>
-    </set>
-   </merge>
+   </loop>
   </if>
  </service>
  <service id="servDbxqFromNC" transaction="transNc">
-  <sql id="ncData" export="true">select  unit_code,
-        unit_name,
-        inputdate,
-        imdi.m10025 jzcsyl,--净资产收益率（%）
-        imdi.m10003 zzcbc,--总资产报酬率（%）
-        imdi.m10008 xslrl,--销售（营业）利润率（%）
-        imdi.m10014 yyxjbzbs,--盈余现金保障倍数
-        imdi.m10020 cbfylyl,--成本费用利润率（%）
-        imdi.m10026 zbsyl,--资本收益率（%）
-        imdi.m10010 zzczzl,--总资产周转率（次）
-        imdi.m10016 yszkzzl,--应收账款周转率（次）
-        imdi.m10022 blzcbl,--不良资产比率（次）
-        imdi.m10000 ldzczzl,--流动资产周转率（次）
-        imdi.m10005 zcxjhsl,--资产现金回收率（%）
-        imdi.m10018 zcfzl,--资产负债率（%）
-        imdi.m10024 yhlxbs,--已获利息倍数
-        imdi.m10002 sdbl,--速度比率（%）
-        imdi.m10007 xjldfzbl,--现金流动负债比率（%）
-        imdi.m10013 dxfzbl,--带息负债比率（%）
-        imdi.m10019 hyfzbl,--或有负债比率（%）
-        imdi.m10004 xszzl,--销售（营业）增长率（%）
-        imdi.m10009 zbbzzzl,--资本保值增值率（%）
-        imdi.m10015 xslrzl,--销售（营业）利润增长率（%）
-        imdi.m10021 zzczengzl,--总资产增长率（%）
-        imdi.m10027 jstrbl,--技术投入比率（%）
-        imdi.m10011 chzzl,--存货周转率（次）
-        imdi.m10017 ljzldzcbz,--两金占流动资产比重（%）
-        imdi.m10023 cbfyzyysr,--成本费用占营业收入比重（%）
-        imdi.m10001 jjzjll,--经济增加值率（%）
-        imdi.m10006 ebitda,--EBITDA率（%）
-        imdi.m10012 zbjll--资本积累率（%）
-  from iufo_measure_data_iv9iuir5 imdi
-  left join (select alone_id,
-                    code,
-                    inputdate,
-                    keyword2,
-                    keyword3,
-                    time_code,
-                    ts,
-                    ver
-               from iufo_measure_pubdata) imp
-    on imdi.alone_id = imp.alone_id
-  left join (select unit_id, unit_code, unit_name from iufo_unit_info) iui
-    on imp.code = iui.unit_id
- where imp.ver in (0,510)
+  <sql id="ncData" export="true">select 
+    mpj5b66	,
+	ml6g88d	,
+	mij0gpg	,
+	m10015	,
+	m5nbh2o	,
+	mxpladr	,
+	mrqyuy4	,
+	mdh0sul	,
+	m10017	,
+	m10000	,
+	mrq5yen	,
+	me7sp7z	,
+	mslp6h8	,
+	m10020	,
+	m10003	,
+	mqq273y	,
+	m6edy7x	,
+	mqtc22o	,
+	m10022	,
+	m10006	,
+	mrtnh1t	,
+	m10025	,
+	m10009	,
+	m6mcdfx	,
+	mfc0n9f	,
+	mjf39sa	,
+	mc4653i	,
+	m10012	,
+	mihllwd	,
+	m3z105e	,
+	mml9mh6	,
+	mrf1s4y	,
+	m10014	,
+	m1ez9u6	,
+	mej32q1	,
+	m408w27	,
+	mpwpd2s	,
+	mupvob2	,
+	m7wgtyo	,
+	musonmz	,
+	m10019	,
+	m10002	,
+	mysgu8z	,
+	mptb66g	,
+	mzq9pfm	,
+	m10021	,
+	m10005	,
+	mho8vai	,
+	mz4qd0z	,
+	mk022of	,
+	m10024	,
+	m10008	,
+	mpfudcv	,
+	ms6f1w3	,
+	m7boe5h	,
+	m10027	,
+	m10011	,
+	mv5re4a	,
+	m5mt72o	,
+	mfvzayi	,
+	maomuuu	,
+	mqytsor	,
+	mk4yy8t	,
+	m7lbax3	,
+	m10016	,
+	m9gbv7p	,
+	m0otflp	,
+	mk2imhx	,
+	myb42k2	,
+	m10018	,
+	m10001	,
+	mwbxqvu	,
+	mj4vhkp	,
+	m10004	,
+	mx20ew9	,
+	m15ey1o	,
+	mvw3ay2	,
+	m10023	,
+	m10007	,
+	mp4kjux	,
+	m8p7y1z	,
+	m3z9cp6	,
+	m10026	,
+	m10010
+from IUFO.V_UF_ZBMX_JT
+ where ver in (0,510)
  and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
  and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
  and unit_code = ${NCCode.code[type]}</sql>
+ </service>
+ <service id="servGFGSDbxqFromNC" transaction="transNc">
+   <sql id="ncData" export="true">select 
+    sum(ml6g88d)/nullif((sum(mij0gpg) + sum(m10015))/2, 0)		as a1	,
+sum(	ml6g88d	)as a2	,
+sum(	mij0gpg	)as a3	,
+sum(	m10015	)as a4	,
+sum(mxpladr)/nullif((sum(mrqyuy4) + sum(mdh0sul))/2, 0)		as a5	,
+sum(	mxpladr	)as a6	,
+sum(	mrqyuy4	)as a7	,
+sum(	mdh0sul	)as a8	,
+sum(mrq5yen)/nullif(sum(m10000), 0)		as a9	,
+sum(	m10000	)as a10	,
+sum(	mrq5yen	)as a11	,
+sum(mslp6h8)/nullif(sum(m10020), 0)		as a12	,
+sum(	mslp6h8	)as a13	,
+sum(	m10020	)as a14	,
+sum(mqq273y)/nullif((sum(m6edy7x) + sum(mqtc22o) + sum(m10022) + sum(m10006))/2,0)		as a15	,
+sum(	mqq273y	)as a16	,
+sum(	m6edy7x	)as a17	,
+sum(	mqtc22o	)as a18	,
+sum(	m10022	)as a19	,
+sum(	m10006	)as a20	,
+sum(m10025)/nullif((sum(m10009) + sum(m6mcdfx))/2,0)		as a21	,
+sum(	m10025	)as a22	,
+sum(	m10009	)as a23	,
+sum(	m6mcdfx	)as a24	,
+sum(mjf39sa)/nullif((sum(mc4653i) + sum(m10012))/2,0)		as a25	,
+sum(	mjf39sa	)as a26	,
+sum(	mc4653i	)as a27	,
+sum(	m10012	)as a28	,
+sum(m3z105e)/nullif((sum(mml9mh6) + sum(mrf1s4y))/2,0)		as a29	,
+sum(	m3z105e	)as a30	,
+sum(	mml9mh6	)as a31	,
+sum(	mrf1s4y	)as a32	,
+sum(m1ez9u6)/nullif((sum(mej32q1) + sum(m408w27))/2,0)		as a33	,
+sum(	m1ez9u6	)as a34	,
+sum(	mej32q1	)as a35	,
+sum(	m408w27	)as a36	,
+sum(mpwpd2s)/nullif(sum(m7wgtyo),0)		as a37	,
+sum(	mupvob2	)as a38	,
+sum(	m7wgtyo	)as a39	,
+(sum(m10019) + sum(m10002))/nullif(sum(m10002),0)		as a40	,
+sum(	m10019	)as a41	,
+sum(	m10002	)as a42	,
+(sum(mptb66g) - sum(mzq9pfm) - sum(m10021) )/nullif(sum(m10021),0)		as a43	,
+sum(	mptb66g	)as a44	,
+sum(	mzq9pfm	)as a45	,
+sum(	m10021	)as a46	,
+sum(	m10005	)as a47	,
+sum(mz4qd0z)/nullif(sum(mk022of),0)		as a48	,
+sum(	mz4qd0z	)as a49	,
+sum(	mk022of	)as a50	,
+(sum(m10008) + sum(mpfudcv) + sum(ms6f1w3) + sum(m7boe5h) + sum(m10027) + sum(m10011) )/nullif(sum(mv5re4a),0)		as a51	,
+sum(	m10008	)as a52	,
+sum(	mpfudcv	)as a53	,
+sum(	ms6f1w3	)as a54	,
+sum(	m7boe5h	)as a55	,
+sum(	m10027	)as a56	,
+sum(	m10011	)as a57	,
+sum(	mv5re4a	)as a58	,
+sum(mfvzayi)/nullif(sum(maomuuu),0)		as a59	,
+sum(	mfvzayi	)as a60	,
+sum(	maomuuu	)as a61	,
+(sum(mk4yy8t) - sum(m7lbax3))/nullif(sum(m7lbax3),0)		as a62	,
+sum(	mk4yy8t	)as a63	,
+sum(	m7lbax3	)as a64	,
+(sum(m9gbv7p) + sum(m0otflp))/nullif(sum(m0otflp),0)		as a65	,
+sum(	m9gbv7p	)as a66	,
+sum(	m0otflp	)as a67	,
+(sum(myb42k2) - sum(m10018))/nullif(sum(m10018),0)		as a68	,
+sum(	myb42k2	)as a69	,
+sum(	m10018	)as a70	,
+(sum(mwbxqvu) - sum(mj4vhkp))/nullif(sum(mj4vhkp),0)		as a71	,
+sum(	mwbxqvu	)as a72	,
+sum(	mj4vhkp	)as a73	,
+sum(mx20ew9)/nullif((sum(m15ey1o) + sum(mvw3ay2))/2,0)		as a74	,
+sum(	mx20ew9	)as a75	,
+sum(	m15ey1o	)as a76	,
+sum(	mvw3ay2	)as a77	,
+(sum(m10007) - sum(mp4kjux))/nullif(sum(mp4kjux),0)		as a78	,
+sum(	m10007	)as a79	,
+sum(	mp4kjux	)as a80	,
+(sum(m3z9cp6) + sum(m10026))/nullif(sum(m10010),0)		as a81	,
+sum(	m3z9cp6	)as a82	,
+sum(	m10026	)as a83	,
+sum(	m10010	)as a84
+from IUFO.V_UF_ZBMX_JT
+ where ver in (0,510)
+ and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
+ and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
+ and unit_code in ${dws}</sql>
  </service>
  <controller id="dbxqTransport" cron="0 0 12 3 * ?">
   <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
@@ -484,45 +214,43 @@
   <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
    <context key="cal" value="${request.date.asCalendar}"/>
   </if>
-  <context key="type" value="${CompanyType.SBGS}"/>
-  <callservice id="servDbxqFromNC"/>
+  <list export="true" id="dwtypes" type="object">
+  	<item>${CompanyType.SBGS}</item>
+  	<item>${CompanyType.HBGS}</item>
+  	<item>${CompanyType.XBC}</item>
+  	<item>${CompanyType.LLGS}</item>
+  	<item>${CompanyType.XLC}</item>
+  	<item>${CompanyType.DLGS}</item>
+  	<item>${CompanyType.XNYGS}</item>
+  	<item>${CompanyType.XTNYGS}</item>
+  	<item>${CompanyType.TCNY}</item>
+  	<item>${CompanyType.NDGS}</item>
+  	<item>${CompanyType.JCKGS_JYDW}</item>
+  	<item>${CompanyType.GJGCGS_GFGS}</item>
+  </list>
+   <list export="true" id="dws" type="object">
+  	<item>${NCCode.code[CompanyType.SBGS]}</item>
+  	<item>${NCCode.code[CompanyType.HBGS]}</item>
+  	<item>${NCCode.code[CompanyType.XBC]}</item>
+  	<item>${NCCode.code[CompanyType.LLGS]}</item>
+  	<item>${NCCode.code[CompanyType.XLC]}</item>
+  	<item>${NCCode.code[CompanyType.DLGS]}</item>
+  	<item>${NCCode.code[CompanyType.XNYGS]}</item>
+  	<item>${NCCode.code[CompanyType.XTNYGS]}</item>
+  	<item>${NCCode.code[CompanyType.TCNY]}</item>
+  	<item>${NCCode.code[CompanyType.NDGS]}</item>
+  	<item>${NCCode.code[CompanyType.JCKGS_JYDW]}</item>
+  	<item>${NCCode.code[CompanyType.GJGCGS_GFGS]}</item>
+  </list>
+  <loop from="${0}" to="${dwtypes.size - 1}" var="index">
+  	<context key="type" value="${dwtypes[index]}"></context>
+   	<callservice id="servDbxqFromNC"/>
+  	<callservice id="servDbxqToLocal"/>
+  </loop>
+  <context key="type" value="${CompanyType.GFGS}"></context>
+  <callservice id="servGFGSDbxqFromNC"/>
   <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.HBGS}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.XBC}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.TBGS}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.LLGS}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.XLC}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.DLGS}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.XNYGS}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.XTNYGS}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.TCNY}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.NDGS}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.JCKGS_JYDW}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
-  <context key="type" value="${CompanyType.GJGCGS_GFGS}"/>
-  <callservice id="servDbxqFromNC"/>
-  <callservice id="servDbxqToLocal"/>
+
   <response type="json">
    <errorCode>0</errorCode>
    <message>OK</message>

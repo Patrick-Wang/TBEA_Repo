@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.ClosureMap;
+import com.tbea.ic.operation.reportframe.el.em.EM2Int;
 import com.tbea.ic.operation.reportframe.el.em.EMArrayJudge;
 import com.tbea.ic.operation.reportframe.el.em.EMAsJson;
 import com.tbea.ic.operation.reportframe.el.em.EMAsTimestamp;
@@ -37,6 +38,7 @@ public class PackingMap2 extends ClosureMap {
 		extendMethods.add(new EMListPack());
 		extendMethods.add(new EMAsTimestamp());
 		extendMethods.add(new EMJsonString2Json());
+		extendMethods.add(new EM2Int());
 	}
 	
 	public Object unpack(){

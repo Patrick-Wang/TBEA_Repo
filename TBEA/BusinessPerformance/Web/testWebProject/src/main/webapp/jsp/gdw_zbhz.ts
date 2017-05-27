@@ -148,8 +148,8 @@ module gdw_zbhz {
                     rowNum: 200,
                     autoScroll: true
                 }));
-            
-           $("#export").css('display','block'); 
+
+           $("#export , #zk").css('display','block');
 
         }
     }

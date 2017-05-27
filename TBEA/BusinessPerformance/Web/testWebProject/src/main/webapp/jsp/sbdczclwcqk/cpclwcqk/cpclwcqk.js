@@ -13,6 +13,7 @@ var plugin;
 (function (plugin) {
     plugin.cpclwcqk = framework.basic.endpoint.lastId();
     plugin.cpclwcqk_byq = framework.basic.endpoint.lastId();
+    plugin.cpclwcqk_xl = framework.basic.endpoint.lastId();
 })(plugin || (plugin = {}));
 var sbdczclwcqk;
 (function (sbdczclwcqk) {
@@ -86,7 +87,10 @@ var sbdczclwcqk;
                 this.updateTable();
             };
             ShowView.prototype.pluginGetUnit = function () {
-                return "单位：万kVA（其中电抗器产量万kvar）";
+                if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ) {
+                    return "单位：万kVA（其中电抗器产量万kvar）";
+                }
+                return "导线：吨；电缆：千米；电缆附件：件";
             };
             ShowView.prototype.isSupported = function (compType) {
                 if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ) {
@@ -98,7 +102,7 @@ var sbdczclwcqk;
                         return true;
                     }
                 }
-                else {
+                else if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_XL) {
                     if (compType == Util.CompanyType.LLGS ||
                         compType == Util.CompanyType.XLC ||
                         compType == Util.CompanyType.DLGS ||
@@ -113,6 +117,10 @@ var sbdczclwcqk;
                     .fromEp(new framework.basic.EndpointProxy(plugin.cpclwcqk_byq, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "产量完成情况");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.cpclwcqk_xl, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产量完成情况");
             };
             ShowView.prototype.onEvent = function (e) {
                 if (e.road != undefined) {
@@ -120,8 +128,9 @@ var sbdczclwcqk;
                         case plugin.cpclwcqk_byq:
                             this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ;
                             break;
-                        default:
-                            this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ;
+                        case plugin.cpclwcqk_xl:
+                            this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_XL;
+                            break;
                     }
                 }
                 return _super.prototype.onEvent.call(this, e);

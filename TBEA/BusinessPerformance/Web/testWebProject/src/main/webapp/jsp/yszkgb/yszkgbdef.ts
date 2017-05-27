@@ -19,6 +19,10 @@ module yszkgb {
     export interface PluginOption {
         host:string;
         tbarea:string;
+        ctarea:string;
+        ct:string;
+        ctarea1:string;
+        ct1:string;
     }
 
     export abstract class BasePluginView implements PluginView {

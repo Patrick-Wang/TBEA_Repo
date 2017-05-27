@@ -91,7 +91,90 @@ module sbdscqyqk {
                     return;
                 }
 
-                this.updateTable();
+                this.$(this.option().ctarea).show();
+                this.updateEchart(this.updateTable());
+            }
+
+            private updateEchart(data:any[]):void {
+                let title = "行业领域签约趋势";
+
+                let legend:Array<string> = [
+                    "传统电力市场",
+                    "新能源市场",
+                    "重点领域市场",
+                    "其它"];
+
+                var xData:any[] = [];
+
+                let month = this.getMonth();
+                for (let i = month; i <= 12; ++i) {
+                    xData.push(i + "月");
+                }
+
+                for (let i = 1; i <= month; ++i) {
+                    xData.push(i + "月");
+                }
+
+
+                let tooltip : any = {
+                    trigger: 'axis',
+
+                };
+
+                let yAxis : any = [
+                    {
+                        type: 'value',
+                    }
+                ];
+
+                let series = [];
+                for (let i = 0; i < legend.length; ++i){
+                    let rData : any = [0,0,0,0,0,0,0,0,0,0,0,0,0];
+                    for (let j = 0; j < data.length; ++j){
+                        if (legend[i] == data[j][0]){
+                            for (let k = 0; k < 13; ++k){
+                                rData[k] += data[j][k + 2] == "--" ? 0 : parseFloat(data[j][k + 2]);
+                            }
+                        }
+                    }
+                    for (let k = 0; k < 13; ++k){
+                        rData[k] = rData[k].toFixed(1);
+                    }
+                    series.push({
+                        name: legend[i],
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: rData
+                    });
+                }
+
+
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: tooltip,
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true,
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: yAxis,
+                    series: series
+                };
+
+                echarts.init(this.$(this.option().ct)[0]).setOption(option);
+
             }
 
             public init(opt:Option):void {
@@ -104,7 +187,7 @@ module sbdscqyqk {
 				return month;
 			}
 			
-            private updateTable():void {
+            private updateTable():any[] {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDt);
                 var parent = this.$(this.option().tb);
@@ -165,6 +248,7 @@ module sbdscqyqk {
                         datatype: "local",
                         viewrecords : true
                     }));
+                return data;
             }
         }
     }

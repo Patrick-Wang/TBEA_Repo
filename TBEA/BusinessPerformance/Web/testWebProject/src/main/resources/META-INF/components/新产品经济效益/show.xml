@@ -1,0 +1,198 @@
+<components>
+ <service id="servXcpjjxy" transaction="transactionManager">
+  <list id="dwids" type="int">1,2,3,4,5,6,9,10,13,1000</list>
+  <sql id="xcp" order="dwids" by="0" colcount="5">select 
+	dwid,
+	ctrtAmountNew,
+	saleRevenueNew,
+	profitNew,
+	productionNew
+from new_product_benefit
+where
+	nf = ${cal.year} and
+	yf = ${cal.month}</sql>
+  <sql id="xcpHj" order="dwids" by="0" colcount="5">select 
+	dwid,
+	sum(ctrtAmountNew) as can,
+	sum(saleRevenueNew) as srn,
+	sum(profitNew) as pn,
+	sum(productionNew) as prn
+from new_product_benefit
+where
+	nf = ${cal.year} and
+	yf = ${cal.month}
+group by
+	dwid</sql>
+  <sql id="zzy" order="dwids" by="0" colcount="5">select 
+	dwid,
+	ctrtAmountNew,
+	saleRevenueNew,
+	profitNew,
+	productionNew
+from new_product_benefit
+where
+	nf = ${cal.year} and
+	yf = ${cal.month}</sql>
+  <context key="zzyHtqy">${accFactory.sjByComps.compute[0][cal.date][cal.date][GSZB.HTQYE48.value.packAsList][orgs.BMDBOrganization.companiesByIds[dwids]]}</context>
+  <context key="zzyXssr">${accFactory.sjByComps.compute[0][cal.date][cal.date][GSZB.XSSR6.value.packAsList][orgs.BMDBOrganization.companiesByIds[dwids]]}</context>
+  <context key="zzyLrze">${accFactory.sjByComps.compute[0][cal.date][cal.date][GSZB.LRZE1.value.packAsList][orgs.BMDBOrganization.companiesByIds[dwids]]}</context>
+  <context key="zzyCz">${accFactory.sjByComps.compute[0][cal.date][cal.date][GSZB.BHSCZ60.value.packAsList][orgs.BMDBOrganization.companiesByIds[dwids]]}</context>
+  <table id="result" rowIds="dwids" export="true">
+   <list list="dwmc">沈变,
+衡变,
+新变,
+鲁缆,
+新缆,
+德缆,
+新能源,
+新特能源,
+众和,
+合计
+</list>
+   <list type="double" sql="xcp" value="1"/>
+   <list type="double" sql="xcp" value="2"/>
+   <list type="double" sql="xcp" value="3"/>
+   <list type="double" sql="xcp" value="4"/>
+   <col list="zzyHtqy"/>
+   <col list="zzyXssr"/>
+   <col list="zzyLrze"/>
+   <col list="zzyCz"/>
+   <col intruction="新产品产值占比"/>
+   <col intruction="总产值" temp="true"/>
+   <sumRow toId="${1000}">
+    <rangeRows>0, ${dwids.size - 2}</rangeRows>
+   </sumRow>
+   <sumCol toCol="10" first="8" second="4"/>
+   <divCol toCol="9" base="10" sub="4"/>
+  </table>
+ </service>
+ <controller id="servFmtterXcpjjxy">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="9"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="0"/>
+  </formatter>
+ </controller>
+ <controller id="xcpjjxyUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servXcpjjxy"/>
+  <callcontroller id="servFmtterXcpjjxy"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>经营单位名称</name>
+    </item>
+    <item>
+     <name>新产品经济效益</name>
+     <sub type="array">
+      <item>
+       <name>合同签约</name>
+      </item>
+      <item>
+       <name>销售收入</name>
+      </item>
+      <item>
+       <name>利润</name>
+      </item>
+      <item>
+       <name>产值</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>公司(各单位)制造业整体经营数据</name>
+     <sub type="array">
+      <item>
+       <name>合同签约</name>
+      </item>
+      <item>
+       <name>销售收入</name>
+      </item>
+      <item>
+       <name>利润</name>
+      </item>
+      <item>
+       <name>制造业总产值</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>新产品产值占比</name>
+    </item>
+   </header>
+   <mergeTitle>true</mergeTitle>
+   <colorKey>合计</colorKey>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="xcpjjxyExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servXcpjjxy"/>
+  <callcontroller id="servFmtterXcpjjxy" inline="true"/>
+  <ExcelTemplate id="excelTemplate" sheet="人力资源系统报表"/>
+  <list id="title" type="string">经营单位名称,
+新产品经济效益,
+新产品经济效益,
+新产品经济效益,
+新产品经济效益,
+公司(各单位)制造业整体经营数据,
+公司(各单位)制造业整体经营数据,
+公司(各单位)制造业整体经营数据,
+公司(各单位)制造业整体经营数据,
+新产品产值占比</list>
+  <list id="title1" type="string">经营单位名称,
+合同签约,
+销售收入,
+利润,
+产值,
+合同签约,
+销售收入,
+利润,
+制造业总产值,
+新产品产值占比</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="${2}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}新产品经济效益.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="xcpjjxy">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="xcpjjxyUpdate"/>
+   <map key="exportUrl" value="xcpjjxyExport"/>
+   <map key="title" value="新产品经济效益"/>
+  </response>
+ </controller>
+</components>

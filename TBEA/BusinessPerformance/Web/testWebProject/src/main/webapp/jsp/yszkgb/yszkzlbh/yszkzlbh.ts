@@ -66,16 +66,88 @@ module yszkgb {
                 if ( this.mData == undefined){
                     return;
                 }
-
-                this.updateTable();
+                this.$(this.option().ctarea).show();
+                this.updateEchart(this.updateTable());
             }
+
+            private updateEchart(data:any[]):void {
+                let title = "应收账款账龄变化";
+
+                let legend:Array<string> = ["5年以上",
+                    "4-5年",
+                    "3-4年",
+                    "2-3年",
+                    "1-2年",
+                    "1年以内"];
+
+                var xData:string[] = [];
+                for (let i = 0; i < data.length; ++i){
+                    xData.push(data[i][1]);
+                }
+
+
+
+                let tooltip : any = {
+                    trigger: 'axis',
+
+                };
+
+                let yAxis : any = [
+                    {
+                        type: 'value',
+                    }
+                ];
+
+                let series = [];
+                for (let i = 0; i < legend.length; ++i){
+                    let rData = [];
+                    for (let j = 0; j < data.length; ++j){
+                        rData.push(data[j][i + 2] == "--" ? 0 : data[j][i + 2]);
+                    }
+                    series.push({
+                        name: legend[i],
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: rData
+                    });
+                }
+
+
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: tooltip,
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true,
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: yAxis,
+                    series: series
+                };
+
+                echarts.init(this.$(this.option().ct)[0]).setOption(option);
+
+            }
+
 
             public init(opt:Option):void {
                 super.init(opt);
                 view.register("应收账款账龄变化", this);
             }
 
-            private updateTable():void {
+            private updateTable():any[] {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
@@ -108,6 +180,7 @@ module yszkgb {
                         datatype: "local",
                         viewrecords : true
                     }));
+                return data;
             }
         }
 

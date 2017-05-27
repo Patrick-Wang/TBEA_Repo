@@ -49,10 +49,10 @@ public class ClylwcqkServlet {
 
 	private SbdczclwcqkType getType(HttpServletRequest request){
 		if (14 == Integer.valueOf(request.getParameter("sbdczclwcqkType"))){
-			return SbdczclwcqkType.SBDCZCLWCQK_CL_XL;
+			return SbdczclwcqkType.SBDCZCLWCQK_CLYLWCQK_XL;
 		}
 		
-		return SbdczclwcqkType.SBDCZCLWCQK_CL_XL;
+		return SbdczclwcqkType.SBDCZCLWCQK_CLYLWCQK_XL;
 	}
 	
 	@RequestMapping(value = "update.do")

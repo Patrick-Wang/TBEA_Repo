@@ -44,6 +44,8 @@ module framework.basic {
     export interface PluginOption {
         host:string;
         tbarea:string;
+        ctarea:string;
+        ct:string;
     }
 
     export abstract class BasicEndpoint implements framework.route.Endpoint {

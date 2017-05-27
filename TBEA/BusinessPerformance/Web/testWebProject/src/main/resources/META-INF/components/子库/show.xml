@@ -1,16 +1,16 @@
 <components>
 	<service id="servZk" transaction="transactionManager">
 		<if test="${item == 0}">
-			<list id="xmmc" type="string">制造业</list>
-			<list id="gsmc" type="string">制造业</list>
+			<list id="xmmc" type="string">总体（制造业）</list>
+			<list id="gsmc" type="string">总体（制造业）</list>
 		</if>
 		<if test="${item == 1}">
-			<list id="xmmc" type="string">集成服务业</list>
-			<list id="gsmc" type="string">集成服务业</list>
+			<list id="xmmc" type="string">总体（集成服务业）</list>
+			<list id="gsmc" type="string">总体（集成服务业）</list>
 		</if>
 		<if test="${item == 2}">
-			<list id="xmmc" type="string">物流贸易业务</list>
-			<list id="gsmc" type="string">物流贸易业务</list>
+			<list id="xmmc" type="string">总体（物流贸易业务）</list>
+			<list id="gsmc" type="string">总体（物流贸易业务）</list>
 		</if>
 		
 		<context key="jydw" value="${BMDBJydw}" />
@@ -84,7 +84,11 @@
 	<controller id="zkUpdate">
 		<context key="cal" value="${request.date.asCalendar}" />
 		<context key="item" value="${request.item.asInt % 10}" />
-		<context key="zb" value="${request.item.asInt / 10}" />
+		<list id="items" type="int">
+			${item}
+		</list>
+		<context key="item" value="${items[0]}" />
+		<context key="zb" value="${(request.item.asInt - item) / 10}" />
 		<callservice id="servZk" />
 		<callcontroller id="servFmtterZk" />
 		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
@@ -181,7 +185,11 @@
 	<controller id="zkExport">
 		<context key="cal" value="${request.date.asCalendar}" />
 		<context key="item" value="${request.item.asInt % 10}" />
-		<context key="zb" value="${request.item.asInt / 10}" />
+		<list id="items" type="int">
+			${item}
+		</list>
+		<context key="item" value="${items[0]}" />
+		<context key="zb" value="${(request.item.asInt - item) / 10}" />
 		<callservice id="servZk" />
 		<callcontroller id="servFmtterZk" inline="true" />
 		<ExcelTemplate id="excelTemplate" sheet="数据子库" />

@@ -68,8 +68,81 @@ module yszkgb {
                 if ( this.mData == undefined){
                     return;
                 }
+                this.$(this.option().ctarea).show();
+                this.updateEchart(this.updateTable());
+            }
 
-                this.updateTable();
+            private updateEchart(data:any[]):void {
+                let title = "逾期应收账产生因素";
+
+                let legend:Array<string> = [
+                    "内部因素",
+                    "客户资信",
+                    "滚动付款",
+                    "项目变化",
+                    "合同因素",
+                    "手续办理",
+                    "诉讼"];
+
+                var xData:string[] = [];
+                for (let i = 0; i < data.length; ++i){
+                    xData.push(data[i][1]);
+                }
+
+
+
+                let tooltip : any = {
+                    trigger: 'axis',
+
+                };
+
+                let yAxis : any = [
+                    {
+                        type: 'value',
+                    }
+                ];
+
+                let series = [];
+                for (let i = 0; i < legend.length; ++i){
+                    let rData = [];
+                    for (let j = 0; j < data.length; ++j){
+                        rData.push(data[j][i + 2] == "--" ? 0 : data[j][i + 2]);
+                    }
+                    series.push({
+                        name: legend[i],
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: rData
+                    });
+                }
+
+
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: tooltip,
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true,
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: yAxis,
+                    series: series
+                };
+
+                echarts.init(this.$(this.option().ct)[0]).setOption(option);
+
             }
 
             public init(opt:Option):void {
@@ -77,7 +150,7 @@ module yszkgb {
                 view.register("逾期应收账产生因素", this);
             }
 
-            private updateTable():void {
+            private updateTable():any[] {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
                 var parent = this.$(this.option().tb);
@@ -110,6 +183,7 @@ module yszkgb {
                         datatype: "local",
                         viewrecords : true
                     }));
+                return data;
             }
         }
 

@@ -1,0 +1,92 @@
+<components>
+ <service id="servXsfy" transaction="transactionManager">
+  <sql id="zbs">select * from identifier_xsfy_zb</sql>
+  <list id="ids" sql="zbs" value="0" type="int"/>
+  <sql id="xsfys" order="ids" by="0" colcount="3">select 
+zbid, 
+sjz,
+ljz 
+from xsfy
+where
+nf = ${cal.year} and 
+yf = ${cal.month} and
+dwid = ${compId}</sql>
+  <table id="result" rowIds="ids" export="true">
+   <list id="zbmc" type="string" sql="zbs" value="1"/>
+   <list id="sjz" type="double" sql="xsfys" value="1"/>
+   <list id="ljz" type="double" sql="xsfys" value="2"/>
+  </table>
+ </service>
+ <controller id="servFmtterXsfy">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="xsfyUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <callservice id="servXsfy"/>
+  <callcontroller id="servFmtterXsfy"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>指标名称</name>
+    </item>
+    <item>
+     <name>本月实际值（元）</name>
+    </item>
+    <item>
+     <name>年度累计值（元）</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="xsfyExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <callservice id="servXsfy"/>
+  <callcontroller id="servFmtterXsfy" inline="true"/>
+  <ExcelTemplate id="excelTemplate" sheet="管理费用"/>
+  <list id="title" type="string">指标名称,本月实际值（元）,年度累计值（元）</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}销售费用.xls" serv="fmtServ"/>
+ </controller> 
+ <controller id="xsfy">
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="xsfyUpdate"/>
+   <map key="exportUrl" value="xsfyExport"/>
+   <map map="${authMgr[23]}"/>
+   <map key="title" value="销售费用"/>
+  </response>
+ </controller>
+</components>

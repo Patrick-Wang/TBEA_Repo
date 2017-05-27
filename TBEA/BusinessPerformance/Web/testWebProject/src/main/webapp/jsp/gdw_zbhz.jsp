@@ -209,16 +209,18 @@
 			<td>
 		</tr>
 		<tr>
-			<td>
-			<form id="export" method="post" style="display:none">
+		<td>
+			<div>
+			<form id="export" method="post" style="display:none;float:left">
 				<input id="update" type="button" value="导出"
 					style="width: 100px;"
 					onclick="instance.exportExcel($('h1').text())"
 					class="ui-button ui-widget ui-state-default ui-corner-all"
 					role="button" aria-disabled="false"></input>
 			</form>
+			<a id="zk" style="display:none;float: right" href="../report/zk.do" target="_blank">数据子库详细信息</a>
+			</div>
 			</td>
-			
 		</tr> 
 	</Table>
 	<%@include file="loading.jsp"%>

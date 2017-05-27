@@ -7,15 +7,11 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -26,6 +22,8 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDao;
 import com.tbea.ic.operation.model.dao.sbdczclwcqk.cpczwcqk.CpczwcqkDaoImpl;
 import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
+import com.tbea.ic.operation.service.sbdczclwcqk.SBDCZCLWCQK_CZCL_BYQ_CPMC;
+import com.tbea.ic.operation.service.sbdczclwcqk.SBDCZCLWCQK_CZCL_XL_CPMC;
 
 @Service(CpczwcqkServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -54,14 +52,14 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 		switch (type) {
 
 		case SBDCZCLWCQK_CZ_BYQ: {
-			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_DYDJ_JLBYQ.value());
-			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_DYDJ_ZLBYQ.value());
-			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_DYDJ_DKQ.value());
-			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_GSBYQ.value());
-			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_77.value());
-			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_81.value());
-			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_TZBYQ.value());
-			hjList.add(SBDCZCLWCQK_CZ_BYQ_Type.MLSPCS_BYQ_CPFL_YSL.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_DYDJ_JLBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_DYDJ_ZLBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_DYDJ_DKQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_GSBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_77.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_81.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_TZBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_YSL.value());
 			break;
 		}
 		default: 
@@ -78,13 +76,13 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 		switch (type) {
 
 		case SBDCZCLWCQK_CZ_BYQ: {
-			for (SBDCZCLWCQK_CZ_BYQ_Type cp : SBDCZCLWCQK_CZ_BYQ_Type.values()) {
+			for (SBDCZCLWCQK_CZCL_BYQ_CPMC cp : SBDCZCLWCQK_CZCL_BYQ_CPMC.values()) {
 				cpIdList.add(cp.value());
 			}
 			break;
 		}
 		case SBDCZCLWCQK_CZ_XL: {
-			for (SBDCZCLWCQK_CZ_XL_Type cp : SBDCZCLWCQK_CZ_XL_Type.values()) {
+			for (SBDCZCLWCQK_CZCL_XL_CPMC cp : SBDCZCLWCQK_CZCL_XL_CPMC.values()) {
 				cpIdList.add(cp.value());
 			}
 			break;
@@ -181,82 +179,82 @@ public class CpczwcqkServiceImpl implements CpczwcqkService {
 		return result;
 	}
 	
-	@Override
-	public List<List<String>> getCpczwcqkEntry(Date d, Company company, SbdczclwcqkType type) {
-		List<List<String>> result = new ArrayList<List<String>>();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(d);
-		
-		List<Integer> cpIdList = getCpIdList(type);
-		
-		for (int cp = 0; cp < cpIdList.size(); cp++) {
-			
-			CpczwcqkEntity entity = cpczwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
-			List<String> oneLine = new ArrayList<String>();
-			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
-			
-			if (entity == null) {
-				oneLine.add("");
-			} else {
-				Boolean bFind = false;
-
-				if (entity.getNf() == cal.get(Calendar.YEAR)
-						&& entity.getYf() == cal.get(Calendar.MONTH) + 1) {
-					bFind = true; 
-					oneLine.add("" + entity.getCz());
-				}
-
-				if (!bFind) {
-					oneLine.add("");
-				}
-
-			}				
-			result.add(oneLine);
-		}		
-		
-		return result;
-	}
-
-	ErrorCode entryCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data, ZBStatus status) {
-
-		ErrorCode err = ErrorCode.OK;
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(d);
-		List<Integer> cpIdList = getCpIdList(type);
-		
-		for (int cp = 0; cp < cpIdList.size(); cp++) {
-			CpczwcqkEntity entity= cpczwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
-			
-			if (null == entity){
-				entity = new CpczwcqkEntity();
-
-				entity.setNf(cal.get(Calendar.YEAR));
-				entity.setYf(cal.get(Calendar.MONTH) + 1);
-				entity.setDwxx(dwxxDao.getById(company.getId()));
-				entity.setCpmc(cpmcDao.getById(cpIdList.get(cp)));
-				entity.setTjfs(type.value());
-			}
-
-			entity.setZt(status.ordinal());
-			entity.setCz(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
-			
-			cpczwcqkDao.merge(entity);
-		}
-		
-		return err;
-	}
-	
-	@Override
-	public ErrorCode saveCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data) {
-
-		return entryCpczwcqk(d, company, type, data, ZBStatus.SAVED);
-	}
-
-	@Override
-	public ErrorCode submitCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data) {
-
-		return entryCpczwcqk(d, company, type, data, ZBStatus.SUBMITTED);		
-	}
+//	@Override
+//	public List<List<String>> getCpczwcqkEntry(Date d, Company company, SbdczclwcqkType type) {
+//		List<List<String>> result = new ArrayList<List<String>>();
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(d);
+//		
+//		List<Integer> cpIdList = getCpIdList(type);
+//		
+//		for (int cp = 0; cp < cpIdList.size(); cp++) {
+//			
+//			CpczwcqkEntity entity = cpczwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
+//			List<String> oneLine = new ArrayList<String>();
+//			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
+//			
+//			if (entity == null) {
+//				oneLine.add("");
+//			} else {
+//				Boolean bFind = false;
+//
+//				if (entity.getNf() == cal.get(Calendar.YEAR)
+//						&& entity.getYf() == cal.get(Calendar.MONTH) + 1) {
+//					bFind = true; 
+//					oneLine.add("" + entity.getCz());
+//				}
+//
+//				if (!bFind) {
+//					oneLine.add("");
+//				}
+//
+//			}				
+//			result.add(oneLine);
+//		}		
+//		
+//		return result;
+//	}
+//
+//	ErrorCode entryCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data, ZBStatus status) {
+//
+//		ErrorCode err = ErrorCode.OK;
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(d);
+//		List<Integer> cpIdList = getCpIdList(type);
+//		
+//		for (int cp = 0; cp < cpIdList.size(); cp++) {
+//			CpczwcqkEntity entity= cpczwcqkDao.getByDate(d, company, type, cpIdList.get(cp));
+//			
+//			if (null == entity){
+//				entity = new CpczwcqkEntity();
+//
+//				entity.setNf(cal.get(Calendar.YEAR));
+//				entity.setYf(cal.get(Calendar.MONTH) + 1);
+//				entity.setDwxx(dwxxDao.getById(company.getId()));
+//				entity.setCpmc(cpmcDao.getById(cpIdList.get(cp)));
+//				entity.setTjfs(type.value());
+//			}
+//
+//			entity.setZt(status.ordinal());
+//			entity.setCz(Util.toDoubleNull(data.getJSONArray(cp).getString(0)));
+//			
+//			cpczwcqkDao.merge(entity);
+//		}
+//		
+//		return err;
+//	}
+//	
+//	@Override
+//	public ErrorCode saveCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data) {
+//
+//		return entryCpczwcqk(d, company, type, data, ZBStatus.SAVED);
+//	}
+//
+//	@Override
+//	public ErrorCode submitCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data) {
+//
+//		return entryCpczwcqk(d, company, type, data, ZBStatus.SUBMITTED);		
+//	}
 	
 	@Override
 	public ZBStatus getCpczwcqkStatus(Date d, Company comp, SbdczclwcqkType type) {

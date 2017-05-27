@@ -116,7 +116,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 
 		List<Integer> cpIdList = CpczwcqkServiceImpl.getCpIdList(SbdczclwcqkType.SBDCZCLWCQK_CZ_XL);
 		List<CpmcEntity> czCps = getCpList(cpIdList);
-		cpIdList = ClylwcqkServiceImpl.getCpIdList(SbdczclwcqkType.SBDCZCLWCQK_CL_XL);
+		cpIdList = ClylwcqkServiceImpl.getCpIdList(SbdczclwcqkType.SBDCZCLWCQK_CLYLWCQK_XL);
 		List<ClmcEntity> clCps = getClList(cpIdList);
 		for (Object[] r: result){
 			LoggerFactory.getLogger("WEBSERVICE").debug(JSONArray.fromObject(r).toString());
@@ -148,7 +148,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 				if (null == mc){
 					LoggerFactory.getLogger("WEBSERVICE").info("importXlCzCl 无法找到产量 : " + r[1]);
 				}else{
-					ClylwcqkEntity entityCl = clylwcqkDao.getByDate(d, comp, SbdczclwcqkType.SBDCZCLWCQK_CL_XL, mc.getId());
+					ClylwcqkEntity entityCl = clylwcqkDao.getByDate(d, comp, SbdczclwcqkType.SBDCZCLWCQK_CLYLWCQK_XL, mc.getId());
 					
 					if (null == entityCl){
 						entityCl = new ClylwcqkEntity();
@@ -157,7 +157,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 						entityCl.setYf(ec.getMonth());
 						entityCl.setDwxx(dwxxDao.getById(comp.getId()));
 						entityCl.setClmc(mc);
-						entityCl.setTjfs(SbdczclwcqkType.SBDCZCLWCQK_CL_XL.value());
+						entityCl.setTjfs(SbdczclwcqkType.SBDCZCLWCQK_CLYLWCQK_XL.value());
 					}
 
 					entityCl.setZt(czStatus.ordinal());

@@ -251,7 +251,7 @@
     }
     }
         }
-
+        var nd = '${nodeData}';
         var nd2 = '${nodeData2}';
         
         framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
@@ -266,7 +266,7 @@
             asSeasonAcc:"${asSeasonAcc}" == "true" ? true : false,
             jdName:'${jdName}' == "" ? undefined : JSON.parse('${jdName}'),
             itemId:"im",
-            itemNodes:JSON.parse('${nodeData}'),
+            itemNodes: nd == '' ? undefined : JSON.parse(nd),
             itemId2:"im2",
             itemNodes2: nd2 == '' ? undefined : JSON.parse(nd2)
         });

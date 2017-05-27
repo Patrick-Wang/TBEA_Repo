@@ -29,11 +29,11 @@ module sbdczclwcqk {
                 node = new JQTable.Node("产品", "cpczwcqkEntry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
 
-                node = new JQTable.Node(year + "年" + month + "月", "cpczwcqkEntry_riqi", false, TextAlign.Center);
+                //node = new JQTable.Node(year + "年" + month + "月", "cpczwcqkEntry_riqi", false, TextAlign.Center);
 
-                node.append(new JQTable.Node("产值", "cpczwcqkEntry_cz", false));
+                //node.append(new JQTable.Node("产值", "cpczwcqkEntry_cz", false));
 
-                titleNodes.push(node);
+                titleNodes.push(new JQTable.Node("产值", "cpczwcqkEntry_cz", false));
 
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             }
@@ -140,31 +140,31 @@ module sbdczclwcqk {
             }
 
             isSupported(compType:Util.CompanyType):boolean {
-                if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCZWCQK_BYQ) {
-                    if (compType == Util.CompanyType.SBGS ||
-                        compType == Util.CompanyType.HBGS ||
-                        compType == Util.CompanyType.XBC ||
-                        compType == Util.CompanyType.TBGS
-                    ) {
-                        return true;
-                    }
-                } else {
-                    if (compType == Util.CompanyType.LLGS ||
-                        compType == Util.CompanyType.XLC ||
-                        compType == Util.CompanyType.DLGS
-                    ) {
-                        return true;
-                    }
-                }
+                //if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCZWCQK_BYQ) {
+                //    if (compType == Util.CompanyType.SBGS ||
+                //        compType == Util.CompanyType.HBGS ||
+                //        compType == Util.CompanyType.XBC ||
+                //        compType == Util.CompanyType.TBGS
+                //    ) {
+                //        return true;
+                //    }
+                //} else {
+                //    if (compType == Util.CompanyType.LLGS ||
+                //        compType == Util.CompanyType.XLC ||
+                //        compType == Util.CompanyType.DLGS
+                //    ) {
+                //        return true;
+                //    }
+                //}
                 return false;
             }
 
 
             protected init(opt:Option):void {
-//                framework.router
-//                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczwcqk_byq, this.getId()))
-//                    .to(framework.basic.endpoint.FRAME_ID)
-//                    .send(framework.basic.FrameEvent.FE_REGISTER, "产值完成情况");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczwcqk_byq, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产值完成情况");
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczwcqk_xl, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)

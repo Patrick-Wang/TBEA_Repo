@@ -122,7 +122,7 @@
 								<%-- 								</c:if> --%>
 								<c:if test="${isJydw || scgsdbqx || FinanceLookup}">
 									<li style="background-color: transparent;"><i
-										class="ec-icon ec-icon-line"></i> <a href="#zbhz"
+										class="ec-icon ec-icon-line"></i> <a href="#NChz"
 										style="color: rgb(62, 152, 197);">财务分析</a></li>
 								</c:if>
 								<c:if test="${JYAnalysisLookup}">
@@ -155,11 +155,21 @@
 										class="ec-icon ec-icon-line"></i> <a href="#zhzl"
 										style="color: rgb(62, 152, 197);">众和指标</a></li>
 								</c:if>
-								<c:if test="${zk}">
+								
+								<c:if test="${rl || rlImport}">
 									<li style="background-color: transparent;"><i
-										class="ec-icon ec-icon-line"></i> <a href="#zk"
-										style="color: rgb(62, 152, 197);">数据子库</a></li>
+										class="ec-icon ec-icon-line"></i> <a href="#rl"
+										style="color: rgb(62, 152, 197);">人力资源信息</a></li>
 								</c:if>
+								
+								
+								
+								<c:if test="${xcp}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#xcp"
+										style="color: rgb(62, 152, 197);">新产品信息</a></li>
+								</c:if>
+								
 								<!-- 只有sbd公司权限显示-->
 								<%-- <c:if test="${SbdAuth}">
 									<li style="background-color: transparent;"><i
@@ -208,6 +218,9 @@
 										class="ec-icon ec-icon-line"></i> <a href="#xnycyjybb"
 										style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
 								</c:if>
+								
+						
+								
 								
 <%-- 								<c:if test="${FinanceLookup}">
 									<li style="background-color: transparent;"><i

@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- jquery -->
 <script type="text/javascript" src="../jsp/jqgrid/js/jquery.js"></script>
 
@@ -179,11 +179,10 @@ th.ui-th-ltr {
 
 .exportButton {
 	height: 23px;
-	width:140px;
+	width: 140px;
 	padding: .1em 1em;
 	margin-top: -1px;
 }
-
 </style>
 
 </head>
@@ -224,28 +223,26 @@ th.ui-th-ltr {
 		</tr>
 		<tr>
 			<td>
-				<Table>
-					<tr>
-						<td>
-							<form id="exportJydw" method="post">
-								<input class="exportButton" type="button" value="导出"
-									style="width: 100px;"
-									onclick="instance.exportExcelJydw($('h1').text())"
-									class="ui-button ui-widget ui-state-default ui-corner-all"
-									role="button" aria-disabled="false"></input>
-							</form>
-						</td>
-						<td>
-							<form id="exportxmgs" method="post" style="dispaly:none">
-								<input class="exportButton" type="button" value="导出项目公司"
-									style="width: 120px;"
-									onclick="instance.exportExcelXmgs($('h1').text())"
-									class="ui-button ui-widget ui-state-default ui-corner-all"
-									role="button" aria-disabled="false"></input>
-							</form>
-						</td>
-					</tr>
-				</Table>
+				<div>
+
+					<form id="exportJydw" style="float: left" method="post">
+						<input class="exportButton" type="button" value="导出"
+							style="width: 100px;"
+							onclick="instance.exportExcelJydw($('h1').text())"
+							class="ui-button ui-widget ui-state-default ui-corner-all"
+							role="button" aria-disabled="false"></input>
+					</form>
+					<form style="float: left; margin-left: 5px;" id="exportxmgs"
+						method="post" style="dispaly:none">
+						<input class="exportButton" type="button" value="导出项目公司"
+							style="width: 120px;"
+							onclick="instance.exportExcelXmgs($('h1').text())"
+							class="ui-button ui-widget ui-state-default ui-corner-all"
+							role="button" aria-disabled="false"></input>
+					</form>
+				</div>
+
+
 			</td>
 
 

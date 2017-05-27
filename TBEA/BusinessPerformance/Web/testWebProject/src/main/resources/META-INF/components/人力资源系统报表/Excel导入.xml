@@ -1,0 +1,34 @@
+<components>
+ <service id="servRlzyxtbbImportEntry" transaction="transactionManager">
+  <merge data="${data}" table="hr_employee_statistics">
+   <where>
+    <nf type="int" ref="1"/>
+    <yf type="int" ref="2"/>
+    <dwmc type="string" ref="0"/>
+   </where>
+   <set>
+    <nf type="int" ref="1" test="${this != null}"/>
+    <yf type="int" ref="2" test="${this != null}"/>
+    <dwmc type="string" ref="0" test="${this != null}"/>
+    <formal_employee type="string" ref="3"/>
+    <labor_dispatch type="string" ref="4"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="rlzyxtbbImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servRlzyxtbbImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="rlzyxtbbImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="rlzyxtbbImport"/>
+   <map key="title" value="人力资源系统报表导入"/>
+  </response>
+ </controller>
+</components>

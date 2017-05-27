@@ -34,6 +34,7 @@ public class LoopXmlInterpreter implements XmlInterpreter {
 		boolean bRet = Schema.isLoop(e);
 		if (bRet) {
 			this.component = component;
+			this.blockComponent = null;
 			elp = new ELParser(component);
 			String test = null;
 			if (e.hasAttribute("test")) {

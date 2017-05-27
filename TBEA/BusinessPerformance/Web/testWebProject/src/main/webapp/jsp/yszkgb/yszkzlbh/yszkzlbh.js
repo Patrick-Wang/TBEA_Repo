@@ -64,7 +64,66 @@ var yszkgb;
                 if (this.mData == undefined) {
                     return;
                 }
-                this.updateTable();
+                this.$(this.option().ctarea).show();
+                this.updateEchart(this.updateTable());
+            };
+            YSZKZLBHView.prototype.updateEchart = function (data) {
+                var title = "应收账款账龄变化";
+                var legend = ["5年以上",
+                    "4-5年",
+                    "3-4年",
+                    "2-3年",
+                    "1-2年",
+                    "1年以内"];
+                var xData = [];
+                for (var i = 0; i < data.length; ++i) {
+                    xData.push(data[i][1]);
+                }
+                var tooltip = {
+                    trigger: 'axis'
+                };
+                var yAxis = [
+                    {
+                        type: 'value'
+                    }
+                ];
+                var series = [];
+                for (var i = 0; i < legend.length; ++i) {
+                    var rData = [];
+                    for (var j = 0; j < data.length; ++j) {
+                        rData.push(data[j][i + 2] == "--" ? 0 : data[j][i + 2]);
+                    }
+                    series.push({
+                        name: legend[i],
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: rData
+                    });
+                }
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: tooltip,
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: yAxis,
+                    series: series
+                };
+                echarts.init(this.$(this.option().ct)[0]).setOption(option);
             };
             YSZKZLBHView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
@@ -100,6 +159,7 @@ var yszkgb;
                     datatype: "local",
                     viewrecords: true
                 }));
+                return data;
             };
             return YSZKZLBHView;
         })(yszkgb.BasePluginView);

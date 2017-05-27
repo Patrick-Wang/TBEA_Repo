@@ -1,0 +1,157 @@
+<components>
+ <service id="servCwfyToLocal" transaction="transactionManager">
+  <if test="${!(ncDataNlj.isEmpty || ncDataYsj.isEmpty)}">
+   <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
+   <sql id="zbCount">select count(*) from identifier_cwfy_zb</sql>
+ 
+   <list id="data" type="object" clear="true">${ncDataNlj[0]}</list>
+   <loop from="${0}" to="${zbCount[0] - 1}" var="k">
+    <merge data="${data}" table="cwfy">
+     <where>
+      <nf type="int" value="${cal.year}"/>
+      <yf type="int" value="${cal.month}"/>
+      <dwid type="int" value="${dwid}"/>
+      <zbid type="int" value="${k + 1}"/>
+     </where>
+     <set>
+      <nf type="int" value="${cal.year}"/>
+      <yf type="int" value="${cal.month}"/>
+      <dwid type="int" value="${dwid}"/>
+      <zbid type="int" value="${k + 1}"/>
+      <ljz type="double" ref="${k}"/>
+     </set>
+    </merge>
+   </loop>
+   <list id="data" type="object">${ncDataYsj[0]}</list>
+   <loop from="${0}" to="${zbCount[0] - 1}" var="j">
+    <merge data="${data}" table="cwfy">
+     <where>
+      <nf type="int" value="${cal.year}"/>
+      <yf type="int" value="${cal.month}"/>
+      <dwid type="int" value="${dwid}"/>
+      <zbid type="int" value="${j + 1}"/>
+     </where>
+     <set>
+      <nf type="int" value="${cal.year}"/>
+      <yf type="int" value="${cal.month}"/>
+      <dwid type="int" value="${dwid}"/>
+      <zbid type="int" value="${j + 1}"/>
+      <sjz type="double" ref="${j}"/>
+     </set>
+    </merge>
+   </loop>
+   
+  </if>
+ </service>
+ <service id="servCwfyFromNC" transaction="transNc">
+  <sql id="ncDataYsj" export="true">select
+ m10006,--财务费用合计本月数
+m10050,--代贴现利息收入本月数
+m10011,--担保费本月数
+m46umgr,--抵消数本月数
+mnzwyfy,--合并数本月数
+m10053,--汇兑损益本月数
+m10026,--利率掉期收入本月数
+m10023,--利息收入小计本月数
+m10032,--利息支出小计本月数
+m10002,--买方信贷利息收入本月数
+m10056,--票据贴现利息本月数
+m10035,--商标许可费本月数
+m10017,--手续费本月数
+m10059,--银行存款利息本月数
+m10007,--银行借款利息本年累计数
+m10014,--资金占用利息本月数
+m10038,--资金中心存款利息收入本月数
+m10044,--资金中心借款利息本月数
+m10031,--其他本月数
+m10041,--其他利息收入本月数
+m10047 --其他利息支出本月数
+from 
+  iufo.v_uf_cwfy_jt
+where 
+  VER in(0,510) and 
+  UNIT_CODE=${NCCode.code[type]} and
+  extract(year from to_date(INPUTDATE,'yyyy-mm-dd')) = ${cal.year} and
+  extract(month from to_date(INPUTDATE,'yyyy-mm-dd')) =  ${cal.month}</sql>
+  <sql id="ncDataNlj" export="true">select
+  m10004,--财务费用合计本年累计数
+m10049,--代贴现利息收入本年累计数
+m10010,--担保费本年累计数
+mvgwibg,--抵消数本年累计数
+m13wu7m,--合并数本年累计数
+m10052,--汇兑损益本年累计数
+m10025,--利率掉期收入本年累计数
+m10022,--利息收入小计本年累计数
+m10030,--利息支出小计本年累计数
+m10001,--买方信贷利息收入本年累计数
+m10055,--票据贴现利息本年累计数
+m10034,--商标许可费本年累计数
+m10016,--手续费本年累计数
+m10058,--银行存款利息本年累计数
+m10008,--银行借款利息本月数
+m10013,--资金占用利息本年累计数
+m10037,--资金中心存款利息收入本年累计数
+m10043,--资金中心借款利息本年累计数
+m10029,--其他本年累计数
+m10040,--其他利息收入本年累计数
+m10046 --其他利息支出本年累计数
+from 
+  iufo.v_uf_cwfy_jt
+where 
+  VER in(0,510) and 
+  UNIT_CODE=${NCCode.code[type]} and
+  extract(year from to_date(INPUTDATE,'yyyy-mm-dd')) = ${cal.year} and
+  extract(month from to_date(INPUTDATE,'yyyy-mm-dd')) =  ${cal.month}</sql>
+ </service>
+ <controller id="cwfyTransport">
+  <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
+   <context key="cal" value="${calendar.current.lastMonth}"/>
+  </if>
+  <if test="${!isSchedule &amp;&amp; request.date.toString != null}">
+   <context key="cal" value="${request.date.asCalendar}"/>
+  </if>
+  <context key="type" value="${CompanyType.SBGS}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.HBGS}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.XBC}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.TBGS}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.LLGS}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.XLC}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.DLGS}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.XNYGS}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.XTNYGS}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.TCNY}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.NDGS}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.JCKGS_JYDW}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <context key="type" value="${CompanyType.GJGCGS_GFGS}"/>
+  <callservice id="servCwfyFromNC"/>
+  <callservice id="servCwfyToLocal"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+</components>

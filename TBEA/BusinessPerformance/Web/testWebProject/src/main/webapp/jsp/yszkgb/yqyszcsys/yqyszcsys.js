@@ -65,7 +65,68 @@ var yszkgb;
                 if (this.mData == undefined) {
                     return;
                 }
-                this.updateTable();
+                this.$(this.option().ctarea).show();
+                this.updateEchart(this.updateTable());
+            };
+            YqyszcsysView.prototype.updateEchart = function (data) {
+                var title = "逾期应收账产生因素";
+                var legend = [
+                    "内部因素",
+                    "客户资信",
+                    "滚动付款",
+                    "项目变化",
+                    "合同因素",
+                    "手续办理",
+                    "诉讼"];
+                var xData = [];
+                for (var i = 0; i < data.length; ++i) {
+                    xData.push(data[i][1]);
+                }
+                var tooltip = {
+                    trigger: 'axis'
+                };
+                var yAxis = [
+                    {
+                        type: 'value'
+                    }
+                ];
+                var series = [];
+                for (var i = 0; i < legend.length; ++i) {
+                    var rData = [];
+                    for (var j = 0; j < data.length; ++j) {
+                        rData.push(data[j][i + 2] == "--" ? 0 : data[j][i + 2]);
+                    }
+                    series.push({
+                        name: legend[i],
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: rData
+                    });
+                }
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: tooltip,
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: yAxis,
+                    series: series
+                };
+                echarts.init(this.$(this.option().ct)[0]).setOption(option);
             };
             YqyszcsysView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
@@ -101,6 +162,7 @@ var yszkgb;
                     datatype: "local",
                     viewrecords: true
                 }));
+                return data;
             };
             return YqyszcsysView;
         })(yszkgb.BasePluginView);

@@ -25,7 +25,10 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
+import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.cwcpdlml.CwcpdlmlService;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Controller
 @RequestMapping(value = "cwcpdlml")
@@ -54,15 +57,26 @@ public class CwcpdlmlServlet {
 	@Autowired
 	CwcpdlmlService cwcpdlmlService;
 	
+	@Autowired
+	ExtendAuthorityService extAuthServ;
+	
 	@RequestMapping(value = "show.do")
 	public ModelAndView getShow(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
-		dateSel.select(map);		
+		dateSel.select(map);
+		List<Company> comps = new ArrayList<Company>();
+		comps.addAll(extAuthServ.getAuthedCompanies(
+				SessionManager.getAccount(request.getSession()),
+				AuthType.FinanceLookup));
 		
-		CompanySelection compSel = new CompanySelection(true, new ArrayList<Company>());
+		if (comps.size() > 1){
+			comps.add(0, companyManager.getBMDBOrganization().getCompany(CompanyType.GFGS));
+		}
+		
+		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
 		return new ModelAndView("cwcpdlml/cwcpdlml", map);
 	}

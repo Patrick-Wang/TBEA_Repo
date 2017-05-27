@@ -65,6 +65,7 @@ module Util {
         shrinkToFit:string;
         step:string;
         count:string;
+        colorKey:string;
     }
 
     export interface ChartCtrl{

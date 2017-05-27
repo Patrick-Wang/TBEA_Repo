@@ -48,11 +48,11 @@ public class CpclwcqkServlet {
 	CompanyManager companyManager;
 
 	private SbdczclwcqkType getType(HttpServletRequest request){
-		if (13 == Integer.valueOf(request.getParameter("sbdczclwcqkType"))){
-			return SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ;
-		}
-		
-		return SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ;
+		return SbdczclwcqkType.valueOf(Integer.valueOf(request.getParameter("sbdczclwcqkType")));
+//		if (SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ.value() == Integer.valueOf(request.getParameter("sbdczclwcqkType"))){
+//			return SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ;
+//		}		
+//		return SbdczclwcqkType.SBDCZCLWCQK_CL_XL;
 	}
 	Company getCompany(CompanyType comp){
 		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
@@ -90,6 +90,7 @@ public class CpclwcqkServlet {
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
 	
+	// 录入数据包含产值 和 产量
 	@RequestMapping(value = "entry/save.do")
 	public @ResponseBody byte[] saveCpclwcqk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {

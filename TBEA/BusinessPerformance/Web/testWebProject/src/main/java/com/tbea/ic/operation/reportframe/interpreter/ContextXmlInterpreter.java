@@ -13,10 +13,15 @@ public class ContextXmlInterpreter implements XmlInterpreter {
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		
 		if (Schema.isContext(e)){
-			String value = e.getAttribute("value");
-			Object obj = XmlUtil.parseELText(value, new ELParser(component));
-			
 			if (e.hasAttribute("key")){
+				String value = null;
+				if (e.hasAttribute("value")){
+					value = e.getAttribute("value");
+				}else{
+					value = XmlUtil.getText(e);
+				}
+				
+				Object obj = XmlUtil.parseELText(value, new ELParser(component));
 				String key = e.getAttribute("key");
 				
 				if ("false".equals(e.getAttribute("export"))){

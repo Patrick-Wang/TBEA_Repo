@@ -1,0 +1,55 @@
+<components>
+ <controller id="sxfyUpdate">
+  <context key="item2" value="${request.item2.asInt}"/>
+  <if test="${item2 == 0}">
+  <callcontroller id="xsfyUpdate"/>
+  </if>
+  <elseif test="${item2 == 1}">
+  <callcontroller id="glfyUpdate"/>
+  </elseif>
+  <else>
+  <callcontroller id="cwfyUpdate"/>
+  </else>
+ </controller>
+ <controller id="sxfyExport">
+  <context key="item2" value="${request.item2.asInt}"/>
+  <if test="${item2 == 0}">
+  <callcontroller id="xsfyExport"/>
+  </if>
+  <elseif test="${item2 == 1}">
+  <callcontroller id="glfyExport"/>
+  </elseif>
+  <else>
+  <callcontroller id="cwfyExport"/>
+  </else>
+ </controller>
+ <controller id="sxfy">
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="sxfyUpdate"/>
+   <map key="exportUrl" value="sxfyExport"/>
+   <map map="${authMgr[23]}"/>
+    <map key="nodeData2">[
+				{
+				&quot;data&quot;: {
+				&quot;id&quot;: 0,
+				&quot;value&quot;: &quot;销售费用&quot;
+				}},{
+				&quot;data&quot;: {
+				&quot;id&quot;: 1,
+				&quot;value&quot;: &quot;管理费用&quot;
+				}},{
+				&quot;data&quot;: {
+				&quot;id&quot;: 2,
+				&quot;value&quot;: &quot;财务费用&quot;
+				}}]</map>
+   <map key="title" value="三项费用明细"/>
+  </response>
+ </controller>
+ <controller id="sxfyTransport" cron="0 0 12 3 * ?">
+	 <callcontroller id="glfyTransport"/>
+	 <callcontroller id="xsfyTransport"/>
+	 <callcontroller id="cwfyTransport"/>
+ </controller>
+</components>

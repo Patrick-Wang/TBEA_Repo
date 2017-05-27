@@ -1,0 +1,281 @@
+<components>
+ <service id="servRlzyxibbByYf">
+  <sql id="sbdbyrlzyxibbs" order="sbd" by="0" colcount="4">select dwmc,
+			formal_employee,
+			labor_dispatch,
+			(formal_employee + labor_dispatch) as zs
+			from hr_employee_statistics
+			where
+			nf = ${cal.year} and
+			yf = ${cal.month} and
+			dwmc in ${sbd}
+		</sql>
+  <sql id="sbdbyrlzyxibbsHj" colcount="4">select '输变电产业合计',
+			sum(formal_employee) as fe,
+			sum(labor_dispatch) as ld,
+			(sum(formal_employee) + sum(labor_dispatch)) as zs
+			from hr_employee_statistics
+			where
+			nf = ${cal.year} and
+			yf = ${cal.month} and
+			dwmc != '股份公司' and
+			dwmc in ${sbd}
+		</sql>
+  <sql id="xnybyrlzyxibbs" order="xny" by="0" colcount="4">select dwmc,
+			formal_employee,
+			labor_dispatch,
+			(formal_employee + labor_dispatch) as zs
+			from hr_employee_statistics
+			where
+			nf = ${cal.year} and
+			yf = ${cal.month} and
+			dwmc in ${xny}
+		</sql>
+  <sql id="xnybyrlzyxibbsHj" colcount="4">select '新能源产业合计',
+			sum(formal_employee) fe,
+			sum(labor_dispatch) ld,
+			(sum(formal_employee) + sum(labor_dispatch)) as zs
+			from hr_employee_statistics
+			where
+			nf = ${cal.year} and
+			yf = ${cal.month} and
+			dwmc in ${xny}
+		</sql>
+  <sql id="nybyrlzyxibbs" order="ny" by="0" colcount="4">select dwmc,
+			formal_employee,
+			labor_dispatch,
+			(formal_employee + labor_dispatch) as zs
+			from hr_employee_statistics
+			where
+			nf = ${cal.year} and
+			yf = ${cal.month} and
+			dwmc in ${ny}
+		</sql>
+  <sql id="nybyrlzyxibbsHj" colcount="4">select '能源产业合计',
+			sum(formal_employee) fe,
+			sum(labor_dispatch) ld,
+			(sum(formal_employee) + sum(labor_dispatch)) as zs
+			from hr_employee_statistics
+			where
+			nf = ${cal.year} and
+			yf = ${cal.month} and
+			dwmc in ${ny}
+		</sql>
+  <sql id="qtbyrlzyxibbs" order="qt" by="0" colcount="4">select dwmc,
+			formal_employee,
+			labor_dispatch,
+			(formal_employee + labor_dispatch) as zs
+			from hr_employee_statistics
+			where
+			nf = ${cal.year} and
+			yf = ${cal.month} and
+			dwmc in ${qt}
+		</sql>
+  <sql id="qtbyrlzyxibbsHj" colcount="4">select '人员合计',
+			sum(formal_employee) as fe,
+			sum(labor_dispatch) as ld,
+			(sum(formal_employee) + sum(labor_dispatch)) as zs
+			from hr_employee_statistics
+			where
+			nf = ${cal.year} and
+			yf = ${cal.month} and
+			dwmc in ${dwmc} 
+		</sql>
+  <list export="true" id="zsyg" type="int" sql="sbdbyrlzyxibbs" value="1" clear="true"/>
+  <list export="true" id="zsyg" type="int" sql="sbdbyrlzyxibbsHj" value="1"/>
+  <list export="true" id="zsyg" type="int" sql="xnybyrlzyxibbs" value="1"/>
+  <list export="true" id="zsyg" type="int" sql="xnybyrlzyxibbsHj" value="1"/>
+  <list export="true" id="zsyg" type="int" sql="nybyrlzyxibbs" value="1"/>
+  <list export="true" id="zsyg" type="int" sql="nybyrlzyxibbsHj" value="1"/>
+  <list export="true" id="zsyg" type="int" sql="qtbyrlzyxibbs" value="1"/>
+  <list export="true" id="zsyg" type="int" sql="qtbyrlzyxibbsHj" value="1"/>
+  <list export="true" id="lwpq" type="int" sql="sbdbyrlzyxibbs" value="2" clear="true"/>
+  <list export="true" id="lwpq" type="int" sql="sbdbyrlzyxibbsHj" value="2"/>
+  <list export="true" id="lwpq" type="int" sql="xnybyrlzyxibbs" value="2"/>
+  <list export="true" id="lwpq" type="int" sql="xnybyrlzyxibbsHj" value="2"/>
+  <list export="true" id="lwpq" type="int" sql="nybyrlzyxibbs" value="2"/>
+  <list export="true" id="lwpq" type="int" sql="nybyrlzyxibbsHj" value="2"/>
+  <list export="true" id="lwpq" type="int" sql="qtbyrlzyxibbs" value="2"/>
+  <list export="true" id="lwpq" type="int" sql="qtbyrlzyxibbsHj" value="2"/>
+  <list export="true" id="zs" type="int" sql="sbdbyrlzyxibbs" value="3" clear="true"/>
+  <list export="true" id="zs" type="int" sql="sbdbyrlzyxibbsHj" value="3"/>
+  <list export="true" id="zs" type="int" sql="xnybyrlzyxibbs" value="3"/>
+  <list export="true" id="zs" type="int" sql="xnybyrlzyxibbsHj" value="3"/>
+  <list export="true" id="zs" type="int" sql="nybyrlzyxibbs" value="3"/>
+  <list export="true" id="zs" type="int" sql="nybyrlzyxibbsHj" value="3"/>
+  <list export="true" id="zs" type="int" sql="qtbyrlzyxibbs" value="3"/>
+  <list export="true" id="zs" type="int" sql="qtbyrlzyxibbsHj" value="3"/>
+ </service>
+ <service id="servRlzyxibb" transaction="transactionManager">
+  <list id="sbd" type="string" export="true">股份公司,
+			沈变,
+			衡变,
+			新变,
+			天变,
+			鲁缆,
+			新缆,
+			德缆
+		</list>
+  <list id="xny" type="string" export="true">
+			新能源（含佳阳）,
+			新特能源
+		</list>
+  <list id="ny" type="string" export="true">天池能源,
+			能动
+		</list>
+  <list id="qt" type="string" export="true">进出口,
+			工程公司,
+			工业旅游公司,
+			后勤公司,
+			集团,
+			众和
+		</list>
+  <list id="dwmc" type="string" export="true">
+   <item concat="sbd"/>
+   <item>输变电产业合计	</item>
+   <item concat="xny"/>
+   <item>新能源产业合计	</item>
+   <item concat="ny"/>
+   <item>能源产业合计</item>
+   <item concat="qt"/>
+   <item>人员合计</item>
+  </list>
+  <callservice id="servRlzyxibbByYf"/>
+  <list id="byzsyg" type="int">
+   <item concat="zsyg"/>
+  </list>
+  <list id="bylwpq" type="int">
+   <item concat="lwpq"/>
+  </list>
+  <list id="byzs" type="int">
+   <item concat="zs"/>
+  </list>
+  <context key="cal" value="${cal.lastMonth}"/>
+  <callservice id="servRlzyxibbByYf"/>
+  <list id="syzsyg" type="int">
+   <item concat="zsyg"/>
+  </list>
+  <list id="sylwpq" type="int">
+   <item concat="lwpq"/>
+  </list>
+  <list id="syzs" type="int">
+   <item concat="zs"/>
+  </list>
+  <list id="zbs" type="int">
+   <item from="1" to="22"/>
+  </list>
+  <table id="result" rowIds="zbs" export="true">
+   <col list="dwmc"/>
+   <col list="byzsyg"/>
+   <col list="bylwpq"/>
+   <col list="byzs"/>
+   <col list="syzsyg"/>
+   <col list="sylwpq"/>
+   <col list="syzs"/>
+   <col instruction="净变量"/>
+   <minusCol first="3" second="6" abs="true" toCol="7"/>
+  </table>
+ </service>
+ <controller id="servFmtterRlzyxibb">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <NumberFormatter reservedCount="0"/>
+  </formatter>
+ </controller>
+ <controller id="rlzyxibbUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servRlzyxibb"/>
+  <callcontroller id="servFmtterRlzyxibb"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>公司</name>
+    </item>
+    <item>
+     <name>本月</name>
+     <sub type="array">
+      <item>
+       <name>正式员工</name>
+      </item>
+      <item>
+       <name>劳务派遣</name>
+      </item>
+      <item>
+       <name>员工总数（含劳务）</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>上月</name>
+     <sub type="array">
+      <item>
+       <name>正式员工</name>
+      </item>
+      <item>
+       <name>劳务派遣</name>
+      </item>
+      <item>
+       <name>员工总数（含劳务）</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>用工总数净变量</name>
+    </item>
+   </header>
+   <mergeTitle>true</mergeTitle>
+   <colorKey>合计</colorKey>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="rlzyxibbExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servRlzyxibb"/>
+  <callcontroller id="servFmtterRlzyxibb" inline="true"/>
+  <ExcelTemplate id="excelTemplate" sheet="人力资源系统报表"/>
+  <list id="title" type="string">公司,本月,本月,本月,上月,上月,上月,用工总数净变量</list>
+  <list id="title1" type="string">公司,正式员工,劳务派遣,员工总数（含劳务）,正式员工,劳务派遣,员工总数（含劳务）,用工总数净变量</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="${2}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="2" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}人力资源系统报表.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="rlzyxibb">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="rlzyxibbUpdate"/>
+   <map key="exportUrl" value="rlzyxibbExport"/>
+   <map key="title" value="人力资源系统报表"/>
+  </response>
+ </controller>
+</components>

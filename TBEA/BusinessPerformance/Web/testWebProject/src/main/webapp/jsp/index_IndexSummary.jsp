@@ -48,6 +48,9 @@
 						<li><a href="../ydzb/gdw_zbhz.do" target="_blank"><img
 								src="../images/charts/pie1.png"> <span><strong>各单位五大经营指标完成情况</strong></span></a>
 						</li>
+						<li><a href="../report/zk.do" target="_blank"><img
+								src="../images/charts/bar3.png"> <span><strong>数据子库</strong></span></a>
+						</li>
 						<li><a href="../report/acyhzzb.do" target="_blank"><img
 								src="../images/charts/pie2.png"> <span><strong>按照产业汇总指标</strong></span></a>
 						</li>
@@ -154,6 +157,9 @@
 						<li><a href="../cwgbjyxxjl/show.do" target="_blank"><img
 								src="../images/charts/bar4.png"> <span><strong>财务-经营性现金流</strong></span></a>
 						</li>
+						<li><a href="../report/sxfy.do" target="_blank"><img
+								src="../images/charts/bar2.png"> <span><strong>三项费用明细</strong></span></a>
+						</li>
 					</c:if>
 				</ul>
 			</div>
@@ -190,7 +196,7 @@
 							target="_blank"><img src="../images/charts/scatter2.png">
 								<span><strong>各单位经营指标排名情况</strong></span></a></li>
 					</c:if>
-					
+
 					<c:if test="${xtnyrbLookupAuth}">
 						<li><a href="../report/xtnyrb.do" target="_blank"><img
 								src="../images/charts/scatter2.png"> <span><strong>新特能源日报</strong></span></a>
@@ -351,17 +357,41 @@
 		</div>
 	</div>
 </c:if>
-<c:if test="${zk}">
+<c:if test="${rl || rlImport}">
 	<div>
 		<h3>
-			数据子库<a name="zk"> </a>
+			人力资源信息<a name="rl"> </a>
 		</h3>
 		<div class="section">
 			<div class="thumb3">
 				<ul class="slides">
-					<li><a href="../report/zk.do" target="_blank"><img
-							src="../images/charts/bar3.png"> <span><strong>数据子库</strong></span></a>
+					<c:if test="${rl}">
+						<li><a href="../report/rlzyxibb.do" target="_blank"><img
+								src="../images/charts/bar5.png"> <span><strong>人力资源系统报表</strong></span></a>
+						</li>
+					</c:if>
+					<c:if test="${rlImport}">
+						<li><a href="../report/rlzyxtbbImportJsp.do" target="_blank"><img
+								src="../images/charts/bar3.png"> <span><strong>人力资源信息导入</strong></span></a>
+						</li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
+	</div>
+</c:if>
+<c:if test="${xcp}">
+	<div>
+		<h3>
+			新产品信息<a name="xcp"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+					<li><a href="../report/xcpjjxy.do" target="_blank"><img
+							src="../images/charts/bar2.png"> <span><strong>新产品信息</strong></span></a>
 					</li>
+
 				</ul>
 			</div>
 		</div>

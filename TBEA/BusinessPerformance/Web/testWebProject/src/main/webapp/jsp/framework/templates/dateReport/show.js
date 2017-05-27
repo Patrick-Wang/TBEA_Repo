@@ -65,7 +65,7 @@ var framework;
                     return {
                         date: this.getDate(date),
                         item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id,
-                        item2: this.unitedSelector2 != undefined ? this.unitedSelector2.getDataNode(this.unitedSelector.getPath()).data.id : undefined
+                        item2: this.unitedSelector2 != undefined ? this.unitedSelector2.getDataNode(this.unitedSelector2.getPath()).data.id : undefined
                     };
                 };
                 ShowView.prototype.getDate = function (date) {

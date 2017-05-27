@@ -82,42 +82,42 @@ public class CpczwcqkServlet {
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"--\"").getBytes("utf-8");
 	}
 
-	@RequestMapping(value = "entry/update.do")
-	public @ResponseBody byte[] updateCpczwcqk(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		
-		List<List<String>> result = cpczwcqkService.getCpczwcqkEntry(d, company, getType(request));
-		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
-	}
-	
-	@RequestMapping(value = "entry/save.do")
-	public @ResponseBody byte[] saveCpczwcqk(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
-		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		
-		ErrorCode err = cpczwcqkService.saveCpczwcqk(d, company, getType(request), data);
-		return Util.response(err);
-	}
-	
-	
-	
-	@RequestMapping(value = "entry/submit.do")
-	public @ResponseBody byte[] submitCpczwcqk(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
-		Date d = Date.valueOf(request.getParameter("date"));
-		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		
-		ErrorCode err = cpczwcqkService.submitCpczwcqk(d, company, getType(request), data);
-		return Util.response(err);
-	}
+//	@RequestMapping(value = "entry/update.do")
+//	public @ResponseBody byte[] updateCpczwcqk(HttpServletRequest request,
+//			HttpServletResponse response) throws UnsupportedEncodingException {
+//		Date d = Date.valueOf(request.getParameter("date"));
+//		CompanyType comp = CompanySelection.getCompany(request);
+//		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+//		
+//		List<List<String>> result = cpczwcqkService.getCpczwcqkEntry(d, company, getType(request));
+//		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
+//	}
+//	
+//	@RequestMapping(value = "entry/save.do")
+//	public @ResponseBody byte[] saveCpczwcqk(HttpServletRequest request,
+//			HttpServletResponse response) throws UnsupportedEncodingException {
+//		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+//		Date d = Date.valueOf(request.getParameter("date"));
+//		CompanyType comp = CompanySelection.getCompany(request);
+//		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+//		
+//		ErrorCode err = cpczwcqkService.saveCpczwcqk(d, company, getType(request), data);
+//		return Util.response(err);
+//	}
+//	
+//	
+//	
+//	@RequestMapping(value = "entry/submit.do")
+//	public @ResponseBody byte[] submitCpczwcqk(HttpServletRequest request,
+//			HttpServletResponse response) throws UnsupportedEncodingException {
+//		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
+//		Date d = Date.valueOf(request.getParameter("date"));
+//		CompanyType comp = CompanySelection.getCompany(request);
+//		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+//		
+//		ErrorCode err = cpczwcqkService.submitCpczwcqk(d, company, getType(request), data);
+//		return Util.response(err);
+//	}
 	
 	private SbdczclwcqkSheetType getSbdczclwcqkSheetType(SbdczclwcqkType type, Date d){
 		Calendar cal = Calendar.getInstance();

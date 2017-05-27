@@ -103,6 +103,16 @@ module framework.templates.singleDateReport {
             var pagername = name + "pager";
             this.mTableAssist = Util.createTable(name, this.resp);
 
+
+            if (this.resp.colorKey){
+                for (var i = 0; i < this.resp.data.length; ++i) {
+                    if (this.resp.data[i][0].lastIndexOf(this.resp.colorKey) >= 0) {
+                        this.mTableAssist.setRowBgColor(i, 183, 222, 232);
+                    }
+                }
+            }
+
+
             var parent = $("#" + this.opt.host);
             parent.empty();
             parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");

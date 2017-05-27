@@ -8,6 +8,8 @@
 module plugin {
     export let cpclwcqk : number = framework.basic.endpoint.lastId();
     export let cpclwcqk_byq : number = framework.basic.endpoint.lastId();
+    export let cpclwcqk_xl : number = framework.basic.endpoint.lastId();
+
 }
 
 module sbdczclwcqk {
@@ -91,7 +93,10 @@ module sbdczclwcqk {
             }
 
             pluginGetUnit():string{
-                return "单位：万kVA（其中电抗器产量万kvar）";
+                if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ){
+                    return "单位：万kVA（其中电抗器产量万kvar）";
+                }
+                return "导线：吨；电缆：千米；电缆附件：件";
             }
 
             isSupported(compType:Util.CompanyType):boolean {
@@ -104,7 +109,7 @@ module sbdczclwcqk {
                     ) {
                         return true;
                     }
-                } else {
+                } else if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_XL){
                     if (compType == Util.CompanyType.LLGS ||
                         compType == Util.CompanyType.XLC ||
                         compType == Util.CompanyType.DLGS ||
@@ -121,6 +126,10 @@ module sbdczclwcqk {
                     .fromEp(new framework.basic.EndpointProxy(plugin.cpclwcqk_byq, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "产量完成情况");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(plugin.cpclwcqk_xl, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产量完成情况");
             }
 
             onEvent(e: framework.route.Event): any {
@@ -129,8 +138,9 @@ module sbdczclwcqk {
                         case plugin.cpclwcqk_byq:
                             this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ;
                             break;
-                        default:
-                            this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ;
+                        case plugin.cpclwcqk_xl:
+                            this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_XL;
+                            break;
                     }
                 }
                 return super.onEvent(e);

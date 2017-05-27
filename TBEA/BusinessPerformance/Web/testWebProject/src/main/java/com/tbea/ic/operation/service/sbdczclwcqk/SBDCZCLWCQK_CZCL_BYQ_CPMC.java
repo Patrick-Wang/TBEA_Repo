@@ -1,6 +1,6 @@
-package com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk;
+package com.tbea.ic.operation.service.sbdczclwcqk;
 
-public enum SBDCZCLWCQK_CL_BYQ_Type{
+public enum SBDCZCLWCQK_CZCL_BYQ_CPMC{
 
 	MLSPCS_BYQ_DYDJ_JLBYQ(23),
 	MLSPCS_BYQ_DYDJ_JLBYQ_35KV_YX(24),
@@ -53,7 +53,7 @@ public enum SBDCZCLWCQK_CL_BYQ_Type{
 	
     private int _value;
 
-    private SBDCZCLWCQK_CL_BYQ_Type(int value)
+    private SBDCZCLWCQK_CZCL_BYQ_CPMC(int value)
     {
         _value = value;
     }

@@ -45,7 +45,7 @@ public class ClylwcqkServiceImpl implements ClylwcqkService {
 		
 		switch (type) {
 
-		case SBDCZCLWCQK_CL_XL: {
+		case SBDCZCLWCQK_CLYLWCQK_XL: {
 			for (SBDCZCLWCQK_CL_XL_Type cp : SBDCZCLWCQK_CL_XL_Type.values()) {
 				cpIdList.add(cp.value());
 			}

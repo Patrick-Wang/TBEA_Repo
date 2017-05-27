@@ -65,7 +65,141 @@ var yszkgb;
                 if (this.mData == undefined) {
                     return;
                 }
-                this.updateTable();
+                this.$(this.option().ctarea).show();
+                this.$(this.option().ctarea1).show();
+                var data = this.updateTable();
+                this.updateEchart(data);
+                this.updateEchart1(data);
+            };
+            YszkyjtztjqsView.prototype.updateEchart = function (data) {
+                var title = "应收账款账面与预警值变化情况";
+                var legendOrg = [
+                    "财务账面应收净收余额",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "预警台账应收账款余额"];
+                var legend = [];
+                var xData = [];
+                for (var i = 0; i < data.length; ++i) {
+                    xData.push(data[i][1]);
+                }
+                var tooltip = {
+                    trigger: 'axis'
+                };
+                var yAxis = [
+                    {
+                        type: 'value'
+                    }
+                ];
+                var series = [];
+                for (var i = 0; i < legendOrg.length; ++i) {
+                    if (legendOrg[i]) {
+                        legend.push(legendOrg[i]);
+                        var rData = [];
+                        for (var j = 0; j < data.length; ++j) {
+                            rData.push(data[j][i + 2] == "--" ? 0 : data[j][i + 2]);
+                        }
+                        series.push({
+                            name: legendOrg[i],
+                            type: 'line',
+                            smooth: true,
+                            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data: rData
+                        });
+                    }
+                }
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: tooltip,
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: yAxis,
+                    series: series
+                };
+                echarts.init(this.$(this.option().ct)[0]).setOption(option);
+            };
+            YszkyjtztjqsView.prototype.updateEchart1 = function (data) {
+                var title = "因素变化趋势";
+                var legendOrg = [
+                    "",
+                    "",
+                    "货发票未开金额（加项）",
+                    "票开货未发金额（减项）",
+                    "预收款冲减应收（加项）",
+                    "",
+                    "",
+                    ""];
+                var legend = [];
+                var xData = [];
+                for (var i = 0; i < data.length; ++i) {
+                    xData.push(data[i][1]);
+                }
+                var tooltip = {
+                    trigger: 'axis'
+                };
+                var yAxis = [
+                    {
+                        type: 'value'
+                    }
+                ];
+                var series = [];
+                for (var i = 0; i < legendOrg.length; ++i) {
+                    if (legendOrg[i]) {
+                        legend.push(legendOrg[i]);
+                        var rData = [];
+                        for (var j = 0; j < data.length; ++j) {
+                            rData.push(data[j][i + 2] == "--" ? 0 : data[j][i + 2]);
+                        }
+                        series.push({
+                            name: legendOrg[i],
+                            type: 'line',
+                            smooth: true,
+                            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                            data: rData
+                        });
+                    }
+                }
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: tooltip,
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: yAxis,
+                    series: series
+                };
+                echarts.init(this.$(this.option().ct1)[0]).setOption(option);
             };
             YszkyjtztjqsView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
@@ -101,6 +235,7 @@ var yszkgb;
                     datatype: "local",
                     viewrecords: true
                 }));
+                return data;
             };
             return YszkyjtztjqsView;
         })(yszkgb.BasePluginView);

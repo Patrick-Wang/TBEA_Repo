@@ -86,7 +86,76 @@ var sbdscqyqk;
                 if (this.mData == undefined) {
                     return;
                 }
-                this.updateTable();
+                this.$(this.option().ctarea).show();
+                this.updateEchart(this.updateTable());
+            };
+            ShowView.prototype.updateEchart = function (data) {
+                var title = "行业领域签约趋势";
+                var legend = [
+                    "传统电力市场",
+                    "新能源市场",
+                    "重点领域市场",
+                    "其它"];
+                var xData = [];
+                var month = this.getMonth();
+                for (var i = month; i <= 12; ++i) {
+                    xData.push(i + "月");
+                }
+                for (var i = 1; i <= month; ++i) {
+                    xData.push(i + "月");
+                }
+                var tooltip = {
+                    trigger: 'axis'
+                };
+                var yAxis = [
+                    {
+                        type: 'value'
+                    }
+                ];
+                var series = [];
+                for (var i = 0; i < legend.length; ++i) {
+                    var rData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+                    for (var j = 0; j < data.length; ++j) {
+                        if (legend[i] == data[j][0]) {
+                            for (var k = 0; k < 13; ++k) {
+                                rData[k] += data[j][k + 2] == "--" ? 0 : parseFloat(data[j][k + 2]);
+                            }
+                        }
+                    }
+                    for (var k = 0; k < 13; ++k) {
+                        rData[k] = rData[k].toFixed(1);
+                    }
+                    series.push({
+                        name: legend[i],
+                        type: 'line',
+                        smooth: true,
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data: rData
+                    });
+                }
+                var option = {
+                    title: {
+                        text: title
+                    },
+                    tooltip: tooltip,
+                    legend: {
+                        data: legend
+                    },
+                    toolbox: {
+                        show: true
+                    },
+                    calculable: false,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            data: xData.length < 1 ? [0] : xData
+                        }
+                    ],
+                    yAxis: yAxis,
+                    series: series
+                };
+                echarts.init(this.$(this.option().ct)[0]).setOption(option);
             };
             ShowView.prototype.init = function (opt) {
                 framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "细分市场签约（国内市场制造业签约）");
@@ -157,6 +226,7 @@ var sbdscqyqk;
                     datatype: "local",
                     viewrecords: true
                 }));
+                return data;
             };
             ShowView.ins = new ShowView();
             return ShowView;

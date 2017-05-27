@@ -14,11 +14,11 @@ public interface CpczwcqkService {
 
 	List<List<String>> getCpczwcqk(Date d, Company company, SbdczclwcqkType type);
 	
-	List<List<String>> getCpczwcqkEntry(Date d, Company company, SbdczclwcqkType type);
-
-	ErrorCode saveCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data);
-
-	ErrorCode submitCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data);
+//	List<List<String>> getCpczwcqkEntry(Date d, Company company, SbdczclwcqkType type);
+//
+//	ErrorCode saveCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data);
+//
+//	ErrorCode submitCpczwcqk(Date d, Company company, SbdczclwcqkType type, JSONArray data);
 	
 	ZBStatus getCpczwcqkStatus(Date d, Company comp, SbdczclwcqkType type);
 	

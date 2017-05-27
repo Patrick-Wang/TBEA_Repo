@@ -37,6 +37,8 @@ import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpclwcqkEntity;
 import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfcpqyEntity;
 import com.tbea.ic.operation.service.report.HBWebService;
+import com.tbea.ic.operation.service.sbdczclwcqk.SBDCZCLWCQK_CZCL_BYQ_CPMC;
+import com.tbea.ic.operation.service.sbdczclwcqk.SBDCZCLWCQK_CZCL_XL_CPMC;
 
 @Service(CpclwcqkServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -67,14 +69,18 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 		switch (type) {
 
 		case SBDCZCLWCQK_CL_BYQ: {
-			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_DYDJ_JLBYQ.value());
-			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_DYDJ_ZLBYQ.value());
-			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_DYDJ_DKQ.value());
-			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_GSBYQ.value());
-			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_77.value());
-			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_81.value());
-			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_TZBYQ.value());
-			hjList.add(SBDCZCLWCQK_CL_BYQ_Type.MLSPCS_BYQ_CPFL_YSL.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_DYDJ_JLBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_DYDJ_ZLBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_DYDJ_DKQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_GSBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_77.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_81.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_TZBYQ.value());
+			hjList.add(SBDCZCLWCQK_CZCL_BYQ_CPMC.MLSPCS_BYQ_CPFL_YSL.value());
+			break;
+		}
+		case SBDCZCLWCQK_CL_XL: {
+//			hjList.add(SBDCZCLWCQK_CL_XL_Type.SBDCZCLWCQK_CZ_XL_ZH_QT.value());
 			break;
 		}
 		default: 
@@ -90,12 +96,22 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 		
 		switch (type) {
 
+		case SBDCZCLWCQK_BYQ:
 		case SBDCZCLWCQK_CL_BYQ: {
-			for (SBDCZCLWCQK_CL_BYQ_Type cp : SBDCZCLWCQK_CL_BYQ_Type.values()) {
+			for (SBDCZCLWCQK_CZCL_BYQ_CPMC cp : SBDCZCLWCQK_CZCL_BYQ_CPMC.values()) {
 				cpIdList.add(cp.value());
 			}
 			break;
 		}
+		
+		case SBDCZCLWCQK_XL:
+		case SBDCZCLWCQK_CL_XL: {
+			for (SBDCZCLWCQK_CZCL_XL_CPMC cp : SBDCZCLWCQK_CZCL_XL_CPMC.values()) {
+				cpIdList.add(cp.value());
+			}
+			break;
+		}
+		
 		default: 
 			break;
 
@@ -147,7 +163,7 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 						bFind = true;
 						oneLine.add("" + entity.getCl());
 						
-						if (hjList.contains(entity.getCpmc().getId())){
+						if (hjList.isEmpty() || hjList.contains(entity.getCpmc().getId())){
 							finalListTemp.set(i, MathUtil.sum(finalListTemp.get(i), entity.getCl()));
 							finalListNullOrNot.set(i, false);
 						}
@@ -192,10 +208,21 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 		
 		List<Integer> cpIdList = getCpIdList(type);
 		
+		SbdczclwcqkType czType;
+		SbdczclwcqkType clType;
+		if (SbdczclwcqkType.SBDCZCLWCQK_BYQ == type){
+			czType = SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ;
+			clType = SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ;
+		}else{
+			czType = SbdczclwcqkType.SBDCZCLWCQK_CZ_XL;
+			clType = SbdczclwcqkType.SBDCZCLWCQK_CL_XL;
+		}
+		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
 			
-			CpclwcqkEntity entityCl = cpclwcqkDao.getByDate(d, company, SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ, cpIdList.get(cp));
-			CpczwcqkEntity entityCz = cpczwcqkDao.getByDate(d, company, SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ, cpIdList.get(cp));
+			CpczwcqkEntity entityCz = cpczwcqkDao.getByDate(d, company, czType, cpIdList.get(cp));
+			CpclwcqkEntity entityCl = cpclwcqkDao.getByDate(d, company, clType, cpIdList.get(cp));
+			
 			List<String> oneLine = new ArrayList<String>();
 			oneLine.add(cpmcDao.getById(cpIdList.get(cp)).getName());
 			
@@ -246,10 +273,21 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 		cal.setTime(d);
 		List<Integer> cpIdList = getCpIdList(type);
 		
+		SbdczclwcqkType czType;
+		SbdczclwcqkType clType;
+		if (SbdczclwcqkType.SBDCZCLWCQK_BYQ == type){
+			czType = SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ;
+			clType = SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ;
+		}else{
+			czType = SbdczclwcqkType.SBDCZCLWCQK_CZ_XL;
+			clType = SbdczclwcqkType.SBDCZCLWCQK_CL_XL;
+		}
+		
 		for (int cp = 0; cp < cpIdList.size(); cp++) {
-			CpclwcqkEntity entityCl = cpclwcqkDao.getByDate(d, company, SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ, cpIdList.get(cp));
-			CpczwcqkEntity entityCz = cpczwcqkDao.getByDate(d, company, SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ, cpIdList.get(cp));
 			
+			CpczwcqkEntity entityCz = cpczwcqkDao.getByDate(d, company, czType, cpIdList.get(cp));
+			CpclwcqkEntity entityCl = cpclwcqkDao.getByDate(d, company, clType, cpIdList.get(cp));
+						
 			if (null == entityCz){
 				entityCz = new CpczwcqkEntity();
 
@@ -257,7 +295,7 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 				entityCz.setYf(cal.get(Calendar.MONTH) + 1);
 				entityCz.setDwxx(dwxxDao.getById(company.getId()));
 				entityCz.setCpmc(cpmcDao.getById(cpIdList.get(cp)));
-				entityCz.setTjfs(SbdczclwcqkType.SBDCZCLWCQK_CZ_BYQ.value());
+				entityCz.setTjfs(czType.value());
 			}
 
 			entityCz.setZt(status.ordinal());
@@ -272,7 +310,7 @@ public class CpclwcqkServiceImpl implements CpclwcqkService {
 				entityCl.setYf(cal.get(Calendar.MONTH) + 1);
 				entityCl.setDwxx(dwxxDao.getById(company.getId()));
 				entityCl.setCpmc(cpmcDao.getById(cpIdList.get(cp)));
-				entityCl.setTjfs(SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ.value());
+				entityCl.setTjfs(clType.value());
 			}
 
 			entityCl.setZt(status.ordinal());

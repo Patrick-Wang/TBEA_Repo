@@ -14,6 +14,7 @@ var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.cpclwcqk = framework.basic.endpoint.lastId();
     pluginEntry.cpczclwcqk_byq = framework.basic.endpoint.lastId();
+    pluginEntry.cpczclwcqk_xl = framework.basic.endpoint.lastId();
 })(pluginEntry || (pluginEntry = {}));
 var sbdczclwcqk;
 (function (sbdczclwcqk) {
@@ -23,7 +24,7 @@ var sbdczclwcqk;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
-            JQGridAssistantFactory.createTable = function (gridName, readOnly, date) {
+            JQGridAssistantFactory.createTable = function (gridName, readOnly, date, unit) {
                 var curDate = new Date(Date.parse(date.replace(/-/g, '/')));
                 var month = curDate.getMonth() + 1;
                 var year = curDate.getFullYear();
@@ -32,10 +33,12 @@ var sbdczclwcqk;
                 var titleNodes = [];
                 node = new JQTable.Node("产品", "cpclwcqkEntry_cp", true, TextAlign.Left);
                 titleNodes.push(node);
-                node = new JQTable.Node(year + "年" + month + "月", "cpclwcqkEntry_riqi", false, TextAlign.Center);
-                node.append(new JQTable.Node("产值(万元)", "cpclwcqkEntry_cz", false));
-                node.append(new JQTable.Node("产量(万kVA(其中电抗器产量万kvar))", "cpclwcqkEntry_cl", false));
-                titleNodes.push(node);
+                //node = new JQTable.Node(year + "年" + month + "月", "cpclwcqkEntry_riqi", false, TextAlign.Center);
+                //
+                //node.append(new JQTable.Node("产量(" + unit + ")", "cpclwcqkEntry_cl", false));
+                //
+                titleNodes.push(new JQTable.Node("产值", "cpclwcqkEntry_cz", false));
+                titleNodes.push(new JQTable.Node("产量(" + unit + ")", "cpclwcqkEntry_cl", false));
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
@@ -127,7 +130,7 @@ var sbdczclwcqk;
                 this.updateTable();
             };
             EntryView.prototype.isSupported = function (compType) {
-                if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ) {
+                if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_BYQ) {
                     if (compType == Util.CompanyType.SBGS ||
                         compType == Util.CompanyType.HBGS ||
                         compType == Util.CompanyType.XBC ||
@@ -135,7 +138,7 @@ var sbdczclwcqk;
                         return true;
                     }
                 }
-                else {
+                else if (this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_XL) {
                     if (compType == Util.CompanyType.LLGS ||
                         compType == Util.CompanyType.XLC ||
                         compType == Util.CompanyType.DLGS) {
@@ -149,22 +152,29 @@ var sbdczclwcqk;
                     .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczclwcqk_byq, this.getId()))
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "产值产量完成情况");
+                framework.router
+                    .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczclwcqk_xl, this.getId()))
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产值产量完成情况");
             };
             EntryView.prototype.onEvent = function (e) {
                 if (e.road != undefined) {
                     switch (e.road[e.road.length - 1]) {
-                        case pluginEntry.cpclwcqk_byq:
-                            this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ;
+                        case pluginEntry.cpczclwcqk_byq:
+                            this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_BYQ;
                             break;
-                        default:
-                            this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_CPCLWCQK_BYQ;
+                        case pluginEntry.cpczclwcqk_xl:
+                            this.mSbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_XL;
+                            break;
                     }
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
             EntryView.prototype.updateTable = function () {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt, this.mSbdczclwcqkType == sbdczclwcqk.SbdczclwcqkType.SBDCZCLWCQK_BYQ
+                    ? "万kVA(其中电抗器产量万kvar" :
+                    "导线：吨；电缆：千米；电缆附件：件");
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + name + "'></table>");
