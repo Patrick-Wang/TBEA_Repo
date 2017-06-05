@@ -3,81 +3,137 @@
   <sql id="zbs">select id, name from identifier_dbxq_zb where SN is not null order by SN asc</sql>
   <list id="ids" sql="zbs" value="0" type="int"/>
   
-<sql id="gfdbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="gfdbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.GFGS.ordinal]}</sql>
   
-<sql id="sbdbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="sbdbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]}</sql>
-<sql id="hbdbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="hbdbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]}</sql>
-<sql id="xbdbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="xbdbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]}</sql>
-<sql id="xldbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="xldbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]}</sql>
 
-<sql id="lldbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="lldbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]}</sql>
-<sql id="dldbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="dldbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</sql>
 
-<sql id="xtnydbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="xtnydbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.XTNYGS.ordinal]}</sql>
 
-<sql id="tcnydbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="tcnydbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.TCNY.ordinal]}</sql>
 
-<sql id="xnydbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="xnydbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.XNYGS.ordinal]}</sql>
 
-<sql id="jckdbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="jckdbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.JCKGS_JYDW.ordinal]}</sql>
 
-<sql id="gjgcdbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="gjgcdbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.GJGCGS_GFGS.ordinal]}</sql>
 
-<sql id="zhdbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="zhdbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.ZHGS.ordinal]}</sql>
 
-<sql id="nddbxqs" order="ids" by="0" colcount="2">select zbid, value from dbxq
+<sql id="nddbxqs" order="ids" by="0" colcount="2">select zbid, 
+(case when zbid &lt;= 28 then value
+	else value / 10000.0
+end) val
+from dbxq
 where
 nf = ${cal.year} and 
 yf = ${cal.month} and
@@ -117,7 +173,7 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
    <PercentFormatter reservedCount="1">
     <DefaultMatcher rows="0,4,8,14,32,36,42,47,50,58,61,64,67,70,77,80"/>
    </PercentFormatter>
-   <NumberFormatter reservedCount="0">
+   <NumberFormatter reservedCount="1">
    </NumberFormatter>
   </formatter>
  </controller>
@@ -221,7 +277,8 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
     <item>
      <col>0</col>
     </item>
-   </mergeRows>
+   </mergeRows>   
+   <width>1300</width>
    <mergeTitle>true</mergeTitle>
    <data>${fmtServ.result}</data>
   </response>

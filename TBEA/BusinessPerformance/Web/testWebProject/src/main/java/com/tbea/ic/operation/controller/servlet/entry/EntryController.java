@@ -178,31 +178,37 @@ public class EntryController {
 		return result.getBytes("utf-8");
 	}
 	
-	private void transport(Date d){
-		Map<Company, JSONArray> data = sjzbImportService.getHBSjzb(d);
+	private void transport(Date d, CompanyType type){
+		Map<Company, JSONArray> data = null;
 		
-
-		LoggerFactory.getLogger("WEBSERVICE").info("transport HB sjzb");
-		for (Entry<Company, JSONArray> entry : data.entrySet()){
-			LoggerFactory.getLogger("WEBSERVICE").info(entry.getKey().getName());
-			LoggerFactory.getLogger("WEBSERVICE").info(entry.getValue().toString());
-			importData(entry, d);
-		}		
-		
-		LoggerFactory.getLogger("WEBSERVICE").info("transport DL sjzb");
-		data = sjzbImportService.getDLSjzb(d);
-		for (Entry<Company, JSONArray> entry : data.entrySet()){
-			LoggerFactory.getLogger("WEBSERVICE").info(entry.getKey().getName());
-			LoggerFactory.getLogger("WEBSERVICE").info(entry.getValue().toString());
-			importData(entry, d);
+		if (null == type || type == CompanyType.HBGS){
+			data = sjzbImportService.getHBSjzb(d);
+			LoggerFactory.getLogger("WEBSERVICE").info("transport HB sjzb");
+			for (Entry<Company, JSONArray> entry : data.entrySet()){
+				LoggerFactory.getLogger("WEBSERVICE").info(entry.getKey().getName());
+				LoggerFactory.getLogger("WEBSERVICE").info(entry.getValue().toString());
+				importData(entry, d);
+			}
 		}
 		
-		LoggerFactory.getLogger("WEBSERVICE").info("transport XL sjzb");
-		data = sjzbImportService.getXLSjzb(d);
-		for (Entry<Company, JSONArray> entry : data.entrySet()){
-			LoggerFactory.getLogger("WEBSERVICE").info(entry.getKey().getName());
-			LoggerFactory.getLogger("WEBSERVICE").info(entry.getValue().toString());
-			importData(entry, d);
+		if (null == type || type == CompanyType.DLGS){
+			LoggerFactory.getLogger("WEBSERVICE").info("transport DL sjzb");
+			data = sjzbImportService.getDLSjzb(d);
+			for (Entry<Company, JSONArray> entry : data.entrySet()){
+				LoggerFactory.getLogger("WEBSERVICE").info(entry.getKey().getName());
+				LoggerFactory.getLogger("WEBSERVICE").info(entry.getValue().toString());
+				importData(entry, d);
+			}
+		}
+		
+		if (null == type || type == CompanyType.XLC){
+			LoggerFactory.getLogger("WEBSERVICE").info("transport XL sjzb");
+			data = sjzbImportService.getXLSjzb(d);
+			for (Entry<Company, JSONArray> entry : data.entrySet()){
+				LoggerFactory.getLogger("WEBSERVICE").info(entry.getKey().getName());
+				LoggerFactory.getLogger("WEBSERVICE").info(entry.getValue().toString());
+				importData(entry, d);
+			}
 		}
 	}
 	
@@ -216,8 +222,11 @@ public class EntryController {
 			d = Date.valueOf(request.getParameter("date"));
 		}
 		
-		
-		transport(d);
+		CompanyType type = null;
+		if (request.getParameter("comp") != null){
+			type = CompanyType.valueOf(request.getParameter("comp"));
+		}
+		transport(d, type);
 		
 		String result = "{\"result\":\"OK\"}";
 		return result.getBytes("utf-8");
@@ -230,7 +239,7 @@ public class EntryController {
 		cal.add(Calendar.MONTH, -1);
 		Date d = Util.toDate(cal);
 		
-		transport(d);
+		transport(d, null);
 		
 	}
 
