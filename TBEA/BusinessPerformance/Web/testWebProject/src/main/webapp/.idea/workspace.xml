@@ -25,8 +25,14 @@
         <entry file="file://$PROJECT_DIR$/jsp/chgb/chzlbhqk/chzlbhqk.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="26" selection-start-line="25" selection-start-column="31" selection-end-line="27" selection-end-column="26" />
-              <folding />
+              <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+              <folding>
+                <marker date="1496627338523" expanded="true" signature="58:168" placeholder="..." />
+                <marker date="1496627338523" expanded="true" signature="79:166" placeholder="..." />
+                <marker date="1496627338523" expanded="true" signature="92:156" placeholder="..." />
+                <marker date="1496627338523" expanded="true" signature="875:890" placeholder="{&quot;tb&quot;: &quot;table&quot;...}" />
+                <marker date="1496627338523" expanded="true" signature="875:894" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,7 +41,7 @@
         <entry file="file://$PROJECT_DIR$/jsp/chgb/chxzqk/chxzqk.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="9" selection-start-line="6" selection-start-column="4" selection-end-line="15" selection-end-column="9" />
+              <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -45,9 +51,21 @@
         <entry file="file://$PROJECT_DIR$/jsp/chgb/chxzqk/chxzqk.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
+              <caret line="152" column="30" selection-start-line="152" selection-start-column="30" selection-end-line="152" selection-end-column="30" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1496627338519" expanded="true" signature="302:373" placeholder="..." />
+                <marker date="1496627338519" expanded="true" signature="387:7013" placeholder="..." />
+                <marker date="1496627338519" expanded="true" signature="414:7011" placeholder="..." />
+                <marker date="1496627338519" expanded="true" signature="529:1451" placeholder="{...}" />
+                <marker date="1496627338519" expanded="true" signature="663:1415" placeholder="[...]" />
+                <marker date="1496627338519" expanded="true" signature="1515:7005" placeholder="{...}" />
+                <marker date="1496627338519" expanded="true" signature="1843:1896" placeholder="{...}" />
+                <marker date="1496627338519" expanded="true" signature="2195:2252" placeholder="{...}" />
+                <marker date="1496627338519" expanded="true" signature="2329:2709" placeholder="{...}" />
+                <marker date="1496627338519" expanded="true" signature="2436:2537" placeholder="{...}" />
+                <marker date="1496627338519" expanded="true" signature="2583:2693" placeholder="{...}" />
+                <marker date="1496627338519" expanded="true" signature="2746:2863" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -57,9 +75,25 @@
         <entry file="file://$PROJECT_DIR$/jsp/sbdscqyqk/xfscqy/xfscqy.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="135" column="100" selection-start-line="135" selection-start-column="100" selection-end-line="135" selection-end-column="100" />
+              <caret line="219" column="21" selection-start-line="219" selection-start-column="21" selection-end-line="219" selection-end-column="21" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1496627338575" expanded="true" signature="304:375" placeholder="..." />
+                <marker date="1496627338575" expanded="true" signature="394:9019" placeholder="..." />
+                <marker date="1496627338575" expanded="true" signature="421:9017" placeholder="..." />
+                <marker date="1496627338575" expanded="true" signature="506:1828" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="600:1818" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="1224:1315" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="1372:1457" placeholder="//..." />
+                <marker date="1496627338575" expanded="true" signature="1599:1690" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="1892:9011" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="2223:2276" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="2312:2359" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="2439:2628" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="2802:3185" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="2911:3013" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="3059:3169" placeholder="{...}" />
+                <marker date="1496627338575" expanded="true" signature="3222:3339" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -78,8 +112,8 @@
       <file leaf-file-name="show.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="253" column="13" selection-start-line="253" selection-start-column="13" selection-end-line="253" selection-end-column="14" />
+            <state vertical-scroll-proportion="-15.434783">
+              <caret line="262" column="52" selection-start-line="262" selection-start-column="52" selection-end-line="262" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -88,8 +122,8 @@
       <file leaf-file-name="show.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43740574">
-              <caret line="101" column="57" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.625">
+              <caret line="136" column="38" selection-start-line="136" selection-start-column="38" selection-end-line="136" selection-end-column="38" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -101,8 +135,14 @@
         <entry file="file://$PROJECT_DIR$/jsp/sbdscqyqk/xfscqy/xfscqy.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-              <folding />
+              <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+              <folding>
+                <marker date="1496627338573" expanded="true" signature="56:166" placeholder="..." />
+                <marker date="1496627338573" expanded="true" signature="77:164" placeholder="..." />
+                <marker date="1496627338573" expanded="true" signature="90:154" placeholder="..." />
+                <marker date="1496627338573" expanded="true" signature="870:885" placeholder="{&quot;tb&quot;: &quot;table&quot;...}" />
+                <marker date="1496627338573" expanded="true" signature="870:889" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -111,7 +151,7 @@
         <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicdef.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="47" column="18" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -133,7 +173,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/jsp/cpzlqk/cpzlqk.ts" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/dateChartReport/show.jsp" />
         <option value="$PROJECT_DIR$/jsp/nwbzlqk/byqwbzlwttjqk/byqwbzlwttjqk.jsp" />
         <option value="$PROJECT_DIR$/jsp/nwbzlqk/pdnbzlwttjqk/pdnbzlwttjqk.jsp" />
@@ -183,6 +222,7 @@
         <option value="$PROJECT_DIR$/jsp/sbdscqyqk/xfscqy/xfscqy.ts" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/dateReport/show.jsp" />
         <option value="$PROJECT_DIR$/jsp/util.ts" />
+        <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp" />
         <option value="$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts" />
       </list>
     </option>
@@ -196,7 +236,7 @@
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1456" />
-    <option name="height" value="876" />
+    <option name="height" value="886" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -248,6 +288,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -278,130 +319,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkzlbh" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkyjtztjqs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yszkgb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="yqyszcsys" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sbdscqyqk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sbdscqyqk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="xfscqy" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -473,7 +390,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -482,7 +398,7 @@
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Documents/GitHub/LoanMgr/collection/collection/src/main/webapp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../../../../LoanMgr/collection/collection/src/main/webapp" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/TBEA_Repo/TBEA/BusinessPerformance/Web/testWebProject/src/main/webapp/jsp/sddb/sddb.ts" />
   </component>
   <component name="RecentsManager">
@@ -577,17 +493,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="876" extended-state="1" />
+    <frame x="-8" y="-8" width="1456" height="886" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23765868" sideWeight="0.55924857" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23765868" sideWeight="0.553495" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15188172" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07114094" sideWeight="0.4721166" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07029178" sideWeight="0.4721166" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24380705" sideWeight="0.5278834" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17473118" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" x="3" y="335" width="1594" height="168" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23765868" sideWeight="0.44075143" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23765868" sideWeight="0.44650498" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -654,7 +570,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="164" column="28" selection-start-line="164" selection-start-column="28" selection-end-line="164" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -753,7 +668,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.653846">
           <caret line="222" column="17" selection-start-line="222" selection-start-column="17" selection-end-line="222" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -859,7 +773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.423077">
           <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -867,7 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-16.346153">
           <caret line="25" column="18" selection-start-line="23" selection-start-column="23" selection-end-line="25" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -875,7 +787,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-15.038462">
           <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="25" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -910,7 +821,7 @@
     <entry file="file://$PROJECT_DIR$/jsp/framework/basic/basicdef.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="18" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -918,7 +829,7 @@
     <entry file="file://$PROJECT_DIR$/jsp/chgb/chxzqk/chxzqk.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="9" selection-start-line="6" selection-start-column="4" selection-end-line="15" selection-end-column="9" />
+          <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -926,17 +837,35 @@
     <entry file="file://$PROJECT_DIR$/jsp/chgb/chzlbhqk/chzlbhqk.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="26" selection-start-line="25" selection-start-column="31" selection-end-line="27" selection-end-column="26" />
-          <folding />
+          <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+          <folding>
+            <marker date="1496627338523" expanded="true" signature="58:168" placeholder="..." />
+            <marker date="1496627338523" expanded="true" signature="79:166" placeholder="..." />
+            <marker date="1496627338523" expanded="true" signature="92:156" placeholder="..." />
+            <marker date="1496627338523" expanded="true" signature="875:890" placeholder="{&quot;tb&quot;: &quot;table&quot;...}" />
+            <marker date="1496627338523" expanded="true" signature="875:894" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/chgb/chxzqk/chxzqk.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="82" column="30" selection-start-line="82" selection-start-column="30" selection-end-line="82" selection-end-column="30" />
+          <caret line="152" column="30" selection-start-line="152" selection-start-column="30" selection-end-line="152" selection-end-column="30" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1496627338519" expanded="true" signature="302:373" placeholder="..." />
+            <marker date="1496627338519" expanded="true" signature="387:7013" placeholder="..." />
+            <marker date="1496627338519" expanded="true" signature="414:7011" placeholder="..." />
+            <marker date="1496627338519" expanded="true" signature="529:1451" placeholder="{...}" />
+            <marker date="1496627338519" expanded="true" signature="663:1415" placeholder="[...]" />
+            <marker date="1496627338519" expanded="true" signature="1515:7005" placeholder="{...}" />
+            <marker date="1496627338519" expanded="true" signature="1843:1896" placeholder="{...}" />
+            <marker date="1496627338519" expanded="true" signature="2195:2252" placeholder="{...}" />
+            <marker date="1496627338519" expanded="true" signature="2329:2709" placeholder="{...}" />
+            <marker date="1496627338519" expanded="true" signature="2436:2537" placeholder="{...}" />
+            <marker date="1496627338519" expanded="true" signature="2583:2693" placeholder="{...}" />
+            <marker date="1496627338519" expanded="true" signature="2746:2863" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -951,17 +880,39 @@
     <entry file="file://$PROJECT_DIR$/jsp/sbdscqyqk/xfscqy/xfscqy.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-          <folding />
+          <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+          <folding>
+            <marker date="1496627338573" expanded="true" signature="56:166" placeholder="..." />
+            <marker date="1496627338573" expanded="true" signature="77:164" placeholder="..." />
+            <marker date="1496627338573" expanded="true" signature="90:154" placeholder="..." />
+            <marker date="1496627338573" expanded="true" signature="870:885" placeholder="{&quot;tb&quot;: &quot;table&quot;...}" />
+            <marker date="1496627338573" expanded="true" signature="870:889" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/sbdscqyqk/xfscqy/xfscqy.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="135" column="100" selection-start-line="135" selection-start-column="100" selection-end-line="135" selection-end-column="100" />
+          <caret line="219" column="21" selection-start-line="219" selection-start-column="21" selection-end-line="219" selection-end-column="21" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1496627338575" expanded="true" signature="304:375" placeholder="..." />
+            <marker date="1496627338575" expanded="true" signature="394:9019" placeholder="..." />
+            <marker date="1496627338575" expanded="true" signature="421:9017" placeholder="..." />
+            <marker date="1496627338575" expanded="true" signature="506:1828" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="600:1818" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="1224:1315" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="1372:1457" placeholder="//..." />
+            <marker date="1496627338575" expanded="true" signature="1599:1690" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="1892:9011" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="2223:2276" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="2312:2359" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="2439:2628" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="2802:3185" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="2911:3013" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="3059:3169" placeholder="{...}" />
+            <marker date="1496627338575" expanded="true" signature="3222:3339" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -974,14 +925,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="253" column="13" selection-start-line="253" selection-start-column="13" selection-end-line="253" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/util.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
@@ -989,10 +932,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.434783">
+          <caret line="262" column="52" selection-start-line="262" selection-start-column="52" selection-end-line="262" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/framework/templates/singleDateReport/show.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43740574">
-          <caret line="101" column="57" selection-start-line="101" selection-start-column="57" selection-end-line="101" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.625">
+          <caret line="136" column="38" selection-start-line="136" selection-start-column="38" selection-end-line="136" selection-end-column="38" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

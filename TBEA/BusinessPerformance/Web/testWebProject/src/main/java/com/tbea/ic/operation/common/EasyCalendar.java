@@ -338,6 +338,26 @@ public class EasyCalendar {
 		return (EasyCalendar) cache(KEY_LasyYear, new EasyCalendar(cal));
 	}
 	
+	public EasyCalendar getYearBefore(int yearCount){
+		if (cache.containsKey(KEY_LasyYear)){
+			return (EasyCalendar) cache.get(KEY_LasyYear);
+		}
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.YEAR, -1 * yearCount);
+		return (EasyCalendar) cache(KEY_LasyYear, new EasyCalendar(cal));
+	}
+	
+	public EasyCalendar getYearAfter(int yearCount){
+		if (cache.containsKey(KEY_LasyYear)){
+			return (EasyCalendar) cache.get(KEY_LasyYear);
+		}
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.YEAR, yearCount);
+		return (EasyCalendar) cache(KEY_LasyYear, new EasyCalendar(cal));
+	}
+	
 	public EasyCalendar getNextYear(){
 		if (cache.containsKey(KEY_NextYear)){
 			return (EasyCalendar) cache.get(KEY_NextYear);

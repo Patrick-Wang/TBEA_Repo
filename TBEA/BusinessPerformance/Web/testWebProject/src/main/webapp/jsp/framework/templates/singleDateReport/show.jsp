@@ -191,6 +191,7 @@
 </div>
 
 <Table id="frameTable" align="center" style="width:1200px">
+
     <tr>
         <td>
         
@@ -214,7 +215,9 @@
     </tr>
 </Table>
 <script type="text/javascript">
-
+	if ("true" == '${nodate}'){
+	    $("#dt").parent().hide();
+	}
     $(document).ready(function () {
 
         framework.templates.singleDateReport.createInstance();
@@ -247,6 +250,8 @@
             }
 
         }
+
+      
 
         framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
             dtId:"dt",

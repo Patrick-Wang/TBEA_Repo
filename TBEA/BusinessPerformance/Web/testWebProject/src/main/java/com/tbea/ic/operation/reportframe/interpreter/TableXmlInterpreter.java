@@ -552,8 +552,8 @@ public class TableXmlInterpreter implements XmlInterpreter {
 
 	private void parseSumRow(AbstractXmlComponent component, Table tb,
 			Element item) throws Exception {
-		int targetCol = getTargetIndex(component, item, tb);
-		if (targetCol < 0) {
+		int targetRow = getTargetIndex(component, item, tb);
+		if (targetRow < 0) {
 			return;
 		}
 		Set<Integer> rows = getAllRows(item, tb);
@@ -575,11 +575,11 @@ public class TableXmlInterpreter implements XmlInterpreter {
 				for (Integer row : rows) {
 					val = tbCol.get(row);
 					if (val instanceof Double) {
-						tbCol.set(targetCol, MathUtil.sum(
-								(Double) tbCol.get(targetCol), (Double) val));
+						tbCol.set(targetRow, MathUtil.sum(
+								(Double) tbCol.get(targetRow), (Double) val));
 					} else if (val instanceof Integer) {
-						tbCol.set(targetCol, MathUtil.sum(
-								(Integer) tbCol.get(targetCol), (Integer) val));
+						tbCol.set(targetRow, MathUtil.sum(
+								(Integer) tbCol.get(targetRow), (Integer) val));
 					}
 				}
 			}
@@ -589,11 +589,11 @@ public class TableXmlInterpreter implements XmlInterpreter {
 				for (Integer row : rows) {
 					val = tbCol.get(row);
 					if (val instanceof Double) {
-						tbCol.set(targetCol, MathUtil.sum(
-								(Double) tbCol.get(targetCol), (Double) val));
+						tbCol.set(targetRow, MathUtil.sum(
+								(Double) tbCol.get(targetRow), (Double) val));
 					} else if (val instanceof Integer) {
-						tbCol.set(targetCol, MathUtil.sum(
-								(Integer) tbCol.get(targetCol), (Integer) val));
+						tbCol.set(targetRow, MathUtil.sum(
+								(Integer) tbCol.get(targetRow), (Integer) val));
 					}
 				}
 			}

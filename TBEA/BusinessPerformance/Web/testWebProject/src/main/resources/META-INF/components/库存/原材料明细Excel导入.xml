@@ -1,0 +1,47 @@
+<components>
+ <service id="servYclmxImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="storage_yclmx">
+   <set>
+	<company_name	type="string"	ref="${counter.reset[0].val}" test="${this != null}"/>
+	<material_name	type="string"	ref="${counter.next.val}" test="${this != null}"/>
+	<model	type="string"	ref="${counter.next.val}"/>
+	<provider	type="string"	ref="${counter.next.val}"/>
+	<measurement_unit	type="string"	ref="${counter.next.val}"/>
+	<amount	type="double"	ref="${counter.next.val}"/>
+	<unit_price	type="double"	ref="${counter.next.val}"/>
+	<amount_of_money	type="double"	ref="${counter.next.val}"/>
+	<storage_date	type="date"	ref="${counter.next.val}"/>
+	<stock_duration	type="double"	ref="${counter.next.val}"/>
+	<cause	type="string"	ref="${counter.next.val}"/>
+	<treatment	type="string"	ref="${counter.next.val}"/>
+	<risk_assessment	type="string"	ref="${counter.next.val}"/>
+	<added_month	type="date"	ref="${counter.next.val}"/>
+	<is_overstock	type="string"	ref="${counter.next.val}"/>
+	<person_liable	type="string"	ref="${counter.next.val}"/>
+	<comletion_date	type="date"	ref="${counter.next.val}"/>
+	<amount_of_this_month	type="double"	ref="${counter.next.val}"/>
+	<money_of_this_month	type="double"	ref="${counter.next.val}"/>
+	<action_of_this_month	type="string"	ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="yclmxImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servYclmxImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="yclmxImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="yclmxImport"/>
+   <map key="title" value="原材料明细导入"/>
+  </response>
+ </controller>
+</components>

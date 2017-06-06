@@ -102,7 +102,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			throws ValidationException {
 		JSONArray jrow = new JSONArray();
 		for (int j = 0; j <= maxCol; ++j) {
-
+ 
 			XSSFCell cell = row.getCell(j);
 			if (cell == null || !types.containsKey(j)) {
 				jrow.add(null);
