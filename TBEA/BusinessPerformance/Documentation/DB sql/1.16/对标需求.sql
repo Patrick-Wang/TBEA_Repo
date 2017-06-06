@@ -1,6 +1,8 @@
 ﻿if not exists(select * from syscolumns where id = object_id('identifier_dbxq_zb') and name='SN') begin
-	alter table identifier_dbxq_zb add SN int;
+	alter table identifier_dbxq_zb add SN int
 end
+
+alter table identifier_dbxq_zb alter column name varchar(100);
 
 update identifier_dbxq_zb set SN = 100 where name like '净资产收益率%';
 update identifier_dbxq_zb set SN = 200 where name like '总资产报酬率%';
