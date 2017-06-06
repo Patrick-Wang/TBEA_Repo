@@ -1,0 +1,52 @@
+<components>
+ <service id="servKcswcptzImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="storage_swccptz">
+   <where>
+    <statistics_year type="int" ref="0"/>
+    <statistics_month type="int" ref="1"/>
+   </where>
+   <set>
+    <statistics_year type="int" ref="${counter.reset[0].val}" test="${this != null}"/>
+    <statistics_month type="int" ref="${counter.next.val}" test="${this != null}"/>
+    <status type="string" ref="${counter.next.val}"/>
+    <company_name type="string" ref="${counter.next.val}"/>
+    <contract_no type="string" ref="${counter.next.val}"/>
+    <customer_name type="string" ref="${counter.next.val}"/>
+    <deliver_date type="string" ref="${counter.next.val}"/>
+    <contract_amount type="double" ref="${counter.next.val}"/>
+    <level type="string" ref="${counter.next.val}"/>
+    <stock_amount type="double" ref="${counter.next.val}"/>
+    <stock_money type="double" ref="${counter.next.val}"/>
+    <complete_date type="date" ref="${counter.next.val}"/>
+	<stock_contract_date type="double" ref="${counter.next.val}"/>
+	<amount_of_paid type="double" ref="${counter.next.val}"/>
+	<ratio_of_paid type="double" ref="${counter.next.val}"/>
+	<plan_of_send_date type="string" ref="${counter.next.val}"/>
+	<reason_of_nondeliver type="string" ref="${counter.next.val}"/>	
+	<risk type="string" ref="${counter.next.val}"/>
+	<added_month type="string" ref="${counter.next.val}"/>   
+    <is_overstock type="string" ref="${counter.next.val}"/>
+    <person_liable type="string" ref="${counter.next.val}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="kcswcptzImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servKcswcptzImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="kcswcptzImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="kcswcptzImport"/>
+   <map key="title" value="实物产成品台账导入"/>
+  </response>
+ </controller>
+</components>
