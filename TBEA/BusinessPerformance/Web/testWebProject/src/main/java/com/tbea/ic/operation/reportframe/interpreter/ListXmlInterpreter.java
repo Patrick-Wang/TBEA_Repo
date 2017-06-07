@@ -170,7 +170,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			}   
 		}
 		
-		XmlUtil.eachChildren(e, new OnLoop(){
+		XmlUtil.eachChildren(e, elp, new OnLoop(){
 			@Override
 			public void on(Element elem) throws Exception {
 				if (elem.getTagName().equals("item")) {

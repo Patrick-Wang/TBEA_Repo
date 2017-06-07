@@ -22,6 +22,7 @@ CREATE TABLE [dbo].[storage_swccptz](
 	added_month	date	,	--	库存新增月份	
 	is_overstock	varchar(10)	,	--	是否形成积压	
 	person_liable	varchar(100),		--	责任人	
+	jydw int,
 	source varchar(100),
 	time datetime
 PRIMARY KEY CLUSTERED 						
@@ -55,6 +56,7 @@ CREATE TABLE [dbo].[storage_yclmx](
 	amount_of_this_month	numeric(18, 4)	,--	本月消化库存（含积压物资）	数量
 	money_of_this_month	numeric(18, 4)	,--		金额（万元）
 	action_of_this_month	varchar(300)	,--		处置措施
+	jydw int,
 	source varchar(100),
 	time datetime
 PRIMARY KEY CLUSTERED 						
@@ -85,6 +87,7 @@ CREATE TABLE [dbo].[storage_bcpmx](
 	amount_of_this_month	numeric(18, 4)	,--	本月消化存货（含积压物资）	数量
 	money_of_this_month	numeric(18, 4)	,--		金额(万元)
 	action_of_this_month	varchar(300)	,--		处置措施
+	jydw int,
 	source varchar(100),
 	time datetime
 PRIMARY KEY CLUSTERED 						

@@ -2,8 +2,7 @@
  <service id="servDbxq" transaction="transactionManager">
   <sql id="zbs">select id, name from identifier_dbxq_zb where SN is not null order by SN asc</sql>
   <list id="ids" sql="zbs" value="0" type="int"/>
-  
-<sql id="gfdbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="gfdbxqs" order="ids" by="0" colcount="2" skip="${compTypes.size != 13}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -12,8 +11,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.GFGS.ordinal]}</sql>
-  
-<sql id="sbdbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="sbdbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.SBGS]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -22,7 +20,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.SBGS.ordinal]}</sql>
-<sql id="hbdbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="hbdbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.HBGS]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -31,7 +29,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.HBGS.ordinal]}</sql>
-<sql id="xbdbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="xbdbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.XBC]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -40,7 +38,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.XBC.ordinal]}</sql>
-<sql id="xldbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="xldbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.XLC]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -49,8 +47,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.XLC.ordinal]}</sql>
-
-<sql id="lldbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="lldbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.LLGS]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -59,7 +56,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.LLGS.ordinal]}</sql>
-<sql id="dldbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="dldbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.DLGS]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -68,8 +65,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.DLGS.ordinal]}</sql>
-
-<sql id="xtnydbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="xtnydbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.XTNYGS]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -78,8 +74,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.XTNYGS.ordinal]}</sql>
-
-<sql id="tcnydbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="tcnydbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.TCNY]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -88,8 +83,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.TCNY.ordinal]}</sql>
-
-<sql id="xnydbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="xnydbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.XNYGS]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -98,8 +92,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.XNYGS.ordinal]}</sql>
-
-<sql id="jckdbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="jckdbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.JCKGS_JYDW]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -108,8 +101,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.JCKGS_JYDW.ordinal]}</sql>
-
-<sql id="gjgcdbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="gjgcdbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.GJGCGS_GFGS]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -118,8 +110,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.GJGCGS_GFGS.ordinal]}</sql>
-
-<sql id="zhdbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="zhdbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.ZHGS]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -128,8 +119,7 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.ZHGS.ordinal]}</sql>
-
-<sql id="nddbxqs" order="ids" by="0" colcount="2">select zbid, 
+  <sql id="nddbxqs" order="ids" by="0" colcount="2" skip="${!compTypes.contains[CompanyType.NDGS]}">select zbid, 
 (case when zbid &lt;= 28 then value
 	else value / 10000.0
 end) val
@@ -138,31 +128,30 @@ where
 nf = ${cal.year} and 
 yf = ${cal.month} and
 dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
-
-<list id="category" type="string">
-  <item repeat="20">盈利能力状况</item>
-  <item repeat="16">资产质量状况</item>
-  <item repeat="25">债务风险状况</item>
-  <item repeat="12">经营增长状况</item>
-  <item repeat="11">其他补充指标</item>
-</list>
+  <list id="category" type="string">
+   <item repeat="20">盈利能力状况</item>
+   <item repeat="16">资产质量状况</item>
+   <item repeat="25">债务风险状况</item>
+   <item repeat="12">经营增长状况</item>
+   <item repeat="11">其他补充指标</item>
+  </list>
   <table id="result" rowIds="zbs" export="true">
    <col list="category"/>
    <list id="zbmc" type="string" sql="zbs" value="1"/>
-   <list type="double" sql="gfdbxqs" value="1"/>
-   <list type="double" sql="sbdbxqs" value="1"/>
-   <list type="double" sql="hbdbxqs" value="1"/>
-   <list type="double" sql="xbdbxqs" value="1"/>
-   <list type="double" sql="xldbxqs" value="1"/>
-   <list type="double" sql="lldbxqs" value="1"/>
-   <list type="double" sql="dldbxqs" value="1"/>
-   <list type="double" sql="xtnydbxqs" value="1"/>
-   <list type="double" sql="tcnydbxqs" value="1"/>
-   <list type="double" sql="xnydbxqs" value="1"/>
-   <list type="double" sql="jchdbxqs" value="1"/>
-   <list type="double" sql="gjgcdbxqs" value="1"/>
-   <list type="double" sql="zhdbxqs" value="1"/>
-   <list type="double" sql="nddbxqs" value="1"/>
+   <list type="double" sql="gfdbxqs" value="1" skip="${compTypes.size != 13}"/>
+   <list type="double" sql="sbdbxqs" value="1" skip="${!compTypes.contains[CompanyType.SBGS]}"/>
+   <list type="double" sql="hbdbxqs" value="1" skip="${!compTypes.contains[CompanyType.HBGS]}"/>
+   <list type="double" sql="xbdbxqs" value="1" skip="${!compTypes.contains[CompanyType.XBC]}"/>
+   <list type="double" sql="xldbxqs" value="1" skip="${!compTypes.contains[CompanyType.XLC]}"/>
+   <list type="double" sql="lldbxqs" value="1" skip="${!compTypes.contains[CompanyType.LLGS]}"/>
+   <list type="double" sql="dldbxqs" value="1" skip="${!compTypes.contains[CompanyType.DLGS]}"/>
+   <list type="double" sql="xtnydbxqs" value="1" skip="${!compTypes.contains[CompanyType.XTNYGS]}"/>
+   <list type="double" sql="tcnydbxqs" value="1" skip="${!compTypes.contains[CompanyType.TCNY]}"/>
+   <list type="double" sql="xnydbxqs" value="1" skip="${!compTypes.contains[CompanyType.XNYGS]}"/>
+   <list type="double" sql="jchdbxqs" value="1" skip="${!compTypes.contains[CompanyType.JCKGS_JYDW]}"/>
+   <list type="double" sql="gjgcdbxqs" value="1" skip="${!compTypes.contains[CompanyType.GJGCGS_GFGS]}"/>
+   <list type="double" sql="zhdbxqs" value="1" skip="${!compTypes.contains[CompanyType.ZHGS]}"/>
+   <list type="double" sql="nddbxqs" value="1" skip="${!compTypes.contains[CompanyType.NDGS]}"/>
   </table>
  </service>
  <controller id="servFmtterDbxq">
@@ -173,13 +162,12 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
    <PercentFormatter reservedCount="1">
     <DefaultMatcher rows="0,4,8,14,32,36,42,47,50,58,61,64,67,70,77,80"/>
    </PercentFormatter>
-   <NumberFormatter reservedCount="1">
-   </NumberFormatter>
+   <NumberFormatter reservedCount="1"/>
   </formatter>
  </controller>
  <controller id="dbxqUpdate">
   <context key="cal" value="${request.date.asCalendar}"/>
- <!--  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/> -->
+  <context key="compTypes" value="${authTypes[23]}"/>
   <callservice id="servDbxq"/>
   <callcontroller id="servFmtterDbxq"/>
   <formatterServer id="fmtServ" table="${result.matrixNoIds}">
@@ -195,38 +183,38 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
      <name>指标分析(单位：万元)</name>
      <align>left</align>
     </item>
-    <item>
+    <item skip="${compTypes.size != 13}">
      <name>股份公司</name>
     </item>
-    <item>
+    <item skip="${!compTypes.contains[CompanyType.HBGS] &amp;&amp; !compTypes.contains[CompanyType.SBGS] &amp;&amp; !compTypes.contains[CompanyType.XBC]}">
      <name>输配电及控制设备制造业</name>
      <sub type="array">
-      <item>
+      <item skip="${!compTypes.contains[CompanyType.SBGS]}">
        <name>沈变</name>
       </item>
-      <item>
+      <item skip="${!compTypes.contains[CompanyType.HBGS]}">
        <name>衡变</name>
       </item>
-      <item>
+      <item skip="${!compTypes.contains[CompanyType.XBC]}">
        <name>新变厂</name>
       </item>
      </sub>
     </item>
-    <item>
+    <item skip="${!compTypes.contains[CompanyType.XLC] &amp;&amp; !compTypes.contains[CompanyType.LLGS] &amp;&amp; !compTypes.contains[CompanyType.DLGS]}">
      <name>电工器材制造业</name>
      <sub type="array">
-      <item>
+      <item skip="${!compTypes.contains[CompanyType.XLC]}">
        <name>新缆厂</name>
       </item>
-      <item>
+      <item skip="${!compTypes.contains[CompanyType.LLGS]}">
        <name>鲁缆公司</name>
       </item>
-      <item>
+      <item skip="${!compTypes.contains[CompanyType.DLGS]}">
        <name>德缆公司</name>
       </item>
      </sub>
     </item>
-    <item>
+    <item skip="${!compTypes.contains[CompanyType.XTNYGS]}">
      <name>基础化学原料制造业</name>
      <sub type="array">
       <item>
@@ -234,7 +222,7 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
       </item>
      </sub>
     </item>
-    <item>
+    <item skip="${!compTypes.contains[CompanyType.TCNY]}">
      <name>煤炭工业</name>
      <sub type="array">
       <item>
@@ -242,21 +230,21 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
       </item>
      </sub>
     </item>
-    <item>
+    <item skip="${!compTypes.contains[CompanyType.XNYGS] &amp;&amp; !compTypes.contains[CompanyType.JCKGS_JYDW] &amp;&amp; !compTypes.contains[CompanyType.GJGCGS_GFGS]}">
      <name>建筑工程安装业</name>
      <sub type="array">
-      <item>
+      <item skip="${!compTypes.contains[CompanyType.XNYGS]}">
        <name>新能源</name>
       </item>
-      <item>
+      <item skip="${!compTypes.contains[CompanyType.JCKGS_JYDW]}">
        <name>进出口</name>
       </item>
-      <item>
+      <item skip="${!compTypes.contains[CompanyType.GJGCGS_GFGS]}">
        <name>国际工程</name>
       </item>
      </sub>
     </item>
-     <item>
+    <item skip="${!compTypes.contains[CompanyType.ZHGS]}">
      <name>有色金属冶炼业</name>
      <sub type="array">
       <item>
@@ -264,7 +252,7 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
       </item>
      </sub>
     </item>
-     <item>
+    <item skip="${!compTypes.contains[CompanyType.NDGS]}">
      <name>热力生产及供应业</name>
      <sub type="array">
       <item>
@@ -277,7 +265,7 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
     <item>
      <col>0</col>
     </item>
-   </mergeRows>   
+   </mergeRows>
    <width>1300</width>
    <mergeTitle>true</mergeTitle>
    <data>${fmtServ.result}</data>
@@ -285,45 +273,45 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
  </controller>
  <controller id="dbxqExport">
   <context key="cal" value="${request.date.asCalendar}"/>
-<!--   <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/> -->
+  <context key="compTypes" value="${authTypes[23]}"/>
   <callservice id="servDbxq"/>
   <callcontroller id="servFmtterDbxq" inline="true"/>
   <ExcelTemplate id="excelTemplate" sheet="对标需求"/>
   <list id="title" type="string">
-  	指标	,
-	指标分析(单位：万元)	,
-	股份公司	,
-	输配电及控制设备制造业	,
-	输配电及控制设备制造业	,
-	输配电及控制设备制造业	,
-	电工器材制造业	,
-	电工器材制造业	,
-	电工器材制造业	,
-	基础化学原料制造业	,
-	煤炭工业	,
-	建筑工程安装业	,
-	建筑工程安装业	,
-	建筑工程安装业	,
-	有色金属冶炼业	,
-	热力生产及供应业
+  	<item>指标</item>
+	<item>指标分析(单位：万元)</item>
+	<item skip="${compTypes.size != 13}">股份公司</item>
+	<item skip="${!compTypes.contains[CompanyType.SBGS]}"		>输配电及控制设备制造业</item>
+	<item skip="${!compTypes.contains[CompanyType.HBGS]}"		>输配电及控制设备制造业</item>
+	<item skip="${!compTypes.contains[CompanyType.XBC]}"		>输配电及控制设备制造业</item>
+	<item skip="${!compTypes.contains[CompanyType.XLC]}"		>电工器材制造业</item>
+	<item skip="${!compTypes.contains[CompanyType.LLGS]}"		>电工器材制造业</item>
+	<item skip="${!compTypes.contains[CompanyType.DLGS]}"		>电工器材制造业</item>
+	<item skip="${!compTypes.contains[CompanyType.XTNYGS]}"		>基础化学原料制造业</item>
+	<item skip="${!compTypes.contains[CompanyType.TCNY]}"		>煤炭工业</item>
+	<item skip="${!compTypes.contains[CompanyType.XNYGS]}"		>建筑工程安装业</item>
+	<item skip="${!compTypes.contains[CompanyType.JCKGS_JYDW]}"	>建筑工程安装业</item>
+	<item skip="${!compTypes.contains[CompanyType.GJGCGS_GFGS]}">建筑工程安装业</item>
+	<item skip="${!compTypes.contains[CompanyType.ZHGS]}"		>有色金属冶炼业</item>
+	<item skip="${!compTypes.contains[CompanyType.NDGS]}"		>热力生产及供应业</item>
   </list>
   <list id="title1" type="string">
-  	指标	,
-	指标分析(单位：万元)	,
-	股份公司	,
-	沈变	,
-	衡变	,
-	新变厂	,
-	新缆厂	,
-	鲁缆公司	,
-	德缆公司	,
-	新特能源	,
-	天池能源	,
-	新能源	,
-	进出口	,
-	国际工程	,
-	众和	,
-	能动	
+	<item>指标</item>
+	<item>指标分析(单位：万元)</item>
+	<item skip="${compTypes.size != 13}">股份公司</item>
+	<item skip="${!compTypes.contains[CompanyType.SBGS]}"		>沈变</item>
+	<item skip="${!compTypes.contains[CompanyType.HBGS]}"		>衡变</item>
+	<item skip="${!compTypes.contains[CompanyType.XBC]}"		>新变厂</item>
+	<item skip="${!compTypes.contains[CompanyType.XLC]}"		>新缆厂</item>
+	<item skip="${!compTypes.contains[CompanyType.LLGS]}"		>鲁缆公司</item>
+	<item skip="${!compTypes.contains[CompanyType.DLGS]}"		>德缆公司</item>
+	<item skip="${!compTypes.contains[CompanyType.XTNYGS]}"		>新特能源</item>
+	<item skip="${!compTypes.contains[CompanyType.TCNY]}"		>天池能源</item>
+	<item skip="${!compTypes.contains[CompanyType.XNYGS]}"		>新能源</item>
+	<item skip="${!compTypes.contains[CompanyType.JCKGS_JYDW]}"	>进出口</item>
+	<item skip="${!compTypes.contains[CompanyType.GJGCGS_GFGS]}">国际工程</item>
+	<item skip="${!compTypes.contains[CompanyType.ZHGS]}"		>众和</item>
+	<item skip="${!compTypes.contains[CompanyType.NDGS]}"		>能动</item>
   </list>
   <formatter id="excel">
    <ExcelTitleFilter>
@@ -361,7 +349,7 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
    <map key="month" value="${calendar.current.month}"/>
    <map key="updateUrl" value="dbxqUpdate"/>
    <map key="exportUrl" value="dbxqExport"/>
-<!--    <map map="${authMgr[23]}"/> -->
+   <!--    <map map="${authMgr[23]}"/> -->
    <map key="title" value="对标需求"/>
   </response>
  </controller>

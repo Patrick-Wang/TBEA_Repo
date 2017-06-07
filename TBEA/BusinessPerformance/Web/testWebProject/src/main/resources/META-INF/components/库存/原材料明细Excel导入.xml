@@ -1,7 +1,7 @@
 <components>
  <service id="servYclmxImportEntry" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
-  <merge data="${data}" table="storage_yclmx">
+  <merge data="${data}" table="storage_yclmx" from="2">
    <set>
 	<company_name	type="string"	ref="${counter.reset[0].val}" test="${this != null}"/>
 	<material_name	type="string"	ref="${counter.next.val}" test="${this != null}"/>
@@ -11,7 +11,7 @@
 	<amount	type="double"	ref="${counter.next.val}"/>
 	<unit_price	type="double"	ref="${counter.next.val}"/>
 	<amount_of_money	type="double"	ref="${counter.next.val}"/>
-	<storage_date	type="date"	ref="${counter.next.val}"/>
+	<storage_date	type="date"	ref="${counter.next.val}" test="${this != null}"/>
 	<stock_duration	type="double"	ref="${counter.next.val}"/>
 	<cause	type="string"	ref="${counter.next.val}"/>
 	<treatment	type="string"	ref="${counter.next.val}"/>
@@ -23,6 +23,7 @@
 	<amount_of_this_month	type="double"	ref="${counter.next.val}"/>
 	<money_of_this_month	type="double"	ref="${counter.next.val}"/>
 	<action_of_this_month	type="string"	ref="${counter.next.val}"/>
+	<jydw type="int" value="${compId}"/>
     <source type="string" value="${src}"/>
     <time type="date" value="${time}"/>
    </set>
@@ -31,6 +32,7 @@
  <controller id="yclmxImport">
   <context key="data" value="${request.upfile.asExcel}"/>
   <context key="src" value="${session.account.name} Excel 导入"/>
+ <context key="compId" value="${orgs.BMDBOrganization.ids[request.compId.asInt]}"/>  
   <context key="time" value="${calendar.current.secondFormat}"/>
   <callservice id="servYclmxImportEntry"/>
   <response type="json">
@@ -41,6 +43,7 @@
  <controller id="yclmxImportJsp">
   <response type="jsp" name="components/import_data">
    <map key="importUrl" value="yclmxImport"/>
+   <map map="${authMgr[70]}"/>
    <map key="title" value="原材料明细导入"/>
   </response>
  </controller>

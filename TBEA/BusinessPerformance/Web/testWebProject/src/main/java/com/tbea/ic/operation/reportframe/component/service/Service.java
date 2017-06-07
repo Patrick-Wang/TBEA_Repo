@@ -6,6 +6,7 @@ import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.ComponentManager;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.interpreter.CallServiceXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.CallXmlInterpreter;
 import com.tbea.ic.operation.reportframe.interpreter.ContextXmlInterpreter;
@@ -63,10 +64,10 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 
 	@Override
 	public void run() throws Exception{
-		XmlUtil.eachChildren(config, new OnLoop() {
+		XmlUtil.eachChildren(config, elp, new OnLoop() {
 			@Override
 			public void on(Element elem) throws Exception {
-				for (XmlInterpreter interpreter : interpreters) {
+				for (XmlInterpreter interpreter : interpreters) {	
 					if (interpreter.accept(Service.this, elem)) {
 						if (ReportLogger.trace().isDebugEnabled()){
 							ReportLogger.trace().debug("service : " + XmlUtil.toStringFromDoc(elem));

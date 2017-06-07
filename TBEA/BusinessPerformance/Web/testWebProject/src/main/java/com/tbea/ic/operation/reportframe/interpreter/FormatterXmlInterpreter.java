@@ -78,7 +78,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		this.component = component;
 		elp = new ELParser(component);
 		List<FormatterHandler> handlers = new ArrayList<FormatterHandler>();
-		XmlUtil.eachChildren(e, new OnLoop(){
+		XmlUtil.eachChildren(e, elp, new OnLoop(){
 
 			@Override
 			public void on(Element elem) throws Exception {

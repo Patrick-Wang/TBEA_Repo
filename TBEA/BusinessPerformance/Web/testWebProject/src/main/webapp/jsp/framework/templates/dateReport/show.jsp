@@ -224,7 +224,9 @@
     </tr>
 </Table>
 <script type="text/javascript">
-
+	if ("true" == '${nodate}'){
+	    $("#dt").hide();
+	}
     $(document).ready(function () {
         framework.templates.dateReport.createInstance();
         var dateEnd;

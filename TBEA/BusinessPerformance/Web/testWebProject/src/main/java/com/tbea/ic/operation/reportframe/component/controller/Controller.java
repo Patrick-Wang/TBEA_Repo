@@ -1,7 +1,6 @@
 package com.tbea.ic.operation.reportframe.component.controller;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
@@ -65,7 +64,7 @@ public class Controller extends AbstractXmlComponent {
 	
 	@Override
 	protected void onRun() throws Exception {		
-		XmlUtil.eachChildren(this.config, new OnLoop(){
+		XmlUtil.eachChildren(this.config, elp, new OnLoop(){
 			@Override
 			public void on(Element elem) throws Exception  {
 				for (XmlInterpreter interpreter : interpreters){

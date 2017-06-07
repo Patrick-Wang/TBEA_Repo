@@ -30,7 +30,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 	
 	JSONObject parseJsonObject(Element pElem) throws Exception{
 		JSONObject pJson = new JSONObject();
-		XmlUtil.eachChildren(pElem, new XmlUtil.OnLoop(){
+		XmlUtil.eachChildren(pElem, elp, new XmlUtil.OnLoop(){
 			@Override
 			public void on(Element elem) throws Exception {
 				if ("array".equals(elem.getAttribute("type"))){
@@ -68,7 +68,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 			ja.addAll(XmlUtil.toStringList(StringUtil.shrink(XmlUtil.getText(elem)), elp));
 		}
 		
-		XmlUtil.eachChildren(elem, new XmlUtil.OnLoop(){
+		XmlUtil.eachChildren(elem, elp, new XmlUtil.OnLoop(){
 			@Override
 			public void on(Element el) throws DOMException, Exception {
 				if ("item".equals(el.getTagName())){
@@ -135,7 +135,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 
 	private Map parseMap(ELParser elp, Element e) throws Exception {
 		Map map = new HashMap();
-		XmlUtil.each(e.getElementsByTagName("map"), new OnLoop(){
+		XmlUtil.each(e.getElementsByTagName("map"), elp, new OnLoop(){
 
 			@Override
 			public void on(Element elem) throws Exception {

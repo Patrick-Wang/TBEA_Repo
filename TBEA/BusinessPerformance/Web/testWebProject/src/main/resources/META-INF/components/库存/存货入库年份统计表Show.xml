@@ -12,7 +12,8 @@
 from 	
 	storage_yclmx
 where
-	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(mm,storage_date)
 		</sql>
@@ -22,7 +23,8 @@ from
 	storage_yclmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[5].months[12].date}) &gt;= 0 and
-	DATEPART(mm,storage_date) = 12
+	DATEPART(mm,storage_date) = 12 and
+	jydw = ${compId}
 		</sql>
   <list export="true" id="r1" type="double" sql="s1" value="1" clear="true">
    <item insert="0">${sr1Frist[0]}</item>
@@ -38,7 +40,8 @@ from
 	storage_yclmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &gt;= 0 and
-	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -55,7 +58,8 @@ from
 	storage_yclmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &gt;= 0 and
-	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -72,7 +76,8 @@ from
 	storage_yclmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &gt;= 0 and
-	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -89,7 +94,8 @@ from
 	storage_yclmx
 where
 	dateDiff(mm, storage_date, ${cal.months[12].date}) &gt;= 0 and
-	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -109,7 +115,8 @@ group by
 from 	
 	storage_bcpmx
 where
-	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(mm,storage_date)
 		</sql>
@@ -119,7 +126,8 @@ from
 	storage_bcpmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[5].months[12].date}) &gt;= 0 and
-	DATEPART(mm,storage_date) = 12
+	DATEPART(mm,storage_date) = 12 and
+	jydw = ${compId}
 		</sql>
   <list export="true" id="r1" type="double" sql="s1" value="1" clear="true">
    <item insert="0">${sr1Frist[0]}</item>
@@ -135,7 +143,8 @@ from
 	storage_bcpmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &gt;= 0 and
-	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -152,7 +161,8 @@ from
 	storage_bcpmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &gt;= 0 and
-	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -169,7 +179,8 @@ from
 	storage_bcpmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &gt;= 0 and
-	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -186,7 +197,8 @@ from
 	storage_bcpmx
 where
 	dateDiff(mm, storage_date, ${cal.months[12].date}) &gt;= 0 and
-	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0
+	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -206,7 +218,8 @@ group by
 from 	
 	storage_swccptz
 where
-	dateDiff(mm, complete_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0
+	dateDiff(mm, complete_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(mm,complete_date)
 		</sql>
@@ -216,7 +229,8 @@ from
 	storage_swccptz
 where
 	dateDiff(mm, complete_date, ${cal.yearBefore[5].months[12].date}) &gt;= 0 and
-	DATEPART(mm,complete_date) = 12
+	DATEPART(mm,complete_date) = 12 and
+	jydw = ${compId}
 		</sql>
   <list export="true" id="r1" type="double" sql="s1" value="1" clear="true">
    <item insert="0">${sr1Frist[0]}</item>
@@ -232,7 +246,8 @@ from
 	storage_swccptz
 where
 	dateDiff(mm, complete_date, ${cal.yearBefore[3].months[12].date}) &gt;= 0 and
-	dateDiff(mm, complete_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0
+	dateDiff(mm, complete_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,complete_date),
 	DATEPART(mm,complete_date)
@@ -249,7 +264,8 @@ from
 	storage_swccptz
 where
 	dateDiff(mm, complete_date, ${cal.yearBefore[2].months[12].date}) &gt;= 0 and
-	dateDiff(mm, complete_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0
+	dateDiff(mm, complete_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,complete_date),
 	DATEPART(mm,complete_date)
@@ -266,7 +282,8 @@ from
 	storage_swccptz
 where
 	dateDiff(mm, complete_date, ${cal.yearBefore[1].months[12].date}) &gt;= 0 and
-	dateDiff(mm, complete_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0
+	dateDiff(mm, complete_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,complete_date),
 	DATEPART(mm,complete_date)
@@ -283,7 +300,8 @@ from
 	storage_swccptz
 where
 	dateDiff(mm, complete_date, ${cal.months[12].date}) &gt;= 0 and
-	dateDiff(mm, complete_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0
+	dateDiff(mm, complete_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
 group by
 	DATEPART(yy,complete_date),
 	DATEPART(mm,complete_date)
@@ -469,6 +487,7 @@ group by
  </controller>
  <controller id="kcchrunftjUpdate">
   <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
   <callservice id="servKcchrunftj"/>
   <callcontroller id="servFmtterKcchrunftj"/>
   <formatterServer id="fmtServ" table="${result.matrixNoIds}">
@@ -511,6 +530,7 @@ group by
  </controller>
  <controller id="kcchrunftjExport">
   <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
   <callservice id="servKcchrunftj"/>
   <callcontroller id="servFmtterKcchrunftj" inline="true"/>
   <ExcelTemplate id="excelTemplate" sheet="存货入库年份统计表"/>
@@ -544,10 +564,11 @@ group by
   <response type="excel" ref="excelTemplate" name="${request.date.asString}存货入库年份统计表.xls" serv="fmtServ"/>
  </controller>
  <controller id="kcchrunftj">
-  <response type="jsp" name="framework/templates/singleDateReport/show">
+  <response type="jsp" name="framework/templates/dateReport/show">
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
    <map key="nodate" value="true"/>
+   <map map="${authMgr[69]}"/>
    <map key="updateUrl" value="kcchrunftjUpdate"/>
    <map key="exportUrl" value="kcchrunftjExport"/>
    <map key="title" value="存货入库年份统计表"/>

@@ -3,7 +3,9 @@ package com.tbea.ic.operation.reportframe.component;
 import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.tbea.ic.operation.reportframe.el.ELParser;
 import com.tbea.ic.operation.reportframe.el.ELParser.ObjectLoader;
+import com.tbea.ic.operation.reportframe.util.XmlUtil;
 
 public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	
@@ -12,6 +14,8 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	protected Element config;
 	protected AbstractXmlComponent preComponent;
 	protected ComponentManager mgr;
+	protected ELParser elp = new ELParser(this);
+	
 	
 	public ComponentManager getCM(){
 		return mgr;

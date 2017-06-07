@@ -161,6 +161,9 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			return true;
 		}
 
+		Integer from = XmlUtil.getIntAttr(e, "from", elp, null);
+		Integer to = XmlUtil.getIntAttr(e, "to", elp, null);
+		
 		Object dataObj = null;
 		if ("true".equalsIgnoreCase(XmlUtil.getAttr(e, "nodata"))) {
 			JSONArray ja = new JSONArray();
@@ -184,13 +187,13 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		Transaction tx = (Transaction) component.getVar(trans);
 		EntityManager em = tx.getEntityManager();
 		if (dataObj instanceof JSONArray) {
-			mergeJson((JSONArray) dataObj, em, table);
+			mergeJson((JSONArray) dataObj, em, table, from, to);
 		} else if (dataObj instanceof XSSFWorkbook) {
-			mergeExcel((XSSFWorkbook) dataObj, em, table);
+			mergeExcel((XSSFWorkbook) dataObj, em, table, from, to);
 		} else if (dataObj instanceof List) {
-			mergeList((List) dataObj, em, table);
+			mergeList((List) dataObj, em, table, from, to);
 		} else if (dataObj instanceof Iterator) {
-			mergeIterator((Iterator) dataObj, em, table);
+			mergeIterator((Iterator) dataObj, em, table, from, to);
 		}
 
 		completeUpdate(em);
@@ -221,46 +224,60 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		}
 	}
 
-	private void mergeIterator(Iterator it, EntityManager em, String table) {
+	private void mergeIterator(Iterator it, EntityManager em, String table, Integer from, Integer to) {
+		int start = (from != null ? from : 0);
 		for (int i = 0; it.hasNext(); ++i) {
-			JSONArray row = list2Json(it.next());
-			this.component.local("i", i - 1);
-			merge(em, table, row);
+			if (i >= start){
+				if (to != null && i > to){
+					break;
+				}
+				
+				JSONArray row = list2Json(it.next());
+				this.component.local("i", i - start);
+				merge(em, table, row);
+			}
+			
 		}
 	}
 
-	private void mergeList(List dataList, EntityManager em, String table) {
-		for (int i = 0; i < dataList.size(); ++i) {
+	private void mergeList(List dataList, EntityManager em, String table, Integer from, Integer to) {
+		int end = (to != null ? Math.min(dataList.size(), to + 1) : dataList.size());
+		int start = (from != null ? from : 0);
+		for (int i = start; i < end; ++i) {
 			JSONArray row = list2Json(dataList.get(i));
-			this.component.local("i", i - 1);
+			this.component.local("i", i);
 			merge(em, table, row);
 		}
 	}
 
 	private void mergeExcel(XSSFWorkbook dataExcel, EntityManager em,
-			String table) throws ValidationException {
+			String table, Integer from, Integer to) throws ValidationException {
 		XSSFWorkbook workbook = (XSSFWorkbook) dataExcel;
 		XSSFSheet sheet = workbook.getSheetAt(0);
 		boolean isInsert = where.isEmpty();
 		Map<Integer, Integer> types = new HashMap<Integer, Integer>();
 		int maxCol = getTypes(types);
-		for (int i = 1; i <= sheet.getLastRowNum(); ++i) {
+		int end = (to != null ? Math.min(sheet.getLastRowNum() + 1, to + 1) : (sheet.getLastRowNum() + 1));
+		int start = (from != null ? from : 1);
+		for (int i = start; i < end; ++i) {
 			XSSFRow row = sheet.getRow(i);
 			if (null != row) {
 				JSONArray jrow = XSSF2Json(row, types, maxCol);
 				if (isInsert) {
 					jrow.add("add");
 				}
-				this.component.local("i", i - 1);
+				this.component.local("i", i - start);
 				merge(em, table, jrow);
 			}
 		}
 	}
 
-	private void mergeJson(JSONArray dataJson, EntityManager em, String table) {
-		for (int i = 0, len = dataJson.size(); i < len; ++i) {
+	private void mergeJson(JSONArray dataJson, EntityManager em, String table, Integer from, Integer to) {
+		int end = (to != null ? Math.min(dataJson.size(), to + 1) : dataJson.size());
+		int start = (from != null ? from : 0);
+		for (int i = start; i < end; ++i) {
 			JSONArray row = dataJson.getJSONArray(i);
-			this.component.local("i", i);
+			this.component.local("i", i - start);
 			merge(em, table, row);
 		}
 	}
@@ -636,11 +653,11 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 
 	private List<FieldSql> compile(NodeList list) throws Exception {
 		List<FieldSql> result = new ArrayList<FieldSql>();
-		XmlUtil.each(list, new OnLoop() {
+		XmlUtil.each(list, elp, new OnLoop() {
 
 			@Override
 			public void on(Element e) throws Exception {
-				XmlUtil.eachChildren(e, new OnLoop() {
+				XmlUtil.eachChildren(e, elp, new OnLoop() {
 
 					@Override
 					public void on(Element elem) throws Exception {

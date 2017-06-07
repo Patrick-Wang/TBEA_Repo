@@ -13,7 +13,8 @@ from
 	storage_yclmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(mm,storage_date)
 		</sql>
@@ -24,7 +25,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[5].months[12].date}) &gt;= 0 and
 	DATEPART(mm,storage_date) = 12 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 		</sql>
   <list export="true" id="r1" type="double" sql="s1" value="1" clear="true">
    <item insert="0">${sr1Frist[0]}</item>
@@ -41,7 +43,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &gt;= 0 and
 	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -59,7 +62,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &gt;= 0 and
 	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -77,7 +81,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &gt;= 0 and
 	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -95,7 +100,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.months[12].date}) &gt;= 0 and
 	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -116,7 +122,8 @@ from
 	storage_bcpmx
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(mm,storage_date)
 		</sql>
@@ -127,7 +134,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[5].months[12].date}) &gt;= 0 and
 	DATEPART(mm,storage_date) = 12 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 		</sql>
   <list export="true" id="r1" type="double" sql="s1" value="1" clear="true">
    <item insert="0">${sr1Frist[0]}</item>
@@ -144,7 +152,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &gt;= 0 and
 	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -162,7 +171,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &gt;= 0 and
 	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -180,7 +190,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &gt;= 0 and
 	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -198,7 +209,8 @@ from
 where
 	dateDiff(mm, storage_date, ${cal.months[12].date}) &gt;= 0 and
 	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
@@ -219,7 +231,8 @@ from
 	storage_swccptz
 where
 	dateDiff(mm, complete_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(mm,complete_date)
 		</sql>
@@ -230,7 +243,8 @@ from
 where
 	dateDiff(mm, complete_date, ${cal.yearBefore[5].months[12].date}) &gt;= 0 and
 	DATEPART(mm,complete_date) = 12 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 		</sql>
   <list export="true" id="r1" type="double" sql="s1" value="1" clear="true">
    <item insert="0">${sr1Frist[0]}</item>
@@ -247,7 +261,8 @@ from
 where
 	dateDiff(mm, complete_date, ${cal.yearBefore[3].months[12].date}) &gt;= 0 and
 	dateDiff(mm, complete_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,complete_date),
 	DATEPART(mm,complete_date)
@@ -265,7 +280,8 @@ from
 where
 	dateDiff(mm, complete_date, ${cal.yearBefore[2].months[12].date}) &gt;= 0 and
 	dateDiff(mm, complete_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,complete_date),
 	DATEPART(mm,complete_date)
@@ -283,7 +299,8 @@ from
 where
 	dateDiff(mm, complete_date, ${cal.yearBefore[1].months[12].date}) &gt;= 0 and
 	dateDiff(mm, complete_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,complete_date),
 	DATEPART(mm,complete_date)
@@ -301,7 +318,8 @@ from
 where
 	dateDiff(mm, complete_date, ${cal.months[12].date}) &gt;= 0 and
 	dateDiff(mm, complete_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0 and
-	is_overstock = '是'
+	is_overstock = '是' and
+	jydw = ${compId}
 group by
 	DATEPART(yy,complete_date),
 	DATEPART(mm,complete_date)
@@ -487,6 +505,7 @@ group by
  </controller>
  <controller id="kcjywzUpdate">
   <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
   <callservice id="servKcjywz"/>
   <callcontroller id="servFmtterKcjywz"/>
   <formatterServer id="fmtServ" table="${result.matrixNoIds}">
@@ -529,6 +548,7 @@ group by
  </controller>
  <controller id="kcjywzExport">
   <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
   <callservice id="servKcjywz"/>
   <callcontroller id="servFmtterKcjywz" inline="true"/>
   <ExcelTemplate id="excelTemplate" sheet="积压物资汇总表"/>
@@ -562,10 +582,11 @@ group by
   <response type="excel" ref="excelTemplate" name="${request.date.asString}积压物资汇总表.xls" serv="fmtServ"/>
  </controller>
  <controller id="kcjywz">
-  <response type="jsp" name="framework/templates/singleDateReport/show">
+  <response type="jsp" name="framework/templates/dateReport/show">
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
    <map key="nodate" value="true"/>
+   <map map="${authMgr[69]}"/>
    <map key="updateUrl" value="kcjywzUpdate"/>
    <map key="exportUrl" value="kcjywzExport"/>
    <map key="title" value="积压物资汇总表"/>

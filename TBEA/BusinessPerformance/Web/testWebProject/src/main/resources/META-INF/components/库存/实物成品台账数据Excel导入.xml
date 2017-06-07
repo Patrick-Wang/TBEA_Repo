@@ -1,10 +1,10 @@
 <components>
  <service id="servKcswcptzImportEntry" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
-  <merge data="${data}" table="storage_swccptz">
+  <merge data="${data}" table="storage_swccptz" from="2">
    <set>
-    <status type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
-    <company_name type="string" ref="${counter.next.val}" test="${this != null}"/>
+    <status type="string" ref="${counter.reset[0].val}"/>
+    <company_name type="string" ref="${counter.next.val}"/>
     <contract_no type="string" ref="${counter.next.val}"/>
     <customer_name type="string" ref="${counter.next.val}"/>
     <deliver_date type="date" ref="${counter.next.val}"/>
@@ -12,7 +12,7 @@
     <level type="string" ref="${counter.next.val}"/>
     <stock_amount type="double" ref="${counter.next.val}"/>
     <stock_money type="double" ref="${counter.next.val}"/>
-    <complete_date type="date" ref="${counter.next.val}"/>
+    <complete_date type="date" ref="${counter.next.val}"  test="${this != null}"/>
 	<stock_contract_date type="double" ref="${counter.next.val}"/>
 	<amount_of_paid type="double" ref="${counter.next.val}"/>
 	<ratio_of_paid type="double" ref="${counter.next.val}"/>
@@ -22,6 +22,7 @@
 	<added_month type="date" ref="${counter.next.val}"/>   
     <is_overstock type="string" ref="${counter.next.val}"/>
     <person_liable type="string" ref="${counter.next.val}"/>
+	<jydw type="int" value="${compId}"/>
     <source type="string" value="${src}"/>
     <time type="date" value="${time}"/>
    </set>
@@ -30,6 +31,7 @@
  <controller id="kcswcptzImport">
   <context key="data" value="${request.upfile.asExcel}"/>
   <context key="src" value="${session.account.name} Excel 导入"/>
+ <context key="compId" value="${orgs.BMDBOrganization.ids[request.compId.asInt]}"/>
   <context key="time" value="${calendar.current.secondFormat}"/>
   <callservice id="servKcswcptzImportEntry"/>
   <response type="json">
@@ -40,6 +42,7 @@
  <controller id="kcswcptzImportJsp">
   <response type="jsp" name="components/import_data">
    <map key="importUrl" value="kcswcptzImport"/>
+   <map map="${authMgr[70]}"/>
    <map key="title" value="实物产成品台账导入"/>
   </response>
  </controller>
