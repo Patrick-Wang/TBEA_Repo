@@ -1,0 +1,26 @@
+<components>
+ <controller id="kcwrapperImport">
+ 	<context key="item" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+ 	<if test="${item == 1}">
+ 		<callcontroller id="bcptjImport"></callcontroller>
+ 	</if>
+ 	<elseif  test="${item == 2}">
+ 		<callcontroller id="yclmxImport"></callcontroller>
+ 	</elseif>
+ 	<else>
+ 		<callcontroller id="kcswcptzImport"></callcontroller>
+ 	</else>
+ </controller>
+ <controller id="kcwrapperImportJsp">
+  <list id="ids" type="int">1,2,3</list>
+  <list id="vals" type="string">
+	半成品统计,原材料明细,实物成品台账数据
+  </list>
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="kcwrapperImport"/>
+   <map map="${authMgr[70]}"/>
+    <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+   <map key="title" value="半成品统计导入"/>
+  </response>
+ </controller>
+</components>
