@@ -507,7 +507,7 @@ public class YszkgbServlet {
 	}
 	
 	//每月3到五号零点触发
-	@Scheduled(cron="0 0 0 3-5 * ?")
+	@Scheduled(cron="0 0 0 4-5 * ?")
 	public void scheduleImport(){
 		Calendar cal = Calendar.getInstance();
 		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");

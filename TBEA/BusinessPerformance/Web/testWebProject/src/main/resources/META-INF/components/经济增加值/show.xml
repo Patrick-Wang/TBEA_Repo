@@ -43,8 +43,10 @@ dwid = ${compId}</sql>
   </formatter>
  </controller>
  <controller id="jjzjzUpdate">
+
   <context key="cal" value="${request.date.asCalendar}"/>
   <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="lg">${logger.ACCOUNT.debug[compId.asJson]}</context>
   <callservice id="servJjzjz"/>
   <callcontroller id="servFmtterJjzjz"/>
   <formatterServer id="fmtServ" table="${result.matrixNoIds}">

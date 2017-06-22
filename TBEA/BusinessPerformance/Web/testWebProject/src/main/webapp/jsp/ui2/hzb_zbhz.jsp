@@ -69,6 +69,7 @@
 <script src="../jsp/hzb_zbhz.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+		Util.loadCssFile("${pageContext.request.contextPath}/jsp/ui2/ui2.css");
     	var instance = hzb_zbhz.View.newInstance();
         (function () {
             $(document).ready(function () {
@@ -83,6 +84,8 @@
 <style type="text/css">
 body {
 	background-color: rgb(247, 247, 247);
+	margin:0px;
+	font-family: Microsoft YaHei UI;
 }
 
 .panel-content-border {
@@ -138,7 +141,7 @@ body {
 }
 
 .header h1 {
-	text-align: center;
+	text-align: left;
 }
 
 .companyname h1 {
@@ -303,6 +306,7 @@ th.ui-th-ltr {
     font-size: 14px;
 }
 
+
 </style>
 
 </head>
@@ -311,7 +315,7 @@ th.ui-th-ltr {
 		<h1>${year}年${month}月公司整体指标完成情况</h1>
 	</div>
 
-	<Table align="center">
+	<Table>
 		<tr>
 			<td>
 				<Table>
@@ -325,11 +329,14 @@ th.ui-th-ltr {
 								<option value="0" selected="selected">全部</option>
 								<option value="1">收入签约分结构</option>
 						</select></td>
-						<td><input id="update" type="button" value="更新"
+						<td>
+						<i class="fa fa-refresh" aria-hidden="true" id="update" onclick="instance.updateUI()"></i>
+						
+						<!-- <input id="update" type="button" 
 							style="width: 80px; margin-left: 10px;"
 							onclick="instance.updateUI()"
 							class="ui-button ui-widget ui-state-default ui-corner-all"
-							role="button" aria-disabled="false"></input></td>
+							role="button" aria-disabled="false"></input> --></td>
 					</tr>
 				</Table>
 			</td>

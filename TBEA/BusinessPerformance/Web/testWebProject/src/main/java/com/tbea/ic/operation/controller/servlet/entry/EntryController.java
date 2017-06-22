@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
@@ -76,7 +77,7 @@ public class EntryController {
 		return comps;
 	}
 
-	@RequestMapping(value = "zb.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"zb.do", "v2/zb"}, method = RequestMethod.GET)
 	public ModelAndView getZBEntry(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar date = Calendar.getInstance();
@@ -102,7 +103,7 @@ public class EntryController {
 		compSel.select(map);
 		
 		map.put("entryType", entryType.ordinal());		
-		return new ModelAndView("entry_template", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "entry_template", map);
 	}
 
 	@RequestMapping(value = "zb_update.do", method = RequestMethod.GET)

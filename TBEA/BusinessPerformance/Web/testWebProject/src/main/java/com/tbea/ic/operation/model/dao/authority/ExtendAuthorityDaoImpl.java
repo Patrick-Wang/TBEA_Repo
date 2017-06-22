@@ -48,5 +48,12 @@ public class ExtendAuthorityDaoImpl extends AbstractReadWriteDaoImpl<ExtendAutho
 		q.setParameter("compId", comp.getId());
 		return q.getResultList();
 	}
+
+	@Override
+	public List<Integer> getAuthority(Account account) {
+		Query q = this.getEntityManager().createQuery("select distinct authType from ExtendAuthority where account.id = :id");
+		q.setParameter("id", account.getId());
+		return q.getResultList();
+	}
 	
 }

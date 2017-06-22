@@ -145,10 +145,10 @@
 										class="ec-icon ec-icon-line"></i> <a href="#sddb"
 										style="color: rgb(62, 152, 197);">订单全过程管控</a></li>
 								</c:if>
-								<c:if test="${scbsjLookup || scbsjEntry}">
+								<c:if test="${scbsjLookup || scbsjEntry || _71 || _72}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#scqyxx"
-										style="color: rgb(62, 152, 197);">市场签约信息</a></li>
+										style="color: rgb(62, 152, 197);">市场分析</a></li>
 								</c:if>
 								<c:if test="${zhzlLookup || zhJyfxLookupAuth}">
 									<li style="background-color: transparent;"><i
@@ -168,6 +168,11 @@
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#xcp"
 										style="color: rgb(62, 152, 197);">新产品信息</a></li>
+								</c:if>
+								<c:if test="${_69 || _70}">
+									<li style="background-color: transparent;"><i
+										class="ec-icon ec-icon-line"></i> <a href="#ch"
+										style="color: rgb(62, 152, 197);">存货管控</a></li>
 								</c:if>
 								
 								<!-- 只有sbd公司权限显示-->
@@ -219,7 +224,7 @@
 										style="color: rgb(62, 152, 197);">新能源产业经营报表</a></li>
 								</c:if>
 								
-						
+								
 								
 								
 <%-- 								<c:if test="${FinanceLookup}">
@@ -456,12 +461,16 @@
 	<script src="../jsp/util.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		function logout() {
-			var logoutAjax = new Util.Ajax("exitSystem.do");
-			logoutAjax.get().then(function onSuccess() {
+			
+			if (!Util.Ajax.parentInvalidate()){
+				var logoutAjax = new Util.Ajax("exitSystem.do");
+				logoutAjax.get().then(function onSuccess() {
 
-			}, function onFailed() {
-				alert("网络错误");
-			});
+				}, function onFailed() {
+					alert("网络错误");
+				});
+			}
+			
 		}
 
 		var funResize;

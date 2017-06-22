@@ -191,4 +191,9 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 		}
 		return ret;
 	}
+	
+	@Override
+	public List<Integer> getAuths(Account account) {
+		return extendAuthDao.getAuthority(account);
+	}
 }

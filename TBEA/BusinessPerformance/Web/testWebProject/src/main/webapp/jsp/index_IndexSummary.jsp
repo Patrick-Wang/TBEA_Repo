@@ -294,10 +294,10 @@
 		</div>
 	</div>
 </c:if>
-<c:if test="${scbsjLookup || scbsjEntry}">
+<c:if test="${scbsjLookup || scbsjEntry || _71 || _72}">
 	<div>
 		<h3>
-			市场签约信息<a name="scqyxx"> </a>
+			市场分析<a name="scqyxx"> </a>
 		</h3>
 		<div class="section">
 			<div class="thumb3">
@@ -319,6 +319,22 @@
 						</li>
 						<li><a href="../report/scjbEntry.do" target="_blank"><img
 								src="../images/charts/bar1.png"> <span><strong>行业签约情况录入</strong></span></a>
+						</li>
+					</c:if>
+					<c:if test="${_71}">
+						<li><a href="../report/gnscxmqyHtmx.do" target="_blank"><img
+								src="../images/charts/bar4.png"> <span><strong>合同明细</strong></span></a>
+						</li>
+						<li><a href="../report/gnscxmqyTbmx.do" target="_blank"><img
+								src="../images/charts/bar3.png"> <span><strong>投标明细</strong></span></a>
+						</li>
+						<li><a href="../report/gnscxmqyXmmx.do" target="_blank"><img
+								src="../images/charts/bar3.png"> <span><strong>项目明细</strong></span></a>
+						</li>
+					</c:if>
+					<c:if test="${_72}">
+						<li><a href="../report/gnscxmqywrapperImportJsp.do" target="_blank"><img
+								src="../images/charts/bar5.png"> <span><strong>国内市场项目签约导入</strong></span></a>
 						</li>
 					</c:if>
 				</ul>
@@ -397,6 +413,35 @@
 		</div>
 	</div>
 </c:if>
+<c:if test="${_69 || _70}">
+	<div>
+		<h3>
+			存货管控<a name="ch"> </a>
+		</h3>
+		<div class="section">
+			<div class="thumb3">
+				<ul class="slides">
+				<c:if test="${_69}">
+					<li><a href="../report/kcchrunftj.do" target="_blank"><img
+							src="../images/charts/bar4.png"> <span><strong>存货入库年份统计</strong></span></a>
+					</li>
+					<li><a href="../report/kcjywz.do" target="_blank"><img
+							src="../images/charts/bar3.png"> <span><strong>积压物资汇总</strong></span></a>
+					</li>
+					
+				</c:if>
+				<c:if test="${_70}">
+					<li><a href="../report/kcwrapperImportJsp.do" target="_blank"><img
+							src="../images/charts/bar5.png"> <span><strong>存货导入</strong></span></a>
+					</li>
+				</c:if>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+</c:if>
+
 <%-- 
 <c:if test="${SbdAuth}">
 <div>

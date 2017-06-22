@@ -5,6 +5,8 @@ module tree {
     export interface INodeData {
         id: number;
         value: string;
+        icon:string;
+        iconOpen:string;
         click?:(node:ITreeNode)=>void;
     }
 
@@ -156,7 +158,7 @@ module tree {
 
         public accept(visitor:NodeVisitor):boolean {
             var stop:boolean = visitor.visit(this);
-            for (var i:number = this.subNodes.length - 1; !stop && i >= 0; --i) {
+            for (var i:number = 0; !stop && i < this.subNodes.length; ++i) {
                 stop = this.subNodes[i].accept(visitor);
             }
             return stop;

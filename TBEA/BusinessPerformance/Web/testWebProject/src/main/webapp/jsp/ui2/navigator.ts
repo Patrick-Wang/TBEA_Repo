@@ -1,5 +1,6 @@
 module navi{
 
+    import ITreeNode = tree.ITreeNode;
     Array.prototype.pushAll = function(items){
         for (var i = 0; i < items.length; ++i){
             this.push(items[i]);
@@ -9,7 +10,7 @@ module navi{
 
     export class Builder{
         builders = {};
-        register(group, builder){
+        register(group, builder:()=>ITreeNode[]){
             if (this.builders[group] == undefined){
                 this.builders[group] = [];
             }

@@ -648,6 +648,22 @@ module Util {
         redirect : string;
     }
 
+
+    export function isIframe(){
+        return !window.invalidate && window.parent.invalidate;
+    }
+
+    export function loadCssFile(f:string) {
+        if (isIframe()){
+            var head = document.getElementsByTagName('HEAD').item(0);
+            var style = document.createElement('link');
+            style.href = f;
+            style.rel = 'stylesheet';
+            style.type = 'text/css';
+            head.appendChild(style);
+        }
+    }
+
     export class Ajax {
         private mBaseUrl: string;
         private mCache: any = {};
@@ -656,6 +672,8 @@ module Util {
             this.mBaseUrl = baseUrl;
             this.mUseCache = useCache;
         }
+
+
 
         public baseUrl(){
             return this.mBaseUrl;
@@ -687,9 +705,19 @@ module Util {
             return this.mCache[Ajax.toUrlParam(option)];
         }
 
+        public static parentInvalidate(redirect?:string){
+            if (isIframe()){
+                window.parent.invalidate(redirect);
+                return true;
+            }
+            return false;
+        }
+
         private validate(data: AjaxRedirect): boolean {
             if (data.error == "invalidate session") {
-                window.location.href = data.redirect;
+                if (!Ajax.parentInvalidate(data.redirect)){
+                    window.location.href = data.redirect;
+                }
                 return false;
             }
             return true;

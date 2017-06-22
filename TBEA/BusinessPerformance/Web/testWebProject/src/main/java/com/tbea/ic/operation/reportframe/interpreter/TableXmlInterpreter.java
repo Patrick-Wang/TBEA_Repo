@@ -128,16 +128,15 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		Integer second = XmlUtil.getIntAttr(elem, "second", elp, null);
 		Integer target = XmlUtil.getIntAttr(elem, "toCol", elp, null);
 
-		for (int i = 0, len = tb.getIds().size(); i < len; ++i) {
-			List<Object> targetCol = tb.getValues().get(target);
-			List<Object> firstCol = tb.getValues().get(first);
-			List<Object> secondCol = tb.getValues().get(second);
-			for (int j = 0; j < targetCol.size(); ++j){
-				targetCol.set(j, MathUtil.sum(
-						MathUtil.o2d(firstCol.get(j)), 
-						MathUtil.o2d(secondCol.get(j))));
-			}
+		List<Object> targetCol = tb.getValues().get(target);
+		List<Object> firstCol = tb.getValues().get(first);
+		List<Object> secondCol = tb.getValues().get(second);
+		for (int j = 0; j < targetCol.size(); ++j){
+			targetCol.set(j, MathUtil.sum(
+					MathUtil.o2d(firstCol.get(j)), 
+					MathUtil.o2d(secondCol.get(j))));
 		}
+
 	}
 
 	private void handleDelays(AbstractXmlComponent component, Table tb)

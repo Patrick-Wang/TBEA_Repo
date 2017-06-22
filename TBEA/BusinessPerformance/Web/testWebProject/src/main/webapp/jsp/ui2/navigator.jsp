@@ -12,7 +12,7 @@
 		<c:if test="${scbsjLookup || scbsjEntry}">
 			<script>
 				builder.register('bbxx', function() {
-					return root = createNode("市场签约信息")
+					return root = createNode("市场签约信息", undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 						.append(builder.build('marketShow'))
 						.append(builder.build('marketEntry'));
 				});
@@ -41,7 +41,7 @@
 	<c:when test="${QualityAuth}">
 		<script>
 			builder.register('bbxx', function() {
-				return root = createNode("质量信息汇总分析").append(
+				return root = createNode("质量信息汇总分析", undefined, "fa fa-plus-square-o", "fa fa-minus-square-o").append(
 						builder.build('qualityShow')).append(
 						builder.build('qualityApprove')).append(
 						builder.build('qualityEntry')).append(
@@ -106,9 +106,9 @@
 		<c:if test="${notSbqgb}">
 			<script>
 				builder.register('bbxx', function() {
-					return createNode('经营指标完成情况')
+					return createNode('经营指标完成情况', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 						.append(builder.build('gczt'))
-						.append(createNode('经营单位及项目公司指标完成情况', 'ydzb/hzb_companys.do'))
+						.append(createNode('单位指标完成情况', 'ydzb/v2/hzb_companys.do'))
 						.append(builder.build('gcyzb'));
 				});
 	 		</script>
@@ -117,7 +117,7 @@
 				<script>
 					builder.register('gczt', function () {
 						return [
-						    createNode('公司整体指标完成情况', 'ydzb/hzb_zbhz.do')
+						    createNode('公司整体指标完成情况', 'ydzb/v2/hzb_zbhz.do')
 						];
 					});
 		 		</script>
@@ -126,9 +126,9 @@
 				<script>
 					builder.register('gcyzb', function() {
 						return [
-						    createNode('各产业五大经营指标完成情况', 'ydzb/gcy_zbhz.do'),
-						    createNode('各单位五大经营指标完成情况', 'ydzb/gdw_zbhz.do'),
-						    createNode('按照产业汇总指标', 'report/acyhzzb.do')
+						    createNode('产业重点指标完成情况', 'ydzb/v2/gcy_zbhz.do'),
+						    createNode('单位重点指标完成情况', 'ydzb/v2/gdw_zbhz.do'),
+						    createNode('产业指标汇总', 'report/acyhzzb.do')
 						];
 					});
 		 		</script>
@@ -136,9 +136,9 @@
 		</c:if>
 		<script>
 			builder.register('bbxx', function() {
-				return createNode('经营指标预测情况')
+				return createNode('经营指标预测情况', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 					.append(builder.build('ztzbycwcqk'))
-					.append(createNode('经营单位及项目公司指标预测完成情况', 'ydzb/hzb_companys_prediction.do'))
+					.append(createNode('单位指标预测完成情况', 'ydzb/v2/hzb_companys_prediction.do'))
 					.append(builder.build('wdjyzbyc'))
 					.append(builder.build('sjztbqk'));
 			});
@@ -147,7 +147,7 @@
 		<c:if test="${CorpAuth}">
 			<script>
 				builder.register('ztzbycwcqk', function() {
-					return createNode('整体指标预测完成情况', 'ydzb/hzb_zbhz_prediction.do');
+					return createNode('整体指标预测完成情况', 'ydzb/v2/hzb_zbhz_prediction.do');
 				});
 			</script>
 		</c:if>
@@ -156,8 +156,8 @@
 			<script>
 				builder.register('wdjyzbyc', function() {
 					return [
-						createNode('各产业五大经营指标预测完成情况', 'ydzb/financial_zbhz_prediction.do'),
-						createNode('各单位五大经营指标预测完成情况', 'ydzb/gdw_zbhz_prediction.do')
+						createNode('产业重点指标预测完成情况', 'ydzb/v2/financial_zbhz_prediction.do'),
+						createNode('单位重点指标预测完成情况', 'ydzb/v2/gdw_zbhz_prediction.do')
 					];
 				});
 			</script>
@@ -165,7 +165,7 @@
 		<c:if test="${JYEntryLookup || zhAuth}">
 			<script>
 				builder.register('sjztbqk', function() {
-					return createNode('20号/28号/实际指标预测值填报情况', 'dashboard/status.do');
+					return createNode('指标填报情况汇总', 'dashboard/status.do');
 				});
 			</script>
 		</c:if>
@@ -173,9 +173,9 @@
 		<c:if test="${isJydw || scgsdbqx || FinanceLookup}">
 			<script>
 				builder.register('bbxx', function() {
-					return createNode('财务分析')
+					return createNode('财务分析', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 						.append(builder.build('gsztcwwcqk'))
-						.append(createNode('经营单位财务指标完成情况', 'NCzb/CompanysNC.do'))
+						.append(createNode('单位财务指标完成情况', 'NCzb/CompanysNC.do'))
 						.append(createNode('财务对标需求', 'report/dbxq.do'))
 						.append(createNode('经济增加值', 'report/jjzjz.do'))
 						.append(builder.build('cwfxLookup'));
@@ -185,7 +185,7 @@
 			<c:if test="${CorpAuth}">
 				<script>
 					builder.register('gsztcwwcqk', function() {
-						return createNode('公司整体财务指标完成情况', 'NCzb/AllCompanysNC_overview.do');
+						return createNode('公司财务指标完成情况', 'NCzb/AllCompanysNC_overview.do');
 					});
 				</script>
 			</c:if>
@@ -205,7 +205,7 @@
 		<c:if test="${JYAnalysisLookup}">
 			<script>
 				builder.register('bbxx', function() {
-					return createNode('经营指标分析')
+					return createNode('经营指标分析', undefined)
 						.append(builder.build('yszkrbLookup'))
 						.append(builder.build('xjlrbLookup'))
 						.append(builder.build('jyzbpm'))
@@ -222,7 +222,7 @@
 			<c:if test="${XJLDialyLookup}">
 				<script>
 					builder.register('xjlrbLookup', function() {
-						return createNode('现金流日报', 'ydzb/xjlrb.do');
+						return createNode('现金流日报', 'ydzb/v2/xjlrb.do');
 					});
 				</script>
 			</c:if>
@@ -264,11 +264,11 @@
 						return [
 						   createNode('订单全过程管控', "report/bidCollectionWrapper.do"),
 						   createNode('中标产品分型号汇总', "report/WinBidModelCollection.do"),
-						   createNode('分阶段各单位订单成本汇总', "report/gdwddfxhCollection.do"),
-						   createNode('分阶段订单成本汇总表(按型号)', "report/gdwddCollection.do"),
+						   createNode('分阶段单位订单成本汇总', "report/gdwddfxhCollection.do"),
+						   createNode('订单成本汇总表(按型号)', "report/gdwddCollection.do"),
 						   createNode('公司订单分阶段汇总分析', "report/ddfjdCollection.do"),
-						   createNode('完工订单分图号三单对比分析', "report/codeCollection.do"),
-						   createNode('完工订单分型号三单对比分析', "report/modelCollection.do"),
+						   createNode('完工订单分图号对比分析', "report/codeCollection.do"),
+						   createNode('完工订单分型号对比分析', "report/modelCollection.do"),
 						   createNode('订单信息明细', "report/ddDetailJsp.do")
 						];
 					});
@@ -440,9 +440,9 @@
 				<script>
 					builder.register('XnyJyfx', function () {
 						return [
-						   createNode('新能源应收账款回款周报', "report/yszkhkzb.do"),
-						   createNode('新能源生产、发货和价格周报表', "report/xnyzb.do"),
-						   createNode('新能源签约周报', "report/xnyqyzb.do")
+						   createNode('应收账款回款周报', "report/yszkhkzb.do"),
+						   createNode('生产、发货和价格周报', "report/xnyzb.do"),
+						   createNode('签约周报', "report/xnyqyzb.do")
 						];
 					});
 				</script>
@@ -454,8 +454,8 @@
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('计划指标录入')
-						.append(createNode('全年计划指标录入', "entry/zb.do?entryType=0"))
-						.append(createNode('季度-月度末计划值录入', "entry/zb.do?entryType=1"));
+						.append(createNode('全年计划指标录入', "entry/v2/zb.do?entryType=0"))
+						.append(createNode('季度-月度末计划值录入', "entry/v2/zb.do?entryType=1"));
 				});
 			</script>
 		</c:if>
@@ -464,9 +464,9 @@
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('预计/实际指标录入')
-						.append(createNode('20号预计指标录入', "entry/zb.do?entryType=2"))
-						.append(createNode('28号预计指标录入', "entry/zb.do?entryType=3"))
-						.append(createNode('实际指标录入', "entry/zb.do?entryType=4"));
+						.append(createNode('20号预计指标录入', "entry/v2/zb.do?entryType=2"))
+						.append(createNode('28号预计指标录入', "entry/v2/zb.do?entryType=3"))
+						.append(createNode('实际指标录入', "entry/v2/zb.do?entryType=4"));
 				});
 			</script>
 		</c:if>
@@ -562,7 +562,7 @@
 						return [
 						   createNode('存货管报录入', "chgb/entry.do")
 						];
-					}
+					});
 				</script>
 			</c:if>
 		</c:if>
@@ -637,15 +637,20 @@
 
 
 <script>
-	function createNode(value, url){
+	function createNode(value, url, icon, iconOpen){
 	    if (url != undefined){
 	        url = '${pageContext.request.contextPath}/' + url;
+	    }else{
+	    	icon = "fa fa-plus-square-o";
+	    	iconOpen = "fa fa-minus-square-o";
 	    }
 	    var node = {
 	        data : {
 	            id : navi.uid(),
 	            value:value,
-	            url : url
+	            url : url,
+	            icon : icon,
+	            iconOpen : iconOpen
 	        },
 	        subNodes:[]
 	    };
@@ -663,11 +668,14 @@
 	}
 
 	builder.register('root', function(){
-		var root = createNode("报表信息");
-		root.append(builder.build('bbxx'));
-		if (root.subNodes.length == 0){
-			return [];
-		}
-		return root;
+		var ztfx = createNode("主题分析");
+		ztfx.data.icon = "fa fa-bar-chart";
+		ztfx.data.iconOpen = undefined;
+		var bbxx = createNode("报表信息");
+		bbxx.data.extracted = true;
+		bbxx.data.icon = "fa fa-pencil-square-o";
+		bbxx.data.iconOpen = undefined;
+		bbxx.append(builder.build('bbxx'));
+		return [ztfx, bbxx];
 	});
 </script>

@@ -11,7 +11,10 @@
 }
 
 html{
-    overflow:hidden;
+	overflow-y: hidden;
+    overflow-x: auto;
+   	min-width: 1000px;
+ 	width: expression_r( document.body.clientWidth < 1000 ? "1000px" : "auto" );
 }
 
 html, body, .container-fluid{
@@ -19,13 +22,44 @@ html, body, .container-fluid{
     font-family: "Microsoft YaHei UI";
 }
 
+body{
+ 	visibility:hidden;
+}
+
+
 .nav-left{
-    background:darkblue;
+    background:rgba(0,81,139,0.85);
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
     color:white;
 }
+
+.nav-other{
+	width:48px;
+    height:48px;
+	background:url("img/other_n.png");
+	cursor:pointer;
+	margin-top: 3px;
+}
+
+.nav-other-clicked{
+	width:48px;
+    height:48px;
+	background:url("img/other_h.png");
+	cursor:pointer;
+	margin-top: 3px;
+	margin-left:-1px;
+}
+
+.nav-other-clicked:hover{
+	background:url("img/other_n.png");
+}
+
+.nav-other:hover{
+	background:url("img/other_h.png");
+}
+
 
 .content-up{
 
@@ -41,8 +75,11 @@ html, body, .container-fluid{
 
 .navbar{
     margin-bottom:0px;
+    height: 65px;
 }
-
+.navbar-collapse{
+    margin-top:5px;
+}
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus{
     float:right;
     border-color: transparent;
@@ -66,12 +103,10 @@ html, body, .container-fluid{
 }
 
 .navbar-title{
-    font-weight: bold;
-    font-size:20px;
-    -moz-user-select:none;/*火狐*/
-    -webkit-user-select:none;/*webkit浏览器*/
+    -moz-user-select:none;/*鐏嫄*/
+    -webkit-user-select:none;/*webkit娴忚鍣�*/
     -ms-user-select:none;/*IE10*/
-    -khtml-user-select:none;/*早期浏览器*/
+    -khtml-user-select:none;/*鏃╂湡娴忚鍣�*/
     user-select:none;
     cursor:default;
 }
@@ -80,21 +115,27 @@ html, body, .container-fluid{
     color:white;
 }
 
+.nav-hide{
+	display:none;
+}
+
 .navbar {
     margin-bottom: 0px;
-    background: darkblue;
-    border-color: darkblue;
+    background: rgba(0,81,139,1);
+    border-color: rgba(0,81,139,1);
     border-radius: 0px;
 }
 
 .search-btn{
     float:right;
-    height:34px;
+    height:32px;
     width:32px;
     background-image:url("img/search-normal.png");
     background-size:cover;
     padding: 0px;
     margin-left:5px;
+    margin-top: 2px;
+    cursor:pointer;
 }
 
 .search-btn:hover{
@@ -102,25 +143,39 @@ html, body, .container-fluid{
 }
 
 .navbar-default .navbar-nav > li > a {
-    color: rgb(245,245,245);
+    color: white;
 }
 
 .navbar-default .navbar-nav > li > a:hover {
     color: white;
 }
 
+.navbar-default .navbar-nav > li > a:focus {
+    color: white;
+}
+
 .navbar-default .dropdown:hover{
-    background:lightskyblue;
+
 }
 
 .navbar-default .navbar-nav > .open > a{
-    background:white;
-    color: blue;
+	background:rgba(0,81,139,0.8);
+    color: white;
 }
 
 .navbar-default .navbar-nav > .open > a:focus{
-    background:white;
-    color: blue;
+    background:rgba(0,81,139,0.8);
+    color: white;
+}
+
+.search-area{
+	padding-top:8px;
+	
+}
+
+.combo-select{
+	border:0;
+	width:220px;
 }
 
 #tabContent{

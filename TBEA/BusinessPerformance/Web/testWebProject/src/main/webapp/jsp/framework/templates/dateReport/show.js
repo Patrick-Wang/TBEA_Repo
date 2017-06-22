@@ -73,6 +73,17 @@ var framework;
                 };
                 ShowView.prototype.update = function (date) {
                     var _this = this;
+                    var opt = (this.opt);
+                    var title = orgTitle;
+                    if (opt.itemNodes2 && opt.itemNodes2.length == 1) {
+                        $("#" + opt.itemId).hide();
+                        title = opt.itemNodes2[0].data.value + " " + title;
+                    }
+                    if (opt.itemNodes && opt.itemNodes.length == 1) {
+                        $("#" + opt.itemId).hide();
+                        title = opt.itemNodes[0].data.value + " " + title;
+                    }
+                    $("#headertitle").text(title);
                     this.mAjaxUpdate.get(this.getParams(date))
                         .then(function (jsonData) {
                         _this.resp = jsonData;

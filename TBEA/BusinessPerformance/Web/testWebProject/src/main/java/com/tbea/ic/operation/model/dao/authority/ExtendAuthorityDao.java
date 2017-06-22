@@ -16,5 +16,7 @@ public interface ExtendAuthorityDao extends AbstractReadWriteDao<ExtendAuthority
 
 	int getAuthorityCount(Account account, int authType);
 
+	List<Integer> getAuthority(Account account);
+
 
 }

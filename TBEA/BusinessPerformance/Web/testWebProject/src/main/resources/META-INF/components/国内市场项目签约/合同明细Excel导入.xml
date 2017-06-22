@@ -1,0 +1,48 @@
+<components>
+ <service id="servGnscHtmxImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="domestic_market_htmx">
+   <set>
+	<comp_name	type="string"	ref="${counter.reset[0].val}"/>
+	<contract_no	type="string"	ref="${counter.next.val}"/>
+	<project_department	type="string"	ref="${counter.next.val}"/>
+	<sign_month	type="date"	ref="${counter.next.val}"/>
+	<industry	type="string"	ref="${counter.next.val}"/>
+	<system	type="string"	ref="${counter.next.val}"/>
+	<region	type="string"	ref="${counter.next.val}"/>
+	<pro_name	type="string"	ref="${counter.next.val}"/>
+	<owner_comp	type="string"	ref="${counter.next.val}"/>
+	<model	type="string"	ref="${counter.next.val}"/>
+	<voltage_level	type="string"	ref="${counter.next.val}"/>
+	<product_amount	type="double"	ref="${counter.next.val}"/>
+	<product_capacity	type="double"	ref="${counter.next.val}"/>
+	<contract_amount	type="double"	ref="${counter.next.val}"/>
+	<payment	type="string"	ref="${counter.next.val}"/>
+	<person_in_charge	type="string"	ref="${counter.next.val}"/>
+	<specific_bid_comp	type="string"	ref="${counter.next.val}"/>
+	<deliver_date	type="date"	ref="${counter.next.val}"/>
+	<jydw type="int" value="${compId}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="gnscHtmxImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+ <context key="compId" value="${orgs.BMDBOrganization.ids[request.compId.asInt]}"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servGnscHtmxImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="gnscHtmxImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="gnscHtmxImport"/>
+   <map map="${authMgr[72]}"/>
+   <map key="title" value="合同明细导入"/>
+  </response>
+ </controller>
+</components>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.DataNode;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.controller.servlet.report.handlers.AuthContextHandler;
 import com.tbea.ic.operation.controller.servlet.report.handlers.ContextHandlers;
 import com.tbea.ic.operation.controller.servlet.report.handlers.DataNodeContextHandler;
@@ -29,7 +30,7 @@ import com.tbea.ic.operation.reportframe.component.controller.Scheduler;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 
 @Controller
-@RequestMapping(value = "report")
+@RequestMapping(value = {"report", "report/v2"})
 public class ReportServlet implements Scheduler {
 
 	ComponentManager compMgr = new ComponentManager(this);
@@ -80,7 +81,13 @@ public class ReportServlet implements Scheduler {
 			handlers.onHandle(context);
 			controller.run(context);
 			ReportLogger.trace().debug("end +++++++++++++++++++++++++++++++++++++++ ==================================");
-			return (ModelAndView) context.get(com.tbea.ic.operation.reportframe.component.controller.Controller.MODEL_AND_VIEW);
+			ModelAndView mv = (ModelAndView) context.get(com.tbea.ic.operation.reportframe.component.controller.Controller.MODEL_AND_VIEW);
+			if (mv != null){
+				if (Url.isV2(request)){
+					mv.setViewName("ui2/pages/" + mv.getViewName());
+				}
+			}
+			return mv;
 		}
 		return null;
 	}

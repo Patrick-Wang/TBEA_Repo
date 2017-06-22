@@ -39,10 +39,10 @@ module tab{
             this.q().append(
                 '<ul class="tab">' +
                     '<li class="tab-home active" >' +
-                        '<div>主页</div>' +
+                        '<div class="fa fa-home"></div>' +
                     '</li>' +
                     '<li class="tab-more dropdown pull-right">' +
-                        '<a href="#more" data-toggle="dropdown" class="dropdown-toggle">更多<strong class="caret"></strong></a>' +
+                        '<a href="#more" data-toggle="dropdown" class="dropdown-toggle"><strong class="fa fa-ellipsis-v"></strong></a>' +
                         '<ul class="tab-more-menu dropdown-menu">' +
                             '<li class="divider" style="display:none"></li>' +
                         '</ul>' +
@@ -85,7 +85,7 @@ module tab{
             return undefined;
         }
 
-        addMore(data: tab.MoreInfo):void {
+        addMore(data: tab.MoreInfo):Tab {
             this.more.push(data);
             this.q(".tab-more-menu .divider")
                 .before(
@@ -96,22 +96,25 @@ module tab{
             this.q(".tab-more-menu #" + data.id).click(()=>{
                 this.triggerClickMore(data.id);
             });
+            return this;
         }
 
-        disableMore(id:string){
+        disableMore(id:string):Tab{
             this.q(".tab-more-menu #" + id).addClass("disable");
             this.q(".tab-more-menu #" + id + ">a").click((event)=>{
                 event.stopPropagation();
             });
+            return this;
         }
 
-        enableMore(id:string){
+        enableMore(id:string):Tab{
             this.q(".tab-more-menu #" + id).removeClass("disable");
             this.q(".tab-more-menu #" + id).removeAttr("readonly");
             this.q(".tab-more-menu #" + id + ">a").unbind("click");
+            return this;
         }
 
-        removeMore(id:string) {
+        removeMore(id:string):Tab {
             for (let i = 0; i < this.more.length; ++i){
                 if (this.more[i].id == id){
                     this.more.splice(i, 1);
@@ -119,26 +122,31 @@ module tab{
                 }
             }
             this.q(".tab-more #" + id).remove();
+            return this;
         }
 
         getActiveTab():TabInfo{
             return this.findTab(this.getActiveTabId());
         }
 
-        setMoreClickListener(onClick:(data:tab.MoreInfo)=>void):void {
+        setMoreClickListener(onClick:(data:tab.MoreInfo)=>void):Tab {
             this.onClickMore = onClick;
+            return this;
         }
 
-        setCloseTabClickListener(onCloseTab:(data:tab.TabInfo)=>void):void {
+        setCloseTabClickListener(onCloseTab:(data:tab.TabInfo)=>void):Tab {
             this.onCloseTab = onCloseTab;
+            return this;
         }
 
-        setTabClickListener(onClick:(data:tab.TabInfo)=>void):void {
+        setTabClickListener(onClick:(data:tab.TabInfo)=>void):Tab {
             this.onClickTab = onClick;
+            return this;
         }
 
-        setHomeClickListener(onClick:()=>void):void {
+        setHomeClickListener(onClick:()=>void):Tab {
             this.onClickHome = onClick;
+            return this;
         }
 
         private internalOnClosed():void{
@@ -297,11 +305,12 @@ module tab{
                         this.triggerClickTab(data.id);
                     });
                 }else{
-                    this.q("#" + data.id + " div div:first").click(()=>{
+                    this.q("#" + data.id).click((e)=>{
                         this.triggerClickTab(data.id);
                     });
-                    this.q("#" + data.id + " div .tab-close").click(()=>{
+                    this.q("#" + data.id + " div .tab-close").click((e)=>{
                         this.triggerClickClose(data.id);
+                        e.stopPropagation();
                     });
                 }
             }else{
@@ -416,11 +425,12 @@ module tab{
             }
         }
 
-        triggerClickHome() {
+        triggerClickHome():Tab {
             this.activeTab();
             if (this.onClickHome != undefined){
                 this.onClickHome();
             }
+            return this;
         }
 
         // undefined : 该元素没有下一个元素

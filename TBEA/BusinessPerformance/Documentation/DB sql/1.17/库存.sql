@@ -74,6 +74,7 @@ CREATE TABLE [dbo].[storage_bcpmx](
 	type_name	varchar(300)	,--	大类名称	
 	model	varchar(300)	,--	规格型号	
 	amount	numeric(18, 4)	,--	数量	
+	stock_money	numeric(18, 4)	,
 	measurement_unit	varchar(300)	,--	计量单位	
 	storage_date	date	,--	"形成日期（年/月/日）"	
 	stock_duration	numeric(18, 2)	,--	库存时长（月）	

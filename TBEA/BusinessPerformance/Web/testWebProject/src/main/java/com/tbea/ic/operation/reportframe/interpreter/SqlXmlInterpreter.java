@@ -11,6 +11,7 @@ import net.sf.json.JSONArray;
 import org.w3c.dom.Element;
 
 import com.tbea.ic.operation.common.Pair;
+import com.tbea.ic.operation.controller.servlet.report.LoggerProxy;
 import com.tbea.ic.operation.reportframe.ReportLogger;
 import com.tbea.ic.operation.reportframe.component.AbstractXmlComponent;
 import com.tbea.ic.operation.reportframe.component.service.Transaction;
@@ -37,7 +38,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		List<Pair<Integer, Object>> objs = new ArrayList<Pair<Integer, Object>>();
 		for (int i = elexps.size() - 1; i >= 0 ; --i){
 			try {
-				ReportLogger.trace().debug("exp : {}", elexps.get(i).exp());
+				lp.trace("exp : " + elexps.get(i).exp());
 				Object obj = elexps.get(i).value();
 				String preFix = sql.substring(0, elexps.get(i).start());
 				if (isInWhereClause(preFix)){
@@ -51,12 +52,12 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			}
 		}
 		
-		ReportLogger.logger().debug(sql);
+		lp.info(sql);
 		
 		Query q = em.createNativeQuery(sql);
 		for (Pair<Integer, Object> pair : objs){
 			q.setParameter(pair.getFirst(), pair.getSecond());
-			ReportLogger.logger().debug("?{} : {}\t",pair.getFirst() , pair.getSecond());
+			lp.info("?" + pair.getFirst() + " : " + pair.getSecond() + "\t");
 		}
 
 		return q;
@@ -95,6 +96,8 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		return sqlRet;
 	}
 	
+	LoggerProxy lp;
+	
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 		
@@ -110,7 +113,12 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			throw new Exception("请指定 transaction " + e.toString());
 		}
 		
-		ReportLogger.logger().debug("database : {}", trans);
+		lp = new LoggerProxy();
+		if (e.hasAttribute("logger")){
+			lp.getLogger(e.getAttribute("logger"));
+		}
+		
+		lp.info("database : " + trans);
 		
 		el = new ELParser(component);
 		if (XmlUtil.hasText(e) && !StringUtil.trim(XmlUtil.getText(e)).isEmpty()){
@@ -129,9 +137,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 				if (retType != DBUtil.SQL_RET_VALUE){
 					sqlRet = parseOrder(sqlRet, component, e);
 				}
-				if (ReportLogger.logger().isDebugEnabled()){
-					ReportLogger.logger().debug(JSONArray.fromObject(sqlRet).toString());
-				}
+				lp.info(JSONArray.fromObject(sqlRet).toString());
 				component.put(e, sqlRet);
 			}else{
 				q.executeUpdate();
@@ -139,9 +145,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		}else{
 			List sqlRet = (List) component.getVar(e.getAttribute("id"));
 			sqlRet = parseOrder(sqlRet, component, e);
-			if (ReportLogger.logger().isDebugEnabled()){
-				ReportLogger.logger().debug(JSONArray.fromObject(sqlRet).toString());
-			}
+			lp.info(JSONArray.fromObject(sqlRet).toString());
 			component.put(e, sqlRet);
 		}
 		

@@ -36,6 +36,7 @@ public class EasyCalendar {
 	private static final Integer KEY_LastSeason = count++;
 	private static final Integer KEY_Format_Month = count++;
 	private static final Integer KEY_Format_Second = count++;
+
 	
 	private Object cache(Integer key, Object val){
 		cache.put(key, val);
@@ -339,23 +340,17 @@ public class EasyCalendar {
 	}
 	
 	public EasyCalendar getYearBefore(int yearCount){
-		if (cache.containsKey(KEY_LasyYear)){
-			return (EasyCalendar) cache.get(KEY_LasyYear);
-		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(this.cal.getTimeInMillis());
 		cal.add(Calendar.YEAR, -1 * yearCount);
-		return (EasyCalendar) cache(KEY_LasyYear, new EasyCalendar(cal));
+		return new EasyCalendar(cal);
 	}
 	
 	public EasyCalendar getYearAfter(int yearCount){
-		if (cache.containsKey(KEY_LasyYear)){
-			return (EasyCalendar) cache.get(KEY_LasyYear);
-		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(this.cal.getTimeInMillis());
 		cal.add(Calendar.YEAR, yearCount);
-		return (EasyCalendar) cache(KEY_LasyYear, new EasyCalendar(cal));
+		return new EasyCalendar(cal);
 	}
 	
 	public EasyCalendar getNextYear(){

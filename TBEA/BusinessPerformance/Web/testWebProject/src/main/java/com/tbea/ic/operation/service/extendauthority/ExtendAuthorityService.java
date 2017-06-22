@@ -24,4 +24,5 @@ public interface ExtendAuthorityService {
 
 	List<Integer> getAuths(Account account, Company comp);
 
+	List<Integer> getAuths(Account account);
 }

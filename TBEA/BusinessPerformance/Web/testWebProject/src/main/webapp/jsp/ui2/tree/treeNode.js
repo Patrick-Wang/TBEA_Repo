@@ -112,7 +112,7 @@ var tree;
         };
         TreeNode.prototype.accept = function (visitor) {
             var stop = visitor.visit(this);
-            for (var i = this.subNodes.length - 1; !stop && i >= 0; --i) {
+            for (var i = 0; !stop && i < this.subNodes.length; ++i) {
                 stop = this.subNodes[i].accept(visitor);
             }
             return stop;

@@ -1,7 +1,7 @@
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
-/// <reference path="messageBox.ts" />
-///<reference path="dateSelector.ts"/>
+/// <reference path="pages/jqgrid/jqassist.ts" />
+/// <reference path="pages/util.ts" />
+/// <reference path="pages/messageBox.ts" />
+///<reference path="pages/dateSelector.ts"/>
 declare var echarts;
 
 module hzb_zbhz {
@@ -83,6 +83,10 @@ module hzb_zbhz {
                {year: year - 3, month : 1},
                {year: year, month: month},
                dateId);
+
+
+
+
           // $("#date1").append("<input type=\"text\" id=\"dateInput\" class=\"Wdate\"/>");
             $("#date1").jeDate({
                 skinCell:"jedatedeepgreen",

@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<p style="margin: 10px 0 0px 0"></p>
+
+
+<div>
+	<h3>
+		通用经营管报录入<a name="commonjygbEntry"> </a>
+	</h3>
+	<div class="section">
+		<div class="thumb3">
+			<ul class="slides">
+			<c:if test="${YszkgbEntry}">
+				<li><a href="../yszkgb/entry.do" target="_blank"><img
+						src="../images/charts/bar4.png"> <span><strong>应收账款管报录入</strong></span></a>
+				</li>
+				</c:if>
+				<c:if test="${ChgbEntry}">
+				<li><a href="../chgb/entry.do" target="_blank"><img
+						src="../images/charts/bar9.png"> <span><strong>存货管报录入</strong></span></a>
+				</li>
+				</c:if>
+			</ul>
+		</div>
+	</div>
+</div>

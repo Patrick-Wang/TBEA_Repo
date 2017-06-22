@@ -1,6 +1,6 @@
 .tab{
   float:left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 2px solid #11a9cc;
   width:100%;
   padding-left:0px;
   margin-bottom:0px;
@@ -37,14 +37,14 @@
 }
 
 .tab-home, .tab-normal, .tab-more a{
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
 }
 
 .tab-normal>div{
-  padding:7px 3px 7px 15px;
+  padding:8px 3px 8px 15px;
   overflow:hidden;
-
+  font-size:14px;
 }
 
 .tab-home, .tab-normal{
@@ -67,7 +67,7 @@
 }
 
 .tab-normal .active:hover{
-  background-color: #fff;
+  background-color: #11a9cc;
 }
 
 .tab-more>a{
@@ -76,20 +76,28 @@
   border-bottom: 0px;
 }
 
-.tab-home>div, .tab-more>a{
-  padding:7px 15px 7px 15px
+.tab-home>div{
+  font-size:30px;
+  padding:2px 10px 2px 10px
 }
 
+.tab-more>a{
+  font-size:20px;
+  padding:2px 15px 2px 15px
+} 
+
 .tab .active{
-  border: 1px solid #ddd;
+  border: 1px solid #11a9cc;
   border-bottom: 0px;
-  background-color: #fff;
+  background-color: #11a9cc;
+  color:white
 }
 
 .tab .active:hover{
-  border: 1px solid #ddd;
+  border: 1px solid #11a9cc;
   border-bottom: 0px;
-  background-color: #fff;
+  background-color: #11a9cc;
+  color:white
 }
 
 
@@ -110,10 +118,10 @@
 }
 
 .tab-more, .tab-normal div, .tab-home{
-  -moz-user-select:none;/*火狐*/
-  -webkit-user-select:none;/*webkit浏览器*/
+  -moz-user-select:none;/*鐏嫄*/
+  -webkit-user-select:none;/*webkit娴忚鍣�*/
   -ms-user-select:none;/*IE10*/
-  -khtml-user-select:none;/*早期浏览器*/
+  -khtml-user-select:none;/*鏃╂湡娴忚鍣�*/
   user-select:none;
 }
 

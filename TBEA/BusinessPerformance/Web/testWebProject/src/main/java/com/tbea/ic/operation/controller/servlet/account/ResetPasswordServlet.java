@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.account;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,9 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.service.account.AccountService;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "Account")
@@ -62,6 +66,41 @@ public class ResetPasswordServlet {
 		}
 		map.put("result", result);
 		return new ModelAndView("resetPassword", map);
+	}
+	
+	@RequestMapping(value = "v2/resetPassword.do", method = RequestMethod.POST)
+	public @ResponseBody byte[] validateV2(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value = "j_username") String j_username,
+			@RequestParam(value = "j_password") String loadOldPassword,
+			@RequestParam(value = "loadNewPassword") String loadNewPassword,
+			@RequestParam(value = "reloadNewPassword") String reloadNewPassword) throws UnsupportedEncodingException {
+
+		boolean result = false;
+		String msg = "";
+		if (checkPassword(loadOldPassword) && checkPassword(loadNewPassword)
+				&& checkPassword(reloadNewPassword)) {
+			if (loadOldPassword.equals(loadNewPassword)) {
+				msg = "请不要与原密码相同";
+			} else if (!loadNewPassword.equals(reloadNewPassword)) {
+				msg = "请确认两次输入新密码一致";
+			} else {
+				if (accountService.resetpassword(j_username, loadOldPassword,
+						loadNewPassword)) {
+					msg = "您的密码已经修改成功，请点击确认重新登录！";
+					result = true;
+				} else {
+					msg = "原密码错误，请重新输入";
+				}
+			}
+		} else {
+			msg = "请输入正确信息，密码只可以是字母或者数字";
+		}
+		JSONObject jo = new JSONObject();
+		jo.put("result", result);
+		jo.put("message", msg);
+		
+		return jo.toString().getBytes("utf-8");
 	}
 
 }

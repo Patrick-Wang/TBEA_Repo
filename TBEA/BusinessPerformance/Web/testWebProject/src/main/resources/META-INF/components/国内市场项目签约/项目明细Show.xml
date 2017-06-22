@@ -1,0 +1,158 @@
+<components>
+ <service id="servGnscxmqyXmmx" transaction="transactionManager">
+  <sql id="data" logger="REPORT-FRAME">select 
+	comp_name	,
+	project_department	,
+	pro_no	,
+	industry	,
+	system	,
+	pro_name	,
+	owner_comp	,
+	model	,
+	amount	,
+	predict_bid_amount	,
+	Convert(varchar(10),predict_bidding_date,120) pbd,
+	region	,
+	project_brief	,
+	pro_condition	,
+	person_in_charge_info	,
+	charge_leader	,
+	other_comp	,
+	bid_condition
+from 	
+	domestic_market_xmmx
+where
+	jydw = ${compId}
+</sql>
+ <list id="ids" type="int">
+   <item from="1" to="${data.size}"/>
+  </list>
+ <context value="${counterFactory.newCounter}" key="counter"/>
+  <table id="result" rowIds="ids" export="true">
+   <list sql="data" value="${counter.reset[0].val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+   <list sql="data" value="${counter.next.val}"/>
+  </table>
+ </service>
+ <controller id="servFmtterGnscxmqyXmmx">
+  <formatter id="fmtData" export="true">
+   <NumberFormatter reservedCount="1">
+   	<DefaultMatcher cols="8"/>
+   </NumberFormatter>
+   <NumberFormatter reservedCount="1">
+   	<DefaultMatcher cols="9"/>
+   </NumberFormatter>
+   <EmptyFormatter>
+   </EmptyFormatter>
+  </formatter>
+ </controller>
+ <controller id="gnscxmqyXmmxUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <callservice id="servGnscxmqyXmmx"/>
+  <callcontroller id="servFmtterGnscxmqyXmmx"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item><name>	单位	</name></item>
+<item><name>	办事处名称	</name></item>
+<item><name>	项目序号	</name></item>
+<item><name>	所属行业	</name></item>
+<item><name>	所属系统	</name></item>
+<item><name>	项目名称	</name></item>
+<item><name>	业主单位	</name></item>
+<item><name>	产品型号	</name></item>
+<item><name>	数量	</name></item>
+<item><name>	预计投标金额	</name></item>
+<item><name>	预计招标时间	</name></item>
+<item><name>	项目所在区域	</name></item>
+<item><name>	项目简介	</name></item>
+<item><name>	目前推进跟踪情况及后期计划	</name></item>
+<item><name>	本单位项目负责人及联系方式	</name></item>
+<item><name>	本单位负责该项目的主管领导	</name></item>
+<item><name>	跟踪该项目的其它内部企业名称	</name></item>
+<item><name>	投标情况	</name></item>
+   </header>
+   <width>1300</width>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="gnscxmqyXmmxExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <callservice id="servGnscxmqyXmmx"/>
+  <callcontroller id="servFmtterGnscxmqyXmmx" inline="true"/>
+  <ExcelTemplate id="excelTemplate" sheet="项目明细"/>
+  <list id="title" type="string">
+	单位	,
+办事处名称	,
+项目序号	,
+所属行业	,
+所属系统	,
+项目名称	,
+业主单位	,
+产品型号	,
+数量	,
+预计投标金额	,
+预计招标时间	,
+项目所在区域	,
+项目简介	,
+目前推进跟踪情况及后期计划	,
+本单位项目负责人及联系方式	,
+本单位负责该项目的主管领导	,
+跟踪该项目的其它内部企业名称	,
+投标情况
+	</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}项目明细.xls" serv="fmtServ"/>
+ </controller> 
+ <controller id="gnscxmqyXmmx">
+  <response type="jsp" name="framework/templates/dateReport/show">
+  	<map key="nodate" value="true"/>
+  	 <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map map="${authMgr[71]}"/>
+   <map key="updateUrl" value="gnscxmqyXmmxUpdate"/>
+   <map key="exportUrl" value="gnscxmqyXmmxExport"/>
+   <map key="title" value="项目明细"/>
+  </response>
+ </controller>
+</components>

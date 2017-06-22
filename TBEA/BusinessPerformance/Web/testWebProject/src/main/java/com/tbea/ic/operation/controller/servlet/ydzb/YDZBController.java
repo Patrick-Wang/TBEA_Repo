@@ -35,6 +35,7 @@ import com.tbea.ic.operation.common.DateHelper;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.POIUtils;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -110,7 +111,7 @@ public class YDZBController {
 		return gszbService.getGdwzb(d, xmgses);
 	}
 	
-	@RequestMapping(value = "hzb_zbhz_jydw_compute.do")
+	@RequestMapping(value = {"hzb_zbhz_jydw_compute.do", "v2/hzb_zbhz_jydw_compute.do"})
 	public @ResponseBody byte[] gethzb_zbhz_jydw_compute(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -313,7 +314,7 @@ public class YDZBController {
 	}
 	
 	
-	@RequestMapping(value = "hzb_zbhz_update.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"hzb_zbhz_update.do", "v2/hzb_zbhz_update.do"}, method = RequestMethod.GET)
 	public @ResponseBody byte[] getHzb_zbhz_update(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = DateSelection.getDate(request);
@@ -329,7 +330,7 @@ public class YDZBController {
 		return hzb_zbhz.getBytes("utf-8");
 	}
 
-	@RequestMapping(value = "hzb_zbhz.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"hzb_zbhz.do", "v2/hzb_zbhz.do"}, method = RequestMethod.GET)
 	public ModelAndView getGszb_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -337,7 +338,7 @@ public class YDZBController {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, false);
 		dateSel.select(map);
-		return new ModelAndView("hzb_zbhz", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "hzb_zbhz", map);
 	}
 
 	private void removeJzcsyl(CompanyType compType, List<String[]> zbData){
@@ -469,7 +470,7 @@ public class YDZBController {
 	}
 
 	//各单位经营指标完成情况
-	@RequestMapping(value = "hzb_companys.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"hzb_companys.do", "v2/hzb_companys.do"}, method = RequestMethod.GET)
 	public ModelAndView getHzb_companys(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -487,7 +488,7 @@ public class YDZBController {
 						org));
 
 		compSel.select(map, 3);
-		return new ModelAndView("hzb_companys", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "hzb_companys", map);
 	}
 	
 	@RequestMapping(value = "gcy_zbhz_export.do")
@@ -618,14 +619,14 @@ public class YDZBController {
 	}
 	
 	//各产业经营指标完成情况
-	@RequestMapping(value = "gcy_zbhz.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"gcy_zbhz.do", "v2/gcy_zbhz.do"}, method = RequestMethod.GET)
 	public ModelAndView getGcy_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, false);
 		dateSel.select(map);
-		return new ModelAndView("gcy_zbhz", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "gcy_zbhz", map);
 	}
 	
 	
@@ -680,14 +681,14 @@ public class YDZBController {
 	}
 	
 	//各单位经营指标完成情况
-	@RequestMapping(value = "gdw_zbhz.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"gdw_zbhz.do", "v2/gdw_zbhz.do"}, method = RequestMethod.GET)
 	public ModelAndView getGdw_zbhz(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, false);
 		dateSel.select(map);
-		return new ModelAndView("gdw_zbhz", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "gdw_zbhz", map);
 	}
 
 	@RequestMapping(value = "xjlrb_update.do", method = RequestMethod.GET)
@@ -699,7 +700,7 @@ public class YDZBController {
 		return xjlrb;
 	}
 
-	@RequestMapping(value = "xjlrb.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"xjlrb.do", "v2/xjlrb.do"}, method = RequestMethod.GET)
 	public ModelAndView getXjlrb(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -707,7 +708,7 @@ public class YDZBController {
 		DateSelection dateSel = new DateSelection(service.getLatestXjlDate());
 		dateSel.select(map);
 
-		return new ModelAndView("xjlrb", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "xjlrb", map);
 	}
 
 
@@ -758,7 +759,7 @@ public class YDZBController {
 	
 	
 	// 整体指标预测
-	@RequestMapping(value = "zbhz_overview.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"zbhz_overview.do", "v2/zbhz_overview.do"}, method = RequestMethod.GET)
 	public ModelAndView getZbhz_overview(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -782,7 +783,7 @@ public class YDZBController {
 				org.getTopCompany());
 		compSel.select(map);
 
-		return new ModelAndView("zbhz_overview", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "zbhz_overview", map);
 	}
 
 	@RequestMapping(value = "hzb_companys_prediction_export.do")
@@ -880,7 +881,7 @@ public class YDZBController {
 	}
 	
 	//整体指标预测Update
-	@RequestMapping(value = "hzb_companys_prediction.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"hzb_companys_prediction.do", "v2/hzb_companys_prediction.do"}, method = RequestMethod.GET)
 	public ModelAndView gethzb_companys_prediction(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -895,7 +896,7 @@ public class YDZBController {
 						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));
 		compSel.select(map, 3);
-		return new ModelAndView("companys_zbhz_prediction", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "companys_zbhz_prediction", map);
 	}
 		
 	@RequestMapping(value = "hzb_companys_prediction_update.do", method = RequestMethod.GET)
@@ -1059,7 +1060,7 @@ public class YDZBController {
 	}
 
 
-	@RequestMapping(value = "general_export.do")
+	@RequestMapping(value = {"general_export.do", "v2/general_export.do"})
 	public @ResponseBody byte[] general_export(
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -1206,14 +1207,14 @@ public class YDZBController {
 	}
 	
 	//整体指标预测Update
-	@RequestMapping(value = "hzb_zbhz_prediction.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"hzb_zbhz_prediction.do", "v2/hzb_zbhz_prediction.do"}, method = RequestMethod.GET)
 	public ModelAndView gethzb_zbhz_prediction(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection();
 		dateSel.select(map);
-		return new ModelAndView("hzb_zbhz_prediction", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "hzb_zbhz_prediction", map);
 	}
 
 	//各产业五大经营指标预测update
@@ -1249,14 +1250,14 @@ public class YDZBController {
 	}
 	
 	//各产业五大经营指标预测
-	@RequestMapping(value = "financial_zbhz_prediction.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"financial_zbhz_prediction.do", "v2/financial_zbhz_prediction.do"}, method = RequestMethod.GET)
 	public ModelAndView getFinancial_zbhz_prediction(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		DateSelection dateSel = new DateSelection();
 		dateSel.select(map);
-		return new ModelAndView("financial_zbhz_prediction", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "financial_zbhz_prediction", map);
 	}
 	
 	
@@ -1294,7 +1295,7 @@ public class YDZBController {
 			return financial_zbhz_prediction.getBytes("utf-8");
 		}
 
-		@RequestMapping(value = "gdw_zbhz_prediction.do", method = RequestMethod.GET)
+		@RequestMapping(value = {"gdw_zbhz_prediction.do", "v2/gdw_zbhz_prediction.do"}, method = RequestMethod.GET)
 		public ModelAndView getGdw_zbhz_prediction(HttpServletRequest request,
 				HttpServletResponse response) {
 			//String gszb = request.getParameter("zb");	
@@ -1305,7 +1306,7 @@ public class YDZBController {
 			dateSel.select(map);
 			//map.put("zbName", zbName);
 			//map.put("zbId", zb);
-			return new ModelAndView("gdw_zbhz_prediction", map);
+			return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "gdw_zbhz_prediction", map);
 		}
 		
 		//各单位指标预测导出

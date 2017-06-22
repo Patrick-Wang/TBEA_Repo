@@ -583,6 +583,21 @@ var Util;
         return Promise;
     })();
     Util.Promise = Promise;
+    function isIframe() {
+        return !window.invalidate && window.parent.invalidate;
+    }
+    Util.isIframe = isIframe;
+    function loadCssFile(f) {
+        if (isIframe()) {
+            var head = document.getElementsByTagName('HEAD').item(0);
+            var style = document.createElement('link');
+            style.href = f;
+            style.rel = 'stylesheet';
+            style.type = 'text/css';
+            head.appendChild(style);
+        }
+    }
+    Util.loadCssFile = loadCssFile;
     var Ajax = (function () {
         function Ajax(baseUrl, useCache) {
             if (useCache === void 0) { useCache = true; }
@@ -615,9 +630,18 @@ var Util;
             }
             return this.mCache[Ajax.toUrlParam(option)];
         };
+        Ajax.parentInvalidate = function (redirect) {
+            if (isIframe()) {
+                window.parent.invalidate(redirect);
+                return true;
+            }
+            return false;
+        };
         Ajax.prototype.validate = function (data) {
             if (data.error == "invalidate session") {
-                window.location.href = data.redirect;
+                if (!Ajax.parentInvalidate(data.redirect)) {
+                    window.location.href = data.redirect;
+                }
                 return false;
             }
             return true;

@@ -64,6 +64,9 @@ module framework.templates.dateReport {
                 });
                 this.renderItemSelector(opt.itemId2);
             }
+
+
+
             super.onInitialize(opt);
         }
 
@@ -81,6 +84,20 @@ module framework.templates.dateReport {
         }
 
         update (date:Util.Date){
+            let opt : any = (this.opt);
+            let title = orgTitle;
+
+            if (opt.itemNodes2 && opt.itemNodes2.length == 1){
+                $("#" + opt.itemId).hide();
+                title = opt.itemNodes2[0].data.value + " " + title;
+            }
+
+            if (opt.itemNodes && opt.itemNodes.length == 1){
+                $("#" + opt.itemId).hide();
+                title = opt.itemNodes[0].data.value + " " + title;
+            }
+            $("#headertitle").text(title);
+
             this.mAjaxUpdate.get(this.getParams(date))
                 .then((jsonData:any) => {
                     this.resp = jsonData;

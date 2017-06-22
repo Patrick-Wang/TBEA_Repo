@@ -10,10 +10,10 @@ var tab;
             this.tabId = id;
             this.q().append('<ul class="tab">' +
                 '<li class="tab-home active" >' +
-                '<div>主页</div>' +
+                '<div class="fa fa-home"></div>' +
                 '</li>' +
                 '<li class="tab-more dropdown pull-right">' +
-                '<a href="#more" data-toggle="dropdown" class="dropdown-toggle">更多<strong class="caret"></strong></a>' +
+                '<a href="#more" data-toggle="dropdown" class="dropdown-toggle"><strong class="fa fa-ellipsis-v"></strong></a>' +
                 '<ul class="tab-more-menu dropdown-menu">' +
                 '<li class="divider" style="display:none"></li>' +
                 '</ul>' +
@@ -74,17 +74,20 @@ var tab;
             this.q(".tab-more-menu #" + data.id).click(function () {
                 _this.triggerClickMore(data.id);
             });
+            return this;
         };
         Tab.prototype.disableMore = function (id) {
             this.q(".tab-more-menu #" + id).addClass("disable");
             this.q(".tab-more-menu #" + id + ">a").click(function (event) {
                 event.stopPropagation();
             });
+            return this;
         };
         Tab.prototype.enableMore = function (id) {
             this.q(".tab-more-menu #" + id).removeClass("disable");
             this.q(".tab-more-menu #" + id).removeAttr("readonly");
             this.q(".tab-more-menu #" + id + ">a").unbind("click");
+            return this;
         };
         Tab.prototype.removeMore = function (id) {
             for (var i = 0; i < this.more.length; ++i) {
@@ -94,21 +97,26 @@ var tab;
                 }
             }
             this.q(".tab-more #" + id).remove();
+            return this;
         };
         Tab.prototype.getActiveTab = function () {
             return this.findTab(this.getActiveTabId());
         };
         Tab.prototype.setMoreClickListener = function (onClick) {
             this.onClickMore = onClick;
+            return this;
         };
         Tab.prototype.setCloseTabClickListener = function (onCloseTab) {
             this.onCloseTab = onCloseTab;
+            return this;
         };
         Tab.prototype.setTabClickListener = function (onClick) {
             this.onClickTab = onClick;
+            return this;
         };
         Tab.prototype.setHomeClickListener = function (onClick) {
             this.onClickHome = onClick;
+            return this;
         };
         Tab.prototype.internalOnClosed = function () {
             //if (this.closelist.length > 0){
@@ -253,11 +261,12 @@ var tab;
                     });
                 }
                 else {
-                    this.q("#" + data.id + " div div:first").click(function () {
+                    this.q("#" + data.id).click(function (e) {
                         _this.triggerClickTab(data.id);
                     });
-                    this.q("#" + data.id + " div .tab-close").click(function () {
+                    this.q("#" + data.id + " div .tab-close").click(function (e) {
                         _this.triggerClickClose(data.id);
+                        e.stopPropagation();
                     });
                 }
             }
@@ -363,6 +372,7 @@ var tab;
             if (this.onClickHome != undefined) {
                 this.onClickHome();
             }
+            return this;
         };
         // undefined : 该元素没有下一个元素
         // ""：该元素不存在

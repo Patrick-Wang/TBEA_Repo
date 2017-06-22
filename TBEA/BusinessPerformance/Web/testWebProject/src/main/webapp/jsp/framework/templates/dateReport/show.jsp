@@ -205,7 +205,7 @@
 
                 </div>
             </div>
-            <input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
+            <input id="updateBtn" type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
                    onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_UPDATE)" />
         </td>
     </tr>
@@ -224,9 +224,23 @@
     </tr>
 </Table>
 <script type="text/javascript">
+
+    var orgTitle='${title}';
+    var nd = '${nodeData}';
+    var nd2 = '${nodeData2}';
+    var ind = nd == '' ? undefined : JSON.parse(nd);
+    var ind2 = nd2 == '' ? undefined : JSON.parse(nd2);
+
 	if ("true" == '${nodate}'){
 	    $("#dt").hide();
+        if ((!ind || ind.length == 1) && (!ind2 || ind2.length == 1)) {
+            $("#updateBtn").hide();
+            $("#dt").parent().hide();
+        }
 	}
+
+
+
     $(document).ready(function () {
         framework.templates.dateReport.createInstance();
         var dateEnd;
@@ -253,8 +267,7 @@
     }
     }
         }
-        var nd = '${nodeData}';
-        var nd2 = '${nodeData2}';
+
         
         framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
             dtId:"dt",
@@ -268,9 +281,9 @@
             asSeasonAcc:"${asSeasonAcc}" == "true" ? true : false,
             jdName:'${jdName}' == "" ? undefined : JSON.parse('${jdName}'),
             itemId:"im",
-            itemNodes: nd == '' ? undefined : JSON.parse(nd),
+            itemNodes: ind,
             itemId2:"im2",
-            itemNodes2: nd2 == '' ? undefined : JSON.parse(nd2)
+            itemNodes2: ind2
         });
         $("#exportButton")
             .css("height", "23px")

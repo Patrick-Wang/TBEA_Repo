@@ -12,7 +12,10 @@
 			<list id="xmmc" type="string">总体（物流贸易业务）</list>
 			<list id="gsmc" type="string">总体（物流贸易业务）</list>
 		</if>
-		
+		<if test="${item == 3}">
+			<list id="xmmc" type="string">总体（三项费用）</list>
+			<list id="gsmc" type="string">总体（三项费用）</list>
+		</if>
 		<context key="jydw" value="${BMDBJydw}" />
 		<context key="xmgs" value="${BMDBXmgs[jydw]}" />
 		<list id="companies" type="object">
@@ -245,19 +248,19 @@
 				&quot;subNodes&quot;: [
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 10,
+				&quot;id&quot;: 1950,
 				&quot;value&quot;: &quot;制造业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 11,
+				&quot;id&quot;: 1961,
 				&quot;value&quot;: &quot;集成服务业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 12,
+				&quot;id&quot;: 1972,
 				&quot;value&quot;: &quot;物流贸易&quot;
 				}
 				}
@@ -271,19 +274,19 @@
 				&quot;subNodes&quot;: [
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 60,
+				&quot;id&quot;: 70,
 				&quot;value&quot;: &quot;制造业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 61,
+				&quot;id&quot;: 121,
 				&quot;value&quot;: &quot;集成服务业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 62,
+				&quot;id&quot;: 162,
 				&quot;value&quot;: &quot;物流贸易&quot;
 				}
 				}
@@ -297,19 +300,19 @@
 				&quot;subNodes&quot;: [
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 320,
+				&quot;id&quot;: 2560,
 				&quot;value&quot;: &quot;制造业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 321,
+				&quot;id&quot;: 2621,
 				&quot;value&quot;: &quot;集成服务业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 322,
+				&quot;id&quot;: 2672,
 				&quot;value&quot;: &quot;物流贸易&quot;
 				}
 				}
@@ -323,19 +326,19 @@
 				&quot;subNodes&quot;: [
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 350,
+				&quot;id&quot;: 2790,
 				&quot;value&quot;: &quot;制造业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 351,
+				&quot;id&quot;: 2821,
 				&quot;value&quot;: &quot;集成服务业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 352,
+				&quot;id&quot;: 2842,
 				&quot;value&quot;: &quot;物流贸易&quot;
 				}
 				}
@@ -349,19 +352,19 @@
 				&quot;subNodes&quot;: [
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 610,
+				&quot;id&quot;: 2170,
 				&quot;value&quot;: &quot;制造业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 611,
+				&quot;id&quot;: 2181,
 				&quot;value&quot;: &quot;集成服务业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 612,
+				&quot;id&quot;: 2192,
 				&quot;value&quot;: &quot;物流贸易&quot;
 				}
 				}
@@ -375,13 +378,13 @@
 				&quot;subNodes&quot;: [
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 480,
+				&quot;id&quot;: 2900,
 				&quot;value&quot;: &quot;制造业&quot;
 				}
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 481,
+				&quot;id&quot;: 2991,
 				&quot;value&quot;: &quot;集成服务业&quot;
 				}
 				}
@@ -389,23 +392,9 @@
 				},
 				{
 				&quot;data&quot;: {
-				&quot;id&quot;: 64,
+				&quot;id&quot;: 643,
 				&quot;value&quot;: &quot;三项费用&quot;
-				},
-				&quot;subNodes&quot;: [
-				{
-				&quot;data&quot;: {
-				&quot;id&quot;: 640,
-				&quot;value&quot;: &quot;制造业&quot;
 				}
-				},
-				{
-				&quot;data&quot;: {
-				&quot;id&quot;: 641,
-				&quot;value&quot;: &quot;集成服务业&quot;
-				}
-				}
-				]
 				}
 				]
 			</map>

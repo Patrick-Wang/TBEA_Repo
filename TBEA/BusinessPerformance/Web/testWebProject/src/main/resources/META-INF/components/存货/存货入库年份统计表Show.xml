@@ -1,0 +1,570 @@
+<components>
+ <service id="servKcchrunftjYcl">
+  <list id="yfs" type="int">
+   <item from="1" to="12"/>
+  </list>
+  <list id="nys" type="int">
+   <item from="0" to="12"/>
+  </list>
+  <sql id="sr1" order="yfs" by="0" colcount="2">select 
+	DATEPART(mm, storage_date) yf,
+	sum(amount_of_money) total
+from 	
+	storage_yclmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(mm,storage_date)
+		</sql>
+  <sql id="sr1Frist">select 
+	sum(amount_of_money) total
+from 	
+	storage_yclmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[5].months[12].date}) &gt;= 0 and
+	DATEPART(mm,storage_date) = 12 and
+	jydw = ${compId}
+		</sql>
+  <list export="true" id="r1" type="double" sql="sr1" value="1" clear="true">
+   <item insert="0">${sr1Frist[0]}</item>
+  </list>
+  <sql id="sr2" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[4].year} 
+		then 0
+	else 
+		DATEPART(mm, storage_date)	
+	end) ny,
+	sum(amount_of_money) total
+from 	
+	storage_yclmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &gt;= 0 and
+	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,storage_date),
+	DATEPART(mm,storage_date)
+		</sql>
+  <list export="true" id="r2" type="double" sql="sr2" value="1" clear="true"/>
+  <sql id="sr3" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[3].year} 
+		then 0
+	else 
+		DATEPART(mm, storage_date)	
+	end) ny,
+	sum(amount_of_money) total
+from 	
+	storage_yclmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &gt;= 0 and
+	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,storage_date),
+	DATEPART(mm,storage_date)
+		</sql>
+  <list export="true" id="r3" type="double" sql="sr3" value="1" clear="true"/>
+  <sql id="sr4" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[2].year} 
+		then 0
+	else 
+		DATEPART(mm, storage_date)	
+	end) ny,
+	sum(amount_of_money) total
+from 	
+	storage_yclmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &gt;= 0 and
+	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,storage_date),
+	DATEPART(mm,storage_date)
+		</sql>
+  <list export="true" id="r4" type="double" sql="sr4" value="1" clear="true"/>
+  <sql id="sr5" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[1].year} 
+		then 0
+	else 
+		DATEPART(mm, storage_date)	
+	end) ny,
+	sum(amount_of_money) total
+from 	
+	storage_yclmx
+where
+	dateDiff(mm, storage_date, ${cal.months[12].date}) &gt;= 0 and
+	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,storage_date),
+	DATEPART(mm,storage_date)
+		</sql>
+  <list export="true" id="r5" type="double" sql="sr5" value="1" clear="true"/>
+ </service>
+ <service id="servKcchrunftjBcp">
+  <list id="yfs" type="int">
+   <item from="1" to="12"/>
+  </list>
+  <list id="nys" type="int">
+   <item from="0" to="12"/>
+  </list>
+  <sql id="sr1" order="yfs" by="0" colcount="2">select 
+	DATEPART(mm,storage_date) yf,
+	sum(stock_money) total
+from 	
+	storage_bcpmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(mm,storage_date)
+		</sql>
+  <sql id="sr1Frist">select 
+	sum(stock_money) total
+from 	
+	storage_bcpmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[5].months[12].date}) &gt;= 0 and
+	DATEPART(mm,storage_date) = 12 and
+	jydw = ${compId}
+		</sql>
+  <list export="true" id="r1" type="double" sql="sr1" value="1" clear="true">
+   <item insert="0">${sr1Frist[0]}</item>
+  </list>
+  <sql id="sr2" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[4].year} 
+		then 0
+	else 
+		DATEPART(mm, storage_date)	
+	end) ny,
+	sum(stock_money) total
+from 	
+	storage_bcpmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &gt;= 0 and
+	dateDiff(mm, storage_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,storage_date),
+	DATEPART(mm,storage_date)
+		</sql>
+  <list export="true" id="r2" type="double" sql="sr2" value="1" clear="true"/>
+  <sql id="sr3" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[3].year} 
+		then 0
+	else 
+		DATEPART(mm, storage_date)	
+	end) ny,
+	sum(stock_money) total
+from 	
+	storage_bcpmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &gt;= 0 and
+	dateDiff(mm, storage_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,storage_date),
+	DATEPART(mm,storage_date)
+		</sql>
+  <list export="true" id="r3" type="double" sql="sr3" value="1" clear="true"/>
+  <sql id="sr4" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[2].year} 
+		then 0
+	else 
+		DATEPART(mm, storage_date)	
+	end) ny,
+	sum(stock_money) total
+from 	
+	storage_bcpmx
+where
+	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &gt;= 0 and
+	dateDiff(mm, storage_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,storage_date),
+	DATEPART(mm,storage_date)
+		</sql>
+  <list export="true" id="r4" type="double" sql="sr4" value="1" clear="true"/>
+  <sql id="sr5" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[1].year} 
+		then 0
+	else 
+		DATEPART(mm, storage_date)	
+	end) ny,
+	sum(stock_money) total
+from 	
+	storage_bcpmx
+where
+	dateDiff(mm, storage_date, ${cal.months[12].date}) &gt;= 0 and
+	dateDiff(mm, storage_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,storage_date),
+	DATEPART(mm,storage_date)
+		</sql>
+  <list export="true" id="r5" type="double" sql="sr5" value="1" clear="true"/>
+ </service>
+ <service id="servKcchrunftjCcp">
+  <list id="yfs" type="int">
+   <item from="1" to="12"/>
+  </list>
+  <list id="nys" type="int">
+   <item from="0" to="12"/>
+  </list>
+  <sql id="sr1" order="yfs" by="0" colcount="2">select 
+	DATEPART(mm,complete_date) yf,
+	sum(stock_money) total
+from 	
+	storage_swccptz
+where
+	dateDiff(mm, complete_date, ${cal.yearBefore[4].months[12].date}) &gt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(mm,complete_date)
+		</sql>
+  <sql id="sr1Frist">select 
+	sum(stock_money) total
+from 	
+	storage_swccptz
+where
+	dateDiff(mm, complete_date, ${cal.yearBefore[5].months[12].date}) &gt;= 0 and
+	DATEPART(mm,complete_date) = 12 and
+	jydw = ${compId}
+		</sql>
+  <list export="true" id="r1" type="double" sql="sr1" value="1" clear="true">
+   <item insert="0">${sr1Frist[0]}</item>
+  </list>
+  <sql id="sr2" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, complete_date) = ${cal.yearBefore[4].year} 
+		then 0
+	else 
+		DATEPART(mm, complete_date)	
+	end) ny,
+	sum(stock_money) total
+from 	
+	storage_swccptz
+where
+	dateDiff(mm, complete_date, ${cal.yearBefore[3].months[12].date}) &gt;= 0 and
+	dateDiff(mm, complete_date, ${cal.yearBefore[4].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,complete_date),
+	DATEPART(mm,complete_date)
+		</sql>
+  <list export="true" id="r2" type="double" sql="sr2" value="1" clear="true"/>
+  <sql id="sr3" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, complete_date) = ${cal.yearBefore[3].year} 
+		then 0
+	else 
+		DATEPART(mm, complete_date)	
+	end) ny,
+	sum(stock_money) total
+from 	
+	storage_swccptz
+where
+	dateDiff(mm, complete_date, ${cal.yearBefore[2].months[12].date}) &gt;= 0 and
+	dateDiff(mm, complete_date, ${cal.yearBefore[3].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,complete_date),
+	DATEPART(mm,complete_date)
+		</sql>
+  <list export="true" id="r3" type="double" sql="sr3" value="1" clear="true"/>
+  <sql id="sr4" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, complete_date) = ${cal.yearBefore[2].year} 
+		then 0
+	else 
+		DATEPART(mm, complete_date)	
+	end) ny,
+	sum(stock_money) total
+from 	
+	storage_swccptz
+where
+	dateDiff(mm, complete_date, ${cal.yearBefore[1].months[12].date}) &gt;= 0 and
+	dateDiff(mm, complete_date, ${cal.yearBefore[2].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,complete_date),
+	DATEPART(mm,complete_date)
+		</sql>
+  <list export="true" id="r4" type="double" sql="sr4" value="1" clear="true"/>
+  <sql id="sr5" order="nys" by="0" colcount="2">select 
+	(case when DATEPART(yy, complete_date) = ${cal.yearBefore[1].year} 
+		then 0
+	else 
+		DATEPART(mm, complete_date)	
+	end) ny,
+	sum(stock_money) total
+from 	
+	storage_swccptz
+where
+	dateDiff(mm, complete_date, ${cal.months[12].date}) &gt;= 0 and
+	dateDiff(mm, complete_date, ${cal.yearBefore[1].months[12].date}) &lt;= 0 and
+	jydw = ${compId}
+group by
+	DATEPART(yy,complete_date),
+	DATEPART(mm,complete_date)
+		</sql>
+  <list export="true" id="r5" type="double" sql="sr5" value="1" clear="true"/>
+ </service>
+ <service id="servKcchrunftj" transaction="transactionManager">
+  <list id="ids" type="int">
+   <item from="1" to="${13*5}"/>
+  </list>
+  <list id="sum1" type="double"/>
+  <list id="sum2" type="double"/>
+  <list id="sum3" type="double"/>
+  <list id="sum4" type="double"/>
+  <list id="sum5" type="double"/>
+  <callservice id="servKcchrunftjYcl"/>
+  <list id="sum1" type="double">
+   <item concat="r1"/>
+  </list>
+  <list id="sum2" type="double">
+   <item concat="r2"/>
+  </list>
+  <list id="sum3" type="double">
+   <item concat="r3"/>
+  </list>
+  <list id="sum4" type="double">
+   <item concat="r4"/>
+  </list>
+  <list id="sum5" type="double">
+   <item concat="r5"/>
+  </list>
+  <callservice id="servKcchrunftjBcp"/>
+  <list id="sum1" type="double">
+   <item concat="r1"/>
+  </list>
+  <list id="sum2" type="double">
+   <item concat="r2"/>
+  </list>
+  <list id="sum3" type="double">
+   <item concat="r3"/>
+  </list>
+  <list id="sum4" type="double">
+   <item concat="r4"/>
+  </list>
+  <list id="sum5" type="double">
+   <item concat="r5"/>
+  </list>
+  <callservice id="servKcchrunftjCcp"/>
+  <list id="sum1" type="double">
+   <item concat="r1"/>
+  </list>
+  <list id="sum2" type="double">
+   <item concat="r2"/>
+  </list>
+  <list id="sum3" type="double">
+   <item concat="r3"/>
+  </list>
+  <list id="sum4" type="double">
+   <item concat="r4"/>
+  </list>
+  <list id="sum5" type="double">
+   <item concat="r5"/>
+  </list>
+  <list id="sum1" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <list id="sum1" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <list id="sum2" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <list id="sum2" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <list id="sum3" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <list id="sum3" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <list id="sum4" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <list id="sum4" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <list id="sum5" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <list id="sum5" type="double">
+   <item repeat="13" isNull="true"/>
+  </list>
+  <context value="${counterFactory.newCounter}" key="counter"/>
+  <table id="result" rowIds="ids" export="true">
+   <list id="chlx" type="string">
+    <item repeat="13">原材料</item>
+    <item repeat="13">半成品
+(实物)</item>
+    <item repeat="13">产成品
+(实物)</item>
+    <item repeat="13">其他</item>
+    <item repeat="13">合计</item>
+   </list>
+   <list id="yf" type="string">
+    <item>年初余额</item>
+    <item from="1" to="12" print=":i月"/>
+    <item>年初余额</item>
+    <item from="1" to="12" print=":i月"/>
+    <item>年初余额</item>
+    <item from="1" to="12" print=":i月"/>
+    <item>年初余额</item>
+    <item from="1" to="12" print=":i月"/>
+    <item>年初余额</item>
+    <item from="1" to="12" print=":i月"/>
+   </list>
+   <col list="sum1"/>
+   <col list="sum2"/>
+   <col list="sum3"/>
+   <col list="sum4"/>
+   <col list="sum5"/>
+   <col instruction="合计"/>
+   <sumRow toRow="${52 + counter.reset[0].val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumRow toRow="${52 + counter.next.val}">
+    <inRows>${counter.val},${13 + counter.val},${26 + counter.val},${39 + counter.val}</inRows>
+   </sumRow>
+   <sumCol first="2" second="3" toCol="7"/>
+   <sumCol first="4" second="7" toCol="7"/>
+   <sumCol first="5" second="7" toCol="7"/>
+   <sumCol first="6" second="7" toCol="7"/>
+  </table>
+ </service>
+ <controller id="servFmtterKcchrunftj">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0, 1"/>
+   </EmptyFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="kcchrunftjUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <callservice id="servKcchrunftj"/>
+  <callcontroller id="servFmtterKcchrunftj"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>存货类型</name>
+    </item>
+    <item>
+     <name>月份</name>
+    </item>
+    <item>
+     <name>${cal.year - 4}年及以前</name>
+    </item>
+    <item>
+     <name>${cal.year - 3}年</name>
+    </item>
+    <item>
+     <name>${cal.year - 2}年</name>
+    </item>
+    <item>
+     <name>${cal.year - 1}年</name>
+    </item>
+    <item>
+     <name>${cal.year}年</name>
+    </item>
+    <item>
+     <name>合计</name>
+    </item>
+   </header>
+   <mergeRows type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeRows>
+   <width>1300</width>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="kcchrunftjExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <callservice id="servKcchrunftj"/>
+  <callcontroller id="servFmtterKcchrunftj" inline="true"/>
+  <ExcelTemplate id="excelTemplate" sheet="存货入库年份统计表"/>
+  <list id="title" type="string">存货类型,月份,${cal.year - 4}年及以前,${cal.year - 3}年,${cal.year - 2}年,${cal.year - 1}年,${cal.year}年,合计</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="1" width="1" height="${result.ids.size}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0, 1"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}存货入库年份统计表.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="kcchrunftj">
+  <response type="jsp" name="framework/templates/dateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="nodate" value="true"/>
+   <map map="${authMgr[69]}"/>
+   <map key="updateUrl" value="kcchrunftjUpdate"/>
+   <map key="exportUrl" value="kcchrunftjExport"/>
+   <map key="title" value="存货入库年份统计表"/>
+  </response>
+ </controller>
+</components>
