@@ -1,7 +1,10 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 var gdw_zbhz;
 (function (gdw_zbhz) {
+    var router = framework.router;
     var DwZb;
     (function (DwZb) {
         DwZb[DwZb["qnjh"] = 0] = "qnjh";
@@ -20,6 +23,7 @@ var gdw_zbhz;
         DwZb[DwZb["ndqntq"] = 13] = "ndqntq";
         DwZb[DwZb["ndtbzf"] = 14] = "ndtbzf";
     })(DwZb || (DwZb = {}));
+    ;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
@@ -48,46 +52,104 @@ var gdw_zbhz;
         };
         return JQGridAssistantFactory;
     })();
-    var View = (function () {
-        function View() {
+    var SimpleView = (function () {
+        function SimpleView() {
             this.mData = [];
-            this.mDataSet = new Util.Ajax("gdw_zbhz_update.do");
+            this.mDataSet = new Util.Ajax("/BusinessManagement/ydzb/gdw_zbhz_update.do");
+            router.register(this);
         }
-        View.newInstance = function () {
-            if (View.ins == undefined) {
-                View.ins = new View();
+        SimpleView.prototype.getId = function () {
+            return Util.FAMOUS_VIEW;
+        };
+        SimpleView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+                case Util.MSG_UPDATE:
+                    this.updateUI();
+                    break;
             }
-            return View.ins;
         };
-        View.prototype.init = function (tableId, dateId, month, year) {
-            this.mTableId = tableId;
-            this.mDs = new Util.DateSelector({ year: year - 3, month: 1 }, { year: year, month: month }, dateId);
-        };
-        View.prototype.onIndexSelected = function () {
-            this.mZBId = $("#indextype").val();
-            this.mZBName = $("#indextype  option:selected").text();
-        };
-        View.prototype.exportExcel = function (fName) {
-            var date = this.mDs.getDate();
-            $("#export")[0].action = "gdw_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, top5index: this.mZBId, zbName: this.mZBName });
-            $("#export")[0].submit();
-        };
-        View.prototype.updateUI = function () {
+        SimpleView.prototype.init = function (opt) {
             var _this = this;
-            var date = this.mDs.getDate();
-            this.onIndexSelected();
-            this.mDataSet.get({ month: date.month, year: date.year, zbId: this.mZBId })
+            this.mOpt = opt;
+            var minDate = Util.addYear(opt.date, -3);
+            minDate.month = 1;
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年MM月",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                minDate: Util.date2Str(minDate),
+                maxDate: Util.date2Str(opt.date),
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+            $(window).resize(function () {
+                _this.adjustSize();
+            });
+            $("#grid-update").on("click", function () {
+                _this.updateUI();
+            });
+            $("#grid-export").on("click", function () {
+                _this.exportExcel();
+            });
+            this.updateUI();
+        };
+        SimpleView.prototype.getDate = function () {
+            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
+        };
+        SimpleView.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.get($.extend(this.getDate(), { zbId: $("#grid-type").val() }))
                 .then(function (dataArray) {
                 _this.mData = dataArray;
-                $('h1').text(date.year + "年" + date.month + "月各单位" + _this.mZBName + "完成情况");
-                document.title = date.year + "年" + date.month + "月各单位" + _this.mZBName + "完成情况";
                 _this.updateTable();
             });
         };
-        View.prototype.updateTable = function () {
-            var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist = JQGridAssistantFactory.createTable(name);
-            tableAssist.mergeRow(0);
+        SimpleView.prototype.exportExcel = function () {
+            $("#exportExcel")[0].action = "/BusinessManagement/ydzb/gdw_zbhz_export.do?" + Util.Ajax.toUrlParam($.extend(this.getDate(), { top5index: $("#grid-type").val(), zbName: $("#grid-type  option:selected").text() }));
+            $("#exportExcel")[0].submit();
+        };
+        SimpleView.prototype.adjustSize = function () {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.tableAssist.resizeHeight(maxTableBodyHeight);
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+        };
+        SimpleView.prototype.jqgrid = function () {
+            return $("#" + this.jqgridName());
+        };
+        SimpleView.prototype.jqgridName = function () {
+            return this.mOpt.tableId + "_jqgrid_real";
+        };
+        SimpleView.prototype.createJqassist = function () {
+            var parent = $("#" + this.mOpt.tableId);
+            parent.empty();
+            parent.append("<table id='" + this.jqgridName() + "'></table>");
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+            this.tableAssist.mergeRow(0);
+            for (var i = 0; i < 5; ++i) {
+                this.tableAssist.setRowBgColor(i * 8 + 5, 183, 222, 232);
+                this.tableAssist.setRowBgColor(i * 8 + 7, 183, 222, 232);
+            }
+            return this.tableAssist;
+        };
+        SimpleView.prototype.updateTable = function () {
+            this.createJqassist();
             var data = [
                 ["沈变公司"],
                 ["衡变公司"],
@@ -112,7 +174,7 @@ var gdw_zbhz;
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (data[i][0].lastIndexOf("计") >= 0) {
-                    tableAssist.setRowBgColor(i, 183, 222, 232);
+                    this.tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
                 if (this.mData[i] instanceof Array) {
                     row = [].concat(this.mData[i]);
@@ -129,24 +191,22 @@ var gdw_zbhz;
                     data[i] = data[i].concat(row);
                 }
             }
-            var parent = $("#" + this.mTableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
-            $("#" + name).jqGrid(tableAssist.decorate({
-                data: tableAssist.getData(data),
+            this.tableAssist.create({
+                data: data,
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                height: "100%",
-                width: 1330,
+                height: '100%',
+                width: $("#" + this.mOpt.tableId).width(),
                 shrinkToFit: true,
-                rowNum: 200,
+                rowNum: 2000,
                 autoScroll: true
-            }));
-            $("#export , #zk").css('display', 'block');
+            });
+            this.adjustSize();
         };
-        return View;
+        SimpleView.ins = new SimpleView();
+        return SimpleView;
     })();
-    gdw_zbhz.View = View;
+    gdw_zbhz.SimpleView = SimpleView;
 })(gdw_zbhz || (gdw_zbhz = {}));

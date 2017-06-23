@@ -1,18 +1,23 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 declare var echarts;
 
-module gcy_zbhz {
+module gcy_zbhz{
 
-    enum DwZb{
+    import Endpoint = framework.route.Endpoint;
+    import router = framework.router;
+
+  enum DwZb{
         qnjh, dyjh, dysj, dyjhwcl, dywntq, dytbzf,
         jdjh, jdlj, jdjhwcl, jdqntq, jdtbzf,
         ndlj, ndljjhwcl, ndqntq, ndtbzf    
-    }
-    
+    };
+
     class JQGridAssistantFactory {
 
-      public static createTable(gridName: string): JQTable.JQGridAssistant {
+        public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
                 new JQTable.Node("产业", "cy"),
@@ -38,56 +43,130 @@ module gcy_zbhz {
         }
     }
 
-    export class View {
-        private static ins: View;
+    interface IViewOption {
+        tableId: string;
+        date: Util.Date;
+    }
 
-        public static newInstance(): View {
-            if (View.ins == undefined) {
-                View.ins = new View();
-            }
-            return View.ins;
+    export class SimpleView implements Endpoint {
+
+        getId():number {
+            return Util.FAMOUS_VIEW;
         }
 
-        private mDs : Util.DateSelector;
-        private mData: Array<string[]> = [];
-        private mDataSet : Util.Ajax = new Util.Ajax("gcy_zbhz_update.do");
-        private mTableId : string;
-        public init(tableId: string, dateId: string, month: number, year: number): void {
-           this.mDs = new Util.DateSelector(
-                {year: year - 3, month : 1}, 
-                {year: year, month: month},
-                dateId);
-            this.mTableId = tableId;
-            this.updateTable();
+        onEvent(e:framework.route.Event):any {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+                case Util.MSG_UPDATE:
+                    this.updateUI();
+                    break;
+            }
+        }
+
+        public constructor() {
+            router.register(this);
+        }
+
+        private static ins:SimpleView = new SimpleView();
+
+        private mOpt: IViewOption;
+        private mData:Array<string[]> = [];
+        private tableAssist:JQTable.JQGridAssistant;
+        private mDataSet:Util.Ajax = new Util.Ajax("/BusinessManagement/ydzb/gcy_zbhz_update.do");
+
+        public init(opt:any):void {
+            this.mOpt = opt;
+
+            let minDate = Util.addYear(opt.date, -3);
+            minDate.month = 1;
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年MM月",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                minDate: Util.date2Str(minDate),
+                maxDate: Util.date2Str(opt.date),
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+
+            $(window).resize(()=> {
+                this.adjustSize();
+            });
+            $("#grid-update").on("click", ()=> {
+                this.updateUI();
+            });
+            $("#grid-export").on("click", ()=> {
+                this.exportExcel();
+            });
+
             this.updateUI();
         }
-        
-        public exportExcel(fName: string) {
-            var date : Util.Date = this.mDs.getDate();
-            $("#export")[0].action = "gcy_zbhz_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year, fileName: fName});
-            $("#export")[0].submit();
+
+        private getDate():Util.Date {
+            let rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
         }
+
         public updateUI() {
-            var date : Util.Date = this.mDs.getDate();
-            this.mDataSet.get({ month: date.month, year: date.year})
-                .then((jsonData: any) => {
-                    this.mData = jsonData;
-                    $('h1').text(date.year + "年" + date.month + "月各产业五大经营指标完成情况");
-                    document.title = date.year + "年" + date.month + "月各产业五大经营指标完成情况";
+            this.mDataSet.get(this.getDate())
+                .then((dataArray:any) => {
+                    this.mData = dataArray;
                     this.updateTable();
                 });
         }
 
-        private updateTable(): void {
-       	    var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
-            tableAssist.mergeRow(0);
-           
-            for (var i = 0; i < 5; ++i) {
-                tableAssist.setRowBgColor(i * 8 + 5, 183, 222, 232);
-                tableAssist.setRowBgColor(i * 8 + 7, 183, 222, 232);
+        public exportExcel() {
+            $("#exportExcel")[0].action = "/BusinessManagement/ydzb/gcy_zbhz_export.do?" + Util.Ajax.toUrlParam($.extend(this.getDate(),{fileName: "产业重点指标完成情况"}));
+            $("#exportExcel")[0].submit();
+        }
+
+        private adjustSize() {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
             }
 
+            let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+        }
+
+        private jqgrid(){
+            return $("#" + this.jqgridName());
+        }
+
+        private jqgridName():string{
+            return this.mOpt.tableId + "_jqgrid_real";
+        }
+
+        private createJqassist():JQTable.JQGridAssistant{
+            var parent = $("#" + this.mOpt.tableId);
+            parent.empty();
+            parent.append("<table id='"+ this.jqgridName() +"'></table>");
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+            this.tableAssist.mergeRow(0);
+
+            for (var i = 0; i < 5; ++i) {
+                this.tableAssist.setRowBgColor(i * 8 + 5, 183, 222, 232);
+                this.tableAssist.setRowBgColor(i * 8 + 7, 183, 222, 232);
+            }
+            return this.tableAssist;
+        }
+
+        private updateTable():void {
+            this.createJqassist();
 
             var data = [
                 ["报表利润", "输变电产业"],
@@ -130,7 +209,7 @@ module gcy_zbhz {
                 ["存 货", "股份合计"],
                 ["存 货", "众和公司"],
                 ["存 货", "集团合计"]];
-           
+
             var row = [];
             for (var i = 0; i < this.mData.length; ++i) {
                 row = [].concat(this.mData[i]);
@@ -146,23 +225,21 @@ module gcy_zbhz {
                 data[i] = data[i].concat(row);
             }
 
-			var parent = $("#" + this.mTableId);
-			parent.empty();
-			parent.append("<table id='"+ name +"'></table>");
-            $("#" + name).jqGrid(
-                tableAssist.decorate({
-                    data: tableAssist.getData(data),
-                    datatype: "local",
-                    multiselect: false,
-                    drag: false,
-                    resize: false,
-                    height: 550,
-                    width: 1330,
-                    shrinkToFit: true,
-                    rowNum: 200,
-                    autoScroll: true
-                }));
 
+            this.tableAssist.create({
+                data: data,
+                datatype: "local",
+                multiselect: false,
+                drag: false,
+                resize: false,
+                height: '100%',
+                width: $("#" + this.mOpt.tableId).width(),
+                shrinkToFit: true,
+                rowNum: 2000,
+                autoScroll: true
+            });
+
+            this.adjustSize();
         }
     }
 }

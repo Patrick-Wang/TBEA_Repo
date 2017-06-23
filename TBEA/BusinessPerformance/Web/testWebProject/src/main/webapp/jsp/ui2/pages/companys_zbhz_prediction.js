@@ -1,9 +1,10 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
-///<reference path="companySelector.ts"/>
-///<reference path="unitedSelector.ts"/>
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 var companys_zbhz_prediction;
 (function (companys_zbhz_prediction) {
+    var router = framework.router;
     var FirstMonthZb;
     (function (FirstMonthZb) {
         FirstMonthZb[FirstMonthZb["zb"] = 0] = "zb";
@@ -25,6 +26,7 @@ var companys_zbhz_prediction;
         FirstMonthZb[FirstMonthZb["ndqntqz"] = 16] = "ndqntqz";
         FirstMonthZb[FirstMonthZb["ndtbzf"] = 17] = "ndtbzf";
     })(FirstMonthZb || (FirstMonthZb = {}));
+    ;
     var SecondMonthZb;
     (function (SecondMonthZb) {
         SecondMonthZb[SecondMonthZb["zb"] = 0] = "zb";
@@ -49,6 +51,7 @@ var companys_zbhz_prediction;
         SecondMonthZb[SecondMonthZb["ndqntqz"] = 19] = "ndqntqz";
         SecondMonthZb[SecondMonthZb["ndtbzf"] = 20] = "ndtbzf";
     })(SecondMonthZb || (SecondMonthZb = {}));
+    ;
     var ThirdMonthZb;
     (function (ThirdMonthZb) {
         ThirdMonthZb[ThirdMonthZb["zb"] = 0] = "zb";
@@ -78,12 +81,7 @@ var companys_zbhz_prediction;
         ThirdMonthZb[ThirdMonthZb["xjdqntq"] = 24] = "xjdqntq";
         ThirdMonthZb[ThirdMonthZb["xjdtbzf"] = 25] = "xjdtbzf";
     })(ThirdMonthZb || (ThirdMonthZb = {}));
-    var TableType;
-    (function (TableType) {
-        TableType[TableType["firstMonthinSeason"] = 0] = "firstMonthinSeason";
-        TableType[TableType["secondMonthinSeason"] = 1] = "secondMonthinSeason";
-        TableType[TableType["thirdMonthinSeason"] = 2] = "thirdMonthinSeason";
-    })(TableType || (TableType = {}));
+    ;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
@@ -179,56 +177,96 @@ var companys_zbhz_prediction;
         };
         return JQGridAssistantFactory;
     })();
-    var View = (function () {
-        function View() {
+    var SimpleView = (function () {
+        function SimpleView() {
             this.mData = [];
-            this.mDataSet = new Util.Ajax("hzb_companys_prediction_update.do");
+            this.mDataSet = new Util.Ajax("/BusinessManagement/ydzb/hzb_companys_prediction_update.do");
+            router.register(this);
         }
-        View.newInstance = function () {
-            if (View.ins == undefined) {
-                View.ins = new View();
+        SimpleView.prototype.getId = function () {
+            return Util.FAMOUS_VIEW;
+        };
+        SimpleView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+                case Util.MSG_UPDATE:
+                    this.updateUI();
+                    break;
             }
-            return View.ins;
         };
-        View.prototype.init = function (tableId, year, companyId, comps) {
-            this.mYear = year;
-            this.mTableId = tableId;
-            this.mCompanyId = companyId;
-            this.mComps = comps;
-            this.mCompanySelector = new Util.CompanySelector(false, this.mCompanyId, this.mComps);
-            this.updateTextandTitle();
-        };
-        View.prototype.onYearSelected = function (year) {
-            this.mYear = year;
-        };
-        View.prototype.onSeasonChange = function (season) {
-            this.mSeason = parseInt(season);
-        };
-        View.prototype.onMonthDelegateSelected = function (month) {
-            this.mDelegateMonth = parseInt(month);
-        };
-        View.prototype.exportExcel = function (fName) {
-            //var date : Util.Date = this.mDateSelector.getDate();
-            var compType = this.mCompanySelector.getCompany();
-            $("#export")[0].action = "hzb_companys_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear, companyId: compType });
-            $("#export")[0].submit();
-        };
-        View.prototype.updateUI = function () {
+        SimpleView.prototype.init = function (opt) {
             var _this = this;
-            this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
+            this.mOpt = opt;
+            var minDate = Util.addYear(opt.date, -3);
+            minDate.month = 1;
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                minDate: Util.date2Str(minDate),
+                maxDate: Util.date2Str(opt.date),
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+            this.mCompanySelector = new Util.CompanySelector(false, "comp-sel", opt.comps);
+            $(window).resize(function () {
+                _this.adjustSize();
+            });
+            $("#grid-update").on("click", function () {
+                _this.updateUI();
+            });
+            $("#grid-export").on("click", function () {
+                _this.exportExcel();
+            });
+            this.updateUI();
+        };
+        SimpleView.prototype.getDate = function () {
+            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
+        };
+        SimpleView.prototype.updateUI = function () {
+            var _this = this;
+            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
             var compType = this.mCompanySelector.getCompany();
-            this.mDataSet.get({ month: this.mActualMonth, year: this.mYear, companyId: compType })
+            this.mDataSet.get({ month: this.mActualMonth, year: parseInt($("#grid-date").val()), companyId: compType })
                 .then(function (dataArray) {
                 _this.mData = dataArray;
                 _this.updateTable();
-                _this.updateTextandTitle();
             });
         };
-        View.prototype.updateTextandTitle = function () {
-            $('h1').text(this.mYear + "年" + "季度项目公司及经营单位指标预测完成情况");
-            document.title = this.mYear + "年" + "季度项目公司及经营单位指标预测完成情况";
+        SimpleView.prototype.exportExcel = function () {
+            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
+            var compType = this.mCompanySelector.getCompany();
+            $("#grid-export")[0].action = "hzb_companys_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear, companyId: compType });
+            $("#grid-export")[0].submit();
         };
-        View.prototype.formatFirstMonthData = function (outputData) {
+        SimpleView.prototype.adjustSize = function () {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.tableAssist.resizeHeight(maxTableBodyHeight);
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+        };
+        SimpleView.prototype.jqgrid = function () {
+            return $("#" + this.jqgridName());
+        };
+        SimpleView.prototype.jqgridName = function () {
+            return this.mOpt.tableId + "_jqgrid_real";
+        };
+        SimpleView.prototype.formatFirstMonthData = function (outputData) {
             var precentList = new std.vector();
             precentList.push(FirstMonthZb.dyjhwcl);
             precentList.push(FirstMonthZb.dytbzf);
@@ -236,18 +274,9 @@ var companys_zbhz_prediction;
             precentList.push(FirstMonthZb.jdtbzf);
             precentList.push(FirstMonthZb.ndzbwcl);
             precentList.push(FirstMonthZb.ndtbzf);
-            return Util.formatData(outputData, this.mData, precentList, [
-                FirstMonthZb.dyyjz,
-                FirstMonthZb.dyqntq,
-                FirstMonthZb.cyyj,
-                FirstMonthZb.myyj,
-                FirstMonthZb.jdyjhj,
-                FirstMonthZb.jdqntq,
-                FirstMonthZb.ndljwcz,
-                FirstMonthZb.ndqntqz
-            ]);
+            return Util.formatData(outputData, this.mData, precentList, []);
         };
-        View.prototype.formatSecondMonthData = function (outputData) {
+        SimpleView.prototype.formatSecondMonthData = function (outputData) {
             var precentList = new std.vector();
             precentList.push(SecondMonthZb.dyjhwcl);
             precentList.push(SecondMonthZb.dytbzf);
@@ -257,19 +286,9 @@ var companys_zbhz_prediction;
             precentList.push(SecondMonthZb.jdtbzf);
             precentList.push(SecondMonthZb.ndzbwcl);
             precentList.push(SecondMonthZb.ndtbzf);
-            return Util.formatData(outputData, this.mData, precentList, [
-                SecondMonthZb.dyyjz,
-                SecondMonthZb.dyqntq,
-                SecondMonthZb.jdlj,
-                SecondMonthZb.jdqntqz,
-                SecondMonthZb.jdmyyj,
-                SecondMonthZb.jdyjhj,
-                SecondMonthZb.jdyjqntq,
-                SecondMonthZb.ndljwcz,
-                SecondMonthZb.ndqntqz
-            ]);
+            return Util.formatData(outputData, this.mData, precentList, []);
         };
-        View.prototype.formatThirdMonthData = function (outputData) {
+        SimpleView.prototype.formatThirdMonthData = function (outputData) {
             var precentList = new std.vector();
             precentList.push(ThirdMonthZb.dyjhwcl);
             precentList.push(ThirdMonthZb.dytbzf);
@@ -280,57 +299,48 @@ var companys_zbhz_prediction;
             precentList.push(ThirdMonthZb.xjdyjwcl);
             precentList.push(ThirdMonthZb.xjdndljwcl);
             precentList.push(ThirdMonthZb.xjdtbzf);
-            return Util.formatData(outputData, this.mData, precentList, [
-                ThirdMonthZb.dyyjz,
-                ThirdMonthZb.dyqntq,
-                ThirdMonthZb.jdlj,
-                ThirdMonthZb.jdqntqz,
-                ThirdMonthZb.ndljwcz,
-                ThirdMonthZb.ndqntqz,
-                ThirdMonthZb.xjdsyyj,
-                ThirdMonthZb.xjdcyyj,
-                ThirdMonthZb.xjdmyyj,
-                ThirdMonthZb.xjdyjhj,
-                ThirdMonthZb.xjdndlj,
-                ThirdMonthZb.xjdqntq
-            ]);
+            return Util.formatData(outputData, this.mData, precentList, []);
         };
-        View.prototype.updateTable = function () {
-            var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist = JQGridAssistantFactory.createTable(name, this.mDelegateMonth);
-            var outputdata = [];
-            if (1 == this.mDelegateMonth) {
-                this.formatFirstMonthData(outputdata);
-            }
-            else if (2 == this.mDelegateMonth) {
-                this.formatSecondMonthData(outputdata);
-            }
-            else if (3 == this.mDelegateMonth) {
-                this.formatThirdMonthData(outputdata);
-            }
-            var parent = $("#" + this.mTableId);
+        SimpleView.prototype.createJqassist = function () {
+            var parent = $("#" + this.mOpt.tableId);
             parent.empty();
-            parent.append("<table id='" + name + "'></table>");
-            $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
-                data: tableAssist.getData(outputdata),
+            parent.append("<table id='" + this.jqgridName() + "'></table>");
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), parseInt($("#grid-season-month").val()));
+            return this.tableAssist;
+        };
+        SimpleView.prototype.updateTable = function () {
+            this.createJqassist();
+            var outputData = [];
+            if (1 == parseInt($("#grid-season-month").val())) {
+                this.formatFirstMonthData(outputData);
+            }
+            else if (2 == parseInt($("#grid-season-month").val())) {
+                this.formatSecondMonthData(outputData);
+            }
+            else if (3 == parseInt($("#grid-season-month").val())) {
+                this.formatThirdMonthData(outputData);
+            }
+            for (var i = 0; i < outputData.length; ++i) {
+                if (outputData[i][0].lastIndexOf("计") >= 0 && outputData[i][0].lastIndexOf("审计") < 0) {
+                    this.tableAssist.setRowBgColor(i, 183, 222, 232);
+                }
+            }
+            this.tableAssist.create({
+                data: outputData,
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
-                height: outputdata.length > 23 ? 500 : '100%',
-                width: 1330,
+                height: '100%',
+                width: $("#" + this.mOpt.tableId).width(),
                 shrinkToFit: true,
-                rowNum: 100,
+                rowNum: 2000,
                 autoScroll: true
-            }));
-            $("#export").css('display', 'block');
+            });
+            this.adjustSize();
         };
-        return View;
+        SimpleView.ins = new SimpleView();
+        return SimpleView;
     })();
-    companys_zbhz_prediction.View = View;
+    companys_zbhz_prediction.SimpleView = SimpleView;
 })(companys_zbhz_prediction || (companys_zbhz_prediction = {}));

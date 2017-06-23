@@ -1,7 +1,10 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 var hzb_zbhz_prediciton;
 (function (hzb_zbhz_prediciton) {
+    var router = framework.router;
     var FirstMonthZb;
     (function (FirstMonthZb) {
         FirstMonthZb[FirstMonthZb["zb"] = 0] = "zb";
@@ -23,6 +26,7 @@ var hzb_zbhz_prediciton;
         FirstMonthZb[FirstMonthZb["ndqntqz"] = 16] = "ndqntqz";
         FirstMonthZb[FirstMonthZb["ndtbzf"] = 17] = "ndtbzf";
     })(FirstMonthZb || (FirstMonthZb = {}));
+    ;
     var SecondMonthZb;
     (function (SecondMonthZb) {
         SecondMonthZb[SecondMonthZb["zb"] = 0] = "zb";
@@ -47,6 +51,7 @@ var hzb_zbhz_prediciton;
         SecondMonthZb[SecondMonthZb["ndqntqz"] = 19] = "ndqntqz";
         SecondMonthZb[SecondMonthZb["ndtbzf"] = 20] = "ndtbzf";
     })(SecondMonthZb || (SecondMonthZb = {}));
+    ;
     var ThirdMonthZb;
     (function (ThirdMonthZb) {
         ThirdMonthZb[ThirdMonthZb["zb"] = 0] = "zb";
@@ -76,6 +81,7 @@ var hzb_zbhz_prediciton;
         ThirdMonthZb[ThirdMonthZb["xjdqntq"] = 24] = "xjdqntq";
         ThirdMonthZb[ThirdMonthZb["xjdtbzf"] = 25] = "xjdtbzf";
     })(ThirdMonthZb || (ThirdMonthZb = {}));
+    ;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
@@ -171,63 +177,107 @@ var hzb_zbhz_prediciton;
         };
         return JQGridAssistantFactory;
     })();
-    var View = (function () {
-        function View() {
+    var SimpleView = (function () {
+        function SimpleView() {
             this.mData = [];
-            this.mDataSet = new Util.Ajax("hzb_zbhz_prediction_update.do");
-            this.mJydwDataSet = new Util.Ajax("hzb_zbhz_prediction_jydw_compute.do", false);
-            this.mXmgsDataSet = new Util.Ajax("hzb_zbhz_prediction_xmgs_compute.do", false);
+            this.mDataSet = new Util.Ajax("/BusinessManagement/ydzb/hzb_zbhz_prediction_update.do");
+            this.mJydwDataSet = new Util.Ajax("/BusinessManagement/ydzb/hzb_zbhz_prediction_jydw_compute.do", false);
+            this.mXmgsDataSet = new Util.Ajax("/BusinessManagement/ydzb/hzb_zbhz_prediction_xmgs_compute.do", false);
+            router.register(this);
         }
-        View.newInstance = function () {
-            if (View.ins == undefined) {
-                View.ins = new View();
+        SimpleView.prototype.getId = function () {
+            return Util.FAMOUS_VIEW;
+        };
+        SimpleView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+                case Util.MSG_UPDATE:
+                    this.updateUI();
+                    break;
             }
-            return View.ins;
         };
-        View.prototype.init = function (tableId, year) {
-            this.mYear = year;
-            this.mTableId = tableId;
-            $('h1').text(this.mYear + "年" + "季度指标预测完成情况");
-            //this.updateTable();
-            //this.updateUI();
-        };
-        View.prototype.onYearSelected = function (year) {
-            this.mYear = year;
-        };
-        View.prototype.onSeasonChange = function (season) {
-            this.mSeason = parseInt(season);
-        };
-        View.prototype.onMonthDelegateSelected = function (month) {
-            this.mDelegateMonth = parseInt(month);
-        };
-        View.prototype.exportExcelJydw = function () {
-            this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
-            $("#loadingText").text("经营单位整体指标预测完成情况导出中。。。");
-            this.mJydwDataSet.get({ month: this.mActualMonth, year: this.mYear }).then(function (tmStamp) {
-                $("#exportJydw")[0].action = "general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
-                $("#exportJydw")[0].submit();
-            });
-        };
-        View.prototype.exportExcelXmgs = function () {
-            this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
-            $("#loadingText").text("项目公司整体指标预测完成情况导出中。。。");
-            this.mXmgsDataSet.get({ month: this.mActualMonth, year: this.mYear }).then(function (tmStamp) {
-                $("#exportxmgs")[0].action = "general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
-                $("#exportxmgs")[0].submit();
-            });
-        };
-        View.prototype.updateUI = function () {
+        SimpleView.prototype.init = function (opt) {
             var _this = this;
-            this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
-            this.mDataSet.get({ month: this.mActualMonth, year: this.mYear })
+            this.mOpt = opt;
+            var minDate = Util.addYear(opt.date, -3);
+            minDate.month = 1;
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                minDate: Util.date2Str(minDate),
+                maxDate: Util.date2Str(opt.date),
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+            $(window).resize(function () {
+                _this.adjustSize();
+            });
+            $("#grid-update").on("click", function () {
+                _this.updateUI();
+            });
+            $("#export-all").on("click", function () {
+                _this.exportExcelJydw();
+            });
+            $("#export-xmgs").on("click", function () {
+                _this.exportExcelXmgs();
+            });
+            this.updateUI();
+        };
+        SimpleView.prototype.getDate = function () {
+            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
+        };
+        SimpleView.prototype.updateUI = function () {
+            var _this = this;
+            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
+            this.mDataSet.get({ month: this.mActualMonth, year: parseInt($("#grid-date").val()) })
                 .then(function (dataArray) {
                 _this.mData = dataArray;
-                $('h1').text(_this.mYear + "年" + "季度指标预测完成情况");
-                //document.title = this.mYear + "年" + this.mMonth + "月 指标汇总";
                 _this.updateTable();
             });
         };
-        View.prototype.formatFirstMonthData = function (outputData) {
+        SimpleView.prototype.exportExcelJydw = function () {
+            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
+            this.mJydwDataSet.get({ month: this.mActualMonth, year: parseInt($("#grid-date").val()) }).then(function (tmStamp) {
+                $("#exportJydw")[0].action = "/BusinessManagement/ydzb/general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
+                $("#exportJydw")[0].submit();
+            });
+        };
+        SimpleView.prototype.exportExcelXmgs = function () {
+            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
+            this.mXmgsDataSet.get({ month: this.mActualMonth, year: parseInt($("#grid-date").val()) }).then(function (tmStamp) {
+                $("#exportJydw")[0].action = "/BusinessManagement/ydzb/general_export.do?" + Util.Ajax.toUrlParam({ timeStamp: tmStamp.timeStamp });
+                $("#exportJydw")[0].submit();
+            });
+        };
+        SimpleView.prototype.adjustSize = function () {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.tableAssist.resizeHeight(maxTableBodyHeight);
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+        };
+        SimpleView.prototype.jqgrid = function () {
+            return $("#" + this.jqgridName());
+        };
+        SimpleView.prototype.jqgridName = function () {
+            return this.mOpt.tableId + "_jqgrid_real";
+        };
+        SimpleView.prototype.formatFirstMonthData = function (outputData) {
             var precentList = new std.vector();
             precentList.push(FirstMonthZb.dyjhwcl);
             precentList.push(FirstMonthZb.dytbzf);
@@ -237,7 +287,7 @@ var hzb_zbhz_prediciton;
             precentList.push(FirstMonthZb.ndtbzf);
             return Util.formatData(outputData, this.mData, precentList, []);
         };
-        View.prototype.formatSecondMonthData = function (outputData) {
+        SimpleView.prototype.formatSecondMonthData = function (outputData) {
             var precentList = new std.vector();
             precentList.push(SecondMonthZb.dyjhwcl);
             precentList.push(SecondMonthZb.dytbzf);
@@ -249,7 +299,7 @@ var hzb_zbhz_prediciton;
             precentList.push(SecondMonthZb.ndtbzf);
             return Util.formatData(outputData, this.mData, precentList, []);
         };
-        View.prototype.formatThirdMonthData = function (outputData) {
+        SimpleView.prototype.formatThirdMonthData = function (outputData) {
             var precentList = new std.vector();
             precentList.push(ThirdMonthZb.dyjhwcl);
             precentList.push(ThirdMonthZb.dytbzf);
@@ -262,48 +312,46 @@ var hzb_zbhz_prediciton;
             precentList.push(ThirdMonthZb.xjdtbzf);
             return Util.formatData(outputData, this.mData, precentList, []);
         };
-        View.prototype.updateTable = function () {
-            var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist = JQGridAssistantFactory.createTable(name, this.mDelegateMonth);
+        SimpleView.prototype.createJqassist = function () {
+            var parent = $("#" + this.mOpt.tableId);
+            parent.empty();
+            parent.append("<table id='" + this.jqgridName() + "'></table>");
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), parseInt($("#grid-season-month").val()));
+            return this.tableAssist;
+        };
+        SimpleView.prototype.updateTable = function () {
+            this.createJqassist();
             var outputData = [];
-            if (1 == this.mDelegateMonth) {
+            if (1 == parseInt($("#grid-season-month").val())) {
                 this.formatFirstMonthData(outputData);
             }
-            else if (2 == this.mDelegateMonth) {
+            else if (2 == parseInt($("#grid-season-month").val())) {
                 this.formatSecondMonthData(outputData);
             }
-            else if (3 == this.mDelegateMonth) {
+            else if (3 == parseInt($("#grid-season-month").val())) {
                 this.formatThirdMonthData(outputData);
             }
             for (var i = 0; i < outputData.length; ++i) {
                 if (outputData[i][0].lastIndexOf("计") >= 0 && outputData[i][0].lastIndexOf("审计") < 0) {
-                    tableAssist.setRowBgColor(i, 183, 222, 232);
+                    this.tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
             }
-            var parent = $("#" + this.mTableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
-            $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
-                data: tableAssist.getData(outputData),
+            this.tableAssist.create({
+                data: outputData,
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: '100%',
-                width: 1330,
+                width: $("#" + this.mOpt.tableId).width(),
                 shrinkToFit: true,
-                rowNum: 100,
+                rowNum: 2000,
                 autoScroll: true
-            }));
-            $("#exportJydw").css('display', 'block');
-            $("#exportxmgs").css('display', 'block');
+            });
+            this.adjustSize();
         };
-        return View;
+        SimpleView.ins = new SimpleView();
+        return SimpleView;
     })();
-    hzb_zbhz_prediciton.View = View;
+    hzb_zbhz_prediciton.SimpleView = SimpleView;
 })(hzb_zbhz_prediciton || (hzb_zbhz_prediciton = {}));

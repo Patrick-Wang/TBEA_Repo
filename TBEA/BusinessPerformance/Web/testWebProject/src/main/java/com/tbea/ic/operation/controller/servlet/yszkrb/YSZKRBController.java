@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.JYGKPhase2SheetType;
 import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
@@ -41,16 +42,16 @@ public class YSZKRBController {
 	@Autowired
 	private YSZKRBService yszkrbService;
 
-	@RequestMapping(value = "yszk.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"yszk.do", "v2/yszk.do"}, method = RequestMethod.GET)
 	public ModelAndView getYszk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		DateSelection dateSel = new DateSelection();
 		Map<String, Object> map = new HashMap<String, Object>();
 		dateSel.select(map);
-		return new ModelAndView("yszkrb_view", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "yszkrb_view", map);
 	}
 
-	@RequestMapping(value = "yszk_update.do")
+	@RequestMapping(value ="yszk_update.do")
 	public @ResponseBody byte[] getYszkUpdate(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date date = DateSelection.getDate(request);

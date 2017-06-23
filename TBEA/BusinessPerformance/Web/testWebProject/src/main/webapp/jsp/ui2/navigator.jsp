@@ -117,17 +117,15 @@
 				<script>
 					builder.register('gczt', function () {
 						return [
-						    createNode('公司整体指标完成情况', 'ydzb/v2/hzb_zbhz.do')
+						    createNode('公司整体指标完成情况', 'ydzb/v2/hzb_zbhz.do')				   
 						];
 					});
-		 		</script>
-			</c:if>
-			<c:if test="${CorpAuth}">
-				<script>
+					
 					builder.register('gcyzb', function() {
 						return [
 						    createNode('产业重点指标完成情况', 'ydzb/v2/gcy_zbhz.do'),
 						    createNode('单位重点指标完成情况', 'ydzb/v2/gdw_zbhz.do'),
+						    createNode('单位数据子库', 'report/zk.do'),
 						    createNode('产业指标汇总', 'report/acyhzzb.do')
 						];
 					});
@@ -215,7 +213,7 @@
 			<c:if test="${YSZKDialyLookup}">
 				<script>
 					builder.register('yszkrbLookup', function() {
-						return createNode('应收账款日报', 'yszkrb/yszk.do');
+						return createNode('应收账款日报', 'yszkrb/v2/yszk.do');
 					});
 				</script>
 			</c:if>

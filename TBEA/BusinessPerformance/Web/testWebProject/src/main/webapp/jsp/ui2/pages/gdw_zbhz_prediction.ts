@@ -1,36 +1,43 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 declare var echarts;
 
-module gdw_zbhz_prediciton {
+module gdw_zbhz_prediciton{
 
-    enum FirstMonthZb{
-        ndjh, bjdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
+    import Endpoint = framework.route.Endpoint;
+    import router = framework.router;
+
+  enum FirstMonthZb{
+        ndjh, jdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
         cyyj, myyj, jdyjhj, jdyjwcl, jdqntq, jdtbzf, 
         ndljwcz, ndzbwcl, ndqntqz, ndtbzf    
-    }
+    };
     
     enum SecondMonthZb{
         ndjh, jdjh, byjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
         jdlj, jdjhwcl, jdqntqz, jdtbzf,
         jdmyyj, jdyjhj, jdyjwcl, jdyjqntq, jdyjtbzf,
         ndljwcz, ndzbwcl, ndqntqz, ndtbzf    
-    }
+    };
        
     enum ThirdMonthZb{
         ndjh, bjdjh, xjdjh, dyjhz, dyyjz, dyjhwcl, dyqntq, dytbzf,
         jdlj, jdjhwcl, jdqntqz, jdtbzf,
         ndljwcz, ndzbwcl, ndqntqz, ndtbzf,
         xjdsyyj, xjdcyyj, xjdmyyj, xjdyjhj, xjdyjwcl, xjdndlj, xjdndljwcl, xjdqntq,xjdtbzf
-    }
+    };
     
-    class JQGridAssistantFactory {
+
+       class JQGridAssistantFactory {
 
         public static createTable(gridName: string, gridStyle: number): JQTable.JQGridAssistant {
             if (1 == gridStyle)
             {
                 return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("产业", "cy"),
                 new JQTable.Node("年度计划", "ndjh"),
                 new JQTable.Node("本季度计划", "jdjh"),
                 new JQTable.Node("当月完成", "dywc")
@@ -57,6 +64,7 @@ module gdw_zbhz_prediciton {
             {
                 return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("产业", "cy"),
                 new JQTable.Node("年度计划", "ndjh"),
                 new JQTable.Node("本季度计划", "jdjh"),
                 new JQTable.Node("当月完成", "dywc")
@@ -87,6 +95,7 @@ module gdw_zbhz_prediciton {
                {
                     return new JQTable.JQGridAssistant([
                 new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("产业", "cy"),
                 new JQTable.Node("年度计划", "ndjh"),
                 new JQTable.Node("本季度计划", "jdjh"),
                 new JQTable.Node("下季度计划", "xjdjh"),
@@ -122,72 +131,118 @@ module gdw_zbhz_prediciton {
         }
     }
 
-    export class View {
-        private static ins: View;
+    interface IViewOption {
+        tableId: string;
+        date: Util.Date;
+    }
 
-        public static newInstance(): View {
-            if (View.ins == undefined) {
-                View.ins = new View();
+    export class SimpleView implements Endpoint {
+
+        getId():number {
+            return Util.FAMOUS_VIEW;
+        }
+
+        onEvent(e:framework.route.Event):any {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+                case Util.MSG_UPDATE:
+                    this.updateUI();
+                    break;
             }
-            return View.ins;
         }
-        private mYear : number;
-        private mSeason: number;
+
+        public constructor() {
+            router.register(this);
+        }
+
+        private static ins:SimpleView = new SimpleView();
+        
         private mActualMonth: number;
-        private mDelegateMonth: number;
-        private mZB: number;
-        private mZBName : string;
-        private mData: Array<string[]> = [];
-        private mDataSet : Util.Ajax = new Util.Ajax("gdw_zbhz_prediction_update.do");
-        private mTableId : string;
-        public init(tableId: string, year: number, zbId: number): void {
-            this.mYear = year;
-            this.mTableId = tableId;
-            //this.mZB = zbId;
-            //this.mZBName = zbName;
-            //$('h1').text(this.mYear + "年"  + "季度" + this.mZBName + "预测完成情况");
-            //this.updateTable();
-            //this.updateUI();
+        private mOpt: IViewOption;
+        private mData:Array<string[]> = [];
+        private tableAssist:JQTable.JQGridAssistant;
+        private mDataSet:Util.Ajax = new Util.Ajax("/BusinessManagement/ydzb/gdw_zbhz_prediction_update.do");
 
+        public init(opt:any):void {
+            this.mOpt = opt;
+
+            let minDate = Util.addYear(opt.date, -3);
+            minDate.month = 1;
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                minDate: Util.date2Str(minDate),
+                maxDate: Util.date2Str(opt.date),
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+
+            $(window).resize(()=> {
+                this.adjustSize();
+            });
+            $("#grid-update").on("click", ()=> {
+                this.updateUI();
+            });
+            $("#grid-export").on("click", ()=> {
+                this.exportExcel();
+            });
+
+            this.updateUI();
         }
- 		public onYearSelected(year : number){
-        	this.mYear = year;
+
+        private getDate():Util.Date {
+            let rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
         }
-        
-        public onSeasonChange(season : string){
-            this.mSeason = parseInt(season);
-        }
-        
-        public onMonthDelegateSelected(month : string){
-        	this.mDelegateMonth = parseInt(month);
-        }
-        
-        public onIndexSelected(){
-            this.mZB = $("#indextype").val();
-            this.mZBName = $("#indextype  option:selected").text();
-        }
-        
+
         public updateUI() {
-
-            this.mActualMonth = (this.mSeason - 1) * 3 + this.mDelegateMonth;
-            this.onIndexSelected();
-            this.mDataSet.get({ month: this.mActualMonth, year: this.mYear, zb: this.mZB})
-                .then((dataArray: any) => {
-
+            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
+            this.mDataSet.get({month: this.mActualMonth, year: parseInt($("#grid-date").val()),zb:$("#grid-type").val()})
+                .then((dataArray:any) => {
                     this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" +  "季度" + this.mZBName + "预测完成情况");
-                    document.title = this.mYear + "年" + "季度" +  this.mZBName + "预测完成情况";
                     this.updateTable();
-
                 });
         }
-        
+
         public exportExcel() {
-            $("#export")[0].action = "gdw_zbhz_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear, top5index: this.mZB, zbName:this.mZBName});
-            $("#export")[0].submit();
+            $("#exportExcel")[0].action = "/BusinessManagement/ydzb/gdw_zbhz_prediction_export.do?" + Util.Ajax.toUrlParam({month: this.mActualMonth, year: parseInt($("#grid-date").val()), top5index: $("#grid-type").val(), zbName:$("#grid-type  option:selected").text()});
+            $("#exportExcel")[0].submit();
+        }
+
+        private adjustSize() {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+
+            let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+        }
+
+        private jqgrid(){
+            return $("#" + this.jqgridName());
+        }
+
+        private jqgridName():string{
+            return this.mOpt.tableId + "_jqgrid_real";
         }
         
-        private formatData(data : string[][], precentList : std.vector<number>){
+        
+         private formatData(data : string[][], precentList : std.vector<number>){
             var row = [];
             for (var j = 0; j < this.mData.length; ++j) {
                 row = [].concat(this.mData[j]);
@@ -241,67 +296,69 @@ module gdw_zbhz_prediciton {
             return this.formatData(data, precentList);
         }
         
-        private updateTable(): void {
-        	var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist: JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDelegateMonth);
-            var data = [
-                ["沈变公司"],
-                ["衡变公司"],
-                ["新变厂"],
-                ["鲁缆公司"],
-                ["新缆厂"],
-                ["德缆公司"],
-                ["输变电小计"],
-                ["新特能源公司"],
-                ["新能源"],
-                ["新能源小计"],
-                ["天池能源"],
-                ["能动公司"],
-                ["能源小计"],
-                ["进出口公司"],
-                ["国际工程公司"],
-                ["工程小计"],
-                ["股份公司小计"],
-                ["众和公司"],
-                ["集团合计"]
-             ];
 
- 			if (1 == this.mDelegateMonth){
-                data = this.formatFirstMonthData(data);
-            } else if (2 == this.mDelegateMonth){
-                data = this.formatSecondMonthData(data);
-            } else if (3 == this.mDelegateMonth){
-                data = this.formatThirdMonthData(data);
-            } 
+        private createJqassist():JQTable.JQGridAssistant{
+            var parent = $("#" + this.mOpt.tableId);
+            parent.empty();
+            parent.append("<table id='"+ this.jqgridName() +"'></table>");
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), parseInt($("#grid-season-month").val()));
+
+            return this.tableAssist;
+        }
+
+        private updateTable():void {
+            this.createJqassist();
+
+           var data = [
+               ["沈变公司"],
+               ["衡变公司"],
+               ["新变厂"],
+               ["鲁缆公司"],
+               ["新缆厂"],
+               ["德缆公司"],
+               ["输变电小计"],
+               ["新特能源公司"],
+               ["新能源"],
+               ["新能源小计"],
+               ["天池能源"],
+               ["能动公司"],
+               ["能源小计"],
+               ["进出口公司"],
+               ["国际工程公司"],
+               ["工程小计"],
+               ["股份公司小计"],
+               ["众和公司"],
+               ["集团合计"]
+           ];
             
+            if (1 == parseInt($("#grid-season-month").val())){
+                data = this.formatFirstMonthData(data);
+            } else if (2 == parseInt($("#grid-season-month").val())){
+                data = this.formatSecondMonthData(data);
+            } else if (3 == parseInt($("#grid-season-month").val())){
+                data = this.formatThirdMonthData(data);
+            }
+
             for (var i = 0; i < data.length; ++i) {
                 if (data[i][0].lastIndexOf("计") >= 0) {
-                    tableAssist.setRowBgColor(i, 183, 222, 232);
+                    this.tableAssist.setRowBgColor(i, 183, 222, 232);
                 }
             }
-            
-			var parent = $("#" + this.mTableId);
-			parent.empty();
-			parent.append("<table id='"+ name +"'></table>");
-            $("#" + name).jqGrid(
-                tableAssist.decorate({
-                    // url: "TestTable/WGDD_load.do",
-                    // datatype: "json",
-                    data: tableAssist.getData(data),
-                    datatype: "local",
-                    multiselect: false,
-                    drag: false,
-                    resize: false,
-                    //autowidth : false,
-//                    cellsubmit: 'clientArray',
-//                    cellEdit: true,
-                    height: '100%',
-                    width: 1330,
-                    shrinkToFit: true,
-                    rowNum: 100,
-                    autoScroll: true
-                }));
-         $("#export").css('display','block'); 
+
+            this.tableAssist.create({
+                data: data,
+                datatype: "local",
+                multiselect: false,
+                drag: false,
+                resize: false,
+                height: '100%',
+                width: $("#" + this.mOpt.tableId).width(),
+                shrinkToFit: true,
+                rowNum: 2000,
+                autoScroll: true
+            });
+
+            this.adjustSize();
         }
     }
 }
