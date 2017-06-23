@@ -1,12 +1,12 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../yszkgbdef.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../messageBox.ts" />
+///<reference path="../../dateSelector.ts"/>
 var yszkgb;
 (function (yszkgb) {
     var yqyszcsys;
@@ -31,25 +31,22 @@ var yszkgb;
             };
             return JQGridAssistantFactory;
         })();
-        var YqyszcsysView = (function (_super) {
-            __extends(YqyszcsysView, _super);
-            function YqyszcsysView() {
-                _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("yqyszcsys/update.do", false);
+        var SimpleView = (function (_super) {
+            __extends(SimpleView, _super);
+            function SimpleView(id) {
+                _super.call(this, id);
+                this.mAjax = new Util.Ajax("/BusinessManagement/yszkgb/yqyszcsys/update.do", false);
             }
-            YqyszcsysView.newInstance = function () {
-                return new YqyszcsysView();
-            };
-            YqyszcsysView.prototype.pluginGetExportUrl = function (date, cpType) {
-                return "yqyszcsys/export.do?" + Util.Ajax.toUrlParam({
+            SimpleView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "/BusinessManagement/yszkgb/yqyszcsys/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: cpType
                 });
             };
-            YqyszcsysView.prototype.option = function () {
+            SimpleView.prototype.option = function () {
                 return this.mOpt;
             };
-            YqyszcsysView.prototype.pluginUpdate = function (date, cpType) {
+            SimpleView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjax.get({
@@ -61,14 +58,18 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            YqyszcsysView.prototype.refresh = function () {
+            SimpleView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.$(this.option().ctarea).show();
-                this.updateEchart(this.updateTable());
+                this.mFinalData = this.updateTable();
+                this.updateEchart(this.mFinalData);
+                this.adjustSize();
             };
-            YqyszcsysView.prototype.updateEchart = function (data) {
+            SimpleView.prototype.updateEchart = function (data) {
+                this.$(this.option().ct).empty();
+                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 var title = "逾期应收账产生因素";
                 var legend = [
                     "内部因素",
@@ -128,16 +129,35 @@ var yszkgb;
                 };
                 echarts.init(this.$(this.option().ct)[0]).setOption(option);
             };
-            YqyszcsysView.prototype.init = function (opt) {
+            SimpleView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("逾期应收账产生因素", this);
+                framework.router.to(Util.FAMOUS_VIEW).send(Util.MSG_REG, { name: "逾期应收账产生因素", plugin: this });
             };
-            YqyszcsysView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+            SimpleView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.tableAssist.resizeHeight(maxTableBodyHeight);
+                //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+                this.$(this.option().ct).css("height", "300px");
+                this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                this.updateEchart(this.mFinalData);
+            };
+            SimpleView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                this.tableAssist.mergeRow(0);
+                this.tableAssist.mergeTitle();
+                return this.tableAssist;
+            };
+            SimpleView.prototype.updateTable = function () {
+                this.createJqassist();
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 var month = curDate.getMonth() + 1;
                 var data = [];
@@ -147,25 +167,23 @@ var yszkgb;
                 for (var i = 1; i <= month; ++i) {
                     data.push(["本年度", i + "月"].concat(this.mData[12 - month + i - 1]));
                 }
-                tableAssist.mergeRow(0);
-                tableAssist.mergeTitle();
-                this.$(name).jqGrid(tableAssist.decorate({
+                this.tableAssist.create({
+                    data: data,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 20,
-                    data: tableAssist.getData(data),
-                    datatype: "local",
-                    viewrecords: true
-                }));
+                    rowNum: 2000,
+                    autoScroll: true
+                });
                 return data;
             };
-            return YqyszcsysView;
+            SimpleView.ins = new SimpleView("yqyszcsys");
+            return SimpleView;
         })(yszkgb.BasePluginView);
-        yqyszcsys.pluginView = YqyszcsysView.newInstance();
+        yqyszcsys.SimpleView = SimpleView;
     })(yqyszcsys = yszkgb.yqyszcsys || (yszkgb.yqyszcsys = {}));
 })(yszkgb || (yszkgb = {}));

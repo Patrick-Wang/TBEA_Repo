@@ -346,7 +346,9 @@ th.ui-th-ltr {
 	border:  1px solid #e3e3e3;
 }
 
-
+.sub-view{
+	display:none;	
+}
 /* table td{
 	padding-right:10px;
 	padding-bottom:10px;

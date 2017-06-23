@@ -57,7 +57,7 @@
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgb.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgb.js" type="text/javascript"></script>
 
 <title>应收账款管报</title>
 

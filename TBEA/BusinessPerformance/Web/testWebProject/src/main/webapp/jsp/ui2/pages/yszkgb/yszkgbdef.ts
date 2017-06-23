@@ -1,6 +1,6 @@
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
-/// <reference path="../../js/jquery/jquery.d.ts" />
+///<reference path="yszkgb.ts"/>
 module yszkgb {
     export interface PluginView {
         hide (): void;
@@ -8,12 +8,7 @@ module yszkgb {
         update (date:Util.Date, cpType:Util.CompanyType) : void;
         refresh():void;
         getExportUrl(date:Util.Date, cpType:Util.CompanyType):string;
-    }
-
-    export interface FrameView {
-        register(name:string, plugin:PluginView):void;
-        unregister(name:string) :PluginView;
-        exportExcel(elemId:string):void;
+        adjustSize();
     }
 
     export interface PluginOption {
@@ -25,9 +20,28 @@ module yszkgb {
         ct1:string;
     }
 
-    export abstract class BasePluginView implements PluginView {
+    export abstract class BasePluginView implements PluginView, framework.route.Endpoint{
 
         mOpt:PluginOption;
+        mId:any;
+
+        constructor(id:string){
+            this.mId = id;
+            framework.router.register(this);
+        }
+
+        getId():any{
+            return this.mId;
+        }
+
+        onEvent(e:framework.route.Event):any{
+            switch (e.id){
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+            }
+        }
+
         public init(opt:PluginOption):void {
             this.mOpt = opt;
         }
@@ -42,7 +56,7 @@ module yszkgb {
             $("#" + this.mOpt.host).show();
         }
 
-        protected $(id:string):jQuery {
+        protected $(id:string):any {
             return $("#" + this.mOpt.host + " #" + id);
         }
 
@@ -59,6 +73,20 @@ module yszkgb {
         }
 
         abstract  pluginGetExportUrl(date:string, cpType:Util.CompanyType):string;
+
+        jqgrid(){
+            return this.$(this.jqgridName());
+        }
+
+
+        jqgridHost():any{
+            return this.$(this.option().tb);
+        }
+
+
+        jqgridName():string{
+            return this.option().host + this.option().tb + "_jqgrid_real";
+        }
     }
 
     export interface EntryPluginView {
@@ -101,7 +129,7 @@ module yszkgb {
             }
         }
 
-        protected $(id:string):jQuery {
+        protected $(id:string):any {
             return $("#" + this.mOpt.host + " #" + id);
         }
 

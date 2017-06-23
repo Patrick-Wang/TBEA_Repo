@@ -1,11 +1,23 @@
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
-/// <reference path="../../js/jquery/jquery.d.ts" />
+///<reference path="yszkgb.ts"/>
 var yszkgb;
 (function (yszkgb) {
     var BasePluginView = (function () {
-        function BasePluginView() {
+        function BasePluginView(id) {
+            this.mId = id;
+            framework.router.register(this);
         }
+        BasePluginView.prototype.getId = function () {
+            return this.mId;
+        };
+        BasePluginView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+            }
+        };
         BasePluginView.prototype.init = function (opt) {
             this.mOpt = opt;
         };
@@ -25,6 +37,15 @@ var yszkgb;
         BasePluginView.prototype.getExportUrl = function (date, cpType) {
             var st = date.year + "-" + date.month + "-" + date.day;
             return this.pluginGetExportUrl(st, cpType);
+        };
+        BasePluginView.prototype.jqgrid = function () {
+            return this.$(this.jqgridName());
+        };
+        BasePluginView.prototype.jqgridHost = function () {
+            return this.$(this.option().tb);
+        };
+        BasePluginView.prototype.jqgridName = function () {
+            return this.option().host + this.option().tb + "_jqgrid_real";
         };
         return BasePluginView;
     })();

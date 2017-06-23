@@ -23,6 +23,7 @@ var Util;
     Util.FAMOUS_VIEW = 0;
     Util.MSG_INIT = 1;
     Util.MSG_UPDATE = 2;
+    Util.MSG_REG = 3;
     var Breadcrumb = (function () {
         function Breadcrumb() {
         }

@@ -1,17 +1,17 @@
-<Table id="yszkkxxz" align="center" style="display: none;">
-    <tr id="tbarea">
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
-</Table>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/yszkgb/yszkkxxz/yszkkxxz.js"></script>
+<div id="yszkkxxz" class="sub-view">
+	<div id="yszkkxxzTbarea">
+		<div class="well">
+			<div id="table"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/yszkgb/yszkkxxz/yszkkxxz.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    yszkgb.yszkkxxz.pluginView.init({
-        tb: "table",
+    framework.router.to("yszkkxxz").send(Util.MSG_INIT, {
+    	tb: "table",
         host: "yszkkxxz",
-        tbarea:"tbarea" 
-    });
+        tbarea:"tbarea"
+	});
 });
 </script>

@@ -361,7 +361,7 @@
 				<script>
 					builder.register('Yszkgb', function () {
 						return [
-						   createNode('应收账款管报汇总', "yszkgb/show.do")
+						   createNode('应收账款管报汇总', "yszkgb/v2/show.do")
 						];
 					});
 				</script>

@@ -32,6 +32,7 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.StatusData;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -59,7 +60,7 @@ public class YszkgbServlet {
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 
-	@RequestMapping(value = "show.do")
+	@RequestMapping(value = {"show.do", "v2/show.do"})
 	public ModelAndView getYszkgb(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -75,7 +76,7 @@ public class YszkgbServlet {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
 		
-		return new ModelAndView("yszkgb/yszkgb", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "yszkgb/yszkgb", map);
 	}
 	
 	@RequestMapping(value = "entry.do")

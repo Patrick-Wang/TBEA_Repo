@@ -1,7 +1,7 @@
 module framework.route {
 
     export interface Event {
-        id:number;
+        id:any;
         from:number;
         to:number;
         road?:number[];
@@ -17,7 +17,7 @@ module framework.route {
 
 
     export interface Endpoint {
-        getId():number;
+        getId():any;
         onEvent(e:Event):any;
     }
 
@@ -55,7 +55,7 @@ module framework.route {
             return this.to(to.getId());
         }
 
-        public from(from:number):Router {
+        public from(from:any):Router {
             this.mCurEvent = <Event>{};
             this.mCurEvent.from = from;
             return this;
@@ -69,7 +69,7 @@ module framework.route {
             return this;
         }
 
-        public broadcast(id:number, data?:any):any {
+        public broadcast(id:any, data?:any):any {
             for (let i = 0; i < this.mEplist.length; ++i) {
                 let event = {
                     from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
@@ -84,7 +84,7 @@ module framework.route {
             return Router.OK;
         }
 
-        public send(id:number, data?:any):any {
+        public send(id:any, data?:any):any {
             if (this.mCurEvent != undefined) {
                 this.mCurEvent.id = id;
                 this.mCurEvent.data = data;
@@ -95,7 +95,7 @@ module framework.route {
             return Router.FAILED;
         }
 
-        public redirect(to:number, event:Event):any {
+        public redirect(to:any, event:Event):any {
             if (to != undefined) {
                 if (event.road == undefined){
                     event.road = [];
@@ -107,7 +107,7 @@ module framework.route {
             return Router.FAILED;
         }
 
-        private getEndpoint(id:number):Endpoint {
+        private getEndpoint(id:any):Endpoint {
             return this.mEndpoints[id];
         }
     }

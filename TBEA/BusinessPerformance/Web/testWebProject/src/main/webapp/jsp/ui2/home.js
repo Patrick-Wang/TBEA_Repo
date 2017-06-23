@@ -37,8 +37,8 @@ var home;
     }
     $(document).ready(function () {
         updateFrameSize();
-        $(document.body).css("visibility", "visible");
-        $(".container-fluid").css("visibility", "visible");
+        $(document.body).css("visibility", "visible").show();
+        $(".container-fluid").css("visibility", "visible").show();
         //myTab.triggerClickHome();
         $(window).resize(function () {
             updateFrameSize();
@@ -64,7 +64,9 @@ var home;
     }).setHomeClickListener(function () {
         var homeFrame = $("#tabContent #home");
         if (homeFrame.length == 0) {
-            $("#tabContent").append('<iframe src="/BusinessManagement/jsp/ui2/background.html" id="home" style="width:100%;height:100%" ></iframe>');
+            //let src = '/BusinessManagement/ydzb/v2/hzb_zbhz.do?breads=[{"id":"1498180329800","value":"abc"},{"id":"1498180329801","value":"def"},{"id":"1498180329802","value":"hij"}]';
+            var src = "/BusinessManagement/jsp/ui2/background.html";
+            $("#tabContent").append('<iframe  frameborder="0" id="home" src=' + src + ' style="width:100%;height:100%;"></iframe>');
             homeFrame = $("#tabContent #home");
             $("#tabContent #home").active(function () {
                 $("body").click();
@@ -153,7 +155,7 @@ var home;
         return stop;
     }
     $("#search-btn").on("click", function () {
-        if ("" == $("#search-sel").val()) {
+        if ("none" == $("#search-sel").val()) {
             return;
         }
         $(treeNodes).each(function (i, e) {
@@ -192,7 +194,7 @@ var home;
                     else {
                         url = node.data.url + "?" + url;
                     }
-                    $("#tabContent").append('<iframe src=\'' + url + '\' ' +
+                    $("#tabContent").append('<iframe frameborder="0" src=\'' + url + '\' ' +
                         'id="' + node.data.id + "tab" + '" ' +
                         'style="width:100%;height:100%">' +
                         '</iframe>');
@@ -253,7 +255,7 @@ var home;
             $(".nav-other-clicked").removeClass("nav-other-clicked");
         }
     });
-    var resetPswHtml = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"id": "resetPassword"}, React.createElement("div", {"className": "row"}, React.createElement("div", {"className": "col-md-12"}, React.createElement("form", {"role": "form"}, React.createElement("div", {"className": "form-group"}, React.createElement("span", {"className": "input-icon icon-right"}, React.createElement("input", {"type": "password", "className": "form-control", "id": "oldPsw", "placeholder": "原始密码"}), React.createElement("i", {"className": "fa fa-lock circular"}))), React.createElement("div", {"className": "form-group"}, React.createElement("span", {"className": "input-icon icon-right"}, React.createElement("input", {"type": "password", "className": "form-control", "id": "newPsw", "placeholder": "新密码"}), React.createElement("i", {"className": "fa fa-lock circular"}))), React.createElement("div", {"className": "form-group"}, React.createElement("span", {"className": "input-icon icon-right"}, React.createElement("input", {"type": "password", "className": "form-control", "id": "confPsw", "placeholder": "确认密码"}), React.createElement("i", {"className": "fa fa-lock circular"}))), React.createElement("div", {"className": "alert alert-danger fade in", "id": "warning", "style": { display: 'none' }}))))));
+    var resetPswHtml = React.renderToStaticMarkup(React.createElement("div", {"id": "resetPassword"}, React.createElement("div", {"className": "row"}, React.createElement("div", {"className": "col-md-12"}, React.createElement("form", {"role": "form"}, React.createElement("div", {"className": "form-group"}, React.createElement("span", {"className": "input-icon icon-right"}, React.createElement("input", {"type": "password", "className": "form-control", "id": "oldPsw", "placeholder": "原始密码"}), React.createElement("i", {"className": "fa fa-lock circular"}))), React.createElement("div", {"className": "form-group"}, React.createElement("span", {"className": "input-icon icon-right"}, React.createElement("input", {"type": "password", "className": "form-control", "id": "newPsw", "placeholder": "新密码"}), React.createElement("i", {"className": "fa fa-lock circular"}))), React.createElement("div", {"className": "form-group"}, React.createElement("span", {"className": "input-icon icon-right"}, React.createElement("input", {"type": "password", "className": "form-control", "id": "confPsw", "placeholder": "确认密码"}), React.createElement("i", {"className": "fa fa-lock circular"}))), React.createElement("div", {"className": "alert alert-danger fade in", "id": "warning", "style": { display: 'none' }}))))));
     $("#btnResetPassword").on("click", function () {
         var dialog = bootbox.dialog({
             message: resetPswHtml,

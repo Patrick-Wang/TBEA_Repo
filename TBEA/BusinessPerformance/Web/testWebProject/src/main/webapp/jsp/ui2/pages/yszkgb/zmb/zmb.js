@@ -1,12 +1,12 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../yszkgbdef.ts" />
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../jqgrid/jqassist.ts" />
+/// <reference path="../../util.ts" />
+/// <reference path="../../messageBox.ts" />
+///<reference path="../../dateSelector.ts"/>
 var yszkgb;
 (function (yszkgb) {
     var zmb;
@@ -23,25 +23,22 @@ var yszkgb;
             };
             return JQGridAssistantFactory;
         })();
-        var ZMBView = (function (_super) {
-            __extends(ZMBView, _super);
-            function ZMBView() {
-                _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("zmb/update.do", false);
+        var SimpleView = (function (_super) {
+            __extends(SimpleView, _super);
+            function SimpleView(id) {
+                _super.call(this, id);
+                this.mAjax = new Util.Ajax("/BusinessManagement/yszkgb/zmb/update.do", false);
             }
-            ZMBView.newInstance = function () {
-                return new ZMBView();
-            };
-            ZMBView.prototype.pluginGetExportUrl = function (date, cpType) {
-                return "zmb/export.do?" + Util.Ajax.toUrlParam({
+            SimpleView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "/BusinessManagement/yszkgb/zmb/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: cpType
                 });
             };
-            ZMBView.prototype.option = function () {
+            SimpleView.prototype.option = function () {
                 return this.mOpt;
             };
-            ZMBView.prototype.pluginUpdate = function (date, cpType) {
+            SimpleView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mAjax.get({
                     date: date,
@@ -52,38 +49,53 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            ZMBView.prototype.refresh = function () {
+            SimpleView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            ZMBView.prototype.init = function (opt) {
+            SimpleView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                view.register("应收帐款账面表", this);
+                framework.router.to(Util.FAMOUS_VIEW).send(Util.MSG_REG, { name: "应收帐款账面表", plugin: this });
             };
-            ZMBView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+            SimpleView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            };
+            SimpleView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                return this.tableAssist;
+            };
+            SimpleView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 20,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
-                    viewrecords: true
-                }));
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                this.adjustSize();
             };
-            return ZMBView;
+            SimpleView.ins = new SimpleView("zmb");
+            return SimpleView;
         })(yszkgb.BasePluginView);
-        zmb.pluginView = ZMBView.newInstance();
+        zmb.SimpleView = SimpleView;
     })(zmb = yszkgb.zmb || (yszkgb.zmb = {}));
 })(yszkgb || (yszkgb = {}));

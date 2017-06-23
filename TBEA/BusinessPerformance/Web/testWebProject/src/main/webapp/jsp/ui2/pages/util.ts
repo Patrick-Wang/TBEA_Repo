@@ -24,6 +24,7 @@ module Util {
     export let FAMOUS_VIEW : number = 0;
     export let MSG_INIT : number = 1;
     export let MSG_UPDATE : number  = 2;
+    export let MSG_REG : number = 3;
 
     export interface BreadcrumbNode{
         id:number;
