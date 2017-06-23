@@ -13,7 +13,7 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/jsp/ui2/images/logo.png"
 	type="image/x-icon">
-<%@include file="ie8-t.jsp" %>
+<%@include file="ie8-t.jsp"%>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 
@@ -158,11 +158,7 @@
 	rel="stylesheet">
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/react/0.13.2/react.js"></script>
-<%-- <script
-	src="${pageContext.request.contextPath}/jsp/ui2/react/react-dom.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/jsp/ui2/react/react-dom-server.min.js"></script> --%>
-<%@include file="ie8-b.jsp" %>
+<%@include file="ie8-b.jsp"%>
 <title>经营管控平台</title>
 </head>
 <body>
