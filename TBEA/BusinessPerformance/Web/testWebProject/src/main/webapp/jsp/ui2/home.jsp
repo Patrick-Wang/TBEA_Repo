@@ -166,7 +166,7 @@
 <title>经营管控平台</title>
 </head>
 <body>
-	<div class="container-fluid" style="visibility: hidden">
+	<div class="container-fluid">
 		<div class="content-up row-fluid clearfix">
 			<div class="col-md-12 col-xs-12 column">
 				<nav class="navbar navbar-default">

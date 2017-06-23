@@ -49,8 +49,8 @@ module home {
 
     $(document).ready(()=> {
         updateFrameSize();
-        $(document.body).css("visibility", "visible");
-        $(".container-fluid").css("visibility", "visible");
+        $(document.body).css("visibility", "visible").show();
+        $(".container-fluid").css("visibility", "visible").show();
         //myTab.triggerClickHome();
         $(window).resize(()=> {
             updateFrameSize();
@@ -82,7 +82,7 @@ module home {
             let src = "/BusinessManagement/jsp/ui2/background.html";
 
 
-            $("#tabContent").append('<iframe id="home" src=' + src +  ' style="width:100%;height:100%;"></iframe>');
+            $("#tabContent").append('<iframe  frameborder="0" id="home" src=' + src +  ' style="width:100%;height:100%;"></iframe>');
             homeFrame = $("#tabContent #home");
             $("#tabContent #home").active(()=> {
                 $("body").click();
@@ -216,7 +216,7 @@ module home {
                     }
 
                     $("#tabContent").append(
-                        '<iframe src=\'' + url + '\' ' +
+                        '<iframe frameborder="0" src=\'' + url + '\' ' +
                         'id="' + node.data.id + "tab" + '" ' +
                         'style="width:100%;height:100%">' +
                         '</iframe>');

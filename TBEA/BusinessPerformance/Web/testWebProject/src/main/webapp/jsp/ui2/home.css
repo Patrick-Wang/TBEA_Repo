@@ -25,7 +25,9 @@ html, body, .container-fluid{
 body{
  	visibility:hidden;
 } 
-
+.container-fluid{
+	visibility:hidden;
+}
 
 .nav-left{
     background:rgba(0,81,139,0.85);

@@ -17,5 +17,14 @@
 	html {
 	  position: static;
 	}
+	body{
+ 		visibility:visible;
+	} 
+	.container-fluid{
+		visibility:visible;
+	}
+	select{
+		padding-right:0px;
+	}
 </style>
 <![endif]-->
