@@ -15,7 +15,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-
+<%@include file="../ie8-t.jsp" %>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 
@@ -148,6 +148,7 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/route/route.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/hzb_zbhz_prediction.js"></script>
+<%@include file="../ie8-b.jsp" %>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -234,6 +235,7 @@
 	<!--Page Related Scripts-->
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootbox/bootbox.js"></script>
+	<%@include file="loading.jsp"%>
 	<script>
 		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
 		if (Util.isIframe()){
@@ -246,7 +248,6 @@
 			date : Util.parseDate('${year}')
 		});
     </script>
-	<%@include file="loading.jsp"%>
 </body>
 <!--  /Body -->
 </html>
