@@ -409,9 +409,9 @@ module entry_template {
                 if ("true" == data.result) {
                     Util.Toast.success("保存 成功");
                 } else if ("false" == data.result) {
-                    Util.Toast.failed("保存 成功");
+                    Util.Toast.failed("保存 失败");
                 } else {
-                    Util.Toast.warning(data.result);
+                    Util.Toast.failed(data.result);
                 }
             });
         }
@@ -446,7 +446,7 @@ module entry_template {
                         for (let i = 0; i < zbxxs.length; ++i){
                             msg += "、" + zbxxs[i].name;
                         }
-                        Util.Toast.warning("第" + i + "列 " + msg.substr(1) + " 指标值与子项和不匹配");
+                        Util.Toast.failed("第" + i + "列 " + msg.substr(1) + " 指标值与子项和不匹配");
                         return;
                     }
                 }
@@ -463,9 +463,9 @@ module entry_template {
                 if ("true" == data.result) {
                     Util.Toast.success("保存 成功");
                 } else if ("false" == data.result) {
-                    Util.Toast.failed("保存 成功");
+                    Util.Toast.failed("保存 失败");
                 } else {
-                    Util.Toast.warning(data.result);
+                    Util.Toast.failed(data.result);
                 }
             });
         }
@@ -484,7 +484,7 @@ module entry_template {
                     if (j != 1) {
                         submitData[i].push(allData[i][j])
                         if (allData[i][j].replace(new RegExp(' ', 'g'), '') == "") {
-                            Util.Toast.warning("有空内容 无法提交");
+                            Util.Toast.failed("有空内容 无法提交");
                             return;
                         }
                     }
@@ -501,7 +501,7 @@ module entry_template {
                         for (let i = 0; i < zbxxs.length; ++i) {
                             msg += "、" + zbxxs[i].name;
                         }
-                        Util.Toast.warning("第" + i + "列" + msg.substr(1) + " 指标值与子项和不匹配");
+                        Util.Toast.failed("第" + i + "列" + msg.substr(1) + " 指标值与子项和不匹配");
                         return;
                     }
                 }
@@ -518,9 +518,9 @@ module entry_template {
                 if ("true" == data.result) {
                     Util.Toast.success("提交内部审核 成功");
                 } else if ("false" == data.result) {
-                    Util.Toast.failed("提交内部审核 成功");
+                    Util.Toast.failed("提交内部审核 失败");
                 } else {
-                    Util.Toast.warning(data.result);
+                    Util.Toast.failed(data.result);
                 }
             });
         }

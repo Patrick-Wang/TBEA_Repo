@@ -351,10 +351,10 @@ var entry_template;
                     Util.Toast.success("保存 成功");
                 }
                 else if ("false" == data.result) {
-                    Util.Toast.failed("保存 成功");
+                    Util.Toast.failed("保存 失败");
                 }
                 else {
-                    Util.Toast.warning(data.result);
+                    Util.Toast.failed(data.result);
                 }
             });
         };
@@ -387,7 +387,7 @@ var entry_template;
                         for (var i_2 = 0; i_2 < zbxxs.length; ++i_2) {
                             msg += "、" + zbxxs[i_2].name;
                         }
-                        Util.Toast.warning("第" + i_1 + "列 " + msg.substr(1) + " 指标值与子项和不匹配");
+                        Util.Toast.failed("第" + i_1 + "列 " + msg.substr(1) + " 指标值与子项和不匹配");
                         return;
                     }
                 }
@@ -403,10 +403,10 @@ var entry_template;
                     Util.Toast.success("保存 成功");
                 }
                 else if ("false" == data.result) {
-                    Util.Toast.failed("保存 成功");
+                    Util.Toast.failed("保存 失败");
                 }
                 else {
-                    Util.Toast.warning(data.result);
+                    Util.Toast.failed(data.result);
                 }
             });
         };
@@ -424,7 +424,7 @@ var entry_template;
                     if (j != 1) {
                         submitData[i].push(allData[i][j]);
                         if (allData[i][j].replace(new RegExp(' ', 'g'), '') == "") {
-                            Util.Toast.warning("有空内容 无法提交");
+                            Util.Toast.failed("有空内容 无法提交");
                             return;
                         }
                     }
@@ -440,7 +440,7 @@ var entry_template;
                         for (var i_4 = 0; i_4 < zbxxs.length; ++i_4) {
                             msg += "、" + zbxxs[i_4].name;
                         }
-                        Util.Toast.warning("第" + i_3 + "列" + msg.substr(1) + " 指标值与子项和不匹配");
+                        Util.Toast.failed("第" + i_3 + "列" + msg.substr(1) + " 指标值与子项和不匹配");
                         return;
                     }
                 }
@@ -456,10 +456,10 @@ var entry_template;
                     Util.Toast.success("提交内部审核 成功");
                 }
                 else if ("false" == data.result) {
-                    Util.Toast.failed("提交内部审核 成功");
+                    Util.Toast.failed("提交内部审核 失败");
                 }
                 else {
-                    Util.Toast.warning(data.result);
+                    Util.Toast.failed(data.result);
                 }
             });
         };

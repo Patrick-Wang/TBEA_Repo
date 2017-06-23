@@ -78,7 +78,11 @@ module home {
     }).setHomeClickListener(()=> {
         let homeFrame = $("#tabContent #home");
         if (homeFrame.length == 0) {
-            $("#tabContent").append('<iframe src="/BusinessManagement/jsp/ui2/background.html" id="home" style="width:100%;height:100%" ></iframe>');
+            //let src = '/BusinessManagement/ydzb/v2/hzb_zbhz.do?breads=[{"id":"1498180329800","value":"abc"},{"id":"1498180329801","value":"def"},{"id":"1498180329802","value":"hij"}]';
+            let src = "/BusinessManagement/jsp/ui2/background.html";
+
+
+            $("#tabContent").append('<iframe id="home" src=' + src +  ' style="width:100%;height:100%;"></iframe>');
             homeFrame = $("#tabContent #home");
             $("#tabContent #home").active(()=> {
                 $("body").click();
@@ -168,7 +172,7 @@ module home {
     }
 
     $("#search-btn").on("click", ()=> {
-        if ("" == $("#search-sel").val()) {
+        if ("none" == $("#search-sel").val()) {
             return;
         }
 
@@ -279,9 +283,9 @@ module home {
         }
     });
 
-    declare var ReactDOMServer:any;
+    declare var React:any;
 
-    let resetPswHtml:string = ReactDOMServer.renderToStaticMarkup(
+    let resetPswHtml:string = React.renderToStaticMarkup(
         <div id="resetPassword">
             <div className="row">
                 <div className="col-md-12">

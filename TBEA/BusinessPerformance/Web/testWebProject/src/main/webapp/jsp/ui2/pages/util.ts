@@ -18,7 +18,6 @@ String.prototype["getWidth"] = function(fontSize)
     return span.offsetWidth;
 }
 
-
 module Util {
 
 

@@ -12,6 +12,8 @@ module Util {
                     //content:"",//忽略icon和text的值，直接在加载框中显示此值
                     // mask:true//是否显示遮罩效果，默认显示
                 });
+                $("#mloading").mLoading("hide");
+                $("#mloading").hide();
             }
         }
 

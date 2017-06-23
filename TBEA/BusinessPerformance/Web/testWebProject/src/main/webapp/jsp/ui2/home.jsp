@@ -13,7 +13,7 @@
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/jsp/ui2/images/logo.png"
 	type="image/x-icon">
-	
+<%@include file="ie8-t.jsp" %>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 
@@ -29,7 +29,6 @@
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/weather-icons.min.css"
 	rel="stylesheet" />
-
 
 <!--Beyond styles-->
 <link
@@ -157,43 +156,46 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/combobox/js/jquery.combo.select.js"></script>
 <link href="${pageContext.request.contextPath}/jsp/ui2/home.css"
 	rel="stylesheet">
-<script src="${pageContext.request.contextPath}/jsp/ui2/react/react.js"></script>
 <script
+	src="${pageContext.request.contextPath}/jsp/ui2/react/0.13.2/react.js"></script>
+<%-- <script
 	src="${pageContext.request.contextPath}/jsp/ui2/react/react-dom.min.js"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/react/react-dom-server.min.js"></script>
+	src="${pageContext.request.contextPath}/jsp/ui2/react/react-dom-server.min.js"></script> --%>
+<%@include file="ie8-b.jsp" %>
 <title>经营管控平台</title>
 </head>
 <body>
 	<div class="container-fluid" style="visibility: hidden">
 		<div class="content-up row-fluid clearfix">
 			<div class="col-md-12 col-xs-12 column">
-				<nav class="navbar navbar-default" role="navigation">
-					<div class="collapse navbar-collapse"
-						id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav">
-							<li><a class="navbar-title"><img
-									src="${pageContext.request.contextPath}/jsp/ui2/img/logo_word.png"></a></li>
-						</ul>
+				<nav class="navbar navbar-default">
+					<div>
+						<a class="navbar-title pull-left"><img
+							src="${pageContext.request.contextPath}/jsp/ui2/img/logo_word.png"></a>
 						<div class="nav-other pull-left"></div>
-						<ul class="nav navbar-nav navbar-right">
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown">${userName}<strong class="caret"></strong></a>
-								<ul class="dropdown-menu">
-									<li><a
-										href="#" id="btnResetPassword">修改密码</a></li>
-									<li><a href="#" id="logoutBtn" onclick="home.logout()">退出登录</a></li>
-								</ul></li>
-						</ul>
+
+						<div class="btn-group pull-right person">
+							<a class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+								aria-expanded="false"> <i class="fa fa-user"></i>
+								${userName}
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#" id="btnResetPassword">修改密码</a></li>
+								<li><a href="#" id="logoutBtn" onclick="home.logout()">退出登录</a></li>
+							</ul>
+						</div>
+
 						<div class="search-area pull-right">
 							<div class="pull-left">
 								<select id="search-sel">
-									<option value="" selected="selected">报表名称查询</option>
+									<option value="none" selected="selected">报表名称查询</option>
 								</select>
 							</div>
 							<div id="search-btn" class="search-btn pull-left"></div>
 						</div>
 					</div>
+
 				</nav>
 			</div>
 		</div>
@@ -218,7 +220,7 @@
 		</div>
 	</div>
 	<%@include file="navigator.jsp"%>
-	
+
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
 	<script

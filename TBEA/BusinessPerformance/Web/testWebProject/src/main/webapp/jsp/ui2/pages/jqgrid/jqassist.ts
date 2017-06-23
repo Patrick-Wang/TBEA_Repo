@@ -494,7 +494,7 @@ module JQTable {
 
         public leavesCount():number {
             var count = 0;
-            for (var i in this.mChilds) {
+            for (var i = 0; i < this.mChilds.length; ++i) {
                 if (this.mChilds[i].hasChilds()) {
                     count += this.mChilds[i].leavesCount();
                 } else {
@@ -515,7 +515,7 @@ module JQTable {
         public leaves():Node[] {
             var list:Node[] = [];
             if (this.hasChilds()) {
-                for (var i in this.mChilds) {
+                for (var i = 0; i < this.mChilds.length; ++i) {
                     if (this.mChilds[i].hasChilds()) {
                         list = list.concat(this.mChilds[i].leaves());
                     } else {
@@ -661,11 +661,11 @@ module JQTable {
             var nodes:Node[];
             this.mGridName = gridName;
             this.mTitle = titleNodes;
-            for (var i in this.mTitle) {
+            for (var i = 0; i < this.mTitle.length; ++i) {
                 //this.mTitle[i].mOpts.id = this.mGridName + this.mTitle[i].mOpts.id;
                 nodes = this.mTitle[i].leaves();
 
-                for (var j in nodes) {
+                for (var j = 0; j < nodes.length; ++j) {
                     var colId = nodes[j].idChain();
                     this.mColModel.push({
                         name: colId,
@@ -717,10 +717,10 @@ module JQTable {
             grid[0].p.data
             var ids = grid.jqGrid('getDataIDs');
             var data:Array<string[]> = [];
-            for (var i in grid[0].p.data) {
+            for (var i = 0; i < grid[0].p.data.length; ++i) {
                 var row = [];
                 row.push(grid[0].p.data[i].id);
-                for (var j in this.mColModel) {
+                for (var j = 0; j < this.mColModel.length; ++j) {
                     let val = grid[0].p.data[i][this.mColModel[j].index];
                     row.push(undefined == val ? "" : val + "");
                 }
@@ -765,8 +765,8 @@ module JQTable {
         public testDepth():number {
             var depth = 1;
             var tmp = 0;
-            for (var node in this.mTitle) {
-                tmp = this.mTitle[node].depth();
+            for (var i = 0; i < this.mTitle.length; ++i){
+                tmp = this.mTitle[i].depth();
                 if (depth < tmp) {
                     depth = tmp;
                 }
@@ -777,10 +777,10 @@ module JQTable {
         public getColNames():string[] {
             var leaves = [];
             var names = [];
-            for (var node in this.mTitle) {
-                leaves = this.mTitle[node].leaves();
-                for (var leaf in leaves) {
-                    names.push(leaves[leaf].name());
+            for (var i = 0; i < this.mTitle.length; ++i) {
+                leaves = this.mTitle[i].leaves();
+                for (var j = 0; j < leaves.length; ++j) {
+                    names.push(leaves[j].name());
                 }
             }
             return names;
@@ -794,7 +794,7 @@ module JQTable {
         public addRowData(rowId:string, rowData:string[]) {
             var grid = $("#" + this.mGridName + "");
             var row:any = {};
-            for (var j in this.mColModel) {
+            for (var j = 0; j < this.mColModel.length; ++j){
                 if (j < rowData.length) {
                     row[this.mColModel[j].index] = rowData[j];
                 }
@@ -805,7 +805,7 @@ module JQTable {
         public id(col:number):string {
             var colCount = 0;
             var leaves = [];
-            for (var i in this.mTitle) {
+            for (var i = 0; i < this.mTitle.length; ++i){
                 leaves = this.mTitle[i].leaves();
                 if (colCount < (col + 1)
                     && (col + 1) <= (colCount + leaves.length)) {
@@ -834,7 +834,7 @@ module JQTable {
                 for (var i = 0; i < this.mDepth - 1; ++i) {
                     nodes = this.getLevelNodes(i);
                     headers = [];
-                    for (var node in nodes) {
+                    for (var node = 0; node < nodes.length; ++node){
                         if (nodes[node].leavesCount() > 0) {
                             headers.push({
                                 startColumnName: nodes[node].mostLeftLeaf()
@@ -871,14 +871,14 @@ module JQTable {
         public getData(data:string[][]):any[] {
             var alldata:any[] = [];
             var colums:Node[] = [];
-            for (var i in this.mTitle) {
+            for (var i = 0; i < this.mTitle.length; ++i){
                 colums = colums.concat(this.mTitle[i].leaves());
             }
             let id = 1;
-            for (var i in data) {
+            for (var i = 0; i < data.length; ++i){
                 var rowdata = {};
                 rowdata["id"] = "" + (id++);
-                for (var j in colums) {
+                for (var j = 0; j < colums.length; ++j){
                     rowdata[colums[j].idChain()] = data[i][j] == undefined ? "" : data[i][j];
                 }
                 alldata.push(rowdata);
@@ -889,14 +889,14 @@ module JQTable {
         public getDataWithId(data:string[][]):any[] {
             var alldata:any[] = [];
             var colums:Node[] = [];
-            for (var i in this.mTitle) {
+            for (var i = 0; i < this.mTitle.length; ++i){
                 colums = colums.concat(this.mTitle[i].leaves());
             }
             let col;
-            for (var i in data) {
+            for (var i = 0; i < data.length; ++i){
                 var rowdata:any = {};
                 rowdata["id"] = data[i][0];
-                for (var j in colums) {
+                for (var j = 0; j < colums.length; ++j){
                     col = parseInt(j) + 1;
                     rowdata[colums[j].idChain()] = data[i][col] == undefined ? "" : data[i][col];
                 }
@@ -964,11 +964,11 @@ module JQTable {
         public getChangedData() {
             var grid = $("#" + this.mGridName + "");
             var data:Array<string[]> = [];
-            for (var i in grid[0].p.data) {
+            for (var i = 0; i < grid[0].p.data.length; ++i){
                 if (Util.indexOf(this.mEditedRows, grid[0].p.data[i].id) >= 0) {
                     var row = [];
                     row.push(grid[0].p.data[i].id);
-                    for (var j in this.mColModel) {
+                    for (var j = 0; j < this.mColModel.length; ++j){
                         let val = grid[0].p.data[i][this.mColModel[j].index];
                         row.push(undefined == val ? "" : val + "");
                     }

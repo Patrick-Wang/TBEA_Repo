@@ -6,15 +6,15 @@ var Util;
         }
         Toast.success = function (msg, closeAble) {
             if (closeAble === void 0) { closeAble = true; }
-            Notify(msg, 'top-right', '3000', 'success', 'fa-check', closeAble);
+            Notify(msg, 'bottom-right', '3000', 'success', 'fa-check', closeAble);
         };
         Toast.warning = function (msg, closeAble) {
             if (closeAble === void 0) { closeAble = true; }
-            Notify(msg, 'top-right', '3000', 'warning', 'fa-warning', closeAble);
+            Notify(msg, 'bottom-right', '3000', 'warning', 'fa-warning', closeAble);
         };
         Toast.failed = function (msg, closeAble) {
             if (closeAble === void 0) { closeAble = true; }
-            Notify(msg, 'top-right', '3000', 'danger', 'fa-bolt', closeAble);
+            Notify(msg, 'bottom-right', '3000', 'danger', 'fa-bolt', closeAble);
         };
         return Toast;
     })();
