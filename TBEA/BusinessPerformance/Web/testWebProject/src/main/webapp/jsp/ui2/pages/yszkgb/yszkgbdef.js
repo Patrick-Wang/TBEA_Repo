@@ -42,10 +42,10 @@ var yszkgb;
             return this.$(this.jqgridName());
         };
         BasePluginView.prototype.jqgridHost = function () {
-            return this.$(this.option().tb);
+            return this.$(this.mOpt.tb);
         };
         BasePluginView.prototype.jqgridName = function () {
-            return this.option().host + this.option().tb + "_jqgrid_real";
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         };
         return BasePluginView;
     })();

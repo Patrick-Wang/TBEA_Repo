@@ -80,12 +80,12 @@ module yszkgb {
 
 
         jqgridHost():any{
-            return this.$(this.option().tb);
+            return this.$(this.mOpt.tb);
         }
 
 
         jqgridName():string{
-            return this.option().host + this.option().tb + "_jqgrid_real";
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         }
     }
 

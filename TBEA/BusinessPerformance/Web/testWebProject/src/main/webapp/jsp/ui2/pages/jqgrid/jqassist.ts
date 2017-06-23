@@ -308,6 +308,7 @@ module JQTable {
                         $('table:first', $t.grid.sDiv).css("width", $t.p.tblwidth + "px");
                     }
                 }
+                if($.isFunction($t.p.gridComplete)) {$t.p.gridComplete.call($t);}
             });
         }
     });
