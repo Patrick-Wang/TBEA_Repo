@@ -130,6 +130,7 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/companySelector.js"
 	type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/toastr/toastr.js"></script>
 	<script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/messageBox.js"
 	type="text/javascript"></script>

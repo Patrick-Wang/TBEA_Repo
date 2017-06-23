@@ -15,7 +15,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-
+<%@include file="../ie8-t.jsp" %>
 
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
@@ -37,7 +37,7 @@
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.css"
 	rel="stylesheet" />
-<link
+ <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/demo.min.css"
 	rel="stylesheet" />
 <link
@@ -50,7 +50,7 @@
 
 <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
+	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script> 
 
 
 <!-- jquery ui -->
@@ -148,7 +148,7 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/route/route.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/hzb_zbhz.js"></script>
-
+<%@include file="../ie8-b.jsp"%>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -226,8 +226,9 @@
 	<!--Page Related Scripts-->
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootbox/bootbox.js"></script>
+	<%@include file="loading.jsp"%>
 	<script>
-		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
+ 		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
 		if (Util.isIframe()){
 			Util.Breadcrumb.setOnClickListener(function(breadNode){
 				window.parent['onClickBreadcrumb'] && window.parent['onClickBreadcrumb'](breadNode);
@@ -236,9 +237,8 @@
 		framework.router.to(Util.FAMOUS_VIEW).send(Util.MSG_INIT, {
 			tableId:"table",
 			date : Util.parseDate('${year}', '${month}', '${day}')
-		});
+		}); 
     </script>
-	<%@include file="loading.jsp"%>
 </body>
 <!--  /Body -->
 </html>

@@ -7,6 +7,8 @@ var Util;
             if ($("#mloading").length == 0) {
                 $("body").children().eq(0).before("<div id='mloading' style='z-index:1999;position:absolute;width:100%;height:100%'></div>");
                 $("#mloading").mLoading({});
+                $("#mloading").mLoading("hide");
+                $("#mloading").hide();
             }
         };
         Loading.start = function () {

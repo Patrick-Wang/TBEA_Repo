@@ -14,7 +14,7 @@ html{
 	overflow-y: hidden;
     overflow-x: auto;
    	min-width: 1000px;
- 	width: expression_r( document.body.clientWidth < 1000 ? "1000px" : "auto" );
+ 	width: expression_r(document.body.clientWidth < 1000 ? "1000px" : "auto" );
 }
 
 html, body, .container-fluid{
@@ -24,11 +24,14 @@ html, body, .container-fluid{
 
 body{
  	visibility:hidden;
+} 
+.container-fluid{
+	visibility:hidden;
 }
-
 
 .nav-left{
     background:rgba(0,81,139,0.85);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#D8005188,endColorstr=#D8005188);    /*IE8支持*/
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
@@ -40,7 +43,7 @@ body{
     height:48px;
 	background:url("img/other_n.png");
 	cursor:pointer;
-	margin-top: 3px;
+	margin-left:21px;
 }
 
 .nav-other-clicked{
@@ -48,8 +51,7 @@ body{
     height:48px;
 	background:url("img/other_h.png");
 	cursor:pointer;
-	margin-top: 3px;
-	margin-left:-1px;
+	margin-left:20px;
 }
 
 .nav-other-clicked:hover{
@@ -76,6 +78,7 @@ body{
 .navbar{
     margin-bottom:0px;
     height: 65px;
+    padding: 8px 10px 0px 10px;
 }
 .navbar-collapse{
     margin-top:5px;
@@ -109,6 +112,7 @@ body{
     -khtml-user-select:none;/*鏃╂湡娴忚鍣�*/
     user-select:none;
     cursor:default;
+    margin-top: 12px;
 }
 
 .navbar-title>span{
@@ -121,8 +125,8 @@ body{
 
 .navbar {
     margin-bottom: 0px;
-    background: rgba(0,81,139,1);
-    border-color: rgba(0,81,139,1);
+    background: rgb(0,81,139);
+    border-color: rgb(0,81,139);
     border-radius: 0px;
 }
 
@@ -154,28 +158,45 @@ body{
     color: white;
 }
 
+.person > a{
+	background: rgb(0,81,139);
+    border: none;
+    color: white;
+    padding: 12px 15px 12px 15px;
+}
+
+.person{
+	margin-top: 2px;
+}
+
+.navbar .btn-group > .btn:first-child{
+	border-radius: 0px;
+}
+
 .navbar-default .dropdown:hover{
 
 }
 
 .navbar-default .navbar-nav > .open > a{
 	background:rgba(0,81,139,0.8);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#C8005188,endColorstr=#C8005188);    /*IE8支持*/
     color: white;
 }
 
 .navbar-default .navbar-nav > .open > a:focus{
     background:rgba(0,81,139,0.8);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#C8005188,endColorstr=#C8005188);    /*IE8支持*/
     color: white;
 }
 
 .search-area{
-	padding-top:8px;
-	
+    margin-top: 7px;
 }
 
 .combo-select{
 	border:0;
 	width:220px;
+	margin-bottom:0px;
 }
 
 #tabContent{
@@ -197,4 +218,8 @@ body{
 
 iframe{
     border:none;
+}
+
+#search-sel{
+	display:none;
 }
