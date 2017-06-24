@@ -27,6 +27,7 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.POIUtils;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -67,7 +68,7 @@ public class NCZBController {
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 	
-	@RequestMapping(value = "AllCompanysNC_overview.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"AllCompanysNC_overview.do", "v2/AllCompanysNC_overview.do"}, method = RequestMethod.GET)
 	public ModelAndView getAllCompanysNC_overview(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -75,10 +76,10 @@ public class NCZBController {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, false);
 		dateSel.select(map);
-		return new ModelAndView("hzbNC_zbhz", map); 
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "hzbNC_zbhz", map); 
 	}
 	
-	@RequestMapping(value = "CompanysNC.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"CompanysNC.do", "v2/CompanysNC.do"}, method = RequestMethod.GET)
 	public ModelAndView getCompanysNC(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -94,7 +95,7 @@ public class NCZBController {
 						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));
 		compSel.select(map, 2);
-		return new ModelAndView("hzb_companysNC", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "hzb_companysNC", map);
 	}
 	
 	private List<String[]> removeJydwzb(List<String[]> data){
