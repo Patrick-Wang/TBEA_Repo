@@ -66,14 +66,16 @@ var home;
         if (homeFrame.length == 0) {
             //let src = '/BusinessManagement/ydzb/v2/hzb_zbhz.do?breads=[{"id":"1498180329800","value":"abc"},{"id":"1498180329801","value":"def"},{"id":"1498180329802","value":"hij"}]';
             var src = "/BusinessManagement/jsp/ui2/background.html";
-            $("#tabContent").append('<iframe  frameborder="0" id="home" src=' + src + ' style="width:100%;height:100%;"></iframe>');
+            $("#tabContent").append('<iframe frameborder="0" name="home" id="home" src=' + src + ' style="width:100%;height:100%;"></iframe>');
             homeFrame = $("#tabContent #home");
             $("#tabContent #home").active(function () {
                 $("body").click();
             });
-            $("iframe").css("height", "0px").css("width", "0px");
+            //homeFrame.css("height", "0").css("width", "0");
+            $("iframe").addClass("gone");
         }
-        homeFrame.css("height", "100%").css("width", "100%");
+        //homeFrame.css("height", "100%").css("width", "100%");
+        homeFrame.removeClass("gone");
         topTab.disableMore("closeCurrent");
     }).setMoreClickListener(function (data) {
         var activeTab = topTab.getActiveTab();
@@ -114,8 +116,10 @@ var home;
         }
     }).setTabClickListener(function (data) {
         topTab.enableMore("closeCurrent");
-        $("iframe").css("height", "0px").css("width", "0px");
-        $("#tabContent #" + data.id).css("width", "100%").css("height", "100%");
+        // $("iframe").css("height", "0px").css("width", "0px");
+        $("iframe").addClass("gone");
+        //$("#tabContent #" + data.id).css("width", "100%").css("height", "100%");
+        $("#tabContent #" + data.id).removeClass("gone");
     }).setCloseTabClickListener(function (data) {
         if (data == undefined) {
             $("#tabContent #home").remove();
@@ -195,6 +199,7 @@ var home;
                         url = node.data.url + "?" + url;
                     }
                     $("#tabContent").append('<iframe frameborder="0" src=\'' + url + '\' ' +
+                        'name="' + node.data.id + "tab" + '" ' +
                         'id="' + node.data.id + "tab" + '" ' +
                         'style="width:100%;height:100%">' +
                         '</iframe>');

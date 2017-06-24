@@ -4,6 +4,7 @@
 ///<reference path="dateSelector.ts"/>
 var hzbNC_zbhz;
 (function (hzbNC_zbhz) {
+    var router = framework.router;
     var ZtId;
     (function (ZtId) {
         ZtId[ZtId["zb"] = 0] = "zb";
@@ -31,78 +32,133 @@ var hzbNC_zbhz;
         };
         return JQGridAssistantFactory;
     })();
-    var View = (function () {
-        function View() {
+    var SimpleView = (function () {
+        function SimpleView() {
             this.mData = [];
-            this.mDataSet = new Util.Ajax("AllCompanysNC_overview_update.do");
-            this.mType = 0;
+            this.mDataSet = new Util.Ajax("/BusinessManagement/NCzb/AllCompanysNC_overview_update.do");
+            router.register(this);
         }
-        View.newInstance = function () {
-            if (View.ins == undefined) {
-                View.ins = new View();
-            }
-            return View.ins;
+        SimpleView.prototype.getId = function () {
+            return Util.FAMOUS_VIEW;
         };
-        View.prototype.init = function (tableId, dateId, month, year) {
-            this.mTableId = tableId;
-            this.mDs = new Util.DateSelector({ year: year - 3, month: 1 }, { year: year, month: month }, dateId);
-            //this.updateTable();
+        SimpleView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+                case Util.MSG_UPDATE:
+                    this.updateUI();
+                    break;
+            }
+        };
+        SimpleView.prototype.init = function (opt) {
+            var _this = this;
+            this.mOpt = opt;
+            var minDate = Util.addYear(opt.date, -1);
+            minDate.month = 1;
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年MM月",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+            $(window).resize(function () {
+                _this.adjustSize();
+            });
+            $("#grid-update").on("click", function () {
+                _this.updateUI();
+            });
+            $("#grid-export").on("click", function () {
+                _this.exportExcel();
+            });
             this.updateUI();
         };
-        View.prototype.exportExcel = function () {
-            var date = this.mDs.getDate();
-            $("#export")[0].action = "AllCompanysNC_overview_export.do?" + Util.Ajax.toUrlParam({ month: date.month, year: date.year });
+        SimpleView.prototype.getDate = function () {
+            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
+        };
+        SimpleView.prototype.exportExcel = function () {
+            $("#export")[0].action = "/BusinessManagement/NCzb/AllCompanysNC_overview_export.do?" + Util.Ajax.toUrlParam(this.getDate());
             $("#export")[0].submit();
         };
-        View.prototype.updateUI = function () {
+        SimpleView.prototype.updateUI = function () {
             var _this = this;
-            var date = this.mDs.getDate();
-            this.mDataSet.get({ month: date.month, year: date.year, type: this.mType })
+            this.mDataSet.get(this.getDate())
                 .then(function (dataArray) {
                 _this.mData = dataArray;
-                $('h1').text(date.year + "年" + date.month + "月公司整体财务指标完成情况(万元)");
-                document.title = date.year + "年" + date.month + "月公司整体财务指标完成情况(万元)";
+                if (dataArray.length == 0) {
+                    var pro = $("#prompt");
+                    pro.empty();
+                    pro.append("<b>暂时没有数据！</b>");
+                }
+                else {
+                    var pro = $("#prompt");
+                    pro.empty();
+                }
                 _this.updateTable();
             });
         };
-        View.prototype.initPercentList = function () {
+        SimpleView.prototype.adjustSize = function () {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.tableAssist.resizeHeight(maxTableBodyHeight);
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+        };
+        SimpleView.prototype.jqgrid = function () {
+            return $("#" + this.jqgridName());
+        };
+        SimpleView.prototype.jqgridName = function () {
+            return this.mOpt.tableId + "_jqgrid_real";
+        };
+        SimpleView.prototype.initPercentList = function () {
             var precentList = new std.vector();
             precentList.push(ZtId.dytbzf);
             precentList.push(ZtId.ndtbzf);
             return precentList;
         };
-        View.prototype.updateTable = function () {
-            var name = this.mTableId + "_jqgrid_1234";
-            var tableAssist = null;
-            var parent = $("#" + this.mTableId);
+        SimpleView.prototype.createJqassist = function () {
+            var parent = $("#" + this.mOpt.tableId);
             parent.empty();
-            parent.append("<table id='" + name + "'></table>");
-            tableAssist = JQGridAssistantFactory.createTable(name);
+            parent.append("<table id='" + this.jqgridName() + "'></table>");
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+            return this.tableAssist;
+        };
+        SimpleView.prototype.updateTable = function () {
+            this.createJqassist();
             if (this.mData.length == 0) {
                 return;
             }
             var outputData = [];
             Util.formatData(outputData, this.mData, this.initPercentList(), []);
-            //data = this.formatZtData();
-            $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
-                data: tableAssist.getData(outputData),
+            this.tableAssist.create({
+                data: outputData,
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
-                height: outputData.length > 23 ? 500 : '100%',
-                width: 1330,
+                height: '100%',
+                width: $("#" + this.mOpt.tableId).width(),
                 shrinkToFit: true,
-                rowNum: 200,
+                rowNum: 2000,
                 autoScroll: true
-            }));
+            });
+            this.adjustSize();
         };
-        return View;
+        SimpleView.ins = new SimpleView();
+        return SimpleView;
     })();
-    hzbNC_zbhz.View = View;
+    hzbNC_zbhz.SimpleView = SimpleView;
 })(hzbNC_zbhz || (hzbNC_zbhz = {}));

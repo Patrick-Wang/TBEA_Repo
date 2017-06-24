@@ -223,3 +223,9 @@ iframe{
 #search-sel{
 	display:none;
 }
+
+.gone{
+  position:absolute;
+  left:-10000px;
+  top:-10000px;
+}

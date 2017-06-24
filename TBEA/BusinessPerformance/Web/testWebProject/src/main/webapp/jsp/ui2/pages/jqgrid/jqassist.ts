@@ -308,6 +308,7 @@ module JQTable {
                         $('table:first', $t.grid.sDiv).css("width", $t.p.tblwidth + "px");
                     }
                 }
+                //触发onComplete 重新调整合并表头
                 if($.isFunction($t.p.gridComplete)) {$t.p.gridComplete.call($t);}
             });
         }

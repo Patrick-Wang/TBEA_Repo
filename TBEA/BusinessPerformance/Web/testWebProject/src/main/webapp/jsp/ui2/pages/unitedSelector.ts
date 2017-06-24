@@ -178,12 +178,14 @@ module Util {
     export class UnitedSelector {
         private mRoot: DataNode = new DataNode(null);
         private mCtrlId: string;
+        private mHostId: string;
         private mPath: number[] = [];
         private mFnChange: (selector: UnitedSelector, depth: number) => void;
 
         public constructor(data: IDataNode[], ctrlId: string, path?: number[]) {
             this.mRoot.appendAll(DataNode.valueOfAll(data));
             this.mCtrlId = ctrlId + "_us";
+            this.mHostId = ctrlId;
             $("#" + ctrlId).empty();
             $("#" + ctrlId).addClass("united-sel");
             $("#" + ctrlId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
@@ -341,6 +343,11 @@ module Util {
                 }
                 this.empty(ctrlTr, start);
                 this.add(ctrlTr, start);
+                if (this.getPath().length > 1){
+                    $("#" + this.mHostId).removeCss("border");
+                }else{
+                    $("#" + this.mHostId).css("border", "none");
+                }
             }
         }
     }

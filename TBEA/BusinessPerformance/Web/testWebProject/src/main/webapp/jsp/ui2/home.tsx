@@ -82,14 +82,16 @@ module home {
             let src = "/BusinessManagement/jsp/ui2/background.html";
 
 
-            $("#tabContent").append('<iframe  frameborder="0" id="home" src=' + src +  ' style="width:100%;height:100%;"></iframe>');
+            $("#tabContent").append('<iframe frameborder="0" name="home" id="home" src=' + src +  ' style="width:100%;height:100%;"></iframe>');
             homeFrame = $("#tabContent #home");
             $("#tabContent #home").active(()=> {
                 $("body").click();
             });
-            $("iframe").css("height", "0px").css("width", "0px");
+            //homeFrame.css("height", "0").css("width", "0");
+            $("iframe").addClass("gone");
         }
-        homeFrame.css("height", "100%").css("width", "100%");
+        //homeFrame.css("height", "100%").css("width", "100%");
+        homeFrame.removeClass("gone");
         topTab.disableMore("closeCurrent");
     }).setMoreClickListener((data)=> {
         let activeTab:tab.TabInfo = topTab.getActiveTab();
@@ -127,8 +129,10 @@ module home {
         }
     }).setTabClickListener((data:any)=> {
         topTab.enableMore("closeCurrent");
-        $("iframe").css("height", "0px").css("width", "0px");
-        $("#tabContent #" + data.id).css("width", "100%").css("height", "100%");
+       // $("iframe").css("height", "0px").css("width", "0px");
+        $("iframe").addClass("gone");
+        //$("#tabContent #" + data.id).css("width", "100%").css("height", "100%");
+        $("#tabContent #" + data.id).removeClass("gone");
     }).setCloseTabClickListener((data)=> {
         if (data == undefined) {
             $("#tabContent #home").remove();
@@ -217,6 +221,7 @@ module home {
 
                     $("#tabContent").append(
                         '<iframe frameborder="0" src=\'' + url + '\' ' +
+                        'name="' + node.data.id + "tab" + '" ' +
                         'id="' + node.data.id + "tab" + '" ' +
                         'style="width:100%;height:100%">' +
                         '</iframe>');

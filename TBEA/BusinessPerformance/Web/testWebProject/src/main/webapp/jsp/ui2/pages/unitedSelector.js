@@ -147,6 +147,7 @@ var Util;
             this.mPath = [];
             this.mRoot.appendAll(DataNode.valueOfAll(data));
             this.mCtrlId = ctrlId + "_us";
+            this.mHostId = ctrlId;
             $("#" + ctrlId).empty();
             $("#" + ctrlId).addClass("united-sel");
             $("#" + ctrlId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
@@ -284,6 +285,12 @@ var Util;
                 }
                 this.empty(ctrlTr, start);
                 this.add(ctrlTr, start);
+                if (this.getPath().length > 1) {
+                    $("#" + this.mHostId).removeCss("border");
+                }
+                else {
+                    $("#" + this.mHostId).css("border", "none");
+                }
             }
         };
         return UnitedSelector;
