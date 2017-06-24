@@ -98,20 +98,35 @@ module yszkgb {
         setOnReadOnlyChangeListener(callBack:(isReadOnly:boolean)=>void);
         save(date:Util.Date, cpType:Util.CompanyType):void;
         submit(date:Util.Date, cpType:Util.CompanyType):void;
-    }
-
-    export interface EntryFrameView {
-        register(name:string, plugin:EntryPluginView):void;
-        unregister(name:string) :EntryPluginView;
-    }
-
         adjustSize();
+    }
+
+    export abstract class BaseEntryPluginView implements EntryPluginView, framework.route.Endpoint{
         private mReadOnlyChange:(isReadOnly:boolean)=>void;
 
         setOnReadOnlyChangeListener(callBack:(isReadOnly:boolean)=>void){
             this.mReadOnlyChange = callBack;
         }
         mOpt:PluginOption;
+        mId:any;
+
+        constructor(id:string){
+            this.mId = id;
+            framework.router.register(this);
+        }
+
+        getId():any{
+            return this.mId;
+        }
+
+        onEvent(e:framework.route.Event):any{
+            switch (e.id){
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+            }
+        }
+
         public init(opt:PluginOption):void {
             this.mOpt = opt;
         }
@@ -146,6 +161,20 @@ module yszkgb {
         public submit(date:Util.Date, cpType:Util.CompanyType):void{
             let dt:string = date.year + "-" + date.month + "-" + date.day;
             this.pluginSubmit(dt, cpType);
+        }
+
+        jqgrid(){
+            return this.$(this.jqgridName());
+        }
+
+
+        jqgridHost():any{
+            return this.$(this.mOpt.tb);
+        }
+
+
+        jqgridName():string{
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         }
 
         abstract refresh():void;
