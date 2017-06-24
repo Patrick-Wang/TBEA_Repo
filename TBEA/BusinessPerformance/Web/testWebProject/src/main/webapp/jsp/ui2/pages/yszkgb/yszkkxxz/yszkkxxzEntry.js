@@ -1,19 +1,20 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../yszkgbdef.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="../yszkgbEntry.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+/// <reference path="../../dateSelector.ts" />
+/// <reference path="../../companySelector.ts" />
+/// <reference path="../../util.ts" />
+///<reference path="../../jqgrid/jqassist.ts"/>
+///<reference path="../../messageBox.ts"/>
+///<reference path="../yszkgbdef.ts"/>
 var yszkgb;
 (function (yszkgb) {
-    var yszkkxxzEntry;
-    (function (yszkkxxzEntry) {
+    var yszkkxxz;
+    (function (yszkkxxz) {
         var TextAlign = JQTable.TextAlign;
+        var BaseEntryPluginView = yszkgb.BaseEntryPluginView;
         var JQGridAssistantFactory = (function () {
             function JQGridAssistantFactory() {
             }
@@ -32,21 +33,15 @@ var yszkgb;
             };
             return JQGridAssistantFactory;
         })();
-        var YszkkxxzEntryView = (function (_super) {
-            __extends(YszkkxxzEntryView, _super);
-            function YszkkxxzEntryView() {
-                _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("yszkkxxz/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("yszkkxxz/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("yszkkxxz/entry/submit.do", false);
+        var SimplePluginEntryView = (function (_super) {
+            __extends(SimplePluginEntryView, _super);
+            function SimplePluginEntryView(id) {
+                _super.call(this, id);
+                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/yszkgb//yszkkxxz/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("/BusinessManagement/yszkgb/yszkkxxz/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/yszkgb/yszkkxxz/entry/submit.do", false);
             }
-            YszkkxxzEntryView.newInstance = function () {
-                return new YszkkxxzEntryView();
-            };
-            YszkkxxzEntryView.prototype.option = function () {
-                return this.mOpt;
-            };
-            YszkkxxzEntryView.prototype.pluginSave = function (dt, cpType) {
+            SimplePluginEntryView.prototype.pluginSave = function (dt, cpType) {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -62,14 +57,14 @@ var yszkgb;
                     data: JSON.stringify(submitData)
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
-            YszkkxxzEntryView.prototype.pluginSubmit = function (dt, cpType) {
+            SimplePluginEntryView.prototype.pluginSubmit = function (dt, cpType) {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -78,7 +73,7 @@ var yszkgb;
                         submitData[i].push(allData[i][j + 2]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
+                            Util.Toast.failed("有空内容 无法提交");
                             return;
                         }
                     }
@@ -89,14 +84,14 @@ var yszkgb;
                     data: JSON.stringify(submitData)
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
-            YszkkxxzEntryView.prototype.pluginUpdate = function (date, cpType) {
+            SimplePluginEntryView.prototype.pluginUpdate = function (date, cpType) {
                 var _this = this;
                 this.mDt = date;
                 this.mAjaxUpdate.get({
@@ -109,23 +104,40 @@ var yszkgb;
                     _this.refresh();
                 });
             };
-            YszkkxxzEntryView.prototype.refresh = function () {
+            SimplePluginEntryView.prototype.refresh = function () {
                 this.raiseReadOnlyChangeEvent(this.mIsReadOnly);
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
             };
-            YszkkxxzEntryView.prototype.init = function (opt) {
+            SimplePluginEntryView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
-                entryView.register("应收账款款项性质情况", this);
+                framework.router.to(Util.FAMOUS_VIEW).send(Util.MSG_REG, { name: "应收账款款项性质情况", plugin: this });
             };
-            YszkkxxzEntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly);
-                var parent = this.$(this.option().tb);
+            SimplePluginEntryView.prototype.adjustSize = function () {
+                if (document.body.clientHeight < 10 || document.body.clientWidth < 10) {
+                    return;
+                }
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() <= this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() < this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            };
+            SimplePluginEntryView.prototype.createJqassist = function () {
+                var parent = this.$(this.mOpt.tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mIsReadOnly);
+                return this.mTableAssist;
+            };
+            SimplePluginEntryView.prototype.updateTable = function () {
+                this.createJqassist();
                 var ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
                 for (var i = 0; i < this.mData.length; ++i) {
                     for (var j = 0; j < this.mData[i].length; ++j) {
@@ -134,9 +146,8 @@ var yszkgb;
                         }
                     }
                 }
-                var lastsel = "";
-                var lastcell = "";
-                this.$(name).jqGrid(this.mTableAssist.decorate({
+                this.mTableAssist.create({
+                    data: [[ny].concat(this.mData[0])],
                     datatype: "local",
                     multiselect: false,
                     drag: false,
@@ -144,66 +155,17 @@ var yszkgb;
                     //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    //height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 150,
                     height: '100%',
-                    width: 1200,
+                    width: this.mTableAssist.getColNames().length * 400,
                     shrinkToFit: true,
                     autoScroll: true,
-                    data: this.mTableAssist.getData([[ny].concat(this.mData[0])]),
-                    viewrecords: true,
-                    beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
-                        var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                        if (isNaN(ret)) {
-                            $.jgrid.jqModal = {
-                                width: 290,
-                                left: $("#" + name).offset().left + $("#" + name).width() / 2 - 290 / 2,
-                                top: $("#" + name).offset().top + $("#" + name).height() / 2 - 90
-                            };
-                            return v;
-                        }
-                        else {
-                            return ret;
-                        }
-                    },
-                    beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
-                        lastsel = iRow;
-                        lastcell = iCol;
-                        //                        console.log(iRow +', ' + iCol);
-                        $("input").attr("disabled", true);
-                    },
-                    afterEditCell: function (rowid, cellname, v, iRow, iCol) {
-                        $("input[type=text]").bind("keydown", function (e) {
-                            if (e.keyCode === 13) {
-                                setTimeout(function () {
-                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
-                                }, 10);
-                            }
-                        });
-                    },
-                    afterSaveCell: function () {
-                        $("input").attr("disabled", false);
-                        lastsel = "";
-                    },
-                    afterRestoreCell: function () {
-                        $("input").attr("disabled", false);
-                        lastsel = "";
-                    }
-                }));
-                $('html').bind('click', function (e) {
-                    if (lastsel != "") {
-                        if ($(e.target).closest("#" + name).length == 0) {
-                            //  $("#" + name).jqGrid('saveRow', lastsel);
-                            $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                            //$("#" + name).resetSelection();
-                            lastsel = "";
-                        }
-                    }
+                    rowNum: 1000,
+                    assistEditable: true
                 });
+                this.adjustSize();
             };
-            return YszkkxxzEntryView;
-        })(yszkgb.BaseEntryPluginView);
-        yszkkxxzEntry.pluginView = YszkkxxzEntryView.newInstance();
-    })(yszkkxxzEntry = yszkgb.yszkkxxzEntry || (yszkgb.yszkkxxzEntry = {}));
+            SimplePluginEntryView.ins = new SimplePluginEntryView("yszkkxxz");
+            return SimplePluginEntryView;
+        })(BaseEntryPluginView);
+    })(yszkkxxz = yszkgb.yszkkxxz || (yszkgb.yszkkxxz = {}));
 })(yszkgb || (yszkgb = {}));

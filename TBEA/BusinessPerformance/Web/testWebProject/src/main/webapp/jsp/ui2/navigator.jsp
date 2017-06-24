@@ -549,7 +549,7 @@
 				<script>
 					builder.register('YszkgbEntry', function () {
 						return [
-						   createNode('应收账款管报录入', "yszkgb/entry.do")
+						   createNode('应收账款管报录入', "yszkgb/v2/entry.do")
 						];
 					});
 				</script>

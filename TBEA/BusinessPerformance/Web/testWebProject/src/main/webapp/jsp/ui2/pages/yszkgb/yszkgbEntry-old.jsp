@@ -17,9 +17,9 @@
 	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
- 
+
 <!-- 多选菜单 -->
-<link rel="stylesheet" type="text/css" 
+<link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.css" />
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/multi-select/assets/style.css" />
@@ -52,12 +52,13 @@
 <script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgbdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgbEntry.js" type="text/javascript"></script>
 
 <!-- message box -->
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/yszkgb/yszkgb.js" type="text/javascript"></script>
+
 
 <title>应收账款管报</title>
 
@@ -165,12 +166,7 @@ th.ui-th-ltr {
 	text-align: left;
 	font-size: 12px;
 }
-#exportButton {
-	height: 23px;
-	width:100px;
-	padding: .1em 1em;
-	margin-top: 2px;
-}
+
 </style>
 </head>
 <body>
@@ -185,38 +181,28 @@ th.ui-th-ltr {
 				<div id="compid" style="float: left"></div>
 				<div id="type" style="float: left"></div>
 				<input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-				onclick="view.updateUI()" />
+				onclick="entryView.updateUI()" />
 			</td>
-		</tr>
+		</tr> 
 		<tr>
 			<td>
-				<%@include file="zmb/zmb.jsp"%>
-				<%@include file="yszkzlbh/yszkzlbh.jsp"%>
-				<%@include file="yszkkxxz/yszkkxxz.jsp"%>
-				<%@include file="yszkyjtztjqs/yszkyjtztjqs.jsp"%>
-				<%@include file="yqyszcsys/yqyszcsys.jsp"%>
+				<%@include file="yszkkxxz/yszkkxxzEntry.jsp"%>
+ 				<%@include file="yqyszcsys/yqyszcsysEntry.jsp"%>
+ 				<%@include file="yszkyjtztjqs/yszkyjtztjqsEntry.jsp"%>
 			</td>
-		</tr>
+		</tr> 
 		<tr>
 			<td>
-				<form id="export" method="post">
-					<input id="exportButton" type="button" value="导出"
-						   onclick="view.exportExcel('export')">
-				</form>
+				<input id="gbsv" type="button" value="保存" style="float: right; width: 80px; margin-left: 10px;"
+					   onclick="entryView.save()" />
+				<input id="gbsm" type="button" value="提交" style="float: right; width: 80px; margin-left: 10px;"
+					   onclick="entryView.submit()" />
 			</td>
 		</tr>
 	</Table>
 	<script type="text/javascript">
-
-
     $(document).ready(function () {
-    	
-        $("#exportButton")
-        .css("height", "23px")
-        .css("padding", ".1em 1em")
-        .css("margin-top", "2px");
-    	
-    	view.init({
+    	entryView.init({
             type: "type",
 			comp:"compid", 
             dt: "dt",
@@ -224,7 +210,7 @@ th.ui-th-ltr {
             date: {
                 month: ${month},
                 year: ${year}
-            }  
+            }
         });
     	(function () {
             $("#type select")
@@ -241,7 +227,6 @@ th.ui-th-ltr {
                     .css("font-size", "12px");
         }());
         $(document.body).css("visibility", "visible");
-
     });
 </script>
 

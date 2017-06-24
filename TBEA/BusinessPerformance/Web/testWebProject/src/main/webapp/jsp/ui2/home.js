@@ -4,7 +4,7 @@
 ///<reference path="navigator.ts"/>
 var home;
 (function (home) {
-    function logout() {
+    $("#logoutBtn").on("click", function () {
         var loc = "" + window.location.href;
         var index = loc.lastIndexOf("/");
         loc = loc.substring(0, index);
@@ -14,8 +14,7 @@ var home;
         }, function onFailed() {
             alert("网络错误");
         });
-    }
-    home.logout = logout;
+    });
     window['invalidate'] = function (redirect) {
         if (redirect) {
             var index = redirect.lastIndexOf("/");

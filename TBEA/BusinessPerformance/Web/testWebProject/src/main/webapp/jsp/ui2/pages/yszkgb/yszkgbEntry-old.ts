@@ -17,50 +17,36 @@ module yszkgb {
     }
 
     interface PluginData extends Util.IData {
-        plugin : PluginView;
+        plugin : EntryPluginView;
     }
 
-    export class View implements FrameView {
+    export class EntryView implements EntryFrameView {
+
         protected mOpt:Option;
         protected mDtSec:Util.DateSelector;
         protected mItemSelector:Util.UnitedSelector;
-        protected mCompanySelector:Util.CompanySelector;
+        protected mCompanySelector: Util.CompanySelector;
         protected mNodes:Util.DataNode[] = [];
-        protected mCurrentPlugin:PluginView;
+        protected mCurrentPlugin: EntryPluginView;
         protected mCurrentDate:Util.Date;
         protected mCurrentComp:Util.CompanyType;
-
-        public register(name:string, plugin:PluginView):void {
+        public register(name:string, plugin:EntryPluginView):void {
             var data:PluginData = {id: this.mNodes.length, value: name, plugin: plugin};
             var node:Util.DataNode = new Util.DataNode(data);
             this.mNodes.push(node);
-        }
-
-        public unregister(name:string):PluginView {
-            var nod:Util.DataNode;
-
-            for (var i = 0; i < this.mNodes.length; ++i) {
-                this.mNodes[i].accept({
-                    visit: (node:Util.DataNode) => {
-                        if (node.getData().value == name) {
-                            nod = node;
-                            return true;
-                        }
-                        return false;
-                    }
-                })
-                if (nod != undefined) {
-                    break;
+            plugin.setOnReadOnlyChangeListener((isReadOnly:boolean)=>{
+                if (isReadOnly){
+                    $("#gbsv").hide();
+                    $("#gbsm").hide();
+                }else{
+                    $("#gbsv").show();
+                    $("#gbsm").show();
                 }
-            }
-
-            return this.plugin(nod);
+            });
         }
-        //不可以起名叫做export 在IE中有冲突
-        public exportExcel(elemId:string) {
-            let url:string = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
-            $("#" + elemId)[0].action = url;
-            $("#" + elemId)[0].submit();
+
+        unregister(name:string):EntryPluginView {
+            return undefined;
         }
 
         public init(opt:Option):void {
@@ -70,7 +56,7 @@ module yszkgb {
                 month: this.mOpt.date.month
             }, this.mOpt.dt);
 
-            this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
+            this.mCompanySelector = new Util.CompanySelector(false,  this.mOpt.comp, this.mOpt.comps);
             if (opt.comps.length == 1) {
                 this.mCompanySelector.hide();
             }
@@ -82,11 +68,11 @@ module yszkgb {
             this.updateUI();
         }
 
-        protected plugin(node:Util.DataNode):PluginView {
-            return (<PluginData>node.getData()).plugin;
+        protected plugin(node:Util.DataNode):EntryPluginView{
+            return  (<PluginData>node.getData()).plugin;
         }
 
-        protected getActiveNode():Util.DataNode {
+        protected getActiveNode():Util.DataNode{
             return this.mItemSelector.getDataNode(this.mItemSelector.getPath());
         }
 
@@ -102,14 +88,21 @@ module yszkgb {
                     this.plugin(this.mNodes[i]).hide();
                 }
             }
-
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
             $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
-            this.plugin(node).update(dt, this.mCurrentComp);
+            this.plugin(node).update(dt,  this.mCurrentComp);
+        }
+
+        public submit(){
+            this.plugin(this.getActiveNode()).submit(this.mCurrentDate, this.mCurrentComp);
+        }
+
+        public save(){
+            this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
         }
     }
 }
 
-var view:yszkgb.FrameView = new yszkgb.View();
+var entryView:yszkgb.EntryView = new yszkgb.EntryView();

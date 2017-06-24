@@ -8,7 +8,7 @@ module home {
     import TreeNode = tree.TreeNode;
     import ITreeNode = tree.ITreeNode;
 
-    export function logout() {
+    $("#logoutBtn").on("click", ()=>{
         var loc = "" + window.location.href;
         var index = loc.lastIndexOf("/");
         loc = loc.substring(0, index);
@@ -19,7 +19,7 @@ module home {
         }, function onFailed() {
             alert("网络错误");
         });
-    }
+    });
 
     window['invalidate'] = (redirect:string)=> {
         if (redirect) {

@@ -14,6 +14,7 @@ module yszkgb {
     export interface PluginOption {
         host:string;
         tbarea:string;
+        tb:string;
         ctarea:string;
         ct:string;
         ctarea1:string;
@@ -104,7 +105,7 @@ module yszkgb {
         unregister(name:string) :EntryPluginView;
     }
 
-    export abstract class BaseEntryPluginView implements EntryPluginView{
+        adjustSize();
         private mReadOnlyChange:(isReadOnly:boolean)=>void;
 
         setOnReadOnlyChangeListener(callBack:(isReadOnly:boolean)=>void){

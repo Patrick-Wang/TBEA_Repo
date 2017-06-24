@@ -16,7 +16,6 @@
     </div>
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/yszkgb/yszkyjtztjqs/yszkyjtztjqs.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router.to("yszkyjtztjqs").send(Util.MSG_INIT, {

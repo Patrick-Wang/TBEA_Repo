@@ -1,18 +1,16 @@
 /// <reference path="../jqgrid/jqassist.ts" />
 /// <reference path="../util.ts" />
-/// <reference path="../dateSelector.ts" />
-/// <reference path="yszkgbdef.ts" />
-/// <reference path="../unitedSelector.ts"/>
-///<reference path="../messageBox.ts"/>
-///<reference path="../companySelector.ts"/>
-
+/// <reference path="../messageBox.ts" />
+///<reference path="../dateSelector.ts"/>
 module yszkgb {
 
+    import Endpoint = framework.route.Endpoint;
+    import router = framework.router;
+    import EntryPluginView = yszkgb.EntryPluginView;
+    import DateSelector = Util.DateSelector;
+
     interface Option {
-        dt:string;
-        comp:string;
         comps: Util.IDataNode[];
-        type:string;
         date: Util.Date;
     }
 
@@ -20,66 +18,108 @@ module yszkgb {
         plugin : EntryPluginView;
     }
 
-    export class EntryView implements EntryFrameView {
+    class EntryView implements Endpoint {
+
+        getId():number {
+            return Util.FAMOUS_VIEW;
+        }
+
+        onEvent(e:framework.route.Event):any {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+                case Util.MSG_UPDATE:
+                    this.updateUI();
+                    break;
+                case Util.MSG_REG:
+                    var data:PluginData = {id: this.mNodes.length, value: e.data.name, plugin: e.data.plugin};
+                    var node:Util.DataNode = new Util.DataNode(data);
+                    this.mNodes.push(node);
+                    break;
+            }
+        }
+
+
+        public constructor() {
+            router.register(this);
+        }
+
+        private static ins:EntryView = new EntryView();
 
         protected mOpt:Option;
-        protected mDtSec:Util.DateSelector;
         protected mItemSelector:Util.UnitedSelector;
-        protected mCompanySelector: Util.CompanySelector;
+        protected mCompanySelector:Util.CompanySelector;
         protected mNodes:Util.DataNode[] = [];
-        protected mCurrentPlugin: EntryPluginView;
+        protected mCurrentPlugin:EntryPluginView;
         protected mCurrentDate:Util.Date;
         protected mCurrentComp:Util.CompanyType;
-        public register(name:string, plugin:EntryPluginView):void {
-            var data:PluginData = {id: this.mNodes.length, value: name, plugin: plugin};
-            var node:Util.DataNode = new Util.DataNode(data);
-            this.mNodes.push(node);
-            plugin.setOnReadOnlyChangeListener((isReadOnly:boolean)=>{
-                if (isReadOnly){
-                    $("#gbsv").hide();
-                    $("#gbsm").hide();
-                }else{
-                    $("#gbsv").show();
-                    $("#gbsm").show();
-                }
-            });
-        }
 
-        unregister(name:string):EntryPluginView {
-            return undefined;
-        }
-
-        public init(opt:Option):void {
+        public init(opt:any):void {
             this.mOpt = opt;
-            this.mDtSec = new Util.DateSelector({year: this.mOpt.date.year - 3, month: 1}, {
-                year: this.mOpt.date.year,
-                month: this.mOpt.date.month
-            }, this.mOpt.dt);
-
-            this.mCompanySelector = new Util.CompanySelector(false,  this.mOpt.comp, this.mOpt.comps);
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年MM月",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                maxDate: Util.date2Str(opt.date),
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+            this.mCompanySelector = new Util.CompanySelector(false, "comp-sel", this.mOpt.comps);
             if (opt.comps.length == 1) {
                 this.mCompanySelector.hide();
             }
-            this.mItemSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
+            this.mItemSelector = new Util.UnitedSelector(this.mNodes, "item-sel");
             if (this.mNodes.length == 1) {
                 this.mItemSelector.hide();
             }
             this.mNodes = this.mItemSelector.getTopNodes();
             this.updateUI();
+
+            $(window).resize(()=> {
+                this.mCurrentPlugin.adjustSize();
+            });
+
+            $("#grid-update").on("click", ()=> {
+                this.updateUI();
+            });
+
+            $("#save").on("click", ()=> {
+                this.mCurrentPlugin.save(this.mCurrentDate, this.mCurrentComp);
+            });
+
+            $("#submit").on("click", ()=> {
+                this.mCurrentPlugin.submit(this.mCurrentDate, this.mCurrentComp);
+            });
+
+            this.updateUI();
         }
 
-        protected plugin(node:Util.DataNode):EntryPluginView{
-            return  (<PluginData>node.getData()).plugin;
+        private getDate():Util.Date {
+            let rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
         }
 
-        protected getActiveNode():Util.DataNode{
+        protected plugin(node:Util.DataNode):EntryPluginView {
+            return (<PluginData>node.getData()).plugin;
+        }
+
+        protected getActiveNode():Util.DataNode {
             return this.mItemSelector.getDataNode(this.mItemSelector.getPath());
         }
 
         public updateUI() {
-            let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
 
-            let dt:Util.Date = this.mDtSec.getDate();
+            let node:Util.DataNode = this.getActiveNode();
+
+            let dt:Util.Date = this.getDate();
             dt.day = 1;
 
             this.mCurrentPlugin = this.plugin(node);
@@ -91,18 +131,7 @@ module yszkgb {
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
-            this.plugin(node).update(dt,  this.mCurrentComp);
-        }
-
-        public submit(){
-            this.plugin(this.getActiveNode()).submit(this.mCurrentDate, this.mCurrentComp);
-        }
-
-        public save(){
-            this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
+            this.plugin(node).update(dt, this.mCurrentComp);
         }
     }
 }
-
-var entryView:yszkgb.EntryView = new yszkgb.EntryView();

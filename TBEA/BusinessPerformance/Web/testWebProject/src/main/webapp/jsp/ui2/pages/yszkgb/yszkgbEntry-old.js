@@ -7,40 +7,29 @@
 ///<reference path="../companySelector.ts"/>
 var yszkgb;
 (function (yszkgb) {
-    var View = (function () {
-        function View() {
+    var EntryView = (function () {
+        function EntryView() {
             this.mNodes = [];
         }
-        View.prototype.register = function (name, plugin) {
+        EntryView.prototype.register = function (name, plugin) {
             var data = { id: this.mNodes.length, value: name, plugin: plugin };
             var node = new Util.DataNode(data);
             this.mNodes.push(node);
-        };
-        View.prototype.unregister = function (name) {
-            var nod;
-            for (var i = 0; i < this.mNodes.length; ++i) {
-                this.mNodes[i].accept({
-                    visit: function (node) {
-                        if (node.getData().value == name) {
-                            nod = node;
-                            return true;
-                        }
-                        return false;
-                    }
-                });
-                if (nod != undefined) {
-                    break;
+            plugin.setOnReadOnlyChangeListener(function (isReadOnly) {
+                if (isReadOnly) {
+                    $("#gbsv").hide();
+                    $("#gbsm").hide();
                 }
-            }
-            return this.plugin(nod);
+                else {
+                    $("#gbsv").show();
+                    $("#gbsm").show();
+                }
+            });
         };
-        //不可以起名叫做export 在IE中有冲突
-        View.prototype.exportExcel = function (elemId) {
-            var url = this.mCurrentPlugin.getExportUrl(this.mCurrentDate, this.mCurrentComp);
-            $("#" + elemId)[0].action = url;
-            $("#" + elemId)[0].submit();
+        EntryView.prototype.unregister = function (name) {
+            return undefined;
         };
-        View.prototype.init = function (opt) {
+        EntryView.prototype.init = function (opt) {
             this.mOpt = opt;
             this.mDtSec = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
                 year: this.mOpt.date.year,
@@ -57,13 +46,13 @@ var yszkgb;
             this.mNodes = this.mItemSelector.getTopNodes();
             this.updateUI();
         };
-        View.prototype.plugin = function (node) {
+        EntryView.prototype.plugin = function (node) {
             return node.getData().plugin;
         };
-        View.prototype.getActiveNode = function () {
+        EntryView.prototype.getActiveNode = function () {
             return this.mItemSelector.getDataNode(this.mItemSelector.getPath());
         };
-        View.prototype.updateUI = function () {
+        EntryView.prototype.updateUI = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
             var dt = this.mDtSec.getDate();
             dt.day = 1;
@@ -79,8 +68,14 @@ var yszkgb;
             $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
             this.plugin(node).update(dt, this.mCurrentComp);
         };
-        return View;
+        EntryView.prototype.submit = function () {
+            this.plugin(this.getActiveNode()).submit(this.mCurrentDate, this.mCurrentComp);
+        };
+        EntryView.prototype.save = function () {
+            this.plugin(this.getActiveNode()).save(this.mCurrentDate, this.mCurrentComp);
+        };
+        return EntryView;
     })();
-    yszkgb.View = View;
+    yszkgb.EntryView = EntryView;
 })(yszkgb || (yszkgb = {}));
-var view = new yszkgb.View();
+var entryView = new yszkgb.EntryView();

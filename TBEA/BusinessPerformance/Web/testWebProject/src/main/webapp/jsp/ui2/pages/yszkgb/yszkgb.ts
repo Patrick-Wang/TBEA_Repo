@@ -93,7 +93,7 @@ module yszkgb {
             });
 
             $(window).resize(()=> {
-                    this.mCurrentPlugin.adjustSize();
+                this.mCurrentPlugin.adjustSize();
             });
 
             this.updateUI();

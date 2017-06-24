@@ -51,10 +51,22 @@ var yszkgb;
     })();
     yszkgb.BasePluginView = BasePluginView;
     var BaseEntryPluginView = (function () {
-        function BaseEntryPluginView() {
+        function BaseEntryPluginView(id) {
+            this.mId = id;
+            framework.router.register(this);
         }
         BaseEntryPluginView.prototype.setOnReadOnlyChangeListener = function (callBack) {
             this.mReadOnlyChange = callBack;
+        };
+        BaseEntryPluginView.prototype.getId = function () {
+            return this.mId;
+        };
+        BaseEntryPluginView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+            }
         };
         BaseEntryPluginView.prototype.init = function (opt) {
             this.mOpt = opt;
@@ -84,6 +96,15 @@ var yszkgb;
         BaseEntryPluginView.prototype.submit = function (date, cpType) {
             var dt = date.year + "-" + date.month + "-" + date.day;
             this.pluginSubmit(dt, cpType);
+        };
+        BaseEntryPluginView.prototype.jqgrid = function () {
+            return this.$(this.jqgridName());
+        };
+        BaseEntryPluginView.prototype.jqgridHost = function () {
+            return this.$(this.mOpt.tb);
+        };
+        BaseEntryPluginView.prototype.jqgridName = function () {
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         };
         return BaseEntryPluginView;
     })();

@@ -8,7 +8,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/yszkgb/yszkkxxz/yszkkxxzEntry.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    framework.router.to("yszkkxxz").send(Util.MSG_INIT, {
+    framework.router.to("yszkkxxzEntry").send(Util.MSG_INIT, {
     	 tb: "table",
          host: "yszkkxxzEntry",
          tbarea:"tbarea"

@@ -8,10 +8,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/yszkgb/yqyszcsys/yqyszcsysEntry.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    framework.router.to("yqyszcsys").send(Util.MSG_INIT, {
-    	 tb: "table",
-         host: "yqyszcsysEntry",
-         tbarea:"tbarea"
+    framework.router.to("yqyszcsysEntry").send(Util.MSG_INIT, {
+        tb: "table",
+        host: "yqyszcsysEntry",
+        tbarea:"tbarea"
 	});
 });
 </script>

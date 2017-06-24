@@ -178,7 +178,7 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="#" id="btnResetPassword">修改密码</a></li>
-								<li><a href="#" id="logoutBtn" onclick="home.logout()">退出登录</a></li>
+								<li><a href="#" id="logoutBtn">退出登录</a></li>
 							</ul>
 						</div>
 

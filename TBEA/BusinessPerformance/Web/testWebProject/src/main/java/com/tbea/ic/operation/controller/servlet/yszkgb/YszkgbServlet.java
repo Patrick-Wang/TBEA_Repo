@@ -79,7 +79,7 @@ public class YszkgbServlet {
 		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "yszkgb/yszkgb", map);
 	}
 	
-	@RequestMapping(value = "entry.do")
+	@RequestMapping(value = {"entry.do", "v2/entry.do"})
 	public ModelAndView getYszkgbEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -95,7 +95,7 @@ public class YszkgbServlet {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
 		
-		return new ModelAndView("yszkgb/yszkgbEntry", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "yszkgb/yszkgbEntry", map);
 	}
 	
 	Company getCompany(CompanyType comp){
