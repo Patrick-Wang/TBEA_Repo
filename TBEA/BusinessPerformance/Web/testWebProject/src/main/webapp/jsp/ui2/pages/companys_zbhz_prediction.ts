@@ -187,23 +187,11 @@ module companys_zbhz_prediction{
             this.mCompanySelector = new Util.CompanySelector(false, "comp-sel", opt.comps);
 
             this.mCompanySelector.change(()=>{
-                $("#headerHost").removeCss("width");
-                if ($("#headerHost").height() > 40){
-                    $(".page-header").addClass("page-header-double");
-                    $("#headerHost").css("width", $("#comp-sel").width() + "px");
-                }else{
-                    $(".page-header").removeClass("page-header-double");
-                }
+                this.adjustHeader();
             });
 
             $(window).resize(()=> {
-                $("#headerHost").removeCss("width");
-                if ($("#headerHost").height() > 40){
-                    $(".page-header").addClass("page-header-double");
-                    $("#headerHost").css("width", $("#comp-sel").width() + "px");
-                }else{
-                    $(".page-header").removeClass("page-header-double");
-                }
+                this.adjustHeader();
                 this.adjustSize();
             });
             $("#grid-update").on("click", ()=> {
@@ -212,6 +200,12 @@ module companys_zbhz_prediction{
             $("#grid-export").on("click", ()=> {
                 this.exportExcel();
             });
+            this.adjustHeader();
+            this.updateUI();
+
+        }
+
+        private adjustHeader(){
             $("#headerHost").removeCss("width");
             if ($("#headerHost").height() > 40){
                 $(".page-header").addClass("page-header-double");
@@ -219,7 +213,6 @@ module companys_zbhz_prediction{
             }else{
                 $(".page-header").removeClass("page-header-double");
             }
-            this.updateUI();
         }
 
         private getDate():Util.Date {

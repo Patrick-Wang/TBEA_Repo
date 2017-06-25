@@ -172,16 +172,18 @@
 				<!-- Page Header -->
 				<div class="page-header position-relative">
 					<div class="header-title">
-						<div class="workinput pull-left">
-							<input id="grid-date" type="text" readonly="readonly"><i
-								class="fa fa-calendar"></i>
-						</div>
-						<div id="comp-sel" class="pull-left"></div>
-						<div id="grid-update" class="btn btn-default">
-							查找 <i class="fa fa-search"></i>
-						</div>
-						<div id="grid-export" class="btn btn-default">
-							导出 <i class="fa fa-file-excel-o"></i>
+						<div id="headerHost" class="pull-left">
+							<div class="workinput pull-left">
+								<input id="grid-date" type="text" readonly="readonly"><i
+									class="fa fa-calendar"></i>
+							</div>
+							<div id="comp-sel" class="pull-left"></div>
+							<div id="grid-update" class="btn btn-default">
+								查找 <i class="fa fa-search"></i>
+							</div>
+							<div id="grid-export" class="btn btn-default">
+								导出 <i class="fa fa-file-excel-o"></i>
+							</div>
 						</div>
 						<form id="exportExcel" style="display: none" method="post"></form>
 					</div>

@@ -93,10 +93,22 @@ module yszkgb {
             });
 
             $(window).resize(()=> {
+                this.adjustHeader();
                 this.mCurrentPlugin.adjustSize();
             });
 
+            this.adjustHeader();
             this.updateUI();
+        }
+
+        private adjustHeader(){
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40){
+                $(".page-header").addClass("page-header-double");
+                $("#headerHost").css("width", $("#sels").width() + "px");
+            }else{
+                $(".page-header").removeClass("page-header-double");
+            }
         }
 
         plugin(node:Util.DataNode):PluginView {

@@ -150,36 +150,6 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/companys_zbhz_prediction.js"></script>
 
 <%@include file="../ie8-b.jsp"%>
-
-<style>
-.page-header br{
-	display:none;
-}
-.page-header-double{
-	height:80px;
-}
-.page-header-double br{
-	display:block;
-}
-
-.page-header-double .btn{
-	float:none
-}
-
-.page-header-double .btn:last-child{
-	margin-left:10px;
-}
-
-.page-header-double .btn:last-child{
-	margin-left:10px;
-}
-
-.page-header-double .united-sel{
-	margin-left:4px;
-}
-
-</style>
-
 </head>
 <!-- /Head -->
 <!-- Body -->

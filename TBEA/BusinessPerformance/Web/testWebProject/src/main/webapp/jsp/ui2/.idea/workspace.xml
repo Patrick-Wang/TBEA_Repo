@@ -21,52 +21,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="jquery.jedate.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/jedate/jquery.jedate.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.25862">
-              <caret line="508" column="24" selection-start-line="508" selection-start-column="24" selection-end-line="508" selection-end-column="24" />
-              <folding>
-                <marker date="1498357577534" expanded="true" signature="13459:13492" placeholder="..." />
-                <marker date="1498357577534" expanded="true" signature="13543:13553" placeholder="..." />
-                <marker date="1498357577534" expanded="true" signature="13761:13771" placeholder="..." />
-                <marker date="1498357577534" expanded="true" signature="13981:13992" placeholder="..." />
-                <marker date="1498357577534" expanded="true" signature="14212:14226" placeholder="..." />
-                <marker date="1498357577534" expanded="true" signature="14994:15005" placeholder="..." />
-                <marker date="1498357577534" expanded="true" signature="15049:15060" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="hzb_zbhz.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/hzb_zbhz.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="140" column="9" selection-start-line="133" selection-start-column="7" selection-end-line="140" selection-end-column="9" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/entry_template.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.6666667">
-              <caret line="105" column="0" selection-start-line="105" selection-start-column="0" selection-end-line="108" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="financial_zbhz_prediction.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/financial_zbhz_prediction.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="369" column="34" selection-start-line="369" selection-start-column="34" selection-end-line="369" selection-end-column="34" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -94,21 +54,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="companys_zbhz_prediction.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="companys_zbhz_prediction.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/companys_zbhz_prediction.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.554717">
-              <caret line="220" column="13" selection-start-line="220" selection-start-column="13" selection-end-line="220" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="215" column="9" selection-start-line="207" selection-start-column="8" selection-end-line="215" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gdw_zbhz_prediction.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/gdw_zbhz_prediction.ts">
+      <file leaf-file-name="yszkgb.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/yszkgb/yszkgb.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5018868">
+              <caret line="95" column="36" selection-start-line="95" selection-start-column="36" selection-end-line="95" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="companys_zbhz_prediction.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/companys_zbhz_prediction.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.347826">
+              <caret line="173" column="20" selection-start-line="173" selection-start-column="20" selection-end-line="173" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gdw_zbhz.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/gdw_zbhz.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="337" column="47" selection-start-line="337" selection-start-column="21" selection-end-line="337" selection-end-column="47" />
+              <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -116,11 +96,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hzb_zbhz_prediction.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/hzb_zbhz_prediction.ts">
+      <file leaf-file-name="hzb_companys.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/hzb_companys.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="299" column="120" selection-start-line="299" selection-start-column="84" selection-end-line="299" selection-end-column="120" />
+              <caret line="104" column="15" selection-start-line="104" selection-start-column="15" selection-end-line="104" selection-end-column="15" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -128,11 +108,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hzb_zbhz_prediction.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/hzb_zbhz_prediction.jsp">
+      <file leaf-file-name="yszkgb.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/yszkgb/yszkgb.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.521739">
-              <caret line="182" column="0" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
+            <state vertical-scroll-proportion="-4.9411764">
+              <caret line="179" column="35" selection-start-line="179" selection-start-column="35" selection-end-line="179" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="hzb_companys.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/hzb_companys.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.0196078">
+              <caret line="173" column="46" selection-start-line="173" selection-start-column="46" selection-end-line="173" selection-end-column="46" />
               <folding />
             </state>
           </provider>
@@ -156,9 +146,7 @@
         <option value="$PROJECT_DIR$/home.ts" />
         <option value="$PROJECT_DIR$/pages/hzb_zbhz.jsp" />
         <option value="$PROJECT_DIR$/home.js" />
-        <option value="$PROJECT_DIR$/pages/hzb_companys.jsp" />
         <option value="$PROJECT_DIR$/pages/entry_template-old.ts" />
-        <option value="$PROJECT_DIR$/pages/hzb_companys.ts" />
         <option value="$PROJECT_DIR$/pages/entry_template.jsp" />
         <option value="$PROJECT_DIR$/pages/messageBox.ts" />
         <option value="$PROJECT_DIR$/ie8.ts" />
@@ -178,8 +166,6 @@
         <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
         <option value="$PROJECT_DIR$/pages/unitedSelector.ts" />
         <option value="$PROJECT_DIR$/pages/util.ts" />
-        <option value="$PROJECT_DIR$/pages/yszkgb/yszkgb.jsp" />
-        <option value="$PROJECT_DIR$/pages/yszkgb/yszkgb.ts" />
         <option value="$PROJECT_DIR$/pages/yszkgb/yszkgbEntry.ts" />
         <option value="$PROJECT_DIR$/home.jsp" />
         <option value="$PROJECT_DIR$/pages/yszkgb/yszkgbdef.ts" />
@@ -197,11 +183,15 @@
         <option value="$PROJECT_DIR$/pages/jedate/jquery.jedate.js" />
         <option value="$PROJECT_DIR$/pages/gdw_zbhz_prediction.ts" />
         <option value="$PROJECT_DIR$/pages/gdw_zbhz_prediction.jsp" />
-        <option value="$PROJECT_DIR$/pages/companys_zbhz_prediction.jsp" />
         <option value="$PROJECT_DIR$/pages/financial_zbhz_prediction.ts" />
         <option value="$PROJECT_DIR$/home.tsx" />
         <option value="$PROJECT_DIR$/jquery/jqueryex.js" />
         <option value="$PROJECT_DIR$/pages/companys_zbhz_prediction.ts" />
+        <option value="$PROJECT_DIR$/pages/companys_zbhz_prediction.jsp" />
+        <option value="$PROJECT_DIR$/pages/hzb_companys.jsp" />
+        <option value="$PROJECT_DIR$/pages/hzb_companys.ts" />
+        <option value="$PROJECT_DIR$/pages/yszkgb/yszkgb.jsp" />
+        <option value="$PROJECT_DIR$/pages/yszkgb/yszkgb.ts" />
       </list>
     </option>
   </component>
@@ -297,7 +287,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jquery" />
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="yszkgb" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -386,7 +380,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1378" height="780" extended-state="0" />
+    <frame x="-8" y="-8" width="1378" height="780" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2335821" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -424,28 +418,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/yszkgb/yszkgbdef.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31612903">
-          <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/yszkgb/zmb/zmb.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/yszkgb/yszkzlbh/yszkzlbh.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.869565">
-          <caret line="8" column="47" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/yszkgb/zmb/zmb.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.73913">
@@ -515,14 +487,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/yszkgb/yszkgb.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.471698">
-          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/yszkgb/zmb/zmb.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -534,14 +498,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33207548">
           <caret line="184" column="15" selection-start-line="184" selection-start-column="15" selection-end-line="184" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/yszkgb/yszkgb.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="95" column="36" selection-start-line="95" selection-start-column="16" selection-end-line="95" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -757,7 +713,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="299" column="120" selection-start-line="299" selection-start-column="84" selection-end-line="299" selection-end-column="120" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -778,20 +734,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/companys_zbhz_prediction.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.745098">
-          <caret line="169" column="1" selection-start-line="168" selection-start-column="1" selection-end-line="168" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/gdw_zbhz_prediction.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="337" column="47" selection-start-line="337" selection-start-column="21" selection-end-line="337" selection-end-column="47" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -841,10 +789,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pages/hzb_companys.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.0196078">
+          <caret line="173" column="46" selection-start-line="173" selection-start-column="46" selection-end-line="173" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/gdw_zbhz.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="0" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/hzb_companys.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="104" column="15" selection-start-line="104" selection-start-column="15" selection-end-line="104" selection-end-column="15" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pages/companys_zbhz_prediction.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.554717">
-          <caret line="220" column="13" selection-start-line="220" selection-start-column="13" selection-end-line="220" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="215" column="9" selection-start-line="207" selection-start-column="8" selection-end-line="215" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/yszkgb/yszkgb.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.9411764">
+          <caret line="179" column="35" selection-start-line="179" selection-start-column="35" selection-end-line="179" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/companys_zbhz_prediction.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.347826">
+          <caret line="173" column="20" selection-start-line="173" selection-start-column="20" selection-end-line="173" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/yszkgb/yszkgb.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5018868">
+          <caret line="95" column="36" selection-start-line="95" selection-start-column="36" selection-end-line="95" selection-end-column="36" />
           <folding />
         </state>
       </provider>

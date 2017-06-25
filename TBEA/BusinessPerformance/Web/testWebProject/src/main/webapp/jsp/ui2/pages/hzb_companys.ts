@@ -100,8 +100,11 @@ module hzb_companys {
                 .removeCss("margin-top");
 
             this.mCompanySelector = new Util.CompanySelector(false, "comp-sel", opt.comps);
-
+            this.mCompanySelector.change(()=>{
+                this.adjustHeader();
+            });
             $(window).resize(()=> {
+                this.adjustHeader();
                 this.adjustSize();
             });
             $("#grid-update").on("click", ()=> {
@@ -110,8 +113,18 @@ module hzb_companys {
             $("#grid-export").on("click", ()=> {
                 this.exportExcel();
             });
-
+            this.adjustHeader();
             this.updateUI();
+        }
+
+        private adjustHeader(){
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40){
+                $(".page-header").addClass("page-header-double");
+                $("#headerHost").css("width", $("#comp-sel").width() + "px");
+            }else{
+                $(".page-header").removeClass("page-header-double");
+            }
         }
 
         private getDate():Util.Date {

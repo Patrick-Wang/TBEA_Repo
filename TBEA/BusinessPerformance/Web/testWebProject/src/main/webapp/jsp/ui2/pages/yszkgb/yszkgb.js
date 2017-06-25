@@ -58,9 +58,21 @@ var yszkgb;
                 _this.exportExcel();
             });
             $(window).resize(function () {
+                _this.adjustHeader();
                 _this.mCurrentPlugin.adjustSize();
             });
+            this.adjustHeader();
             this.updateUI();
+        };
+        FrameView.prototype.adjustHeader = function () {
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40) {
+                $(".page-header").addClass("page-header-double");
+                $("#headerHost").css("width", $("#sels").width() + "px");
+            }
+            else {
+                $(".page-header").removeClass("page-header-double");
+            }
         };
         FrameView.prototype.plugin = function (node) {
             return node.getData().plugin;

@@ -216,24 +216,10 @@ var companys_zbhz_prediction;
                 .addClass("season-month");
             this.mCompanySelector = new Util.CompanySelector(false, "comp-sel", opt.comps);
             this.mCompanySelector.change(function () {
-                $("#headerHost").removeCss("width");
-                if ($("#headerHost").height() > 40) {
-                    $(".page-header").addClass("page-header-double");
-                    $("#headerHost").css("width", $("#comp-sel").width() + "px");
-                }
-                else {
-                    $(".page-header").removeClass("page-header-double");
-                }
+                _this.adjustHeader();
             });
             $(window).resize(function () {
-                $("#headerHost").removeCss("width");
-                if ($("#headerHost").height() > 40) {
-                    $(".page-header").addClass("page-header-double");
-                    $("#headerHost").css("width", $("#comp-sel").width() + "px");
-                }
-                else {
-                    $(".page-header").removeClass("page-header-double");
-                }
+                _this.adjustHeader();
                 _this.adjustSize();
             });
             $("#grid-update").on("click", function () {
@@ -242,6 +228,10 @@ var companys_zbhz_prediction;
             $("#grid-export").on("click", function () {
                 _this.exportExcel();
             });
+            this.adjustHeader();
+            this.updateUI();
+        };
+        SimpleView.prototype.adjustHeader = function () {
             $("#headerHost").removeCss("width");
             if ($("#headerHost").height() > 40) {
                 $(".page-header").addClass("page-header-double");
@@ -250,7 +240,6 @@ var companys_zbhz_prediction;
             else {
                 $(".page-header").removeClass("page-header-double");
             }
-            this.updateUI();
         };
         SimpleView.prototype.getDate = function () {
             var curDate = $("#grid-date").getDate();

@@ -330,6 +330,27 @@ th.ui-th-ltr {
 	z-index: 1000;
 }
 
+
+.page-header-double{
+	height:80px;
+}
+
+.page-header-double .btn{
+	float:none
+}
+
+.page-header-double .btn:last-child{
+	margin-left:10px;
+}
+
+.page-header-double .btn:last-child{
+	margin-left:10px;
+}
+
+.page-header-double .united-sel{
+	margin-left:4px;
+}
+
 /* ÆÁ±Î bootstrap Ó°Ïì*/
 .ui-jqgrid th {
 	text-align: center;

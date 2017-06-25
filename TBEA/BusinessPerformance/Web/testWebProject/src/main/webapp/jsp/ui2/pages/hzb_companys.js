@@ -110,7 +110,11 @@ var hzb_companys;
                 .removeCss("padding")
                 .removeCss("margin-top");
             this.mCompanySelector = new Util.CompanySelector(false, "comp-sel", opt.comps);
+            this.mCompanySelector.change(function () {
+                _this.adjustHeader();
+            });
             $(window).resize(function () {
+                _this.adjustHeader();
                 _this.adjustSize();
             });
             $("#grid-update").on("click", function () {
@@ -119,7 +123,18 @@ var hzb_companys;
             $("#grid-export").on("click", function () {
                 _this.exportExcel();
             });
+            this.adjustHeader();
             this.updateUI();
+        };
+        SimpleView.prototype.adjustHeader = function () {
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40) {
+                $(".page-header").addClass("page-header-double");
+                $("#headerHost").css("width", $("#comp-sel").width() + "px");
+            }
+            else {
+                $(".page-header").removeClass("page-header-double");
+            }
         };
         SimpleView.prototype.getDate = function () {
             var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
