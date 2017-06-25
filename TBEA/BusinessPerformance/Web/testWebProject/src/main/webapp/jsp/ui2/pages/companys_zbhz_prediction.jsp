@@ -15,7 +15,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<%@include file="../ie8-t.jsp" %>
+<%@include file="../ie8-t.jsp"%>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 
@@ -149,7 +149,37 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/companys_zbhz_prediction.js"></script>
 
-<%@include file="../ie8-b.jsp" %>
+<%@include file="../ie8-b.jsp"%>
+
+<style>
+.page-header br{
+	display:none;
+}
+.page-header-double{
+	height:80px;
+}
+.page-header-double br{
+	display:block;
+}
+
+.page-header-double .btn{
+	float:none
+}
+
+.page-header-double .btn:last-child{
+	margin-left:10px;
+}
+
+.page-header-double .btn:last-child{
+	margin-left:10px;
+}
+
+.page-header-double .united-sel{
+	margin-left:4px;
+}
+
+</style>
+
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -167,26 +197,27 @@
 					</ul>
 				</div>
 				<!-- /Page Breadcrumb -->
-				
+
 				<!-- Page Header -->
 				<div class="page-header position-relative">
 					<div class="header-title">
+					<div id="headerHost" class="pull-left">
 						<div class="workinput pull-left">
 							<input id="grid-date" type="text" readonly="readonly"><i
 								class="fa fa-calendar"></i>
 						</div>
-						<select id="grid-season" class="pull-left">
-								<option value="1" selected="selected">第一季度</option>
-								<option value="2">第二季度</option>
-								<option value="3">第三季度</option>
-								<option value="4">第四季度</option>
-						</select>
+						<%--<select id="grid-season" class="pull-left">--%>
+						<%--<option value="1" selected="selected">第一季度</option>--%>
+						<%--<option value="2">第二季度</option>--%>
+						<%--<option value="3">第三季度</option>--%>
+						<%--<option value="4">第四季度</option>--%>
+						<%--</select>--%>
 
-						<select id="grid-season-month" class="pull-left">
-								<option value="1" selected="selected">首月</option>
-								<option value="2">次月</option>
-								<option value="3">末月</option>
-						</select>
+						<%--<select id="grid-season-month" class="pull-left">--%>
+						<%--<option value="1" selected="selected">首月</option>--%>
+						<%--<option value="2">次月</option>--%>
+						<%--<option value="3">末月</option>--%>
+						<%--</select>--%>
 						<div id="comp-sel" class="pull-left"></div>
 						<div id="grid-update" class="btn btn-default">
 							查找 <i class="fa fa-search"></i>
@@ -194,8 +225,10 @@
 						<div id="grid-export" class="btn btn-default">
 							导出 <i class="fa fa-file-excel-o"></i>
 						</div>
+						<br/>
+</div>
 						<form id="exportExcel" style="display: none" method="post"></form>
-						
+
 					</div>
 				</div>
 				<!-- /Page Header -->
@@ -244,7 +277,7 @@
 			date : Util.parseDate('${year}')
 		});
     </script>
-	
+
 </body>
 <!--  /Body -->
 </html>

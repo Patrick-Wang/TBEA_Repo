@@ -30,6 +30,20 @@ module home {
         }
     }
 
+    function getFrameWindow(name){
+        for (let i = 0; i < window.frames.length; ++i){
+            if (window.frames[i].name == name){
+                return window.frames[i];
+            }
+        }
+    }
+
+    function triggerFrameResize(name){
+        let frame = getFrameWindow(name);
+        if (frame && frame.triggerResize){
+            frame.triggerResize();
+        }
+    }
 
     function updateFrameSize() {
         let heightUp = $(".content-up>div").css("height");
@@ -92,6 +106,8 @@ module home {
         }
         //homeFrame.css("height", "100%").css("width", "100%");
         homeFrame.removeClass("gone");
+        triggerFrameResize(homeFrame[0].name);
+
         topTab.disableMore("closeCurrent");
     }).setMoreClickListener((data)=> {
         let activeTab:tab.TabInfo = topTab.getActiveTab();
@@ -133,6 +149,8 @@ module home {
         $("iframe").addClass("gone");
         //$("#tabContent #" + data.id).css("width", "100%").css("height", "100%");
         $("#tabContent #" + data.id).removeClass("gone");
+        triggerFrameResize($("#tabContent #" + data.id)[0].name);
+
     }).setCloseTabClickListener((data)=> {
         if (data == undefined) {
             $("#tabContent #home").remove();

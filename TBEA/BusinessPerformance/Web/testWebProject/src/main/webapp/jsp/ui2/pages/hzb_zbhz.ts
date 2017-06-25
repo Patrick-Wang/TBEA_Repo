@@ -98,7 +98,6 @@ module hzb_zbhz {
         private mXmgsDataSet:Util.Ajax = new Util.Ajax("/BusinessManagement/ydzb/hzb_zbhz_xmgs_compute.do", false);
         private mJydwDataSet:Util.Ajax = new Util.Ajax("/BusinessManagement/ydzb/hzb_zbhz_jydw_compute.do", false);
         private mOpt: IViewOption;
-        
         public init(opt:any):void {
             this.mOpt = opt;
 
@@ -133,11 +132,11 @@ module hzb_zbhz {
         }
 
         private getDate():Util.Date {
-            let rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            let curDate = $("#grid-date").getDate();
             return {
-                year: rq[0] ? parseInt(rq[0]) : undefined,
-                month: rq[1] ? parseInt(rq[1]) : undefined,
-                day: rq[2] ? parseInt(rq[2]) : undefined
+                year : curDate.getFullYear(),
+                month : curDate.getMonth() + 1,
+                day:curDate.getDate()
             };
         }
 

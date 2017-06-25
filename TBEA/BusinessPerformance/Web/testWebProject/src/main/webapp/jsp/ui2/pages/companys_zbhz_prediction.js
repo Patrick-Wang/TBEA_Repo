@@ -203,7 +203,7 @@ var companys_zbhz_prediction;
             minDate.month = 1;
             $("#grid-date").jeDate({
                 skinCell: "jedatedeepgreen",
-                format: "YYYY年",
+                format: "YYYY年 && $$MM月",
                 isTime: false,
                 isinitVal: true,
                 isClear: false,
@@ -212,9 +212,28 @@ var companys_zbhz_prediction;
                 maxDate: Util.date2Str(opt.date),
             }).removeCss("height")
                 .removeCss("padding")
-                .removeCss("margin-top");
+                .removeCss("margin-top")
+                .addClass("season-month");
             this.mCompanySelector = new Util.CompanySelector(false, "comp-sel", opt.comps);
+            this.mCompanySelector.change(function () {
+                $("#headerHost").removeCss("width");
+                if ($("#headerHost").height() > 40) {
+                    $(".page-header").addClass("page-header-double");
+                    $("#headerHost").css("width", $("#comp-sel").width() + "px");
+                }
+                else {
+                    $(".page-header").removeClass("page-header-double");
+                }
+            });
             $(window).resize(function () {
+                $("#headerHost").removeCss("width");
+                if ($("#headerHost").height() > 40) {
+                    $(".page-header").addClass("page-header-double");
+                    $("#headerHost").css("width", $("#comp-sel").width() + "px");
+                }
+                else {
+                    $(".page-header").removeClass("page-header-double");
+                }
                 _this.adjustSize();
             });
             $("#grid-update").on("click", function () {
@@ -223,30 +242,38 @@ var companys_zbhz_prediction;
             $("#grid-export").on("click", function () {
                 _this.exportExcel();
             });
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40) {
+                $(".page-header").addClass("page-header-double");
+                $("#headerHost").css("width", $("#comp-sel").width() + "px");
+            }
+            else {
+                $(".page-header").removeClass("page-header-double");
+            }
             this.updateUI();
         };
         SimpleView.prototype.getDate = function () {
-            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            var curDate = $("#grid-date").getDate();
             return {
-                year: rq[0] ? parseInt(rq[0]) : undefined,
-                month: rq[1] ? parseInt(rq[1]) : undefined,
-                day: rq[2] ? parseInt(rq[2]) : undefined
+                year: curDate.getFullYear(),
+                month: curDate.getMonth() + 1,
+                day: curDate.getDate()
             };
         };
         SimpleView.prototype.updateUI = function () {
             var _this = this;
-            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
+            /*  this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());*/
             var compType = this.mCompanySelector.getCompany();
-            this.mDataSet.get({ month: this.mActualMonth, year: parseInt($("#grid-date").val()), companyId: compType })
+            this.mDataSet.get($.extend(this.getDate(), { companyId: compType }))
                 .then(function (dataArray) {
                 _this.mData = dataArray;
                 _this.updateTable();
             });
         };
         SimpleView.prototype.exportExcel = function () {
-            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
+            /*  this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());*/
             var compType = this.mCompanySelector.getCompany();
-            $("#grid-export")[0].action = "hzb_companys_prediction_export.do?" + Util.Ajax.toUrlParam({ month: this.mActualMonth, year: this.mYear, companyId: compType });
+            $("#grid-export")[0].action = "hzb_companys_prediction_export.do?" + Util.Ajax.toUrlParam($.extend(this.getDate(), { companyId: compType }));
             $("#grid-export")[0].submit();
         };
         SimpleView.prototype.adjustSize = function () {
@@ -254,11 +281,12 @@ var companys_zbhz_prediction;
             if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
                 jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
             }
-            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 38 - 42 - $(".page-breadcrumbs").height() - $(".page-header").height();
             this.tableAssist.resizeHeight(maxTableBodyHeight);
             if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
                 jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
             }
+            $(".page-container").css("height", ($(".page-breadcrumbs").height() + $(".page-header").height() + $(".page-body").height()) + "px");
         };
         SimpleView.prototype.jqgrid = function () {
             return $("#" + this.jqgridName());
@@ -305,19 +333,20 @@ var companys_zbhz_prediction;
             var parent = $("#" + this.mOpt.tableId);
             parent.empty();
             parent.append("<table id='" + this.jqgridName() + "'></table>");
-            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), parseInt($("#grid-season-month").val()));
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), (1 + (this.getDate().month - 1) % 3));
             return this.tableAssist;
         };
         SimpleView.prototype.updateTable = function () {
             this.createJqassist();
+            var date = this.getDate();
             var outputData = [];
-            if (1 == parseInt($("#grid-season-month").val())) {
+            if (1 == (1 + (date.month - 1) % 3)) {
                 this.formatFirstMonthData(outputData);
             }
-            else if (2 == parseInt($("#grid-season-month").val())) {
+            else if (2 == (1 + (date.month - 1) % 3)) {
                 this.formatSecondMonthData(outputData);
             }
-            else if (3 == parseInt($("#grid-season-month").val())) {
+            else if (3 == (1 + (date.month - 1) % 3)) {
                 this.formatThirdMonthData(outputData);
             }
             for (var i = 0; i < outputData.length; ++i) {

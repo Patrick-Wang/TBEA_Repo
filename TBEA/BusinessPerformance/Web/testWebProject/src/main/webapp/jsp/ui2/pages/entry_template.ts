@@ -87,7 +87,6 @@ module entry_template {
         private mZbxxs:Array<Zbxx>;
         private mStatusList: Array<string>;
         private mTableData: Array<any[]>;
-        private mDateSelector: Util.DateSelector;
         private mCompanySelector: Util.CompanySelector;
         private mOpt: IViewOption;
         private mDataSet: Util.Ajax = new Util.Ajax("/BusinessManagement/entry/zb_update.do", false);
@@ -104,15 +103,31 @@ module entry_template {
             switch (this.mOpt.entryType) {
 
                 case Util.ZBType.YDJDMJH:
-                    this.mDateSelector = new Util.DateSelector(
+/*                    this.mDateSelector = new Util.DateSelector(
                         { year: this.mOpt.date.year - 3 },
                         Util.addMonth({ year: this.mOpt.date.year, month: this.mOpt.date.month }, 3),
-                        this.mOpt.dateId, true);
+                        this.mOpt.dateId, true);*/
+                    let minDate = Util.addYear(opt.date, -3);
+                    minDate.month = 1;
+                    opt.date.month = parseInt("" + ((opt.date.month - 1) / 3 + 1)) * 3;
+                    $("#grid-date").jeDate({
+                        skinCell: "jedatedeepgreen",
+                        format: "YYYY年 &&MM月",
+                        isTime: false,
+                        isinitVal: true,
+                        isClear: false,
+                        isToday: false,
+                        minDate: Util.date2Str(minDate),
+                        maxDate: Util.date2Str(opt.date),
+                    }).removeCss("height")
+                      .removeCss("padding")
+                      .removeCss("margin-top")
+                      .addClass("season");
                     break;
                 case Util.ZBType.QNJH:{
                     let minDate = Util.addYear(opt.date, -3);
                     minDate.month = 1;
-                    $("#grid-date").jeDate({
+                     $("#grid-date").jeDate({
                         skinCell: "jedatedeepgreen",
                         format: "YYYY年",
                         isTime: false,
@@ -171,15 +186,11 @@ module entry_template {
         }
 
         private getDate():Util.Date {
-            if (this.mDateSelector){
-                return this.mDateSelector.getDate();
-            }
-
-            let rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            let curDate = $("#grid-date").getDate();
             return {
-                year: rq[0] ? parseInt(rq[0]) : undefined,
-                month: rq[1] ? parseInt(rq[1]) : undefined,
-                day: rq[2] ? parseInt(rq[2]) : undefined
+                year : curDate.getFullYear(),
+                month : curDate.getMonth() + 1,
+                day:curDate.getDate()
             };
         }
 

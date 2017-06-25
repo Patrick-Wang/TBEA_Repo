@@ -166,12 +166,11 @@ module hzb_zbhz_prediciton{
 
         public init(opt:any):void {
             this.mOpt = opt;
-
             let minDate = Util.addYear(opt.date, -3);
             minDate.month = 1;
             $("#grid-date").jeDate({
                 skinCell: "jedatedeepgreen",
-                format: "YYYY年",
+                format: "YYYY年 && $$MM月",
                 isTime: false,
                 isinitVal: true,
                 isClear: false,
@@ -180,7 +179,8 @@ module hzb_zbhz_prediciton{
                 maxDate: Util.date2Str(opt.date),
             }).removeCss("height")
                 .removeCss("padding")
-                .removeCss("margin-top");
+                .removeCss("margin-top")
+                .addClass("season-month");
 
             $(window).resize(()=> {
                 this.adjustSize();
@@ -198,17 +198,17 @@ module hzb_zbhz_prediciton{
         }
 
         private getDate():Util.Date {
-            let rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            let curDate = $("#grid-date").getDate();
             return {
-                year: rq[0] ? parseInt(rq[0]) : undefined,
-                month: rq[1] ? parseInt(rq[1]) : undefined,
-                day: rq[2] ? parseInt(rq[2]) : undefined
+                year : curDate.getFullYear(),
+                month : curDate.getMonth() + 1,
+                day:curDate.getDate()
             };
         }
 
         public updateUI() {
-            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
-            this.mDataSet.get({month: this.mActualMonth, year: parseInt($("#grid-date").val())})
+            /*this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());*/
+            this.mDataSet.get(this.getDate())
                 .then((dataArray:any) => {
                     this.mData = dataArray;
                     this.updateTable();
@@ -216,16 +216,16 @@ module hzb_zbhz_prediciton{
         }
 
         public exportExcelJydw() {
-            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
-            this.mJydwDataSet.get({month: this.mActualMonth, year: parseInt($("#grid-date").val())}).then((tmStamp)=> {
+           /* this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());*/
+            this.mJydwDataSet.get(this.getDate()).then((tmStamp)=> {
                 $("#exportJydw")[0].action = "/BusinessManagement/ydzb/general_export.do?" + Util.Ajax.toUrlParam({timeStamp: tmStamp.timeStamp});
                 $("#exportJydw")[0].submit();
             })
         }
 
         public exportExcelXmgs() {
-            this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());
-            this.mXmgsDataSet.get({month: this.mActualMonth, year: parseInt($("#grid-date").val())}).then((tmStamp)=> {
+            /*this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());*/
+            this.mXmgsDataSet.get(this.getDate()).then((tmStamp)=> {
                 $("#exportJydw")[0].action = "/BusinessManagement/ydzb/general_export.do?" + Util.Ajax.toUrlParam({timeStamp: tmStamp.timeStamp});
                 $("#exportJydw")[0].submit();
             })
@@ -297,7 +297,7 @@ module hzb_zbhz_prediciton{
             var parent = $("#" + this.mOpt.tableId);
             parent.empty();
             parent.append("<table id='"+ this.jqgridName() +"'></table>");
-            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(),parseInt($("#grid-season-month").val()));
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(),(1 + (this.getDate().month - 1) % 3));
             return this.tableAssist;
         }
 
@@ -305,11 +305,14 @@ module hzb_zbhz_prediciton{
             this.createJqassist();
 
             var outputData = [];
-            if (1 == parseInt($("#grid-season-month").val())){
+
+            let date = this.getDate();
+
+            if (1 == (1 + (date.month - 1) % 3)){
                 this.formatFirstMonthData(outputData);
-            } else if (2 == parseInt($("#grid-season-month").val())){
+            } else if (2 == (1 + (date.month - 1) % 3)){
                 this.formatSecondMonthData(outputData);
-            } else if (3 == parseInt($("#grid-season-month").val())){
+            } else if (3 == (1 + (date.month - 1) % 3)){
                 this.formatThirdMonthData(outputData);
             }
             for (var i = 0; i < outputData.length; ++i) {

@@ -24,6 +24,19 @@ var home;
             $("#logoutBtn").click();
         }
     };
+    function getFrameWindow(name) {
+        for (var i = 0; i < window.frames.length; ++i) {
+            if (window.frames[i].name == name) {
+                return window.frames[i];
+            }
+        }
+    }
+    function triggerFrameResize(name) {
+        var frame = getFrameWindow(name);
+        if (frame && frame.triggerResize) {
+            frame.triggerResize();
+        }
+    }
     function updateFrameSize() {
         var heightUp = $(".content-up>div").css("height");
         $(".content-up").css("height", heightUp);
@@ -75,6 +88,7 @@ var home;
         }
         //homeFrame.css("height", "100%").css("width", "100%");
         homeFrame.removeClass("gone");
+        triggerFrameResize(homeFrame[0].name);
         topTab.disableMore("closeCurrent");
     }).setMoreClickListener(function (data) {
         var activeTab = topTab.getActiveTab();
@@ -119,6 +133,7 @@ var home;
         $("iframe").addClass("gone");
         //$("#tabContent #" + data.id).css("width", "100%").css("height", "100%");
         $("#tabContent #" + data.id).removeClass("gone");
+        triggerFrameResize($("#tabContent #" + data.id)[0].name);
     }).setCloseTabClickListener(function (data) {
         if (data == undefined) {
             $("#tabContent #home").remove();

@@ -175,7 +175,7 @@
 							<input id="grid-date" type="text" readonly="readonly"><i
 								class="fa fa-calendar"></i>
 						</div>
-						<select id="grid-season" class="pull-left">
+						<!-- <select id="grid-season" class="pull-left">
 								<option value="1" selected="selected">第一季度</option>
 								<option value="2">第二季度</option>
 								<option value="3">第三季度</option>
@@ -186,7 +186,7 @@
 								<option value="1" selected="selected">首月</option>
 								<option value="2">次月</option>
 								<option value="3">末月</option>
-						</select>
+						</select> -->
 						<div id="grid-update" class="btn btn-default">
 							查找 <i class="fa fa-search"></i>
 						</div>

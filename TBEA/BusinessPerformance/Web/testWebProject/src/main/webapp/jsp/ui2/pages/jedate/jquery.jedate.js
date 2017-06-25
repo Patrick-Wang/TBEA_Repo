@@ -19,6 +19,7 @@ window.console && (console = console || {log : function(){return;}});
 	var jet = {}, doc = document, ymdMacth = /\w+|d+/g, parseInt = function (n) { return window.parseInt(n, 10);},
 	config = {
 		skinCell:"jedateblue",
+		seasonText:["第一季度", "第二季度", "第三季度", "第四季度"],
 		format:"YYYY-MM-DD hh:mm:ss", //日期格式
 		minDate:"1900-01-01 00:00:00", //最小日期
 		maxDate:"2099-12-31 23:59:59" //最大日期
@@ -28,11 +29,19 @@ window.console && (console = console || {log : function(){return;}});
 			return new jeDate($(this),options||{});
 		});
 	};
+
+
+	$.fn.getDate = function(){
+		return jet.getDate();
+	};
 	$.extend({
 		jeDate:function(elem, options){
 			return $(elem).each(function(){
 				return new jeDate($(this),options||{});
 			});
+		},
+		getDate : function(){
+			return jet.getDate();
 		}
 	});
 
@@ -163,6 +172,7 @@ window.console && (console = console || {log : function(){return;}});
 		this.init();
 	}
 	var jedfn = jeDate.prototype;
+
 	jedfn.init = function(){
 		var that = this, opts = that.opts, zIndex = opts.zIndex == undefined ? 2099 : opts.zIndex,
 			isinitVal = (opts.isinitVal == undefined || opts.isinitVal == false) ? false : true,
@@ -170,6 +180,7 @@ window.console && (console = console || {log : function(){return;}});
 		jet.fixed = jet.isBool(opts.fixed);
 		createDiv.attr("author","chen guojun--www.jayui.com--version:"+$.dateVer);
 		createDiv.css({"z-index": zIndex ,"position":(jet.fixed == true ? "absolute" :"fixed"),"display":"block"});
+
 		var initVals = function(elem) {
 			var jeformat = opts.format || config.format, inaddVal = opts.initAddVal || [0], num, type;
 			if(inaddVal.length == 1){
@@ -179,6 +190,7 @@ window.console && (console = console || {log : function(){return;}});
 			}
 			var isnosepYMD = $.inArray(jet.checkFormat(jeformat), ["YYYYMM","YYYYMMDD","YYYYMMDDhh","YYYYMMDDhhmm","YYYYMMDDhhmmss"]);
 			var nowDateVal = jet.initDates(0, jeformat), jeaddDate = (isnosepYMD != -1) ? nowDateVal : jet.addDateTime(nowDateVal, num, type, jeformat);
+			jeaddDate = that.parseSeason(jeaddDate);
 			(elem.val() || elem.text()) == "" ? jet.isValHtml(elem) ? elem.val(jeaddDate) :elem.text(jeaddDate) :jet.isValHtml(elem) ? elem.val() : elem.text();
 		};
 		//为开启初始化的时间设置值
@@ -187,6 +199,34 @@ window.console && (console = console || {log : function(){return;}});
 				initVals($(this));
 			});
 		}
+
+
+		jet.getDate = function(){
+			var date = new Date()
+			if ((that.valCell.val() || that.valCell.text()) == "") {
+				//目标为空值则获取当前日期时间
+				jet.current = date;
+			} else {
+				var dateFormat = jet.checkFormat(that.opts.format),
+					isYYMM = (dateFormat == "YYYY-MM" || dateFormat == "YYYY") ? true :false,  ishhmm = dateFormat.substring(0, 5) == "hh-mm" ? true :false;
+
+				var initVal = jet.isValHtml(that.valCell) ? that.valCell.val() : that.valCell.text();
+				initVal = that.removeSeason(initVal);
+				//对获取到日期的进行替换
+				var nocharDate = ishhmm ? initVal.replace(/^(\d{2})(?=\d)/g,"$1,") : initVal.substr(0,4).replace(/^(\d{4})/g,"$1,") + initVal.substr(4).replace(/^(\d{2})(?=\d)/g,"$1,");
+				//判断是否为数字类型，并分割
+				var inVals = jet.IsNum(initVal) ? nocharDate.match(ymdMacth) : initVal.match(ymdMacth);
+				if(ishhmm){
+					var tmsArr = that.opts.format == "hh-mm" ? [ inVals[0], inVals[1], date.getSeconds() ] :[ inVals[0], inVals[1], inVals[2] ];
+					jet.current = new Date(tmsArr[0], tmsArr[1], tmsArr[2]);
+				}else{
+					tmsArr = [ inVals[0], inVals[1] ? inVals[1] : 1, inVals[2] ? inVals[2] : 1, inVals[3] == undefined ? date.getHours() : inVals[3], inVals[4] == undefined ? date.getMinutes() : inVals[4], inVals[5] == undefined ? date.getSeconds() :inVals[5] ];
+					jet.current = new Date(tmsArr[0], parseInt(tmsArr[1])-1,  tmsArr[2], tmsArr[3], tmsArr[4], tmsArr[5]);
+				}
+			}
+			return jet.current;
+		}
+
 		if (jet.isBool(opts.insTrigger)) {
 			that.valCell.on("click", function (ev) {
 				ev.stopPropagation();
@@ -224,6 +264,40 @@ window.console && (console = console || {log : function(){return;}});
 	jedfn.dateClose = function() {
 		$(jet.boxCell).remove();
 	};
+
+	jedfn.isSeason = function(){
+		return this.opts.format && this.opts.format.indexOf("&&") >= 0;
+	}
+
+	jedfn.isSeasonMonth = function(){
+		return this.isSeason() && this.opts.format.indexOf("$$") >= 0;
+	}
+
+	jedfn.parseSeason = function(dateText){
+		if (this.opts.format && this.opts.format.indexOf("&&") >= 0){
+			this.dateBeforeSeason = dateText;
+			var nyr = dateText.match(ymdMacth);
+			var jd = parseInt(((nyr[1] - 1) / 3) + "");
+			var jdName = this.opts.seasonText || config.seasonText;
+			dateText = this.opts.format.replace("YYYY", nyr[0]);
+			dateText = dateText.replace("&&", jdName[jd]);
+			var index = dateText.indexOf("MM");
+			if (this.opts.format.indexOf("$$") >= 0){
+				var yfName = ["首月", "次月", "末月"];
+				var yf = (nyr[1] - 1) % 3;
+				dateText = dateText.replace("$$", yfName[yf]);
+			}
+			dateText = dateText.substring(0, index);
+		}
+		return dateText;
+	}
+	jedfn.removeSeason = function(dateText){
+		if (this.opts.format && this.opts.format.indexOf("&&") >= 0){
+			dateText = this.dateBeforeSeason;
+		}
+		return dateText;
+	}
+
 	//布局控件骨架
 	jedfn.setHtml = function(opts){
 		var that = this, elemCell = that.valCell, boxCell = $(jet.boxCell);
@@ -237,6 +311,7 @@ window.console && (console = console || {log : function(){return;}});
 			jet.ymdDate = tmsArr[0] + "-" + jet.digit(tmsArr[1]) + "-" + jet.digit(tmsArr[2]);
 		} else {
 			var initVal = jet.isValHtml(elemCell) ? elemCell.val() : elemCell.text();
+			initVal = this.removeSeason(initVal);
 			//对获取到日期的进行替换
 			var nocharDate = ishhmm ? initVal.replace(/^(\d{2})(?=\d)/g,"$1,") : initVal.substr(0,4).replace(/^(\d{4})/g,"$1,") + initVal.substr(4).replace(/^(\d{2})(?=\d)/g,"$1,");
 			//判断是否为数字类型，并分割
@@ -251,11 +326,14 @@ window.console && (console = console || {log : function(){return;}});
 			}
 		}
 		jet.currMonth = tmsArr[1], jet.currDays = tmsArr[2];
+
+		var byj = that.isSeason() && !that.isSeasonMonth() ? "本季度" : "本月";
+
 		//控件HMTL模板
 		var datetopStr = '<div class="jedatetop" style="display:'+(ishhmm ? "none":"bolck")+'">' + (!isYYMM ? '<div class="jedateym" style="width:50%;"><i class="prev triangle yearprev"></i><span class="jedateyy" ym="24"><em class="jedateyear"></em><em class="pndrop"></em></span><i class="next triangle yearnext"></i></div>' + '<div class="jedateym" style="width:50%;"><i class="prev triangle monthprev"></i><span class="jedatemm" ym="12"><em class="jedatemonth"></em><em class="pndrop"></em></span><i class="next triangle monthnext"></i></div>' :'<div class="jedateym" style="width:100%;"><i class="prev triangle ymprev"></i><span class="jedateyy"><em class="jedateyearmonth"></em></span><i class="next triangle ymnext"></i></div>') + "</div>";
 		var dateymList = !isYYMM ? '<div class="jedatetopym" style="display: none;">' + '<ul class="ymdropul"></ul><p><span class="jedateymchle">&lt;&lt;</span><span class="jedateymchri">&gt;&gt;</span><span class="jedateymchok">关闭</span></p>' + "</div>" :(dateFormat == "YYYY" ? '<ul class="jedayy"></ul>' :　'<ul class="jedaym"></ul>');
 		var dateriList = '<ol class="jedaol"></ol><ul class="jedaul"></ul>';
-		var bothmsStr = !isYYMM ? '<div class="botflex jedatehmsshde"><ul class="jedatehms"><li><input type="text" /></li><i>:</i><li><input type="text" /></li><i>:</i><li><input type="text" /></li></ul></div>' + '<div class="botflex jedatebtn"><span class="jedateok">确认</span><span class="jedatetodaymonth">今天</span><span class="jedateclear">清空</span></div>' :(dateFormat == "YYYY" ? '<div class="botflex jedatebtn"><span class="jedateok" style="width:47.8%">确认</span><span class="jedateclear" style="width:47.8%">清空</span></div>' : '<div class="botflex jedatebtn"><span class="jedateok">确认</span><span class="jedatetodaymonth">本月</span><span class="jedateclear">清空</span></div>');
+		var bothmsStr = !isYYMM ? '<div class="botflex jedatehmsshde"><ul class="jedatehms"><li><input type="text" /></li><i>:</i><li><input type="text" /></li><i>:</i><li><input type="text" /></li></ul></div>' + '<div class="botflex jedatebtn"><span class="jedateok">确认</span><span class="jedatetodaymonth">今天</span><span class="jedateclear">清空</span></div>' :(dateFormat == "YYYY" ? '<div class="botflex jedatebtn"><span class="jedateok" style="width:47.8%">确认</span><span class="jedateclear" style="width:47.8%">清空</span></div>' : '<div class="botflex jedatebtn"><span class="jedateok">确认</span><span class="jedatetodaymonth">' + byj + '</span><span class="jedateclear">清空</span></div>');
 		var datebotStr = '<div class="jedatebot">' + bothmsStr + "</div>";
 		var datehmschoose = '<div class="jedateprophms ' + (ishhmm ? "jedatepropfix" :"jedateproppos") + '"><div class="jedatepropcon"><div class="jedatehmstitle">时间选择<div class="jedatehmsclose">&times;</div></div><div class="jedateproptext">小时</div><div class="jedateproptext">分钟</div><div class="jedateproptext">秒数</div><div class="jedatehmscon jedateprophours"></div><div class="jedatehmscon jedatepropminutes"></div><div class="jedatehmscon jedatepropseconds"></div></div></div>';
 		var dateHtmStr = isYYMM ? datetopStr + dateymList + datebotStr :ishhmm ? datetopStr + datehmschoose + datebotStr :datetopStr + dateymList + dateriList + datehmschoose + datebotStr;
@@ -312,7 +390,11 @@ window.console && (console = console || {log : function(){return;}});
 				monthCls.attr("data-onyy",tmsArr[0]).text(tmsArr[0] + "年");
 				boxCell.find(".jedayy").html(that.onlyYear(tmsArr[0]));
 			}else{
-				monthCls.attr("data-onym",tmsArr[0]+"-"+jet.digit(tmsArr[1])).text(tmsArr[0] + "年" + parseInt(tmsArr[1]) + "月");
+				if (that.opts.format.indexOf("&&") > 0){
+					monthCls.attr("data-onym",tmsArr[0]+"-"+jet.digit(tmsArr[1])).text(tmsArr[0] + "年");
+				}else{
+					monthCls.attr("data-onym",tmsArr[0]+"-"+jet.digit(tmsArr[1])).text(tmsArr[0] + "年" + tmsArr[1] + "月");
+				}
 				boxCell.find(".jedaym").html(that.onlyYMStr(tmsArr[0], parseInt(tmsArr[1])));
 			}
 			that.onlyYMevents(tmsArr,opts);
@@ -323,6 +405,7 @@ window.console && (console = console || {log : function(){return;}});
 		}, 2);
 		that.events(tmsArr, opts);
 	};
+
 	//循环生成日历
 	jedfn.createDaysHtml = function(ys, ms, opts){
 		var that = this, boxCell = $(jet.boxCell);
@@ -396,17 +479,45 @@ window.console && (console = console || {log : function(){return;}});
 	};
 	//循环生成年月（YYYY-MM）
 	jedfn.onlyYMStr = function(y, m) {
-		var onlyYM = "";
+		var onlyYM = [];
+		var _this = this;
+
+		var monthCls = $(jet.boxCell).find(".jedateym .jedateyearmonth");
+		var isSeason = _this.isSeason();
+		var isSeasonMonth = _this.isSeasonMonth();
+		if (isSeason){
+			monthCls.attr("data-onym",y+"-"+m).text(y + "年");
+		}else{
+			monthCls.attr("data-onym",y+"-"+m).text(y + "年" + m + "月");
+		}
 		$.each(jet.montharr, function(i, val) {
 			var minArr = jet.parseMatch(jet.minDate), maxArr = jet.parseMatch(jet.maxDate),
 				thisDate = new Date(y, jet.digit(val), "01"), minTime = new Date(minArr[0], minArr[1], minArr[2]), maxTime = new Date(maxArr[0], maxArr[1], maxArr[2]);
+
+			var dt = _this.parseSeason(y + "年" + jet.digit(val) + "月");
+			if (isSeason){
+				var index = dt.indexOf("年");
+				dt = dt.substring(index + 1);
+				if (!isSeasonMonth){
+					if ((val - 1) % 3 != 2){
+						return;
+					}
+				}
+			}
+
 			if (thisDate < minTime || thisDate > maxTime) {
-				onlyYM += "<li class='disabled' ym='" + y + "-" + jet.digit(val) + "'>" + y + "年" + jet.digit(val) + "月</li>";
+				onlyYM.push("<li class='disabled' ym='" + y + "-" + jet.digit(val) + "'>" + dt + "</li>");
 			} else {
-				onlyYM += "<li " + (m == val ? 'class="action"' :"") + ' ym="' + y + "-" + jet.digit(val) + '">' + y + "年" + jet.digit(val) + "月</li>";
+				onlyYM.push("<li " + (m == val ? 'class="action"' :"") + ' ym="' + y + "-" + jet.digit(val) + '">' + dt + "</li>");
 			}
 		});
-		return onlyYM;
+
+		if (isSeasonMonth){
+			onlyYM = [onlyYM[0], onlyYM[3], onlyYM[1], onlyYM[4], onlyYM[2], onlyYM[5],
+					  onlyYM[6], onlyYM[9], onlyYM[7], onlyYM[10], onlyYM[8], onlyYM[11]];
+		}
+
+		return onlyYM.join("");
 	};
 	//循环生成年（YYYY）
 	jedfn.onlyYear = function(YY) {
@@ -514,6 +625,7 @@ window.console && (console = console || {log : function(){return;}});
 			});
 			var aty = parseInt(_that.attr("year")), atm = parseFloat(_that.attr("month")), atd = parseFloat(_that.attr("day")),
 				getDateVal = jet.parse([ aty, atm, atd ], [ liTms[0], liTms[1], liTms[2] ], jet.format);
+			getDateVal = that.parseSeason(getDateVal);
 			jet.isValHtml(elemCell) ? elemCell.val(getDateVal) :elemCell.text(getDateVal);
 			that.dateClose();
 			opts.festival && $("#jedatetipscon").remove();
@@ -641,6 +753,7 @@ window.console && (console = console || {log : function(){return;}});
 			ev.stopPropagation();
 			var atYM =  isYY ? $(this).attr("yy").match(ymdMacth) : $(this).attr("ym").match(ymdMacth),
 				getYMDate = isYY ? jet.parse([atYM[0], newDate.getMonth() + 1, 1], [0, 0, 0], jet.format) : jet.parse([atYM[0], atYM[1], 1], [0, 0, 0], jet.format);
+			getYMDate = that.parseSeason(getYMDate);
 			jet.isValHtml(elemCell) ? elemCell.val(getYMDate) : elemCell.text(getYMDate);
 			that.dateClose();
 			if ($.isFunction(opts.choosefun) || opts.choosefun != null) opts.choosefun(elemCell, getYMDate);
@@ -720,6 +833,7 @@ window.console && (console = console || {log : function(){return;}});
 				var toTime = [ newDate.getFullYear(), newDate.getMonth() + 1, newDate.getDate(), newDate.getHours(), newDate.getMinutes(), newDate.getSeconds() ],
 					gettoDate = jet.parse([ toTime[0], toTime[1], toTime[2] ], [ toTime[3], toTime[4], toTime[5] ], jet.format);
 				that.createDaysHtml(toTime[0], toTime[1], opts);
+				gettoDate = that.parseSeason(gettoDate);
 				jet.isValHtml(elemCell) ? elemCell.val(gettoDate) :jet.text(gettoDate);
 				that.dateClose();
 				if ($.isFunction(opts.choosefun) || opts.choosefun != null) opts.choosefun(elemCell,gettoDate);
@@ -732,6 +846,8 @@ window.console && (console = console || {log : function(){return;}});
 				ev.stopPropagation();
 				var ymTime = [ newDate.getFullYear(), newDate.getMonth() + 1, newDate.getDate() ],
 					YMDate = jet.parse([ ymTime[0], ymTime[1], 0 ], [ 0, 0, 0 ], jet.format);
+
+				YMDate = that.parseSeason(YMDate);
 				jet.isValHtml(elemCell) ? elemCell.val(YMDate) :elemCell.text(YMDate);
 				that.dateClose();
 				if ($.isFunction(opts.choosefun) || opts.choosefun != null) opts.choosefun(elemCell,YMDate);
@@ -824,7 +940,7 @@ window.console && (console = console || {log : function(){return;}});
 						jet.parse([parseInt(okDate[0]), parseInt(okDate[1]), newDate.getDate()], [okArr[0], okArr[1], okArr[2]], jet.format);
 				}
 			}
-
+			okVal = that.parseSeason(okVal);
 			jet.isValHtml(elemCell) ? elemCell.val(okVal) :elemCell.text(okVal);
 			that.dateClose();
 			if ($.isFunction(opts.okfun) || opts.okfun != null) opts.okfun(jet.elemCell,okVal);

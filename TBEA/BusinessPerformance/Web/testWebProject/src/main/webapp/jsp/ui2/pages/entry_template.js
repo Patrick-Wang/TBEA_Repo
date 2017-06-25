@@ -60,12 +60,31 @@ var entry_template;
             this.mOpt = opt;
             switch (this.mOpt.entryType) {
                 case Util.ZBType.YDJDMJH:
-                    this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 3 }, Util.addMonth({ year: this.mOpt.date.year, month: this.mOpt.date.month }, 3), this.mOpt.dateId, true);
+                    /*                    this.mDateSelector = new Util.DateSelector(
+                                            { year: this.mOpt.date.year - 3 },
+                                            Util.addMonth({ year: this.mOpt.date.year, month: this.mOpt.date.month }, 3),
+                                            this.mOpt.dateId, true);*/
+                    var minDate = Util.addYear(opt.date, -3);
+                    minDate.month = 1;
+                    opt.date.month = parseInt("" + ((opt.date.month - 1) / 3 + 1)) * 3;
+                    $("#grid-date").jeDate({
+                        skinCell: "jedatedeepgreen",
+                        format: "YYYY年 &&MM月",
+                        isTime: false,
+                        isinitVal: true,
+                        isClear: false,
+                        isToday: false,
+                        minDate: Util.date2Str(minDate),
+                        maxDate: Util.date2Str(opt.date),
+                    }).removeCss("height")
+                        .removeCss("padding")
+                        .removeCss("margin-top")
+                        .addClass("season");
                     break;
                 case Util.ZBType.QNJH:
                     {
-                        var minDate = Util.addYear(opt.date, -3);
-                        minDate.month = 1;
+                        var minDate_1 = Util.addYear(opt.date, -3);
+                        minDate_1.month = 1;
                         $("#grid-date").jeDate({
                             skinCell: "jedatedeepgreen",
                             format: "YYYY年",
@@ -73,7 +92,7 @@ var entry_template;
                             isinitVal: true,
                             isClear: false,
                             isToday: false,
-                            minDate: Util.date2Str(minDate),
+                            minDate: Util.date2Str(minDate_1),
                             maxDate: Util.date2Str(opt.date),
                         }).removeCss("height")
                             .removeCss("padding")
@@ -84,8 +103,8 @@ var entry_template;
                 case Util.ZBType.BY28YJ:
                 case Util.ZBType.BYSJ:
                     {
-                        var minDate = Util.addYear(opt.date, -3);
-                        minDate.month = 1;
+                        var minDate_2 = Util.addYear(opt.date, -3);
+                        minDate_2.month = 1;
                         $("#grid-date").jeDate({
                             skinCell: "jedatedeepgreen",
                             format: "YYYY年MM月",
@@ -93,7 +112,7 @@ var entry_template;
                             isinitVal: true,
                             isClear: false,
                             isToday: false,
-                            minDate: Util.date2Str(minDate),
+                            minDate: Util.date2Str(minDate_2),
                             maxDate: Util.date2Str(opt.date),
                         }).removeCss("height")
                             .removeCss("padding")
@@ -123,14 +142,11 @@ var entry_template;
             this.updateUI();
         };
         EntryView.prototype.getDate = function () {
-            if (this.mDateSelector) {
-                return this.mDateSelector.getDate();
-            }
-            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            var curDate = $("#grid-date").getDate();
             return {
-                year: rq[0] ? parseInt(rq[0]) : undefined,
-                month: rq[1] ? parseInt(rq[1]) : undefined,
-                day: rq[2] ? parseInt(rq[2]) : undefined
+                year: curDate.getFullYear(),
+                month: curDate.getMonth() + 1,
+                day: curDate.getDate()
             };
         };
         EntryView.prototype.updateUI = function () {

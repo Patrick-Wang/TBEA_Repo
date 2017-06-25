@@ -248,6 +248,16 @@ th.ui-th-ltr {
     font-size: 14px;
     color: black;
 }
+
+.workinput .season{
+	width : 145px;
+}
+
+.workinput .season-month{
+	width : 175px;
+}
+
+
 .workinput input:hover{
     border: 1px #A5D2EC solid;
 }
@@ -279,12 +289,16 @@ th.ui-th-ltr {
 	padding-right:30px;
 }
 
-.header-title .btn-group, .header-title .workinput, .header-title>.btn,
+.header-title .btn-group, .header-title .workinput, .header-title .btn,
 	.header-title select {
 	margin-top: 8px;
 }
 
-.header-title select, .header-title>.btn {
+.header-title .btn{
+	float:left;
+}
+
+.header-title select, .header-title .btn {
 	margin-left: 13px;
 }
 

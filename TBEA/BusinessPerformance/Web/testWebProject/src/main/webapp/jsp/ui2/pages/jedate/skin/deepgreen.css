@@ -98,3 +98,6 @@
 .jedatebox .jedatehmscon::-webkit-scrollbar-thumb:active{background:rgba(0,0,0,0.8)}
 .jedatebox .jedatehmscon::-webkit-scrollbar-thumb:window-inactive {background: rgba(0,0,0,0.4);}
 
+.jedatedeepgreen .jedaym{
+	height:100%;
+}

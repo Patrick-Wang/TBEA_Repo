@@ -138,11 +138,11 @@ var hzb_zbhz;
             this.updateUI();
         };
         SimpleView.prototype.getDate = function () {
-            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            var curDate = $("#grid-date").getDate();
             return {
-                year: rq[0] ? parseInt(rq[0]) : undefined,
-                month: rq[1] ? parseInt(rq[1]) : undefined,
-                day: rq[2] ? parseInt(rq[2]) : undefined
+                year: curDate.getFullYear(),
+                month: curDate.getMonth() + 1,
+                day: curDate.getDate()
             };
         };
         SimpleView.prototype.updateUI = function () {

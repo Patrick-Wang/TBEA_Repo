@@ -1,5 +1,12 @@
 (function(){
     var _old_jq_resize = $.fn.resize;
+    var _old_jq_removeClass = $.fn.removeClass;
+    var _un_resize_list__ = [];
+
+
+    window.triggerResize = function(){
+        $(document).trigger("resize");
+    }
 
     $.fn.extend({
         newClass:function(name, classObj) {
@@ -71,11 +78,35 @@
 
         },
 
+        //removeClass : function(cls){
+        //    _old_jq_removeClass.call(this, cls);
+        //    if (cls == "gone"){
+        //        var oldWidth = $("iframe").css("width");
+        //        $("iframe").css("width", "99%");
+        //        $("iframe").css("width", oldWidth);
+        //        /*for (var i = 0; i < _un_resize_list__.length; ++i){
+        //            if (this[0].name == _un_resize_list__[i].name){
+        //                _un_resize_list__[i].onResize();
+        //                _un_resize_list__.splice(i, 1);
+        //                break;
+        //            }
+        //        }*/
+        //    }
+        //    return $(this);
+        //},
+
         resize : function(onResize){
             _old_jq_resize.call(this, function(){
                 if (window.parent){
                     if(!$(window.parent.document.getElementsByName(window.name)).hasClass("gone")){
                         onResize();
+                    }else{
+                        /*for (var i = 0; i < _un_resize_list__.length; ++i){
+                            if (window.name == _un_resize_list__[i].name){
+                                return $(this);
+                            }
+                        }
+                        _un_resize_list__.push({name : window.name, onResize : onResize});*/
                     }
                 }else{
                     onResize();
