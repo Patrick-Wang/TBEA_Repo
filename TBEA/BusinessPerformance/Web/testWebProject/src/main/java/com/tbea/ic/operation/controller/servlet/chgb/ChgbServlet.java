@@ -33,6 +33,7 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.StatusData;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -164,7 +165,7 @@ public class ChgbServlet {
 		return JSONArray.fromObject(result).toString().getBytes("utf-8");
 	}
 	
-	@RequestMapping(value = "show.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"show.do","v2/show.do"}, method = RequestMethod.GET)
 	public ModelAndView getChgb(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -180,10 +181,10 @@ public class ChgbServlet {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
 		
-		return new ModelAndView("chgb/chgb", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "chgb/chgb", map);
 	}
 	
-	@RequestMapping(value = "entry.do")
+	@RequestMapping(value = {"entry.do", "v2/entry.do"})
 	public ModelAndView getChgbEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -199,7 +200,7 @@ public class ChgbServlet {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
 		
-		return new ModelAndView("chgb/chgbEntry", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "chgb/chgbEntry", map);
 	}
 	
 	@RequestMapping(value = "chjykcb/entry/update.do")

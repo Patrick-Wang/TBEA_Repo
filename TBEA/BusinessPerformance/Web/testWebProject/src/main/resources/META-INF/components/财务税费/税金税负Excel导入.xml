@@ -1,0 +1,62 @@
+<components>
+ <service id="servCwsjsfImportEntry" transaction="transactionManager">
+  <context key="counter" value="${counterFactory.newCounter}"/>
+  <merge data="${data}" table="financial_tax">
+   <where>
+    <companyName		type="string"	 ref="0"/>
+	<year		type="int"	 ref="1"/>
+	<month		type="int"	 ref="2"/>
+   </where>
+   <set>
+    <companyName		type="string"	 ref="${counter.reset[0].val}"/>
+	<year		type="int"	 ref="${counter.next.val}"/>
+	<month		type="int"	 ref="${counter.next.val}"/>
+	<VAT		type="string"	 ref="${counter.next.val}"/>
+	<xssr		type="string"	 ref="${counter.next.val}"/>
+	<salesIncome		type="string"	 ref="${counter.next.val}"/>
+	<totalProfit		type="string"	 ref="${counter.next.val}"/>
+	<tariff		type="string"	 ref="${counter.next.val}"/>
+	<businessTax		type="string"	 ref="${counter.next.val}"/>
+	<urbanConstructionTax		type="string"	 ref="${counter.next.val}"/>
+	<educationSurtax		type="string"	 ref="${counter.next.val}"/>
+	<localEducationSurtax		type="string"	 ref="${counter.next.val}"/>
+	<stampTax		type="string"	 ref="${counter.next.val}"/>
+	<personalIncomeTax 		type="string"	 ref="${counter.next.val}"/>
+	<buildingTax		type="string"	 ref="${counter.next.val}"/>
+	<landUseTax		type="string"	 ref="${counter.next.val}"/>
+	<landVTA		type="string"	 ref="${counter.next.val}"/>
+	<landOccupationTax		type="string"	 ref="${counter.next.val}"/>
+	<vehicleAndVesselTax		type="string"	 ref="${counter.next.val}"/>
+	<resourceTax		type="string"	 ref="${counter.next.val}"/>
+	<deedTax		type="string"	 ref="${counter.next.val}"/>
+	<floodPreventionCharges		type="string"	 ref="${counter.next.val}"/>
+	<waterConservancyFund		type="string"	 ref="${counter.next.val}"/>
+	<mineralResourceCompensation		type="string"	 ref="${counter.next.val}"/>
+	<mtzydfjjfzf		type="string"	 ref="${counter.next.val}"/>
+	<coalFee		type="string"	 ref="${counter.next.val}"/>
+	<labourUunionExpenditure		type="string"	 ref="${counter.next.val}"/>
+	<employmentSecurityForDisabledPersons		type="string"	 ref="${counter.next.val}"/>
+	<other		type="string"	 ref="${counter.next.val}"/>
+	<source		type="string"	value="${src}"/>
+	<time		type="date"	value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="cwsjsfImport">
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context key="src" value="${session.account.name} Excel 导入"/>
+ <context key="compId" value="${orgs.BMDBOrganization.ids[request.compId.asInt]}"/>
+  <context key="time" value="${calendar.current.secondFormat}"/>
+  <callservice id="servCwsjsfImportEntry"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="cwsjsfImportJsp">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="cwsjsfImport"/>
+   <map key="title" value="税金税负导入"/>
+  </response>
+ </controller>
+</components>

@@ -71,7 +71,7 @@ module yszkgb { export module zmb {
             framework.router.to(Util.FAMOUS_VIEW).send(Util.MSG_REG, {name: "应收帐款账面表", plugin:this});
         }
 
-        private adjustSize() {
+        public adjustSize() {
             var jqgrid = this.jqgrid();
             if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
                 jqgrid.setGridWidth(this.jqgridHost().width());

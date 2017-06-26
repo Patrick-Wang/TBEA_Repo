@@ -39,9 +39,9 @@ var chgb;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("chzlbhqk/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("chzlbhqk/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("chzlbhqk/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/chgb/chzlbhqk/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("/BusinessManagement/chgb/chzlbhqk/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/chgb/chzlbhqk/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.chzlbhqk;
@@ -50,7 +50,6 @@ var chgb;
                 return this.mOpt;
             };
             EntryView.prototype.pluginSave = function (dt, cpType) {
-                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -66,17 +65,14 @@ var chgb;
                     data: JSON.stringify(submitData)
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", function () {
-                            _this.pluginUpdate(dt, cpType);
-                        });
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
             EntryView.prototype.pluginSubmit = function (dt, cpType) {
-                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -85,7 +81,7 @@ var chgb;
                         submitData[i].push(allData[i][j + 2]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
+                            Util.Toast.failed("有空内容 无法提交");
                             return;
                         }
                     }
@@ -96,12 +92,10 @@ var chgb;
                     data: JSON.stringify(submitData)
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", function () {
-                            _this.pluginUpdate(dt, cpType);
-                        });
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -129,13 +123,28 @@ var chgb;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "存货账龄变化情况");
             };
-            EntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+            EntryView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            };
+            EntryView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false);
+                this.mTableAssist.mergeRow(0);
+                this.mTableAssist.mergeTitle();
+                return this.mTableAssist;
+            };
+            EntryView.prototype.updateTable = function () {
+                this.createJqassist();
                 var ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
                 for (var i = 0; i < this.mData.length; ++i) {
                     for (var j = 0; j < this.mData[i].length; ++j) {
@@ -144,25 +153,22 @@ var chgb;
                         }
                     }
                 }
-                this.$(name).jqGrid(this.mTableAssist.decorate({
+                this.mTableAssist.create({
+                    data: [[ny].concat(this.mData[0])],
                     datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable: true,
-                    //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    //height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 150,
                     height: '100%',
-                    width: 1200,
+                    width: this.mTableAssist.getColNames().length * 400,
                     shrinkToFit: true,
+                    rowNum: 2000,
                     autoScroll: true,
-                    data: this.mTableAssist.getData([[ny].concat(this.mData[0])]),
-                    viewrecords: true
-                }));
+                    assistEditable: true
+                });
+                this.adjustSize();
             };
             EntryView.ins = new EntryView();
             return EntryView;

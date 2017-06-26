@@ -370,7 +370,7 @@
 				<script>
 					builder.register('Chgb', function () {
 						return [
-						   createNode('存货管报汇总', "chgb/show.do")
+						   createNode('存货管报汇总', "chgb/v2/show.do")
 						];
 					});
 				</script>
@@ -558,7 +558,7 @@
 				<script>
 					builder.register('ChgbEntry', function() {
 						return [
-						   createNode('存货管报录入', "chgb/entry.do")
+						   createNode('存货管报录入', "chgb/v2/entry.do")
 						];
 					});
 				</script>

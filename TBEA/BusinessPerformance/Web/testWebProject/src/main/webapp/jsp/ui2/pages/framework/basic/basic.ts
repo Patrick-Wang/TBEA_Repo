@@ -24,7 +24,6 @@ module framework.basic {
 
     export class BasicFrameView extends FrameView {
         protected mOpt:Option;
-        protected mDtSec:Util.DateSelector;
         protected mItemSelector:Util.UnitedSelector;
         protected mNodesAll:Util.DataNode[] = [];
         protected mCurrentPlugin:number;
@@ -61,10 +60,21 @@ module framework.basic {
 
         protected init(opt:Option):void {
             this.mOpt = opt;
-            this.mDtSec = new Util.DateSelector({year: this.mOpt.date.year - 3, month: 1}, {
-                year: this.mOpt.date.year,
-                month: this.mOpt.date.month
-            }, this.mOpt.dt);
+
+            let minDate = Util.addYear(opt.date, -3);
+            minDate.month = 1;
+            $("#" + this.mOpt.dt).jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年MM月",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                minDate: Util.date2Str(minDate),
+                maxDate: Util.date2Str(opt.date),
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
 
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (opt.comps.length == 1) {
@@ -73,10 +83,41 @@ module framework.basic {
 
             this.mCompanySelector.change((selector:any, depth:number) => {
                 this.updateTypeSelector();
+                this.adjustHeader();
+                router.to(this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
             });
 
+            $(window).resize(()=> {
+                this.adjustHeader();
+                router.to(this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
+            });
+
+
+
             this.updateTypeSelector();
+            this.adjustHeader();
+
+            router.to(this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
             this.updateUI();
+        }
+
+        private adjustHeader(){
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40){
+                $(".page-header").addClass("page-header-double");
+                $("#headerHost").css("width", $("#sels").width() + "px");
+            }else{
+                $(".page-header").removeClass("page-header-double");
+            }
+        }
+
+        private getDate():Util.Date {
+            let curDate = $("#" + this.mOpt.dt).getDate();
+            return {
+                year : curDate.getFullYear(),
+                month : curDate.getMonth() + 1,
+                day:curDate.getDate()
+            };
         }
 
         onEvent(e:framework.route.Event):any {
@@ -119,18 +160,6 @@ module framework.basic {
                 if (nodes.length == 1) {
                     this.mItemSelector.hide();
                 }
-                $("#" + this.mOpt.type + " select")
-                    .multiselect({
-                        multiple: false,
-                        header: false,
-                        minWidth: width,
-                        height: '100%',
-                        // noneSelectedText: "请选择月份",
-                        selectedList: 1
-                    })
-                    .css("padding", "2px 0 2px 4px")
-                    .css("text-align", "left")
-                    .css("font-size", "12px");
             }
             return typeChange;
         }
@@ -143,7 +172,7 @@ module framework.basic {
         protected updateUI() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
 
-            let dt:Util.Date = this.mDtSec.getDate();
+            let dt:Util.Date = this.getDate();
             if (dt.month == undefined){
                 dt.month = 1;
             }
@@ -158,12 +187,6 @@ module framework.basic {
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
-            if (null != this.mCurrentComp){
-                $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
-            }
-            else{
-                $("#headertitle")[0].innerHTML = node.getData().value;
-            }
 
             let unit = router.to(this.mCurrentPlugin).send(FrameEvent.FE_GETUNIT);
             if (undefined != unit){

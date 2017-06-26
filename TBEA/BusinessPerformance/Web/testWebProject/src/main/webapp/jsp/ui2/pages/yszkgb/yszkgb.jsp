@@ -15,7 +15,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<%@include file="../../ie8-t.jsp" %>
+<%@include file="../../ie8-t.jsp"%>
 
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
@@ -145,12 +145,14 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/scroll/js/jquery.mCustomScrollbar.js"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/route/route.js"></script><script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/route/route.js"></script>
+<script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/yszkgb/yszkgbdef.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/yszkgb/yszkgb.js"></script>
-	<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
-<%@include file="../../ie8-b.jsp" %>
+<script
+	src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
+<%@include file="../../ie8-b.jsp"%>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -168,26 +170,26 @@
 					</ul>
 				</div>
 				<!-- /Page Breadcrumb -->
-				
+
 				<!-- Page Header -->
 				<div class="page-header position-relative">
 					<div class="header-title">
-	<div id="headerHost" class="pull-left">
-						<div class="workinput pull-left">
-							<input id="grid-date" type="text" readonly="readonly"><i
-								class="fa fa-calendar"></i>
-						</div>
-	<div id="sels" class="pull-left">
-						<div id="comp-sel" class="pull-left"></div>
-						<div id="item-sel" class="pull-left"></div>
-	</div>
+						<div id="headerHost" class="pull-left">
+							<div class="workinput pull-left">
+								<input id="grid-date" type="text" readonly="readonly"><i
+									class="fa fa-calendar"></i>
+							</div>
+							<div id="sels" class="pull-left">
+								<div id="comp-sel" class="pull-left"></div>
+								<div id="item-sel" class="pull-left"></div>
+							</div>
 							<div id="grid-update" class="btn btn-default">
-							查找 <i class="fa fa-search"></i>
+								查找 <i class="fa fa-search"></i>
+							</div>
+							<div id="grid-export" class="btn btn-default">
+								导出 <i class="fa fa-file-excel-o"></i>
+							</div>
 						</div>
-						<div id="grid-export" class="btn btn-default">
-							导出 <i class="fa fa-file-excel-o"></i>
-						</div>
-	</div>
 						<form id="exportExcel" style="display: none" method="post"></form>
 					</div>
 				</div>
@@ -197,7 +199,7 @@
 					<div class="row">
 						<div class="col-lg-12 col-sm-12 col-xs-12">
 							<%@include file="zmb/zmb.jsp"%>
-						 	<%@include file="yszkzlbh/yszkzlbh.jsp"%>
+							<%@include file="yszkzlbh/yszkzlbh.jsp"%>
 							<%@include file="yszkkxxz/yszkkxxz.jsp"%>
 							<%@include file="yszkyjtztjqs/yszkyjtztjqs.jsp"%>
 							<%@include file="yqyszcsys/yqyszcsys.jsp"%>
@@ -231,20 +233,20 @@
 	<%@include file="../loading.jsp"%>
 	<script>
 		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
-		if (Util.isIframe()){
-			Util.Breadcrumb.setOnClickListener(function(breadNode){
-				window.parent['onClickBreadcrumb'] && window.parent['onClickBreadcrumb'](breadNode);
+		if (Util.isIframe()) {
+			Util.Breadcrumb.setOnClickListener(function(breadNode) {
+				window.parent['onClickBreadcrumb']
+						&& window.parent['onClickBreadcrumb'](breadNode);
 			});
 		}
-		$(document).ready(function(){
+		$(document).ready(function() {
 			framework.router.to(Util.FAMOUS_VIEW).send(Util.MSG_INIT, {
 				comps : JSON.parse('${nodeData}'),
 				date : Util.parseDate('${year}', '${month}', '${day}')
 			});
 		});
+	</script>
 
-    </script>
-	
 </body>
 <!--  /Body -->
 </html>

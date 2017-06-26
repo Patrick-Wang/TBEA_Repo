@@ -151,7 +151,7 @@ module yszkgb { export module yszkzlbh {
             framework.router.to(Util.FAMOUS_VIEW).send(Util.MSG_REG, {name: "应收账款账龄变化", plugin:this});
         }
 
-        private adjustSize() {
+        adjustSize() {
             var jqgrid = this.jqgrid();
             if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
                 jqgrid.setGridWidth(this.jqgridHost().width());

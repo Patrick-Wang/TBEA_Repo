@@ -1,5 +1,5 @@
 <div id="zmb" class="sub-view">
-	<div id="zmbTbarea">
+	<div id="tbarea">
 		<div class="well">
 			<div id="table"></div>
 		</div>

@@ -40,13 +40,13 @@ var chgb;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("chzlbhqk/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/chgb/chzlbhqk/update.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.chzlbhqk;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, cpType) {
-                return "chzlbhqk/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/chgb/chzlbhqk/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: cpType
                 });
@@ -71,7 +71,9 @@ var chgb;
                     return;
                 }
                 this.$(this.option().ctarea).show();
-                this.updateEchart(this.updateTable());
+                this.mFinalData = this.updateTable();
+                this.updateEchart(this.mFinalData);
+                this.adjustSize();
             };
             ShowView.prototype.updateEchart = function (data) {
                 var title = "存货账龄变化情况";
@@ -137,17 +139,31 @@ var chgb;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "存货账龄变化情况");
             };
-            ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.tableAssist.resizeHeight(maxTableBodyHeight);
+                //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+                this.$(this.option().ct).css("height", "300px");
+                this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                this.updateEchart(this.mFinalData);
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+            ShowView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                this.tableAssist.mergeRow(0);
+                this.tableAssist.mergeTitle();
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 var month = curDate.getMonth() + 1;
                 var data = [];
@@ -157,21 +173,20 @@ var chgb;
                 for (var i = 1; i <= month; ++i) {
                     data.push(["本年度", i + "月"].concat(this.mData[12 - month + i - 1]));
                 }
-                tableAssist.mergeRow(0);
-                tableAssist.mergeTitle();
-                this.$(name).jqGrid(tableAssist.decorate({
+                this.tableAssist.create({
+                    data: data,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 20,
-                    data: tableAssist.getData(data),
-                    datatype: "local",
-                    viewrecords: true
-                }));
+                    rowNum: 2000,
+                    autoScroll: true
+                });
                 return data;
             };
             ShowView.ins = new ShowView();

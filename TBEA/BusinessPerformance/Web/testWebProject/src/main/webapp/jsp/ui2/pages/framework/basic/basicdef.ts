@@ -1,6 +1,5 @@
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../../../js/jquery/jquery.d.ts" />
 /// <reference path="../route/route.ts" />
 ///<reference path="../../unitedSelector.ts"/>
 module framework.basic {
@@ -40,6 +39,7 @@ module framework.basic {
         export let FE_SUBMITTED : number = lastEvent();
         export let FE_APPROVED : number = lastEvent();
         export let FE_GETUNIT : number = lastEvent();
+        export let FE_ADJUST_SZIE : number = lastEvent();
     }
     export interface PluginOption {
         host:string;
@@ -144,7 +144,7 @@ module framework.basic {
             $("#" + this.mOpt.host).show();
         }
 
-        protected $(id:string):JQuery {
+        protected $(id:string):any {
             return $("#" + this.mOpt.host + " #" + id);
         }
 
@@ -152,11 +152,27 @@ module framework.basic {
             return true;
         }
 
+        jqgrid(): any{
+            return this.$(this.jqgridName());
+        }
+
+
+        jqgridHost():any{
+            return this.$(this.mOpt.tb);
+        }
+
+
+        jqgridName():string{
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
+        }
+
         protected abstract  pluginUpdate(date:string, compType:Util.CompanyType):void;
 
         protected abstract refresh():void;
 
         protected abstract init(opt:PluginOption):void;
+
+        protected abstract adjustSize():void;
 
         abstract getId():number;
     }
@@ -175,6 +191,11 @@ module framework.basic {
                 case FrameEvent.FE_GETUNIT:
                 {
                     val = this.pluginGetUnit();
+                }
+                    break;
+                case FrameEvent.FE_ADJUST_SZIE:
+                {
+                    val = this.adjustSize();
                 }
                     break;
                 default:
@@ -206,6 +227,10 @@ module framework.basic {
                     this.pluginSubmit(st, e.data.compType);
                 }
                     break;
+                case FrameEvent.FE_ADJUST_SZIE:
+                {
+                    val = this.adjustSize();
+                }
                 default:
                     break;
             }

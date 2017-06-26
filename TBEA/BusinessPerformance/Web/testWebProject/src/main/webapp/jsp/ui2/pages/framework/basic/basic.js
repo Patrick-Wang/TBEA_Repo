@@ -48,19 +48,55 @@ var framework;
             BasicFrameView.prototype.init = function (opt) {
                 var _this = this;
                 this.mOpt = opt;
-                this.mDtSec = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
-                    year: this.mOpt.date.year,
-                    month: this.mOpt.date.month
-                }, this.mOpt.dt);
+                var minDate = Util.addYear(opt.date, -3);
+                minDate.month = 1;
+                $("#" + this.mOpt.dt).jeDate({
+                    skinCell: "jedatedeepgreen",
+                    format: "YYYY年MM月",
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false,
+                    minDate: Util.date2Str(minDate),
+                    maxDate: Util.date2Str(opt.date),
+                }).removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top");
                 this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
                 if (opt.comps.length == 1) {
                     this.mCompanySelector.hide();
                 }
                 this.mCompanySelector.change(function (selector, depth) {
                     _this.updateTypeSelector();
+                    _this.adjustHeader();
+                    router.to(_this.mCurrentPlugin).send(basic.FrameEvent.FE_ADJUST_SZIE);
+                });
+                $(window).resize(function () {
+                    _this.adjustHeader();
+                    router.to(_this.mCurrentPlugin).send(basic.FrameEvent.FE_ADJUST_SZIE);
                 });
                 this.updateTypeSelector();
+                this.adjustHeader();
+                router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_ADJUST_SZIE);
                 this.updateUI();
+            };
+            BasicFrameView.prototype.adjustHeader = function () {
+                $("#headerHost").removeCss("width");
+                if ($("#headerHost").height() > 40) {
+                    $(".page-header").addClass("page-header-double");
+                    $("#headerHost").css("width", $("#sels").width() + "px");
+                }
+                else {
+                    $(".page-header").removeClass("page-header-double");
+                }
+            };
+            BasicFrameView.prototype.getDate = function () {
+                var curDate = $("#" + this.mOpt.dt).getDate();
+                return {
+                    year: curDate.getFullYear(),
+                    month: curDate.getMonth() + 1,
+                    day: curDate.getDate()
+                };
             };
             BasicFrameView.prototype.onEvent = function (e) {
                 switch (e.id) {
@@ -101,18 +137,6 @@ var framework;
                     if (nodes.length == 1) {
                         this.mItemSelector.hide();
                     }
-                    $("#" + this.mOpt.type + " select")
-                        .multiselect({
-                        multiple: false,
-                        header: false,
-                        minWidth: width,
-                        height: '100%',
-                        // noneSelectedText: "请选择月份",
-                        selectedList: 1
-                    })
-                        .css("padding", "2px 0 2px 4px")
-                        .css("text-align", "left")
-                        .css("font-size", "12px");
                 }
                 return typeChange;
             };
@@ -121,7 +145,7 @@ var framework;
             };
             BasicFrameView.prototype.updateUI = function () {
                 var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-                var dt = this.mDtSec.getDate();
+                var dt = this.getDate();
                 if (dt.month == undefined) {
                     dt.month = 1;
                 }
@@ -133,12 +157,6 @@ var framework;
                 this.mCurrentComp = this.mCompanySelector.getCompany();
                 this.mCurrentDate = dt;
                 router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_SHOW);
-                if (null != this.mCurrentComp) {
-                    $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
-                }
-                else {
-                    $("#headertitle")[0].innerHTML = node.getData().value;
-                }
                 var unit = router.to(this.mCurrentPlugin).send(basic.FrameEvent.FE_GETUNIT);
                 if (undefined != unit) {
                     $("#unit").text(unit);
