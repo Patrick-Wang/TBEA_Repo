@@ -199,9 +199,9 @@
 				<div class="page-body">
 					<div class="row">
 						<div class="col-lg-12 col-sm-12 col-xs-12">
-							<%--<%@include file="chjykcb/chjykcbEntry.jsp"%>--%>
+							<%@include file="chjykcb/chjykcbEntry.jsp"%>
 							<%@include file="chzlbhqk/chzlbhqkEntry.jsp"%>
-							<%--<%@include file="chxzqk/chxzqkEntry.jsp"%>--%>
+							<%@include file="chxzqk/chxzqkEntry.jsp"%>
 						</div>
 					</div>
 				</div>

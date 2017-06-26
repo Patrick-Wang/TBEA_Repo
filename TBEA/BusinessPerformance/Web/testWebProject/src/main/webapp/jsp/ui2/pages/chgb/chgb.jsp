@@ -196,10 +196,10 @@
 					<div class="row">
 						<div class="col-lg-12 col-sm-12 col-xs-12">
 							<%@include file="chzmb/chzmb.jsp"%>
-							<%--<%@include file="chjykcb/chjykcb.jsp"%>--%>
+							<%@include file="chjykcb/chjykcb.jsp"%>
 							<%@include file="chzlbhqk/chzlbhqk.jsp"%>
-							<%--<%@include file="chxzqk/chxzqk.jsp"%>--%>
-							<%--<%@include file="chnych/chnych.jsp"%>--%>
+							<%@include file="chxzqk/chxzqk.jsp"%>
+							<%@include file="chnych/chnych.jsp"%>
 						</div>
 					</div>
 				</div>

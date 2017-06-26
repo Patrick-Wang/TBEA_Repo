@@ -34,16 +34,16 @@ module chgb {
         class ShowView extends framework.basic.ShowPluginView {
             static ins = new ShowView();
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("chxzqk/update.do", false);
-            private mDateSelector:Util.DateSelector;
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/chgb/chxzqk/update.do", false);
+            private tableAssist:JQTable.JQGridAssistant;
             private mDt: string;
-            private mCompType:Util.CompanyType;
+            private mFinalData:any;
 
             getId():number {
                 return plugin.chxzqk;
             }
             pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
-                return "chxzqk/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/chgb/chxzqk/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId: cpType
                     });
@@ -54,7 +54,6 @@ module chgb {
 
             public pluginUpdate(date:string, cpType:Util.CompanyType):void {
                 this.mDt = date;
-                this.mCompType = cpType;
                 this.mAjax.get({
                         date: date,
                         companyId: cpType
@@ -71,10 +70,12 @@ module chgb {
                 }
 
                 this.$(this.option().ctarea).show();
-                this.updateEchart(this.updateTable());
+                this.mFinalData = this.updateTable()
+                this.updateEchart(this.mFinalData);
+                this.adjustSize();
             }
 
-            private updateEchart(data:any[]):void {
+              private updateEchart(data:any[]):void {
                 let title = "存货性质情况";
 
                 let legend:Array<string> = [
@@ -86,7 +87,6 @@ module chgb {
                 for (let i = 0; i < data.length; ++i){
                     xData.push(data[i][1]);
                 }
-
 
                 let tooltip : any = {
                     trigger: 'axis',
@@ -113,7 +113,6 @@ module chgb {
                         data: rData
                     });
                 }
-
 
                 var option = {
                     title: {
@@ -149,19 +148,37 @@ module chgb {
 					.send(framework.basic.FrameEvent.FE_REGISTER, "存货性质情况");
             }
 
-			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
-			}
-			
-            private updateTable():any[] {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+                //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+
+                this.$(this.option().ct).css("height", "300px");
+                this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                this.updateEchart(this.mFinalData);
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                this.tableAssist.mergeRow(0);
+                this.tableAssist.mergeTitle();
+                return this.tableAssist;
+            }
+
+            private updateTable():any {
+                this.createJqassist();
+
                 let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
                 let data = [];
@@ -172,23 +189,21 @@ module chgb {
                     data.push(["本年度", i + "月"].concat(this.mData[12 - month + i - 1]));
                 }
 
-                tableAssist.mergeRow(0);
-                tableAssist.mergeTitle();
-                
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 20,
-                        data: tableAssist.getData(data),
-                        datatype: "local",
-                        viewrecords : true
-                    }));
+                this.tableAssist.create({
+                    data: data,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+
                 return data;
             }
         }

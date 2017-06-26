@@ -12,6 +12,7 @@ module plugin {
 module chgb {
     export module chnych {
         import TextAlign = JQTable.TextAlign;
+		import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
@@ -30,22 +31,20 @@ module chgb {
         class ShowView extends framework.basic.ShowPluginView {
             static ins = new ShowView();
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("chnych/update.do", false);
-            private mDateSelector:Util.DateSelector;
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/chgb/chnych/update.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
 
+            private tableAssist:JQTable.JQGridAssistant;
             getId():number {
-                return plugin.chnych;
+                return plugin.chzmb;
             }
+
             pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
-                return "chnych/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/chgb/chnych/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId: cpType
                     });
-            }
-            private option():Option {
-                return <Option>this.mOpt;
             }
 
             protected isSupported(compType:Util.CompanyType):boolean {
@@ -53,6 +52,10 @@ module chgb {
                     return true;
                 }
                 return false;
+            }
+
+            private option():Option {
+                return <Option>this.mOpt;
             }
 
             public pluginUpdate(date:string, cpType:Util.CompanyType):void {
@@ -83,27 +86,45 @@ module chgb {
 					.send(framework.basic.FrameEvent.FE_REGISTER, "能源存货");
             }
 
-			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
-			}
-			
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+
+                this.tableAssist.mergeRow(0);
+                this.tableAssist.mergeTitle();
+                this.tableAssist.mergeColum(0);
+                return this.tableAssist;
+            }
+
+            public adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            }
+
+            private updateTable():void {
+                this.createJqassist();
+
+
                 let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
                 let year = curDate.getFullYear();
-                
-                
+
+
                 let data = [];
                 data.push([year + "年期初结余", year + "年期初结余"].concat(this.mData[12]));
-                
+
                 for (let i = month + 1; i <= 12; ++i){
                     data.push(["上年度", i + "月"].concat(this.mData[i - month - 1]));
                 }
@@ -111,24 +132,21 @@ module chgb {
                     data.push(["本年度", i + "月"].concat(this.mData[12 - month + i - 1]));
                 }
 
-                tableAssist.mergeRow(0);
-                tableAssist.mergeTitle();
-                tableAssist.mergeColum(0);
-                
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-						datatype: "local",
-						data: tableAssist.getData(data),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 20,
-                        viewrecords : true
-                    }));
+
+                this.tableAssist.create({
+                    data: data,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+
+                this.adjustSize();
             }
         }
     }

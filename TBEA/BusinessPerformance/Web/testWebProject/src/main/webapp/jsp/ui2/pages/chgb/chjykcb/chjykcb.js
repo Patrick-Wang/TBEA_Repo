@@ -37,13 +37,13 @@ var chgb;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("chjykcb/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/chgb/chjykcb/update.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.chjykcb;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, cpType) {
-                return "chjykcb/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/chgb/chjykcb/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: cpType
                 });
@@ -54,7 +54,6 @@ var chgb;
             ShowView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjax.get({
                     date: date,
                     companyId: compType
@@ -68,7 +67,9 @@ var chgb;
                 if (this.mData == undefined) {
                     return;
                 }
-                this.updateTable();
+                this.$(this.option().ctarea).show();
+                this.mFinalData = this.updateTable();
+                this.adjustSize();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -76,37 +77,51 @@ var chgb;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "积压库存表");
             };
-            ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+            ShowView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                this.tableAssist.mergeRow(0);
+                this.tableAssist.mergeTitle();
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
                 var data = [];
                 data.push(["积压库存（原值）"].concat(this.mData[0]));
                 data.push(["积压库存（原值）"].concat(this.mData[1]));
                 data.push(["积压库存（原值）"].concat(this.mData[2]));
                 data.push(["积压库存（原值）"].concat(this.mData[3]));
-                tableAssist.mergeRow(0);
-                tableAssist.mergeTitle();
-                this.$(name).jqGrid(tableAssist.decorate({
+                this.tableAssist.create({
+                    data: data,
                     datatype: "local",
-                    data: tableAssist.getData(data),
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 20,
-                    viewrecords: true
-                }));
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                return data;
             };
             ShowView.ins = new ShowView();
             return ShowView;
