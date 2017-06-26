@@ -37,12 +37,11 @@ module chgb {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("chzlbhqk/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("chzlbhqk/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("chzlbhqk/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/chgb/chzlbhqk/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("/BusinessManagement/chgb/chzlbhqk/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/chgb/chzlbhqk/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
-            private mCompType:Util.CompanyType;
             getId():number {
                 return pluginEntry.chzlbhqk;
             }
@@ -67,11 +66,9 @@ module chgb {
                     data: JSON.stringify(submitData)
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", ()=>{
-                            this.pluginUpdate(dt, cpType);
-                        });
+                        Util.Toast.success("保存 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -85,7 +82,7 @@ module chgb {
                         submitData[i].push(allData[i][j + 2]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j]){
-                            Util.MessageBox.tip("有空内容 无法提交")
+                            Util.Toast.failed("有空内容 无法提交")
                             return;
                         }
                     }
@@ -96,11 +93,9 @@ module chgb {
                     data: JSON.stringify(submitData)
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", ()=>{
-                            this.pluginUpdate(dt, cpType);
-                        });
+                        Util.Toast.success("提交 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -123,6 +118,7 @@ module chgb {
                 }
 
                 this.updateTable();
+
             }
 
             protected init(opt:Option):void {
@@ -132,14 +128,33 @@ module chgb {
 					.send(framework.basic.FrameEvent.FE_REGISTER, "存货账龄变化情况");
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
 
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false);
+                this.mTableAssist.mergeRow(0);
+                this.mTableAssist.mergeTitle();
+                return this.mTableAssist;
+            }
+
+            private updateTable():void {
+                this.createJqassist();
+
                 let ny = this.mDt.substr(0, this.mDt.length - 2).replace("-", "年") + "月";
 
                 for (var i = 0; i < this.mData.length; ++i) {
@@ -151,27 +166,23 @@ module chgb {
                 }
 
 
-                this.$(name).jqGrid(
-                    this.mTableAssist.decorate({
-                        datatype: "local",
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        assistEditable:true,
-                        //autowidth : false,
-                        cellsubmit: 'clientArray',
-                        cellEdit: true,
-                        //height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 150,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        data: this.mTableAssist.getData([[ny].concat(this.mData[0])]),
-                        viewrecords: true
-                    }));
+                this.mTableAssist.create({
+                    data: [[ny].concat(this.mData[0])],
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true,
+                    assistEditable: true
+                });
 
+                this.adjustSize();
             }
         }
     }
