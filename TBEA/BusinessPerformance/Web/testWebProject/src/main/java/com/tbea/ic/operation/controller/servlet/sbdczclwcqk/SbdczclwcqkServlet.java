@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -46,7 +47,7 @@ public class SbdczclwcqkServlet {
 	@Resource(name=SbdczclwcqkServiceImpl.NAME)
 	SbdczclwcqkService sbdczclwcqkService;
 	
-	@RequestMapping(value = "show.do")
+	@RequestMapping(value = {"show.do", "v2/show.do"})
 	public ModelAndView getShow(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -59,10 +60,10 @@ public class SbdczclwcqkServlet {
 
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("sbdczclwcqk/sbdczclwcqk", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "sbdczclwcqk/sbdczclwcqk", map);
 	}
 	
-	@RequestMapping(value = "entry.do")
+	@RequestMapping(value = {"entry.do", "v2/entry.do"})
 	public ModelAndView getEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();	
@@ -73,7 +74,7 @@ public class SbdczclwcqkServlet {
 				AuthType.SbdgbEntry);
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("sbdczclwcqk/sbdczclwcqkEntry", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "sbdczclwcqk/sbdczclwcqkEntry", map);
 	}
 	
 	@RequestMapping(value = "schedule.do")

@@ -44,9 +44,9 @@ var sbdczclwcqk;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("../cpczwcqk/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("../cpczwcqk/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("../cpczwcqk/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/cpczwcqk/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("/BusinessManagement/cpczwcqk/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/cpczwcqk/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.cpczwcqk;
@@ -73,10 +73,10 @@ var sbdczclwcqk;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -99,10 +99,10 @@ var sbdczclwcqk;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -145,6 +145,17 @@ var sbdczclwcqk;
                 //}
                 return false;
             };
+            EntryView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            };
             EntryView.prototype.init = function (opt) {
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(pluginEntry.cpczwcqk_byq, this.getId()))
@@ -170,33 +181,31 @@ var sbdczclwcqk;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
-            EntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
+            EntryView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                var jqTable = this.$(name);
-                jqTable.jqGrid(this.mTableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
+                return this.mTableAssist;
+            };
+            EntryView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.mTableAssist.create({
+                    data: this.mData,
                     datatype: "local",
-                    data: this.mTableAssist.getData(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable: true,
-                    //autowidth : false,
                     cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
                     cellEdit: true,
-                    //height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 1000,
-                    height: this.mData.length > 25 ? 550 : '100%',
-                    width: 700,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
                     shrinkToFit: true,
+                    rowNum: 2000,
                     autoScroll: true,
-                    viewrecords: true,
-                }));
+                    assistEditable: true
+                });
+                this.adjustSize();
             };
             EntryView.ins = new EntryView();
             return EntryView;

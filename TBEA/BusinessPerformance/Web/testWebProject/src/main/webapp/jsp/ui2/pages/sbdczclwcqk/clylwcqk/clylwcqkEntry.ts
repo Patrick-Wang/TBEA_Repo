@@ -45,9 +45,9 @@ module sbdczclwcqk {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../clylwcqk/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../clylwcqk/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../clylwcqk/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/clylwcqk/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("/BusinessManagement/clylwcqk/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/clylwcqk/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
@@ -177,36 +177,48 @@ module sbdczclwcqk {
                 return super.onEvent(e);
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
+                return this.mTableAssist;
+            }
 
-                let jqTable = this.$(name);
-                jqTable.jqGrid(
-                    this.mTableAssist.decorate({
-                        datatype: "local",
-                        data: this.mTableAssist.getData(this.mData),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        assistEditable:true,
-                        //autowidth : false,
-                        cellsubmit: 'clientArray',
-                        //editurl: 'clientArray',
-                        cellEdit: true,
-                        //height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 1000,
-                        height: this.mData.length > 25 ? 550 : '100%',
-                        width: 700,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        viewrecords: true,
-                        //pager: '#' + pagername,
-                    }));
+            private updateTable():void {
+                this.createJqassist();
+
+                this.mTableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true,
+                    assistEditable: true
+                });
+
+                this.adjustSize();
             }
         }
     }

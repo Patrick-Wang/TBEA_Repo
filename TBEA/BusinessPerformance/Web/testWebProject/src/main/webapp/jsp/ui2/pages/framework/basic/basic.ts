@@ -108,6 +108,7 @@ module framework.basic {
                 $("#headerHost").css("width", $("#sels").width() + "px");
             }else{
                 $(".page-header").removeClass("page-header-double");
+                $("#headerHost").removeCss("width");
             }
         }
 

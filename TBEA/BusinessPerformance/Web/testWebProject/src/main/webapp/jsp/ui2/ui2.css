@@ -381,6 +381,10 @@ th.ui-th-ltr {
 	border:  1px solid #e3e3e3;
 }
 
+#headerHost{
+	width:100%;
+}
+
 .sub-view{
 	display:none;	
 }

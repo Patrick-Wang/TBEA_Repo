@@ -88,6 +88,7 @@ var framework;
                 }
                 else {
                     $(".page-header").removeClass("page-header-double");
+                    $("#headerHost").removeCss("width");
                 }
             };
             BasicFrameView.prototype.getDate = function () {
