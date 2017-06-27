@@ -1,9 +1,9 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../dzwzgbdef.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../dzwzgbdef.ts"/>
 
 module plugin {
     export let dzclcb : number = framework.basic.endpoint.lastId();
@@ -46,29 +46,28 @@ module dzwzgb {
         class ShowView extends framework.basic.ShowPluginView {
             static ins = new ShowView();
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("dzclcb/update.do", false);
-            private mDateSelector:Util.DateSelector;
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/dzwzgb/dzclcb/update.do", false);
+            private tableAssist:JQTable.JQGridAssistant;
             private mDt: string;
             private mCompType:Util.CompanyType;
+            private mIsByq: boolean;
 
             getId():number {
                 return plugin.dzclcb;
             }
-
-            pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "dzclcb/export.do?" + Util.Ajax.toUrlParam({
+            
+            pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
+                return "/BusinessManagement/dzwzgb/dzclcb/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
-                        companyId:compType
+                        companyId: cpType
                     });
             }
-
             private option():Option {
                 return <Option>this.mOpt;
             }
 
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjax.get({
                         date: date,
                         companyId:compType
@@ -83,7 +82,6 @@ module dzwzgb {
                 if ( this.mData == undefined){
                     return;
                 }
-
                 this.updateTable();
             }
 
@@ -91,22 +89,46 @@ module dzwzgb {
                 framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
             }
 
-            private updateTable():void {
-                let isByq = false;
+            private createJqassist():JQTable.JQGridAssistant{
+                var parent = this.$(this.option().tb);
+                parent.empty();
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mIsByq);
+                this.tableAssist.mergeRow(0);
+                return this.tableAssist;
+            }
+
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
+            }
+
+            private updateTable():any {
+               this.mIsByq = false;
                 if (this.mCompType == Util.CompanyType.SBGS ||
                     this.mCompType == Util.CompanyType.HBGS ||
                     this.mCompType == Util.CompanyType.TBGS ||
                     this.mCompType == Util.CompanyType.XBC){
-                    isByq = true;
+                    this.mIsByq = true;
                 }
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, isByq);
-                var parent = this.$(this.option().tb);
-                parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+
+                this.createJqassist();
 
                 let data = [];
-                if (isByq){
+                if (this.mIsByq){
                     for (let i = 0; i < 12; ++i){
                         let arr = this.mData[i];
                         data.push([i + 1, "铜"].concat(arr));
@@ -119,22 +141,21 @@ module dzwzgb {
                         data.push([i + 1, "铝"].concat(arr));
                     }
                 }
-
-                tableAssist.mergeRow(0);
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 1000,
-                        data: tableAssist.getData(data),
-                        datatype: "local",
-                        viewrecords : true
-                    }));
+                this.tableAssist.create({
+                    data: data,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                return ;
             }
         }
     }
