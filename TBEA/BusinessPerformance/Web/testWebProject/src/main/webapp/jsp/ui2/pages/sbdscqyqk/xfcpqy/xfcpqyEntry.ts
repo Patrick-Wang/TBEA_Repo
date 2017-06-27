@@ -1,15 +1,15 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../sbdscqyqkdef.ts"/>
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../sbdscqyqkdef.ts"/>
 declare var $:any;
 
 
 module pluginEntry {
-    export let xfcpqy : number = framework.basic.endpoint.lastId();
+   export let xfcpqy : number = framework.basic.endpoint.lastId();
 
     export let xfcpqy_byq:number = framework.basic.endpoint.lastId();
 
@@ -19,8 +19,9 @@ module pluginEntry {
 module sbdscqyqk {
     export module xfcpqyEntry {
         import TextAlign = JQTable.TextAlign;
+        import Node = JQTable.Node;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, readOnly : boolean, date : string):JQTable.JQGridAssistant {
+           public static createTable(gridName:string, readOnly : boolean, date : string):JQTable.JQGridAssistant {
                 let curDate : Date = new Date(Date.parse(date.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
                 let year = curDate.getFullYear();
@@ -48,15 +49,14 @@ module sbdscqyqk {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../xfcpqy/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../xfcpqy/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../xfcpqy/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/xfcpqy/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("/BusinessManagement/xfcpqy/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/xfcpqy/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
-            private mCompType:Util.CompanyType;
-
             private mType:sbdscqyqk.SbdscqyqkType;
-
+            
+            
             getId():number {
                 return pluginEntry.xfcpqy;
             }
@@ -65,7 +65,7 @@ module sbdscqyqk {
                 return <Option>this.mOpt;
             }
 
-            public pluginSave(dt:string, compType:Util.CompanyType):void {
+             public pluginSave(dt:string, compType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -83,13 +83,14 @@ module sbdscqyqk {
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
-
+                      
+            
             public  pluginSubmit(dt:string, compType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
@@ -112,16 +113,15 @@ module sbdscqyqk {
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                         Util.Toast.failed(resp.message);
                     }
                 });
             }
 
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjaxUpdate.get({
                         date: date,
                         companyId: compType,
@@ -137,7 +137,6 @@ module sbdscqyqk {
                 if (this.mData == undefined) {
                     return;
                 }
-
                 this.updateTable();
             }
 
@@ -171,8 +170,6 @@ module sbdscqyqk {
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势（国内市场制造业签约）");
             }
-
-
             onEvent(e:framework.route.Event):any {
                 if (e.road != undefined) {
                     switch (e.road[e.road.length - 1]) {
@@ -189,36 +186,48 @@ module sbdscqyqk {
                 return super.onEvent(e);
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false, this.mDt);
+                return this.mTableAssist;
+            }
 
-                let jqTable = this.$(name);
-                jqTable.jqGrid(
-                    this.mTableAssist.decorate({
-                        datatype: "local",
-                        data: this.mTableAssist.getData(this.mData),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        assistEditable:true,
-                        //autowidth : false,
-                        cellsubmit: 'clientArray',
-                        //editurl: 'clientArray',
-                        cellEdit: true,
-                        //height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 1000,
-                        height: this.mData.length > 25 ? 550 : '100%',
-                        width: 700,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        viewrecords: true,
-                        //pager: '#' + pagername,
-                    }));
+            private updateTable():void {
+                this.createJqassist();
+
+                this.mTableAssist.create({
+                    data:this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true,
+                    assistEditable: true
+                });
+
+                this.adjustSize();
             }
         }
     }

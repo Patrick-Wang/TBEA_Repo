@@ -6,10 +6,10 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../sbdscqyqkdef.ts"/>
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../sbdscqyqkdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.xfscqy = framework.basic.endpoint.lastId();
@@ -35,9 +35,9 @@ var sbdscqyqk;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("../xfscqy/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("../xfscqy/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("../xfscqy/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/xfscqy/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("/BusinessManagement/xfscqy/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/xfscqy/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.xfscqy;
@@ -62,10 +62,10 @@ var sbdscqyqk;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -86,17 +86,16 @@ var sbdscqyqk;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
             EntryView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjaxUpdate.get({
                     date: date,
                     companyId: compType
@@ -113,11 +112,34 @@ var sbdscqyqk;
                 this.updateTable();
             };
             EntryView.prototype.init = function (opt) {
-                framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "细分市场签约");
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "细分市场签约");
+            };
+            EntryView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            };
+            EntryView.prototype.createJqassist = function () {
+                var parent = this.$(this.option().tb);
+                parent.empty();
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false);
+                this.mTableAssist.mergeColum(0);
+                this.mTableAssist.mergeRow(0);
+                this.mTableAssist.mergeTitle();
+                return this.mTableAssist;
             };
             EntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+                this.createJqassist();
                 var data = [["传统电力市场"],
                     ["传统电力市场"],
                     ["传统电力市场"],
@@ -144,33 +166,22 @@ var sbdscqyqk;
                         data[i] = data[i].concat(this.mData[i]);
                     }
                 }
-                this.mTableAssist.mergeColum(0);
-                this.mTableAssist.mergeRow(0);
-                this.mTableAssist.mergeTitle();
-                var parent = this.$(this.option().tb);
-                parent.empty();
-                parent.append("<table id='" + name + "'>");
-                var jqTable = this.$(name);
-                jqTable.jqGrid(this.mTableAssist.decorate({
+                this.mTableAssist.create({
+                    data: data,
                     datatype: "local",
-                    data: this.mTableAssist.getData(data),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable: true,
-                    //autowidth : false,
                     cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
                     cellEdit: true,
-                    //height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 1000,
-                    height: data.length > 25 ? 550 : '100%',
-                    width: 700,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
                     shrinkToFit: true,
+                    rowNum: 2000,
                     autoScroll: true,
-                    viewrecords: true
-                }));
+                    assistEditable: true
+                });
+                this.adjustSize();
             };
             EntryView.ins = new EntryView();
             return EntryView;

@@ -1,9 +1,9 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../sbdscqyqkdef.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../sbdscqyqkdef.ts"/>
 
 module plugin {
     export let xfcpqy : number = framework.basic.endpoint.lastId();
@@ -16,28 +16,22 @@ module plugin {
 module sbdscqyqk {
     export module xfcpqy {
         import TextAlign = JQTable.TextAlign;
+		import Node = JQTable.Node;
         class JQGridAssistantFactory {
-            public static createTable(gridName:string, date:string):JQTable.JQGridAssistant {
+             public static createTable(gridName:string, date:string):JQTable.JQGridAssistant {
 
                 let curDate:Date = new Date(Date.parse(date.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
                 let data = [];
                 let node:JQTable.Node;
                 let titleNodes:JQTable.Node[] = [];
-
                 node = new JQTable.Node("产品", "cp", true, TextAlign.Left);
                 titleNodes.push(node);
-
                 node = new JQTable.Node("上年度", "snd", true, TextAlign.Center);
                 for (let i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "snd_" + i));
                 }
-
                 titleNodes.push(node);
-                //if (month != 12) {
-                //    titleNodes.push(node);
-                //}
-
                 node = new JQTable.Node("本年度", "sbdscqyqk_bnd", true, TextAlign.Center);
                 for (let i = 1; i <= month; ++i) {
                     node.append(new JQTable.Node(i + "月", "bnd_" + i));
@@ -51,35 +45,27 @@ module sbdscqyqk {
         class ShowView extends framework.basic.ShowPluginView {
             static ins = new ShowView();
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("../xfcpqy/update.do", false);
-            private mDateSelector:Util.DateSelector;
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/xfcpqy/update.do", false);
+            private tableAssist:JQTable.JQGridAssistant;
             private mDt: string;
-            private mCompType:Util.CompanyType;
             private mType:sbdscqyqk.SbdscqyqkType;
 
             getId():number {
                 return plugin.xfcpqy;
             }
-
-            pluginGetUnit():string{
-                return "单位：万元";
-            }
-
-            pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "../xfcpqy/export.do?" + Util.Ajax.toUrlParam({
+            pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
+                return "/BusinessManagement/xfcpqy/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
-                        companyId:compType,
+                        companyId: cpType,
                         type: this.mType
                     });
             }
-
             private option():Option {
                 return <Option>this.mOpt;
             }
 
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjax.get({
                         date: date,
                         companyId:compType,
@@ -96,11 +82,13 @@ module sbdscqyqk {
                     return;
                 }
 
+                this.$(this.option().ctarea).show();
                 this.updateTable();
+
+                this.adjustSize();
             }
-
-
-            isSupported(compType:Util.CompanyType):boolean {
+            
+             isSupported(compType:Util.CompanyType):boolean {
                 if (this.mType == sbdscqyqk.SbdscqyqkType.BYQ) {
                     if (compType == Util.CompanyType.SBGS ||
                         compType == Util.CompanyType.HBGS ||
@@ -122,6 +110,7 @@ module sbdscqyqk {
                 return false;
             }
 
+
             public init(opt:Option):void {
                 framework.router
                     .fromEp(new framework.basic.EndpointProxy(plugin.xfcpqy_byq, this.getId()))
@@ -132,8 +121,8 @@ module sbdscqyqk {
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "细分产品签约情况及趋势（国内市场制造业签约）");
             }
-
-            onEvent(e:framework.route.Event):any {
+            
+             onEvent(e:framework.route.Event):any {
                 if (e.road != undefined) {
                     switch (e.road[e.road.length - 1]) {
                         case plugin.xfcpqy_byq:
@@ -148,32 +137,57 @@ module sbdscqyqk {
                 }
                 return super.onEvent(e);
             }
-			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+
+            private getMonth():number{
+                let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
-				return month;
-			}
-			
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mDt);
+                return month;
+            }
+
+
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: this.mData.length > 25 ? 550 : '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 1000,
-                        data: tableAssist.getData(this.mData),
-                        datatype: "local",
-                        viewrecords : true
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mDt);
+                return this.tableAssist;
+            }
+
+            private updateTable():any {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                return ;
             }
         }
     }

@@ -1,9 +1,9 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../sbdscqyqkdef.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../sbdscqyqkdef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -36,9 +36,6 @@ var sbdscqyqk;
                     node.append(new JQTable.Node(i + "月", "snd_" + i));
                 }
                 titleNodes.push(node);
-                //if (month != 12) {
-                //    titleNodes.push(node);
-                //}
                 node = new JQTable.Node("本年度", "sbdscqyqk_bnd", true, TextAlign.Center);
                 for (var i = 1; i <= month; ++i) {
                     node.append(new JQTable.Node(i + "月", "bnd_" + i));
@@ -52,18 +49,15 @@ var sbdscqyqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../xfcpqy/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/xfcpqy/update.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.xfcpqy;
             };
-            ShowView.prototype.pluginGetUnit = function () {
-                return "单位：万元";
-            };
-            ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../xfcpqy/export.do?" + Util.Ajax.toUrlParam({
+            ShowView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "/BusinessManagement/xfcpqy/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    companyId: compType,
+                    companyId: cpType,
                     type: this.mType
                 });
             };
@@ -73,7 +67,6 @@ var sbdscqyqk;
             ShowView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
@@ -88,7 +81,9 @@ var sbdscqyqk;
                 if (this.mData == undefined) {
                     return;
                 }
+                this.$(this.option().ctarea).show();
                 this.updateTable();
+                this.adjustSize();
             };
             ShowView.prototype.isSupported = function (compType) {
                 if (this.mType == sbdscqyqk.SbdscqyqkType.BYQ) {
@@ -140,25 +135,44 @@ var sbdscqyqk;
                 var month = curDate.getMonth() + 1;
                 return month;
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name, this.mDt);
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
+            };
+            ShowView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mDt);
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    height: this.mData.length > 25 ? 550 : '100%',
-                    width: 1200,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 1000,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
-                    viewrecords: true
-                }));
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                return;
             };
             ShowView.ins = new ShowView();
             return ShowView;
