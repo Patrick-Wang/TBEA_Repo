@@ -330,9 +330,12 @@ th.ui-th-ltr {
 	z-index: 1000;
 }
 
-
 .page-header-double{
 	height:80px;
+}
+
+.hidden{
+	display:none;
 }
 
 .page-header-double .btn{

@@ -97,25 +97,25 @@
 
         resize : function(onResize){
             _old_jq_resize.call(this, function(){
-                if (!this.lastResizeTime){
-                    this.lastResizeTime = new Date().getTime();
-                    this.inCheckTime = false;
-                }
-                var _this = this;
-                var cur = new Date().getTime();
-
-                if ((cur - this.lastResizeTime) < 10){
-                    if (!this.inCheckTime){
-                        this.inCheckTime = true;
-                        setTimeout(function(){
-                            _this.inCheckTime = false;
-                            $(_this).trigger("resize");
-                        }, 11);
-                    }
-                    this.lastResizeTime = cur;
-                    return $(this);
-                }
-                this.lastResizeTime = cur;
+                //if (!this.lastResizeTime){
+                //    this.lastResizeTime = new Date().getTime();
+                //    this.inCheckTime = false;
+                //}
+                //var _this = this;
+                //var cur = new Date().getTime();
+                //
+                //if ((cur - this.lastResizeTime) < 10){
+                //    if (!this.inCheckTime){
+                //        this.inCheckTime = true;
+                //        setTimeout(function(){
+                //            _this.inCheckTime = false;
+                //            $(_this).trigger("resize");
+                //        }, 11);
+                //    }
+                //    this.lastResizeTime = cur;
+                //    return $(this);
+                //}
+                //this.lastResizeTime = cur;
 
 
 

@@ -12,29 +12,15 @@ module framework.templates.dateChartReport {
     import UnitedSelector = Util.UnitedSelector;
     import IDataNode = Util.IDataNode;
     import DataNode = Util.DataNode;
+    import ShowView = framework.templates.singleDateReport.ShowView;
 
-    String.prototype["getWidth"] = function(fontSize)
-    {
-        var span = document.getElementById("__getwidth");
-        if (span == null) {
-            span = document.createElement("span");
-            span.id = "__getwidth";
-            document.body.appendChild(span);
-            span.style.visibility = "hidden";
-            span.style.whiteSpace = "nowrap";
-        }
-        span.innerText = this;
-        span.style.fontSize = fontSize + "px";
-
-        return span.offsetWidth;
-    }
 
     export let FE_TB_CLICKED:number = framework.route.nextId();
     export let FE_CT_CLICKED:number = framework.route.nextId();
     export let FE_ZL_APPROVED:number = framework.route.nextId();
 
-    export function createInstance() : ShowView {
-        return new ShowView();
+    export function create() : ShowView {
+        return new SimpleShowView();
     }
 
     declare var echarts;
@@ -49,6 +35,7 @@ module framework.templates.dateChartReport {
         chart:number;
         nodes:IDataNode[];
     }
+
     export interface ShowOption extends framework.templates.singleDateReport.ShowOption{
         itemNodes:IDataNode[];
         chartNodes:ChartNodes[];
@@ -60,7 +47,7 @@ module framework.templates.dateChartReport {
     }
 
 
-    export class ShowView extends framework.templates.singleDateReport.ShowView{
+    class SimpleShowView extends framework.templates.singleDateReport.ShowView{
         unitedSelector : Util.UnitedSelector;
         chartSelector : Util.UnitedSelector;
         mChartUpdate:Util.Ajax;
@@ -86,28 +73,13 @@ module framework.templates.dateChartReport {
             return undefined;
         }
 
-        private getMaxWidth(opts : any) : number{
-            var max = 0;
-            var tmp = 0;
-            var fontSize = Util.isMSIE() ? 14 : 13;
-            for (var i = 0; i < opts.length; ++i){
-                tmp = $(opts[i]).text().getWidth(fontSize) + 25;
-                if (max < tmp){
-                    max = tmp;
-                }
-            }
-            return max;
-        }
 
         updateChartSelect(){
             let changed = false;
             let chartSelId = this.option().chartSelId;
             let ctNodeId = this.findChartId(this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id);
 
-
             if (this.chartSelector == undefined){
-                $("#" + this.option().chartId).append(
-                    "<div id='" + this.option().chartId + "ct' style='width:1200px;height:500px'/>");
                 this.mChartType = ctNodeId;
                 changed = true;
             }else{
@@ -120,20 +92,6 @@ module framework.templates.dateChartReport {
 
             if (changed){
                 this.chartSelector = new UnitedSelector(this.findChartNode(ctNodeId), chartSelId);
-                var width = this.getMaxWidth($("#" + chartSelId + " select").children());
-                $("#" + chartSelId + " select").css("width", width);
-                $("#" + chartSelId + " select")
-                    .multiselect({
-                        multiple: false,
-                        header: false,
-                        minWidth: 100,
-                        height: '500px',
-                        // noneSelectedText: "请选择月份",
-                        selectedList: 1
-                    })
-                    .css("padding", "2px 0 2px 4px")
-                    .css("text-align", "left")
-                    .css("font-size", "12px");
             }
         }
 
@@ -142,38 +100,14 @@ module framework.templates.dateChartReport {
             this.mChartUpdate = new Util.Ajax(this.option().chartUrl, false);
             this.unitedSelector = new UnitedSelector(opt.itemNodes,opt.itemId);
             this.unitedSelector.change(()=>{
-                var width = this.getMaxWidth($("#" + opt.itemId + " select").children());
-                $("#" + opt.itemId + " select").css("width", width);
-                $("#" + opt.itemId + " select")
-                    .multiselect({
-                        multiple: false,
-                        header: false,
-                        minWidth: 100,
-                        height:'100%',
-                        // noneSelectedText: "请选择月份",
-                        selectedList: 1
-                    })
-                    .css("padding", "2px 0 2px 4px")
-                    .css("text-align", "left")
-                    .css("font-size", "12px");
                 this.updateChartSelect();
+                this.adjustHeader();
             });
-            var width = this.getMaxWidth($("#" + opt.itemId + " select").children());
-            $("#" + opt.itemId + " select").css("width", width);
-            $("#" + opt.itemId + " select")
-                .multiselect({
-                    multiple: false,
-                    header: false,
-                    minWidth: 100,
-                    height: '100%',
-                    // noneSelectedText: "请选择月份",
-                    selectedList: 1
-                })
-                .css("padding", "2px 0 2px 4px")
-                .css("text-align", "left")
-                .css("font-size", "12px");
-
             this.updateChartSelect();
+
+            $(window).resize(()=>{
+                this.adjustHeader();
+            });
 
             super.onInitialize(opt);
 
@@ -184,24 +118,24 @@ module framework.templates.dateChartReport {
         }
 
 
-        onEvent(e:framework.route.Event):any {
-            switch (e.id) {
-                case FE_TB_CLICKED:
-                    $("#" + this.option().host).show();
-                    $("#" + this.option().chartId).hide();
-                    $("#" + this.option().chartSelId).hide();
-                    this.updateTable();
-                    break;
-                case FE_CT_CLICKED:
-                    $("#" + this.option().host).hide();
-                    $("#" + this.option().chartId).show();
-                    $("#" + this.option().chartSelId).show();
-                    this.updateChart();
-                    break;
-            }
-
-            return super.onEvent(e);
-        }
+        //onEvent(e:framework.route.Event):any {
+        //    switch (e.id) {
+        //        case FE_TB_CLICKED:
+        //            $("#" + this.option().host).show();
+        //            $("#" + this.option().chartId).hide();
+        //            $("#" + this.option().chartSelId).hide();
+        //            this.updateTable();
+        //            break;
+        //        case FE_CT_CLICKED:
+        //            $("#" + this.option().host).hide();
+        //            $("#" + this.option().chartId).show();
+        //            $("#" + this.option().chartSelId).show();
+        //            this.updateChart();
+        //            break;
+        //    }
+        //
+        //    return super.onEvent(e);
+        //}
 
 
         getParams(date:Util.Date):any{
@@ -211,68 +145,57 @@ module framework.templates.dateChartReport {
             };
         }
 
-        getDate(date:Util.Date):string{
-            return "" + (date.year + "-" + (date.month == undefined ? 1 :date.month) + "-" + (date.day == undefined ? 1 :date.day));
-        }
 
         update (date:Util.Date){
-
             let nodes : DataNode[] = this.chartSelector.getNodes();
             this.mChartUpdate.get($.extend({
                 chart:nodes[nodes.length - 1].data.id
             }, this.getParams(date))).then((jsonData:any) => {
                 this.mChartResp = jsonData;
-                if ($("#" + this.option().chartId).css("display") != "none") {
-                    this.updateChart();
-                }
+                this.updateChart();
             });
 
             this.mAjaxUpdate.get(this.getParams(date))
                 .then((jsonData:any) => {
                     this.resp = jsonData;
-                    if ($("#" + this.option().host).css("display") != "none") {
-                        this.updateTable();
-                    }
+                    this.updateTable();
                 });
         }
 
-        updateTable():void {
-            var name = this.opt.host + "_jqgrid_uiframe";
-            var pagername = name + "pager";
-            this.mTableAssist = Util.createTable(name, this.resp);
-
-            var parent = $("#" + this.opt.host);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-            let jqTable = $("#" + name);
-            jqTable.jqGrid(
-                this.mTableAssist.decorate({
-                    datatype: "local",
-                    data: this.mTableAssist.getData(this.resp.data),
-                    multiselect: false,
-                    drag: false,
-                    resize: false,
-                    assistEditable:false,
-                    //autowidth : false,
-                    cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
-                    cellEdit: false,
-                    // height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 1000,
-                    height: this.resp.data.length > 25 ? 550 : '100%',
-                    width: this.resp.width == undefined ? 1200 : this.resp.width,
-                    shrinkToFit: true,
-                    autoScroll: true
-                }));
+        adjustHeader(){
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40){
+                $(".page-header").addClass("page-header-double");
+                $("#headerHost").css("width", $("#sels").width() + "px");
+            }else{
+                $(".page-header").removeClass("page-header-double");
+            }
+            return false;
         }
 
-        exportExcel(date:Util.Date, id:string): void {
-            $("#" + id)[0].action = this.opt.exportUrl + "?" +  Util.Ajax.toUrlParam(this.getParams(date));
-            $("#" + id)[0].submit();
+        adjustSize(){
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.opt.host).width());
+            }
+
+            //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            //this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+            //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+            //    jqgrid.setGridWidth(this.jqgridHost().width());
+            //}
+
+            $("#" + this.option().chartId).css("height", "300px");
+            $("#" + this.option().chartId).css("width", $("#" + this.opt.host).width() + "px");
+            this.updateChart();
         }
 
         private updateChart():void {
+
+            $("#" + this.option().chartId).empty();
+            $("#" + this.option().chartId).removeAttr("_echarts_instance_");
+
             let series = [];
             for (let i in this.mChartResp.yNames) {
                 series.push({
@@ -313,7 +236,7 @@ module framework.templates.dateChartReport {
                 series: series
             };
 
-            echarts.init($("#" + this.option().chartId + "ct")[0]).setOption(option);
+            echarts.init($("#" + this.option().chartId)[0]).setOption(option);
         }
     }
 }

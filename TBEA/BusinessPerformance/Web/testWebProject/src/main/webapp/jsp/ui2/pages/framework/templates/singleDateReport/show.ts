@@ -14,7 +14,7 @@ module framework.templates.singleDateReport {
     export let FE_EXPORTEXCEL:number = framework.route.nextId();
     export let FE_INIT_EVENT:number = framework.route.nextId();
 
-    export function createInstance() : ShowView{
+    export function create() : ShowView{
         return new ShowView();
     }
 
@@ -33,7 +33,6 @@ module framework.templates.singleDateReport {
 
 
     export class ShowView extends BasicEndpoint{
-        dateSelect : Util.DateSelectorProxy;
         mAjaxUpdate:Util.Ajax;
         mAjaxExport:Util.Ajax;
         mTableAssist:JQTable.JQGridAssistant;
@@ -54,31 +53,66 @@ module framework.templates.singleDateReport {
                 if (opt.dateEnd == undefined){
                     opt.dateEnd = $.extend({}, opt.date);
                 }
-                this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
-                    year:opt.date.year - 3,
-                    month:opt.date.month,
-                    day:opt.date.day
-                }, opt.dateEnd, opt.date, opt.asSeason, opt.asSeasonAcc, opt.jdName);
-                this.update(this.dateSelect.getDate());
+
+                let seasonClass = "";
+                let fmt = "YYYY年MM月";
+                if (opt.asSeason){
+                    fmt = "YYYY年 && $$MM月";
+                    seasonClass = "season-month";
+                }else if(opt.asSeasonAcc){
+                    fmt = "YYYY年 &&MM月";
+                    seasonClass = "season";
+                }
+
+                $("#" + this.opt.dtId).jeDate({
+                    skinCell: "jedatedeepgreen",
+                    format: fmt,
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false,
+                    minDate: Util.date2Str(Util.addYear(opt.date, -3)),
+                    maxDate: Util.date2Str(opt.dateEnd),
+                    seasonText : opt.jdName ? opt.jdName : undefined
+                }).removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top")
+                    .addClass(seasonClass);
+
+                this.update(this.getUDate());
+                $(window).resize(()=>{
+                    this.adjustSize();
+                });
             }
+        }
 
 
-
+        protected getUDate():Util.Date {
+            let ret : any = {};
+            if (this.opt.date){
+                let curDate = $("#" + this.opt.dtId).getDate();
+                ret = {
+                    year : curDate.getFullYear(),
+                    month : curDate.getMonth() + 1,
+                    day : curDate.getDate()
+                };
+            }
+            return ret;
         }
 
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
                 case FE_UPDATE:
-                    if (this.dateSelect == undefined){
+                    if (this.opt.date == undefined){
                         return this.update(<Util.Date>({}));
                     }else{
-                        return this.update(this.dateSelect.getDate());
+                        return this.update(this.getUDate());
                     }
                 case FE_EXPORTEXCEL:
-                    if (this.dateSelect == undefined){
+                    if (this.opt.date == undefined){
                         return this.exportExcel(<Util.Date>({}), e.data);
                     }else{
-                        return this.exportExcel(this.dateSelect.getDate(), e.data);
+                        return this.exportExcel(this.getUDate(), e.data);
                     }
             }
             return super.onEvent(e);
@@ -88,21 +122,57 @@ module framework.templates.singleDateReport {
             return "" + (date.year + "-" + (date.month == undefined ? 1 :date.month) + "-" + (date.day == undefined ? 1 :date.day));
         }
 
+        getParams(date:Util.Date):any{
+            return {
+                date: this.getDate(date)
+            };
+        }
+
         update (date:Util.Date){
-            this.mAjaxUpdate.get({
-                    date: this.getDate(date)
-                })
+            this.mAjaxUpdate.get(this.getParams(this.getUDate()))
                 .then((jsonData:any) => {
                     this.resp = jsonData;
                     this.updateTable();
                 });
         }
 
-        updateTable():void {
-            var name = this.opt.host + "_jqgrid_uiframe";
-            var pagername = name + "pager";
-            this.mTableAssist = Util.createTable(name, this.resp);
+        adjustSize() {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.opt.host).width());
+            }
 
+            let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+
+
+
+
+            if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.opt.host).width());
+            }
+        }
+
+        jqgrid(){
+            return $("#" + this.jqgridName());
+        }
+
+        jqgridName():string{
+            return this.opt.host + "_jqgrid_real";
+        }
+
+        createJqassist():JQTable.JQGridAssistant{
+            var parent = $("#" + this.opt.host);
+            var pagername = this.jqgridName() + "pager";
+            parent.empty();
+            parent.append("<table id='"+ this.jqgridName() +"'><div id='" + pagername + "'></table>");
+            this.mTableAssist = Util.createTable(this.jqgridName(), this.resp);
+            return this.mTableAssist;
+        }
+
+        updateTable():void {
+            this.createJqassist();
 
             if (this.resp.colorKey){
                 for (var i = 0; i < this.resp.data.length; ++i) {
@@ -112,37 +182,24 @@ module framework.templates.singleDateReport {
                 }
             }
 
+            this.mTableAssist.create({
+                data: this.resp.data,
+                datatype: "local",
+                multiselect: false,
+                drag: false,
+                resize: false,
+                height: '100%',
+                width: $("#" + this.opt.host).width(),
+                shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
+                rowNum: 2000,
+                autoScroll: true
+            });
 
-            var parent = $("#" + this.opt.host);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-            let jqTable = $("#" + name);
-            jqTable.jqGrid(
-                this.mTableAssist.decorate({
-                    datatype: "local",
-                    data: this.mTableAssist.getData(this.resp.data),
-                    multiselect: false,
-                    drag: false,
-                    resize: false,
-                    assistEditable:false,
-                    //autowidth : false,
-                    cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
-                    cellEdit: false,
-                    // height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 1000,
-                    height: this.resp.data.length > 25 ? 550 : '100%',
-                    width: this.resp.width == undefined ? 1300 : this.resp.width,
-                    shrinkToFit: true,
-                    autoScroll: true
-                }));
+            this.adjustSize();
         }
 
         exportExcel(date:Util.Date, id:string): void {
-            $("#" + id)[0].action = this.opt.exportUrl + "?" +  Util.Ajax.toUrlParam({
-                date: this.getDate(date)
-            });
+            $("#" + id)[0].action = this.opt.exportUrl + "?" +  Util.Ajax.toUrlParam(this.getParams(this.getUDate()));
             $("#" + id)[0].submit();
         }
     }

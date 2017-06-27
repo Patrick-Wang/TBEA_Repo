@@ -19,10 +19,10 @@ var framework;
             singleDateReport.FE_UPDATE = framework.route.nextId();
             singleDateReport.FE_EXPORTEXCEL = framework.route.nextId();
             singleDateReport.FE_INIT_EVENT = framework.route.nextId();
-            function createInstance() {
+            function create() {
                 return new ShowView();
             }
-            singleDateReport.createInstance = createInstance;
+            singleDateReport.create = create;
             var ShowView = (function (_super) {
                 __extends(ShowView, _super);
                 function ShowView() {
@@ -32,6 +32,7 @@ var framework;
                     return singleDateReport.FRAME_ID;
                 };
                 ShowView.prototype.onInitialize = function (opt) {
+                    var _this = this;
                     this.opt = opt;
                     this.mAjaxUpdate = new Util.Ajax(opt.updateUrl, false);
                     this.mAjaxExport = new Util.Ajax(opt.exportUrl, false);
@@ -43,29 +44,63 @@ var framework;
                         if (opt.dateEnd == undefined) {
                             opt.dateEnd = $.extend({}, opt.date);
                         }
-                        this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
-                            year: opt.date.year - 3,
-                            month: opt.date.month,
-                            day: opt.date.day
-                        }, opt.dateEnd, opt.date, opt.asSeason, opt.asSeasonAcc, opt.jdName);
-                        this.update(this.dateSelect.getDate());
+                        var seasonClass = "";
+                        var fmt = "YYYY年MM月";
+                        if (opt.asSeason) {
+                            fmt = "YYYY年 && $$MM月";
+                            seasonClass = "season-month";
+                        }
+                        else if (opt.asSeasonAcc) {
+                            fmt = "YYYY年 &&MM月";
+                            seasonClass = "season";
+                        }
+                        $("#" + this.opt.dtId).jeDate({
+                            skinCell: "jedatedeepgreen",
+                            format: fmt,
+                            isTime: false,
+                            isinitVal: true,
+                            isClear: false,
+                            isToday: false,
+                            minDate: Util.date2Str(Util.addYear(opt.date, -3)),
+                            maxDate: Util.date2Str(opt.dateEnd),
+                            seasonText: opt.jdName ? opt.jdName : undefined
+                        }).removeCss("height")
+                            .removeCss("padding")
+                            .removeCss("margin-top")
+                            .addClass(seasonClass);
+                        this.update(this.getUDate());
+                        $(window).resize(function () {
+                            _this.adjustSize();
+                        });
                     }
+                };
+                ShowView.prototype.getUDate = function () {
+                    var ret = {};
+                    if (this.opt.date) {
+                        var curDate = $("#" + this.opt.dtId).getDate();
+                        ret = {
+                            year: curDate.getFullYear(),
+                            month: curDate.getMonth() + 1,
+                            day: curDate.getDate()
+                        };
+                    }
+                    return ret;
                 };
                 ShowView.prototype.onEvent = function (e) {
                     switch (e.id) {
                         case singleDateReport.FE_UPDATE:
-                            if (this.dateSelect == undefined) {
+                            if (this.opt.date == undefined) {
                                 return this.update(({}));
                             }
                             else {
-                                return this.update(this.dateSelect.getDate());
+                                return this.update(this.getUDate());
                             }
                         case singleDateReport.FE_EXPORTEXCEL:
-                            if (this.dateSelect == undefined) {
+                            if (this.opt.date == undefined) {
                                 return this.exportExcel(({}), e.data);
                             }
                             else {
-                                return this.exportExcel(this.dateSelect.getDate(), e.data);
+                                return this.exportExcel(this.getUDate(), e.data);
                             }
                     }
                     return _super.prototype.onEvent.call(this, e);
@@ -73,20 +108,46 @@ var framework;
                 ShowView.prototype.getDate = function (date) {
                     return "" + (date.year + "-" + (date.month == undefined ? 1 : date.month) + "-" + (date.day == undefined ? 1 : date.day));
                 };
+                ShowView.prototype.getParams = function (date) {
+                    return {
+                        date: this.getDate(date)
+                    };
+                };
                 ShowView.prototype.update = function (date) {
                     var _this = this;
-                    this.mAjaxUpdate.get({
-                        date: this.getDate(date)
-                    })
+                    this.mAjaxUpdate.get(this.getParams(this.getUDate()))
                         .then(function (jsonData) {
                         _this.resp = jsonData;
                         _this.updateTable();
                     });
                 };
+                ShowView.prototype.adjustSize = function () {
+                    var jqgrid = this.jqgrid();
+                    if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+                        jqgrid.setGridWidth($("#" + this.opt.host).width());
+                    }
+                    var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                    this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                    if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+                        jqgrid.setGridWidth($("#" + this.opt.host).width());
+                    }
+                };
+                ShowView.prototype.jqgrid = function () {
+                    return $("#" + this.jqgridName());
+                };
+                ShowView.prototype.jqgridName = function () {
+                    return this.opt.host + "_jqgrid_real";
+                };
+                ShowView.prototype.createJqassist = function () {
+                    var parent = $("#" + this.opt.host);
+                    var pagername = this.jqgridName() + "pager";
+                    parent.empty();
+                    parent.append("<table id='" + this.jqgridName() + "'><div id='" + pagername + "'></table>");
+                    this.mTableAssist = Util.createTable(this.jqgridName(), this.resp);
+                    return this.mTableAssist;
+                };
                 ShowView.prototype.updateTable = function () {
-                    var name = this.opt.host + "_jqgrid_uiframe";
-                    var pagername = name + "pager";
-                    this.mTableAssist = Util.createTable(name, this.resp);
+                    this.createJqassist();
                     if (this.resp.colorKey) {
                         for (var i = 0; i < this.resp.data.length; ++i) {
                             if (this.resp.data[i][0].lastIndexOf(this.resp.colorKey) >= 0) {
@@ -94,34 +155,22 @@ var framework;
                             }
                         }
                     }
-                    var parent = $("#" + this.opt.host);
-                    parent.empty();
-                    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                    var jqTable = $("#" + name);
-                    jqTable.jqGrid(this.mTableAssist.decorate({
+                    this.mTableAssist.create({
+                        data: this.resp.data,
                         datatype: "local",
-                        data: this.mTableAssist.getData(this.resp.data),
                         multiselect: false,
                         drag: false,
                         resize: false,
-                        assistEditable: false,
-                        //autowidth : false,
-                        cellsubmit: 'clientArray',
-                        //editurl: 'clientArray',
-                        cellEdit: false,
-                        // height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 1000,
-                        height: this.resp.data.length > 25 ? 550 : '100%',
-                        width: this.resp.width == undefined ? 1300 : this.resp.width,
-                        shrinkToFit: true,
+                        height: '100%',
+                        width: $("#" + this.opt.host).width(),
+                        shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
+                        rowNum: 2000,
                         autoScroll: true
-                    }));
+                    });
+                    this.adjustSize();
                 };
                 ShowView.prototype.exportExcel = function (date, id) {
-                    $("#" + id)[0].action = this.opt.exportUrl + "?" + Util.Ajax.toUrlParam({
-                        date: this.getDate(date)
-                    });
+                    $("#" + id)[0].action = this.opt.exportUrl + "?" + Util.Ajax.toUrlParam(this.getParams(this.getUDate()));
                     $("#" + id)[0].submit();
                 };
                 return ShowView;

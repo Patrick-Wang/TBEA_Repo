@@ -20,9 +20,9 @@
 			<c:if test="${scbsjLookup}">
 				<script>
 					builder.register('marketShow', function() {
-						return [ createNode('市场签约统计情况', 'report/scqytjqk.do'),
-								createNode('重点产品签约情况查看', 'report/scqy.do'),
-								createNode('行业签约情况查看', 'report/scjb.do') ];
+						return [ createNode('市场签约统计情况', 'report/v2/scqytjqk.do'),
+								createNode('重点产品签约情况查看', 'report/v2/scqy.do'),
+								createNode('行业签约情况查看', 'report/v2/scjb.do') ];
 					});
 				</script>
 			</c:if>
@@ -30,8 +30,8 @@
 				<script>
 					builder.register('marketEntry', function() {
 						return root = [
-								createNode('重点产品签约情况录入', 'report/scqyEntry.do'),
-								createNode('行业签约情况录入', 'report/scjbEntry.do') ];
+								createNode('重点产品签约情况录入', 'report/v2/scqyEntry.do'),
+								createNode('行业签约情况录入', 'report/v2/scjbEntry.do') ];
 					});
 				</script>
 			</c:if>
@@ -53,7 +53,7 @@
 				builder.register('qualityEntry', function() {
 					return [
 						createNode("产品一次送试录入", 'cpzlqk/entry.do'), 
-						createNode("原材料合格率录入", 'report/yclhglqktjEntry.do')
+						createNode("原材料合格率录入", 'report/v2/yclhglqktjEntry.do')
 					];
 				});
 	 		</script>
@@ -61,8 +61,8 @@
 				<script>
 					builder.register('qualityImport', function() {
 						return [
-							createNode("内部质量问题导入", 'report/nbzlqkImportJsp.do'), 
-							createNode("外部质量问题导入", 'report/wbzlqkImportJsp.do')
+							createNode("内部质量问题导入", 'report/v2/nbzlqkImportJsp.do'), 
+							createNode("外部质量问题导入", 'report/v2/wbzlqkImportJsp.do')
 						];
 					});
 		 		</script>
@@ -125,8 +125,8 @@
 						return [
 						    createNode('产业重点指标完成情况', 'ydzb/v2/gcy_zbhz.do'),
 						    createNode('单位重点指标完成情况', 'ydzb/v2/gdw_zbhz.do'),
-						    createNode('单位数据子库', 'report/zk.do'),
-						    createNode('产业指标汇总', 'report/acyhzzb.do')
+						    createNode('单位数据子库', 'report/v2/zk.do'),
+						    createNode('产业指标汇总', 'report/v2/acyhzzb.do')
 						];
 					});
 		 		</script>
@@ -174,8 +174,8 @@
 					return createNode('财务分析', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 						.append(builder.build('gsztcwwcqk'))
 						.append(createNode('单位财务指标完成情况', 'NCzb/v2/CompanysNC.do'))
-						.append(createNode('财务对标需求', 'report/dbxq.do'))
-						.append(createNode('经济增加值', 'report/jjzjz.do'))
+						.append(createNode('财务对标需求', 'report/v2/dbxq.do'))
+						.append(createNode('经济增加值', 'report/v2/jjzjz.do'))
 						.append(builder.build('cwfxLookup'));
 				})
 			</script>
@@ -234,7 +234,7 @@
 			<c:if test="${xtnyrbLookupAuth}">
 				<script>
 					builder.register('xnyrb', function() {
-						return createNode('新特能源日报', 'report/xtnyrb.do');
+						return createNode('新特能源日报', 'report/v2/xtnyrb.do');
 					});
 				</script>
 			</c:if>
@@ -243,8 +243,8 @@
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('上市公司对标数据')
-						.append(createNode('对标数据总体分析', 'report/ztdbfx.do'))
-						.append(createNode('对标数据分类分析', 'report/fldbfx.do'));
+						.append(createNode('对标数据总体分析', 'report/v2/ztdbfx.do'))
+						.append(createNode('对标数据分类分析', 'report/v2/fldbfx.do'));
 				});
 			</script>
 		</c:if>
@@ -260,14 +260,14 @@
 				<script>
 					builder.register('SddbLookup', function () {
 						return [
-						   createNode('订单全过程管控', "report/bidCollectionWrapper.do"),
-						   createNode('中标产品分型号汇总', "report/WinBidModelCollection.do"),
-						   createNode('分阶段单位订单成本汇总', "report/gdwddfxhCollection.do"),
-						   createNode('订单成本汇总表(按型号)', "report/gdwddCollection.do"),
-						   createNode('公司订单分阶段汇总分析', "report/ddfjdCollection.do"),
-						   createNode('完工订单分图号对比分析', "report/codeCollection.do"),
-						   createNode('完工订单分型号对比分析', "report/modelCollection.do"),
-						   createNode('订单信息明细', "report/ddDetailJsp.do")
+						   createNode('订单全过程管控', "report/v2/bidCollectionWrapper.do"),
+						   createNode('中标产品分型号汇总', "report/v2/WinBidModelCollection.do"),
+						   createNode('分阶段单位订单成本汇总', "report/v2/gdwddfxhCollection.do"),
+						   createNode('订单成本汇总表(按型号)', "report/v2/gdwddCollection.do"),
+						   createNode('公司订单分阶段汇总分析', "report/v2/ddfjdCollection.do"),
+						   createNode('完工订单分图号对比分析', "report/v2/codeCollection.do"),
+						   createNode('完工订单分型号对比分析', "report/v2/modelCollection.do"),
+						   createNode('订单信息明细', "report/v2/ddDetailJsp.do")
 						];
 					});
 				</script>
@@ -275,7 +275,7 @@
 			<c:if test="${sddbImport}">
 				<script>
 					builder.register('SddbImport', function () {
-						return createNode('订单信息导入', "report/sddbImportWrapperJsp.do");
+						return createNode('订单信息导入', "report/v2/sddbImportWrapperJsp.do");
 					});
 				</script>
 			</c:if>
@@ -292,9 +292,9 @@
 				<script>
 					builder.register('ScqyLookup', function () {
 						return [
-						   createNode('市场签约统计情况', "report/scqytjqk.do"),
-						   createNode('重点产品签约情况查看', "report/scqy.do"),
-						   createNode('行业签约情况查看', "report/scjb.do")
+						   createNode('市场签约统计情况', "report/v2/scqytjqk.do"),
+						   createNode('重点产品签约情况查看', "report/v2/scqy.do"),
+						   createNode('行业签约情况查看', "report/v2/scjb.do")
 						];
 					});
 				</script>
@@ -303,8 +303,8 @@
 				<script>
 					builder.register('ScqyEntry',function () {
 						return [
-						   createNode('重点产品签约情况录入', "report/scqyEntry.do"),
-						   createNode('行业签约情况录入', "report/scjbEntry.do")
+						   createNode('重点产品签约情况录入', "report/v2/scqyEntry.do"),
+						   createNode('行业签约情况录入', "report/v2/scjbEntry.do")
 						];
 					});
 				</script>
@@ -322,7 +322,7 @@
 				<script>
 					builder.register('Zhzlzb', function () {
 						return [
-						   createNode('众和质量指标', "report/zhzl.do")
+						   createNode('众和质量指标', "report/v2/zhzl.do")
 						];
 					});
 				</script>
@@ -332,9 +332,9 @@
 				<script>
 					builder.register('Zhfzgszlzb', function () {
 						return [
-						   createNode('众和分子公司累计汇总', "report/zhgsljzbhz.do"),
-						   createNode('众和分子公司月度汇总', "report/zhgsljzbhz.do"),
-						   createNode('众和分产业关键指标汇总', "report/zhgsfcyUnion.do")
+						   createNode('众和分子公司累计汇总', "report/v2/zhgsljzbhz.do"),
+						   createNode('众和分子公司月度汇总', "report/v2/zhgsljzbhz.do"),
+						   createNode('众和分产业关键指标汇总', "report/v2/zhgsfcyUnion.do")
 						];
 					});
 				</script>
@@ -420,7 +420,7 @@
 				<script>
 					builder.register('Gcyzb', function () {
 						return [
-						   createNode('工程一张表', "report/gcyzb.do")
+						   createNode('工程一张表', "report/v2/gcyzb.do")
 						];
 					});
 				</script>
@@ -429,7 +429,7 @@
 				<script>
 					builder.register('GcyzbImport', function () {
 						return [
-						   createNode('工程一张表数据导入', "report/gcyzbImportJsp.do")
+						   createNode('工程一张表数据导入', "report/v2/gcyzbImportJsp.do")
 						];
 					});
 				</script>
@@ -438,9 +438,9 @@
 				<script>
 					builder.register('XnyJyfx', function () {
 						return [
-						   createNode('应收账款回款周报', "report/yszkhkzb.do"),
-						   createNode('生产、发货和价格周报', "report/xnyzb.do"),
-						   createNode('签约周报', "report/xnyqyzb.do")
+						   createNode('应收账款回款周报', "report/v2/yszkhkzb.do"),
+						   createNode('生产、发货和价格周报', "report/v2/xnyzb.do"),
+						   createNode('签约周报', "report/v2/xnyqyzb.do")
 						];
 					});
 				</script>
@@ -482,8 +482,8 @@
 				<script>
 					builder.register('ZXnyJyfxEntry', function () {
 						return [
-						   createNode('新能源生产、发货和价格周报录入', "report/xnyzbEntryJsp.do"),
-						   createNode('新能源应收账款回款周报导入', "report/yszkhkzbImportJsp.do")
+						   createNode('新能源生产、发货和价格周报录入', "report/v2/xnyzbEntryJsp.do"),
+						   createNode('新能源应收账款回款周报导入', "report/v2/yszkhkzbImportJsp.do")
 						];
 					});
 				</script>
@@ -492,7 +492,7 @@
 				<script>
 					builder.register('ZXtnyrbEntry', function () {
 						return [
-						   createNode('新特能源日报录入', "report/xtnyrbEntry.do")
+						   createNode('新特能源日报录入', "report/v2/xtnyrbEntry.do")
 						];
 					});
 				</script>
@@ -503,7 +503,7 @@
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('质量信息指标录入')
-						.append(createNode('质量信息指标录入', "report/zhzlEntry.do"));
+						.append(createNode('质量信息指标录入', "report/v2/zhzlEntry.do"));
 				});
 			</script>
 		</c:if>
