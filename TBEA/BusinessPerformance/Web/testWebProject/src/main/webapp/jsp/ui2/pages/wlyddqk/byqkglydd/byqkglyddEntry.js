@@ -9,8 +9,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var sbdddcbjpcqk;
-(function (sbdddcbjpcqk) {
+var wlyddqk;
+(function (wlyddqk) {
     var byqkglyddEntry;
     (function (byqkglyddEntry) {
         var TextAlign = JQTable.TextAlign;
@@ -80,9 +80,9 @@ var sbdddcbjpcqk;
             __extends(ByqkglyddEntryView, _super);
             function ByqkglyddEntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("../sbdddcbjpcqk/byqkglydd/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("../sbdddcbjpcqk/byqkglydd/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("../sbdddcbjpcqk/byqkglydd/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/entry/submit.do", false);
             }
             ByqkglyddEntryView.newInstance = function () {
                 return new ByqkglyddEntryView();
@@ -91,7 +91,6 @@ var sbdddcbjpcqk;
                 return this.mOpt;
             };
             ByqkglyddEntryView.prototype.pluginSave = function (dt, compType) {
-                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -108,17 +107,14 @@ var sbdddcbjpcqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", function () {
-                            _this.pluginUpdate(dt, compType);
-                        });
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
             ByqkglyddEntryView.prototype.pluginSubmit = function (dt, compType) {
-                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -127,7 +123,7 @@ var sbdddcbjpcqk;
                         submitData[i].push(allData[i][j]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
+                            Util.Toast.failed("有空内容 无法提交");
                             return;
                         }
                     }
@@ -139,12 +135,10 @@ var sbdddcbjpcqk;
                     companyId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", function () {
-                            _this.pluginUpdate(dt, compType);
-                        });
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -182,38 +176,78 @@ var sbdddcbjpcqk;
                     bSubmit: "确定"
                 });
             };
-            ByqkglyddEntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mType, false, this.mData.cplb);
+            ByqkglyddEntryView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() <= this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                //
+                //if (this.jqgridHost().width() < this.jqgridHost().find(".ui-jqgrid").width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+            };
+            ByqkglyddEntryView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
+                var pagername = this.jqgridName() + "pager";
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                var jqTable = this.$(name);
-                jqTable.jqGrid(this.mTableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + pagername + "'></div>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mType, false, this.mData.cplb);
+                return this.mTableAssist;
+            };
+            ByqkglyddEntryView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.mTableAssist.create({
+                    dataWithId: this.mData.statusData.data,
                     datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable: true,
                     //autowidth : false,
                     cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
                     cellEdit: true,
-                    //height: data.length > 25 ? 550 : '100%',
-                    //width: titles.length * 200,
-                    rowNum: 20,
-                    height: this.mData.statusData.data.length > 25 ? 550 : '100%',
-                    width: 1400,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
                     shrinkToFit: true,
                     autoScroll: true,
-                    viewrecords: true,
-                    pager: '#' + pagername,
-                }));
+                    rowNum: 15,
+                    assistEditable: true,
+                    pager: '#' + this.jqgridName() + "pager"
+                });
+                this.adjustSize();
+                //var name = this.option().host + this.option().tb + "_jqgrid_1234";
+                //var pagername = name + "pager";
+                //this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mType, false, this.mData.cplb);
+                //var parent = this.$(this.option().tb);
+                //parent.empty();
+                //parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+                //let jqTable = this.$(name);
+                //jqTable.jqGrid(
+                //    this.mTableAssist.decorate({
+                //        datatype: "local",
+                //        data: this.mTableAssist.getDataWithId(this.mData.statusData.data),
+                //        multiselect: false,
+                //        drag: false,
+                //        resize: false,
+                //        assistEditable:true,
+                //        //autowidth : false,
+                //        cellsubmit: 'clientArray',
+                //        //editurl: 'clientArray',
+                //        cellEdit: true,
+                //        //height: data.length > 25 ? 550 : '100%',
+                //        //width: titles.length * 200,
+                //        rowNum: 20,
+                //        height: this.mData.statusData.data.length > 25 ? 550 : '100%',
+                //        width: 1400,
+                //        shrinkToFit: true,
+                //        autoScroll: true,
+                //        viewrecords: true,
+                //        pager: '#' + pagername,
+                //    }));
             };
             return ByqkglyddEntryView;
         })(wlyddqk.BaseEntryPluginView);
         byqkglyddEntry.pluginView = ByqkglyddEntryView.newInstance();
-    })(byqkglyddEntry = sbdddcbjpcqk.byqkglyddEntry || (sbdddcbjpcqk.byqkglyddEntry = {}));
-})(sbdddcbjpcqk || (sbdddcbjpcqk = {}));
+    })(byqkglyddEntry = wlyddqk.byqkglyddEntry || (wlyddqk.byqkglyddEntry = {}));
+})(wlyddqk || (wlyddqk = {}));

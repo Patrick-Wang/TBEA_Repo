@@ -8,8 +8,8 @@
 declare var echarts;
 declare var entryView:wlyddqk.EntryView;
 declare var $:any;
-module sbdddcbjpcqk {
-    export module byqkglyddEntry {
+module wlyddqk {
+    export module xlkglyddEntry {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, type:wlyddqk.WlyddType, readOnly:boolean, cplb:string[]):JQTable.JQGridAssistant {
@@ -25,6 +25,7 @@ module sbdddcbjpcqk {
                             vals += cplb[i] + ':' + cplb[i];
                         }
                     }
+
                     nodeFirst = new JQTable.Node("产品类别", "sclb", readOnly, TextAlign.Center, 0, "select",
                         {value: vals}
                         , false);
@@ -32,42 +33,22 @@ module sbdddcbjpcqk {
 
                 return new JQTable.JQGridAssistant([
                     nodeFirst,
-                    new JQTable.Node("月产出能力", "rqa", readOnly)
-                        .append( new JQTable.Node("产值", "ba", readOnly))
-                        .append( new JQTable.Node("产量", "bb", readOnly)),
-                    new JQTable.Node("所有可供履约订单总量产值", "ab", readOnly)
-                        .append( new JQTable.Node("产值", "cca", readOnly))
-                        .append( new JQTable.Node("产量", "ccb", readOnly)),
-                    new JQTable.Node("当年可供履约订单总量产值", "ac", readOnly)
-                        .append( new JQTable.Node("产值", "da", readOnly))
-                        .append( new JQTable.Node("产量", "db", readOnly)),
+                    new JQTable.Node("月产出能力（产值）", "rqa", readOnly),
+                    new JQTable.Node("可供履约订单总额", "ab", readOnly),
+                    new JQTable.Node("当年可供履约订单总量", "ac", readOnly),
                     new JQTable.Node("n+1月订单量", "ada", readOnly)
-                        .append( new JQTable.Node("产值", "ea", readOnly))
-                        .append( new JQTable.Node("产量", "eb", readOnly)),
-                    new JQTable.Node("n+2月订单量", "aeb", readOnly)
-                        .append( new JQTable.Node("产值", "fc", readOnly))
-                        .append( new JQTable.Node("产量", "fb", readOnly)),
-                    new JQTable.Node("n+3月订单量", "aec", readOnly)
-                        .append( new JQTable.Node("产值", "fc", readOnly))
-                        .append( new JQTable.Node("产量", "fb", readOnly)),
-                    new JQTable.Node("n+4月订单量", "aed", readOnly)
-                        .append( new JQTable.Node("产值", "fc", readOnly))
-                        .append( new JQTable.Node("产量", "fb", readOnly)),
-                    new JQTable.Node("n+5月订单量", "aef", readOnly)
-                        .append( new JQTable.Node("产值", "fc", readOnly))
-                        .append( new JQTable.Node("产量", "fb", readOnly)),
-                    new JQTable.Node("n+6月订单量", "aeg", readOnly)
-                        .append( new JQTable.Node("产值", "fc", readOnly))
-                        .append( new JQTable.Node("产量", "fb", readOnly)),
-                    new JQTable.Node("n+6月以后可供履约订单", "aeh", readOnly)
-                        .append( new JQTable.Node("产值", "fc", readOnly))
-                        .append( new JQTable.Node("产量", "fb", readOnly)),
-                    new JQTable.Node("次年及以后可供履约订单排产值", "af", readOnly)
-                        .append( new JQTable.Node("产值", "ga", readOnly))
-                        .append( new JQTable.Node("产量", "gb", readOnly)),
-                    new JQTable.Node("交货期待定产值", "ag", readOnly)
-                        .append( new JQTable.Node("产值", "ga", readOnly))
-                        .append( new JQTable.Node("产量", "gb", readOnly))
+                        .append(new JQTable.Node("已排产", "ba", readOnly))
+                        .append(new JQTable.Node("未排产", "bc", readOnly)),
+                    new JQTable.Node("n+2月订单量", "adb", readOnly)
+                        .append(new JQTable.Node("已排产", "ba", readOnly))
+                        .append(new JQTable.Node("未排产", "bc", readOnly)),
+                    new JQTable.Node("n+3月订单量", "adc", readOnly)
+                        .append(new JQTable.Node("已排产", "ba", readOnly))
+                        .append(new JQTable.Node("未排产", "bc", readOnly)),
+                    new JQTable.Node("n+3月以后履约订单", "ae", readOnly),
+                    new JQTable.Node("次年及以后可供履约订单排产值", "af", readOnly),
+                    new JQTable.Node("交货期待定产值", "ag", readOnly),
+                    new JQTable.Node("外协", "ah", readOnly)
                 ], gridName);
             }
         }
@@ -76,21 +57,28 @@ module sbdddcbjpcqk {
             tb:string;
         }
 
-        class ByqkglyddEntryView extends wlyddqk.BaseEntryPluginView {
+        class XlkglyddEntryView extends wlyddqk.BaseEntryPluginView {
 
             private mData:wlyddqk.EntryLyddData;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../sbdddcbjpcqk/byqkglydd/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../sbdddcbjpcqk/byqkglydd/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../sbdddcbjpcqk/byqkglydd/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/xlkglydd/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/xlkglydd/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/xlkglydd/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
 
-            public static newInstance():ByqkglyddEntryView {
-                return new ByqkglyddEntryView();
+            public static newInstance():XlkglyddEntryView {
+                return new XlkglyddEntryView();
             }
 
             private option():Option {
                 return <Option>this.mOpt;
+            }
+
+            isSupported(compType:Util.CompanyType):boolean {
+                if (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.XLC || compType == Util.CompanyType.DLGS) {
+                    return true;
+                }
+                return false;
             }
 
             public pluginSave(dt:string, compType:Util.CompanyType):void {
@@ -110,11 +98,10 @@ module sbdddcbjpcqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", ()=>{
-                            this.pluginUpdate(dt, compType);
-                        });
+                        Util.Toast.success("保存 成功");
+                        this.pluginUpdate(dt, compType);
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -128,7 +115,7 @@ module sbdddcbjpcqk {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
+                            Util.Toast.failed("有空内容 无法提交")
                             return;
                         }
                     }
@@ -140,11 +127,10 @@ module sbdddcbjpcqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", ()=>{
-                        	this.pluginUpdate(dt, compType);
-                        });
+                        Util.Toast.success("提交 成功");
+                        this.pluginUpdate(dt, compType);
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -160,13 +146,6 @@ module sbdddcbjpcqk {
                         this.mData = jsonData;
                         this.refresh();
                     });
-            }
-
-            isSupported( compType:Util.CompanyType):boolean{
-                if (compType == Util.CompanyType.SBGS || compType == Util.CompanyType.HBGS || compType == Util.CompanyType.XBC  || compType == Util.CompanyType.TBGS){
-                    return true;
-                }
-                return false;
             }
 
             public refresh():void {
@@ -187,7 +166,56 @@ module sbdddcbjpcqk {
                 });
             }
 
+
+            public adjustSize() {
+
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() <= this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                //
+                //if (this.jqgridHost().width() < this.jqgridHost().find(".ui-jqgrid").width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
+                var parent = this.$(this.option().tb);
+                var pagername = this.jqgridName() + "pager";
+                parent.empty();
+                parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + pagername + "'></div>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mType, false, this.mData.cplb);
+                return this.mTableAssist;
+            }
+
             private updateTable():void {
+                this.createJqassist();
+
+                this.mTableAssist.create({
+                    dataWithId: this.mData.statusData.data,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    //autowidth : false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
+                    shrinkToFit: true,
+                    autoScroll: true,
+                    rowNum: 15,
+                    assistEditable: true,
+                    pager: '#' + this.jqgridName() + "pager"
+                });
+
+                this.adjustSize();
+            }
+
+            /*private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var pagername = name + "pager";
                 this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mType, false, this.mData.cplb);
@@ -208,18 +236,18 @@ module sbdddcbjpcqk {
                         //editurl: 'clientArray',
                         cellEdit: true,
                         //height: data.length > 25 ? 550 : '100%',
-                        //width: titles.length * 200,
+                        // width: titles.length * 200,
                         rowNum: 20,
-                        height: this.mData.statusData.data.length > 25 ? 550 : '100%',
-                        width: 1400,
+                        height: '100%',
+                        width: 1200,
                         shrinkToFit: true,
                         autoScroll: true,
                         viewrecords: true,
                         pager: '#' + pagername,
                     }));
-            }
+            }*/
         }
 
-        export var pluginView = ByqkglyddEntryView.newInstance();
+        export var pluginView = XlkglyddEntryView.newInstance();
     }
 }

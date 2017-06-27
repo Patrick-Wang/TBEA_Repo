@@ -1,6 +1,5 @@
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
-/// <reference path="../../js/jquery/jquery.d.ts" />
 var wlyddqk;
 (function (wlyddqk) {
     (function (WlyddType) {
@@ -46,6 +45,15 @@ var wlyddqk;
         BasePluginView.prototype.isSupported = function (compType) {
             return true;
         };
+        BasePluginView.prototype.jqgrid = function () {
+            return this.$(this.jqgridName());
+        };
+        BasePluginView.prototype.jqgridHost = function () {
+            return this.$(this.mOpt.tb);
+        };
+        BasePluginView.prototype.jqgridName = function () {
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
+        };
         return BasePluginView;
     })();
     wlyddqk.BasePluginView = BasePluginView;
@@ -54,6 +62,9 @@ var wlyddqk;
             this.mStub = stub;
             this.mType = type;
         }
+        TypeViewProxy.prototype.adjustSize = function () {
+            this.mStub.adjustSize();
+        };
         TypeViewProxy.prototype.hide = function () {
             this.mStub.hide();
         };
@@ -122,6 +133,15 @@ var wlyddqk;
         BaseEntryPluginView.prototype.isSupported = function (compType) {
             return true;
         };
+        BaseEntryPluginView.prototype.jqgrid = function () {
+            return this.$(this.jqgridName());
+        };
+        BaseEntryPluginView.prototype.jqgridHost = function () {
+            return this.$(this.mOpt.tb);
+        };
+        BaseEntryPluginView.prototype.jqgridName = function () {
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
+        };
         return BaseEntryPluginView;
     })();
     wlyddqk.BaseEntryPluginView = BaseEntryPluginView;
@@ -130,6 +150,9 @@ var wlyddqk;
             this.mStub = stub;
             this.mType = type;
         }
+        TypeEntryViewProxy.prototype.adjustSize = function () {
+            this.mStub.adjustSize();
+        };
         TypeEntryViewProxy.prototype.isSupported = function (compType) {
             this.mStub.setType(this.mType);
             return this.mStub.isSupported(compType);

@@ -7,8 +7,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var sbdddcbjpcqk;
-(function (sbdddcbjpcqk) {
+var wlyddqk;
+(function (wlyddqk) {
     var xlkglydd;
     (function (xlkglydd) {
         var TextAlign = JQTable.TextAlign;
@@ -52,7 +52,7 @@ var sbdddcbjpcqk;
             __extends(XlkglyddView, _super);
             function XlkglyddView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../sbdddcbjpcqk/xlkglydd/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/xlkglydd/update.do", false);
             }
             XlkglyddView.prototype.isSupported = function (compType) {
                 if (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.XLC || compType == Util.CompanyType.DLGS) {
@@ -64,7 +64,7 @@ var sbdddcbjpcqk;
                 return new XlkglyddView();
             };
             XlkglyddView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../sbdddcbjpcqk/xlkglydd/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/sbdddcbjpcqk/xlkglydd/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     type: this.mType,
                     companyId: compType
@@ -97,28 +97,42 @@ var sbdddcbjpcqk;
                 view.register("可供履约订单情况(产品类别口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCLB));
                 view.register("可供履约订单情况(生产单元口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
             };
-            XlkglyddView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name, this.mType);
+            XlkglyddView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            };
+            XlkglyddView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mType);
+                return this.tableAssist;
+            };
+            XlkglyddView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1400,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 20,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
-                    viewrecords: true
-                }));
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                this.adjustSize();
             };
             return XlkglyddView;
         })(wlyddqk.BasePluginView);
         xlkglydd.pluginView = XlkglyddView.newInstance();
-    })(xlkglydd = sbdddcbjpcqk.xlkglydd || (sbdddcbjpcqk.xlkglydd = {}));
-})(sbdddcbjpcqk || (sbdddcbjpcqk = {}));
+    })(xlkglydd = wlyddqk.xlkglydd || (wlyddqk.xlkglydd = {}));
+})(wlyddqk || (wlyddqk = {}));

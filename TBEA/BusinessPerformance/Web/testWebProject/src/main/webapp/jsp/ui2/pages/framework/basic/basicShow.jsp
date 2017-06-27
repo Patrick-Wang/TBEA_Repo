@@ -10,5 +10,4 @@
         padding-bottom: 5px;
         font-weight: bold;
     }
-
-    </style>
+</style>

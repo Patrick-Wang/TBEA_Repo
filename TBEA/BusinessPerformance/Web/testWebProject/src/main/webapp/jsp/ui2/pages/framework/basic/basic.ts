@@ -62,10 +62,22 @@ module framework.basic {
             this.mOpt = opt;
 
             let minDate = Util.addYear(opt.date, -3);
+            let className = "";
+            let fmt = "YYYY年MM月";
+            if (!opt.date.month){
+                fmt = "YYYY年";
+                className = "year";
+            }else{
+                if (!opt.date.day){
+                    fmt = "YYYY年MM月DD日";
+                    className = "day";
+                }
+            }
+
             minDate.month = 1;
             $("#" + this.mOpt.dt).jeDate({
                 skinCell: "jedatedeepgreen",
-                format: "YYYY年MM月",
+                format: fmt,
                 isTime: false,
                 isinitVal: true,
                 isClear: false,
@@ -74,7 +86,8 @@ module framework.basic {
                 maxDate: Util.date2Str(opt.date),
             }).removeCss("height")
                 .removeCss("padding")
-                .removeCss("margin-top");
+                .removeCss("margin-top")
+                .addClass(className);
 
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (opt.comps.length == 1) {

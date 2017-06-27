@@ -257,6 +257,13 @@ th.ui-th-ltr {
 	width : 175px;
 }
 
+.workinput .year{
+	width : 80px;
+}
+
+.workinput .day{
+	width : 135px;
+}
 
 .workinput input:hover{
     border: 1px #A5D2EC solid;
@@ -396,3 +403,10 @@ th.ui-th-ltr {
 	padding-bottom:10px;
 } */
 
+#unit{
+        float: right;
+        margin-right: 45px;
+        padding-top: 3px;
+        padding-bottom: 5px;
+        font-weight: bold;
+}

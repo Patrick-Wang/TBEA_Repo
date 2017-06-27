@@ -11,6 +11,7 @@ declare var entryView:wlyddqk.EntryView;
 module ylfxwlyddmlspcs {
     export module wlyddmlspcsEntry {
         import TextAlign = JQTable.TextAlign;
+        import StatusData = wlyddqk.StatusData;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly : boolean, date : string):JQTable.JQGridAssistant {
                 let curDate : Date = new Date(Date.parse(date.replace(/-/g, '/')));
@@ -41,9 +42,9 @@ module ylfxwlyddmlspcs {
         class WlyddmlspcsEntryView extends wlyddqk.BaseEntryPluginView {
 
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("wlyddmlspcs/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("wlyddmlspcs/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("wlyddmlspcs/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/wlydd/wlyddmlspcs/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("/BusinessManagement/wlydd/wlyddmlspcs/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/wlydd/wlyddmlspcs/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mIsReadOnly:boolean;
@@ -75,9 +76,9 @@ module ylfxwlyddmlspcs {
                     data: JSON.stringify(submitData)
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -103,9 +104,9 @@ module ylfxwlyddmlspcs {
                     data: JSON.stringify(submitData)
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -166,35 +167,81 @@ module ylfxwlyddmlspcs {
                 entryView.register("未履约订单毛利水平测算(制造业)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly, this.mDt);
+            public adjustSize() {
+
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() <= this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() < this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-
-                this.$(name).jqGrid(
-                    this.mTableAssist.decorate({
-                        datatype: "local",
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        //autowidth : true,
-                        cellsubmit: 'clientArray',
-                        cellEdit: true,
-                        assistEditable:true,
-                        //height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 150,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        data: this.mTableAssist.getData(this.mData),
-                        viewrecords: true
-                    }));
- 
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mIsReadOnly, this.mDt);
+                return this.mTableAssist;
             }
+
+            private updateTable():void {
+                this.createJqassist();
+
+                this.mTableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    //autowidth : false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
+                    shrinkToFit: true,
+                    autoScroll: true,
+                    rowNum: 1000,
+                    assistEditable: true
+                });
+
+                this.adjustSize();
+            }
+
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_1234";
+            //    this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly, this.mDt);
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table>");
+            //
+            //    this.$(name).jqGrid(
+            //        this.mTableAssist.decorate({
+            //            datatype: "local",
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            //autowidth : true,
+            //            cellsubmit: 'clientArray',
+            //            cellEdit: true,
+            //            assistEditable:true,
+            //            //height: data.length > 25 ? 550 : '100%',
+            //            // width: titles.length * 200,
+            //            rowNum: 150,
+            //            height: '100%',
+            //            width: 1200,
+            //            shrinkToFit: true,
+            //            autoScroll: true,
+            //            data: this.mTableAssist.getData(this.mData),
+            //            viewrecords: true
+            //        }));
+            //
+            //}
         }
 
         export var pluginView = WlyddmlspcsEntryView.newInstance();

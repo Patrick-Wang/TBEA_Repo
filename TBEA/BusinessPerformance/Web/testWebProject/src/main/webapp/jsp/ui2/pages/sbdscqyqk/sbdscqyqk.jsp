@@ -198,7 +198,6 @@
 				<div class="page-body">
 					<div class="row">
 						<div class="col-lg-12 col-sm-12 col-xs-12">
-							<span id="unit" style="float: right;margin-right:10px;padding-top:10px"></span>
 							<%@include file="xfscqy/xfscqy.jsp"%>
  							<%@include file="xfcpqy/xfcpqy.jsp"%>
 						</div>

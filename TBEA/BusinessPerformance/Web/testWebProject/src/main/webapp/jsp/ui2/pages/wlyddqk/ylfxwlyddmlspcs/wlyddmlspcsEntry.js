@@ -38,9 +38,9 @@ var ylfxwlyddmlspcs;
             __extends(WlyddmlspcsEntryView, _super);
             function WlyddmlspcsEntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("wlyddmlspcs/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("wlyddmlspcs/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("wlyddmlspcs/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/wlydd/wlyddmlspcs/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("/BusinessManagement/wlydd/wlyddmlspcs/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/wlydd/wlyddmlspcs/entry/submit.do", false);
             }
             WlyddmlspcsEntryView.newInstance = function () {
                 return new WlyddmlspcsEntryView();
@@ -65,10 +65,10 @@ var ylfxwlyddmlspcs;
                     data: JSON.stringify(submitData)
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -89,10 +89,10 @@ var ylfxwlyddmlspcs;
                     data: JSON.stringify(submitData)
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -147,31 +147,43 @@ var ylfxwlyddmlspcs;
                 entryView.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
                 entryView.register("未履约订单毛利水平测算(制造业)", new wlyddqk.TypeEntryViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
             };
-            WlyddmlspcsEntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mIsReadOnly, this.mDt);
+            WlyddmlspcsEntryView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() <= this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() < this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            };
+            WlyddmlspcsEntryView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(this.mTableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mIsReadOnly, this.mDt);
+                return this.mTableAssist;
+            };
+            WlyddmlspcsEntryView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.mTableAssist.create({
+                    data: this.mData,
                     datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    //autowidth : true,
+                    //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    assistEditable: true,
-                    //height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 150,
                     height: '100%',
-                    width: 1200,
+                    width: this.mTableAssist.getColNames().length * 400,
                     shrinkToFit: true,
                     autoScroll: true,
-                    data: this.mTableAssist.getData(this.mData),
-                    viewrecords: true
-                }));
+                    rowNum: 1000,
+                    assistEditable: true
+                });
+                this.adjustSize();
             };
             return WlyddmlspcsEntryView;
         })(wlyddqk.BaseEntryPluginView);

@@ -7,8 +7,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var ylfxwlyddmlspcs;
-(function (ylfxwlyddmlspcs) {
+var wlyddqk;
+(function (wlyddqk) {
     var wlyddmlspcs;
     (function (wlyddmlspcs) {
         var TextAlign = JQTable.TextAlign;
@@ -43,13 +43,13 @@ var ylfxwlyddmlspcs;
             __extends(WLYDDMLSPCSView, _super);
             function WLYDDMLSPCSView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("wlyddmlspcs/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/wlydd/wlyddmlspcs/update.do", false);
             }
             WLYDDMLSPCSView.newInstance = function () {
                 return new WLYDDMLSPCSView();
             };
             WLYDDMLSPCSView.prototype.pluginGetExportUrl = function (date, cpType) {
-                return "wlyddmlspcs/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/wlydd/wlyddmlspcs/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: cpType,
                     type: this.mType
@@ -131,28 +131,42 @@ var ylfxwlyddmlspcs;
                 view.register("未履约订单毛利水平测算(转型业务口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_ZH));
                 view.register("未履约订单毛利水平测算(制造业)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.YLFX_WLYMLSP_XL_CPFL));
             };
-            WLYDDMLSPCSView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name, this.mDt);
+            WLYDDMLSPCSView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            };
+            WLYDDMLSPCSView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mDt);
+                return this.tableAssist;
+            };
+            WLYDDMLSPCSView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 100,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
-                    viewrecords: true
-                }));
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                this.adjustSize();
             };
             return WLYDDMLSPCSView;
         })(wlyddqk.BasePluginView);
         wlyddmlspcs.pluginView = WLYDDMLSPCSView.newInstance();
-    })(wlyddmlspcs = ylfxwlyddmlspcs.wlyddmlspcs || (ylfxwlyddmlspcs.wlyddmlspcs = {}));
-})(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));
+    })(wlyddmlspcs = wlyddqk.wlyddmlspcs || (wlyddqk.wlyddmlspcs = {}));
+})(wlyddqk || (wlyddqk = {}));

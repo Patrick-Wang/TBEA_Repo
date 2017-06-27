@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
@@ -36,7 +37,7 @@ public class WlyddServlet {
 	@Autowired
 	WlyddService wlyddService;
 	
-	@RequestMapping(value = "show.do")
+	@RequestMapping(value = {"show.do", "v2/show.do"})
 	public ModelAndView getWlydd(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -49,10 +50,10 @@ public class WlyddServlet {
 
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("wlyddqk/wlyddqk", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "wlyddqk/wlyddqk", map);
 	}
 	
-	@RequestMapping(value = "entry.do")
+	@RequestMapping(value =  {"entry.do", "v2/entry.do"})
 	public ModelAndView getWlyddEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -65,7 +66,7 @@ public class WlyddServlet {
 
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("wlyddqk/wlyddqkEntry", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "wlyddqk/wlyddqkEntry", map);
 	}
 	
 	@RequestMapping(value = "schedule.do")

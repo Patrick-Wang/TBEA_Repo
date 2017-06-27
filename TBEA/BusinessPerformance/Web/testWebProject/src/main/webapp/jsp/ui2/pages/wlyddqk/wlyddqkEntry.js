@@ -17,12 +17,12 @@ var wlyddqk;
             this.mNodesAll.push(node);
             plugin.setOnReadOnlyChangeListener(function (isReadOnly) {
                 if (isReadOnly) {
-                    $("#gbsv").hide();
-                    $("#gbsm").hide();
+                    $("#save").hide();
+                    $("#submit").hide();
                 }
                 else {
-                    $("#gbsv").show();
-                    $("#gbsm").show();
+                    $("#save").show();
+                    $("#submit").show();
                 }
             });
         };
@@ -32,10 +32,18 @@ var wlyddqk;
         EntryView.prototype.init = function (opt) {
             var _this = this;
             this.mOpt = opt;
-            this.mDtSec = new Util.DateSelector({ year: this.mOpt.date.year - 3, month: 1 }, {
-                year: this.mOpt.date.year,
-                month: this.mOpt.date.month
-            }, this.mOpt.dt);
+            $("#" + this.mOpt.dt).jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年MM月",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                minDate: Util.date2Str(Util.addYear(this.mOpt.date, -3)),
+                maxDate: Util.date2Str(this.mOpt.date)
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (opt.comps.length == 1) {
                 this.mCompanySelector.hide();
@@ -43,8 +51,36 @@ var wlyddqk;
             this.mCompanySelector.change(function (selector, depth) {
                 _this.updateTypeSelector();
             });
+            $(window).resize(function () {
+                _this.mCurrentPlugin.adjustSize();
+                _this.adjustHeader();
+            });
             this.updateTypeSelector();
             this.updateUI();
+            this.adjustHeader();
+        };
+        EntryView.prototype.adjustHeader = function () {
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40) {
+                $(".page-header").addClass("page-header-double");
+                $("#headerHost").css("width", $("#sels").width() + "px");
+            }
+            else {
+                $(".page-header").removeClass("page-header-double");
+            }
+            return false;
+        };
+        EntryView.prototype.getDate = function () {
+            var ret = {};
+            if (this.mOpt.date) {
+                var curDate = $("#" + this.mOpt.dt).getDate();
+                ret = {
+                    year: curDate.getFullYear(),
+                    month: curDate.getMonth() + 1,
+                    day: curDate.getDate()
+                };
+            }
+            return ret;
         };
         EntryView.prototype.updateTypeSelector = function (width) {
             if (width === void 0) { width = 325; }
@@ -76,18 +112,6 @@ var wlyddqk;
                 if (nodes.length == 1) {
                     this.mItemSelector.hide();
                 }
-                $("#" + this.mOpt.type + " select")
-                    .multiselect({
-                    multiple: false,
-                    header: false,
-                    minWidth: width,
-                    height: '100%',
-                    // noneSelectedText: "请选择月份",
-                    selectedList: 1
-                })
-                    .css("padding", "2px 0 2px 4px")
-                    .css("text-align", "left")
-                    .css("font-size", "12px");
             }
         };
         EntryView.prototype.plugin = function (node) {
@@ -98,7 +122,7 @@ var wlyddqk;
         };
         EntryView.prototype.updateUI = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            var dt = this.mDtSec.getDate();
+            var dt = this.getDate();
             dt.day = 1;
             this.mCurrentPlugin = this.plugin(node);
             for (var i = 0; i < this.mNodesAll.length; ++i) {
@@ -109,7 +133,6 @@ var wlyddqk;
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             this.mCurrentPlugin.show();
-            $("#headertitle")[0].innerHTML = node.getData().value;
             this.plugin(node).update(dt, this.mCurrentComp);
         };
         EntryView.prototype.submit = function () {

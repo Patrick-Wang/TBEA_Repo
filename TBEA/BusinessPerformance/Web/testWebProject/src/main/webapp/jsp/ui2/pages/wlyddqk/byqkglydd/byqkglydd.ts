@@ -6,7 +6,7 @@
 declare var echarts;
 declare var view:wlyddqk.FrameView;
 
-module sbdddcbjpcqk {
+module wlyddqk {
     export module byqkglydd {
         import TextAlign = JQTable.TextAlign;
         class JQGridAssistantFactory {
@@ -74,8 +74,8 @@ module sbdddcbjpcqk {
 
         class ByqkglyddView extends wlyddqk.BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("../sbdddcbjpcqk/byqkglydd/update.do", false);
-            private mDateSelector:Util.DateSelector;
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/update.do", false);
+            private tableAssist:JQTable.JQGridAssistant;
             private mDt: string;
 
             public static newInstance():ByqkglyddView {
@@ -89,7 +89,7 @@ module sbdddcbjpcqk {
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "../sbdddcbjpcqk/byqkglydd/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/sbdddcbjpcqk/byqkglydd/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         type: this.mType,
                         companyId:compType
@@ -127,27 +127,68 @@ module sbdddcbjpcqk {
                 view.register("可供履约订单情况(生产单元口径)", new wlyddqk.TypeViewProxy(this, wlyddqk.WlyddType.SCDY));
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mType);
+            public adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1400,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 20,
-                        data: tableAssist.getData(this.mData),
-                        datatype: "local",
-                        viewrecords : true
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mType);
+                return this.tableAssist;
             }
+
+            private updateTable():void {
+                this.createJqassist();
+
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+
+                this.adjustSize();
+            }
+
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_1234";
+            //    var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mType);
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table>");
+            //    this.$(name).jqGrid(
+            //        tableAssist.decorate({
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            height: '100%',
+            //            width: 1400,
+            //            shrinkToFit: true,
+            //            autoScroll: true,
+            //            rowNum: 20,
+            //            data: tableAssist.getData(this.mData),
+            //            datatype: "local",
+            //            viewrecords : true
+            //        }));
+            //}
         }
 
         export var pluginView = ByqkglyddView.newInstance();

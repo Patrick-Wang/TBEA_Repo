@@ -1,6 +1,5 @@
 /// <reference path="../util.ts" />
 /// <reference path="../dateSelector.ts" />
-/// <reference path="../../js/jquery/jquery.d.ts" />
 module wlyddqk {
 
 
@@ -28,6 +27,7 @@ module wlyddqk {
         pluginGetUnit():string;
         getExportUrl(date:Util.Date, compType:Util.CompanyType):string;
         isSupported( compType:Util.CompanyType):boolean;
+        adjustSize();
     }
 
     export interface FrameView {
@@ -46,6 +46,7 @@ module wlyddqk {
         mOpt:PluginOption;
 
         mType : WlyddType;
+
         public init(opt:PluginOption):void {
             this.mOpt = opt;
         }
@@ -88,10 +89,25 @@ module wlyddqk {
             return true;
         }
 
+        jqgrid(){
+            return this.$(this.jqgridName());
+        }
+
+
+        jqgridHost():any{
+            return this.$(this.mOpt.tb);
+        }
+
+
+        jqgridName():string{
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
+        }
+
         abstract  pluginGetExportUrl(date:string, compType:Util.CompanyType):string;
     }
 
     export class TypeViewProxy implements PluginView{
+
         mStub : BasePluginView;
 
         mType : WlyddType;
@@ -99,6 +115,10 @@ module wlyddqk {
         constructor(stub : BasePluginView,  type : WlyddType){
             this.mStub = stub;
             this.mType = type;
+        }
+
+        adjustSize() {
+            this.mStub.adjustSize();
         }
 
         hide():void {
@@ -142,6 +162,7 @@ module wlyddqk {
         save(date:Util.Date, compType:Util.CompanyType):void;
         submit(date:Util.Date, compType:Util.CompanyType):void;
         isSupported( compType:Util.CompanyType):boolean;
+        adjustSize();
     }
 
     export interface EntryFrameView {
@@ -202,6 +223,20 @@ module wlyddqk {
             return true;
         }
 
+        jqgrid(){
+            return this.$(this.jqgridName());
+        }
+
+
+        jqgridHost():any{
+            return this.$(this.mOpt.tb);
+        }
+
+
+        jqgridName():string{
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
+        }
+
         abstract refresh():void;
         abstract  pluginUpdate(date:string, compType:Util.CompanyType):void;
         abstract pluginSave(dt:string, compType:Util.CompanyType):void;
@@ -210,6 +245,7 @@ module wlyddqk {
     }
 
     export class TypeEntryViewProxy implements EntryPluginView{
+
         mStub : BaseEntryPluginView;
 
         mType : WlyddType;
@@ -218,6 +254,10 @@ module wlyddqk {
 
             this.mStub = stub;
             this.mType = type;
+        }
+
+        adjustSize() {
+            this.mStub.adjustSize();
         }
 
         isSupported( compType:Util.CompanyType):boolean{
