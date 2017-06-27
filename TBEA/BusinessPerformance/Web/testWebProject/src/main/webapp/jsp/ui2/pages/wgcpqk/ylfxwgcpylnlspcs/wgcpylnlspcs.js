@@ -1,9 +1,9 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../wgcpqkdef.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../wgcpqkdef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -37,9 +37,7 @@ var ylfxwgcpylnlspcs;
                 for (var i = month; i <= 12; ++i) {
                     node.append(new JQTable.Node(i + "月", "wgcpylnlspcs_snd_" + i));
                 }
-                // if (month != 12) {
                 titleNodes.push(node);
-                //  }
                 node = new JQTable.Node("本年度", "wgcpylnlspcs_bnd", true, TextAlign.Center);
                 for (var i = 1; i <= month; ++i) {
                     node.append(new JQTable.Node(i + "月", "wgcpylnlspcs_bnd_" + i));
@@ -53,15 +51,15 @@ var ylfxwgcpylnlspcs;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../wgcpylnlspcs/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/wgcpylnlspcs/update.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.wgcpylnlspcs;
             };
-            ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../wgcpylnlspcs/export.do?" + Util.Ajax.toUrlParam({
+            ShowView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "/BusinessManagement/wgcpylnlspcs/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    companyId: compType,
+                    companyId: cpType,
                     wgcpqkType: this.mWgcpqkType
                 });
             };
@@ -71,7 +69,6 @@ var ylfxwgcpylnlspcs;
             ShowView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
@@ -166,25 +163,51 @@ var ylfxwgcpylnlspcs;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name, this.mDt);
+            ShowView.prototype.getMonth = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                var month = curDate.getMonth() + 1;
+                return month;
+            };
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
+            };
+            ShowView.prototype.createJqassist = function () {
+                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+                var month = curDate.getMonth() + 1;
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mDt);
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 1000,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
-                    viewrecords: true
-                }));
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                return;
             };
             ShowView.ins = new ShowView();
             return ShowView;

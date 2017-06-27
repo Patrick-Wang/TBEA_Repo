@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -41,7 +42,7 @@ public class WgcpqkServlet {
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 	
-	@RequestMapping(value = "show.do")
+	@RequestMapping(value = {"show.do", "v2/show.do"})
 	public ModelAndView getWgcpqk(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -53,10 +54,10 @@ public class WgcpqkServlet {
 				AuthType.SbdgbLookup);
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("wgcpqk/wgcpqk", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "wgcpqk/wgcpqk", map);
 	}
 	
-	@RequestMapping(value = "entry.do")
+	@RequestMapping(value = {"entry.do", "v2/entry.do"})
 	public ModelAndView getWgcpqkEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -68,7 +69,7 @@ public class WgcpqkServlet {
 				AuthType.SbdgbEntry);
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("wgcpqk/wgcpqkEntry", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "wgcpqk/wgcpqkEntry", map);
 	}
 	
 	//每月3到五号零点触发

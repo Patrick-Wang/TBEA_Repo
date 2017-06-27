@@ -380,11 +380,11 @@
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('输变电产业经营管报')
-						.append(createNode('大宗物资管报', "dzwzgb/show.do"))
+						.append(createNode('大宗物资管报', "dzwzgb/v2/show.do"))
 						.append(createNode('未履约订单情况', "wlydd/v2/show.do"))
 						.append(createNode('输变电产值/产量完成情况', "sbdczclwcqk/v2/show.do"))
 						.append(createNode('输变电市场签约情况', "sbdscqyqk/v2/show.do"))
-						.append(createNode('完工产品情况', "wgcpqk/show.do"));
+						.append(createNode('完工产品情况', "wgcpqk/v2/show.do"));
 				});
 			</script>
 	    </c:if>
@@ -571,7 +571,7 @@
 						.append(createNode('未履约订单情况录入', "wlydd/v2/entry.do"))
 						.append(createNode('输变电产值/产量完成情况录入', "sbdczclwcqk/v2/entry.do"))
 						.append(createNode('输变电市场签约情况录入', "sbdscqyqk/v2/entry.do"))
-						.append(createNode('完工产品情况录入', "wgcpqk/entry.do"));
+						.append(createNode('完工产品情况录入', "wgcpqk/v2/entry.do"));
 				});
 			</script>
 		</c:if>
