@@ -148,8 +148,8 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/scroll/js/jquery.mCustomScrollbar.js"></script>
 
 <%@include file="../framework/basic/basicEntry.jsp"%>
-<script src="${pageContext.request.contextPath}/jsp/sbdscqyqk/sbdscqyqkdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/sbdscqyqk/sbdscqyqkEntry.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/sbdscqyqk/sbdscqyqkdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/sbdscqyqk/sbdscqyqkEntry.js" type="text/javascript"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <%@include file="../../ie8-b.jsp"%>
