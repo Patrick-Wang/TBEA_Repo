@@ -34,8 +34,8 @@ module jcycljg {
 
         class LwgView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.LWG, false);
-            private mDateSelector:Util.DateSelector;
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/jcycljg/update.do?type=" + jcycljg.JcycljgType.LWG, false);
+            tableAssist:JQTable.JQGridAssistant;
 
             public static newInstance():LwgView {
                 return new LwgView();
@@ -60,12 +60,13 @@ module jcycljg {
                     return;
                 }
 
-                if (this.mDispType == DisplayType.CHART) {
+                //if (this.mDispType == DisplayType.CHART) {
                     this.update1214Chart();
                     this.update1625Chart();
-                }else{
+                //}else{
                     this.updateTable();
-                }
+                //}
+                this.adjustSize();
             }
             public init(opt:Option):void {
                 super.init(opt);
@@ -158,33 +159,67 @@ module jcycljg {
                     ],
                     series: series
                 };
-
+                this.$(echart).empty();
+                this.$(echart).removeAttr("_echarts_instance_");
                 echarts.init(this.$(echart)[0]).setOption(option);
 
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+            adjustSize(){
+                super.adjustSize();
+                this.update1214Chart();
+                this.update1625Chart();
+            }
+
+            createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + name + "pager" + "'></div>");
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 20,
-                        data: tableAssist.getData(this.mData),
-                        datatype: "local",
-                        viewrecords : true,
-                        pager : name + "pager"
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'><div id='" + this.jqgridName() + "pager" + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                return this.tableAssist;
             }
+
+            private updateTable():void {
+                this.createJqassist();
+
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 15,
+                    autoScroll: true,
+                    pager : this.jqgridName() + "pager"
+                });
+
+            }
+
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_1234";
+            //    var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table><div id='" + name + "pager" + "'></div>");
+            //    this.$(name).jqGrid(
+            //        tableAssist.decorate({
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            height: '100%',
+            //            width: 1200,
+            //            shrinkToFit: true,
+            //            autoScroll: true,
+            //            rowNum: 20,
+            //            data: tableAssist.getData(this.mData),
+            //            datatype: "local",
+            //            viewrecords : true,
+            //            pager : name + "pager"
+            //        }));
+            //}
         }
         export var pluginView = LwgView.newInstance();
     }

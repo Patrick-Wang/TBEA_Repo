@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgServiceImpl;
@@ -38,7 +39,7 @@ public class JcycljgServlet {
 	@Resource(name=JcycljgServiceImpl.NAME)
 	JcycljgService jcycljgService;
 	
-	@RequestMapping(value = "show.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"show.do", "v2/show.do"}, method = RequestMethod.GET)
 	public ModelAndView show(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -46,7 +47,7 @@ public class JcycljgServlet {
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(),
 				true, true);
 		dateSel.select(map);
-		return new ModelAndView("priceLib/jcycljg/jcycljg", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "priceLib/jcycljg/jcycljg", map);
 	}
 	
 	@RequestMapping(value = "update.do")
@@ -60,10 +61,10 @@ public class JcycljgServlet {
 	}
 	
 	
-	@RequestMapping(value = "import/show.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"import/show.do", "v2/import/show.do"}, method = RequestMethod.GET)
 	public ModelAndView importShow(HttpServletRequest request,
 			HttpServletResponse response) {
-		return new ModelAndView("priceLib/jcycljg/jcycljg_import_data");
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "priceLib/jcycljg/jcycljg_import_data");
 	}
 	
 	@RequestMapping(value = "import.do")

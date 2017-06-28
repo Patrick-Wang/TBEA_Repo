@@ -1,6 +1,5 @@
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-/// <reference path="../../../js/jquery/jquery.d.ts" />
 var jcycljg;
 (function (jcycljg) {
     (function (DateType) {
@@ -22,29 +21,30 @@ var jcycljg;
     var BasePluginView = (function () {
         function BasePluginView() {
         }
+        //mDispType : DisplayType;
         BasePluginView.prototype.init = function (opt) {
             this.mOpt = opt;
         };
-        BasePluginView.prototype.switchDisplayType = function (type) {
-            this.mDispType = type;
-            switch (type) {
-                case DisplayType.TABLE:
-                    this.$(this.mOpt.ctarea).css("display", "none");
-                    this.$(this.mOpt.tbarea).css("display", "");
-                    this.refresh();
-                    break;
-                case DisplayType.CHART:
-                    this.$(this.mOpt.tbarea).css("display", "none");
-                    this.$(this.mOpt.ctarea).css("display", "");
-                    this.refresh();
-                    break;
-                default:
-                    break;
-            }
-        };
-        BasePluginView.prototype.getContentType = function () {
-            return ContentType.TABLE_CHART;
-        };
+        //public switchDisplayType(type:jcycljg.DisplayType):void {
+        //    this.mDispType = type;
+        //    switch (type){
+        //        case DisplayType.TABLE:
+        //            this.$(this.mOpt.ctarea).css("display", "none");
+        //            this.$(this.mOpt.tbarea).css("display", "");
+        //            this.refresh();
+        //            break;
+        //        case DisplayType.CHART:
+        //            this.$(this.mOpt.tbarea).css("display", "none");
+        //            this.$(this.mOpt.ctarea).css("display", "");
+        //            this.refresh();
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
+        //public getContentType():ContentType{
+        //    return ContentType.TABLE_CHART;
+        //}
         BasePluginView.prototype.getDateType = function () {
             return DateType.DAY;
         };
@@ -61,6 +61,27 @@ var jcycljg;
             var st = start.year + "-" + start.month + "-" + start.day;
             var ed = end.year + "-" + end.month + "-" + end.day;
             this.pluginUpdate(st, ed);
+        };
+        BasePluginView.prototype.adjustSize = function () {
+            var jqgrid = this.jqgrid();
+            if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                jqgrid.setGridWidth(this.jqgridHost().width());
+            }
+            //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            //this.tableAssist.resizeHeight(maxTableBodyHeight);
+            //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+            //    jqgrid.setGridWidth(this.jqgridHost().width());
+            //}
+            this.$(".chart").css("width", this.jqgridHost().width() + "px");
+        };
+        BasePluginView.prototype.jqgridHost = function () {
+            return this.$(this.mOpt.tb);
+        };
+        BasePluginView.prototype.jqgrid = function () {
+            return this.$(this.jqgridName());
+        };
+        BasePluginView.prototype.jqgridName = function () {
+            return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         };
         return BasePluginView;
     })();

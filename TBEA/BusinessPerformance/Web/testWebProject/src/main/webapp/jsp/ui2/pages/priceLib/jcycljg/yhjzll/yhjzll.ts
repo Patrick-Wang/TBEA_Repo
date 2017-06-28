@@ -31,20 +31,20 @@ module jcycljg {
 
         class YhjzllView extends BasePluginView {
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.YHJZLL, false);
-            private mDateSelector:Util.DateSelector;
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/jcycljg/update.do?type=" + jcycljg.JcycljgType.YHJZLL, false);
+            tableAssist:JQTable.JQGridAssistant;
 
             public static newInstance():YhjzllView {
                 return new YhjzllView();
             }
 
-            public getContentType():ContentType{
-                return ContentType.TABLE;
-            }
+            //public getContentType():ContentType{
+            //    return ContentType.TABLE;
+            //}
 
-            switchDisplayType(type:jcycljg.DisplayType):void {
-
-            }
+            //switchDisplayType(type:jcycljg.DisplayType):void {
+            //
+            //}
 
             public refresh() : void{
                 this.updateTable();
@@ -62,6 +62,7 @@ module jcycljg {
                     .then((jsonData:any) => {
                         this.mData = jsonData;
                         this.updateTable();
+                        this.adjustSize();
                     });
             }
 
@@ -74,6 +75,33 @@ module jcycljg {
                 return DateType.YEAR;
             }
 
+            createJqassist():JQTable.JQGridAssistant{
+                var parent = this.$(this.option().tb);
+                parent.empty();
+                parent.append("<table id='"+ this.jqgridName() +"'><div id='" + this.jqgridName() + "pager" + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                return this.tableAssist;
+            }
+
+            private updateTable():void {
+                this.createJqassist();
+
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 15,
+                    autoScroll: true,
+                    pager : this.jqgridName() + "pager"
+                });
+
+            }
+            /*
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_1234";
                 var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
@@ -95,7 +123,7 @@ module jcycljg {
                         viewrecords : true,
                         pager : name + "pager"
                     }));
-            }
+            }*/
         }
         export var pluginView = YhjzllView.newInstance();
     }

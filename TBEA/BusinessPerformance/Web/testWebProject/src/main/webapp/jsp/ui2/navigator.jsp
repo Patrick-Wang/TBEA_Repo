@@ -344,8 +344,8 @@
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('价格库数据汇总')
-						.append(createNode('价格库数据展示', "jcycljg/show.do"))
-						.append(createNode('价格库数据录入', "jcycljg/import/show.do"));
+						.append(createNode('价格库数据展示', "jcycljg/v2/show.do"))
+						.append(createNode('价格库数据录入', "jcycljg/v2/import/show.do"));
 				});
 			</script>
 		</c:if>

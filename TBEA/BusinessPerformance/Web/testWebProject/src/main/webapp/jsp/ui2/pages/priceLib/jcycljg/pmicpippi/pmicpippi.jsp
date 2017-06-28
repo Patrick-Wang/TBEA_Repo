@@ -1,45 +1,22 @@
-<Table id="pmicpippi" align="center" style="display: none;">
-    <tr id="tbarea">
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
-    <tr id="ctarea"><td>
-        <table>
-            <tr>
-                <td>
-                    <div align="center">
-                        <div class="panel-content-border"
-                             style="margin-bottom: 20px; width: 1200px">
-                            <div id="pmi" class="panel-content"></div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div align="center">
-                        <div class="panel-content-border"
-                             style="margin-bottom: 20px; width: 1200px">
-                            <div id="cpi" class="panel-content"></div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div align="center">
-                        <div class="panel-content-border"
-                             style="margin-bottom: 20px; width: 1200px">
-                            <div id="ppi" class="panel-content"></div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table></td>
-    </tr>
-</Table>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/priceLib/jcycljg/pmicpippi/pmicpippi.js"></script>
+<div id="pmicpippi" class="sub-view">
+	<div id="tbarea">
+       <div class="well">
+			<div id="table"></div>
+		</div>
+    </div>
+    <div id="ctarea" class="multi-chart">
+        <div class="well">
+			<div id="pmi" class="chart"></div>
+		</div>
+		<div class="well">
+			<div id="cpi" class="chart"></div>
+		</div>
+		<div class="well">
+			<div id="ppi" class="chart"></div>
+		</div>
+    </div>
+</div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/priceLib/jcycljg/pmicpippi/pmicpippi.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     jcycljg.pmicpippi.pluginView.init({

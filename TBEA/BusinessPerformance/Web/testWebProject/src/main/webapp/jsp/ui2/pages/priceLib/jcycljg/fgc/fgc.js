@@ -29,7 +29,7 @@ var jcycljg;
             __extends(FgcView, _super);
             function FgcView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.FGC, false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/jcycljg/update.do?type=" + jcycljg.JcycljgType.FGC, false);
             }
             FgcView.newInstance = function () {
                 return new FgcView();
@@ -52,12 +52,12 @@ var jcycljg;
                 if (this.mData == undefined) {
                     return;
                 }
-                if (this.mDispType == jcycljg.DisplayType.CHART) {
-                    this.updateChart();
-                }
-                else {
-                    this.updateTable();
-                }
+                //if (this.mDispType == DisplayType.CHART) {
+                this.updateChart();
+                //}else{
+                this.updateTable();
+                //}
+                this.adjustSize();
             };
             FgcView.prototype.init = function (opt) {
                 _super.prototype.init.call(this, opt);
@@ -135,28 +135,36 @@ var jcycljg;
                     ],
                     series: series
                 };
+                this.$(echart).empty();
+                this.$(echart).removeAttr("_echarts_instance_");
                 echarts.init(this.$(echart)[0]).setOption(option);
             };
-            FgcView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+            FgcView.prototype.adjustSize = function () {
+                _super.prototype.adjustSize.call(this);
+                this.updateChart();
+            };
+            FgcView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + name + "pager" + "'></div>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'><div id='" + this.jqgridName() + "pager" + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                return this.tableAssist;
+            };
+            FgcView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
+                    rowNum: 15,
                     autoScroll: true,
-                    rowNum: 20,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
-                    viewrecords: true,
-                    pager: name + "pager"
-                }));
+                    pager: this.jqgridName() + "pager"
+                });
             };
             return FgcView;
         })(jcycljg.BasePluginView);

@@ -3,12 +3,12 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../messageBox.ts"/>
-/// <reference path="../../framework/basic/basicdef.ts"/>
-/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../../../../jqgrid/jqassist.ts" />
+/// <reference path="../../../../util.ts" />
+/// <reference path="../../../../dateSelector.ts" />
+/// <reference path="../../../../messageBox.ts"/>
+/// <reference path="../../../../framework/basic/basicdef.ts"/>
+/// <reference path="../../../../framework/route/route.ts"/>
 /// <reference path="../basicReportdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {

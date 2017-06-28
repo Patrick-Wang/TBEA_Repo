@@ -410,3 +410,11 @@ th.ui-th-ltr {
         padding-bottom: 5px;
         font-weight: bold;
 }
+
+.single-chart .chart{
+	height:300px;
+}
+
+.multi-chart .chart{
+	height:250px;
+}

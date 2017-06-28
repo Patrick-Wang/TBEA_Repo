@@ -1,9 +1,5 @@
 ///<reference path="../unitedSelector.ts"/>
 ///<reference path="../dateSelector.ts"/>
-///<reference path="../../js/jquery/jquery.d.ts"/>
-/**
- * Created by Floyd on 2016/7/19.
- */
 var Util;
 (function (Util) {
     var months = [{

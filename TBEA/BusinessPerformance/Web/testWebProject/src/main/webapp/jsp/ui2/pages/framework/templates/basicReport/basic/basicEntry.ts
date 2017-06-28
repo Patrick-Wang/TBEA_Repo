@@ -1,9 +1,9 @@
-/// <reference path="../../jqgrid/jqassist.ts" />
-/// <reference path="../../util.ts" />
-/// <reference path="../../dateSelector.ts" />
-/// <reference path="../../messageBox.ts"/>
-/// <reference path="../../framework/basic/basicdef.ts"/>
-/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../../../../jqgrid/jqassist.ts" />
+/// <reference path="../../../../util.ts" />
+/// <reference path="../../../../dateSelector.ts" />
+/// <reference path="../../../../messageBox.ts"/>
+/// <reference path="../../../../framework/basic/basicdef.ts"/>
+/// <reference path="../../../../framework/route/route.ts"/>
 /// <reference path="../basicReportdef.ts"/>
 declare var $:any;
 

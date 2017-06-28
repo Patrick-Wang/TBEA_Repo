@@ -33,16 +33,17 @@ var jcycljg;
             __extends(YhjzllView, _super);
             function YhjzllView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.YHJZLL, false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/jcycljg/update.do?type=" + jcycljg.JcycljgType.YHJZLL, false);
             }
             YhjzllView.newInstance = function () {
                 return new YhjzllView();
             };
-            YhjzllView.prototype.getContentType = function () {
-                return jcycljg.ContentType.TABLE;
-            };
-            YhjzllView.prototype.switchDisplayType = function (type) {
-            };
+            //public getContentType():ContentType{
+            //    return ContentType.TABLE;
+            //}
+            //switchDisplayType(type:jcycljg.DisplayType):void {
+            //
+            //}
             YhjzllView.prototype.refresh = function () {
                 this.updateTable();
             };
@@ -58,6 +59,7 @@ var jcycljg;
                     .then(function (jsonData) {
                     _this.mData = jsonData;
                     _this.updateTable();
+                    _this.adjustSize();
                 });
             };
             YhjzllView.prototype.init = function (opt) {
@@ -67,26 +69,28 @@ var jcycljg;
             YhjzllView.prototype.getDateType = function () {
                 return jcycljg.DateType.YEAR;
             };
-            YhjzllView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+            YhjzllView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + name + "pager" + "'></div>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'><div id='" + this.jqgridName() + "pager" + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                return this.tableAssist;
+            };
+            YhjzllView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
+                    rowNum: 15,
                     autoScroll: true,
-                    rowNum: 20,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
-                    viewrecords: true,
-                    pager: name + "pager"
-                }));
+                    pager: this.jqgridName() + "pager"
+                });
             };
             return YhjzllView;
         })(jcycljg.BasePluginView);

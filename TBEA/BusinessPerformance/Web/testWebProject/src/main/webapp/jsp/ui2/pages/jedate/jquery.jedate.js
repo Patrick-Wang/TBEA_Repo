@@ -24,15 +24,23 @@ window.console && (console = console || {log : function(){return;}});
 		minDate:"1900-01-01 00:00:00", //最小日期
 		maxDate:"2099-12-31 23:59:59" //最大日期
 	};
+
+	var jedatesAll=[];
+
 	$.fn.jeDate = function(options){
 		return this.each(function(){
-			return new jeDate($(this),options||{});
+			var jdt = [this, new jeDate($(this),options||{})];
+			jedatesAll.push(jdt);
+			return jdt[1];
 		});
 	};
 
-
 	$.fn.getDate = function(){
-		return jet.getDate();
+		for (var i = 0; i < jedatesAll.length; ++i){
+			if (this[0] == jedatesAll[i][0]){
+				return jet.getDate(jedatesAll[i][1]);
+			}
+		}
 	};
 	$.extend({
 		jeDate:function(elem, options){
@@ -201,11 +209,11 @@ window.console && (console = console || {log : function(){return;}});
 		}
 
 
-		jet.getDate = function(){
+		jet.getDate = function(that){
 			var date = new Date()
 			if ((that.valCell.val() || that.valCell.text()) == "") {
 				//目标为空值则获取当前日期时间
-				jet.current = date;
+				that.current = date;
 			} else {
 				var dateFormat = jet.checkFormat(that.opts.format),
 					isYYMM = (dateFormat == "YYYY-MM" || dateFormat == "YYYY") ? true :false,  ishhmm = dateFormat.substring(0, 5) == "hh-mm" ? true :false;
@@ -218,13 +226,13 @@ window.console && (console = console || {log : function(){return;}});
 				var inVals = jet.IsNum(initVal) ? nocharDate.match(ymdMacth) : initVal.match(ymdMacth);
 				if(ishhmm){
 					var tmsArr = that.opts.format == "hh-mm" ? [ inVals[0], inVals[1], date.getSeconds() ] :[ inVals[0], inVals[1], inVals[2] ];
-					jet.current = new Date(tmsArr[0], tmsArr[1], tmsArr[2]);
+					that.current = new Date(tmsArr[0], tmsArr[1], tmsArr[2]);
 				}else{
 					tmsArr = [ inVals[0], inVals[1] ? inVals[1] : 1, inVals[2] ? inVals[2] : 1, inVals[3] == undefined ? date.getHours() : inVals[3], inVals[4] == undefined ? date.getMinutes() : inVals[4], inVals[5] == undefined ? date.getSeconds() :inVals[5] ];
-					jet.current = new Date(tmsArr[0], parseInt(tmsArr[1])-1,  tmsArr[2], tmsArr[3], tmsArr[4], tmsArr[5]);
+					that.current = new Date(tmsArr[0], parseInt(tmsArr[1])-1,  tmsArr[2], tmsArr[3], tmsArr[4], tmsArr[5]);
 				}
 			}
-			return jet.current;
+			return that.current;
 		}
 
 		if (jet.isBool(opts.insTrigger)) {

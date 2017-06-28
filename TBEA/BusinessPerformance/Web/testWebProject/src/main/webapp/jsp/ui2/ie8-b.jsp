@@ -15,7 +15,7 @@
 		margin-right: 35px;
 	}
 	html {
-	  position: static;
+	  	position: static;
 	}
 	body{
  		visibility:visible;

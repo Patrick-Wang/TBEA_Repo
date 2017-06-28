@@ -33,7 +33,7 @@ var jcycljg;
             __extends(YsjsView, _super);
             function YsjsView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("update.do?type=" + jcycljg.JcycljgType.YSJS, false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/jcycljg/update.do?type=" + jcycljg.JcycljgType.YSJS, false);
             }
             YsjsView.newInstance = function () {
                 return new YsjsView();
@@ -45,14 +45,14 @@ var jcycljg;
                 if (this.mData == undefined) {
                     return;
                 }
-                if (this.mDispType == jcycljg.DisplayType.CHART) {
-                    this.updateCuChart();
-                    this.updateAlChart();
-                    this.updateZnChart();
-                }
-                else {
-                    this.updateTable();
-                }
+                //if (this.mDispType == DisplayType.CHART) {
+                this.updateCuChart();
+                this.updateAlChart();
+                this.updateZnChart();
+                //}else{
+                this.updateTable();
+                //}
+                this.adjustSize();
             };
             YsjsView.prototype.pluginUpdate = function (start, end) {
                 var _this = this;
@@ -163,28 +163,37 @@ var jcycljg;
                         }
                     ]
                 };
+                this.$(echart).empty();
+                this.$(echart).removeAttr("_echarts_instance_");
                 echarts.init(this.$(echart)[0]).setOption(option);
             };
-            YsjsView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_1234";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+            YsjsView.prototype.adjustSize = function () {
+                _super.prototype.adjustSize.call(this);
+                this.updateAlChart();
+                this.updateZnChart();
+            };
+            YsjsView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + name + "pager" + "'></div>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'><div id='" + this.jqgridName() + "pager" + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                return this.tableAssist;
+            };
+            YsjsView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
+                    rowNum: 15,
                     autoScroll: true,
-                    rowNum: 20,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
-                    viewrecords: true,
-                    pager: name + "pager"
-                }));
+                    pager: this.jqgridName() + "pager"
+                });
             };
             return YsjsView;
         })(jcycljg.BasePluginView);
