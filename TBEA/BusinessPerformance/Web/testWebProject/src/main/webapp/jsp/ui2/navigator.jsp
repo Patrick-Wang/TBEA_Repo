@@ -392,8 +392,8 @@
 	       <script>
 				builder.register('bbxx', function() {
 					return createNode('能源产业经营报表')
-						.append(createNode('成本分析', "cbfx/show.do"))
-						.append(createNode('能源-周边市场情况', "nyzbscqk/show.do"));
+						.append(createNode('成本分析', "cbfx/v2/show.do"))
+						.append(createNode('能源-周边市场情况', "nyzbscqk/v2/show.do"));
 				});
 			</script>
 		</c:if>
@@ -579,8 +579,16 @@
 	        <script>
 	        	builder.register('bbxx', function() {
 					return createNode('能源产业经营报表录入')
-						.append(createNode('成本分析录入', 'cbfx/entry.do'))
-						.append(createNode('能源-周边市场情况录入', "nyzbscqk/entry.do"));
+						.append(createNode('成本分析录入', 'cbfx/v2/entry.do'))
+						.append(builder.build('nyzbscqk'));
+				});
+			</script>
+		</c:if>
+		
+		 <c:if test="${NYzbscqkEntry}">
+	        <script>
+	        	builder.register('nyzbscqk', function() {
+					return createNode('能源-周边市场情况录入', "nyzbscqk/v2/entry.do");
 				});
 			</script>
 		</c:if>

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
@@ -32,7 +33,7 @@ public class NyzbscqkServlet {
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 	
-	@RequestMapping(value = "show.do")
+	@RequestMapping(value = {"show.do", "v2/show.do"})
 	public ModelAndView getShow(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -44,10 +45,10 @@ public class NyzbscqkServlet {
 				AuthType.NYzbscqkLookup);
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("nyzbscqk/nyzbscqk", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "nyzbscqk/nyzbscqk", map);
 	}
 	
-	@RequestMapping(value = "entry.do")
+	@RequestMapping(value = {"entry.do","v2/entry.do"})
 	public ModelAndView getEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();	
@@ -58,6 +59,6 @@ public class NyzbscqkServlet {
 				AuthType.NygbEntry);
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("nyzbscqk/nyzbscqkEntry", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") +"nyzbscqk/nyzbscqkEntry", map);
 	}
 }

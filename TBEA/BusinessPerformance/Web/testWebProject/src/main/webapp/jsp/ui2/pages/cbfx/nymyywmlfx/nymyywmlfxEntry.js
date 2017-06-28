@@ -6,10 +6,10 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../cbfxdef.ts"/>
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cbfxdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.nymyywmlfx = framework.basic.endpoint.lastId();
@@ -38,18 +38,18 @@ var cbfx;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("../nymyywmlfx/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("../nymyywmlfx/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("../nymyywmlfx/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/nymyywmlfx/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("/BusinessManagement/nymyywmlfx/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/nymyywmlfx/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.nymyywmlfx;
             };
-            EntryView.prototype.option = function () {
-                return this.mOpt;
-            };
             EntryView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.TCNY;
+            };
+            EntryView.prototype.option = function () {
+                return this.mOpt;
             };
             EntryView.prototype.pluginSave = function (dt, compType) {
                 var _this = this;
@@ -69,10 +69,10 @@ var cbfx;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -83,10 +83,6 @@ var cbfx;
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([allData[i][0], allData[i][2]]);
                     submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
-                    if ("" == submitData[i][1]) {
-                        Util.MessageBox.tip("有空内容 无法提交");
-                        return;
-                    }
                 }
                 this.mAjaxSubmit.post({
                     date: dt,
@@ -95,17 +91,16 @@ var cbfx;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
             EntryView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjaxUpdate.get({
                     date: date,
                     companyId: compType
@@ -127,31 +122,44 @@ var cbfx;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "能源贸易业务毛利分析");
             };
-            EntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
+            EntryView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+            };
+            EntryView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
+                var pagername = this.jqgridName() + "pager";
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                var jqTable = this.$(name);
-                jqTable.jqGrid(this.mTableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + pagername + "'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false);
+                return this.mTableAssist;
+            };
+            EntryView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.mTableAssist.create({
+                    DataWithId: this.mData,
                     datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable: true,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
-                    rowNum: 22,
                     height: '100%',
-                    width: 1000,
+                    width: this.mTableAssist.getColNames().length * 400,
                     shrinkToFit: true,
+                    rowNum: 15,
                     autoScroll: true,
-                    viewrecords: true,
-                    pager: '#' + pagername,
-                }));
+                    assistEditable: true,
+                    pager: '#' + this.jqgridName() + "pager",
+                });
+                this.adjustSize();
             };
             EntryView.ins = new EntryView();
             return EntryView;

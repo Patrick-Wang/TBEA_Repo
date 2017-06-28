@@ -1,10 +1,10 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../cbfxdef.ts"/>
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cbfxdef.ts"/>
 declare var $:any;
 
 
@@ -23,8 +23,6 @@ module cbfx {
                 ], gridName);
             }
         }
-        
-  
 
         interface Option extends framework.basic.PluginOption {
             tb:string;
@@ -33,20 +31,21 @@ module cbfx {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../dmcbfx/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../dmcbfx/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../dmcbfx/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/dmcbfx/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("/BusinessManagement/dmcbfx/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/dmcbfx/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
-            private mCompType:Util.CompanyType;
+            
+            
             getId():number {
                 return pluginEntry.dmcbfx;
             }
-            
+
             protected isSupported(compType: Util.CompanyType): boolean {
                 return compType == Util.CompanyType.XJNY || compType == Util.CompanyType.NLTK;
             }
-            
+
             private option():Option {
                 return <Option>this.mOpt;
             }
@@ -65,12 +64,13 @@ module cbfx {
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
+
 
             public  pluginSubmit(dt:string, compType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
@@ -78,10 +78,6 @@ module cbfx {
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([allData[i][0], allData[i][2]]);
                     submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
-                    if ("" == submitData[i][1]) {
-                        Util.MessageBox.tip("有空内容 无法提交")
-                        return;
-                    }
                 }
                 this.mAjaxSubmit.post({
                     date: dt,
@@ -90,16 +86,15 @@ module cbfx {
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
 
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjaxUpdate.get({
                         date: date,
                         companyId: compType
@@ -114,7 +109,6 @@ module cbfx {
                 if (this.mData == undefined) {
                     return;
                 }
-
                 this.updateTable();
             }
 
@@ -125,54 +119,49 @@ module cbfx {
                 });
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
-                //let data : string[][] = [
-                //    ["土方剥离爆破成本"],
-                //    ["原煤爆破成本"],
-                //    ["原煤采运成本"],
-                //    ["回筛倒运成本"],
-                //    ["装车成本"],
-                //    ["直接成本合计"],
-                //    ["非可控成本"],
-                //    ["可控成本"],
-                //    ["制造费用小计"],
-                //    ["技改财务费用"],
-                //    ["生产成本合计"]
-                //];
-                //
-                //for (let i = 0; i < data.length; ++i){
-                //    data[i] = data[i].concat(this.mData[i]);
-                //}
 
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                let jqTable = this.$(name);
-                jqTable.jqGrid(
-                    this.mTableAssist.decorate({
-                        datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.mData),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        assistEditable:true,
-                        //autowidth : false,
-                        cellsubmit: 'clientArray',
-                        //editurl: 'clientArray',
-                        cellEdit: true,
-                        //height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 1000,
-                        height: '100%',
-                        width: 700,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        viewrecords: true,
-                        //pager: '#' + pagername,
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false);
+                return this.mTableAssist;
+            }
+
+            private updateTable():void {
+                this.createJqassist();
+
+                this.mTableAssist.create({
+                    DataWithId:this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true,
+                    assistEditable: true
+                });
+
+                this.adjustSize();
             }
         }
     }

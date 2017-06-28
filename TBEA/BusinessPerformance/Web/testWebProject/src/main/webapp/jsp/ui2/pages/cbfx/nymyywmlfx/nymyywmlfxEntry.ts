@@ -1,10 +1,10 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../cbfxdef.ts"/>
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cbfxdef.ts"/>
 declare var $:any;
 
 
@@ -15,7 +15,7 @@ module pluginEntry {
 module cbfx {
     export module nymyywmlfxEntry {
         import TextAlign = JQTable.TextAlign;
-import Node = JQTable.Node;
+        import Node = JQTable.Node;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, readOnly:boolean):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
@@ -35,24 +35,27 @@ import Node = JQTable.Node;
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Array<string[]>;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../nymyywmlfx/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../nymyywmlfx/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../nymyywmlfx/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/nymyywmlfx/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("/BusinessManagement/nymyywmlfx/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/nymyywmlfx/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
-            private mCompType:Util.CompanyType;
+            
+            
             getId():number {
                 return pluginEntry.nymyywmlfx;
             }
 
-            private option():Option {
-                return <Option>this.mOpt;
-            }
-            
             protected isSupported(compType: Util.CompanyType): boolean {
                 return compType == Util.CompanyType.TCNY;
             }
-            
+
+
+            private option():Option {
+                return <Option>this.mOpt;
+            }
+
+
             public pluginSave(dt:string, compType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
@@ -70,12 +73,13 @@ import Node = JQTable.Node;
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
+
 
             public  pluginSubmit(dt:string, compType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
@@ -83,10 +87,7 @@ import Node = JQTable.Node;
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([allData[i][0], allData[i][2]]);
                     submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
-                    if ("" == submitData[i][1]) {
-                        Util.MessageBox.tip("有空内容 无法提交")
-                        return;
-                    }
+
                 }
                 this.mAjaxSubmit.post({
                     date: dt,
@@ -95,16 +96,15 @@ import Node = JQTable.Node;
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
 
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjaxUpdate.get({
                         date: date,
                         companyId: compType
@@ -114,6 +114,7 @@ import Node = JQTable.Node;
                         this.refresh();
                     });
             }
+
 
             public refresh():void {
                 if (this.mData == undefined) {
@@ -129,33 +130,51 @@ import Node = JQTable.Node;
                     .send(framework.basic.FrameEvent.FE_REGISTER, "能源贸易业务毛利分析");
             }
 
-            private updateTable():void {
-                let name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                let pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
 
-                let parent = this.$(this.option().tb);
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+                //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
+                var parent = this.$(this.option().tb);
+                let pagername = this.jqgridName() + "pager";
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                let jqTable = this.$(name);
-                jqTable.jqGrid(
-                    this.mTableAssist.decorate({
-                        datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.mData),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        assistEditable:true,
-                        cellsubmit: 'clientArray',
-                        cellEdit: true,
-                        rowNum: 22,
-                        height: '100%',
-                        width: 1000,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        viewrecords: true,
-                        pager: '#' + pagername,
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + pagername + "'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false);
+                return this.mTableAssist;
+            }
+
+            private updateTable():void {
+                this.createJqassist();
+
+                this.mTableAssist.create({
+                    DataWithId:this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
+                    shrinkToFit: true,
+                    rowNum: 15,
+                    autoScroll: true,
+                    assistEditable: true,
+                    pager: '#' + this.jqgridName() + "pager",
+                });
+
+                this.adjustSize();
             }
         }
     }

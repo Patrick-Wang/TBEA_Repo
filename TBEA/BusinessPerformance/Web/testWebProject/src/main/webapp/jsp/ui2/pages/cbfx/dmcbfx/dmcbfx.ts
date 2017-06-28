@@ -1,9 +1,9 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../cbfxdef.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cbfxdef.ts"/>
 
 module plugin {
     export let dmcbfx : number = framework.basic.endpoint.lastId();
@@ -14,7 +14,8 @@ module plugin {
 module cbfx {
     export module dmcbfx {
         import TextAlign = JQTable.TextAlign;
-import EndpointProxy = framework.basic.EndpointProxy;
+		import Node = JQTable.Node;
+        import EndpointProxy = framework.basic.EndpointProxy;
         class JQGridAssistantFactory {
             //吨煤成本分析表
             public static createTable(gridName:string, year:number, month:number):JQTable.JQGridAssistant {
@@ -58,10 +59,9 @@ import EndpointProxy = framework.basic.EndpointProxy;
         class ShowView extends framework.basic.ShowPluginView {
             static ins = new ShowView();
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("../dmcbfx/update.do", false);
-            private mDateSelector:Util.DateSelector;
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/dmcbfx/update.do", false);
+            private tableAssist:JQTable.JQGridAssistant;
             private mDt: string;
-            private mCompType:Util.CompanyType;
             private mCurCbfxType : CbfxType;
             onEvent(e:framework.route.Event):any {
                 if (e.road != undefined){
@@ -77,15 +77,14 @@ import EndpointProxy = framework.basic.EndpointProxy;
             getId():number {
                 return plugin.dmcbfx;
             }
-
-            pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "../dmcbfx/export.do?" + Util.Ajax.toUrlParam({
+            pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {
+                return "/BusinessManagement/dmcbfx/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
-                        companyId:compType,
+                        companyId: cpType,
                         type:this.mCurCbfxType
                     });
             }
-            
+
             protected isSupported(compType: Util.CompanyType): boolean {
                 return compType == Util.CompanyType.XJNY || compType == Util.CompanyType.NLTK;
             }
@@ -96,7 +95,6 @@ import EndpointProxy = framework.basic.EndpointProxy;
 
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjax.get({
                         date: date,
                         companyId:compType,
@@ -113,7 +111,10 @@ import EndpointProxy = framework.basic.EndpointProxy;
                     return;
                 }
 
+                this.$(this.option().ctarea).show();
                 this.updateTable();
+
+                this.adjustSize();
             }
 
             public init(opt:Option):void {
@@ -127,61 +128,73 @@ import EndpointProxy = framework.basic.EndpointProxy;
                     .send(framework.basic.FrameEvent.FE_REGISTER, "吨煤成本趋势分析表");
             }
 
-			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
+            private getMonth():number{
+                let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 let month = curDate.getMonth() + 1;
-				return month;
-			}
+                return month;
+            }
 
             private getYear():number{
                 let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 return curDate.getFullYear();
             }
-			
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                let tableAssist:JQTable.JQGridAssistant;
-                if (this.mCurCbfxType == CbfxType.dmcbfx){
-                    tableAssist = JQGridAssistantFactory.createTable(name, this.getYear(), this.getMonth());
-                }else{
-                    tableAssist = JQGridAssistantFactory.createQsTable(name);
+
+
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
                 }
 
-                //let data : string[][] = [
-                //    ["土方剥离爆破成本"],
-                //    ["原煤爆破成本"],
-                //    ["原煤采运成本"],
-                //    ["回筛倒运成本"],
-                //    ["装车成本"],
-                //    ["直接成本合计"],
-                //    ["非可控成本"],
-                //    ["可控成本"],
-                //    ["制造费用小计"],
-                //    ["技改财务费用"],
-                //    ["生产成本合计"]
-                //];
-                //
-                //for (let i = 0; i < data.length; ++i){
-                //    data[i] = data[i].concat(this.mData[i]);
-                //}
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
 
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 20,
-                        data: tableAssist.getData(this.mData),
-                        datatype: "local",
-                        viewrecords : true
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                if (this.mCurCbfxType == CbfxType.dmcbfx){
+                    this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.getYear(), this.getMonth());
+                }else{
+                    this.tableAssist = JQGridAssistantFactory.createQsTable(this.jqgridName());
+                }
+                return this.tableAssist;
+            }
+
+            private updateTable():any {
+                this.createJqassist();
+
+                //var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+                //let tableAssist:JQTable.JQGridAssistant;
+                //if (this.mCurCbfxType == CbfxType.dmcbfx){
+                //    this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.getYear(), this.getMonth());
+                //}else{
+                //    this.tableAssist = JQGridAssistantFactory.createQsTable(this.jqgridName());
+                //}
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                return ;
             }
         }
     }

@@ -1,19 +1,19 @@
-<Table id="nyzbscxlEntry" align="center" style="display: none;">
-    <tr id="tbarea">
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
-</Table>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/nyzbscqk/nyzbscxl/nyzbscxlEntry.js"></script>
+<div id="nyzbscxlEntry" class="sub-view">
+    <div id="tbarea">
+        <div class="well">
+                <div id="table"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/nyzbscqk/nyzbscxl/nyzbscxlEntry.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    framework.router
+            framework.router
             .to(pluginEntry.nyzbscxl)
             .send(framework.basic.FrameEvent.FE_INIT_EVENT,{
-                tb: "table",
-                host: "nyzbscxlEntry",
-                tbarea:"tbarea"
+            tb: "table",
+            host: "nyzbscxlEntry",
+            tbarea:"tbarea"
             });
-});
-</script> 
+        });
+</script>

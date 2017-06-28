@@ -6,10 +6,10 @@ var __extends = (this && this.__extends) || function (d, b) {
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../messageBox.ts"/>
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../cbfxdef.ts"/>
+/// <reference path="../../messageBox.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cbfxdef.ts"/>
 var pluginEntry;
 (function (pluginEntry) {
     pluginEntry.dmcbfx = framework.basic.endpoint.lastId();
@@ -34,9 +34,9 @@ var cbfx;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("../dmcbfx/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("../dmcbfx/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("../dmcbfx/entry/submit.do", false);
+                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/dmcbfx/entry/update.do", false);
+                this.mAjaxSave = new Util.Ajax("/BusinessManagement/dmcbfx/entry/save.do", false);
+                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/dmcbfx/entry/submit.do", false);
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.dmcbfx;
@@ -62,10 +62,10 @@ var cbfx;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -76,10 +76,6 @@ var cbfx;
                 for (var i = 0; i < allData.length; ++i) {
                     submitData.push([allData[i][0], allData[i][2]]);
                     submitData[i][1] = submitData[i][1].replace(new RegExp(' ', 'g'), '');
-                    if ("" == submitData[i][1]) {
-                        Util.MessageBox.tip("有空内容 无法提交");
-                        return;
-                    }
                 }
                 this.mAjaxSubmit.post({
                     date: dt,
@@ -88,17 +84,16 @@ var cbfx;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
             EntryView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjaxUpdate.get({
                     date: date,
                     companyId: compType
@@ -120,51 +115,42 @@ var cbfx;
                     bSubmit: "确定"
                 });
             };
-            EntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false);
-                //let data : string[][] = [
-                //    ["土方剥离爆破成本"],
-                //    ["原煤爆破成本"],
-                //    ["原煤采运成本"],
-                //    ["回筛倒运成本"],
-                //    ["装车成本"],
-                //    ["直接成本合计"],
-                //    ["非可控成本"],
-                //    ["可控成本"],
-                //    ["制造费用小计"],
-                //    ["技改财务费用"],
-                //    ["生产成本合计"]
-                //];
-                //
-                //for (let i = 0; i < data.length; ++i){
-                //    data[i] = data[i].concat(this.mData[i]);
-                //}
+            EntryView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            };
+            EntryView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                var jqTable = this.$(name);
-                jqTable.jqGrid(this.mTableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false);
+                return this.mTableAssist;
+            };
+            EntryView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.mTableAssist.create({
+                    DataWithId: this.mData,
                     datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable: true,
-                    //autowidth : false,
                     cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
                     cellEdit: true,
-                    //height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 1000,
                     height: '100%',
-                    width: 700,
+                    width: this.mTableAssist.getColNames().length * 400,
                     shrinkToFit: true,
+                    rowNum: 2000,
                     autoScroll: true,
-                    viewrecords: true,
-                }));
+                    assistEditable: true
+                });
+                this.adjustSize();
             };
             EntryView.ins = new EntryView();
             return EntryView;

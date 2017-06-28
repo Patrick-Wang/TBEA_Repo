@@ -1,9 +1,9 @@
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
-///<reference path="../../framework/basic/basicdef.ts"/>
-///<reference path="../../framework/route/route.ts"/>
-///<reference path="../cbfxdef.ts"/>
+/// <reference path="../../framework/basic/basicdef.ts"/>
+/// <reference path="../../framework/route/route.ts"/>
+/// <reference path="../cbfxdef.ts"/>
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -66,7 +66,7 @@ var cbfx;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../dmcbfx/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/dmcbfx/update.do", false);
             }
             ShowView.prototype.onEvent = function (e) {
                 if (e.road != undefined) {
@@ -82,10 +82,10 @@ var cbfx;
             ShowView.prototype.getId = function () {
                 return plugin.dmcbfx;
             };
-            ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../dmcbfx/export.do?" + Util.Ajax.toUrlParam({
+            ShowView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "/BusinessManagement/dmcbfx/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    companyId: compType,
+                    companyId: cpType,
                     type: this.mCurCbfxType
                 });
             };
@@ -98,7 +98,6 @@ var cbfx;
             ShowView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
                 this.mDt = date;
-                this.mCompType = compType;
                 this.mAjax.get({
                     date: date,
                     companyId: compType,
@@ -113,7 +112,9 @@ var cbfx;
                 if (this.mData == undefined) {
                     return;
                 }
+                this.$(this.option().ctarea).show();
                 this.updateTable();
+                this.adjustSize();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -134,48 +135,56 @@ var cbfx;
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 return curDate.getFullYear();
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist;
-                if (this.mCurCbfxType == cbfx.CbfxType.dmcbfx) {
-                    tableAssist = JQGridAssistantFactory.createTable(name, this.getYear(), this.getMonth());
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
                 }
-                else {
-                    tableAssist = JQGridAssistantFactory.createQsTable(name);
+                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
                 }
-                //let data : string[][] = [
-                //    ["土方剥离爆破成本"],
-                //    ["原煤爆破成本"],
-                //    ["原煤采运成本"],
-                //    ["回筛倒运成本"],
-                //    ["装车成本"],
-                //    ["直接成本合计"],
-                //    ["非可控成本"],
-                //    ["可控成本"],
-                //    ["制造费用小计"],
-                //    ["技改财务费用"],
-                //    ["生产成本合计"]
-                //];
-                //
-                //for (let i = 0; i < data.length; ++i){
-                //    data[i] = data[i].concat(this.mData[i]);
-                //}
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
+            };
+            ShowView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                if (this.mCurCbfxType == cbfx.CbfxType.dmcbfx) {
+                    this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.getYear(), this.getMonth());
+                }
+                else {
+                    this.tableAssist = JQGridAssistantFactory.createQsTable(this.jqgridName());
+                }
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                //var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+                //let tableAssist:JQTable.JQGridAssistant;
+                //if (this.mCurCbfxType == CbfxType.dmcbfx){
+                //    this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.getYear(), this.getMonth());
+                //}else{
+                //    this.tableAssist = JQGridAssistantFactory.createQsTable(this.jqgridName());
+                //}
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 20,
-                    data: tableAssist.getData(this.mData),
-                    datatype: "local",
-                    viewrecords: true
-                }));
+                    rowNum: 2000,
+                    autoScroll: true
+                });
+                return;
             };
             ShowView.ins = new ShowView();
             return ShowView;
