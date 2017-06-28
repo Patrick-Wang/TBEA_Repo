@@ -4,9 +4,9 @@
 			<div id="table"></div>
 		</div>
     </div>
-    <div id="ctarea">
+    <div id="ctarea" class="single-chart">
         <div class="well">
-			<div id="chart" style="height:300px"></div>
+			<div id="chart" class="chart"></div>
 		</div>
     </div>
 </div>

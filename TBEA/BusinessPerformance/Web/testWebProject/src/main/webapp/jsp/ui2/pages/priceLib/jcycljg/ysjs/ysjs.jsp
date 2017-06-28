@@ -4,12 +4,15 @@
 			<div id="table"></div>
 		</div>
     </div>
-    <div id="ctarea">
+    <div id="ctarea" class="multi-chart">
         <div class="well">
-			<div id="chartCu" style="height:300px"></div>
+			<div id="chartCu" class="chart"></div>
+		</div>
+		 <div class="well">
+			<div id="chartAl" class="chart"></div>
 		</div>
 		<div class="well">
-			<div id="chartZn" style="height:300px"></div>
+			<div id="chartZn" class="chart"></div>
 		</div>
     </div>
 </div>

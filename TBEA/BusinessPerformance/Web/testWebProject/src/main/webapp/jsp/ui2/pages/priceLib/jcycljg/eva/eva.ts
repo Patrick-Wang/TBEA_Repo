@@ -13,7 +13,7 @@ module jcycljg {
                 return new JQTable.JQGridAssistant([
                     new JQTable.Node("日期", "rq"),
                     new JQTable.Node("北京有机（14-2）<br/>元/吨", "a1"),
-                    new JQTable.Node("北京有机（18-3）<br/>元/吨", "a2"),,
+                    new JQTable.Node("北京有机（18-3）<br/>元/吨", "a2"),
                     new JQTable.Node("扬巴V5110J<br/>元/吨", "a3")
                 ], gridName);
             }

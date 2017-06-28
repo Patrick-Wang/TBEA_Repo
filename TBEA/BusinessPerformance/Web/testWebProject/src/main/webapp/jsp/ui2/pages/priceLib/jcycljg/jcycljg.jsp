@@ -149,6 +149,8 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/hzb_companys.js"></script>
 <script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
+<script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/priceLib/jcycljg/jcycljgdef.js"
 	type="text/javascript"></script>
 <script
@@ -186,7 +188,7 @@
 									class="fa fa-calendar"></i>
 							</div>
 							<div id="item-sel" class="pull-left"></div>
-							<div id="grid-update" class="btn btn-default">
+							<div id="grid-update" class="btn btn-default" onclick="view.updateUI()" >
 								查找 <i class="fa fa-search"></i>
 							</div>
 						</div>
@@ -247,12 +249,14 @@
 						&& window.parent['onClickBreadcrumb'](breadNode);
 			});
 		}
-		view.init({
-            type: "item-sel",
-            dts: "grid-date",
-            dte: "grid-date-end",
-			date : Util.parseDate('${year}', '${month}', '${day}')
-		});
+		$(document).ready(function(){
+			view.init({
+	            type: "item-sel",
+	            dts: "grid-date",
+	            dte: "grid-date-end",
+				date : Util.parseDate('${year}', '${month}', '${day}')
+			});
+		});		
 	</script>
 
 </body>

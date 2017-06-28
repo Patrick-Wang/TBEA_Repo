@@ -101,18 +101,18 @@ module jcycljg {
             this.mItemSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
             this.mNodes = this.mItemSelector.getTopNodes();
             if (this.plugin(this.getActiveNode()).getDateType() == DateType.DAY){
-                $("#" + this.mOpt.dte).hide();
+                $("#" + this.mOpt.dte).parent().hide();
             }
             this.mItemSelector.change((sel:any, depth:number)=>{
                 if (this.plugin(this.getActiveNode()).getDateType() == DateType.MONTH){
-                    $("#" + this.mOpt.dte).show();
-                    $("#" + this.mOpt.dts).show();
+                    $("#" + this.mOpt.dte).parent().show();
+                    $("#" + this.mOpt.dts).parent().show();
                 }else if (this.plugin(this.getActiveNode()).getDateType() == DateType.YEAR){
-                    $("#" + this.mOpt.dts).hide();
-                    $("#" + this.mOpt.dte).hide();
+                    $("#" + this.mOpt.dts).parent().hide();
+                    $("#" + this.mOpt.dte).parent().hide();
                 }else {
-                    $("#" + this.mOpt.dts).show();
-                    $("#" + this.mOpt.dte).hide();
+                    $("#" + this.mOpt.dts).parent().show();
+                    $("#" + this.mOpt.dte).parent().hide();
                 }
             });
 
@@ -212,13 +212,12 @@ module jcycljg {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
 
             let dts:Util.Date = this.getStartDate();
-            let dte:Util.Date = this.getEndDate();
-            //if (this.plugin(node).getDateType() == DateType.MONTH){
-            //    dte = this.mDSEnd.getDate();
-            //    dte.day = this.mDSEnd.monthDays();
-            //}else {
-            //    dte.day = this.mDSStart.monthDays();
-            //}
+            let dte:Util.Date = this.getStartDate();
+            if (this.plugin(node).getDateType() == DateType.MONTH){
+                dte = this.getEndDate();
+            }
+            dts.day = 1;
+            dte.day = Util.monthDaysCount(dte);
             //
             //if (!this.checkDate(dts, dte)){
             //    return;

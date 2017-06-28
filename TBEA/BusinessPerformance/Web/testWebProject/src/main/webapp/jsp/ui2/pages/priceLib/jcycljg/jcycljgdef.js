@@ -72,7 +72,7 @@ var jcycljg;
             //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
             //    jqgrid.setGridWidth(this.jqgridHost().width());
             //}
-            this.$(".chart").css("width", this.jqgridHost().width() + "px");
+            this.$(this.mOpt.tb).find(".chart").css("width", this.jqgridHost().width() + "px");
         };
         BasePluginView.prototype.jqgridHost = function () {
             return this.$(this.mOpt.tb);

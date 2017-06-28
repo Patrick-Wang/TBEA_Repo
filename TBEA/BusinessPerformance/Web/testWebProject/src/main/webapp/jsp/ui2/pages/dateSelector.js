@@ -6,6 +6,14 @@ var Util;
         return sd;
     }
     Util.uDate2sDate = uDate2sDate;
+    function monthDaysCount(date) {
+        if (undefined != date.year && undefined != date.month) {
+            var temp = new Date(date.year, date.month, 0);
+            return temp.getDate();
+        }
+        return -1;
+    }
+    Util.monthDaysCount = monthDaysCount;
     function toDate(dt) {
         var curDate = new Date(Date.parse(dt.replace(/-/g, '/')));
         return {

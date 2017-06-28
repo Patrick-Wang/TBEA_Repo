@@ -13,6 +13,14 @@ module Util {
         return sd;
     }
 
+    export function monthDaysCount(date : Util.Date) : number{
+        if (undefined != date.year && undefined != date.month) {
+            var temp = new Date(date.year, date.month, 0);
+            return temp.getDate();
+        }
+        return -1;
+    }
+
     export function toDate(dt:string): Date{
         let curDate : any = new Date(Date.parse(dt.replace(/-/g, '/')));
         return {

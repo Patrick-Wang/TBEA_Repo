@@ -77,20 +77,20 @@ var jcycljg;
             this.mItemSelector = new Util.UnitedSelector(this.mNodes, this.mOpt.type);
             this.mNodes = this.mItemSelector.getTopNodes();
             if (this.plugin(this.getActiveNode()).getDateType() == jcycljg.DateType.DAY) {
-                $("#" + this.mOpt.dte).hide();
+                $("#" + this.mOpt.dte).parent().hide();
             }
             this.mItemSelector.change(function (sel, depth) {
                 if (_this.plugin(_this.getActiveNode()).getDateType() == jcycljg.DateType.MONTH) {
-                    $("#" + _this.mOpt.dte).show();
-                    $("#" + _this.mOpt.dts).show();
+                    $("#" + _this.mOpt.dte).parent().show();
+                    $("#" + _this.mOpt.dts).parent().show();
                 }
                 else if (_this.plugin(_this.getActiveNode()).getDateType() == jcycljg.DateType.YEAR) {
-                    $("#" + _this.mOpt.dts).hide();
-                    $("#" + _this.mOpt.dte).hide();
+                    $("#" + _this.mOpt.dts).parent().hide();
+                    $("#" + _this.mOpt.dte).parent().hide();
                 }
                 else {
-                    $("#" + _this.mOpt.dts).show();
-                    $("#" + _this.mOpt.dte).hide();
+                    $("#" + _this.mOpt.dts).parent().show();
+                    $("#" + _this.mOpt.dte).parent().hide();
                 }
             });
             $(window).resize(function () {
@@ -180,13 +180,12 @@ var jcycljg;
         View.prototype.updateUI = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
             var dts = this.getStartDate();
-            var dte = this.getEndDate();
-            //if (this.plugin(node).getDateType() == DateType.MONTH){
-            //    dte = this.mDSEnd.getDate();
-            //    dte.day = this.mDSEnd.monthDays();
-            //}else {
-            //    dte.day = this.mDSStart.monthDays();
-            //}
+            var dte = this.getStartDate();
+            if (this.plugin(node).getDateType() == jcycljg.DateType.MONTH) {
+                dte = this.getEndDate();
+            }
+            dts.day = 1;
+            dte.day = Util.monthDaysCount(dte);
             //
             //if (!this.checkDate(dts, dte)){
             //    return;
