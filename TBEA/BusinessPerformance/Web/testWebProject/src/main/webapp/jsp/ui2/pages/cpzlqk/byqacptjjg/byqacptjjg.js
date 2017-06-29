@@ -40,8 +40,8 @@ var cpzlqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../byqacptjjg/update.do", false);
-                this.mAjaxStatus = new Util.Ajax("../byqacptjjg/updateStatus.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/byqacptjjg/update.do", false);
+                this.mAjaxStatus = new Util.Ajax("/BusinessManagement/byqacptjjg/updateStatus.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqacptjjg;
@@ -58,7 +58,7 @@ var cpzlqk;
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../byqacptjjg/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/byqacptjjg/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType

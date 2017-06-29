@@ -43,14 +43,13 @@ module cpzlqk {
         class ShowView extends ZlPluginView  {
             static ins = new ShowView();
             private mData:BhgxxfbResp;
-            private mAjax:Util.Ajax = new Util.Ajax("../pdcpycssbhgxxfb/update.do", false);
-            private mDateSelector:Util.DateSelector;
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/pdcpycssbhgxxfb/update.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
-
-            private mAjaxStatus:Util.Ajax = new Util.Ajax("../pdcpycssbhgwtmx/updateStatus.do", false);
-            private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
-            private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
+            private tableAssist:JQTable.JQGridAssistant;
+            private mAjaxStatus:Util.Ajax = new Util.Ajax("/BusinessManagement/pdcpycssbhgwtmx/updateStatus.do", false);
+            private mCommentGet:Util.Ajax = new Util.Ajax("/BusinessManagement/report/zlfxUpdate.do", false);
+            private mCommentSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/report/zlfxSubmit.do", false);
             getId():number {
                 return plugin.pdcpycssbhgxxfb;
             }
@@ -61,7 +60,7 @@ module cpzlqk {
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "../pdcpycssbhgxxfb/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/pdcpycssbhgxxfb/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType,
                         ydjd:this.mYdjdType,
@@ -154,6 +153,30 @@ module cpzlqk {
 
                 this.$(this.option().ctarea).show();
 
+                this.adjustSize();
+            }
+
+
+            onEvent(e:framework.route.Event):any {
+                switch (e.id) {
+                    case Event.ZLFE_IS_COMPANY_SUPPORTED:
+                        return true;
+                }
+                return super.onEvent(e);
+            }
+
+            public init(opt:Option):void {
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产品送试不合格现象分布");
+            }
+
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
                 if (this.mYdjdType == YDJDType.YD){
                     if (this.mData.waveItems.length == 0){
                         this.$(this.option().ctarea).hide();
@@ -175,31 +198,20 @@ module cpzlqk {
                 }
             }
 
-
-            onEvent(e:framework.route.Event):any {
-                switch (e.id) {
-                    case Event.ZLFE_IS_COMPANY_SUPPORTED:
-                        return true;
-                }
-                return super.onEvent(e);
+            private createJqassist():JQTable.JQGridAssistant{
+                var pagername = this.jqgridName() + "pager";
+                var parent = this.$(this.option().tb);
+                parent.empty();
+                parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + pagername + "'></div>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mData.bhglbs, this.mYdjdType);
+                this.tableAssist.mergeColum(0);
+                this.tableAssist.mergeTitle(0);
+                this.tableAssist.mergeRow(0);
+                return this.tableAssist;
             }
 
-            public init(opt:Option):void {
-                framework.router
-                    .fromEp(this)
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "产品送试不合格现象分布");
-            }
-
-			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
-			}
-			
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mData.bhglbs, this.mYdjdType);
+            private updateTable():any {
+                this.createJqassist();
 
                 let data = [];
                 if (this.mYdjdType == YDJDType.YD){
@@ -217,26 +229,22 @@ module cpzlqk {
                         data.push(["去年同期"].concat(this.mData.result[i]));
                     }
                 }
-                var parent = this.$(this.option().tb);
-                parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeRow(0);
-                tableAssist.mergeColum(0);
-                tableAssist.mergeTitle(0);
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-						datatype: "local",
-						data: tableAssist.getData(data),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 1000,
-                        viewrecords : true
-                    }));
+
+                this.tableAssist.create({
+                    data: data,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 10000,
+                    autoScroll: true
+                });
+
             }
 
             private updateYDEchart():void {
@@ -291,6 +299,8 @@ module cpzlqk {
                     yAxis: yAxis,
                     series: series
                 };
+                this.$(this.option().ct).empty();
+                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 echarts.init(this.$(this.option().ct)[0]).setOption(option);
             }
 
@@ -391,7 +401,8 @@ module cpzlqk {
                     this.$(this.option().ct).css("width", "100%");
                     this.$(this.option().ct1).hide();
                 }
-
+                this.$(this.option().ct).empty();
+                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 echarts.init(this.$(this.option().ct)[0]).setOption(option);
             }
 
@@ -417,7 +428,7 @@ module cpzlqk {
                 this.mCommentSubmit.get({
                     data : JSON.stringify([[param.condition, param.comment]])
                 }).then((jsonData:any)=>{
-                    Util.MessageBox.tip("提交成功", undefined);
+                    Util.Toast.success("提交成功", undefined);
                 });
             }
         }

@@ -35,8 +35,8 @@ module cpzlqk {
         class ShowView extends ZlPluginView {
             static ins = new ShowView();
             private mData:CpzlqkResp;
-            private mAjax:Util.Ajax = new Util.Ajax("../byqacptjjg/update.do", false);
-            private mAjaxStatus:Util.Ajax = new Util.Ajax("../byqacptjjg/updateStatus.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/byqacptjjg/update.do", false);
+            private mAjaxStatus:Util.Ajax = new Util.Ajax("/BusinessManagement/byqacptjjg/updateStatus.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
             getId():number {
@@ -56,7 +56,7 @@ module cpzlqk {
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "../byqacptjjg/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/byqacptjjg/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType,
                         ydjd:this.mYdjdType

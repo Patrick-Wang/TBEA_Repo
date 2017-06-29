@@ -45,36 +45,50 @@ var framework;
                 }
                 return this.plugin(nod);
             };
-            BasicFrameView.prototype.init = function (opt) {
-                var _this = this;
-                this.mOpt = opt;
-                var minDate = Util.addYear(opt.date, -3);
+            BasicFrameView.prototype.createDate = function (opt) {
                 var className = "";
                 var fmt = "YYYY年MM月";
-                if (!opt.date.month) {
+                if (!this.mOpt.date.month) {
                     fmt = "YYYY年";
                     className = "year";
                 }
                 else {
-                    if (opt.date.day) {
+                    if (this.mOpt.date.day) {
                         fmt = "YYYY年MM月DD日";
                         className = "day";
                     }
                 }
+                $("#" + this.mOpt.dt).removeClass("year")
+                    .removeClass("day");
+                var minDate = Util.addYear(this.mOpt.date, -3);
                 minDate.month = 1;
-                $("#" + this.mOpt.dt).jeDate({
-                    skinCell: "jedatedeepgreen",
-                    format: fmt,
-                    isTime: false,
-                    isinitVal: true,
-                    isClear: false,
-                    isToday: false,
-                    minDate: Util.date2Str(minDate),
-                    maxDate: Util.date2Str(opt.date),
-                }).removeCss("height")
+                var oldOpt = $("#" + this.mOpt.dt).jeOpts();
+                if (!oldOpt) {
+                    oldOpt = {
+                        skinCell: "jedatedeepgreen",
+                        format: fmt,
+                        isTime: false,
+                        isinitVal: true,
+                        isClear: false,
+                        isToday: false,
+                        minDate: Util.date2Str(minDate),
+                        maxDate: Util.date2Str(this.mOpt.date),
+                        insTrigger: true
+                    };
+                }
+                else {
+                    oldOpt.insTrigger = false;
+                }
+                $.extend(oldOpt, opt);
+                $("#" + this.mOpt.dt).empty().jeDate(oldOpt).removeCss("height")
                     .removeCss("padding")
                     .removeCss("margin-top")
                     .addClass(className);
+            };
+            BasicFrameView.prototype.init = function (opt) {
+                var _this = this;
+                this.mOpt = opt;
+                this.createDate({});
                 this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
                 if (opt.comps.length == 1) {
                     this.mCompanySelector.hide();

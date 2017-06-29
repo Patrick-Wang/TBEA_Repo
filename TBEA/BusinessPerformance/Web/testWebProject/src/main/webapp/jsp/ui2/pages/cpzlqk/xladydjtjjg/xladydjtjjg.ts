@@ -33,9 +33,9 @@ module cpzlqk {
         class ShowView extends ZlPluginView {
             static ins = new ShowView();
             private mData:CpzlqkResp;
-            private mAjax:Util.Ajax = new Util.Ajax("../xladydjtjjg/update.do", false);
-
-            private mAjaxStatus:Util.Ajax = new Util.Ajax("../xlacptjjg/updateStatus.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/xladydjtjjg/update.do", false);
+            private tableAssist:JQTable.JQGridAssistant;
+            private mAjaxStatus:Util.Ajax = new Util.Ajax("/BusinessManagement/xlacptjjg/updateStatus.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
             getId():number {
@@ -55,7 +55,7 @@ module cpzlqk {
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "../xladydjtjjg/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/xladydjtjjg/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType,
                         ydjd:this.mYdjdType,
@@ -66,6 +66,8 @@ module cpzlqk {
             private option():Option {
                 return <Option>this.mOpt;
             }
+
+
 
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
                 this.mDt = date;
@@ -247,7 +249,8 @@ module cpzlqk {
                     yAxis: yAxis,
                     series: series
                 };
-
+                this.$(echart).empty();
+                this.$(echart).removeAttr("_echarts_instance_");
                 echarts.init(this.$(echart)[0]).setOption(option);
             }
 
@@ -258,35 +261,49 @@ module cpzlqk {
 					.send(framework.basic.FrameEvent.FE_REGISTER, "按电压等级统计结果");
             }
 
-			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
-			}
-			
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mYdjdType);
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+
+                //this.$(this.option().ct).css("height", "300px");
+                this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart();
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
+                var pagername = this.jqgridName() + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeColum(0);
-                tableAssist.mergeTitle();
-                tableAssist.mergeRow(0);
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-						datatype: "local",
-						data: tableAssist.getData(this.mData.tjjg),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 1000,
-                        viewrecords : true
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + pagername + "'></div>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mYdjdType);
+                this.tableAssist.mergeColum(0);
+                this.tableAssist.mergeTitle();
+                this.tableAssist.mergeRow(0);
+                return this.tableAssist;
+            }
+
+            private updateTable():any {
+                this.createJqassist();
+
+                this.tableAssist.create({
+                    data: this.mData.tjjg,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 10000,
+                    autoScroll: true
+                });
+
+                this.adjustSize();
             }
 
             onSaveComment(comment:any):void {
@@ -311,7 +328,7 @@ module cpzlqk {
                 this.mCommentSubmit.get({
                     data : JSON.stringify([[param.condition, param.comment]])
                 }).then((jsonData:any)=>{
-                    Util.MessageBox.tip("提交成功", undefined);
+                    Util.Toast.success("提交成功", undefined);
                 });
             }
         }

@@ -41,8 +41,8 @@ var cpzlqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../byqcpycssbhgxxfb/update.do", false);
-                this.mAjaxStatus = new Util.Ajax("../byqcpycssbhgwtmx/updateStatus.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/byqcpycssbhgxxfb/update.do", false);
+                this.mAjaxStatus = new Util.Ajax("/BusinessManagement/byqcpycssbhgwtmx/updateStatus.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqcpycssbhgxxfb;
@@ -52,7 +52,7 @@ var cpzlqk;
                     || compType == Util.CompanyType.XBC || compType == Util.CompanyType.BYQCY;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../byqcpycssbhgxxfb/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/byqcpycssbhgxxfb/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType,
@@ -136,6 +136,26 @@ var cpzlqk;
                 }
                 this.updateTable();
                 this.$(this.option().ctarea).show();
+                this.adjustSize();
+            };
+            ShowView.prototype.onEvent = function (e) {
+                switch (e.id) {
+                    case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
+                        return true;
+                }
+                return _super.prototype.onEvent.call(this, e);
+            };
+            ShowView.prototype.init = function (opt) {
+                framework.router
+                    .fromEp(this)
+                    .to(framework.basic.endpoint.FRAME_ID)
+                    .send(framework.basic.FrameEvent.FE_REGISTER, "产品送试不合格现象分布");
+            };
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
                 if (this.mYdjdType == cpzlqk.YDJDType.YD) {
                     if (this.mData.waveItems.length == 0) {
                         this.$(this.option().ctarea).hide();
@@ -159,27 +179,19 @@ var cpzlqk;
                     }
                 }
             };
-            ShowView.prototype.onEvent = function (e) {
-                switch (e.id) {
-                    case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
-                        return true;
-                }
-                return _super.prototype.onEvent.call(this, e);
-            };
-            ShowView.prototype.init = function (opt) {
-                framework.router
-                    .fromEp(this)
-                    .to(framework.basic.endpoint.FRAME_ID)
-                    .send(framework.basic.FrameEvent.FE_REGISTER, "产品送试不合格现象分布");
-            };
-            ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+            ShowView.prototype.createJqassist = function () {
+                var pagername = this.jqgridName() + "pager";
+                var parent = this.$(this.option().tb);
+                parent.empty();
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + pagername + "'></div>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mData.bhglbs, this.mYdjdType);
+                this.tableAssist.mergeColum(0);
+                this.tableAssist.mergeTitle(0);
+                this.tableAssist.mergeRow(0);
+                return this.tableAssist;
             };
             ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name, this.mData.bhglbs, this.mYdjdType);
+                this.createJqassist();
                 var data = [];
                 if (this.mYdjdType == cpzlqk.YDJDType.YD) {
                     data = this.mData.result;
@@ -197,25 +209,20 @@ var cpzlqk;
                         data.push(["去年同期"].concat(this.mData.result[i]));
                     }
                 }
-                var parent = this.$(this.option().tb);
-                parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeRow(0);
-                tableAssist.mergeColum(0);
-                tableAssist.mergeTitle(0);
-                this.$(name).jqGrid(tableAssist.decorate({
+                this.tableAssist.create({
+                    data: data,
                     datatype: "local",
-                    data: tableAssist.getData(data),
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 1000,
-                    viewrecords: true
-                }));
+                    rowNum: 10000,
+                    autoScroll: true
+                });
             };
             ShowView.prototype.updateYDEchart = function () {
                 var title = "按产单位计结果";
@@ -266,6 +273,8 @@ var cpzlqk;
                     yAxis: yAxis,
                     series: series
                 };
+                this.$(this.option().ct).empty();
+                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 echarts.init(this.$(this.option().ct)[0]).setOption(option);
             };
             ShowView.prototype.toCtVal = function (val) {
@@ -356,6 +365,8 @@ var cpzlqk;
                     this.$(this.option().ct).css("width", "100%");
                     this.$(this.option().ct1).hide();
                 }
+                this.$(this.option().ct).empty();
+                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 echarts.init(this.$(this.option().ct)[0]).setOption(option);
             };
             ShowView.prototype.onSaveComment = function (comment) {

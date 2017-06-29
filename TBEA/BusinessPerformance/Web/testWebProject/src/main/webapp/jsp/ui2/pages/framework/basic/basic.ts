@@ -72,21 +72,30 @@ module framework.basic {
                 }
             }
 
+            $("#" + this.mOpt.dt).removeClass("year")
+                .removeClass("day");
             let minDate = Util.addYear(this.mOpt.date, -3);
             minDate.month = 1;
 
-            opt = $.extend({
-                skinCell: "jedatedeepgreen",
-                format:fmt,
-                isTime: false,
-                isinitVal: true,
-                isClear: false,
-                isToday: false,
-                minDate: Util.date2Str(minDate),
-                maxDate: Util.date2Str(this.mOpt.date)
-            }, opt);
+            let oldOpt = $("#" + this.mOpt.dt).jeOpts();
+            if (!oldOpt){
+                oldOpt = {
+                    skinCell: "jedatedeepgreen",
+                    format: fmt,
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false,
+                    minDate: Util.date2Str(minDate),
+                    maxDate: Util.date2Str(this.mOpt.date),
+                    insTrigger:true
+                };
+            }else{
+                oldOpt.insTrigger = false;
+            }
+            $.extend(oldOpt, opt);
 
-            $("#" + this.mOpt.dt).empty().jeDate(opt).removeCss("height")
+            $("#" + this.mOpt.dt).empty().jeDate(oldOpt).removeCss("height")
                 .removeCss("padding")
                 .removeCss("margin-top")
                 .addClass(className);

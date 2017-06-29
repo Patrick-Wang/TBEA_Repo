@@ -1,11 +1,11 @@
-<Table id="pdcpycssbhgwtmx" align="center" style="display: none;">
-    <tr id="tbarea">
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
-</Table>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/cpzlqk/pdcpycssbhgwtmx/pdcpycssbhgwtmx.js"></script>
+<div id="pdcpycssbhgwtmx" class="sub-view">
+	<div id="tbarea">
+       <div class="well">
+			<div id="table"></div>
+		</div>
+    </div>
+</div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/pdcpycssbhgwtmx/pdcpycssbhgwtmx.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router
@@ -14,7 +14,7 @@ $(document).ready(function(){
                 tb: "table",
                 host: "pdcpycssbhgwtmx",
                 tbarea:"tbarea",
-    tableStatus: tableStatus
+    			tableStatus: tableStatus
             });
 });
 </script>

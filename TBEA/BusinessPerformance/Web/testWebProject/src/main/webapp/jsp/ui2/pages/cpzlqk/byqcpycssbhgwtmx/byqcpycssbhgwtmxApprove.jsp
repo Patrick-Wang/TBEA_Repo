@@ -1,16 +1,12 @@
-<Table id="byqcpycssbhgwtmxApprove" align="center" style="display: none;">
-    <tr>
-        <td>
-        <div id="tips" style="font-size: 18px;font-weight: bold"></div>
-        </td>
-    </tr>
-    <tr id="tbarea">
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
-</Table>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxApprove.js"></script>
+<div id="byqcpycssbhgwtmxApprove" class="sub-view">
+	<div id="tbarea">
+       <div class="well">
+       		<span id="tips" style="font-size: 18px;font-weight: bold"></span>
+			<div id="table"></div>
+		</div>
+    </div>
+</div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxApprove.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router

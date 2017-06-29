@@ -33,7 +33,7 @@ module cpzlqk {
             static ins = new ShowView();
             private mData:CpzlqkResp;
             private mAjax:Util.Ajax = new Util.Ajax("../byqadwtjjg/update.do", false);
-            private mDateSelector:Util.DateSelector;
+            private tableAssist:JQTable.JQGridAssistant;
 
             private mAjaxStatus:Util.Ajax = new Util.Ajax("../byqacptjjg/updateStatus.do", false);
             private mDt: string;

@@ -40,10 +40,10 @@ var cpzlqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../pdacptjjg/update.do", false);
-                this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
-                this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
-                this.mAjaxStatus = new Util.Ajax("../pdacptjjg/updateStatus.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/pdacptjjg/update.do", false);
+                this.mCommentGet = new Util.Ajax("/BusinessManagement/report/zlfxUpdate.do", false);
+                this.mCommentSubmit = new Util.Ajax("/BusinessManagement/report/zlfxSubmit.do", false);
+                this.mAjaxStatus = new Util.Ajax("/BusinessManagement/pdacptjjg/updateStatus.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.pdacptjjg;
@@ -61,7 +61,7 @@ var cpzlqk;
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../pdacptjjg/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/pdacptjjg/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType
@@ -233,6 +233,8 @@ var cpzlqk;
                     yAxis: yAxis,
                     series: series
                 };
+                this.$(echart).empty();
+                this.$(echart).removeAttr("_echarts_instance_");
                 echarts.init(this.$(echart)[0]).setOption(option);
             };
             ShowView.prototype.refresh = function () {
@@ -249,34 +251,43 @@ var cpzlqk;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
             };
-            ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //this.$(this.option().ct).css("height", "300px");
+                this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart();
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name, this.mYdjdType);
+            ShowView.prototype.createJqassist = function () {
+                var pagername = this.jqgridName() + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeColum(0);
-                tableAssist.mergeTitle();
-                tableAssist.mergeRow(0);
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + pagername + "'></div>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mYdjdType);
+                this.tableAssist.mergeColum(0);
+                this.tableAssist.mergeTitle();
+                this.tableAssist.mergeRow(0);
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData.tjjg,
                     datatype: "local",
-                    data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 1000,
-                    viewrecords: true,
-                    caption: "按产品统计结果"
-                }));
+                    rowNum: 10000,
+                    autoScroll: true
+                });
+                this.adjustSize();
             };
             ShowView.prototype.onSaveComment = function (comment) {
                 var param = {

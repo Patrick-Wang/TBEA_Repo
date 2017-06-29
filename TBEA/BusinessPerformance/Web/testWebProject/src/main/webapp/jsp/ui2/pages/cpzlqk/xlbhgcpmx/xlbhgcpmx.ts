@@ -33,11 +33,12 @@ module cpzlqk {
         }
 
         class ShowView extends ZlPluginView {
+
             static ins = new ShowView();
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("../xlbhgcpmx/update.do", false);
-
-            private mAjaxStatus:Util.Ajax = new Util.Ajax("../xlbhgcpmx/updateStatus.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/xlbhgcpmx/update.do", false);
+            private tableAssist:JQTable.JQGridAssistant;
+            private mAjaxStatus:Util.Ajax = new Util.Ajax("/BusinessManagement/xlbhgcpmx/updateStatus.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
             protected isSupported(compType:Util.CompanyType):boolean {
@@ -60,7 +61,7 @@ module cpzlqk {
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "../xlbhgcpmx/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/xlbhgcpmx/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType,
                         all: this.mCompSize > 1
@@ -69,6 +70,18 @@ module cpzlqk {
 
             private option():Option {
                 return <Option>this.mOpt;
+            }
+
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
             }
 
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
@@ -157,37 +170,38 @@ module cpzlqk {
 					.send(framework.basic.FrameEvent.FE_REGISTER, "不合格产品明细");
             }
 
-			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
-			}
-			
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+            private createJqassist():JQTable.JQGridAssistant{
+                var pagername = this.jqgridName() + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                tableAssist.mergeColum(0);
-                tableAssist.mergeTitle();
-                tableAssist.mergeRow(0);
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-						datatype: "local",
-						data: tableAssist.getData(this.mData),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: 20,
-                        viewrecords : true,
-                        pager: '#' + pagername,
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + pagername + "'></div>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                this.tableAssist.mergeColum(0);
+                this.tableAssist.mergeTitle();
+                this.tableAssist.mergeRow(0);
+                return this.tableAssist;
+            }
+
+            private updateTable():any {
+                this.createJqassist();
+
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 15,
+                    autoScroll: true,
+                    pager: '#' + this.jqgridName() + "pager",
+                });
+
+                this.adjustSize();
             }
 
             onSaveComment(comment:any):void {
@@ -212,7 +226,7 @@ module cpzlqk {
                 this.mCommentSubmit.get({
                     data : JSON.stringify([[param.condition, param.comment]])
                 }).then((jsonData:any)=>{
-                    Util.MessageBox.tip("提交成功", undefined);
+                    Util.Toast.success("提交成功", undefined);
                 });
             }
         }

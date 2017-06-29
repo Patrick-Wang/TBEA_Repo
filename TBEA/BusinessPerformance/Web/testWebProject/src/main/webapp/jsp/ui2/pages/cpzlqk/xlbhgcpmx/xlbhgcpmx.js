@@ -41,8 +41,8 @@ var cpzlqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../xlbhgcpmx/update.do", false);
-                this.mAjaxStatus = new Util.Ajax("../xlbhgcpmx/updateStatus.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/xlbhgcpmx/update.do", false);
+                this.mAjaxStatus = new Util.Ajax("/BusinessManagement/xlbhgcpmx/updateStatus.do", false);
             }
             ShowView.prototype.isSupported = function (compType) {
                 return compType == Util.CompanyType.LLGS || compType == Util.CompanyType.DLGS
@@ -61,7 +61,7 @@ var cpzlqk;
                 return plugin.xlbhgcpmx;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../xlbhgcpmx/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/xlbhgcpmx/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
                     all: this.mCompSize > 1
@@ -69,6 +69,15 @@ var cpzlqk;
             };
             ShowView.prototype.option = function () {
                 return this.mOpt;
+            };
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
             };
             ShowView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
@@ -148,35 +157,35 @@ var cpzlqk;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "不合格产品明细");
             };
-            ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
-            };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                var tableAssist = JQGridAssistantFactory.createTable(name);
+            ShowView.prototype.createJqassist = function () {
+                var pagername = this.jqgridName() + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                tableAssist.mergeColum(0);
-                tableAssist.mergeTitle();
-                tableAssist.mergeRow(0);
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + pagername + "'></div>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                this.tableAssist.mergeColum(0);
+                this.tableAssist.mergeTitle();
+                this.tableAssist.mergeRow(0);
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
                     datatype: "local",
-                    data: tableAssist.getData(this.mData),
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
+                    rowNum: 15,
                     autoScroll: true,
-                    rowNum: 20,
-                    viewrecords: true,
-                    pager: '#' + pagername,
-                }));
+                    pager: '#' + this.jqgridName() + "pager",
+                });
+                this.adjustSize();
             };
             ShowView.prototype.onSaveComment = function (comment) {
                 var param = {
@@ -197,7 +206,7 @@ var cpzlqk;
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {
-                    Util.MessageBox.tip("提交成功", undefined);
+                    Util.Toast.success("提交成功", undefined);
                 });
             };
             ShowView.ins = new ShowView();
