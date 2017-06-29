@@ -25,9 +25,9 @@ var Util;
     Util.toDate = toDate;
     function parseDate(year, month, day) {
         var date = {
-            year: year == undefined || year.length == 0 ? undefined : parseInt(year),
-            month: month == undefined || month.length == 0 ? undefined : parseInt(month),
-            day: day == undefined || day.length == 0 ? undefined : parseInt(day)
+            year: (year == undefined || year.length == 0) ? undefined : parseInt(year),
+            month: (month == undefined || month.length == 0) ? undefined : parseInt(month),
+            day: (day == undefined || day.length == 0) ? undefined : parseInt(day)
         };
         if (date.year != undefined || date.month != undefined || date.day != undefined) {
             return date;

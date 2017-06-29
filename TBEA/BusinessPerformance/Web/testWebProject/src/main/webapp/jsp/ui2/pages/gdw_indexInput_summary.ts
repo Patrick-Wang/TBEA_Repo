@@ -1,94 +1,85 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 declare var echarts;
 
-module gdw_indexinput_summary {
+module gdw_indexinput_summary{
+
+    import Endpoint = framework.route.Endpoint;
+    import router = framework.router;
 
     class JQGridAssistantFactory {
-
         public static createTable(gridName: string): JQTable.JQGridAssistant {
-
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("公司名称", "gsmc", true, JQTable.TextAlign.Left),
                 new JQTable.Node("预计指标填写情况", "inputCondition", true, JQTable.TextAlign.Left),
                 new JQTable.Node("填写时间", "inputTime", true, JQTable.TextAlign.Left),
                 new JQTable.Node("审核时间", "approveTime", true, JQTable.TextAlign.Left),
-            ], gridName); 
+            ], gridName);
 
         }
-
     }
 
-    export class View {
-        private static ins: View;
+    interface IViewOption {
+        tableId: string;
+        date: Util.Date;
+    }
 
-        public static newInstance(): View {
-            if (View.ins == undefined) {
-                View.ins = new View();
+    export class SimpleView implements Endpoint {
+
+        getId():number {
+            return Util.FAMOUS_VIEW;
+        }
+
+        onEvent(e:framework.route.Event):any {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+                case Util.MSG_UPDATE:
+                    this.updateUI();
+                    break;
             }
-            return View.ins;
-        }
-        private mYear: number;
-        private mMonth: number;
-        private mIndex: number;
-        private mCompanyType:number;
-        private mCompanyName: string;
-        private mDs: Util.DateSelector;
-        private mData: Array<string[]> = [];
-        private mDataSet: Util.Ajax = new Util.Ajax("status_update.do");
-        private mTableId: string;
-        private isZHCompany:boolean;
-        public init(tableId: string, dateId: string, year: number, month: number,isZHCompany: boolean): void {
-            this.mYear = year;
-            this.mTableId = tableId;
-            this.mMonth = month;
-            this.isZHCompany = isZHCompany;
-            this.mDs = new Util.DateSelector(
-                { year: year - 3, month: 1 },
-                { year: year, month: month },
-                dateId);
-            this.onIndexSelected();
-            this.onCompanysSelected();
-
         }
 
-        public onIndexSelected() {
-            this.mIndex = $("#indextype").val();
-            //this.mIndex = $("#indextype  option:selected").text();
-        }
-        
-        public onCompanysSelected() {
-            this.mCompanyType = $("#companytype").val();
-            this.mCompanyName = $("#companytype  option:selected").text();
-            //this.mIndex = $("#indextype  option:selected").text();
+        public constructor() {
+            router.register(this);
         }
 
-        public updateUI() {
-            var date: Util.Date = this.mDs.getDate();
-            //this.onIndexSelected();
-            this.mDataSet.get({ month: date.month, year: date.year, entryType: this.mIndex, companyType: this.mCompanyType })
-                .then((dataArray: any) => {
-                this.mData = dataArray;
-                if (this.isZHCompany) {
-                    $('h1').text(date.year + "年" + date.month + "月" + "众和公司各项目单位预测指标填报情况");
-                    document.title = date.year + "年" + date.month + "月" + "众和公司各项目单位预测指标填报情况";
-                    
-                } else {
-                    if(this.mCompanyType == 1)
-                    {
-                        $('h1').text(date.year + "年" + date.month + "月" + "各经营单位预测指标填报情况");
-                        document.title = date.year + "年" + date.month + "月" + "各经营单位预测指标填报情况";
-                    }else{
-                         $('h1').text(date.year + "年" + date.month + "月" + this.mCompanyName + "预测指标填报情况");
-                        document.title = date.year + "年" + date.month + "月" + this.mCompanyName + "预测指标填报情况";
-                    }
-                    
-                }
-                
-                this.updateTable();
+        private static ins:SimpleView = new SimpleView();
 
+        private mOpt: IViewOption;
+        private mData:Array<string[]> = [];
+        private tableAssist:JQTable.JQGridAssistant;
+        private mDataSet:Util.Ajax = new Util.Ajax("/BusinessManagement/dashboard/status_update.do");
+
+        public init(opt:any):void {
+            this.mOpt = opt;
+
+            let minDate = Util.addYear(opt.date, -3);
+            minDate.month = 1;
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年MM月",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                minDate: Util.date2Str(minDate),
+                maxDate: Util.date2Str(opt.date),
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+
+            $(window).resize(()=> {
+                this.adjustSize();
+            });
+            $("#grid-update").on("click", ()=> {
+                this.updateUI();
             });
 
+            this.updateUI();
         }
 
         private formatData() {
@@ -101,7 +92,6 @@ module gdw_indexinput_summary {
                         row[1] = "尚未提交";
                         row[2] = "--";
                     }
-
                     if (row[3] == ""){
                         row[3] = "--";
                     }
@@ -112,40 +102,72 @@ module gdw_indexinput_summary {
             return data;
         }
 
-        private updateTable(): void {
-            var name = this.mTableId + "_jqgrid_1234";
-            var data = [];
-            var tableAssist: JQTable.JQGridAssistant = null;
+        private getDate():Util.Date {
+            let rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
+        }
 
-            tableAssist = JQGridAssistantFactory.createTable(name)
+        public updateUI() {
+            this.mDataSet.get($.extend(this.getDate(), {entryType: $("#grid-type").val()}, {companyType:$("#company-type").val()}))
+                .then((dataArray:any) => {
+                    this.mData = dataArray;
+                    this.updateTable();
+                });
+        }
+
+        private adjustSize() {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+
+            let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+        }
+
+        private jqgrid(){
+            return $("#" + this.jqgridName());
+        }
+
+        private jqgridName():string{
+            return this.mOpt.tableId + "_jqgrid_real";
+        }
+
+        private createJqassist():JQTable.JQGridAssistant{
+            var parent = $("#" + this.mOpt.tableId);
+            parent.empty();
+            parent.append("<table id='"+ this.jqgridName() +"'></table>");
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+            return this.tableAssist;
+        }
+
+        private updateTable():void {
+            this.createJqassist();
+            var data = [];
             data = this.formatData();
 
+            this.tableAssist.create({
+                data: data,
+                datatype: "local",
+                multiselect: false,
+                drag: false,
+                resize: false,
+                height: '100%',
+                width: $("#" + this.mOpt.tableId).width(),
+                shrinkToFit: true,
+                rowNum: 2000,
+                autoScroll: true
+            });
 
-            var parent = $("#" + this.mTableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>" + "<div id= 'pager'></div>");
-            $("#" + name).jqGrid(
-                tableAssist.decorate({
-                    // url: "TestTable/WGDD_load.do",
-                    // datatype: "json",
-                    data: tableAssist.getData(data),
-                    datatype: "local",
-                    multiselect: false,
-                    drag: false,
-                    resize: false,
-                    //autowidth : false,
-                    //                    cellsubmit: 'clientArray',
-                    //                    cellEdit: true,
-                    height: '100%',
-                    width: 650,
-                    shrinkToFit: true,
-                    autoScroll: true,
-                    pager:'#pager',
-                    rowNum: 20,
-                    viewrecords: true//是否显示行数 
-
-                }));
-
+            this.adjustSize();
         }
     }
 }

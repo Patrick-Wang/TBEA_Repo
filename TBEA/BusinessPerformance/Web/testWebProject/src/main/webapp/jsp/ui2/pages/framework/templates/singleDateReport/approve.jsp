@@ -1,245 +1,251 @@
-﻿<html>
+﻿<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Head -->
 <head>
+<meta charset="utf-8" />
+<title></title>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <!-- message box -->
-    <link href="${pageContext.request.contextPath}/jsp/message-box/css/style.css" rel="stylesheet" type="text/css">
-
-    <!-- jquery -->
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
-
-    <!-- jquery ui blue -->
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
-
-    <!-- 多选菜单 -->
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.css" />
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/jsp/multi-select/assets/style.css" />
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/jsp/multi-select/assets/prettify.css" />
-    <script type="text/javascript" src="${pageContext.request.contextPath}/jsp/multi-select/assets/prettify.js"></script>
-    <script type="text/javascript"
-            src="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.js"></script>
-
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="${pageContext.request.contextPath}/jsp/components/select2/css/select2.min.css">
-    <script src="${pageContext.request.contextPath}/jsp/components/select2/js/select2.min.js" type="text/javascript"></script>
-
-    <!-- jqgrid -->
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.jqgrid.css">
-    <link rel="stylesheet" type="text/css" media="screen"
-          href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.multiselect.css">
-    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.contextmenu.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/i18n/grid.locale-cn.js"
-            type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
-
-    <!-- jqgrid assist -->
-    <script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js" type="text/javascript"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 
-    <script src="${pageContext.request.contextPath}/jsp/json2.js" type="text/javascript"></script>
+<%@include file="../../../../ie8-t.jsp"%>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 
-    <!-- message box -->
-    <script src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/util.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/unitedSelector.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/dateSelector.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/basic/basicdef.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/basic/basic.js" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/jsp/framework/templates/singleDateReport/approve.js"></script>
-    <title>${title}</title>
+<!--Basic Styles-->
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/bootstrap.min.css"
+	rel="stylesheet" />
 
-    <style type="text/css">
-        body {
-            background-color: rgb(247, 247, 247);
-            visibility: hidden;
-        }
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/weather-icons.min.css"
+	rel="stylesheet" />
 
-        .select2-container{
-            margin-left:8px;
-        }
 
-        .panel-content-border {
-            height: 350px;
-            width: 1000px;
-            border: 2px solid #e3e3e3;
-            margin: 0;
-            padding: 0;
-            align: center;
-            valign: center;
-            text-align: center;
-        }
+<!--Beyond styles-->
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/demo.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/typicons.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/animate.min.css"
+	rel="stylesheet" />
+<link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
-        .panel-content {
-            height: 100%;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
+<!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
 
-        .right {
-            width: 45%;
-            height: 180px;
-            float: left;
-            padding-top: 20px;
-            margin-left: 225px;
-        }
 
-        .contract {
-            text-align: center;
-        }
+<!-- jquery ui -->
+<!-- jquery ui gray -->
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
+<!-- jquery ui blue -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/redmond/jquery-ui-custom.css">
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery-ui-custom.min.js"
+	type="text/javascript"></script>
 
-        .contract h1 {
-            display: none;
-            color: #003B8F;
-        }
+<!-- 多选菜单 -->
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/jquery.multiselect.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/assets/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/assets/prettify.css" />
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/assets/prettify.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/jquery.multiselect.js"></script>
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- jedate -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/skin/jedate.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/skin/deepgreen.css">
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/jquery.jedate.js"
+	type="text/javascript"></script>
+<!-- jqgrid -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/ui.jqgrid.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/ui.multiselect.css">
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery.tablednd.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery.contextmenu.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/i18n/grid.locale-cn.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery.layout.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery.jqGrid.js"
+	type="text/javascript"></script>
 
-        .btn_loading, .btn_detail {
-            width: 100px;
-            height: 30px;
-            padding: 5px,10px;
-            font-size: 12px;
-            line-height: 1.5;
-            boder-radius: 3px;
-            background-color: #5cb85c;
-            boder-color: #4cae4c;
-            color: #fff;
-        }
+<!-- jqgrid assist -->
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/jqassist.js"
+	type="text/javascript"></script>
 
-        .header {
-            width: 100%;
-            height: 60px;
-        }
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/json2.js"
+	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/util.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/vector.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/dateSelector.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/unitedSelector.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/companySelector.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/toastr/toastr.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/messageBox.js"
+	type="text/javascript"></script>
 
-        .header h1 {
-            text-align: center;
-        }
-
-        .companyname h1 {
-            width: 30px;
-            font-size: 30px;
-            word-wrap: break-word;
-            letter-spacing: 20px;
-            color: #5cb85c;
-            float: left;
-        }
-
-        .lxian {
-            margin-left: 30px;
-            width: 1px;
-            height: 175px;
-            background: #5cb85c;
-            float: left;
-        }
-
-        .hrclass hr {
-            width: 1100px;
-            height: 1px;
-            margin-top: 10px;
-            margin-left: 90px;
-            border: 0;
-            background-color: #5cb85c;
-        }
-
-        th.ui-th-column div {
-            /* jqGrid columns name wrap  */
-            white-space: normal !important;
-            height: auto !important;
-            padding: 0px;
-        }
-
-        th.ui-th-ltr {
-            /* jqGrid columns name wrap  */
-            font-size: 14px;
-        }
-        .ui-multiselect {
-            padding: 2px 0 2px 4px;
-            text-align: left;
-            font-size: 12px;
-        }
-    </style>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jqueryex.js"
+	type="text/javascript"></script>
+<link href="${pageContext.request.contextPath}/jsp/ui2/ui2.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/scroll/css/jquery.mCustomScrollbar.min.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/scroll/js/jquery.mCustomScrollbar.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/route/route.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/basic/basicdef.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/basic/basic.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/singleDateReport/approve.js"></script>
+<%@include file="../../../../ie8-b.jsp"%>
 </head>
+<!-- /Head -->
+<!-- Body -->
 <body>
-<div class="header">
-    <h1 id="headertitle">${title}</h1>
-</div>
+	<!-- Main Container -->
+	<div class="main-container container-fluid">
+		<!-- Page Container -->
+		<div class="page-container">
 
-<Table id="frameTable" align="center" style="width:1200px">
-    <tr>
-        <td>
-        
-            <div id="dt" style="float: left;margin-right:10px"></div>
-            <input type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
-                   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <input id="unapprove" type="button" value="反审核" style="display:none;float: right;width: 80px; mrgin-left: 10px;"
-                onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UNAPPROVE)" />
-            <input id="approve" type="button" value="审核" style="display:none;float: right;width: 80px; mrgin-left: 10px;"
-                   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_APPROVE)" />
-        </td>
-    </tr>
-</Table>
-<script type="text/javascript">
-    $(document).ready(function () {
-        framework.templates.singleDateReport.createInstance();
-        var date;
-        if ('${date}' == ""){
-            if ("" != '${year}') {
-                date = {
-                    month: '${month}' == '' ? undefined : parseInt('${month}'),
-                    year: '${year}' == '' ? undefined : parseInt('${year}'),
-                    day: '${day}' == '' ? undefined : parseInt('${day}')
-                }
-            }
-        }else{
-            var dt = new Date(Date.parse('${date}'.replace(/-/g, '/')));
-            date = {
-                month: dt.getMonth() + 1,
-                year: dt.getFullYear(),
-                day: dt.getDate()
-            }
-        }
+			<!-- Page Content -->
+			<div class="page-content">
+				<!-- Page Breadcrumb -->
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+					</ul>
+				</div>
+				<!-- /Page Breadcrumb -->
 
-        framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
-            dtId:"dt",
-            date: date,
-            host:"table",
-            title:"${title}",
-            updateUrl:"${updateUrl}.do",
-            approveUrl:"${approveUrl}.do",
-            unapproveUrl:"${unapproveUrl}.do",
-        });
-        $(document.body).css("visibility", "visible");
-    });
-</script>
+				<!-- Page Header -->
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<div class="workinput pull-left">
+							<input id="grid-date" type="text" readonly="readonly"><i
+								class="fa fa-calendar"></i>
+						</div>
+						<div id="grid-update" class="btn btn-default"
+						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)">
+							查找 <i class="fa fa-search"></i>
+						</div>
+						<div id="unapprove" class="btn btn-default pull-right"
+								onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UNAPPROVE)">
+								反审核 
+						</div>
+						<div id="approve" class="btn btn-default pull-right"
+							onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_APPROVE)">
+							审核 
+						</div>
+					</div>
+				</div>
+				<!-- /Page Header -->
+				<!-- Page Body -->
+				<div class="page-body">
+					<div class="row">
+						<div class="col-lg-12 col-sm-12 col-xs-12">
+							<div class="well">
+								<div id="table"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Page Body -->
+			</div>
+			<!-- /Page Content -->
+		</div>
+		<!-- /Page Container -->
+		<!-- Main Container -->
+	</div>
+	<!--Basic Scripts-->
 
-<script src="${pageContext.request.contextPath}/jsp/style_button.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
-<%@include file="../../../components/loading.jsp"%>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!--Beyond Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/beyond.min.js"></script>
+
+	<!--Page Related Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootbox/bootbox.js"></script>
+	<%@include file="../../../loading.jsp"%>
+	<script>
+		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
+		if (Util.isIframe()){
+			Util.Breadcrumb.setOnClickListener(function(breadNode){
+				window.parent['onClickBreadcrumb'] && window.parent['onClickBreadcrumb'](breadNode);
+			});
+		}
+		
+	        
+		$(document).ready(function(){
+			framework.templates.singleDateReport.createInstance();
+			 
+			framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+	            dtId:"grid-date",
+	            date: Util.parseDate('${year}', '${month}', '${day}'),
+	            host:"table",
+	            updateUrl:"${updateUrl}.do",
+	            approveUrl:"${approveUrl}.do",
+	            unapproveUrl:"${unapproveUrl}.do",
+	        });
+		});
+    </script>
+
 </body>
-
-
+<!--  /Body -->
 </html>

@@ -25,7 +25,7 @@ module framework.templates.singleDateReport {
     }
 
     export class EntryView extends BasicEndpoint{
-        dateSelect : Util.DateSelectorProxy;
+        //dateSelect : Util.DateSelectorProxy;
         mAjaxUpdate:Util.Ajax;
         mAjaxSubmit:Util.Ajax;
         mTableAssist:JQTable.JQGridAssistant;
@@ -46,31 +46,71 @@ module framework.templates.singleDateReport {
                 if (opt.dateEnd == undefined){
                     opt.dateEnd = $.extend({}, opt.date);
                 }
-                this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
-                    year:opt.date.year - 3,
-                    month:opt.date.month,
-                    day:opt.date.day
-                }, opt.dateEnd, opt.date, opt.asSeason, opt.asSeasonAcc, opt.jdName);
-                this.update(this.dateSelect.getDate());
+                //this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
+                //    year:opt.date.year - 3,
+                //    month:opt.date.month,
+                //    day:opt.date.day
+                //}, opt.dateEnd, opt.date, opt.asSeason, opt.asSeasonAcc, opt.jdName);
+
+                let seasonClass = "";
+                let fmt = "YYYY年MM月";
+                if (opt.asSeason){
+                    fmt = "YYYY年 && $$MM月";
+                    seasonClass = "season-month";
+                }else if(opt.asSeasonAcc){
+                    fmt = "YYYY年 &&MM月";
+                    seasonClass = "season";
+                }
+
+                $("#" + this.opt.dtId).jeDate({
+                    skinCell: "jedatedeepgreen",
+                    format: fmt,
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false,
+                    minDate: Util.date2Str(Util.addYear(opt.date, -3)),
+                    maxDate: Util.date2Str(opt.dateEnd),
+                    seasonText : opt.jdName ? opt.jdName : undefined
+                }).removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top")
+                    .addClass(seasonClass);
+
+
+                this.update(this.getUDate());
             }
 
 
         }
 
+        protected getUDate():Util.Date {
+            let ret : any = {};
+            if (this.opt.date){
+                let curDate = $("#" + this.opt.dtId).getDate();
+                ret = {
+                    year : curDate.getFullYear(),
+                    month : curDate.getMonth() + 1,
+                    day : curDate.getDate()
+                };
+            }
+            return ret;
+        }
+
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
                 case FrameEvent.FE_UPDATE:
-                    if (this.dateSelect == undefined){
+                    if (this.opt.date == undefined){
                         return this.update(<Util.Date>({}));
                     }else{
-                        return this.update(this.dateSelect.getDate());
+                        return this.update(this.getUDate());
                     }
 
                 case FrameEvent.FE_SUBMIT:
-                    if (this.dateSelect == undefined){
+                    if (this.opt.date == undefined){
                         return this.submit(<Util.Date>({}));
                     }else{
-                        return this.submit(this.dateSelect.getDate());
+                        return this.submit(this.getUDate());
                     }
             }
             return super.onEvent(e);
@@ -80,28 +120,57 @@ module framework.templates.singleDateReport {
             return "" + (date.year + "-" + (date.month == undefined ? 1 :date.month) + "-" + (date.day == undefined ? 1 :date.day));
         }
 
+        getParams(date:Util.Date):any{
+            return {
+                date: this.getDate(date)
+            };
+        }
+
         update (date:Util.Date){
-            this.mAjaxUpdate.get({
-                    date: this.getDate(date)
-                })
+            this.mAjaxUpdate.get(this.getParams(this.getUDate()))
                 .then((jsonData:any) => {
                     this.resp = jsonData;
                     this.updateTable();
                 });
         }
 
-        updateTable():void {
-            var name = this.opt.host + "_jqgrid_uiframe";
-            var pagername = name + "pager";
-            this.mTableAssist = Util.createTable(name, this.resp);
+        adjustSize() {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.opt.host).width());
+            }
 
+            let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+            if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.opt.host).width());
+            }
+        }
+
+        jqgrid(){
+            return $("#" + this.jqgridName());
+        }
+
+        jqgridName():string{
+            return this.opt.host + "_jqgrid_real";
+        }
+
+        createJqassist():JQTable.JQGridAssistant{
             var parent = $("#" + this.opt.host);
+            var pagername = this.jqgridName() + "pager";
             parent.empty();
-            parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-            let jqTable = $("#" + name);
+            parent.append("<table id='"+ this.jqgridName() +"'><div id='" + pagername + "'></table>");
+            this.mTableAssist = Util.createTable(this.jqgridName(), this.resp);
+            return this.mTableAssist;
+        }
+
+        updateTable():void {
+            this.createJqassist();
+
             let opt = {
                 datatype: "local",
-                data: this.mTableAssist.getDataWithId(this.resp.data),
+                dataWithId : this.resp.data,
                 multiselect: false,
                 drag: false,
                 resize: false,
@@ -112,20 +181,58 @@ module framework.templates.singleDateReport {
                 cellEdit: true,
                 // height: data.length > 25 ? 550 : '100%',
                 // width: titles.length * 200,
-                rowNum: 20,
+                rowNum: 15,
                 height: '100%',
-                width: 1200,
+                width: $("#" + this.opt.host).width(),
                 shrinkToFit: true,
                 autoScroll: true,
-                pager: '#' + pagername,
+                pager: '#' + this.jqgridName() + "pager",
                 viewrecords: true
             };
             if (this.resp.pager == 'none'){
                 opt.pager = undefined;
-                opt.rowNum = 1000;
+                opt.rowNum = 2000;
             }
-            jqTable.jqGrid(this.mTableAssist.decorate(opt));
+            this.mTableAssist.create(opt);
+            this.adjustSize();
         }
+
+        //updateTable():void {
+        //    var name = this.opt.host + "_jqgrid_uiframe";
+        //    var pagername = name + "pager";
+        //    this.mTableAssist = Util.createTable(name, this.resp);
+        //
+        //    var parent = $("#" + this.opt.host);
+        //    parent.empty();
+        //    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+        //    let jqTable = $("#" + name);
+        //    let opt = {
+        //        datatype: "local",
+        //        data: this.mTableAssist.getDataWithId(this.resp.data),
+        //        multiselect: false,
+        //        drag: false,
+        //        resize: false,
+        //        assistEditable:true,
+        //        //autowidth : false,
+        //        cellsubmit: 'clientArray',
+        //        //editurl: 'clientArray',
+        //        cellEdit: true,
+        //        // height: data.length > 25 ? 550 : '100%',
+        //        // width: titles.length * 200,
+        //        rowNum: 20,
+        //        height: '100%',
+        //        width: 1200,
+        //        shrinkToFit: true,
+        //        autoScroll: true,
+        //        pager: '#' + pagername,
+        //        viewrecords: true
+        //    };
+        //    if (this.resp.pager == 'none'){
+        //        opt.pager = undefined;
+        //        opt.rowNum = 1000;
+        //    }
+        //    jqTable.jqGrid(this.mTableAssist.decorate(opt));
+        //}
 
         onLoadSubmitData() : any{
             if (this.resp.pager == 'none'){
@@ -135,17 +242,15 @@ module framework.templates.singleDateReport {
         }
 
         submit(date:Util.Date): void{
-            this.mAjaxSubmit.get({
-                data : JSON.stringify(this.onLoadSubmitData()),
-                date:this.getDate(date)
-                })
+            this.mAjaxSubmit.get(
+                $.extend(this.getParams(this.getUDate()), {
+                    data : JSON.stringify(this.onLoadSubmitData())
+                }))
             .then((resp:Util.IResponse) => {
                 if (Util.ErrorCode.OK == resp.errorCode) {
-                    Util.MessageBox.tip("保存 成功", ()=>{
-                        this.update(date);
-                    });
+                    Util.Toast.success("保存 成功");
                 } else {
-                    Util.MessageBox.tip(resp.message);
+                    Util.Toast.failed(resp.message);
                 }
             });
         }

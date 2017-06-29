@@ -1,6 +1,6 @@
 <components>
  <service id="servYclhglqktjApproveUpdate" transaction="transactionManager">
-  <sql id="clids">select
+  <sql id="clids" logger="WEBSERVICE">select
  CLDL.id,
  CLDL.name,
  CLDL.dw
@@ -10,7 +10,7 @@ where
  CLDL.cy=${cy}</sql>
   <list id="ids" type="int" sql="clids" value="0"/>
   <if test="${zts.isEmpty}">
-   <sql id="dyz" order="ids" by="0" colcount="3">select
+   <sql id="dyz" order="ids" by="0" colcount="3" logger="WEBSERVICE">select
  CLDL.id,
  YCL.hgs,
  YCL.zs
@@ -24,7 +24,7 @@ where
  YCL.dwid=${compId}</sql>
   </if>
   <if test="${!zts.isEmpty}">
-   <sql id="dyz" order="ids" by="0" colcount="3">select
+   <sql id="dyz" order="ids" by="0" colcount="3" logger="WEBSERVICE">select
  CLDL.id,
  YCL.hgs,
  YCL.zs
@@ -149,7 +149,7 @@ where
   </response>
  </controller>
  <service id="servYclhglqktjApproveStatus" transaction="transactionManager">
-  <sql id="clids">select
+  <sql id="clids" logger="WEBSERVICE">select
  CLDL.id,
  CLDL.name,
  CLDL.dw
@@ -158,7 +158,7 @@ from
 where
  CLDL.cy=${cy}</sql>
   <list id="ids" type="int" sql="clids" value="0"/>
-  <sql id="dyz">select
+  <sql id="dyz" logger="WEBSERVICE">select
  top 1
  YCL.zt
 from

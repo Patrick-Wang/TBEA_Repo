@@ -13,7 +13,7 @@ module framework.templates.dateReport {
         return new EntryView();
     }
 
-    export interface EntryOption extends framework.templates.singleDateReport.EntryOption{
+    interface EntryOption extends framework.templates.singleDateReport.EntryOption{
         itemNodes:Util.IDataNode[];
         itemId:string;
     }
@@ -22,23 +22,10 @@ module framework.templates.dateReport {
 
         unitedSelector : Util.UnitedSelector;
 
-        onInitialize(opt:any):void{
+        onInitialize(opt:EntryOption):void{
             this.unitedSelector = new Util.UnitedSelector(opt.itemNodes,opt.itemId);
-            $("#" + opt.itemId + " select")
-                .multiselect({
-                    multiple: false,
-                    header: false,
-                    minWidth: 100,
-                    height: '100%',
-                    // noneSelectedText: "请选择月份",
-                    selectedList: 1
-                })
-                .css("padding", "2px 0 2px 4px")
-                .css("text-align", "left")
-                .css("font-size", "12px");
             if (opt.itemNodes.length == 1){
                 this.unitedSelector.hide();
-                $("#headertitle").text(opt.itemNodes[0].data.value + " " + $("#headertitle").text());
             }
             super.onInitialize(opt);
         }
@@ -48,28 +35,6 @@ module framework.templates.dateReport {
                 date: this.getDate(date),
                 item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id
             };
-        }
-
-        update (date:Util.Date){
-            this.mAjaxUpdate.get(this.getParams(date))
-                .then((jsonData:any) => {
-                    this.resp = jsonData;
-                    this.updateTable();
-                });
-        }
-
-        submit(date:Util.Date): void{
-            this.mAjaxSubmit.get($.extend(this.getParams(date), {
-                    data : JSON.stringify(this.onLoadSubmitData())
-                }))
-            .then((resp:Util.IResponse) => {
-                if (Util.ErrorCode.OK == resp.errorCode) {
-                    this.update(date);
-                    Util.MessageBox.tip("保存 成功");
-                } else {
-                    Util.MessageBox.tip(resp.message);
-                }
-            });
         }
     }
 }

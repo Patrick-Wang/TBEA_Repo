@@ -16,9 +16,9 @@ var cpzlqk;
         function CpzlqkFrameView() {
             _super.apply(this, arguments);
             this.isCompanySupported = false;
-            this.mAjaxApprove = new Util.Ajax("doApprove.do", false);
-            this.mAjaxYclApprove = new Util.Ajax("../report/yclhglqktjZlDoApprove.do", false);
-            this.mAjaxAuth = new Util.Ajax("auth.do", false);
+            this.mAjaxApprove = new Util.Ajax("/BusinessManagement/cpzlqk/doApprove.do", false);
+            this.mAjaxYclApprove = new Util.Ajax("/BusinessManagement/report/yclhglqktjZlDoApprove.do", false);
+            this.mAjaxAuth = new Util.Ajax("/BusinessManagement/cpzlqk/auth.do", false);
         }
         CpzlqkFrameView.prototype.checkCompanyCount = function (comps) {
             if (comps == undefined) {
@@ -32,14 +32,22 @@ var cpzlqk;
         CpzlqkFrameView.prototype.init = function (opt) {
             var _this = this;
             this.mOpt = opt;
-            var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
+            //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+            //    {year: this.mOpt.date.year - 3, month: 1},
+            //    {
+            //        year: this.mOpt.date.year,
+            //        month: 12
+            //    },
+            //    {
+            //        year: this.mOpt.date.year,
+            //        month: this.mOpt.date.month
+            //    }, false, false);
+            //this.mDtSec = dsp;
+            var jeOpts = $("#" + this.mOpt.dt).jeOpts();
+            jeOpts.maxDate = Util.date2Str({
                 year: this.mOpt.date.year,
                 month: 12
-            }, {
-                year: this.mOpt.date.year,
-                month: this.mOpt.date.month
-            }, false, false);
-            this.mDtSec = dsp;
+            });
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (this.checkCompanyCount(opt.comps)) {
                 this.mCompanySelector.hide();
@@ -57,10 +65,13 @@ var cpzlqk;
                 }
                 _this.updateTypeSelector();
             });
-            var inputs = $("#" + this.mOpt.contentType).show();
-            inputs.click(function (e) {
+            $("#" + this.mOpt.contentType).on("change", function () {
                 var node = _this.triggerYdjdChecked();
             });
+            //let inputs = $("#" + (<FrameOption>this.mOpt).contentType).show();
+            //inputs.click((e)=>{
+            //    let node : Util.DataNode = this.triggerYdjdChecked();
+            //});
             var pageSlector = new Util.UnitedSelector([{
                     data: {
                         id: 0,
@@ -75,25 +86,13 @@ var cpzlqk;
             pageSlector.change(function () {
                 if (pageSlector.getPath()[0] == 1) {
                     if (pageType == cpzlqk.PageType.APPROVE) {
-                        window.location.href = "../report/yclhglqktj.do?approve=true";
+                        window.location.href = "/BusinessManagement/report/v2/yclhglqktj.do?approve=true";
                     }
                     else {
-                        window.location.href = "../report/yclhglqktj.do";
+                        window.location.href = "/BusinessManagement/report/v2/yclhglqktj.do";
                     }
                 }
             });
-            $("#zlAndyclhgl select")
-                .multiselect({
-                multiple: false,
-                header: false,
-                minWidth: 115,
-                height: '100%',
-                // noneSelectedText: "请选择月份",
-                selectedList: 1
-            })
-                .css("padding", "2px 0 2px 4px")
-                .css("text-align", "left")
-                .css("font-size", "12px");
             this.updateTypeSelector();
             this.updateUI();
         };
@@ -139,43 +138,60 @@ var cpzlqk;
             }
         };
         CpzlqkFrameView.prototype.triggerYdjdChecked = function () {
-            var inputs = $("#" + this.mOpt.contentType + " input");
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            for (var i = 0; i < inputs.length; i++) {
-                if (true == inputs[i].checked) {
-                    if (inputs[i].id == 'rdyd') {
-                        // if ( this.mYdjdType ==  YDJDType.JD || this.mYdjdType == undefined){
-                        var dtNow = this.mDtSec.getDate();
-                        this.mDtJd = this.mDtSec.getDate();
-                        if (this.mDtYd != undefined) {
-                            dtNow = this.mDtYd;
-                        }
-                        this.mYdjdType = cpzlqk.YDJDType.YD;
-                        $("#" + this.mOpt.dt).empty();
-                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
-                            year: this.mOpt.date.year,
-                            month: 12
-                        }, dtNow, false, false);
-                        this.mDtSec = dsp;
-                        router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_YD_SELECTED);
-                    }
-                    else {
-                        //if ( this.mYdjdType ==  YDJDType.YD || this.mYdjdType == undefined){
-                        var dtNow = this.mDtSec.getDate();
-                        this.mDtYd = this.mDtSec.getDate();
-                        //if (this.mDtJd != undefined){
-                        //    dtNow = this.mDtJd;
-                        //}
-                        this.mYdjdType = cpzlqk.YDJDType.JD;
-                        $("#" + this.mOpt.dt).empty();
-                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
-                            year: this.mOpt.date.year,
-                            month: 12
-                        }, dtNow, false, true);
-                        this.mDtSec = dsp;
-                        router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
-                    }
+            if ($("#" + this.mOpt.contentType).val() == 0) {
+                // if ( this.mYdjdType ==  YDJDType.JD || this.mYdjdType == undefined){
+                var dtNow = this.getDate();
+                this.mDtJd = dtNow;
+                if (this.mDtYd) {
+                    dtNow = this.mDtYd;
                 }
+                this.mYdjdType = cpzlqk.YDJDType.YD;
+                //$("#" + this.mOpt.dt).empty();
+                //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                //    {year: this.mOpt.date.year - 3, month: 1},
+                //    {
+                //        year: this.mOpt.date.year,
+                //        month: 12
+                //    },
+                //    dtNow, false, false);
+                //this.mDtSec = dsp;
+                this.createDate({
+                    nowDate: Util.date2Str(dtNow),
+                    maxDate: Util.date2Str({
+                        year: this.mOpt.date.year,
+                        month: 12
+                    })
+                });
+                router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_YD_SELECTED);
+            }
+            else {
+                //if ( this.mYdjdType ==  YDJDType.YD || this.mYdjdType == undefined){
+                var dtNow = this.getDate();
+                this.mDtYd = dtNow;
+                //if (this.mDtJd != undefined){
+                //    dtNow = this.mDtJd;
+                //}
+                this.mYdjdType = cpzlqk.YDJDType.JD;
+                //$("#" + this.mOpt.dt).empty();
+                //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                //    {year: this.mOpt.date.year - 3, month: 1},
+                //    {
+                //        year: this.mOpt.date.year,
+                //        month: 12
+                //    },
+                //    dtNow, false, true);
+                //this.mDtSec = dsp;
+                this.createDate({
+                    format: "YYYY年 &&MM月",
+                    seasonText: ["一季度", "半年度", "三季度", "年度"],
+                    nowDate: Util.date2Str(dtNow),
+                    maxDate: Util.date2Str({
+                        year: this.mOpt.date.year,
+                        month: 12
+                    })
+                });
+                router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
             }
             return node;
         };
@@ -232,10 +248,10 @@ var cpzlqk;
                                 comment: $("#commentText").val()
                             }, zt: zt });
                         if (zt == Util.IndiStatus.INTER_APPROVED_1) {
-                            Util.MessageBox.tip("审核成功", undefined);
+                            Util.Toast.success("审核成功", undefined);
                         }
                         else {
-                            Util.MessageBox.tip("上报成功", undefined);
+                            Util.Toast.failed("上报成功", undefined);
                         }
                     });
                 });
@@ -267,7 +283,7 @@ var cpzlqk;
         CpzlqkFrameView.prototype.updateUI = function () {
             var _this = this;
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            var dt = this.mDtSec.getDate();
+            var dt = this.getDate();
             if (dt.month == undefined) {
                 dt.month = 1;
             }
@@ -279,17 +295,16 @@ var cpzlqk;
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
-            var title = node.getData().value;
-            if (this.mYdjdType == cpzlqk.YDJDType.YD) {
-                title = "月度" + title;
-            }
-            else if (this.mYdjdType == cpzlqk.YDJDType.JD) {
-                title = "季度" + title;
-            }
-            if (this.isCompanySupported) {
-                title = this.mCompanySelector.getCompanyName() + " " + title;
-            }
-            $("#headertitle")[0].innerHTML = title;
+            //let title = node.getData().value;
+            //if (this.mYdjdType == YDJDType.YD){
+            //    title = "月度" + title;
+            //}else if (this.mYdjdType == YDJDType.JD){
+            //    title = "季度" + title;
+            //}
+            //if (this.isCompanySupported){
+            //    title = this.mCompanySelector.getCompanyName() + " " + title;
+            //}
+            //$("#headertitle")[0].innerHTML = title;
             if (pageType == cpzlqk.PageType.APPROVE) {
                 this.mAjaxAuth.get({ companyId: this.mCurrentComp })
                     .then(function (jsonData) {
@@ -422,8 +437,8 @@ var cpzlqk;
         __extends(ZlPluginView, _super);
         function ZlPluginView() {
             _super.apply(this, arguments);
-            this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
-            this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
+            this.mCommentSubmit = new Util.Ajax("/BusinessManagement/report/zlfxSubmit.do", false);
+            this.mCommentGet = new Util.Ajax("/BusinessManagement/report/zlfxUpdate.do", false);
         }
         ZlPluginView.prototype.onEvent = function (e) {
             switch (e.id) {

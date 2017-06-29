@@ -29,19 +29,38 @@ window.console && (console = console || {log : function(){return;}});
 
 	$.fn.jeDate = function(options){
 		return this.each(function(){
-			var jdt = [this, new jeDate($(this),options||{})];
-			jedatesAll.push(jdt);
+			var jdt = findJeDate(this);
+			if (!jdt){
+				jdt = [this, null];
+				jedatesAll.push(jdt);
+			}
+			jdt[1] = new jeDate($(this),options||{});
 			return jdt[1];
 		});
 	};
 
-	$.fn.getDate = function(){
+	function findJeDate(jeElem){
 		for (var i = 0; i < jedatesAll.length; ++i){
-			if (this[0] == jedatesAll[i][0]){
-				return jet.getDate(jedatesAll[i][1]);
+			if (jeElem == jedatesAll[i][0]){
+				return jedatesAll[i];
 			}
 		}
+	}
+
+	$.fn.getDate = function(){
+		var jeDate = findJeDate(this[0]);
+		if (jeDate){
+			return jet.getDate(jeDate[1]);
+		}
 	};
+
+	$.fn.jeOpts = function(){
+		var jeDate = findJeDate(this[0]);
+		if (jeDate){
+			return jeDate[1].opts;
+		}
+	};
+
 	$.extend({
 		jeDate:function(elem, options){
 			return $(elem).each(function(){
@@ -49,7 +68,11 @@ window.console && (console = console || {log : function(){return;}});
 			});
 		},
 		getDate : function(){
-			return jet.getDate();
+			for (var i = 0; i < jedatesAll.length; ++i){
+				if (this[0] == jedatesAll[i][0]){
+					return jet.getDate(jedatesAll[i][1]);
+				}
+			}
 		}
 	});
 
@@ -196,10 +219,18 @@ window.console && (console = console || {log : function(){return;}});
 			}else{
 				num = inaddVal[0], type = inaddVal[1];
 			}
+
+			var nowTimeInSeconds = 0;
+			if (opts.nowDate){
+				var dtNow = new Date(Date.parse(opts.nowDate.replace(/-/g, '/'))).getTime() + "";
+				nowTimeInSeconds = dtNow.substring(0, dtNow.length - 3);
+			}
+
 			var isnosepYMD = $.inArray(jet.checkFormat(jeformat), ["YYYYMM","YYYYMMDD","YYYYMMDDhh","YYYYMMDDhhmm","YYYYMMDDhhmmss"]);
-			var nowDateVal = jet.initDates(0, jeformat), jeaddDate = (isnosepYMD != -1) ? nowDateVal : jet.addDateTime(nowDateVal, num, type, jeformat);
+			var nowDateVal = jet.initDates(nowTimeInSeconds, jeformat), jeaddDate = (isnosepYMD != -1) ? nowDateVal : jet.addDateTime(nowDateVal, num, type, jeformat);
 			jeaddDate = that.parseSeason(jeaddDate);
-			(elem.val() || elem.text()) == "" ? jet.isValHtml(elem) ? elem.val(jeaddDate) :elem.text(jeaddDate) :jet.isValHtml(elem) ? elem.val() : elem.text();
+			jet.isValHtml(elem) ? elem.val(jeaddDate) :elem.text(jeaddDate);
+			//(elem.val() || elem.text() == "") ? jet.isValHtml(elem) ? elem.val(jeaddDate) :elem.text(jeaddDate) :jet.isValHtml(elem) ? elem.val() : elem.text();
 		};
 		//为开启初始化的时间设置值
 		if (isinitVal && jet.isBool(opts.insTrigger)) {

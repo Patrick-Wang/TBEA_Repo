@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
@@ -109,7 +110,7 @@ public class DashboardController {
 		return result.getBytes("utf-8");
 	}
 
-	@RequestMapping(value = "status.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"status.do","v2/status.do"}, method = RequestMethod.GET)
 	public ModelAndView getGdw_sjzb_summary(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -118,7 +119,7 @@ public class DashboardController {
 		Account account = SessionManager.getAccount(request.getSession(false));
 		map.put("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()));
 		SessionManager.getAcl(request.getSession()).select(map);
-		return new ModelAndView("gdw_indexInput_summary", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") +"gdw_indexInput_summary", map);
 	}
 	
 	@RequestMapping(value = "user_status.do")

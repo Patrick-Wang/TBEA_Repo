@@ -19,9 +19,9 @@ module cpzlqk {
         mYdjdType : YDJDType;
         mDtYd:Util.Date;
         mDtJd:Util.Date;
-        mAjaxApprove:Util.Ajax = new Util.Ajax("doApprove.do", false);
-        mAjaxYclApprove:Util.Ajax = new Util.Ajax("../report/yclhglqktjZlDoApprove.do", false);
-        mAjaxAuth:Util.Ajax = new Util.Ajax("auth.do", false);
+        mAjaxApprove:Util.Ajax = new Util.Ajax("/BusinessManagement/cpzlqk/doApprove.do", false);
+        mAjaxYclApprove:Util.Ajax = new Util.Ajax("/BusinessManagement/report/yclhglqktjZlDoApprove.do", false);
+        mAjaxAuth:Util.Ajax = new Util.Ajax("/BusinessManagement/cpzlqk/auth.do", false);
         mCurZt:number;
         mAuths:any;
         checkCompanyCount(comps : Util.IDataNode[]){
@@ -37,17 +37,24 @@ module cpzlqk {
 
         protected init(opt:any):void {
             this.mOpt = opt;
-            let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
-                {year: this.mOpt.date.year - 3, month: 1},
-                {
-                    year: this.mOpt.date.year,
-                    month: 12
-                },
-                {
-                    year: this.mOpt.date.year,
-                    month: this.mOpt.date.month
-                }, false, false);
-            this.mDtSec = dsp;
+            //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+            //    {year: this.mOpt.date.year - 3, month: 1},
+            //    {
+            //        year: this.mOpt.date.year,
+            //        month: 12
+            //    },
+            //    {
+            //        year: this.mOpt.date.year,
+            //        month: this.mOpt.date.month
+            //    }, false, false);
+            //this.mDtSec = dsp;
+
+            let jeOpts = $("#" + this.mOpt.dt).jeOpts();
+            jeOpts.maxDate = Util.date2Str({
+                year: this.mOpt.date.year,
+                month: 12
+            });
+
 
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (this.checkCompanyCount(opt.comps)) {
@@ -66,10 +73,16 @@ module cpzlqk {
                 }
                 this.updateTypeSelector();
             });
-            let inputs = $("#" + (<FrameOption>this.mOpt).contentType).show();
-            inputs.click((e)=>{
-                let node:Util.DataNode = this.triggerYdjdChecked();
+
+            $("#" + (<FrameOption>this.mOpt).contentType).on("change", ()=>{
+                let node : Util.DataNode = this.triggerYdjdChecked();
             });
+
+            //let inputs = $("#" + (<FrameOption>this.mOpt).contentType).show();
+            //inputs.click((e)=>{
+            //    let node : Util.DataNode = this.triggerYdjdChecked();
+            //});
+
             var pageSlector = new Util.UnitedSelector([{
                 data:{
                     id:0,
@@ -85,25 +98,12 @@ module cpzlqk {
             pageSlector.change(() => {
                 if (pageSlector.getPath()[0] == 1){
                     if (pageType == PageType.APPROVE){
-                        window.location.href="../report/yclhglqktj.do?approve=true";
+                        window.location.href="/BusinessManagement/report/v2/yclhglqktj.do?approve=true";
                     }else{
-                        window.location.href="../report/yclhglqktj.do";
+                        window.location.href="/BusinessManagement/report/v2/yclhglqktj.do";
                     }
                 }
             });
-
-            $("#zlAndyclhgl select")
-                .multiselect({
-                    multiple: false,
-                    header: false,
-                    minWidth: 115,
-                    height:'100%',
-                    // noneSelectedText: "请选择月份",
-                    selectedList: 1
-                })
-                .css("padding", "2px 0 2px 4px")
-                .css("text-align", "left")
-                .css("font-size", "12px");
 
             this.updateTypeSelector();
             this.updateUI();
@@ -153,53 +153,69 @@ module cpzlqk {
         }
 
         private triggerYdjdChecked() : Util.DataNode {
-            let inputs = $("#" + (<FrameOption>this.mOpt).contentType + " input");
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            for (let i = 0; i < inputs.length; i++) {
-                if (true == inputs[i].checked) {
-                    if (inputs[i].id == 'rdyd') {
-                       // if ( this.mYdjdType ==  YDJDType.JD || this.mYdjdType == undefined){
-                            let dtNow = this.mDtSec.getDate();
-                            this.mDtJd = this.mDtSec.getDate();
-                            if (this.mDtYd != undefined){
-                                dtNow = this.mDtYd;
-                            }
-                            this.mYdjdType = YDJDType.YD;
-                            $("#" + this.mOpt.dt).empty();
-                            let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
-                                {year: this.mOpt.date.year - 3, month: 1},
-                                {
-                                    year: this.mOpt.date.year,
-                                    month: 12
-                                },
-                                dtNow, false, false);
-                            this.mDtSec = dsp;
-                            router.to(this.plugin(node)).send(Event.ZLFE_YD_SELECTED);
-                      //  }
 
-
-                    } else {
-                        //if ( this.mYdjdType ==  YDJDType.YD || this.mYdjdType == undefined){
-                            let dtNow = this.mDtSec.getDate();
-                            this.mDtYd = this.mDtSec.getDate();
-                            //if (this.mDtJd != undefined){
-                            //    dtNow = this.mDtJd;
-                            //}
-                            this.mYdjdType = YDJDType.JD;
-
-                            $("#" + this.mOpt.dt).empty();
-                            let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
-                                {year: this.mOpt.date.year - 3, month: 1},
-                                {
-                                    year: this.mOpt.date.year,
-                                    month: 12
-                                },
-                                dtNow, false, true);
-                            this.mDtSec = dsp;
-                            router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
-                       // }
+            if ($("#" + (<FrameOption>this.mOpt).contentType).val() == 0) {
+               // if ( this.mYdjdType ==  YDJDType.JD || this.mYdjdType == undefined){
+                    let dtNow = this.getDate();
+                    this.mDtJd = dtNow;
+                    if (this.mDtYd){
+                        dtNow = this.mDtYd;
                     }
-                }
+                    this.mYdjdType = YDJDType.YD;
+
+                    //$("#" + this.mOpt.dt).empty();
+                    //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                    //    {year: this.mOpt.date.year - 3, month: 1},
+                    //    {
+                    //        year: this.mOpt.date.year,
+                    //        month: 12
+                    //    },
+                    //    dtNow, false, false);
+                    //this.mDtSec = dsp;
+
+                    this.createDate({
+                        nowDate: Util.date2Str(dtNow),
+                        maxDate: Util.date2Str({
+                            year: this.mOpt.date.year,
+                            month: 12
+                        })
+                    });
+
+                    router.to(this.plugin(node)).send(Event.ZLFE_YD_SELECTED);
+              //  }
+
+
+            } else {
+                //if ( this.mYdjdType ==  YDJDType.YD || this.mYdjdType == undefined){
+                    let dtNow = this.getDate();
+                    this.mDtYd = dtNow;
+                    //if (this.mDtJd != undefined){
+                    //    dtNow = this.mDtJd;
+                    //}
+                    this.mYdjdType = YDJDType.JD;
+
+                    //$("#" + this.mOpt.dt).empty();
+                    //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                    //    {year: this.mOpt.date.year - 3, month: 1},
+                    //    {
+                    //        year: this.mOpt.date.year,
+                    //        month: 12
+                    //    },
+                    //    dtNow, false, true);
+                    //this.mDtSec = dsp;
+
+                    this.createDate({
+                        format:"YYYY年 &&MM月",
+                        seasonText:["一季度", "半年度","三季度","年度"],
+                        nowDate: Util.date2Str(dtNow),
+                        maxDate: Util.date2Str({
+                            year: this.mOpt.date.year,
+                            month: 12
+                        })
+                    });
+                    router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
+               // }
             }
             return node;
         }
@@ -259,9 +275,9 @@ module cpzlqk {
                             }, zt:zt});
 
                         if (zt == Util.IndiStatus.INTER_APPROVED_1){
-                            Util.MessageBox.tip("审核成功", undefined);
+                            Util.Toast.success("审核成功", undefined);
                         }else{
-                            Util.MessageBox.tip("上报成功", undefined);
+                            Util.Toast.failed("上报成功", undefined);
                         }
 
                     });
@@ -298,7 +314,7 @@ module cpzlqk {
         protected updateUI() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
 
-            let dt:Util.Date = this.mDtSec.getDate();
+            let dt:Util.Date = this.getDate();
             if (dt.month == undefined){
                 dt.month = 1;
             }
@@ -313,18 +329,18 @@ module cpzlqk {
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
-            let title = node.getData().value;
+            //let title = node.getData().value;
 
-            if (this.mYdjdType == YDJDType.YD){
-                title = "月度" + title;
-            }else if (this.mYdjdType == YDJDType.JD){
-                title = "季度" + title;
-            }
+            //if (this.mYdjdType == YDJDType.YD){
+            //    title = "月度" + title;
+            //}else if (this.mYdjdType == YDJDType.JD){
+            //    title = "季度" + title;
+            //}
 
-            if (this.isCompanySupported){
-                title = this.mCompanySelector.getCompanyName() + " " + title;
-            }
-            $("#headertitle")[0].innerHTML = title;
+            //if (this.isCompanySupported){
+            //    title = this.mCompanySelector.getCompanyName() + " " + title;
+            //}
+            //$("#headertitle")[0].innerHTML = title;
 
 
             if (pageType == PageType.APPROVE){
@@ -459,8 +475,8 @@ module cpzlqk {
     export abstract class ZlPluginView extends framework.basic.ShowPluginView {
         protected mYdjdType : YDJDType;
         protected mCompSize:number;
-        mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
-        mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
+        mCommentSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/report/zlfxSubmit.do", false);
+        mCommentGet:Util.Ajax = new Util.Ajax("/BusinessManagement/report/zlfxUpdate.do", false);
 
         onEvent(e:framework.route.Event):any {
             switch (e.id) {

@@ -37,36 +37,72 @@ var framework;
                         this.update(({}));
                     }
                     else {
-                        this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
-                            year: opt.date.year - 3,
-                            month: opt.date.month,
-                            day: opt.date.day
-                        }, opt.date, opt.date);
-                        this.update(this.dateSelect.getDate());
+                        //this.dateSelect = new Util.DateSelectorProxy(opt.dtId, {
+                        //    year: opt.date.year - 3,
+                        //    month: opt.date.month,
+                        //    day: opt.date.day
+                        //}, opt.date, opt.date);
+                        var seasonClass = "";
+                        var fmt = "YYYY年MM月";
+                        if (opt.asSeason) {
+                            fmt = "YYYY年 && $$MM月";
+                            seasonClass = "season-month";
+                        }
+                        else if (opt.asSeasonAcc) {
+                            fmt = "YYYY年 &&MM月";
+                            seasonClass = "season";
+                        }
+                        $("#" + this.opt.dtId).jeDate({
+                            skinCell: "jedatedeepgreen",
+                            format: fmt,
+                            isTime: false,
+                            isinitVal: true,
+                            isClear: false,
+                            isToday: false,
+                            minDate: Util.date2Str(Util.addYear(opt.date, -3)),
+                            maxDate: Util.date2Str(opt.dateEnd),
+                            seasonText: opt.jdName ? opt.jdName : undefined
+                        }).removeCss("height")
+                            .removeCss("padding")
+                            .removeCss("margin-top")
+                            .addClass(seasonClass);
+                        this.update(this.getUDate());
                     }
+                };
+                ApproveView.prototype.getUDate = function () {
+                    var ret = {};
+                    if (this.opt.date) {
+                        var curDate = $("#" + this.opt.dtId).getDate();
+                        ret = {
+                            year: curDate.getFullYear(),
+                            month: curDate.getMonth() + 1,
+                            day: curDate.getDate()
+                        };
+                    }
+                    return ret;
                 };
                 ApproveView.prototype.onEvent = function (e) {
                     switch (e.id) {
                         case FrameEvent.FE_UPDATE:
-                            if (this.dateSelect == undefined) {
+                            if (this.opt.date == undefined) {
                                 return this.update(({}));
                             }
                             else {
-                                return this.update(this.dateSelect.getDate());
+                                return this.update(this.getUDate());
                             }
                         case FrameEvent.FE_APPROVE:
-                            if (this.dateSelect == undefined) {
+                            if (this.opt.date == undefined) {
                                 return this.approve(({}));
                             }
                             else {
-                                return this.approve(this.dateSelect.getDate());
+                                return this.approve(this.getUDate());
                             }
                         case FrameEvent.FE_UNAPPROVE:
-                            if (this.dateSelect == undefined) {
+                            if (this.opt.date == undefined) {
                                 return this.unapprove(({}));
                             }
                             else {
-                                return this.unapprove(this.dateSelect.getDate());
+                                return this.unapprove(this.getUDate());
                             }
                     }
                     return _super.prototype.onEvent.call(this, e);
@@ -74,11 +110,14 @@ var framework;
                 ApproveView.prototype.getDate = function (date) {
                     return "" + (date.year + "-" + (date.month == undefined ? 1 : date.month) + "-" + (date.day == undefined ? 1 : date.day));
                 };
+                ApproveView.prototype.getParams = function (date) {
+                    return {
+                        date: this.getDate(date)
+                    };
+                };
                 ApproveView.prototype.update = function (date) {
                     var _this = this;
-                    this.mAjaxUpdate.get({
-                        date: this.getDate(date)
-                    })
+                    this.mAjaxUpdate.get(this.getParams(this.getUDate()))
                         .then(function (jsonData) {
                         _this.resp = jsonData;
                         if (jsonData.zt == 0) {
@@ -96,70 +135,112 @@ var framework;
                         _this.updateTable();
                     });
                 };
-                ApproveView.prototype.updateTable = function () {
-                    var name = this.opt.host + "_jqgrid_uiframe";
-                    var pagername = name + "pager";
-                    this.mTableAssist = Util.createTable(name, this.resp);
+                ApproveView.prototype.adjustSize = function () {
+                    var jqgrid = this.jqgrid();
+                    if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+                        jqgrid.setGridWidth($("#" + this.opt.host).width());
+                    }
+                    var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                    this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                    if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+                        jqgrid.setGridWidth($("#" + this.opt.host).width());
+                    }
+                };
+                ApproveView.prototype.jqgrid = function () {
+                    return $("#" + this.jqgridName());
+                };
+                ApproveView.prototype.jqgridName = function () {
+                    return this.opt.host + "_jqgrid_real";
+                };
+                ApproveView.prototype.createJqassist = function () {
                     var parent = $("#" + this.opt.host);
+                    var pagername = this.jqgridName() + "pager";
                     parent.empty();
-                    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                    var jqTable = $("#" + name);
-                    var opt = {
+                    parent.append("<table id='" + this.jqgridName() + "'><div id='" + pagername + "'></table>");
+                    this.mTableAssist = Util.createTable(this.jqgridName(), this.resp);
+                    return this.mTableAssist;
+                };
+                ApproveView.prototype.updateTable = function () {
+                    this.createJqassist();
+                    this.mTableAssist.create({
+                        dataWithId: this.resp.data,
                         datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.resp.data),
                         multiselect: false,
                         drag: false,
                         resize: false,
-                        assistEditable: true,
-                        //autowidth : false,
-                        cellsubmit: 'clientArray',
-                        //editurl: 'clientArray',
-                        cellEdit: false,
-                        // height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 1000,
                         height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                    };
-                    //if (this.resp.pager == 'none'){
-                    //    opt.pager = undefined;
-                    //}
-                    jqTable.jqGrid(this.mTableAssist.decorate(opt));
+                        width: $("#" + this.opt.host).width(),
+                        shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
+                        rowNum: 2000,
+                        autoScroll: true
+                    });
+                    this.adjustSize();
                 };
+                //updateTable():void {
+                //    var name = this.opt.host + "_jqgrid_uiframe";
+                //    var pagername = name + "pager";
+                //    this.mTableAssist = Util.createTable(name, this.resp);
+                //
+                //    var parent = $("#" + this.opt.host);
+                //    parent.empty();
+                //    parent.append("<table id='" + name + "'></div>");
+                //    let jqTable = $("#" + name);
+                //    let opt = {
+                //        datatype: "local",
+                //        data: this.mTableAssist.getDataWithId(this.resp.data),
+                //        multiselect: false,
+                //        drag: false,
+                //        resize: false,
+                //        assistEditable:true,
+                //        //autowidth : false,
+                //        cellsubmit: 'clientArray',
+                //        //editurl: 'clientArray',
+                //        cellEdit: false,
+                //        // height: data.length > 25 ? 550 : '100%',
+                //        // width: titles.length * 200,
+                //        rowNum: 1000,
+                //        height: '100%',
+                //        width: 1200,
+                //        shrinkToFit: true,
+                //        autoScroll: true,
+                //       // pager: '#' + pagername,
+                //       // viewrecords: true
+                //    };
+                //    //if (this.resp.pager == 'none'){
+                //    //    opt.pager = undefined;
+                //    //}
+                //    jqTable.jqGrid(this.mTableAssist.decorate(opt));
+                //}
                 ApproveView.prototype.onLoadSubmitData = function () {
                     return this.mTableAssist.getAllData();
                 };
                 ApproveView.prototype.approve = function (date) {
                     var _this = this;
-                    this.mAjaxApprove.get({
-                        data: JSON.stringify(this.onLoadSubmitData()),
-                        date: this.getDate(date)
-                    })
+                    this.mAjaxApprove.get($.extend(this.getParams(this.getUDate()), {
+                        data: JSON.stringify(this.onLoadSubmitData())
+                    }))
                         .then(function (resp) {
                         if (Util.ErrorCode.OK == resp.errorCode) {
                             _this.update(date);
-                            Util.MessageBox.tip("审核 成功");
+                            Util.Toast.success("审核 成功");
                         }
                         else {
-                            Util.MessageBox.tip(resp.message);
+                            Util.Toast.failed(resp.message);
                         }
                     });
                 };
                 ApproveView.prototype.unapprove = function (date) {
                     var _this = this;
-                    this.mAjaxUnApprove.get({
-                        data: JSON.stringify(this.onLoadSubmitData()),
-                        date: this.getDate(date)
-                    })
+                    this.mAjaxUnApprove.get($.extend(this.getParams(this.getUDate()), {
+                        data: JSON.stringify(this.onLoadSubmitData())
+                    }))
                         .then(function (resp) {
                         if (Util.ErrorCode.OK == resp.errorCode) {
                             _this.update(date);
-                            Util.MessageBox.tip("反审核 成功");
+                            Util.Toast.success("反审核 成功");
                         }
                         else {
-                            Util.MessageBox.tip(resp.message);
+                            Util.Toast.failed(resp.message);
                         }
                     });
                 };

@@ -1,22 +1,17 @@
-<Table id="byqcpycssbhgxxfb" align="center" style="display: none;">
-    <tr id="tbarea">
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
-    <tr id="ctarea" style="display: none;">
-        <td>
-            <div align="center">
-                <div class="panel-content-border"
-                     style="margin-bottom: 20px; width: 1200px">
-                    <div id="chart" class="panel-content" style="float:left"></div>
-                    <div id="pie" class="panel-content" style="float:left"></div>
-                </div>
-            </div>
-        </td>
-    </tr>
-</Table>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/cpzlqk/byqcpycssbhgxxfb/byqcpycssbhgxxfb.js"></script>
+<div id="byqcpycssbhgxxfb" class="sub-view">
+	<div id="tbarea">
+       <div class="well">
+			<div id="table"></div>
+		</div>
+    </div>
+    <div id="ctarea" class="single-chart">
+        <div class="well">
+			<div id="chart" class="chart pull-left" style="width:50%"></div>
+            <div id="pie" class="chart pull-left" style="width:50%"></div>
+		</div>
+    </div>
+</div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/byqcpycssbhgxxfb/byqcpycssbhgxxfb.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router
