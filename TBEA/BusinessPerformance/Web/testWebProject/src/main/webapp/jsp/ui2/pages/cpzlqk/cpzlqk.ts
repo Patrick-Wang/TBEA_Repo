@@ -48,12 +48,10 @@ module cpzlqk {
             //        month: this.mOpt.date.month
             //    }, false, false);
             //this.mDtSec = dsp;
-
-            let jeOpts = $("#" + this.mOpt.dt).jeOpts();
-            jeOpts.maxDate = Util.date2Str({
+            this.createDate({maxDate : Util.date2Str({
                 year: this.mOpt.date.year,
                 month: 12
-            });
+            })});
 
 
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
@@ -72,10 +70,12 @@ module cpzlqk {
                     $("#zlAndyclhgl").show();
                 }
                 this.updateTypeSelector();
+                this.adjustHeader();
             });
 
             $("#" + (<FrameOption>this.mOpt).contentType).on("change", ()=>{
                 let node : Util.DataNode = this.triggerYdjdChecked();
+
             });
 
             //let inputs = $("#" + (<FrameOption>this.mOpt).contentType).show();
@@ -105,7 +105,16 @@ module cpzlqk {
                 }
             });
 
+
+            $(window).resize(()=> {
+                this.adjustHeader();
+                router.to(this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
+            });
+
+
+
             this.updateTypeSelector();
+            this.adjustHeader();
             this.updateUI();
         }
 
@@ -148,6 +157,8 @@ module cpzlqk {
                 this.triggerYdjdChecked();
             }else{
                 $("#" + (<FrameOption>this.mOpt).contentType).hide();
+                $("#" + (<FrameOption>this.mOpt).contentType).val("0");
+                this.triggerYdjdChecked();
                 this.mYdjdType = undefined;
             }
         }
@@ -206,7 +217,7 @@ module cpzlqk {
                     //this.mDtSec = dsp;
 
                     this.createDate({
-                        format:"YYYY年 &&MM月",
+                        format:"YYYY年  &&MM月",
                         seasonText:["一季度", "半年度","三季度","年度"],
                         nowDate: Util.date2Str(dtNow),
                         maxDate: Util.date2Str({
@@ -217,6 +228,7 @@ module cpzlqk {
                     router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
                // }
             }
+            this.adjustHeader();
             return node;
         }
 
@@ -225,9 +237,11 @@ module cpzlqk {
                 this.mItemSelector.change(()=>{
                     this.checkCompanySupported();
                     this.checkYdjdSupported();
+                    this.adjustHeader();
                 });
                 this.checkCompanySupported();
                 this.checkYdjdSupported();
+
                 return true;
             }
             return false;

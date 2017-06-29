@@ -41,7 +41,7 @@ var cpzlqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../byqcpycssbhgwtmx/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/byqcpycssbhgwtmx/update.do", false);
                 this.mAjaxStatus = new Util.Ajax("/BusinessManagement/byqcpycssbhgwtmx/updateStatus.do", false);
             }
             ShowView.prototype.getId = function () {

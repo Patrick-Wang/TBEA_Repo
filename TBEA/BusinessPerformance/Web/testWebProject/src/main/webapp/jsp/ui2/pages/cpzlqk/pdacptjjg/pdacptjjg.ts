@@ -257,7 +257,7 @@ module cpzlqk {
                 this.updateTable();
 
                 this.$(this.option().ctarea).show();
-                this.updateEchart();
+                this.adjustSize();
             }
 
             public init(opt:Option):void {
@@ -276,7 +276,7 @@ module cpzlqk {
 
                 //this.$(this.option().ct).css("height", "300px");
                 this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
-                //this.updateEchart();
+                this.updateEchart();
             }
 
             private createJqassist():JQTable.JQGridAssistant{
@@ -309,7 +309,6 @@ module cpzlqk {
                     autoScroll: true
                 });
 
-                this.adjustSize();
             }
 
 

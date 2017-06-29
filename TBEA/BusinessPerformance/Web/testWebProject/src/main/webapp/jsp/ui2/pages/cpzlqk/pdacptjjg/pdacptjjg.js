@@ -243,7 +243,7 @@ var cpzlqk;
                 }
                 this.updateTable();
                 this.$(this.option().ctarea).show();
-                this.updateEchart();
+                this.adjustSize();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -258,7 +258,7 @@ var cpzlqk;
                 }
                 //this.$(this.option().ct).css("height", "300px");
                 this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
-                //this.updateEchart();
+                this.updateEchart();
             };
             ShowView.prototype.createJqassist = function () {
                 var pagername = this.jqgridName() + "pager";
@@ -287,7 +287,6 @@ var cpzlqk;
                     rowNum: 10000,
                     autoScroll: true
                 });
-                this.adjustSize();
             };
             ShowView.prototype.onSaveComment = function (comment) {
                 var param = {

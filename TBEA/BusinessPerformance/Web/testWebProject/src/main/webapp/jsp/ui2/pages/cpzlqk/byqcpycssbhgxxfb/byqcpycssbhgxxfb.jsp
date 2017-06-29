@@ -5,9 +5,11 @@
 		</div>
     </div>
     <div id="ctarea" class="single-chart">
-        <div class="well">
-			<div id="chart" class="chart pull-left" style="width:50%"></div>
-            <div id="pie" class="chart pull-left" style="width:50%"></div>
+        <div class="well pull-left" style="position:static">
+			<div id="chart" class="chart"></div>
+		</div>
+		<div class="well pull-right" style="position:static">
+            <div id="pie" class="chart"></div>
 		</div>
     </div>
 </div>

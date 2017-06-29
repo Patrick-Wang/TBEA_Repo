@@ -58,8 +58,17 @@ var framework;
                         className = "day";
                     }
                 }
-                $("#" + this.mOpt.dt).removeClass("year")
-                    .removeClass("day");
+                if (opt.format && opt.format.indexOf("&&") >= 0) {
+                    className = "season";
+                }
+                if (opt.format && opt.format.indexOf("$$") >= 0) {
+                    className = "season-month";
+                }
+                $("#" + this.mOpt.dt)
+                    .removeClass("year")
+                    .removeClass("day")
+                    .removeClass("season")
+                    .removeClass("season-month");
                 var minDate = Util.addYear(this.mOpt.date, -3);
                 minDate.month = 1;
                 var oldOpt = $("#" + this.mOpt.dt).jeOpts();
@@ -78,6 +87,7 @@ var framework;
                 }
                 else {
                     oldOpt.insTrigger = false;
+                    oldOpt.format = fmt;
                 }
                 $.extend(oldOpt, opt);
                 $("#" + this.mOpt.dt).empty().jeDate(oldOpt).removeCss("height")
@@ -109,13 +119,10 @@ var framework;
             };
             BasicFrameView.prototype.adjustHeader = function () {
                 $("#headerHost").removeCss("width");
+                $(".page-header").removeClass("page-header-double");
                 if ($("#headerHost").height() > 40) {
                     $(".page-header").addClass("page-header-double");
                     $("#headerHost").css("width", $("#sels").width() + "px");
-                }
-                else {
-                    $(".page-header").removeClass("page-header-double");
-                    $("#headerHost").removeCss("width");
                 }
             };
             BasicFrameView.prototype.getDate = function () {

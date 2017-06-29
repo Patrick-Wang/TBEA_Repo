@@ -144,15 +144,22 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/scroll/js/jquery.mCustomScrollbar.js"></script>
 <%@include file="../framework/basic/basicShow.jsp"%>
-<script
-	src="${pageContext.request.contextPath}/jsp/sbdczclwcqk/sbdczclwcqkdef.js"
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/cpzlqkdef.js"
 	type="text/javascript"></script>
-<script
-	src="${pageContext.request.contextPath}/jsp/sbdczclwcqk/sbdczclwcqk.js"
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/cpzlqk.js"
 	type="text/javascript"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <%@include file="../../ie8-b.jsp"%>
+<style>
+.workinput{
+	margin-left:5px;
+}
+
+#ydjd-sel{
+    margin-left: 10px;
+}
+</style>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -180,13 +187,14 @@
 								<input id="grid-date" type="text" readonly="readonly"><i
 									class="fa fa-calendar"></i>
 							</div>
+							
 							<div id="sels" class="pull-left">
+								<div id="comp-sel" class="pull-left"></div>
+								<div id="item-sel" class="pull-left"></div>
 								<select id="ydjd-sel" class="pull-left">
 									<option value="0" selected="selected">月度</option>
 									<option value="1">季度</option>
 								</select>
-								<div id="comp-sel" class="pull-left"></div>
-								<div id="item-sel" class="pull-left"></div>
 							</div>
 
 							<div id="grid-update" class="btn btn-default"
@@ -233,7 +241,7 @@
 							<%@include file="byqcpycssbhgxxfb/byqcpycssbhgxxfb.jsp"%>
 							<%@include file="pdcpycssbhgxxfb/pdcpycssbhgxxfb.jsp"%>
 							<%@include file="xlbhgcpmx/xlbhgcpmx.jsp"%>
-							<div class="well">
+							<div class="well" style="position:static">
 								<div style="font-size: 18px; font-weight: bold">问题分析</div>
 								<textarea id="commentText" rows="5" style="width: 100%;"></textarea>
 							</div>

@@ -140,7 +140,7 @@ var cpzlqk;
                 this.updateTable();
                 //if (this.mCompType !=  Util.CompanyType.BYQCY){
                 this.$(this.option().ctarea).show();
-                this.updateEchart();
+                this.adjustSize();
                 //}else{
                 //    this.$(this.option().ctarea).hide();
                 //}
@@ -255,6 +255,7 @@ var cpzlqk;
                     jqgrid.setGridWidth(this.jqgridHost().width());
                 }
                 this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                this.updateEchart();
             };
             ShowView.prototype.createJqassist = function () {
                 var pagername = this.jqgridName() + "pager";
@@ -283,7 +284,6 @@ var cpzlqk;
                     rowNum: 10000,
                     autoScroll: true
                 });
-                this.adjustSize();
             };
             ShowView.prototype.onSaveComment = function (comment) {
                 var param = {

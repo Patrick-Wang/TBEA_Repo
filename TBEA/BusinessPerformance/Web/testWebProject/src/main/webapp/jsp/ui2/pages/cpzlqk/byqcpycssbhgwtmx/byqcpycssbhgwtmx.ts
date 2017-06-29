@@ -34,7 +34,7 @@ module cpzlqk {
         class ShowView extends ZlPluginView {
             static ins = new ShowView();
             private mData:Array<string[]>;
-            private mAjax:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/update.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/byqcpycssbhgwtmx/update.do", false);
             private mAjaxStatus:Util.Ajax = new Util.Ajax("/BusinessManagement/byqcpycssbhgwtmx/updateStatus.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;

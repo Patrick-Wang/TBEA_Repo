@@ -47,6 +47,13 @@ window.console && (console = console || {log : function(){return;}});
 		}
 	}
 
+	$.fn.jePopup = function(){
+		var jeDate = findJeDate(this[0]);
+		if (jeDate){
+			return jet.popup(jeDate[1]);
+		}
+	};
+
 	$.fn.getDate = function(){
 		var jeDate = findJeDate(this[0]);
 		if (jeDate){
@@ -233,7 +240,7 @@ window.console && (console = console || {log : function(){return;}});
 			//(elem.val() || elem.text() == "") ? jet.isValHtml(elem) ? elem.val(jeaddDate) :elem.text(jeaddDate) :jet.isValHtml(elem) ? elem.val() : elem.text();
 		};
 		//为开启初始化的时间设置值
-		if (isinitVal && jet.isBool(opts.insTrigger)) {
+		if (isinitVal) {
 			that.valCell.each(function() {
 				initVals($(this));
 			});
@@ -266,23 +273,21 @@ window.console && (console = console || {log : function(){return;}});
 			return that.current;
 		}
 
-		if (jet.isBool(opts.insTrigger)) {
-			that.valCell.on("click", function (ev) {
-				ev.stopPropagation();
-				if ($(jet.boxCell).length > 0) return;
-				jet.format = opts.format || config.format;
-				jet.minDate = opts.minDate || config.minDate;
-				jet.maxDate = opts.maxDate || config.maxDate;
-				$("body").append(createDiv);
-				that.setHtml(opts);
-			});
-		}else {
+		jet.popup = function(that){
 			jet.format = opts.format || config.format;
 			jet.minDate = opts.minDate || config.minDate;
 			jet.maxDate = opts.maxDate || config.maxDate;
 			$("body").append(createDiv);
-			that.setHtml(opts);    
-		}   
+			that.setHtml(opts);
+		}
+
+		if (jet.isBool(opts.insTrigger)) {
+			that.valCell.on("click", function (ev) {
+				ev.stopPropagation();
+				if ($(jet.boxCell).length > 0) return;
+				jet.popup(that);
+			});
+		}
 	};
 	//方位辨别
 	jedfn.orien = function(obj, self, pos) {  
@@ -313,8 +318,8 @@ window.console && (console = console || {log : function(){return;}});
 	}
 
 	jedfn.parseSeason = function(dateText){
+		this.dateBeforeSeason = dateText;
 		if (this.opts.format && this.opts.format.indexOf("&&") >= 0){
-			this.dateBeforeSeason = dateText;
 			var nyr = dateText.match(ymdMacth);
 			var jd = parseInt(((nyr[1] - 1) / 3) + "");
 			var jdName = this.opts.seasonText || config.seasonText;
@@ -331,7 +336,7 @@ window.console && (console = console || {log : function(){return;}});
 		return dateText;
 	}
 	jedfn.removeSeason = function(dateText){
-		if (this.opts.format && this.opts.format.indexOf("&&") >= 0){
+		if (this.dateBeforeSeason && this.opts.format && this.opts.format.indexOf("&&") >= 0){
 			dateText = this.dateBeforeSeason;
 		}
 		return dateText;

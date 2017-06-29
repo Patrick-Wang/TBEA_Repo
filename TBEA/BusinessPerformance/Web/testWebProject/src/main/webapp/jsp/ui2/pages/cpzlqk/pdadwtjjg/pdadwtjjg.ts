@@ -145,7 +145,7 @@ module cpzlqk {
                 this.updateTable();
                 //if (this.mCompType !=  Util.CompanyType.BYQCY){
                     this.$(this.option().ctarea).show();
-                    this.updateEchart();
+                this.adjustSize();
 
                 //}else{
                 //    this.$(this.option().ctarea).hide();
@@ -271,6 +271,7 @@ module cpzlqk {
                 }
 
                 this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                this.updateEchart();
             }
 
             private createJqassist():JQTable.JQGridAssistant{
@@ -303,7 +304,7 @@ module cpzlqk {
                     autoScroll: true
                 });
 
-                this.adjustSize();
+
             }
 			
 

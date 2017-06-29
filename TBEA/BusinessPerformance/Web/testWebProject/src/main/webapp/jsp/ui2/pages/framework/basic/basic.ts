@@ -72,8 +72,19 @@ module framework.basic {
                 }
             }
 
-            $("#" + this.mOpt.dt).removeClass("year")
-                .removeClass("day");
+            if (opt.format && opt.format.indexOf("&&") >= 0){
+                className = "season";
+            }
+
+            if (opt.format && opt.format.indexOf("$$") >= 0){
+                className = "season-month";
+            }
+
+            $("#" + this.mOpt.dt)
+                .removeClass("year")
+                .removeClass("day")
+                .removeClass("season")
+                .removeClass("season-month");
             let minDate = Util.addYear(this.mOpt.date, -3);
             minDate.month = 1;
 
@@ -92,6 +103,7 @@ module framework.basic {
                 };
             }else{
                 oldOpt.insTrigger = false;
+                oldOpt.format = fmt;
             }
             $.extend(oldOpt, opt);
 
@@ -133,12 +145,10 @@ module framework.basic {
 
         adjustHeader(){
             $("#headerHost").removeCss("width");
+            $(".page-header").removeClass("page-header-double");
             if ($("#headerHost").height() > 40){
                 $(".page-header").addClass("page-header-double");
                 $("#headerHost").css("width", $("#sels").width() + "px");
-            }else{
-                $(".page-header").removeClass("page-header-double");
-                $("#headerHost").removeCss("width");
             }
         }
 

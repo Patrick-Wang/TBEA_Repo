@@ -161,8 +161,8 @@ var cpzlqk;
                         this.$(this.option().ctarea).hide();
                     }
                     else {
-                        this.$(this.option().ct1).hide();
-                        this.$(this.option().ct).css("width", "100%");
+                        this.$(this.option().ct1).parent().hide();
+                        this.$(this.option().ct).parent().css("width", "100%");
                         this.updateYDEchart();
                     }
                 }
@@ -171,10 +171,10 @@ var cpzlqk;
                         this.$(this.option().ctarea).hide();
                     }
                     else {
-                        this.$(this.option().ct).show();
-                        this.$(this.option().ct1).show();
-                        this.$(this.option().ct).css("width", "50%");
-                        this.$(this.option().ct1).css("width", "50%");
+                        this.$(this.option().ct).parent().show();
+                        this.$(this.option().ct1).parent().show();
+                        this.$(this.option().ct).parent().css("width", "50%");
+                        this.$(this.option().ct1).parent().css("width", "50%");
                         this.updateJDEchart();
                     }
                 }
@@ -359,6 +359,8 @@ var cpzlqk;
                         calculable: true,
                         series: series
                     };
+                    this.$(this.option().ct1).empty();
+                    this.$(this.option().ct1).removeAttr("_echarts_instance_");
                     echarts.init(this.$(this.option().ct1)[0]).setOption(option1);
                 }
                 else {

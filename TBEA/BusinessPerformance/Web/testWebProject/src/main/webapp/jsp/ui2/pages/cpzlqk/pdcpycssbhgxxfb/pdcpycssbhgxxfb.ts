@@ -181,18 +181,18 @@ module cpzlqk {
                     if (this.mData.waveItems.length == 0){
                         this.$(this.option().ctarea).hide();
                     }else{
-                        this.$(this.option().ct1).hide();
-                        this.$(this.option().ct).css("width", "100%");
+                        this.$(this.option().ct1).parent().hide();
+                        this.$(this.option().ct).parent().css("width", "100%");
                         this.updateYDEchart();
                     }
                 }else{
                     if (this.mData.result.length == 0){
                         this.$(this.option().ctarea).hide();
                     }else {
-                        this.$(this.option().ct).show();
-                        this.$(this.option().ct1).show();
-                        this.$(this.option().ct).css("width", "50%");
-                        this.$(this.option().ct1).css("width", "50%");
+                        this.$(this.option().ct).parent().show();
+                        this.$(this.option().ct1).parent().show();
+                        this.$(this.option().ct).parent().css("width", "50%");
+                        this.$(this.option().ct1).parent().css("width", "50%");
                         this.updateJDEchart();
                     }
                 }
@@ -205,7 +205,7 @@ module cpzlqk {
                 parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + pagername + "'></div>");
                 this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mData.bhglbs, this.mYdjdType);
                 this.tableAssist.mergeColum(0);
-                this.tableAssist.mergeTitle(0);
+                this.tableAssist.mergeTitle();
                 this.tableAssist.mergeRow(0);
                 return this.tableAssist;
             }
@@ -395,7 +395,8 @@ module cpzlqk {
                         calculable: true,
                         series: series
                     };
-
+                    this.$(this.option().ct1).empty();
+                    this.$(this.option().ct1).removeAttr("_echarts_instance_");
                     echarts.init(this.$(this.option().ct1)[0]).setOption(option1);
                 }else{
                     this.$(this.option().ct).css("width", "100%");

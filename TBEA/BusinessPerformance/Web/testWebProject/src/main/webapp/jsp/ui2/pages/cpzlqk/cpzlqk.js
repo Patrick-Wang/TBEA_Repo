@@ -43,11 +43,10 @@ var cpzlqk;
             //        month: this.mOpt.date.month
             //    }, false, false);
             //this.mDtSec = dsp;
-            var jeOpts = $("#" + this.mOpt.dt).jeOpts();
-            jeOpts.maxDate = Util.date2Str({
-                year: this.mOpt.date.year,
-                month: 12
-            });
+            this.createDate({ maxDate: Util.date2Str({
+                    year: this.mOpt.date.year,
+                    month: 12
+                }) });
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (this.checkCompanyCount(opt.comps)) {
                 this.mCompanySelector.hide();
@@ -64,6 +63,7 @@ var cpzlqk;
                     $("#zlAndyclhgl").show();
                 }
                 _this.updateTypeSelector();
+                _this.adjustHeader();
             });
             $("#" + this.mOpt.contentType).on("change", function () {
                 var node = _this.triggerYdjdChecked();
@@ -93,7 +93,12 @@ var cpzlqk;
                     }
                 }
             });
+            $(window).resize(function () {
+                _this.adjustHeader();
+                router.to(_this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
+            });
             this.updateTypeSelector();
+            this.adjustHeader();
             this.updateUI();
         };
         CpzlqkFrameView.prototype.register = function (name, plugin) {
@@ -134,6 +139,8 @@ var cpzlqk;
             }
             else {
                 $("#" + this.mOpt.contentType).hide();
+                $("#" + this.mOpt.contentType).val("0");
+                this.triggerYdjdChecked();
                 this.mYdjdType = undefined;
             }
         };
@@ -183,7 +190,7 @@ var cpzlqk;
                 //    dtNow, false, true);
                 //this.mDtSec = dsp;
                 this.createDate({
-                    format: "YYYY年 &&MM月",
+                    format: "YYYY年  &&MM月",
                     seasonText: ["一季度", "半年度", "三季度", "年度"],
                     nowDate: Util.date2Str(dtNow),
                     maxDate: Util.date2Str({
@@ -193,6 +200,7 @@ var cpzlqk;
                 });
                 router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
             }
+            this.adjustHeader();
             return node;
         };
         CpzlqkFrameView.prototype.updateTypeSelector = function (width) {
@@ -202,6 +210,7 @@ var cpzlqk;
                 this.mItemSelector.change(function () {
                     _this.checkCompanySupported();
                     _this.checkYdjdSupported();
+                    _this.adjustHeader();
                 });
                 this.checkCompanySupported();
                 this.checkYdjdSupported();
