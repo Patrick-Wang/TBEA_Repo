@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -60,7 +61,7 @@ public class CwgbjyxxjlServlet {
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 	
-	@RequestMapping(value = "show.do")
+	@RequestMapping(value = {"show.do", "v2/show.do"})
 	public ModelAndView getShow(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -72,10 +73,10 @@ public class CwgbjyxxjlServlet {
 				AuthType.FinanceLookup);
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("cwgbjyxxjl/cwgbjyxxjl", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") +"cwgbjyxxjl/cwgbjyxxjl", map);
 	}
 	
-	@RequestMapping(value = "entry.do")
+	@RequestMapping(value = {"entry.do","v2/entry.do"})
 	public ModelAndView getEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();	
@@ -86,7 +87,7 @@ public class CwgbjyxxjlServlet {
 				AuthType.FinanceEntry);
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("cwgbjyxxjl/cwgbjyxxjlEntry", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") +"cwgbjyxxjl/cwgbjyxxjlEntry", map);
 	}
 	
 	//每月3到五号零点触发

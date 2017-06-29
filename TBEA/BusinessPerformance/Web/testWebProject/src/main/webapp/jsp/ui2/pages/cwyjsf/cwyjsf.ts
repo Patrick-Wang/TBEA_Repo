@@ -10,15 +10,17 @@ module cwyjsf{
         date:Util.Date;
         protected updateUI() {
             super.updateUI();
-            this.date = $.extend(this.date, this.mDtSec.getDate());
+            this.date = $.extend(this.date, this.getDate());
             if (router.to(this.mCurrentPlugin).send(Event.CW_ISMONTH_SUPPORTED)){
-                this.mDtSec.select(this.date);
+                this.createDate({nowDate: Util.date2Str(this.date)});
             }else{
-                this.mDtSec.select({year:this.date.year});
+                this.createDate({
+                    format:"YYYY年",
+                    nowDate: Util.date2Str(this.date)});
             }             
         }
         
-        protected init(opt:Option):void {
+        protected init(opt:any):void {
             this.date = $.extend({}, opt.date);
             super.init(opt);    
         }

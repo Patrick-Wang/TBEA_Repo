@@ -192,9 +192,9 @@
 				<script>
 					builder.register('cwfxLookup', function () {
 						return [
-						    createNode('财务-应交税费', 'cwyjsf/show.do'),
-						    createNode('财务-产品大类毛利表', 'cwcpdlml/show.do'),
-						    createNode('财务-经营性现金流', 'cwgbjyxxjl/show.do')
+						    createNode('财务-应交税费', 'cwyjsf/v2/show.do'),
+						    createNode('财务-产品大类毛利表', 'cwcpdlml/v2/show.do'),
+						    createNode('财务-经营性现金流', 'cwgbjyxxjl/v2/show.do')
 						];
 					});
 				</script>
@@ -605,7 +605,7 @@
 	         <script>
 	         	builder.register('bbxx', function() {
 					return createNode('财务报表录入')
-						.append(createNode('财务-经营性现金流录入', 'cwgbjyxxjl/entry.do'));
+						.append(createNode('财务-经营性现金流录入', 'cwgbjyxxjl/v2/entry.do'));
 				});
 			</script>
 	    </c:if>

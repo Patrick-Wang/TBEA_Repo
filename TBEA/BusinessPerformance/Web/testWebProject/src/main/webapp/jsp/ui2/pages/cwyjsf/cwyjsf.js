@@ -16,12 +16,14 @@ var cwyjsf;
         }
         CwyjsfFrameView.prototype.updateUI = function () {
             _super.prototype.updateUI.call(this);
-            this.date = $.extend(this.date, this.mDtSec.getDate());
+            this.date = $.extend(this.date, this.getDate());
             if (router.to(this.mCurrentPlugin).send(cwyjsf.Event.CW_ISMONTH_SUPPORTED)) {
-                this.mDtSec.select(this.date);
+                this.createDate({ nowDate: Util.date2Str(this.date) });
             }
             else {
-                this.mDtSec.select({ year: this.date.year });
+                this.createDate({
+                    format: "YYYY年",
+                    nowDate: Util.date2Str(this.date) });
             }
         };
         CwyjsfFrameView.prototype.init = function (opt) {
