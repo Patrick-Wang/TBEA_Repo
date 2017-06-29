@@ -163,7 +163,7 @@
 		<c:if test="${JYEntryLookup || zhAuth}">
 			<script>
 				builder.register('sjztbqk', function() {
-					return createNode('指标填报情况汇总', 'dashboard/status.do');
+					return createNode('指标填报情况汇总', 'dashboard/v2/status.do');
 				});
 			</script>
 		</c:if>
@@ -411,7 +411,7 @@
 				<script>
 					builder.register('Xnygb', function () {
 						return [
-						   createNode('新能源存货', "xnychFrame/show.do")
+						   createNode('新能源存货', "xnychFrame/v2/show.do")
 						];
 					});
 				</script>
@@ -597,7 +597,7 @@
 	        <script>
 	        	builder.register('bbxx', function() {
 					return createNode('新能源产业经营报表录入')
-						.append(createNode('新能源存货录入', 'xnychFrame/entry.do'));
+						.append(createNode('新能源存货录入', 'xnychFrame/v2/entry.do'));
 				});
 			</script>
 		</c:if>

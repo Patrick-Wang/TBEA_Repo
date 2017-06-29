@@ -146,7 +146,7 @@ module cbfx {
                 this.createJqassist();
 
                 this.mTableAssist.create({
-                    DataWithId:this.mData,
+                    dataWithId:this.mData,
                     datatype: "local",
                     multiselect: false,
                     drag: false,

@@ -1,7 +1,10 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
+/// <reference path="messageBox.ts" />
+///<reference path="dateSelector.ts"/>
 var gdw_indexinput_summary;
 (function (gdw_indexinput_summary) {
+    var router = framework.router;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
@@ -15,60 +18,51 @@ var gdw_indexinput_summary;
         };
         return JQGridAssistantFactory;
     })();
-    var View = (function () {
-        function View() {
+    var SimpleView = (function () {
+        function SimpleView() {
             this.mData = [];
-            this.mDataSet = new Util.Ajax("status_update.do");
+            this.mDataSet = new Util.Ajax("/BusinessManagement/dashboard/status_update.do");
+            router.register(this);
         }
-        View.newInstance = function () {
-            if (View.ins == undefined) {
-                View.ins = new View();
+        SimpleView.prototype.getId = function () {
+            return Util.FAMOUS_VIEW;
+        };
+        SimpleView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+                case Util.MSG_UPDATE:
+                    this.updateUI();
+                    break;
             }
-            return View.ins;
         };
-        View.prototype.init = function (tableId, dateId, year, month, isZHCompany) {
-            this.mYear = year;
-            this.mTableId = tableId;
-            this.mMonth = month;
-            this.isZHCompany = isZHCompany;
-            this.mDs = new Util.DateSelector({ year: year - 3, month: 1 }, { year: year, month: month }, dateId);
-            this.onIndexSelected();
-            this.onCompanysSelected();
-        };
-        View.prototype.onIndexSelected = function () {
-            this.mIndex = $("#indextype").val();
-            //this.mIndex = $("#indextype  option:selected").text();
-        };
-        View.prototype.onCompanysSelected = function () {
-            this.mCompanyType = $("#companytype").val();
-            this.mCompanyName = $("#companytype  option:selected").text();
-            //this.mIndex = $("#indextype  option:selected").text();
-        };
-        View.prototype.updateUI = function () {
+        SimpleView.prototype.init = function (opt) {
             var _this = this;
-            var date = this.mDs.getDate();
-            //this.onIndexSelected();
-            this.mDataSet.get({ month: date.month, year: date.year, entryType: this.mIndex, companyType: this.mCompanyType })
-                .then(function (dataArray) {
-                _this.mData = dataArray;
-                if (_this.isZHCompany) {
-                    $('h1').text(date.year + "年" + date.month + "月" + "众和公司各项目单位预测指标填报情况");
-                    document.title = date.year + "年" + date.month + "月" + "众和公司各项目单位预测指标填报情况";
-                }
-                else {
-                    if (_this.mCompanyType == 1) {
-                        $('h1').text(date.year + "年" + date.month + "月" + "各经营单位预测指标填报情况");
-                        document.title = date.year + "年" + date.month + "月" + "各经营单位预测指标填报情况";
-                    }
-                    else {
-                        $('h1').text(date.year + "年" + date.month + "月" + _this.mCompanyName + "预测指标填报情况");
-                        document.title = date.year + "年" + date.month + "月" + _this.mCompanyName + "预测指标填报情况";
-                    }
-                }
-                _this.updateTable();
+            this.mOpt = opt;
+            var minDate = Util.addYear(opt.date, -3);
+            minDate.month = 1;
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年MM月",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                minDate: Util.date2Str(minDate),
+                maxDate: Util.date2Str(opt.date),
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+            $(window).resize(function () {
+                _this.adjustSize();
             });
+            $("#grid-update").on("click", function () {
+                _this.updateUI();
+            });
+            this.updateUI();
         };
-        View.prototype.formatData = function () {
+        SimpleView.prototype.formatData = function () {
             var data = [];
             var row = [];
             for (var j = 0; j < this.mData.length; ++j) {
@@ -87,36 +81,66 @@ var gdw_indexinput_summary;
             }
             return data;
         };
-        View.prototype.updateTable = function () {
-            var name = this.mTableId + "_jqgrid_1234";
-            var data = [];
-            var tableAssist = null;
-            tableAssist = JQGridAssistantFactory.createTable(name);
-            data = this.formatData();
-            var parent = $("#" + this.mTableId);
+        SimpleView.prototype.getDate = function () {
+            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
+        };
+        SimpleView.prototype.updateUI = function () {
+            var _this = this;
+            this.mDataSet.get($.extend(this.getDate(), { entryType: $("#grid-type").val() }, { companyType: $("#company-type").val() }))
+                .then(function (dataArray) {
+                _this.mData = dataArray;
+                _this.updateTable();
+            });
+        };
+        SimpleView.prototype.adjustSize = function () {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.tableAssist.resizeHeight(maxTableBodyHeight);
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+        };
+        SimpleView.prototype.jqgrid = function () {
+            return $("#" + this.jqgridName());
+        };
+        SimpleView.prototype.jqgridName = function () {
+            return this.mOpt.tableId + "_jqgrid_real";
+        };
+        SimpleView.prototype.createJqassist = function () {
+            var parent = $("#" + this.mOpt.tableId);
             parent.empty();
-            parent.append("<table id='" + name + "'></table>" + "<div id= 'pager'></div>");
-            $("#" + name).jqGrid(tableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
-                data: tableAssist.getData(data),
+            parent.append("<table id='" + this.jqgridName() + "'></table>");
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+            return this.tableAssist;
+        };
+        SimpleView.prototype.updateTable = function () {
+            this.createJqassist();
+            var data = [];
+            data = this.formatData();
+            this.tableAssist.create({
+                data: data,
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
-                //                    cellsubmit: 'clientArray',
-                //                    cellEdit: true,
                 height: '100%',
-                width: 650,
+                width: $("#" + this.mOpt.tableId).width(),
                 shrinkToFit: true,
-                autoScroll: true,
-                pager: '#pager',
-                rowNum: 20,
-                viewrecords: true //是否显示行数 
-            }));
+                rowNum: 2000,
+                autoScroll: true
+            });
+            this.adjustSize();
         };
-        return View;
+        SimpleView.ins = new SimpleView();
+        return SimpleView;
     })();
-    gdw_indexinput_summary.View = View;
+    gdw_indexinput_summary.SimpleView = SimpleView;
 })(gdw_indexinput_summary || (gdw_indexinput_summary = {}));

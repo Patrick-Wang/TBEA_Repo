@@ -2,6 +2,7 @@
 	<div id="tbarea">
        <div class="well">
 			<div id="table"></div>
+			<div id="prompt"></div>
 		</div>
     </div>
 </div>

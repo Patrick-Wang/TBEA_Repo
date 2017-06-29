@@ -56,7 +56,7 @@ var framework;
                     className = "year";
                 }
                 else {
-                    if (!opt.date.day) {
+                    if (opt.date.day) {
                         fmt = "YYYY年MM月DD日";
                         className = "day";
                     }

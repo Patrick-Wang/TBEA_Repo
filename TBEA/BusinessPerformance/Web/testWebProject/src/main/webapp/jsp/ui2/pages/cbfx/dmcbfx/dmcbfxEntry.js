@@ -136,7 +136,7 @@ var cbfx;
             EntryView.prototype.updateTable = function () {
                 this.createJqassist();
                 this.mTableAssist.create({
-                    DataWithId: this.mData,
+                    dataWithId: this.mData,
                     datatype: "local",
                     multiselect: false,
                     drag: false,

@@ -61,6 +61,16 @@ module cbfx {
                     })
                     .then((jsonData:any) => {
                         this.mData = jsonData;
+                        if (this.mData.length == 0){
+                            this.jqgridHost().hide();
+                            var pro = $("#prompt");
+                            pro.empty();
+                            pro.append("<b>暂时没有数据！</b>")
+                        }else{
+                            this.jqgridHost().show();
+                            var pro = $("#prompt");
+                            pro.empty();
+                        }
                         this.refresh();
                     });
             }

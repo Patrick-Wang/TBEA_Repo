@@ -64,6 +64,17 @@ var cbfx;
                 })
                     .then(function (jsonData) {
                     _this.mData = jsonData;
+                    if (_this.mData.length == 0) {
+                        _this.jqgridHost().hide();
+                        var pro = $("#prompt");
+                        pro.empty();
+                        pro.append("<b>暂时没有数据！</b>");
+                    }
+                    else {
+                        _this.jqgridHost().show();
+                        var pro = $("#prompt");
+                        pro.empty();
+                    }
                     _this.refresh();
                 });
             };
