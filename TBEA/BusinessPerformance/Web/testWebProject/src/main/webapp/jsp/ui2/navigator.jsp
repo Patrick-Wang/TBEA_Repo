@@ -40,7 +40,7 @@
 
 	<c:when test="${QualityAuth}">
 		<script>
-			builder.register('bbxx', function() {
+			builder.register('quality', function() {
 				return root = createNode("质量信息汇总分析", undefined, "fa fa-plus-square-o", "fa fa-minus-square-o").append(
 						builder.build('qualityShow')).append(
 						builder.build('qualityApprove')).append(
@@ -450,7 +450,7 @@
 	 
 		<c:if test="${entryPlan}">
 			<script>
-				builder.register('bbxx', function() {
+				builder.register('entryxx', function() {
 					return createNode('计划指标录入')
 						.append(createNode('全年计划指标录入', "entry/v2/zb.do?entryType=0"))
 						.append(createNode('季度-月度末计划值录入', "entry/v2/zb.do?entryType=1"));
@@ -460,7 +460,7 @@
 	
 		<c:if test="${entryPredict}">
 			<script>
-				builder.register('bbxx', function() {
+				builder.register('entryxx', function() {
 					return createNode('预计/实际指标录入')
 						.append(createNode('20号预计指标录入', "entry/v2/zb.do?entryType=2"))
 						.append(createNode('28号预计指标录入', "entry/v2/zb.do?entryType=3"))
@@ -471,7 +471,7 @@
 	
 		<c:if test="${isJydw}">
 			<script>
-				builder.register('bbxx', function() {
+				builder.register('entryxx', function() {
 					return createNode('经营分析录入')
 						.append(createNode('应收账款日报录入', "dailyReport/yszk.do"))
 						.append(builder.build('ZXnyJyfxEntry'))
@@ -511,7 +511,7 @@
 	
 		<c:if test="${approvePlan}">
 			<script>
-				builder.register('bbxx', function() {
+				builder.register('Approve', function() {
 					return createNode('计划指标审核')
 						.append(createNode('全年计划指标审核', "approve/zb.do?approveType=0"))
 						.append(createNode('季度-月度末计划值审核', "approve/zb.do?approveType=1"));
@@ -521,7 +521,7 @@
 	
 		<c:if test="${approvePredict}">
 			<script>
-				builder.register('bbxx', function() {
+				builder.register('Approve', function() {
 					return createNode('预计/实际指标审核')
 						.append(createNode('20预计指标审核', "approve/zb.do?approveType=2"))
 						.append(createNode('28号预计指标审核', "approve/zb.do?approveType=3"))
@@ -539,7 +539,7 @@
 	
 		<c:if test="${ComGbEntry}">
 			<script>
-				builder.register('bbxx', function() {
+				builder.register('entryxx', function() {
 					return createNode('通用经营管报录入')
 						.append(builder.build('YszkgbEntry'))
 						.append(builder.build('ChgbEntry'));
@@ -566,7 +566,7 @@
 		</c:if>
 		<c:if test="${SbdgbEntry}">	
 			<script>
-				builder.register('bbxx', function() {
+				builder.register('entryxx', function() {
 					return createNode('输变电产业经营管报录入')
 						.append(createNode('未履约订单情况录入', "wlydd/v2/entry.do"))
 						.append(createNode('输变电产值/产量完成情况录入', "sbdczclwcqk/v2/entry.do"))
@@ -577,7 +577,7 @@
 		</c:if>
 	    <c:if test="${NygbEntry}">
 	        <script>
-	        	builder.register('bbxx', function() {
+	        	builder.register('entryxx', function() {
 					return createNode('能源产业经营报表录入')
 						.append(createNode('成本分析录入', 'cbfx/v2/entry.do'))
 						.append(builder.build('nyzbscqk'));
@@ -603,7 +603,7 @@
 		</c:if>
 	    <c:if test="${FinanceEntry}">
 	         <script>
-	         	builder.register('bbxx', function() {
+	         	builder.register('entryxx', function() {
 					return createNode('财务报表录入')
 						.append(createNode('财务-经营性现金流录入', 'cwgbjyxxjl/v2/entry.do'));
 				});
@@ -611,8 +611,8 @@
 	    </c:if>
 		<c:if test="${QualityLookup || QualityApprove}">
 			<script>
-				builder.register('bbxx', function() {
-					return createNode('质量问题')
+				builder.register('quality', function() {
+					return createNode('质量数据管控')
 						.append(builder.build('ZlLookup'))
 						.append(builder.build('ZlApprove'));
 				});
@@ -640,7 +640,41 @@
 		</c:if>
 	</c:otherwise>
 </c:choose>
-
+			<c:if test="${entryPlan}">
+				<script>
+					builder.register('entryxxRoot', function () {
+						var entryxx = createNode("数据录入");
+						entryxx.data.icon = "fa fa-pencil-square-o";
+						entryxx.data.iconOpen = undefined;	
+						entryxx.append(builder.build("entryxx"));
+						return entryxx;
+					});
+				</script>
+			</c:if>
+			
+			<c:if test="${approvePlan}">
+				<script>
+					builder.register('ApprovexxRoot', function () {
+						var Approve = createNode("数据审核");
+						Approve.data.icon = "fa fa-check-square-o";
+						Approve.data.iconOpen = undefined;	
+						Approve.append(builder.build("Approve"));
+						return Approve;
+					});
+				</script>
+			</c:if>
+			
+			<c:if test="${QualityAuth}">
+				<script>
+					builder.register('qulityxxRoot', function () {
+						var quality = createNode("质量数据管控");
+						quality.data.icon = "fa fa-cogs";
+						quality.data.iconOpen = undefined;	
+						quality.append(builder.build("quality"));
+						return quality;
+					});
+				</script>
+			</c:if>
 
 <script>
 	function createNode(value, url, icon, iconOpen){
@@ -674,14 +708,22 @@
 	}
 
 	builder.register('root', function(){
+
+		var root = createNode();
 		var ztfx = createNode("主题分析");
 		ztfx.data.icon = "fa fa-bar-chart";
 		ztfx.data.iconOpen = undefined;
 		var bbxx = createNode("报表信息");
 		bbxx.data.extracted = true;
-		bbxx.data.icon = "fa fa-pencil-square-o";
+		bbxx.data.icon = "fa fa-table";
 		bbxx.data.iconOpen = undefined;
-		bbxx.append(builder.build('bbxx'));
-		return [ztfx, bbxx];
+		bbxx.append(builder.build('bbxx'));	
+
+		root.append(ztfx)
+			.append(bbxx)
+			.append(builder.build("entryxxRoot"))
+			.append(builder.build("ApprovexxRoot"))
+			.append(builder.build("qulityxxRoot"))
+		return root.subNodes;
 	});
 </script>
