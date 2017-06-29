@@ -58,36 +58,44 @@ module framework.basic {
             return this.plugin(nod);
         }
 
-        protected init(opt:Option):void {
-            this.mOpt = opt;
 
-            let minDate = Util.addYear(opt.date, -3);
+        protected createDate(opt){
             let className = "";
             let fmt = "YYYY年MM月";
-            if (!opt.date.month){
+            if (!this.mOpt.date.month){
                 fmt = "YYYY年";
                 className = "year";
             }else{
-                if (opt.date.day){
+                if (this.mOpt.date.day){
                     fmt = "YYYY年MM月DD日";
                     className = "day";
                 }
             }
 
+            let minDate = Util.addYear(this.mOpt.date, -3);
             minDate.month = 1;
-            $("#" + this.mOpt.dt).jeDate({
+
+            opt = $.extend({
                 skinCell: "jedatedeepgreen",
-                format: fmt,
+                format:fmt,
                 isTime: false,
                 isinitVal: true,
                 isClear: false,
                 isToday: false,
                 minDate: Util.date2Str(minDate),
-                maxDate: Util.date2Str(opt.date),
-            }).removeCss("height")
+                maxDate: Util.date2Str(this.mOpt.date)
+            }, opt);
+
+            $("#" + this.mOpt.dt).empty().jeDate(opt).removeCss("height")
                 .removeCss("padding")
                 .removeCss("margin-top")
                 .addClass(className);
+        }
+
+        protected init(opt:Option):void {
+            this.mOpt = opt;
+
+            this.createDate({});
 
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (opt.comps.length == 1) {
@@ -114,7 +122,7 @@ module framework.basic {
             this.updateUI();
         }
 
-        private adjustHeader(){
+        adjustHeader(){
             $("#headerHost").removeCss("width");
             if ($("#headerHost").height() > 40){
                 $(".page-header").addClass("page-header-double");
@@ -125,7 +133,7 @@ module framework.basic {
             }
         }
 
-        private getDate():Util.Date {
+        getDate():Util.Date {
             let curDate = $("#" + this.mOpt.dt).getDate();
             return {
                 year : curDate.getFullYear(),
