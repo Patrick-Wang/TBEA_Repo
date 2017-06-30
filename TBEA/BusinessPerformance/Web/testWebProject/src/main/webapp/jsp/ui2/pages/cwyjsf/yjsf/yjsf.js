@@ -44,15 +44,15 @@ var cwyjsf;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../yjsf/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/yjsf/update.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.yjsf;
             };
-            ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../yjsf/export.do?" + Util.Ajax.toUrlParam({
+            ShowView.prototype.pluginGetExportUrl = function (date, cpType) {
+                return "/BusinessManagement/yjsf/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
-                    companyId: compType
+                    companyId: cpType
                 });
             };
             ShowView.prototype.onEvent = function (e) {
@@ -74,20 +74,23 @@ var cwyjsf;
                     companyId: compType
                 })
                     .then(function (jsonData) {
-                    _this.updateTable(_this.option().tb, _this.getYear(), jsonData);
+                    _this.mData = jsonData;
+                    _this.updateTable();
                 });
                 this.mAjax.get({
                     date: (this.getYear() - 1) + "-" + this.getMonth() + "-1",
                     companyId: compType
                 })
                     .then(function (jsonData) {
-                    _this.updateTable(_this.option().tb1, _this.getYear() - 1, jsonData);
+                    _this.mData1 = jsonData;
+                    _this.updateTable1();
                 });
             };
             ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
+                this.adjustSize();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -104,25 +107,83 @@ var cwyjsf;
                 var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
                 return curDate.getFullYear();
             };
-            ShowView.prototype.updateTable = function (tbid, year, data) {
-                var name = this.option().host + tbid + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name, year);
-                var parent = this.$(tbid);
+            ShowView.prototype.jqgridHost1 = function () {
+                return this.$(this.mOpt.tb1);
+            };
+            ShowView.prototype.jqgridName1 = function () {
+                return this.mOpt.host + this.mOpt.tb1 + "_jqgrid_real";
+            };
+            ShowView.prototype.jqgrid1 = function () {
+                return this.$(this.jqgridName1());
+            };
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                var jqgrid1 = this.jqgrid1();
+                if (this.jqgridHost1().width() != this.jqgridHost1().children().eq(0).width()) {
+                    jqgrid1.setGridWidth(this.jqgridHost1().width());
+                }
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.tableAssist.resizeHeight(maxTableBodyHeight);
+                //
+                //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+                //this.$(this.option().ct).css("height", "300px");
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart(this.mFinalData);
+            };
+            ShowView.prototype.createJqassist = function () {
+                var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.getYear());
+                return this.tableAssist;
+            };
+            ShowView.prototype.createJqassist1 = function () {
+                var parent = this.$(this.option().tb1);
+                parent.empty();
+                parent.append("<table id='" + this.jqgridName1() + "'></table>");
+                this.tableAssist1 = JQGridAssistantFactory.createTable(this.jqgridName1(), this.getYear() - 1);
+                return this.tableAssist1;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
                     datatype: "local",
-                    data: tableAssist.getData(data),
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
-                    width: 1400,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 20,
-                    viewrecords: true
-                }));
+                    rowNum: 100,
+                    autoScroll: true
+                });
+                return;
+            };
+            ShowView.prototype.updateTable1 = function () {
+                this.createJqassist1();
+                this.tableAssist1.create({
+                    data: this.mData1,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost1().width(),
+                    shrinkToFit: true,
+                    rowNum: 100,
+                    autoScroll: true
+                });
+                return;
             };
             ShowView.ins = new ShowView();
             return ShowView;

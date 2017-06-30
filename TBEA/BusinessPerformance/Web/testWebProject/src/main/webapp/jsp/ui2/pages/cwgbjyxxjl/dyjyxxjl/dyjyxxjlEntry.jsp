@@ -1,11 +1,11 @@
-<Table id="dyjyxxjlEntry" align="center" style="display: none;">
-    <tr id="tbarea">
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
-</Table>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/cwgbjyxxjl/dyjyxxjl/dyjyxxjlEntry.js"></script>
+<div id="dyjyxxjlEntry" class="sub-view">
+	<div id="tbarea">
+       <div class="well">
+			<div id="table"></div>
+		</div>
+    </div>
+</div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/cwgbjyxxjl/dyjyxxjl/dyjyxxjlEntry.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router
@@ -16,4 +16,4 @@ $(document).ready(function(){
                 tbarea:"tbarea"
             });
 });
-</script> 
+</script>

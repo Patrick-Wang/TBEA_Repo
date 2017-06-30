@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -60,7 +61,7 @@ public class CwcpdlmlServlet {
 	@Autowired
 	ExtendAuthorityService extAuthServ;
 	
-	@RequestMapping(value = "show.do")
+	@RequestMapping(value = {"show.do", "v2/show.do"})
 	public ModelAndView getShow(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -78,7 +79,7 @@ public class CwcpdlmlServlet {
 		
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("cwcpdlml/cwcpdlml", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") +"cwcpdlml/cwcpdlml", map);
 	}
 	
 	//每月3到五号零点触发
