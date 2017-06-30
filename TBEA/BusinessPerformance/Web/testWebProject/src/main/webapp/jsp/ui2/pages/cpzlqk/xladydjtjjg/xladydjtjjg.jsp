@@ -21,7 +21,7 @@ $(document).ready(function(){
                 ctarea:"ctarea",
                 host: "xladydjtjjg",
                 tbarea:"tbarea",
-    tableStatus: tableStatus
+    			tableStatus: tableStatus
             });
 });
 </script>

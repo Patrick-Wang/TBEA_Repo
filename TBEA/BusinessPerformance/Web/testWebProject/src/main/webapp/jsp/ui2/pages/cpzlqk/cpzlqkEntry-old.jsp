@@ -53,10 +53,10 @@
 <script src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/messageBox.js" type="text/javascript"></script>
 
-	<%@include file="../framework/basic/basicApprove.jsp"%>
+	<%@include file="../framework/basic/basicEntry.jsp"%>
 	<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkdef.js" type="text/javascript"></script>
-	<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkApprove.js" type="text/javascript"></script>
-<title>产品质量情况审核</title>
+	<script src="${pageContext.request.contextPath}/jsp/cpzlqk/cpzlqkEntry.js" type="text/javascript"></script>
+<title>产品质量情况录入</title>
 
 <style type="text/css">
 body {
@@ -166,7 +166,7 @@ th.ui-th-ltr {
 </head> 
 <body>
 	<div class="header">
-		<h1 id="headertitle">产品质量情况审核</h1>
+		<h1 id="headertitle">产品质量情况录入</h1>
 	</div>
 
 	<Table id="frameTable" align="center" style="width:1200px">
@@ -181,20 +181,20 @@ th.ui-th-ltr {
 		</tr> 
 		<tr>
 			<td id="plugin">
-				<%@include file="byqacptjjg/byqacptjjgApprove.jsp"%>
-				<%@include file="byqcpycssbhgwtmx/byqcpycssbhgwtmxApprove.jsp"%>
-				<%@include file="xlacptjjg/xlacptjjgApprove.jsp"%>
-				<%@include file="xlbhgcpmx/xlbhgcpmxApprove.jsp"%>
-				<%@include file="pdacptjjg/pdacptjjgApprove.jsp"%>
-				<%@include file="pdcpycssbhgwtmx/pdcpycssbhgwtmxApprove.jsp"%>
+				<%@include file="byqacptjjg/byqacptjjgEntry.jsp"%>
+				<%@include file="byqcpycssbhgwtmx/byqcpycssbhgwtmxEntry.jsp"%>
+				<%@include file="xlacptjjg/xlacptjjgEntry.jsp"%>
+				<%@include file="xlbhgcpmx/xlbhgcpmxEntry.jsp"%>
+				<%@include file="pdacptjjg/pdacptjjgEntry.jsp"%>
+				<%@include file="pdcpycssbhgwtmx/pdcpycssbhgwtmxEntry.jsp"%>
 			</td>
 		</tr> 
 		<tr>
 			<td>
-				<input id="unaprv" type="button" value="反审核" style="display:none; float: right; width: 80px; margin-left: 10px;"
-					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UNAPPROVE)" />
-				<input id="aprv" type="button" value="审核" style="display:none;float: right; width: 80px; margin-left: 10px;"
-					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_APPROVE)" />
+				<%--<input id="gbsv" type="button" value="保存" style="display:none;float: right; width: 80px; margin-left: 10px;"--%>
+					   <%--onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SAVE)" />--%>
+				<input id="gbsm" type="button" value="提交并分析" style="display:none;float: right; width: 100px; margin-left: 10px;"
+					   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)" />
 			</td>
 		</tr>
 	</Table>
@@ -208,9 +208,7 @@ th.ui-th-ltr {
 				date: {
 					month: "${month}".length == 0 ? undefined : parseInt("${month}"),
 					year: ${year}
-				},
-				approveBtn:"aprv",
-				unapproveBtn:"unaprv"
+				}
 			});
         $(document.body).css("visibility", "visible");
     });

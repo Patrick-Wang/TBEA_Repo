@@ -14,8 +14,7 @@ module cpzlqk{
         onEvent(e:framework.route.Event):any {
             switch (e.id){
                 case Event.ZLFE_DATA_STATUS:
-                    $("#gbsm").show();
-                    $("#gbsv").show();
+                    $("#submit").show();
                     break;
             }
             return super.onEvent(e);

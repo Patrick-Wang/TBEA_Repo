@@ -40,9 +40,9 @@ module cpzlqk {
         class EntryView extends ZlEntryPluginView {
             static ins = new EntryView();
             private mData:CpzlqkResp;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../byqcpycssbhgwtmx/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/byqcpycssbhgwtmx/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("/BusinessManagement/byqcpycssbhgwtmx/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/byqcpycssbhgwtmx/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
@@ -76,10 +76,10 @@ module cpzlqk {
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j]) {
                             if (j == 5){
-                                Util.MessageBox.tip("不合格类别不能为空");
+                                Util.Toast.failed("不合格类别不能为空");
                                 return;
                             }else if (j == 9){
-                                Util.MessageBox.tip("责任类别不能为空");
+                                Util.Toast.failed("责任类别不能为空");
                                 return;
                             }
 
@@ -93,11 +93,9 @@ module cpzlqk {
                     companyId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", ()=>{
-                            this.pluginUpdate(dt, compType);
-                        });
+                        Util.Toast.success("保存 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -111,7 +109,7 @@ module cpzlqk {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
+                            Util.Toast.failed("有空内容 无法提交")
                             return;
                         }
                     }
@@ -136,11 +134,11 @@ module cpzlqk {
                                     }
                                 ])
                             }
-                            window.location.href = "show.do?param=" + JSON.stringify(param);
+                            window.location.href = "/BusinessManagement/cpzlqk/v2/show.do?param=" + JSON.stringify(param);
                             //this.pluginUpdate(dt, compType);
                       //  });
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.success(resp.message);
                     }
                 });
             }
@@ -177,38 +175,90 @@ module cpzlqk {
 					.send(framework.basic.FrameEvent.FE_REGISTER, "产品一次送试不合格问题明细");
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status, this.mData.bhglx, this.mData.zrlb);
+            adjustSize() {
+                if (document.body.clientHeight < 10 || document.body.clientWidth < 10){
+                    return;
+                }
 
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() <= this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+                //if (this.jqgridHost().width() < this.jqgridHost().find(".ui-jqgrid").width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                let jqTable = this.$(name);
-                jqTable.jqGrid(
-                    this.mTableAssist.decorate({
-                        datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.mData.tjjg),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        assistEditable: Util.ZBStatus.APPROVED != this.mData.status,
-                        //autowidth : false,
-                        cellsubmit: 'clientArray',
-                        //editurl: 'clientArray',
-                        cellEdit: true,
-                        // height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 20,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        pager: '#' + pagername,
-                        viewrecords: true
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + this.jqgridName()  + "pager'></div>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status, this.mData.bhglx, this.mData.zrlb);
+                return this.mTableAssist;
             }
+
+
+            private updateTable():void {
+                this.createJqassist();
+
+                this.mTableAssist.create({
+                    data: this.mData.tjjg,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    //autowidth : false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
+                    shrinkToFit: true,
+                    autoScroll: true,
+                    rowNum: 1000,
+                    assistEditable:Util.ZBStatus.APPROVED != this.mData.status,
+                    pager: '#' + this.jqgridName()  + "pager",
+                    viewrecords: true
+                });
+
+                this.adjustSize();
+            }
+
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+            //    var pagername = name + "pager";
+            //    this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status, this.mData.bhglx, this.mData.zrlb);
+            //
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+            //    let jqTable = this.$(name);
+            //    jqTable.jqGrid(
+            //        this.mTableAssist.decorate({
+            //            datatype: "local",
+            //            data: this.mTableAssist.getDataWithId(this.mData.tjjg),
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            assistEditable: Util.ZBStatus.APPROVED != this.mData.status,
+            //            //autowidth : false,
+            //            cellsubmit: 'clientArray',
+            //            //editurl: 'clientArray',
+            //            cellEdit: true,
+            //            // height: data.length > 25 ? 550 : '100%',
+            //            // width: titles.length * 200,
+            //            rowNum: 20,
+            //            height: '100%',
+            //            width: 1200,
+            //            shrinkToFit: true,
+            //            autoScroll: true,
+            //            pager: '#' + pagername,
+            //            viewrecords: true
+            //        }));
+            //}
         }
     }
 }
