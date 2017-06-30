@@ -35,9 +35,9 @@ module cpzlqk {
         class EntryView extends ZlEntryPluginView {
             static ins = new EntryView();
             private mData:CpzlqkResp;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/update.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/save.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("../xlacptjjg/entry/submit.do", false);
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/xlacptjjg/entry/update.do", false);
+            private mAjaxSave:Util.Ajax = new Util.Ajax("/BusinessManagement/xlacptjjg/entry/save.do", false);
+            private mAjaxSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/xlacptjjg/entry/submit.do", false);
             private mDt:string;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
@@ -87,9 +87,9 @@ module cpzlqk {
                                 }
                             ])
                         }
-                        window.location.href = "show.do?param=" + JSON.stringify(param);
+                        window.location.href = "/BusinessManagement/cpzlqk/v2/show.do?param=" + JSON.stringify(param);
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -103,7 +103,7 @@ module cpzlqk {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j - 3] = submitData[i][j - 3].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j - 3]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
+                            Util.Toast.failed("有空内容 无法提交")
                             return;
                         }
                     }
@@ -127,7 +127,7 @@ module cpzlqk {
                                 }
                             ])
                         }
-                        window.location.href = "show.do?param=" + JSON.stringify(param);
+                        window.location.href = "/BusinessManagement/cpzlqk/v2/show.do?param=" + JSON.stringify(param);
                     } else {
                         Util.MessageBox.tip(resp.message);
                     }
@@ -164,40 +164,94 @@ module cpzlqk {
 					.send(framework.basic.FrameEvent.FE_REGISTER, "按产品类型录入");
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status);
+            adjustSize() {
+                if (document.body.clientHeight < 10 || document.body.clientWidth < 10){
+                    return;
+                }
 
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() <= this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() < this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            }
+
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                let jqTable = this.$(name);
+                parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + this.jqgridName()  + "pager'></div>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status);
                 this.mTableAssist.mergeColum(0);
                 this.mTableAssist.mergeRow(0);
-                jqTable.jqGrid(
-                    this.mTableAssist.decorate({
-                        datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.mData.tjjg),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        assistEditable:true,
-                        //autowidth : false,
-                        cellsubmit: 'clientArray',
-                        //editurl: 'clientArray',
-                        cellEdit: true,
-                        // height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 1000,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        //pager: '#' + pagername,
-                        viewrecords: true
-                    }));
+                return this.mTableAssist;
             }
+
+
+            private updateTable():void {
+                this.createJqassist();
+
+                this.mTableAssist.create({
+                    dataWithId: this.mData.tjjg,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    //autowidth : false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.mTableAssist.getColNames().length * 400,
+                    shrinkToFit: true,
+                    autoScroll: true,
+                    rowNum: 1000,
+                    assistEditable:true,
+                    //pager: '#' + this.jqgridName()  + "pager",
+                    viewrecords: true
+                });
+
+                this.adjustSize();
+            }
+
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+            //    var pagername = name + "pager";
+            //    this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status);
+            //
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+            //    let jqTable = this.$(name);
+            //    this.mTableAssist.mergeColum(0);
+            //    this.mTableAssist.mergeRow(0);
+            //    jqTable.jqGrid(
+            //        this.mTableAssist.decorate({
+            //            datatype: "local",
+            //            data: this.mTableAssist.getDataWithId(this.mData.tjjg),
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            assistEditable:true,
+            //            //autowidth : false,
+            //            cellsubmit: 'clientArray',
+            //            //editurl: 'clientArray',
+            //            cellEdit: true,
+            //            // height: data.length > 25 ? 550 : '100%',
+            //            // width: titles.length * 200,
+            //            rowNum: 1000,
+            //            height: '100%',
+            //            width: 1200,
+            //            shrinkToFit: true,
+            //            autoScroll: true,
+            //            //pager: '#' + pagername,
+            //            viewrecords: true
+            //        }));
+            //}
         }
     }
 }
