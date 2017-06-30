@@ -169,6 +169,7 @@ module xnyzb {
                 if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
                     jqgrid.setGridWidth(this.jqgridHost().width());
                 }
+
                 //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
                 //this.tableAssist.resizeHeight(maxTableBodyHeight);
                 //
@@ -182,6 +183,7 @@ module xnyzb {
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + this.jqgridName() + "pager'></div>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mData.header);
                 return this.mTableAssist;
             }
 

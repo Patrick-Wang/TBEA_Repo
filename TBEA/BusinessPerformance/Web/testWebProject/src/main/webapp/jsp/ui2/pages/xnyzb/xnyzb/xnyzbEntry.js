@@ -160,6 +160,7 @@ var xnyzb;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + this.jqgridName() + "pager'></div>");
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mData.header);
                 return this.mTableAssist;
             };
             EntryView.prototype.updateTable = function () {
