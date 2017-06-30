@@ -1,90 +1,87 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
-/// <reference path="messageBox.ts" />
-///<reference path="dateSelector.ts"/>
 //利润计划完成率排名,经营性净现金流实际完成排名
-var RANKINGTYPE1;
-(function (RANKINGTYPE1) {
-    RANKINGTYPE1[RANKINGTYPE1["GSMC"] = 0] = "GSMC";
-    RANKINGTYPE1[RANKINGTYPE1["NDJH"] = 1] = "NDJH";
-    RANKINGTYPE1[RANKINGTYPE1["NDLJWC"] = 2] = "NDLJWC";
-    RANKINGTYPE1[RANKINGTYPE1["JHWCL"] = 3] = "JHWCL";
-    RANKINGTYPE1[RANKINGTYPE1["YEARRANKING"] = 4] = "YEARRANKING";
-    RANKINGTYPE1[RANKINGTYPE1["YDJH"] = 5] = "YDJH";
-    RANKINGTYPE1[RANKINGTYPE1["YDWC"] = 6] = "YDWC";
-    RANKINGTYPE1[RANKINGTYPE1["YDWCL"] = 7] = "YDWCL";
-    RANKINGTYPE1[RANKINGTYPE1["MONTHRANKING"] = 8] = "MONTHRANKING";
-})(RANKINGTYPE1 || (RANKINGTYPE1 = {}));
+var RANKINGTYPE11;
+(function (RANKINGTYPE11) {
+    RANKINGTYPE11[RANKINGTYPE11["GSMC"] = 0] = "GSMC";
+    RANKINGTYPE11[RANKINGTYPE11["NDJH"] = 1] = "NDJH";
+    RANKINGTYPE11[RANKINGTYPE11["NDLJWC"] = 2] = "NDLJWC";
+    RANKINGTYPE11[RANKINGTYPE11["JHWCL"] = 3] = "JHWCL";
+    RANKINGTYPE11[RANKINGTYPE11["YEARRANKING"] = 4] = "YEARRANKING";
+    RANKINGTYPE11[RANKINGTYPE11["YDJH"] = 5] = "YDJH";
+    RANKINGTYPE11[RANKINGTYPE11["YDWC"] = 6] = "YDWC";
+    RANKINGTYPE11[RANKINGTYPE11["YDWCL"] = 7] = "YDWCL";
+    RANKINGTYPE11[RANKINGTYPE11["MONTHRANKING"] = 8] = "MONTHRANKING";
+})(RANKINGTYPE11 || (RANKINGTYPE11 = {}));
 ;
 //利润指标年度累计完成同比增长情况排名
-var RANKINGTYPE2;
-(function (RANKINGTYPE2) {
-    RANKINGTYPE2[RANKINGTYPE2["GSMC"] = 0] = "GSMC";
-    RANKINGTYPE2[RANKINGTYPE2["NDLJ"] = 1] = "NDLJ";
-    RANKINGTYPE2[RANKINGTYPE2["QNTQLJ"] = 2] = "QNTQLJ";
-    RANKINGTYPE2[RANKINGTYPE2["NDTBZZ"] = 3] = "NDTBZZ";
-    RANKINGTYPE2[RANKINGTYPE2["YEARRANKING"] = 4] = "YEARRANKING";
-    RANKINGTYPE2[RANKINGTYPE2["DYWC"] = 5] = "DYWC";
-    RANKINGTYPE2[RANKINGTYPE2["QNTQ"] = 6] = "QNTQ";
-    RANKINGTYPE2[RANKINGTYPE2["YDTBZZ"] = 7] = "YDTBZZ";
-    RANKINGTYPE2[RANKINGTYPE2["MONTHRANKING"] = 8] = "MONTHRANKING";
-})(RANKINGTYPE2 || (RANKINGTYPE2 = {}));
+var RANKINGTYPE21;
+(function (RANKINGTYPE21) {
+    RANKINGTYPE21[RANKINGTYPE21["GSMC"] = 0] = "GSMC";
+    RANKINGTYPE21[RANKINGTYPE21["NDLJ"] = 1] = "NDLJ";
+    RANKINGTYPE21[RANKINGTYPE21["QNTQLJ"] = 2] = "QNTQLJ";
+    RANKINGTYPE21[RANKINGTYPE21["NDTBZZ"] = 3] = "NDTBZZ";
+    RANKINGTYPE21[RANKINGTYPE21["YEARRANKING"] = 4] = "YEARRANKING";
+    RANKINGTYPE21[RANKINGTYPE21["DYWC"] = 5] = "DYWC";
+    RANKINGTYPE21[RANKINGTYPE21["QNTQ"] = 6] = "QNTQ";
+    RANKINGTYPE21[RANKINGTYPE21["YDTBZZ"] = 7] = "YDTBZZ";
+    RANKINGTYPE21[RANKINGTYPE21["MONTHRANKING"] = 8] = "MONTHRANKING";
+})(RANKINGTYPE21 || (RANKINGTYPE21 = {}));
 ;
 //人均利润，人均收入
-var RANKINGTYPE3;
-(function (RANKINGTYPE3) {
-    RANKINGTYPE3[RANKINGTYPE3["GSMC"] = 0] = "GSMC";
-    RANKINGTYPE3[RANKINGTYPE3["NDLJ"] = 1] = "NDLJ";
-    RANKINGTYPE3[RANKINGTYPE3["YEARRANKING"] = 2] = "YEARRANKING";
-    RANKINGTYPE3[RANKINGTYPE3["DYWC"] = 3] = "DYWC";
-    RANKINGTYPE3[RANKINGTYPE3["MONTHRANKING"] = 4] = "MONTHRANKING";
-})(RANKINGTYPE3 || (RANKINGTYPE3 = {}));
+var RANKINGTYPE31;
+(function (RANKINGTYPE31) {
+    RANKINGTYPE31[RANKINGTYPE31["GSMC"] = 0] = "GSMC";
+    RANKINGTYPE31[RANKINGTYPE31["NDLJ"] = 1] = "NDLJ";
+    RANKINGTYPE31[RANKINGTYPE31["YEARRANKING"] = 2] = "YEARRANKING";
+    RANKINGTYPE31[RANKINGTYPE31["DYWC"] = 3] = "DYWC";
+    RANKINGTYPE31[RANKINGTYPE31["MONTHRANKING"] = 4] = "MONTHRANKING";
+})(RANKINGTYPE31 || (RANKINGTYPE31 = {}));
 ;
 //应收账款占收入排名
-var RANKINGTYPE4;
-(function (RANKINGTYPE4) {
-    RANKINGTYPE4[RANKINGTYPE4["GSMC"] = 0] = "GSMC";
-    RANKINGTYPE4[RANKINGTYPE4["BYSR"] = 1] = "BYSR";
-    RANKINGTYPE4[RANKINGTYPE4["BYYSZK"] = 2] = "BYYSZK";
-    RANKINGTYPE4[RANKINGTYPE4["YSZKZSRBZ"] = 3] = "YSZKZSRBZ";
-    RANKINGTYPE4[RANKINGTYPE4["MONTHRANKING"] = 4] = "MONTHRANKING";
-})(RANKINGTYPE4 || (RANKINGTYPE4 = {}));
+var RANKINGTYPE41;
+(function (RANKINGTYPE41) {
+    RANKINGTYPE41[RANKINGTYPE41["GSMC"] = 0] = "GSMC";
+    RANKINGTYPE41[RANKINGTYPE41["BYSR"] = 1] = "BYSR";
+    RANKINGTYPE41[RANKINGTYPE41["BYYSZK"] = 2] = "BYYSZK";
+    RANKINGTYPE41[RANKINGTYPE41["YSZKZSRBZ"] = 3] = "YSZKZSRBZ";
+    RANKINGTYPE41[RANKINGTYPE41["MONTHRANKING"] = 4] = "MONTHRANKING";
+})(RANKINGTYPE41 || (RANKINGTYPE41 = {}));
 ;
 //应收账款加保理
-var RANKINGTYPE5;
-(function (RANKINGTYPE5) {
-    RANKINGTYPE5[RANKINGTYPE5["GSMC"] = 0] = "GSMC";
-    RANKINGTYPE5[RANKINGTYPE5["BYSR"] = 1] = "BYSR";
-    RANKINGTYPE5[RANKINGTYPE5["BYYSZK"] = 2] = "BYYSZK";
-    RANKINGTYPE5[RANKINGTYPE5["BYBLYE"] = 3] = "BYBLYE";
-    RANKINGTYPE5[RANKINGTYPE5["YSZKZSRBZ"] = 4] = "YSZKZSRBZ";
-    RANKINGTYPE5[RANKINGTYPE5["MONTHRANKING"] = 5] = "MONTHRANKING";
-})(RANKINGTYPE5 || (RANKINGTYPE5 = {}));
+var RANKINGTYPE51;
+(function (RANKINGTYPE51) {
+    RANKINGTYPE51[RANKINGTYPE51["GSMC"] = 0] = "GSMC";
+    RANKINGTYPE51[RANKINGTYPE51["BYSR"] = 1] = "BYSR";
+    RANKINGTYPE51[RANKINGTYPE51["BYYSZK"] = 2] = "BYYSZK";
+    RANKINGTYPE51[RANKINGTYPE51["BYBLYE"] = 3] = "BYBLYE";
+    RANKINGTYPE51[RANKINGTYPE51["YSZKZSRBZ"] = 4] = "YSZKZSRBZ";
+    RANKINGTYPE51[RANKINGTYPE51["MONTHRANKING"] = 5] = "MONTHRANKING";
+})(RANKINGTYPE51 || (RANKINGTYPE51 = {}));
 ;
 //存货占比
-var RANKINGTYPE6;
-(function (RANKINGTYPE6) {
-    RANKINGTYPE6[RANKINGTYPE6["GSMC"] = 0] = "GSMC";
-    RANKINGTYPE6[RANKINGTYPE6["BYSR"] = 1] = "BYSR";
-    RANKINGTYPE6[RANKINGTYPE6["BYCH"] = 2] = "BYCH";
-    RANKINGTYPE6[RANKINGTYPE6["CHZSRBZ"] = 3] = "CHZSRBZ";
-    RANKINGTYPE6[RANKINGTYPE6["MONTHRANKING"] = 4] = "MONTHRANKING";
-})(RANKINGTYPE6 || (RANKINGTYPE6 = {}));
+var RANKINGTYPE61;
+(function (RANKINGTYPE61) {
+    RANKINGTYPE61[RANKINGTYPE61["GSMC"] = 0] = "GSMC";
+    RANKINGTYPE61[RANKINGTYPE61["BYSR"] = 1] = "BYSR";
+    RANKINGTYPE61[RANKINGTYPE61["BYCH"] = 2] = "BYCH";
+    RANKINGTYPE61[RANKINGTYPE61["CHZSRBZ"] = 3] = "CHZSRBZ";
+    RANKINGTYPE61[RANKINGTYPE61["MONTHRANKING"] = 4] = "MONTHRANKING";
+})(RANKINGTYPE61 || (RANKINGTYPE61 = {}));
 ;
 //应收账款加存货占比
-var RANKINGTYPE7;
-(function (RANKINGTYPE7) {
-    RANKINGTYPE7[RANKINGTYPE7["GSMC"] = 0] = "GSMC";
-    RANKINGTYPE7[RANKINGTYPE7["BYSR"] = 1] = "BYSR";
-    RANKINGTYPE7[RANKINGTYPE7["BYYSZK"] = 2] = "BYYSZK";
-    RANKINGTYPE7[RANKINGTYPE7["BYCH"] = 3] = "BYCH";
-    RANKINGTYPE7[RANKINGTYPE7["YSZKCHZSRBZ"] = 4] = "YSZKCHZSRBZ";
-    RANKINGTYPE7[RANKINGTYPE7["MONTHRANKING"] = 5] = "MONTHRANKING";
-})(RANKINGTYPE7 || (RANKINGTYPE7 = {}));
+var RANKINGTYPE71;
+(function (RANKINGTYPE71) {
+    RANKINGTYPE71[RANKINGTYPE71["GSMC"] = 0] = "GSMC";
+    RANKINGTYPE71[RANKINGTYPE71["BYSR"] = 1] = "BYSR";
+    RANKINGTYPE71[RANKINGTYPE71["BYYSZK"] = 2] = "BYYSZK";
+    RANKINGTYPE71[RANKINGTYPE71["BYCH"] = 3] = "BYCH";
+    RANKINGTYPE71[RANKINGTYPE71["YSZKCHZSRBZ"] = 4] = "YSZKCHZSRBZ";
+    RANKINGTYPE71[RANKINGTYPE71["MONTHRANKING"] = 5] = "MONTHRANKING";
+})(RANKINGTYPE71 || (RANKINGTYPE71 = {}));
 ;
-var companys_ranking;
-(function (companys_ranking) {
-    var router = framework.router;
+var companys_ranking1;
+(function (companys_ranking1) {
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
@@ -171,58 +168,47 @@ var companys_ranking;
         };
         return JQGridAssistantFactory;
     })();
-    var SimpleView = (function () {
-        function SimpleView() {
+    var View = (function () {
+        function View() {
             this.mData = [];
-            this.mDataSet = new Util.Ajax("/BusinessManagement/ydzbRanking/companys_ranking_update.do");
-            router.register(this);
+            this.mDataSet = new Util.Ajax("companys_ranking_update.do");
         }
-        SimpleView.prototype.getId = function () {
-            return Util.FAMOUS_VIEW;
-        };
-        SimpleView.prototype.onEvent = function (e) {
-            switch (e.id) {
-                case Util.MSG_INIT:
-                    this.init(e.data);
-                    break;
-                case Util.MSG_UPDATE:
-                    this.updateUI();
-                    break;
+        View.newInstance = function () {
+            if (View.ins == undefined) {
+                View.ins = new View();
             }
+            return View.ins;
         };
-        SimpleView.prototype.init = function (opt) {
+        View.prototype.init = function (tableId, dateId, year, month) {
+            this.mYear = year;
+            this.mTableId = tableId;
+            this.mMonth = month;
+            this.mDs = new Util.DateSelector({ year: year - 1, month: 1 }, { year: year, month: month }, dateId);
+            this.onIndexSelected();
+        };
+        View.prototype.onIndexSelected = function () {
+            this.mIndex = $("#ranktype").val();
+            //this.mIndex = $("#indextype  option:selected").text();
+        };
+        //导出excel
+        View.prototype.exportExcel = function (fName) {
+            var date = this.mDs.getDate();
+            $("#export")[0].action = "companys_ranking_export.do?" + Util.Ajax.toUrlParam({ year: date.year, month: date.month, rankingType: this.mIndex });
+            $("#export")[0].submit();
+        };
+        View.prototype.updateUI = function () {
             var _this = this;
-            this.mOpt = opt;
-            var minDate = Util.addYear(opt.date, -3);
-            minDate.month = 1;
-            $("#grid-date").jeDate({
-                skinCell: "jedatedeepgreen",
-                format: "YYYY年MM月",
-                isTime: false,
-                isinitVal: true,
-                isClear: false,
-                isToday: false,
-                minDate: Util.date2Str(minDate),
-                maxDate: Util.date2Str(opt.date),
-            }).removeCss("height")
-                .removeCss("padding")
-                .removeCss("margin-top");
-            $(window).resize(function () {
-                _this.adjustSize();
+            var date = this.mDs.getDate();
+            this.onIndexSelected();
+            this.mDataSet.get({ month: date.month, year: date.year, rankingType: this.mIndex })
+                .then(function (dataArray) {
+                _this.mData = dataArray;
+                $('h1').text(date.year + "年" + date.month + "月" + "经营单位指标排名情况");
+                document.title = date.year + "年" + date.month + "月" + "经营单位指标排名情况";
+                _this.updateTable(_this.mIndex);
             });
-            $("#grid-update").on("click", function () {
-                _this.updateUI();
-            });
-            $("#grid-export").on("click", function () {
-                _this.exportExcel();
-            });
-            $("#company-type").change(function () {
-                _this.showCont();
-            });
-            this.showCont();
-            this.updateUI();
         };
-        SimpleView.prototype.formatData = function (data) {
+        View.prototype.formatData = function (data) {
             var row = [];
             var mdata = [];
             for (var i = 0; i < this.mData.length; ++i) {
@@ -312,84 +298,14 @@ var companys_ranking;
             }
             return mdata;
         };
-        SimpleView.prototype.showCont = function () {
-            switch ($("#company-type").val()) {
-                case "1":
-                    $("#report-type").empty();
-                    var option = $("<option>").text("利润计划完成率排名").val(1);
-                    var option2 = $("<option>").text("利润指标年度累计完成同比增长排名").val(2);
-                    var option3 = $("<option>").text("人均利润实际完成排名").val(3);
-                    var option4 = $("<option>").text("人均收入实际完成排名").val(4);
-                    var option5 = $("<option>").text("应收账款占收入比排名").val(5);
-                    var option6 = $("<option>").text("应收账款加保理占收入排名").val(6);
-                    var option7 = $("<option>").text("存货占收入比排名").val(7);
-                    var option8 = $("<option>").text("应收加存货占收入比排名").val(8);
-                    var option9 = $("<option>").text("经营性净现金流实际完成排名").val(9);
-                    //var option10 = $("<option>").text("各单位净资产收益率完成排名").val(10);
-                    $("#report-type").append(option).append(option2).append(option3).append(option4)
-                        .append(option5).append(option6).append(option7).append(option8).append(option9);
-                    break;
-                case "2":
-                    $("#report-type").empty();
-                    var option = $("<option>").text("利润指标年度累计完成同比增长排名").val(11);
-                    //var option2 = $("<option>").text("项目公司净资产收益率排名").val(12);
-                    var option3 = $("<option>").text("人均收入完成排名").val(13);
-                    var option4 = $("<option>").text("人均利润完成排名").val(14);
-                    $("#report-type").append(option).append(option3).append(option4);
-                    break;
-                default:
-                    break;
-            }
-        };
-        SimpleView.prototype.exportExcel = function () {
-            $("#exportExcel")[0].action = "/BusinessManagement/ydzbRanking/companys_ranking_export.do?" + Util.Ajax.toUrlParam($.extend(this.getDate(), { rankingType: this.mIndex }));
-            $("#exportExcel")[0].submit();
-        };
-        SimpleView.prototype.getDate = function () {
-            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
-            return {
-                year: rq[0] ? parseInt(rq[0]) : undefined,
-                month: rq[1] ? parseInt(rq[1]) : undefined,
-                day: rq[2] ? parseInt(rq[2]) : undefined
-            };
-        };
-        SimpleView.prototype.updateUI = function () {
-            var _this = this;
-            this.mIndex = $("#report-type").val();
-            this.mDataSet.get($.extend(this.getDate(), { rankingType: this.mIndex }))
-                .then(function (dataArray) {
-                _this.mData = dataArray;
-                _this.updateTable();
-            });
-        };
-        SimpleView.prototype.adjustSize = function () {
-            var jqgrid = this.jqgrid();
-            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
-                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
-            }
-            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-            this.tableAssist.resizeHeight(maxTableBodyHeight);
-            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
-                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
-            }
-        };
-        SimpleView.prototype.jqgrid = function () {
-            return $("#" + this.jqgridName());
-        };
-        SimpleView.prototype.jqgridName = function () {
-            return this.mOpt.tableId + "_jqgrid_real";
-        };
-        SimpleView.prototype.createJqassist = function () {
-            var parent = $("#" + this.mOpt.tableId);
-            parent.empty();
-            parent.append("<table id='" + this.jqgridName() + "'></table>");
-            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mIndex);
-            return this.tableAssist;
-        };
-        SimpleView.prototype.updateTable = function () {
-            this.createJqassist();
+        View.prototype.updateTable = function (rankingType) {
+            var name = this.mTableId + "_jqgrid_1234";
+            var tableAssist = null;
             var data = null;
-            if ($("#company-type").val() == "1") {
+            var parent = $("#" + this.mTableId);
+            parent.empty();
+            parent.append("<table id='" + name + "'></table>");
+            if ($("input[name=rank]:checked").attr("id") == "JYcompanys") {
                 if (this.mIndex == 1 || this.mIndex == 2 || this.mIndex == 3 || this.mIndex == 4 || this.mIndex == 9) {
                     var predata = [
                         ["沈变公司"],
@@ -414,22 +330,27 @@ var companys_ranking;
             else {
                 data = this.formatData([]);
             }
-            this.tableAssist.create({
-                data: data,
+            tableAssist = JQGridAssistantFactory.createTable(name, rankingType);
+            $("#" + name).jqGrid(tableAssist.decorate({
+                // url: "TestTable/WGDD_load.do",
+                // datatype: "json",
+                data: tableAssist.getData(data),
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
+                //autowidth : false,
+                //                    cellsubmit: 'clientArray',
+                //                    cellEdit: true,
                 height: '100%',
-                width: $("#" + this.mOpt.tableId).width(),
+                width: 1200,
                 shrinkToFit: true,
-                rowNum: 2000,
+                rowNum: 100,
                 autoScroll: true
-            });
-            this.adjustSize();
+            }));
+            $("#export").css('display', 'block');
         };
-        SimpleView.ins = new SimpleView();
-        return SimpleView;
+        return View;
     })();
-    companys_ranking.SimpleView = SimpleView;
-})(companys_ranking || (companys_ranking = {}));
+    companys_ranking1.View = View;
+})(companys_ranking1 || (companys_ranking1 = {}));
