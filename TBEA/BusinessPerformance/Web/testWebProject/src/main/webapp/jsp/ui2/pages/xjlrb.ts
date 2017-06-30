@@ -43,9 +43,6 @@ module xjlrb {
                 case Util.MSG_INIT:
                     this.init(e.data);
                     break;
-                case Util.MSG_UPDATE:
-                    this.updateUI();
-                    break;
             }
         }
 

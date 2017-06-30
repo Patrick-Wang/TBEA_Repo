@@ -1,223 +1,207 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
-/// <reference path="messageBox.ts" />
-declare var echarts;
+declare var $:any;
 
 module yszkrb {
+        import Endpoint = framework.route.Endpoint;
+        import router = framework.router;
 
-    class JQGridAssistantFactory {
-
-        public static createTable(gridName: string): JQTable.JQGridAssistant {
-            return new JQTable.JQGridAssistant([
-                new JQTable.Node("集团下达月度资金回笼指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("各单位自行制定的回款计划", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("今日回款", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("已回款中可降应收的回款金额", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("确保办出", "t5", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("争取办出", "t6", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("截止月底应收账款账面余额", "t7", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
-            ], gridName);
-        }
-    }
-
-    interface ISubmitResult {
-        errorCode: number;
-        message: string;
-
-    }
-
-    export class View {
-        private static ins: View;
-
-        public static newInstance(): View {
-            if (View.ins == undefined) {
-                View.ins = new View();
+        class JQGridAssistantFactory {
+            public static createTable(gridName: string): JQTable.JQGridAssistant {
+                return new JQTable.JQGridAssistant([
+                    new JQTable.Node("集团下达月度资金回笼指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                    new JQTable.Node("各单位自行制定的回款计划", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                    new JQTable.Node("今日回款", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                    new JQTable.Node("已回款中可降应收的回款金额", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                    new JQTable.Node("确保办出", "t5", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                    new JQTable.Node("争取办出", "t6", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                    new JQTable.Node("截止月底应收账款账面余额", "t7", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                ], gridName);
             }
-            return View.ins;
         }
 
-        private mMonth: number;
-        private mYear: number;
-        private mDay: number;
-        private mData: Array<string[]> = [];
-        private mDataSet: Util.Ajax = new Util.Ajax("yszk_update.do", false);
-        private mTableId: string;
-
-        private mTableAssist: JQTable.JQGridAssistant;
-        private mSave: Util.Ajax = new Util.Ajax("yszk_submit.do");
-
-        public init(tableId: string, month: number, year: number, day: number): void {
-            this.mYear = year;
-            this.mMonth = month;
-            this.mDay = day;
-            this.mTableId = tableId;
-
-            $("#date").val(year + "/" + month + "/" + day);
-            $("#date").datepicker({
-                //            numberOfMonths:1,//显示几个月  
-                //            showButtonPanel:true,//是否显示按钮面板  
-                dateFormat: 'yy/mm/dd',//日期格式  
-                //            clearText:"清除",//清除日期的按钮名称  
-                //            closeText:"关闭",//关闭选择框的按钮名称  
-                yearSuffix: '年', //年的后缀  
-                showMonthAfterYear: true,//是否把月放在年的后面  
-                defaultDate: year + "/" + month + "/" + day,//默认日期  
-                //            minDate:'2011-03-05',//最小日期  
-               // maxDate: year + "/" + month + "/" + day,//最大日期
-                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-                dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
-                onSelect: (selectedDate) => {//选择日期后执行的操作  
-                    var d: Date = new Date(selectedDate);
-                    this.mYear = d.getFullYear();
-                    this.mMonth = d.getMonth() + 1;
-                    this.mDay = d.getDate();
-                }
-            });
-            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
-            
-            //this.updateTable();
-            this.updateUI();
-
+        interface IViewOption {
+            tableId: string;
+            date: Util.Date;
         }
 
-        public save() {
-            var allData = this.mTableAssist.getAllData();
-            var submitData = [];
-            var colNames = this.mTableAssist.getColNames();
-            for (var i = 0; i < allData.length; ++i) {
-                submitData.push([]);
-                for (var j = 0; j < allData[i].length; ++j) {
-                    if (j != 0) {
-                        submitData[i].push(allData[i][j])
-                        allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '')
-                    }
+        export class SimpleView implements Endpoint {
+
+            getId():number {
+                return Util.FAMOUS_VIEW;
+            }
+
+            onEvent(e:framework.route.Event):any {
+                switch (e.id) {
+                    case Util.MSG_INIT:
+                        this.init(e.data);
+                        break;
                 }
             }
 
-            this.mSave.post({
-                year: this.mYear,
-                month: this.mMonth,
-                day: this.mDay,
-                data: JSON.stringify(submitData[0])
-            }).then((data: ISubmitResult) => {
-                if (0 == data.errorCode) {
-                    Util.MessageBox.tip("保存 成功");
-                } else {
-                    Util.MessageBox.tip("保存 失败");
-                }
-            });
-        }
-        public updateUI() {
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
-                .then((dataArray: any) => {
-                    this.mData = dataArray;
-                    $('h1').text(this.mYear + "年" + this.mMonth + "月" + this.mDay + "日应收账款日报");
-                    document.title = this.mYear + "年" + this.mMonth + "月" + this.mDay + "日应收账款日报";
-                    this.updateTable();
+            public constructor() {
+                router.register(this);
+            }
+
+            private static ins:SimpleView = new SimpleView();
+
+            private mData:Array<string[]>;
+            private mAjaxSubmit: Util.Ajax = new Util.Ajax("/BusinessManagement/dailyReport/yszk_submit.do");
+            private mAjaxUpdate:Util.Ajax = new Util.Ajax("/BusinessManagement/dailyReport/yszk_update.do", false);
+            private mDt:string;
+            private tableAssist:JQTable.JQGridAssistant;
+            private mOpt: IViewOption;
+
+            public init(opt:any):void {
+                this.mOpt = opt;
+
+                let minDate = Util.addYear(opt.date, -1);
+                minDate.month = 1;
+                $("#grid-date").jeDate({
+                    skinCell: "jedatedeepgreen",
+                    format: "YYYY年MM月DD日",
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false
+                }).removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top");
+
+                $(window).resize(()=> {
+                    this.adjustSize();
                 });
-        }
+                $("#grid-update").on("click", ()=> {
+                    this.updateUI();
+                });
+                $("#submit").on("click", ()=> {
+                    this.submit();
+                });
+                this.updateUI();
+            }
 
-        private updateTable(): void {
-            var name = this.mTableId + "_jqgrid_1234";
-            this.mTableAssist = JQGridAssistantFactory.createTable(name);
+            public updateUI() {
+                this.mAjaxUpdate.get(this.getDate())
+                    .then((dataArray: any) => {
+                        this.mData = dataArray;
+                        if (dataArray.length == 0){
+                            var pro = $("#prompt");
+                            pro.empty();
+                            pro.append("<b>暂时没有数据！</b>")
+                        }else{
+                            var pro = $("#prompt");
+                            pro.empty();
+                        }
+                        this.updateTable();
+                    });
+            }
 
-            var data = [];
-            var row = [];
-            for (var i = 0; i < this.mData.length; ++i) {
-                data.push([]);
-                if (this.mData[i] instanceof Array) {
-                    row = [].concat(this.mData[i]);
-                    for (var col in row) {
-                        row[col] = Util.formatCurrency(row[col]);
-                    }
-                    data[i] = data[i].concat(row);
+            private getDate():Util.Date {
+                let rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+                return {
+                    year: rq[0] ? parseInt(rq[0]) : undefined,
+                    month: rq[1] ? parseInt(rq[1]) : undefined,
+                    day: rq[2] ? parseInt(rq[2]) : undefined
+                };
+            }
+
+            private jqgrid(){
+                return $("#" + this.jqgridName());
+            }
+
+            private jqgridName():string{
+                return this.mOpt.tableId + "_jqgrid_real";
+            }
+
+            private adjustSize() {
+                var jqgrid = this.jqgrid();
+                if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                    jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+                if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                    jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
                 }
             }
-            var parent = $("#" + this.mTableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
 
-            var lastsel = "";
-            var lastcell = "";
-            $("#" + name).jqGrid(
-                this.mTableAssist.decorate({
-                    // url: "TestTable/WGDD_load.do",
-                    // datatype: "json",
-                    data: this.mTableAssist.getData(data),
+            public submit() {
+                var allData = this.tableAssist.getAllData();
+                var submitData = [];
+                var colNames = this.tableAssist.getColNames();
+                for (var i = 0; i < allData.length; ++i) {
+                    submitData.push([]);
+                    for (var j = 0; j < allData[i].length; ++j) {
+                        if (j != 0) {
+                            submitData[i].push(allData[i][j])
+                            allData[i][j] = allData[i][j].replace(new RegExp(' ', 'g'), '')
+                        }
+                    }
+                }
+
+                this.mAjaxSubmit.post($.extend(this.getDate(), {
+                    data: JSON.stringify(submitData[0])
+                })).then((resp:Util.IResponse) => {
+                    if (Util.ErrorCode.OK == resp.errorCode) {
+                        Util.Toast.success("提交 成功");
+                    } else {
+                        Util.Toast.failed(resp.message);
+                    }
+                });
+            }
+
+
+            public refresh():void {
+                if (this.mData == undefined) {
+                    return;
+                }
+                this.updateTable();
+            }
+
+
+            private createJqassist():JQTable.JQGridAssistant{
+                var parent = $("#" + this.mOpt.tableId);
+                parent.empty();
+                parent.append("<table id='"+ this.jqgridName() +"'></table>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                return this.tableAssist;
+            }
+
+            private updateTable():void {
+                this.createJqassist();
+
+                var data = [];
+                var row = [];
+                for (var i = 0; i < this.mData.length; ++i) {
+                    data.push([]);
+                    if (this.mData[i] instanceof Array) {
+                        row = [].concat(this.mData[i]);
+                        for (var col in row) {
+                            row[col] = Util.formatCurrency(row[col]);
+                        }
+                        data[i] = data[i].concat(row);
+                    }
+                }
+
+                this.tableAssist.create({
+                    data:this.mData,
                     datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    //autowidth : false,
                     cellsubmit: 'clientArray',
                     cellEdit: true,
                     height: '100%',
-                    width: 850,
+                    width: this.tableAssist.getColNames().length * 400,
                     shrinkToFit: true,
-                    rowNum: 100,
+                    rowNum: 2000,
                     autoScroll: true,
-                    beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
-                        var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                        if (isNaN(ret)) {
-                            $.jgrid.jqModal = {
-                                width: 290,
-                                left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
-                                top: $("#table").offset().top + $("#table").height() / 2 - 90
-                            };
-                            return v;
-                        } else {
-                            return ret;
-                        }
-                    },
-                    beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
-                        lastsel = iRow;
-                        lastcell = iCol; 
-                        //                        console.log(iRow +', ' + iCol);
-                        $("input").attr("disabled", true);
-                    },
+                    assistEditable: true
+                });
 
-                    afterEditCell: (rowid, cellname, v, iRow, iCol) => {
-                        $("input[type=text]").bind("keydown", function(e) {
-                            if (e.keyCode === 13) {
-                                setTimeout(function() {
-                                    $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
-                                }, 10);
-                            }
-                        });
-                    },
-
-                    afterSaveCell: () => {
-                        $("input").attr("disabled", false);
-                        lastsel = "";
-                    },
-
-                    afterRestoreCell: () => {
-                        $("input").attr("disabled", false);
-
-                        lastsel = "";
-                    }
-                    //                    ,
-                    //                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
-                    //                        lastsel = ""; 
-                    //                        lastcell = ""; 
-                    //                    } 
-                }));
-
-
-            $('html').bind('click', function(e) { //用于点击其他地方保存正在编辑状态下的行
-                if (lastsel != "") { //if a row is selected for edit 
-                    if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row  
-                        //  $("#" + name).jqGrid('saveRow', lastsel); 
-                        $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                        //$("#" + name).resetSelection(); 
-                        lastsel = "";
-                    }
-                }
-            });
-
-
+                this.adjustSize();
+            }
         }
-    }
 }
