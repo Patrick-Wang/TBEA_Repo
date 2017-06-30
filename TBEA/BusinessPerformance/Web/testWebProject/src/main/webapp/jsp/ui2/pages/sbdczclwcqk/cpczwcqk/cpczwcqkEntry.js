@@ -185,7 +185,7 @@ var sbdczclwcqk;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + this.jqgridName() + "'></table>");
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false, this.mDt);
                 return this.mTableAssist;
             };
             EntryView.prototype.updateTable = function () {

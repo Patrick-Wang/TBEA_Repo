@@ -9,7 +9,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router
-            .to(pluginEntry.chzlbhqk)
+            .to(pluginEntry.clylwcqk)
             .send(framework.basic.FrameEvent.FE_INIT_EVENT,{
                 tb: "table",
                 host: "clylwcqkEntry",

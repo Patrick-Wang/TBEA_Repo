@@ -72,10 +72,10 @@ var sbdczclwcqk;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -98,10 +98,10 @@ var sbdczclwcqk;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -176,7 +176,7 @@ var sbdczclwcqk;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + this.jqgridName() + "'></table>");
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, false, this.mDt);
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), false, this.mDt);
                 return this.mTableAssist;
             };
             EntryView.prototype.updateTable = function () {
