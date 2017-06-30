@@ -102,7 +102,7 @@
 				});
 	 		</script>
 		</c:if>
-
+<!--------------------------------------------------------Company index begin ------------------------------------>
 		<c:if test="${notSbqgb}">
 			<script>
 				builder.register('bbxx', function() {
@@ -138,15 +138,6 @@
 		 		</script>
 			</c:if>
 		</c:if>
-		<!-- <script>
-			builder.register('bbxx', function() {
-				return createNode('经营指标预测情况', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
-					.append(builder.build('ztzbycwcqk'))
-					.append(createNode('单位指标预测完成情况', 'ydzb/v2/hzb_companys_prediction.do'))
-					.append(builder.build('wdjyzbyc'))
-					.append(builder.build('sjztbqk'));
-			});
-		</script> -->
 					
 		<c:if test="${CorpAuth}">
 			<script>
@@ -166,6 +157,7 @@
 				});
 			</script>
 		</c:if>
+		
 		<c:if test="${JYEntryLookup || zhAuth}">
 			<script>
 				builder.register('sjztbqk', function() {
@@ -173,16 +165,81 @@
 				});
 			</script>
 		</c:if>
+		
+		<!--------------------------------------------------------ZH Company begin --------------------->
+		<c:if test="${zhzlLookup}">
+			<script>
+				builder.register('Zhzlzb', function () {
+					return [
+					   createNode('众和质量指标', "report/v2/zhzl.do")
+					];
+				});
+			</script>
+		</c:if>
 	
+		<c:if test="${zhJyfxLookupAuth}">
+			<script>
+				builder.register('Zhfzgszlzb', function () {
+					return [
+					   createNode('众和分子公司累计汇总', "report/v2/zhgsljzbhz.do"),
+					   createNode('众和分子公司月度汇总', "report/v2/zhgsljzbhz.do"),
+					   createNode('众和分产业关键指标汇总', "report/v2/zhgsfcyUnion.do")
+					];
+				});
+			</script>
+		</c:if>
+		<!--------------------------------------------------------ZH Company end ------------------------->	
+<!--------------------------------------------------------Company index end ------------------------------------>
+
+
+
+<!--------------------------------------------------------Management analysis begin ---------------------------->
+		
+		<c:if test="${JYAnalysisLookup}">
+			<script>
+				builder.register('bbxx', function() {
+					return createNode('经营指标分析', undefined)
+						.append(builder.build('yszkrbLookup'))
+						.append(builder.build('xjlrbLookup'))
+						.append(builder.build('jyzbpm'));
+				});
+			</script>
+			<c:if test="${YSZKDialyLookup}">
+				<script>
+					builder.register('yszkrbLookup', function() {
+						return createNode('应收账款日报', 'yszkrb/v2/yszk.do');
+					});
+				</script>
+			</c:if>
+			<c:if test="${XJLDialyLookup}">
+				<script>
+					builder.register('xjlrbLookup', function() {
+						return createNode('现金流日报', 'ydzb/v2/xjlrb.do');
+					});
+				</script>
+			</c:if>
+			<c:if test="${CorpAuth}">
+				<script>
+					builder.register('jyzbpm', function() {
+						return createNode('各单位经营指标排名情况', 'ydzbRanking/v2/companys_ranking.do');
+					});
+				</script>
+			</c:if>
+		</c:if>
+<!--------------------------------------------------------Management analysis end --------------------------->
+
+<!--------------------------------------------------------Finance analysis start ---------------------------->
+
 		<c:if test="${isJydw || scgsdbqx || FinanceLookup}">
 			<script>
 				builder.register('bbxx', function() {
-					return createNode('财务分析', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
+					return createNode('财务数据分析', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 						.append(builder.build('gsztcwwcqk'))
 						.append(createNode('单位财务指标完成情况', 'NCzb/v2/CompanysNC.do'))
 						.append(createNode('财务对标需求', 'report/v2/dbxq.do'))
 						.append(createNode('经济增加值', 'report/v2/jjzjz.do'))
-						.append(builder.build('cwfxLookup'));
+						.append(builder.build('cwfxLookup'))
+						.append(builder.build('externalFinData'));
 				})
 			</script>
 	
@@ -205,55 +262,22 @@
 					});
 				</script>
 			</c:if>
-		</c:if>
-		<c:if test="${JYAnalysisLookup}">
-			<script>
-				builder.register('bbxx', function() {
-					return createNode('经营指标分析', undefined)
-						.append(builder.build('yszkrbLookup'))
-						.append(builder.build('xjlrbLookup'))
-						.append(builder.build('jyzbpm'))
-						.append(builder.build('xnyrb'));
-				});
-			</script>
-			<c:if test="${YSZKDialyLookup}">
-				<script>
-					builder.register('yszkrbLookup', function() {
-						return createNode('应收账款日报', 'yszkrb/v2/yszk.do');
-					});
-				</script>
-			</c:if>
-			<c:if test="${XJLDialyLookup}">
-				<script>
-					builder.register('xjlrbLookup', function() {
-						return createNode('现金流日报', 'ydzb/v2/xjlrb.do');
-					});
-				</script>
-			</c:if>
-			<c:if test="${CorpAuth}">
-				<script>
-					builder.register('jyzbpm', function() {
-						return createNode('各单位经营指标排名情况', 'ydzbRanking/companys_ranking.do');
-					});
-				</script>
-			</c:if>
-			<c:if test="${xtnyrbLookupAuth}">
-				<script>
-					builder.register('xnyrb', function() {
-						return createNode('新特能源日报', 'report/v2/xtnyrb.do');
-					});
-				</script>
-			</c:if>
-		</c:if>
+		</c:if>	
+		
 		<c:if test="${scgsdbqx}">
 			<script>
-				builder.register('bbxx', function() {
-					return createNode('上市公司对标数据')
-						.append(createNode('对标数据总体分析', 'report/v2/ztdbfx.do'))
-						.append(createNode('对标数据分类分析', 'report/v2/fldbfx.do'));
+				builder.register('externalFinData', function() {
+					return [createNode('外部单位经营数据总体分析', 'report/v2/ztdbfx.do'),
+					         createNode('外部单位经营数据分类分析', 'report/v2/fldbfx.do')
+					        ];
 				});
 			</script>
 		</c:if>
+		
+<!--------------------------------------------------------Finance analysis end ---------------------------->
+
+
+<!--------------------------------------------------------cost start ---------------------------->			
 		<c:if test="${sddbLookup || sddbImport}">
 			<script>
 				builder.register('bbxx', function() {
@@ -286,6 +310,12 @@
 				</script>
 			</c:if>
 		</c:if>
+		
+
+<!--------------------------------------------------------cost end ---------------------------->	
+
+
+<!--------------------------------------------------------market start ---------------------------->	
 		<c:if test="${scbsjLookup || scbsjEntry}">
 			<script>
 				builder.register('bbxx', function() {
@@ -316,29 +346,7 @@
 				</script>
 			</c:if>
 		</c:if>
-<!--------------------------------------------------------ZH Company begin -------------------------------------->
-		<c:if test="${zhzlLookup}">
-			<script>
-				builder.register('Zhzlzb', function () {
-					return [
-					   createNode('众和质量指标', "report/v2/zhzl.do")
-					];
-				});
-			</script>
-		</c:if>
-	
-		<c:if test="${zhJyfxLookupAuth}">
-			<script>
-				builder.register('Zhfzgszlzb', function () {
-					return [
-					   createNode('众和分子公司累计汇总', "report/v2/zhgsljzbhz.do"),
-					   createNode('众和分子公司月度汇总', "report/v2/zhgsljzbhz.do"),
-					   createNode('众和分产业关键指标汇总', "report/v2/zhgsfcyUnion.do")
-					];
-				});
-			</script>
-		</c:if>
-<!--------------------------------------------------------ZH Company end -------------------------------------->	
+<!--------------------------------------------------------market end ---------------------------->
 
 <!--------------------------------------------------------price database begin -------------------------------------->		
 		<c:if test="${PriceLibAuth}">
@@ -415,14 +423,17 @@
 				</script>
 		</c:if>
 		
-<!--------------------------------------------------------kind of gb end -------------------------------------->		
+<!--------------------------------------------------------kind of gb end -------------------------------------->
+
+<!--------------------------------------------------------XNY Management start -------------------------------->		
 		<c:if test="${gcyzbLookup || gcyzbImport || xnyJyfxLookupAuth}">
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('新能源产业经营管控')
 						.append(builder.build('Gcyzb'))
 						.append(builder.build('GcyzbImport'))
-						.append(builder.build('XnyJyfx'));
+						.append(builder.build('XnyJyfx'))
+						.append(builder.build('xnyrb'));
 				});
 			</script>
 			
@@ -455,8 +466,16 @@
 					});
 				</script>
 			</c:if>
+			
+			<c:if test="${xtnyrbLookupAuth}">
+				<script>
+					builder.register('xnyrb', function() {
+						return createNode('新特能源日报', 'report/v2/xtnyrb.do');
+					});
+				</script>
+			</c:if>
 		 </c:if>
-	        
+<!--------------------------------------------------------XNY Management end -------------------------------->	        
 	 
 		<c:if test="${entryPlan}">
 			<script>
@@ -507,6 +526,7 @@
 					});
 				</script>
 			</c:if>
+
 		</c:if>
 		
 		<c:if test="${zhzlEntry}">
