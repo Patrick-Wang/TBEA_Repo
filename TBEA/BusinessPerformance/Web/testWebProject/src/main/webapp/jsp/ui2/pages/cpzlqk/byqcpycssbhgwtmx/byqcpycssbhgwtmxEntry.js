@@ -184,7 +184,7 @@ var cpzlqk;
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + this.jqgridName() + "pager'></div>");
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status, this.mData.bhglx, this.mData.zrlb);
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), Util.ZBStatus.APPROVED == this.mData.status, this.mData.bhglx, this.mData.zrlb);
                 return this.mTableAssist;
             };
             EntryView.prototype.updateTable = function () {
@@ -202,7 +202,7 @@ var cpzlqk;
                     width: this.mTableAssist.getColNames().length * 400,
                     shrinkToFit: true,
                     autoScroll: true,
-                    rowNum: 1000,
+                    rowNum: 15,
                     assistEditable: Util.ZBStatus.APPROVED != this.mData.status,
                     pager: '#' + this.jqgridName() + "pager",
                     viewrecords: true

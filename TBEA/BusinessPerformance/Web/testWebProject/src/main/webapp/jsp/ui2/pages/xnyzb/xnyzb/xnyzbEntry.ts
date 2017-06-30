@@ -41,9 +41,9 @@ module xnyzb {
         class EntryView extends framework.basic.EntryPluginView {
             static ins = new EntryView();
             private mData:Util.ServResp;
-            private mAjaxUpdate:Util.Ajax = new Util.Ajax("xnyzbEntryUpdate.do", false);
-            private mAjaxSave:Util.Ajax = new Util.Ajax("xnyzbSave.do", false);
-            private mAjaxSubmit:Util.Ajax = new Util.Ajax("xnyzbSubmit.do", false);
+            private mAjaxUpdate:Util.Ajax;
+            //private mAjaxSave:Util.Ajax;
+            private mAjaxSubmit:Util.Ajax;
             private mTableAssist:JQTable.JQGridAssistant;
             private mCompType:Util.CompanyType;
             getId():number {
@@ -55,7 +55,7 @@ module xnyzb {
                     case framework.basic.FrameEvent.FE_SAVE:
                     {
 
-                        this.pluginSave(e.data.dStart, e.data.dEnd, e.data.compType);
+                        //this.pluginSave(e.data.dStart, e.data.dEnd, e.data.compType);
                     }
                         return;
                     case framework.basic.FrameEvent.FE_SUBMIT:
@@ -78,31 +78,31 @@ module xnyzb {
                 return <Option>this.mOpt;
             }
 
-            public pluginSave(dStart:string, dEnd:string, compType:Util.CompanyType):void {
-                var allData = this.mTableAssist.getAllData();
-                var submitData = [];
-                for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([]);
-                    for (var j = 0; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
-                    }
-                }
-                this.mAjaxSave.post({
-                    dStart: dStart,
-                    data: JSON.stringify(submitData),
-                    dEnd:dEnd,
-                    compId: compType
-                }).then((resp:Util.IResponse) => {
-                    if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", ()=>{
-                            this.pluginUpdate(dStart, dEnd, compType);
-                        });
-                    } else {
-                        Util.MessageBox.tip(resp.message);
-                    }
-                });
-            }
+            //public pluginSave(dStart:string, dEnd:string, compType:Util.CompanyType):void {
+            //    var allData = this.mTableAssist.getAllData();
+            //    var submitData = [];
+            //    for (var i = 0; i < allData.length; ++i) {
+            //        submitData.push([]);
+            //        for (var j = 0; j < allData[i].length; ++j) {
+            //            submitData[i].push(allData[i][j]);
+            //            submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+            //        }
+            //    }
+            //    this.mAjaxSave.post({
+            //        dStart: dStart,
+            //        data: JSON.stringify(submitData),
+            //        dEnd:dEnd,
+            //        compId: compType
+            //    }).then((resp:Util.IResponse) => {
+            //        if (Util.ErrorCode.OK == resp.errorCode) {
+            //            Util.MessageBox.tip("保存 成功", ()=>{
+            //                this.pluginUpdate(dStart, dEnd, compType);
+            //            });
+            //        } else {
+            //            Util.MessageBox.tip(resp.message);
+            //        }
+            //    });
+            //}
 
             public  pluginSubmit(dStart:string, dEnd:string, compType:Util.CompanyType):void {
                 var allData = this.mTableAssist.getAllData();
@@ -164,38 +164,79 @@ module xnyzb {
                 this.mAjaxSubmit = new Util.Ajax(this.option().submitUrl, false);
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mData.header);
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.tableAssist.resizeHeight(maxTableBodyHeight);
+                //
+                //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
 
+            }
+
+            createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                let jqTable = this.$(name);
-                jqTable.jqGrid(
-                    this.mTableAssist.decorate({
-                        datatype: "local",
-                        data: this.mTableAssist.getDataWithId(this.mData.data),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        assistEditable:true,
-                        //autowidth : false,
-                        cellsubmit: 'clientArray',
-                        //editurl: 'clientArray',
-                        cellEdit: true,
-                        // height: data.length > 25 ? 550 : '100%',
-                        // width: titles.length * 200,
-                        rowNum: 20,
-                        height: '100%',
-                        width: 1200,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        pager: '#' + pagername,
-                        viewrecords: true
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + this.jqgridName() + "pager'></div>");
+                return this.mTableAssist;
             }
+
+            private updateTable():void {
+                this.createJqassist();
+
+                this.mTableAssist.create({
+                    dataWithId: this.mData.data,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 15,
+                    assistEditable:true,
+                    autoScroll: true,
+                    pager: '#' + this.jqgridName() + "pager",
+                });
+
+            }
+
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+            //    var pagername = name + "pager";
+            //    this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mData.header);
+            //
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+            //    let jqTable = this.$(name);
+            //    jqTable.jqGrid(
+            //        this.mTableAssist.decorate({
+            //            datatype: "local",
+            //            data: this.mTableAssist.getDataWithId(this.mData.data),
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            assistEditable:true,
+            //            //autowidth : false,
+            //            cellsubmit: 'clientArray',
+            //            //editurl: 'clientArray',
+            //            cellEdit: true,
+            //            // height: data.length > 25 ? 550 : '100%',
+            //            // width: titles.length * 200,
+            //            rowNum: 20,
+            //            height: '100%',
+            //            width: 1200,
+            //            shrinkToFit: true,
+            //            autoScroll: true,
+            //            pager: '#' + pagername,
+            //            viewrecords: true
+            //        }));
+            //}
         }
     }
 }

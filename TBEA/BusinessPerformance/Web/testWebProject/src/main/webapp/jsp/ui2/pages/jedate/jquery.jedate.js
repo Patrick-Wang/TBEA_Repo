@@ -274,11 +274,11 @@ window.console && (console = console || {log : function(){return;}});
 		}
 
 		jet.popup = function(that){
-			jet.format = opts.format || config.format;
-			jet.minDate = opts.minDate || config.minDate;
-			jet.maxDate = opts.maxDate || config.maxDate;
+			jet.format = that.opts.format || config.format;
+			jet.minDate = that.opts.minDate || config.minDate;
+			jet.maxDate = that.opts.maxDate || config.maxDate;
 			$("body").append(createDiv);
-			that.setHtml(opts);
+			that.setHtml(that.opts);
 		}
 
 		if (jet.isBool(opts.insTrigger)) {

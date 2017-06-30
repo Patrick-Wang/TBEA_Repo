@@ -56,8 +56,11 @@ var Util;
         };
     }
     Util.addDay = addDay;
+    function digit(num) {
+        return num < 10 ? "0" + (num | 0) : num;
+    }
     function date2Str(dCur) {
-        return dCur.year + "-" + dCur.month + "-" + (dCur.day == undefined ? 1 : dCur.day);
+        return dCur.year + "-" + digit(dCur.month) + "-" + digit(dCur.day == undefined ? 1 : dCur.day);
     }
     Util.date2Str = date2Str;
     var DateSelector = (function () {

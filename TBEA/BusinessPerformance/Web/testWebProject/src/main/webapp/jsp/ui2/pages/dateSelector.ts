@@ -63,8 +63,12 @@ module Util {
         };
     }
 
+    function digit(num) {
+        return num < 10 ? "0" + (num | 0) :num;
+    }
+
     export function date2Str(dCur: Util.Date): string {
-        return dCur.year + "-" + dCur.month + "-" + (dCur.day == undefined ? 1 : dCur.day);
+        return dCur.year + "-" + digit(dCur.month) + "-" + digit(dCur.day == undefined ? 1 : dCur.day);
     }
 
     export class DateSelector {

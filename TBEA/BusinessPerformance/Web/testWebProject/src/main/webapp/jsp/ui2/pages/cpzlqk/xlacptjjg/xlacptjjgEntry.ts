@@ -186,7 +186,7 @@ module cpzlqk {
                 var parent = this.$(this.option().tb);
                 parent.empty();
                 parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + this.jqgridName()  + "pager'></div>");
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status);
+                this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), Util.ZBStatus.APPROVED == this.mData.status);
                 this.mTableAssist.mergeColum(0);
                 this.mTableAssist.mergeRow(0);
                 return this.mTableAssist;

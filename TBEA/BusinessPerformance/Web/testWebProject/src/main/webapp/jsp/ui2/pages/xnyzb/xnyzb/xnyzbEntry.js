@@ -37,9 +37,6 @@ var xnyzb;
             __extends(EntryView, _super);
             function EntryView() {
                 _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("xnyzbEntryUpdate.do", false);
-                this.mAjaxSave = new Util.Ajax("xnyzbSave.do", false);
-                this.mAjaxSubmit = new Util.Ajax("xnyzbSubmit.do", false);
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.xnyzb;
@@ -48,7 +45,6 @@ var xnyzb;
                 switch (e.id) {
                     case framework.basic.FrameEvent.FE_SAVE:
                         {
-                            this.pluginSave(e.data.dStart, e.data.dEnd, e.data.compType);
                         }
                         return;
                     case framework.basic.FrameEvent.FE_SUBMIT:
@@ -69,33 +65,31 @@ var xnyzb;
             EntryView.prototype.option = function () {
                 return this.mOpt;
             };
-            EntryView.prototype.pluginSave = function (dStart, dEnd, compType) {
-                var _this = this;
-                var allData = this.mTableAssist.getAllData();
-                var submitData = [];
-                for (var i = 0; i < allData.length; ++i) {
-                    submitData.push([]);
-                    for (var j = 0; j < allData[i].length; ++j) {
-                        submitData[i].push(allData[i][j]);
-                        submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
-                    }
-                }
-                this.mAjaxSave.post({
-                    dStart: dStart,
-                    data: JSON.stringify(submitData),
-                    dEnd: dEnd,
-                    compId: compType
-                }).then(function (resp) {
-                    if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("保存 成功", function () {
-                            _this.pluginUpdate(dStart, dEnd, compType);
-                        });
-                    }
-                    else {
-                        Util.MessageBox.tip(resp.message);
-                    }
-                });
-            };
+            //public pluginSave(dStart:string, dEnd:string, compType:Util.CompanyType):void {
+            //    var allData = this.mTableAssist.getAllData();
+            //    var submitData = [];
+            //    for (var i = 0; i < allData.length; ++i) {
+            //        submitData.push([]);
+            //        for (var j = 0; j < allData[i].length; ++j) {
+            //            submitData[i].push(allData[i][j]);
+            //            submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+            //        }
+            //    }
+            //    this.mAjaxSave.post({
+            //        dStart: dStart,
+            //        data: JSON.stringify(submitData),
+            //        dEnd:dEnd,
+            //        compId: compType
+            //    }).then((resp:Util.IResponse) => {
+            //        if (Util.ErrorCode.OK == resp.errorCode) {
+            //            Util.MessageBox.tip("保存 成功", ()=>{
+            //                this.pluginUpdate(dStart, dEnd, compType);
+            //            });
+            //        } else {
+            //            Util.MessageBox.tip(resp.message);
+            //        }
+            //    });
+            //}
             EntryView.prototype.pluginSubmit = function (dStart, dEnd, compType) {
                 var _this = this;
                 var allData = this.mTableAssist.getAllData();
@@ -150,35 +144,40 @@ var xnyzb;
                 this.mAjaxUpdate = new Util.Ajax(this.option().updateUrl, false);
                 this.mAjaxSubmit = new Util.Ajax(this.option().submitUrl, false);
             };
-            EntryView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var pagername = name + "pager";
-                this.mTableAssist = JQGridAssistantFactory.createTable(name, this.mData.header);
+            EntryView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                //this.tableAssist.resizeHeight(maxTableBodyHeight);
+                //
+                //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                //    jqgrid.setGridWidth(this.jqgridHost().width());
+                //}
+            };
+            EntryView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                var jqTable = this.$(name);
-                jqTable.jqGrid(this.mTableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + this.jqgridName() + "pager'></div>");
+                return this.mTableAssist;
+            };
+            EntryView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.mTableAssist.create({
+                    dataWithId: this.mData.data,
                     datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.mData.data),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    assistEditable: true,
-                    //autowidth : false,
-                    cellsubmit: 'clientArray',
-                    //editurl: 'clientArray',
-                    cellEdit: true,
-                    // height: data.length > 25 ? 550 : '100%',
-                    // width: titles.length * 200,
-                    rowNum: 20,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
+                    rowNum: 15,
+                    assistEditable: true,
                     autoScroll: true,
-                    pager: '#' + pagername,
-                    viewrecords: true
-                }));
+                    pager: '#' + this.jqgridName() + "pager",
+                });
             };
             EntryView.ins = new EntryView();
             return EntryView;

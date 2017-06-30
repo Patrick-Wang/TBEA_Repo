@@ -145,8 +145,7 @@
 	rel="stylesheet">
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/scroll/js/jquery.mCustomScrollbar.js"></script>
-<script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/route/route.js"></script>
+<%@include file="../framework/basic/basicEntry.jsp"%>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/cpzlqkdef.js"></script>
 <script
