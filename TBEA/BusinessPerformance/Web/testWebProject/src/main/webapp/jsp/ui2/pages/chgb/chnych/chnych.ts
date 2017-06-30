@@ -37,7 +37,7 @@ module chgb {
 
             private tableAssist:JQTable.JQGridAssistant;
             getId():number {
-                return plugin.chzmb;
+                return plugin.chnych;
             }
 
             pluginGetExportUrl(date:string, cpType:Util.CompanyType):string {

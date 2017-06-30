@@ -109,7 +109,13 @@
 					return createNode('经营指标完成情况', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 						.append(builder.build('gczt'))
 						.append(createNode('单位指标完成情况', 'ydzb/v2/hzb_companys.do'))
-						.append(builder.build('gcyzb'));
+						.append(builder.build('gcyzb'))
+						.append(builder.build('ztzbycwcqk'))
+						.append(createNode('单位指标预测完成情况', 'ydzb/v2/hzb_companys_prediction.do'))
+						.append(builder.build('wdjyzbyc'))
+						.append(builder.build('sjztbqk'))
+						.append(builder.build('Zhzlzb'))
+						.append(builder.build('Zhfzgszlzb'));
 				});
 	 		</script>
 
@@ -132,7 +138,7 @@
 		 		</script>
 			</c:if>
 		</c:if>
-		<script>
+		<!-- <script>
 			builder.register('bbxx', function() {
 				return createNode('经营指标预测情况', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 					.append(builder.build('ztzbycwcqk'))
@@ -140,7 +146,7 @@
 					.append(builder.build('wdjyzbyc'))
 					.append(builder.build('sjztbqk'));
 			});
-		</script>
+		</script> -->
 					
 		<c:if test="${CorpAuth}">
 			<script>
@@ -310,36 +316,31 @@
 				</script>
 			</c:if>
 		</c:if>
-		<c:if test="${zhzlLookup || zhJyfxLookupAuth}">
+<!--------------------------------------------------------ZH Company begin -------------------------------------->
+		<c:if test="${zhzlLookup}">
 			<script>
-				builder.register('bbxx', function() {
-					return createNode('众和指标')
-						.append(builder.build('Zhzlzb'))
-						.append(builder.build('Zhfzgszlzb'));
+				builder.register('Zhzlzb', function () {
+					return [
+					   createNode('众和质量指标', "report/v2/zhzl.do")
+					];
 				});
 			</script>
-			<c:if test="${zhzlLookup}">
-				<script>
-					builder.register('Zhzlzb', function () {
-						return [
-						   createNode('众和质量指标', "report/v2/zhzl.do")
-						];
-					});
-				</script>
-			</c:if>
-		
-			<c:if test="${zhJyfxLookupAuth}">
-				<script>
-					builder.register('Zhfzgszlzb', function () {
-						return [
-						   createNode('众和分子公司累计汇总', "report/v2/zhgsljzbhz.do"),
-						   createNode('众和分子公司月度汇总', "report/v2/zhgsljzbhz.do"),
-						   createNode('众和分产业关键指标汇总', "report/v2/zhgsfcyUnion.do")
-						];
-					});
-				</script>
-			</c:if>
 		</c:if>
+	
+		<c:if test="${zhJyfxLookupAuth}">
+			<script>
+				builder.register('Zhfzgszlzb', function () {
+					return [
+					   createNode('众和分子公司累计汇总', "report/v2/zhgsljzbhz.do"),
+					   createNode('众和分子公司月度汇总', "report/v2/zhgsljzbhz.do"),
+					   createNode('众和分产业关键指标汇总', "report/v2/zhgsfcyUnion.do")
+					];
+				});
+			</script>
+		</c:if>
+<!--------------------------------------------------------ZH Company end -------------------------------------->	
+
+<!--------------------------------------------------------price database begin -------------------------------------->		
 		<c:if test="${PriceLibAuth}">
 			<script>
 				builder.register('bbxx', function() {
@@ -349,12 +350,19 @@
 				});
 			</script>
 		</c:if>
+		
+<!--------------------------------------------------------price database end -------------------------------------->		
+		
+<!--------------------------------------------------------kind of gb begin -------------------------------------->	
 		<c:if test="${ComGbLookup}">
 			<script>
 				builder.register('bbxx', function() {
-					return createNode('通用经营管报')
+					return createNode('经营管报管控')
 						.append(builder.build('Yszkgb'))
-						.append(builder.build('Chgb'));
+						.append(builder.build('Chgb'))
+						.append(builder.build('sbdgbModule'))
+						.append(builder.build('nygbModule'))
+						.append(builder.build('xnygbModule'));
 				});
 			</script>
 			<c:if test="${YszkgbLookup}">
@@ -378,44 +386,46 @@
 		</c:if>
 		<c:if test="${SbdgbLookup}">
 			<script>
-				builder.register('bbxx', function() {
-					return createNode('输变电产业经营管报')
-						.append(createNode('大宗物资管报', "dzwzgb/v2/show.do"))
-						.append(createNode('未履约订单情况', "wlydd/v2/show.do"))
-						.append(createNode('输变电产值/产量完成情况', "sbdczclwcqk/v2/show.do"))
-						.append(createNode('输变电市场签约情况', "sbdscqyqk/v2/show.do"))
-						.append(createNode('完工产品情况', "wgcpqk/v2/show.do"));
-				});
+				builder.register('sbdgbModule', function() {
+					return [createNode('大宗物资管报', "dzwzgb/v2/show.do"),
+							createNode('未履约订单情况', "wlydd/v2/show.do"),
+							createNode('输变电产值/产量完成情况', "sbdczclwcqk/v2/show.do"),
+							createNode('输变电市场签约情况', "sbdscqyqk/v2/show.do"),
+							createNode('完工产品情况', "wgcpqk/v2/show.do")
+							];
+					});
 			</script>
 	    </c:if>
 		<c:if test="${NygbLookup}">
 	       <script>
-				builder.register('bbxx', function() {
-					return createNode('能源产业经营报表')
-						.append(createNode('成本分析', "cbfx/v2/show.do"))
-						.append(createNode('能源-周边市场情况', "nyzbscqk/v2/show.do"));
+				builder.register('nygbModule', function() {
+					return [createNode('成本分析', "cbfx/v2/show.do"),
+					        createNode('能源-周边市场情况', "nyzbscqk/v2/show.do")
+					        ];
 				});
 			</script>
 		</c:if>
-		<c:if test="${XnygbLookup || gcyzbLookup || gcyzbImport || xnyJyfxLookupAuth}">
-			<script>
-				builder.register('bbxx', function() {
-					return createNode('新能源产业经营报表')
-						.append(builder.build('Xnygb'))
-						.append(builder.build('Gcyzb'))
-						.append(builder.build('GcyzbImport'))
-						.append(builder.build('XnyJyfx'));
-				});
-			</script>
-			<c:if test="${XnygbLookup}">
+		<c:if test="${XnygbLookup}">
 				<script>
-					builder.register('Xnygb', function () {
+					builder.register('xnygbModule', function () {
 						return [
 						   createNode('新能源存货', "xnychFrame/v2/show.do")
 						];
 					});
 				</script>
-			</c:if>
+		</c:if>
+		
+<!--------------------------------------------------------kind of gb end -------------------------------------->		
+		<c:if test="${gcyzbLookup || gcyzbImport || xnyJyfxLookupAuth}">
+			<script>
+				builder.register('bbxx', function() {
+					return createNode('新能源产业经营管控')
+						.append(builder.build('Gcyzb'))
+						.append(builder.build('GcyzbImport'))
+						.append(builder.build('XnyJyfx'));
+				});
+			</script>
+			
 			<c:if test="${gcyzbLookup}">
 				<script>
 					builder.register('Gcyzb', function () {

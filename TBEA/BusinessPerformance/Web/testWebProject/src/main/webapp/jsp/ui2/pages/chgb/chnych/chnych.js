@@ -42,7 +42,7 @@ var chgb;
                 this.mAjax = new Util.Ajax("/BusinessManagement/chgb/chnych/update.do", false);
             }
             ShowView.prototype.getId = function () {
-                return plugin.chzmb;
+                return plugin.chnych;
             };
             ShowView.prototype.pluginGetExportUrl = function (date, cpType) {
                 return "/BusinessManagement/chgb/chnych/export.do?" + Util.Ajax.toUrlParam({
