@@ -1,8 +1,8 @@
 /// <reference path="jqgrid/jqassist.ts" />
 /// <reference path="util.ts" />
-/// <reference path="messageBox.ts" />
 var yszkrb;
 (function (yszkrb) {
+    var router = framework.router;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
@@ -19,55 +19,94 @@ var yszkrb;
         };
         return JQGridAssistantFactory;
     })();
-    var View = (function () {
-        function View() {
-            this.mData = [];
-            this.mDataSet = new Util.Ajax("yszk_update.do", false);
-            this.mSave = new Util.Ajax("yszk_submit.do");
+    var SimpleView = (function () {
+        function SimpleView() {
+            this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/dailyReport/yszk_submit.do");
+            this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/dailyReport/yszk_update.do", false);
+            router.register(this);
         }
-        View.newInstance = function () {
-            if (View.ins == undefined) {
-                View.ins = new View();
-            }
-            return View.ins;
+        SimpleView.prototype.getId = function () {
+            return Util.FAMOUS_VIEW;
         };
-        View.prototype.init = function (tableId, month, year, day) {
+        SimpleView.prototype.onEvent = function (e) {
+            switch (e.id) {
+                case Util.MSG_INIT:
+                    this.init(e.data);
+                    break;
+            }
+        };
+        SimpleView.prototype.init = function (opt) {
             var _this = this;
-            this.mYear = year;
-            this.mMonth = month;
-            this.mDay = day;
-            this.mTableId = tableId;
-            $("#date").val(year + "/" + month + "/" + day);
-            $("#date").datepicker({
-                //            numberOfMonths:1,//显示几个月  
-                //            showButtonPanel:true,//是否显示按钮面板  
-                dateFormat: 'yy/mm/dd',
-                //            clearText:"清除",//清除日期的按钮名称  
-                //            closeText:"关闭",//关闭选择框的按钮名称  
-                yearSuffix: '年',
-                showMonthAfterYear: true,
-                defaultDate: year + "/" + month + "/" + day,
-                //            minDate:'2011-03-05',//最小日期  
-                // maxDate: year + "/" + month + "/" + day,//最大日期
-                monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-                dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
-                dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
-                onSelect: function (selectedDate) {
-                    var d = new Date(selectedDate);
-                    _this.mYear = d.getFullYear();
-                    _this.mMonth = d.getMonth() + 1;
-                    _this.mDay = d.getDate();
-                }
+            this.mOpt = opt;
+            var minDate = Util.addYear(opt.date, -1);
+            minDate.month = 1;
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: "YYYY年MM月DD日",
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top");
+            $(window).resize(function () {
+                _this.adjustSize();
             });
-            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
-            //this.updateTable();
+            $("#grid-update").on("click", function () {
+                _this.updateUI();
+            });
+            $("#submit").on("click", function () {
+                _this.submit();
+            });
             this.updateUI();
         };
-        View.prototype.save = function () {
-            var allData = this.mTableAssist.getAllData();
+        SimpleView.prototype.updateUI = function () {
+            var _this = this;
+            this.mAjaxUpdate.get(this.getDate())
+                .then(function (dataArray) {
+                _this.mData = dataArray;
+                if (dataArray.length == 0) {
+                    var pro = $("#prompt");
+                    pro.empty();
+                    pro.append("<b>暂时没有数据！</b>");
+                }
+                else {
+                    var pro = $("#prompt");
+                    pro.empty();
+                }
+                _this.updateTable();
+            });
+        };
+        SimpleView.prototype.getDate = function () {
+            var rq = $("#grid-date").val().replace("年", "-").replace("月", "-").replace("日", "-").split("-");
+            return {
+                year: rq[0] ? parseInt(rq[0]) : undefined,
+                month: rq[1] ? parseInt(rq[1]) : undefined,
+                day: rq[2] ? parseInt(rq[2]) : undefined
+            };
+        };
+        SimpleView.prototype.jqgrid = function () {
+            return $("#" + this.jqgridName());
+        };
+        SimpleView.prototype.jqgridName = function () {
+            return this.mOpt.tableId + "_jqgrid_real";
+        };
+        SimpleView.prototype.adjustSize = function () {
+            var jqgrid = this.jqgrid();
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            this.tableAssist.resizeHeight(maxTableBodyHeight);
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            }
+        };
+        SimpleView.prototype.submit = function () {
+            var allData = this.tableAssist.getAllData();
             var submitData = [];
-            var colNames = this.mTableAssist.getColNames();
+            var colNames = this.tableAssist.getColNames();
             for (var i = 0; i < allData.length; ++i) {
                 submitData.push([]);
                 for (var j = 0; j < allData[i].length; ++j) {
@@ -77,33 +116,32 @@ var yszkrb;
                     }
                 }
             }
-            this.mSave.post({
-                year: this.mYear,
-                month: this.mMonth,
-                day: this.mDay,
+            this.mAjaxSubmit.post($.extend(this.getDate(), {
                 data: JSON.stringify(submitData[0])
-            }).then(function (data) {
-                if (0 == data.errorCode) {
-                    Util.MessageBox.tip("保存 成功");
+            })).then(function (resp) {
+                if (Util.ErrorCode.OK == resp.errorCode) {
+                    Util.Toast.success("提交 成功");
                 }
                 else {
-                    Util.MessageBox.tip("保存 失败");
+                    Util.Toast.failed(resp.message);
                 }
             });
         };
-        View.prototype.updateUI = function () {
-            var _this = this;
-            this.mDataSet.get({ month: this.mMonth, year: this.mYear, day: this.mDay })
-                .then(function (dataArray) {
-                _this.mData = dataArray;
-                $('h1').text(_this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报");
-                document.title = _this.mYear + "年" + _this.mMonth + "月" + _this.mDay + "日应收账款日报";
-                _this.updateTable();
-            });
+        SimpleView.prototype.refresh = function () {
+            if (this.mData == undefined) {
+                return;
+            }
+            this.updateTable();
         };
-        View.prototype.updateTable = function () {
-            var name = this.mTableId + "_jqgrid_1234";
-            this.mTableAssist = JQGridAssistantFactory.createTable(name);
+        SimpleView.prototype.createJqassist = function () {
+            var parent = $("#" + this.mOpt.tableId);
+            parent.empty();
+            parent.append("<table id='" + this.jqgridName() + "'></table>");
+            this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+            return this.tableAssist;
+        };
+        SimpleView.prototype.updateTable = function () {
+            this.createJqassist();
             var data = [];
             var row = [];
             for (var i = 0; i < this.mData.length; ++i) {
@@ -116,77 +154,25 @@ var yszkrb;
                     data[i] = data[i].concat(row);
                 }
             }
-            var parent = $("#" + this.mTableId);
-            parent.empty();
-            parent.append("<table id='" + name + "'></table>");
-            var lastsel = "";
-            var lastcell = "";
-            $("#" + name).jqGrid(this.mTableAssist.decorate({
-                // url: "TestTable/WGDD_load.do",
-                // datatype: "json",
-                data: this.mTableAssist.getData(data),
+            this.tableAssist.create({
+                data: this.mData,
                 datatype: "local",
                 multiselect: false,
                 drag: false,
                 resize: false,
-                //autowidth : false,
                 cellsubmit: 'clientArray',
                 cellEdit: true,
                 height: '100%',
-                width: 850,
+                width: this.tableAssist.getColNames().length * 400,
                 shrinkToFit: true,
-                rowNum: 100,
+                rowNum: 2000,
                 autoScroll: true,
-                beforeSaveCell: function (rowid, cellname, v, iRow, iCol) {
-                    var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
-                    if (isNaN(ret)) {
-                        $.jgrid.jqModal = {
-                            width: 290,
-                            left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
-                            top: $("#table").offset().top + $("#table").height() / 2 - 90
-                        };
-                        return v;
-                    }
-                    else {
-                        return ret;
-                    }
-                },
-                beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
-                    lastsel = iRow;
-                    lastcell = iCol;
-                    //                        console.log(iRow +', ' + iCol);
-                    $("input").attr("disabled", true);
-                },
-                afterEditCell: function (rowid, cellname, v, iRow, iCol) {
-                    $("input[type=text]").bind("keydown", function (e) {
-                        if (e.keyCode === 13) {
-                            setTimeout(function () {
-                                $("#" + name).jqGrid("editCell", iRow + 1, iCol, true);
-                            }, 10);
-                        }
-                    });
-                },
-                afterSaveCell: function () {
-                    $("input").attr("disabled", false);
-                    lastsel = "";
-                },
-                afterRestoreCell: function () {
-                    $("input").attr("disabled", false);
-                    lastsel = "";
-                }
-            }));
-            $('html').bind('click', function (e) {
-                if (lastsel != "") {
-                    if ($(e.target).closest("#" + name).length == 0) {
-                        //  $("#" + name).jqGrid('saveRow', lastsel); 
-                        $("#" + name).jqGrid("saveCell", lastsel, lastcell);
-                        //$("#" + name).resetSelection(); 
-                        lastsel = "";
-                    }
-                }
+                assistEditable: true
             });
+            this.adjustSize();
         };
-        return View;
+        SimpleView.ins = new SimpleView();
+        return SimpleView;
     })();
-    yszkrb.View = View;
+    yszkrb.SimpleView = SimpleView;
 })(yszkrb || (yszkrb = {}));

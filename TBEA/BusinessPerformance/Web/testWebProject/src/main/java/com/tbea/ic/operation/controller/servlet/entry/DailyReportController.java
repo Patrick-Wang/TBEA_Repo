@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
@@ -33,13 +34,13 @@ public class DailyReportController {
 	@Autowired
 	private DailyReportService dailyReportService;
 
-	@RequestMapping(value = "yszk.do", method = RequestMethod.GET)
+	@RequestMapping(value = {"yszk.do" ,"v2/yszk.do"}, method = RequestMethod.GET)
 	public ModelAndView getYszk(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		DateSelection dateSel = new DateSelection();
 		Map<String, Object> map = new HashMap<String, Object>();
 		dateSel.select(map);
-		return new ModelAndView("yszkrb", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "yszkrb", map);
 	}
 
 	@RequestMapping(value = "yszk_submit.do")

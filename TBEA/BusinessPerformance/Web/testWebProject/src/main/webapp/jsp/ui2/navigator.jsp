@@ -502,7 +502,7 @@
 			<script>
 				builder.register('entryxx', function() {
 					return createNode('经营分析录入')
-						.append(createNode('应收账款日报录入', "dailyReport/yszk.do"))
+						.append(createNode('应收账款日报录入', "dailyReport/v2/yszk.do"))
 						.append(builder.build('ZXnyJyfxEntry'))
 						.append(builder.build('ZXtnyrbEntry'));
 				});
