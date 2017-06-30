@@ -104,8 +104,11 @@ module xnyzb {
                     jqgrid.setGridWidth(this.jqgridHost().width());
                 }
 
+                $("html").removeCss("overflow-y");
                 let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
                 this.tableAssist.resizeHeight(maxTableBodyHeight);
+                $("html").css("overflow-y", "hidden");
+
 
                 if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
                     jqgrid.setGridWidth(this.jqgridHost().width());
