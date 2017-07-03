@@ -114,6 +114,17 @@ var approve_template;
             if (data[1].length > 0) {
                 this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
             }
+            this.adjustSize();
+        };
+        QNJHSubView.prototype.adjustSize = function () {
+            var jqgrid = $("#" + this.mOpt.tableApproveId + "_jqgrid");
+            if ($("#" + this.mOpt.tableApproveId).width() != $("#" + this.mOpt.tableApproveId + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableApproveId).width());
+            }
+            jqgrid = $("#" + this.mOpt.tableUnapproveId + "_jqgrid");
+            if ($("#" + this.mOpt.tableUnapproveId).width() != $("#" + this.mOpt.tableUnapproveId + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableUnapproveId).width());
+            }
         };
         //comps : selected companies
         QNJHSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
@@ -208,10 +219,10 @@ var approve_template;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             var width = (title.length) * 50;
-            $("#" + name).jqGrid(jqAssist.decorate({
+            jqAssist.create({
                 // url: "TestTable/WGDD_load.do",
                 // datatype: "json",
-                data: jqAssist.getDataWithId(tmpData),
+                dataWithId: tmpData,
                 datatype: "local",
                 multiselect: true,
                 drag: false,
@@ -223,9 +234,8 @@ var approve_template;
                 height: '100%',
                 width: 1350,
                 shrinkToFit: width > 1350 ? false : true,
-                autoScroll: true,
-                caption: caption
-            }));
+                autoScroll: true
+            });
             return jqAssist;
         };
         return QNJHSubView;
@@ -292,6 +302,17 @@ var approve_template;
             }
             if (data[1].length > 0) {
                 this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
+            }
+            this.adjustSize();
+        };
+        YDSubView.prototype.adjustSize = function () {
+            var jqgrid = $("#" + this.mOpt.tableApproveId + "_jqgrid");
+            if ($("#" + this.mOpt.tableApproveId).width() != $("#" + this.mOpt.tableApproveId + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableApproveId).width());
+            }
+            jqgrid = $("#" + this.mOpt.tableUnapproveId + "_jqgrid");
+            if ($("#" + this.mOpt.tableUnapproveId).width() != $("#" + this.mOpt.tableUnapproveId + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableUnapproveId).width());
             }
         };
         YDSubView.prototype.updateTable = function (rawData, comps, tableId, caption) {
@@ -407,10 +428,10 @@ var approve_template;
             parent.empty();
             parent.append("<table id='" + name + "'></table>");
             var width = (title.length) * 50;
-            $("#" + name).jqGrid(jqAssist.decorate({
+            jqAssist.create({
                 // url: "TestTable/WGDD_load.do",
                 // datatype: "json",
-                data: jqAssist.getDataWithId(tmpData),
+                dataWithId: tmpData,
                 datatype: "local",
                 multiselect: true,
                 drag: false,
@@ -422,32 +443,84 @@ var approve_template;
                 height: '100%',
                 width: 1350,
                 shrinkToFit: width > 1350 ? false : true,
-                autoScroll: true,
-                caption: caption
-            }));
+                autoScroll: true
+            });
             return jqAssist;
         };
         return YDSubView;
     })();
     var View = (function () {
         function View() {
-            this.mDataSet = new Util.Ajax("zb_update.do", false);
-            this.mUnapprove = new Util.Ajax("zb_unapprove.do");
-            this.mApprove = new Util.Ajax("zb_approve.do");
+            this.mDataSet = new Util.Ajax("/BusinessManagement/approve/zb_update.do", false);
+            this.mUnapprove = new Util.Ajax("/BusinessManagement/approve/zb_unapprove.do");
+            this.mApprove = new Util.Ajax("/BusinessManagement/approve/zb_approve.do");
         }
         View.getInstance = function () {
             return View.instance;
         };
+        View.prototype.getDate = function () {
+            var ret = {};
+            var curDate = $("#" + this.mOpt.dateId).getDate();
+            ret = {
+                year: curDate.getFullYear(),
+                month: curDate.getMonth() + 1,
+                day: curDate.getDate()
+            };
+            return ret;
+        };
         View.prototype.initInstance = function (opt) {
+            var _this = this;
             this.mOpt = opt;
             if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, Util.addMonth(this.mOpt.date, 1), this.mOpt.dateId, true);
+                var seasonClass = "season";
+                var fmt = "YYYY年 &&MM月";
+                $("#" + this.mOpt.dateId).jeDate({
+                    skinCell: "jedatedeepgreen",
+                    format: fmt,
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false,
+                    minDate: Util.date2Str(Util.addYear(this.mOpt.date, -2)) + " 00:00:00",
+                    maxDate: Util.date2Str(Util.addMonth(this.mOpt.date, 3)) + " 00:00:00"
+                }).removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top")
+                    .addClass(seasonClass);
             }
             else if (this.mOpt.approveType == Util.ZBType.QNJH) {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, { year: this.mOpt.date.year }, this.mOpt.dateId, true);
+                var seasonClass = "year";
+                var fmt = "YYYY年";
+                $("#" + this.mOpt.dateId).jeDate({
+                    skinCell: "jedatedeepgreen",
+                    format: fmt,
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false,
+                    minDate: Util.date2Str(Util.addYear(this.mOpt.date, -2)) + " 00:00:00",
+                    maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00" })
+                    .removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top")
+                    .addClass(seasonClass);
             }
             else {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, this.mOpt.date, this.mOpt.dateId);
+                var seasonClass = "month";
+                var fmt = "YYYY年MM月";
+                $("#" + this.mOpt.dateId).jeDate({
+                    skinCell: "jedatedeepgreen",
+                    format: fmt,
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false,
+                    minDate: Util.date2Str(Util.addYear(this.mOpt.date, -2)) + " 00:00:00",
+                    maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00" })
+                    .removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top")
+                    .addClass(seasonClass);
             }
             this.mCompanySelector = new Util.CompanySelector(true, opt.companyId, opt.comps, opt.firstCompany);
             this.mCompanySelector.checkAll();
@@ -463,14 +536,17 @@ var approve_template;
                     break;
             }
             this.updateTitle();
-            //this.updateUI();
+            this.updateUI();
+            $(window).resize(function () {
+                _this.mCurView.adjustSize();
+            });
         };
         View.prototype.updateUI = function () {
             var _this = this;
-            $("#nodatatips").css("display", "none");
+            //$("#nodatatips").css("display", "none");
             var comps = this.mCompanySelector.getCompanys();
             if (comps.length != 0) {
-                var date = this.mDateSelector.getDate();
+                var date = this.getDate();
                 if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
                     date = Util.addMonth(date, -2);
                 }
@@ -478,29 +554,29 @@ var approve_template;
                     .then(function (data) {
                     _this.updateTitle();
                     if (data[0].length == 0) {
-                        $("#approve").css("display", "none");
+                        $(".approve-area").css("display", "none");
                     }
                     else {
-                        $("#approve").css("display", "");
+                        $(".approve-area").css("display", "");
                         $("#nothing").css("display", "none");
                     }
                     if (data[1].length == 0) {
-                        $("#unapprove").css("display", "none");
+                        $(".unapprove-area").css("display", "none");
                     }
                     else {
-                        $("#unapprove").css("display", "");
+                        $(".unapprove-area").css("display", "");
                         $("#nothing").css("display", "none");
                     }
                     if (data[0].length == 0 && data[1].length == 0) {
                         $("#nothing").css("display", "");
                     }
                     else {
-                        _this.mCurView.process(data, _this.mDateSelector.getDate(), _this.mCompanySelector.getRawCompanyData());
+                        _this.mCurView.process(data, _this.getDate(), _this.mCompanySelector.getRawCompanyData());
                     }
                 });
             }
             else {
-                Util.MessageBox.tip("请选择公司");
+                Util.Toast.failed("请选择公司");
             }
         };
         View.prototype.unapprove = function () {
@@ -515,17 +591,17 @@ var approve_template;
                     data: JSON.stringify(compIds)
                 }).then(function (data) {
                     if (data.result) {
-                        Util.MessageBox.tip("反审核  成功");
-                        _this.mDateSelector.select(date);
+                        Util.Toast.success("反审核  成功");
+                        //this.mDateSelector.select(date);
                         _this.updateUI();
                     }
                     else {
-                        Util.MessageBox.tip("反审核 失敗");
+                        Util.Toast.failed("反审核 失败");
                     }
                 });
             }
             else {
-                Util.MessageBox.tip("请选择公司");
+                Util.Toast.failed("请选择公司");
             }
         };
         View.prototype.approve = function () {
@@ -540,41 +616,42 @@ var approve_template;
                     data: JSON.stringify(compIds)
                 }).then(function (data) {
                     if (data.result) {
-                        Util.MessageBox.tip("审核 成功");
-                        _this.mDateSelector.select(date);
+                        Util.Toast.success("审核 成功");
+                        //this.mDateSelector.select(date);
                         _this.updateUI();
                     }
                     else {
-                        Util.MessageBox.tip("审核 失敗");
+                        Util.Toast.failed("审核 失败");
                     }
                 });
             }
             else {
-                Util.MessageBox.tip("请选择公司");
+                Util.Toast.failed("请选择公司");
             }
         };
         View.prototype.updateTitle = function () {
-            var header = "";
-            var date = this.mDateSelector.getDate();
-            switch (this.mOpt.approveType) {
-                case Util.ZBType.QNJH:
-                    header = date.year + "年 全年计划数据审核";
-                    break;
-                case Util.ZBType.YDJDMJH:
-                    header = date.year + "年" + " 季度-月度末计划值审核";
-                    break;
-                case Util.ZBType.BY20YJ:
-                    header = date.year + "年" + date.month + "月 20日预计值审核";
-                    break;
-                case Util.ZBType.BY28YJ:
-                    header = date.year + "年" + date.month + "月 28日预计值审核";
-                    break;
-                case Util.ZBType.BYSJ:
-                    header = date.year + "年" + date.month + "月 实际数据审核";
-                    break;
-            }
-            $('h1').text(header);
-            document.title = header;
+            //var header = "";
+            //var date = this.mDateSelector.getDate();
+            //switch (this.mOpt.approveType) {
+            //    case Util.ZBType.QNJH:
+            //        header = date.year + "年 全年计划数据审核";
+            //        break;
+            //    case Util.ZBType.YDJDMJH:
+            //        header = date.year + "年" + " 季度-月度末计划值审核";
+            //        break;
+            //    case Util.ZBType.BY20YJ:
+            //        header = date.year + "年" + date.month + "月 20日预计值审核";
+            //        break;
+            //    case Util.ZBType.BY28YJ:
+            //        header = date.year + "年" + date.month + "月 28日预计值审核";
+            //        break;
+            //    case Util.ZBType.BYSJ:
+            //        header = date.year + "年" + date.month + "月 实际数据审核";
+            //        break;
+            //}
+            //
+            //$('h1').text(header);
+            //document.title = header;
         };
         View.instance = new View();
         return View;

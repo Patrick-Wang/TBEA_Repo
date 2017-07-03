@@ -543,8 +543,8 @@
 			<script>
 				builder.register('Approve', function() {
 					return createNode('计划指标审核')
-						.append(createNode('全年计划指标审核', "approve/zb.do?approveType=0"))
-						.append(createNode('季度-月度末计划值审核', "approve/zb.do?approveType=1"));
+						.append(createNode('全年计划指标审核', "approve/v2/zb.do?approveType=0"))
+						.append(createNode('季度-月度末计划值审核', "approve/v2/zb.do?approveType=1"));
 				});
 			</script>
 		</c:if>
@@ -553,9 +553,9 @@
 			<script>
 				builder.register('Approve', function() {
 					return createNode('预计/实际指标审核')
-						.append(createNode('20预计指标审核', "approve/zb.do?approveType=2"))
-						.append(createNode('28号预计指标审核', "approve/zb.do?approveType=3"))
-						.append(createNode('实际指标审核', "approve/zb.do?approveType=4"));
+						.append(createNode('20预计指标审核', "approve/v2/zb.do?approveType=2"))
+						.append(createNode('28号预计指标审核', "approve/v2/zb.do?approveType=3"))
+						.append(createNode('实际指标审核', "approve/v2/zb.do?approveType=4"));
 				});
 			</script>
 		</c:if>

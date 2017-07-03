@@ -100,6 +100,7 @@ module approve_template {
         getUnapprovedData(): number[][];
         process(data: any, date: Util.Date, companies: Util.IData[]): void;
         getDate(): Util.Date;
+        adjustSize():void;
     }
 
     class QNJHSubView implements ISubView {
@@ -153,6 +154,20 @@ module approve_template {
 
             if (data[1].length > 0) {
                 this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
+            }
+            this.adjustSize();
+        }
+
+
+        adjustSize() {
+            var jqgrid = $("#" + this.mOpt.tableApproveId + "_jqgrid");
+            if ($("#" + this.mOpt.tableApproveId).width() != $("#" + this.mOpt.tableApproveId + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableApproveId).width());
+            }
+
+            jqgrid = $("#" + this.mOpt.tableUnapproveId + "_jqgrid");
+            if ($("#" + this.mOpt.tableUnapproveId).width() != $("#" + this.mOpt.tableUnapproveId + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableUnapproveId).width());
             }
         }
 
@@ -254,11 +269,10 @@ module approve_template {
             var width = (title.length) * 50;
 
 
-            $("#" + name).jqGrid(
-                jqAssist.decorate({
+            jqAssist.create({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: jqAssist.getDataWithId(tmpData),
+                    dataWithId: tmpData,
                     datatype: "local",
                     multiselect: true,
                     drag: false,
@@ -270,9 +284,9 @@ module approve_template {
                     height: '100%',
                     width: 1350,
                     shrinkToFit: width > 1350 ? false : true,
-                    autoScroll: true,
-                    caption: caption
-                }));
+                    autoScroll: true
+            });
+
             return jqAssist;
         }
     }
@@ -357,8 +371,20 @@ module approve_template {
             if (data[1].length > 0) {
                 this.mTableUnapproveAssist = this.updateTable(data[1], companies, this.mOpt.tableUnapproveId, "已审核数据");
             }
+            this.adjustSize();
         }
 
+        adjustSize() {
+            var jqgrid = $("#" + this.mOpt.tableApproveId + "_jqgrid");
+            if ($("#" + this.mOpt.tableApproveId).width() != $("#" + this.mOpt.tableApproveId + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableApproveId).width());
+            }
+
+            jqgrid = $("#" + this.mOpt.tableUnapproveId + "_jqgrid");
+            if ($("#" + this.mOpt.tableUnapproveId).width() != $("#" + this.mOpt.tableUnapproveId + " .ui-jqgrid").width()) {
+                jqgrid.setGridWidth($("#" + this.mOpt.tableUnapproveId).width());
+            }
+        }
 
         private updateTable(rawData: string[][], comps: Util.IData[], tableId: string, caption: string): JQTable.JQGridAssistant {
             var compMap = {};
@@ -479,11 +505,10 @@ module approve_template {
             var width = (title.length) * 50;
 
 
-            $("#" + name).jqGrid(
-                jqAssist.decorate({
+            jqAssist.create({
                     // url: "TestTable/WGDD_load.do",
                     // datatype: "json",
-                    data: jqAssist.getDataWithId(tmpData),
+                    dataWithId : tmpData,
                     datatype: "local",
                     multiselect: true,
                     drag: false,
@@ -495,9 +520,8 @@ module approve_template {
                     height: '100%',
                     width: 1350,
                     shrinkToFit: width > 1350 ? false : true,
-                    autoScroll: true,
-                    caption: caption
-                }));
+                    autoScroll: true
+            });
             return jqAssist;
         }
     }
@@ -511,22 +535,81 @@ module approve_template {
 
 
         private mCurView: ISubView;
-        private mDateSelector: Util.DateSelector;
+        //private mDateSelector: Util.DateSelector;
         private mCompanySelector: Util.CompanySelector;
         private mOpt: IViewOption;
-        private mDataSet: Util.Ajax = new Util.Ajax("zb_update.do", false);
-        private mUnapprove: Util.Ajax = new Util.Ajax("zb_unapprove.do");
-        private mApprove: Util.Ajax = new Util.Ajax("zb_approve.do");
+        private mDataSet: Util.Ajax = new Util.Ajax("/BusinessManagement/approve/zb_update.do", false);
+        private mUnapprove: Util.Ajax = new Util.Ajax("/BusinessManagement/approve/zb_unapprove.do");
+        private mApprove: Util.Ajax = new Util.Ajax("/BusinessManagement/approve/zb_approve.do");
+
+
+        protected getDate():Util.Date {
+            let ret : any = {};
+            let curDate = $("#" + this.mOpt.dateId).getDate();
+            ret = {
+                year : curDate.getFullYear(),
+                month : curDate.getMonth() + 1,
+                day : curDate.getDate()
+            };
+            return ret;
+        }
 
         initInstance(opt: IViewOption) {
             this.mOpt = opt;
             if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, Util.addMonth(this.mOpt.date, 1), this.mOpt.dateId, true);
+                let seasonClass = "season";
+                let fmt = "YYYY年 &&MM月";
+                $("#" + this.mOpt.dateId).jeDate({
+                    skinCell: "jedatedeepgreen",
+                    format: fmt,
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false,
+                    minDate: Util.date2Str(Util.addYear(this.mOpt.date, -2)) + " 00:00:00",
+                    maxDate: Util.date2Str(Util.addMonth(this.mOpt.date, 3)) + " 00:00:00"
+                }).removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top")
+                    .addClass(seasonClass);
+                //this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, Util.addMonth(this.mOpt.date, 1), this.mOpt.dateId, true);
             } else if (this.mOpt.approveType == Util.ZBType.QNJH) {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, { year: this.mOpt.date.year }, this.mOpt.dateId, true);
+                let seasonClass = "year";
+                let fmt = "YYYY年";
+                $("#" + this.mOpt.dateId).jeDate({
+                    skinCell: "jedatedeepgreen",
+                    format: fmt,
+                    isTime: false,
+                    isinitVal: true,
+                    isClear: false,
+                    isToday: false,
+                    minDate: Util.date2Str(Util.addYear(this.mOpt.date, -2)) + " 00:00:00",
+                    maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00" })
+                    .removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top")
+                    .addClass(seasonClass);
+
+                //this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, { year: this.mOpt.date.year }, this.mOpt.dateId, true);
             } else {
-                this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, this.mOpt.date, this.mOpt.dateId);
+                let seasonClass = "month";
+                let fmt = "YYYY年MM月";
+                $("#" + this.mOpt.dateId).jeDate({
+                        skinCell: "jedatedeepgreen",
+                        format: fmt,
+                        isTime: false,
+                        isinitVal: true,
+                        isClear: false,
+                        isToday: false,
+                        minDate: Util.date2Str(Util.addYear(this.mOpt.date, -2)) + " 00:00:00",
+                        maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00" })
+                    .removeCss("height")
+                    .removeCss("padding")
+                    .removeCss("margin-top")
+                    .addClass(seasonClass);
+                //this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, this.mOpt.date, this.mOpt.dateId);
             }
+
 
             this.mCompanySelector = new Util.CompanySelector(
                 true,
@@ -553,14 +636,18 @@ module approve_template {
             }
 
             this.updateTitle();
-            //this.updateUI();
+            this.updateUI();
+            $(window).resize(()=>{
+                this.mCurView .adjustSize();
+            })
         }
 
+
         public updateUI() {
-            $("#nodatatips").css("display", "none");
+            //$("#nodatatips").css("display", "none");
             var comps = this.mCompanySelector.getCompanys();
             if (comps.length != 0) {
-                var date = this.mDateSelector.getDate();
+                var date = this.getDate();
                 if (this.mOpt.approveType == Util.ZBType.YDJDMJH) {
                     date = Util.addMonth(date, -2);
                 }
@@ -568,16 +655,16 @@ module approve_template {
                     .then((data: any) => {
                         this.updateTitle();
                         if (data[0].length == 0) {
-                            $("#approve").css("display", "none");
+                            $(".approve-area").css("display", "none");
                         } else {
-                            $("#approve").css("display", "");
+                            $(".approve-area").css("display", "");
                             $("#nothing").css("display", "none");
                         }
 
                         if (data[1].length == 0) {
-                            $("#unapprove").css("display", "none");
+                            $(".unapprove-area").css("display", "none");
                         } else {
-                            $("#unapprove").css("display", "");
+                            $(".unapprove-area").css("display", "");
                             $("#nothing").css("display", "none");
                         }
 
@@ -585,11 +672,11 @@ module approve_template {
                             $("#nothing").css("display", "");
                         }
                         else {
-                            this.mCurView.process(data, this.mDateSelector.getDate(), this.mCompanySelector.getRawCompanyData());
+                            this.mCurView.process(data, this.getDate(), this.mCompanySelector.getRawCompanyData());
                         }
                     });
             } else {
-                Util.MessageBox.tip("请选择公司");
+                Util.Toast.failed("请选择公司");
             }
         }
 
@@ -604,15 +691,15 @@ module approve_template {
                     data: JSON.stringify(compIds)
                 }).then((data: ISubmitResult) => {
                     if (data.result) {
-                        Util.MessageBox.tip("反审核  成功");
-                        this.mDateSelector.select(date);
+                        Util.Toast.success("反审核  成功");
+                        //this.mDateSelector.select(date);
                         this.updateUI();
                     } else {
-                        Util.MessageBox.tip("反审核 失敗");
+                        Util.Toast.failed("反审核 失败");
                     }
                 });
             } else {
-                Util.MessageBox.tip("请选择公司");
+                Util.Toast.failed("请选择公司");
             }
         }
 
@@ -628,41 +715,41 @@ module approve_template {
                     data: JSON.stringify(compIds)
                 }).then((data: ISubmitResult) => {
                     if (data.result) {
-                        Util.MessageBox.tip("审核 成功");
-                        this.mDateSelector.select(date);
+                        Util.Toast.success("审核 成功");
+                        //this.mDateSelector.select(date);
                         this.updateUI();
                     } else {
-                        Util.MessageBox.tip("审核 失敗");
+                        Util.Toast.failed("审核 失败");
                     }
                 });
             } else {
-                Util.MessageBox.tip("请选择公司");
+                Util.Toast.failed("请选择公司");
             }
         }
 
         private updateTitle() {
-            var header = "";
-            var date = this.mDateSelector.getDate();
-            switch (this.mOpt.approveType) {
-                case Util.ZBType.QNJH:
-                    header = date.year + "年 全年计划数据审核";
-                    break;
-                case Util.ZBType.YDJDMJH:
-                    header = date.year + "年" + " 季度-月度末计划值审核";
-                    break;
-                case Util.ZBType.BY20YJ:
-                    header = date.year + "年" + date.month + "月 20日预计值审核";
-                    break;
-                case Util.ZBType.BY28YJ:
-                    header = date.year + "年" + date.month + "月 28日预计值审核";
-                    break;
-                case Util.ZBType.BYSJ:
-                    header = date.year + "年" + date.month + "月 实际数据审核";
-                    break;
-            }
-
-            $('h1').text(header);
-            document.title = header;
+            //var header = "";
+            //var date = this.mDateSelector.getDate();
+            //switch (this.mOpt.approveType) {
+            //    case Util.ZBType.QNJH:
+            //        header = date.year + "年 全年计划数据审核";
+            //        break;
+            //    case Util.ZBType.YDJDMJH:
+            //        header = date.year + "年" + " 季度-月度末计划值审核";
+            //        break;
+            //    case Util.ZBType.BY20YJ:
+            //        header = date.year + "年" + date.month + "月 20日预计值审核";
+            //        break;
+            //    case Util.ZBType.BY28YJ:
+            //        header = date.year + "年" + date.month + "月 28日预计值审核";
+            //        break;
+            //    case Util.ZBType.BYSJ:
+            //        header = date.year + "年" + date.month + "月 实际数据审核";
+            //        break;
+            //}
+            //
+            //$('h1').text(header);
+            //document.title = header;
         }
     }
 }

@@ -336,9 +336,12 @@ th.ui-th-ltr {
 }
 
 
-.header-title .select2-container--default .select2-selection--single .select2-selection__rendered
-{
+.header-title .select2-container--default .select2-selection--single .select2-selection__rendered{
 	line-height: 23px;
+}
+
+.header-title .ui-multiselect{
+	height: 25px;
 }
 
 .btn, .btn-group>.btn:first-child {
@@ -381,7 +384,59 @@ th.ui-th-ltr {
 .ui-jqgrid th {
 	text-align: center;
 }
+
+.ui-jqgrid input[type=checkbox]{
+	position:static;
+	opacity:1;
+}
+
+.ui-multiselect-menu input[type=checkbox]{
+	left:0px;
+	top: 3px;
+	opacity:1;
+	width:15px;
+	height:15px;
+}
+
+.ui-multiselect-menu .ui-state-hover{
+	background: rgb(0,110,171);
+	color:white;
+}
+
+.ui-multiselect-checkboxes li label{
+	padding-top:0px;
+	padding-bottom:6px;
+}
+
+.ui-multiselect{
+	background: white;
+    color: black;
+    border: 1px solid lightgray;
+}
+
+
+.header-title .ui-multiselect .ui-icon {
+    background-image: url(pages/jqgrid/themes/jquery-ui-1.11.1.custom/images/ui-icons_888888_256x240.png);
+}
+
+.header-title .ui-state-active  .ui-icon{
+    background-image: url(pages/jqgrid/themes/jquery-ui-1.11.1.custom/images/ui-icons_454545_256x240.png);
+}
+
+.header-title .ui-state-hover  .ui-icon{
+    background-image: url(pages/jqgrid/themes/jquery-ui-1.11.1.custom/images/ui-icons_454545_256x240.png);
+}
+
+.header-title  .ui-state-focus .ui-icon {
+    background-image: url(pages/jqgrid/themes/jquery-ui-1.11.1.custom/images/ui-icons_454545_256x240.png);
+}
+
+.ui-widget-header{
+	background: rgb(79, 173, 194);
+    border: 1px solid rgb(79, 173, 194);
+}
 /* ÆÁ±Î bootstrap Ó°Ïì end*/
+
 .well {
 	margin-bottom: 0px;
 }
