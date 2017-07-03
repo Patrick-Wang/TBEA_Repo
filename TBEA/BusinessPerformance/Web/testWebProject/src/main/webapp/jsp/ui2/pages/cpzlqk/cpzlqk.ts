@@ -291,7 +291,7 @@ module cpzlqk {
                         if (zt == Util.IndiStatus.INTER_APPROVED_1){
                             Util.Toast.success("审核成功", undefined);
                         }else{
-                            Util.Toast.failed("上报成功", undefined);
+                            Util.Toast.success("上报成功", undefined);
                         }
 
                     });

@@ -105,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cpzlqk.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="cpzlqk.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/cpzlqk/cpzlqk.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46849757">
-              <caret line="86" column="22" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="22" />
+            <state vertical-scroll-proportion="-6.866667">
+              <caret line="293" column="38" selection-start-line="293" selection-start-column="33" selection-end-line="293" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -127,11 +127,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nwbzlqk.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="nwbzlqk.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/nwbzlqk/nwbzlqk.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.322034">
-              <caret line="92" column="69" selection-start-line="92" selection-start-column="61" selection-end-line="92" selection-end-column="69" />
+            <state vertical-scroll-proportion="0.7625202">
+              <caret line="295" column="55" selection-start-line="295" selection-start-column="55" selection-end-line="295" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -1265,18 +1265,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/nwbzlqk/nwbzlqk.ts">
+    <entry file="file://$PROJECT_DIR$/pages/cpzlqk/cpzlqk.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.322034">
-          <caret line="92" column="69" selection-start-line="92" selection-start-column="61" selection-end-line="92" selection-end-column="69" />
+        <state vertical-scroll-proportion="-6.866667">
+          <caret line="293" column="38" selection-start-line="293" selection-start-column="33" selection-end-line="293" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/cpzlqk/cpzlqk.ts">
+    <entry file="file://$PROJECT_DIR$/pages/nwbzlqk/nwbzlqk.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46849757">
-          <caret line="86" column="22" selection-start-line="86" selection-start-column="22" selection-end-line="86" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.7625202">
+          <caret line="295" column="55" selection-start-line="295" selection-start-column="55" selection-end-line="295" selection-end-column="55" />
           <folding />
         </state>
       </provider>
