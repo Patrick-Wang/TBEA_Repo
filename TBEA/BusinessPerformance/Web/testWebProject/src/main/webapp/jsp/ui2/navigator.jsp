@@ -75,7 +75,7 @@
 					builder.register('qualityShow', function() {
 						return [
 								createNode("产品一次送试及原材料合格率汇总及分析", 'cpzlqk/v2/show.do'), 
-								createNode("内外部质量问题汇总及分析", 'nwbzlqk/show.do')
+								createNode("内外部质量问题汇总及分析", 'nwbzlqk/v2/show.do')
 							];
 					});
 	 			</script>
@@ -85,7 +85,7 @@
 					builder.register('qualityApprove', function() {
 						return [
 								createNode("产品一次送试及原材料合格率审核及上报", 'cpzlqk/v2/approve.do'), 
-								createNode("内外部质量问题审核及上报", 'nwbzlqk/approve.do')
+								createNode("内外部质量问题审核及上报", 'nwbzlqk/v2/approve.do')
 							];
 					});
 	 			</script>
@@ -652,7 +652,7 @@
 					builder.register('ZlLookup', function () {
 						return [
 						   createNode('产品一次送试及原材料合格率汇总及分析', "cpzlqk/v2/show.do"),
-						   createNode('内外部质量问题汇总及分析', "nwbzlqk/show.do")
+						   createNode('内外部质量问题汇总及分析', "nwbzlqk/v2/show.do")
 						];
 					});
 				</script>
@@ -662,7 +662,7 @@
 					builder.register('ZlApprove', function () {
 						return [
 						   createNode('产品一次送试及原材料合格率审核及上报', "cpzlqk/v2/approve.do"),
-						   createNode('内外部质量问题审核及上报', "nwbzlqk/approve.do")
+						   createNode('内外部质量问题审核及上报', "nwbzlqk/v2/approve.do")
 						];
 					});
 				</script>

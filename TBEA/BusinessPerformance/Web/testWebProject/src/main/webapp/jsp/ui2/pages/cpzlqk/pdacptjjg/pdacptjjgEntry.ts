@@ -112,7 +112,7 @@ module cpzlqk {
                                 }
                             ])
                         }
-                        window.location.href = "/BusinessManagement/cpzlqk/v2/show.do?param=" + JSON.stringify(param);
+                        window.location.href = "/BusinessManagement/cpzlqk/v2/show.do?breads=" + breads + "&param=" + JSON.stringify(param);
                     } else {
                         Util.Toast.failed(resp.message);
                     }

@@ -413,8 +413,10 @@ th.ui-th-ltr {
 
 .single-chart .chart{
 	height:300px;
+	margin: 0px 0px 0px 0px;
 }
 
 .multi-chart .chart{
 	height:250px;
+	margin: 0px 0px 0px 0px;
 }

@@ -46,7 +46,7 @@ var nwbzlqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../byqsczzzlwtxxxx/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/byqsczzzlwtxxxx/update.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqsczzzlwtxxxx;
@@ -63,7 +63,7 @@ var nwbzlqk;
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../byqsczzzlwtxxxx/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/byqsczzzlwtxxxx/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType
@@ -85,7 +85,7 @@ var nwbzlqk;
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {
-                    Util.MessageBox.tip("提交成功", undefined);
+                    Util.Toast.success("提交成功", undefined);
                 });
             };
             ShowView.prototype.pluginUpdate = function (date, compType) {
@@ -140,107 +140,115 @@ var nwbzlqk;
                 }
                 return val == '--' ? 0 : val;
             };
-            ShowView.prototype.updateEchart = function () {
-                var title = "对应车间生产制造质量问题情况";
-                var legend = [];
-                var echart = this.option().ct;
-                var series = [];
-                var xData = [];
-                var tooltip = {
-                    trigger: 'axis'
-                };
-                var yAxis = [
-                    {
-                        type: 'value'
-                    }
-                ];
-                if (this.mYdjdType == nwbzlqk.YDJDType.YD) {
-                    for (var i in this.mData.waveItems) {
-                        legend.push(this.mData.waveItems[i].name);
-                        var data = [];
-                        for (var j = 0; j < this.mData.waveItems[i].data.length; ++j) {
-                            data.push((parseFloat("" + this.mData.waveItems[i].data[j]) * 100).toFixed(1));
-                        }
-                        series.push({
-                            name: this.mData.waveItems[i].name,
-                            type: 'line',
-                            smooth: true,
-                            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                            data: data
-                        });
-                    }
-                    for (var i = 0; i < 12; ++i) {
-                        xData.push((i + 1) + "月");
-                    }
-                }
-                else {
-                    var dy = [];
-                    var qntq = [];
-                    if (this.mCompType == Util.CompanyType.BYQCY) {
-                        for (var i = 0; i < this.mData.tjjg.length; ++i) {
-                            if (this.mData.tjjg[i][0].replace(/\s/g, "") == "合计") {
-                                xData.push("内部质量问题");
-                                dy.push(this.toCtVal(this.mData.tjjg[i][1]));
-                                qntq.push(this.toCtVal(this.mData.tjjg[i][4]));
-                                xData.push("外部质量问题");
-                                dy.push(this.toCtVal(this.mData.tjjg[i][2]));
-                                qntq.push(this.toCtVal(this.mData.tjjg[i][5]));
-                            }
-                        }
-                    }
-                    else {
-                        xData.push("内部质量问题");
-                        xData.push("外部质量问题");
-                        dy.push(this.toCtVal(this.mData.tjjg[0][1]));
-                        dy.push(this.toCtVal(this.mData.tjjg[0][2]));
-                        dy.push(this.toCtVal(this.mData.tjjg[1][1]));
-                        qntq.push(this.toCtVal(this.mData.tjjg[1][2]));
-                    }
-                    legend = ["当月", "去年同期"];
-                    series.push({
-                        name: legend[0],
-                        type: 'bar',
-                        smooth: true,
-                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: dy
-                    });
-                    series.push({
-                        name: legend[1],
-                        type: 'bar',
-                        smooth: true,
-                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: qntq
-                    });
-                }
-                var option = {
-                    title: {
-                        text: title
-                    },
-                    tooltip: tooltip,
-                    legend: {
-                        data: legend
-                    },
-                    toolbox: {
-                        show: true,
-                    },
-                    calculable: false,
-                    xAxis: [
-                        {
-                            type: 'category',
-                            boundaryGap: this.mYdjdType == nwbzlqk.YDJDType.YD ? false : true,
-                            data: xData.length < 1 ? [0] : xData
-                        }
-                    ],
-                    yAxis: yAxis,
-                    series: series
-                };
-                echarts.init(this.$(echart)[0]).setOption(option);
-            };
+            //private updateEchart():void {
+            //    let title = "对应车间生产制造质量问题情况";
+            //    let legend:Array<string> = [];
+            //    let echart = this.option().ct;
+            //
+            //    let series = [];
+            //    var xData:string[] = [];
+            //    let tooltip : any = {
+            //        trigger: 'axis'
+            //    };
+            //    let yAxis : any = [
+            //        {
+            //            type: 'value'
+            //        }
+            //    ];
+            //    if (this.mYdjdType == YDJDType.YD){
+            //        for (let i in this.mData.waveItems){
+            //            legend.push(this.mData.waveItems[i].name);
+            //
+            //            let data = [];
+            //            for (let j = 0; j < this.mData.waveItems[i].data.length; ++j){
+            //                data.push((parseFloat("" + this.mData.waveItems[i].data[j]) * 100).toFixed(1));
+            //            }
+            //
+            //            series.push({
+            //                name: this.mData.waveItems[i].name,
+            //                type: 'line',
+            //                smooth: true,
+            //                // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            //                data: data
+            //            });
+            //        }
+            //        for (let i = 0; i < 12; ++i){
+            //            xData.push((i + 1) + "月");
+            //        }
+            //    }else{
+            //        let dy = [];
+            //        let qntq = [];
+            //
+            //        if (this.mCompType == Util.CompanyType.BYQCY){
+            //            for (let i = 0; i < this.mData.tjjg.length; ++i){
+            //                if (this.mData.tjjg[i][0].replace(/\s/g, "") == "合计"){
+            //                    xData.push("内部质量问题");
+            //                    dy.push(this.toCtVal(this.mData.tjjg[i][1]));
+            //                    qntq.push(this.toCtVal(this.mData.tjjg[i][4]));
+            //                    xData.push("外部质量问题");
+            //                    dy.push(this.toCtVal(this.mData.tjjg[i][2]));
+            //                    qntq.push(this.toCtVal(this.mData.tjjg[i][5]));
+            //                }
+            //            }
+            //        }else{
+            //            xData.push( "内部质量问题");
+            //            xData.push( "外部质量问题");
+            //            dy.push(this.toCtVal(this.mData.tjjg[0][1]));
+            //            dy.push(this.toCtVal(this.mData.tjjg[0][2]));
+            //            dy.push(this.toCtVal(this.mData.tjjg[1][1]));
+            //            qntq.push(this.toCtVal(this.mData.tjjg[1][2]));
+            //        }
+            //
+            //        legend = ["当月", "去年同期"];
+            //        series.push({
+            //            name: legend[0],
+            //            type: 'bar',
+            //            smooth: true,
+            //            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            //            data: dy
+            //        });
+            //        series.push({
+            //            name: legend[1],
+            //            type: 'bar',
+            //            smooth: true,
+            //            // itemStyle: {normal: {areaStyle: {type: 'default'}}},
+            //            data: qntq
+            //        });
+            //    }
+            //
+            //
+            //    var option = {
+            //        title: {
+            //            text: title
+            //        },
+            //        tooltip: tooltip,
+            //        legend: {
+            //            data: legend
+            //        },
+            //        toolbox: {
+            //            show: true,
+            //        },
+            //        calculable: false,
+            //        xAxis: [
+            //            {
+            //                type: 'category',
+            //                boundaryGap: this.mYdjdType == YDJDType.YD ? false : true,
+            //                data: xData.length < 1 ? [0] : xData
+            //            }
+            //        ],
+            //        yAxis: yAxis,
+            //        series: series
+            //    };
+            //
+            //    echarts.init(this.$(echart)[0]).setOption(option);
+            //
+            //}
             ShowView.prototype.refresh = function () {
                 if (this.mData == undefined) {
                     return;
                 }
                 this.updateTable();
+                this.adjustSize();
                 //this.$(this.option().ctarea).show();
                 //this.updateEchart();
             };
@@ -250,39 +258,45 @@ var nwbzlqk;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "对应车间生产制造质量问题情况");
             };
-            ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart();
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist;
-                if (this.mCompType == Util.CompanyType.BYQCY) {
-                    tableAssist = JQGridAssistantFactory.createZtTable(name, this.mYdjdType);
-                }
-                else {
-                    tableAssist = JQGridAssistantFactory.createFdwTable(name, this.mYdjdType);
-                }
-                var pagername = name + "pager";
+            ShowView.prototype.createJqassist = function () {
+                var pagername = this.jqgridName() + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                tableAssist.mergeTitle();
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + pagername + "'></div>");
+                if (this.mCompType == Util.CompanyType.BYQCY) {
+                    this.tableAssist = JQGridAssistantFactory.createZtTable(this.jqgridName(), this.mYdjdType);
+                }
+                else {
+                    this.tableAssist = JQGridAssistantFactory.createFdwTable(this.jqgridName(), this.mYdjdType);
+                }
+                this.tableAssist.mergeTitle();
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData.tjjg,
                     datatype: "local",
-                    data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
-                    width: 1200,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
+                    rowNum: 15,
                     autoScroll: true,
-                    rowNum: this.mData.tjjg.length + 10,
-                    viewrecords: true,
-                    pager: '#' + pagername,
-                }));
+                    pager: '#' + this.jqgridName() + "pager",
+                });
             };
             ShowView.ins = new ShowView();
             return ShowView;

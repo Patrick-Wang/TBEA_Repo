@@ -18,20 +18,30 @@ var nwbzlqk;
         function NwbzlqkFrameView() {
             _super.apply(this, arguments);
             this.isCompanySupported = false;
-            this.mAjaxApprove = new Util.Ajax("doApprove.do", false);
-            this.mAjaxAuth = new Util.Ajax("auth.do", false);
+            this.mAjaxApprove = new Util.Ajax("/BusinessManagement/nwbzlqk/doApprove.do", false);
+            this.mAjaxAuth = new Util.Ajax("/BusinessManagement/nwbzlqk/auth.do", false);
         }
         NwbzlqkFrameView.prototype.init = function (opt) {
             var _this = this;
             this.mOpt = opt;
-            var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
-                year: this.mOpt.date.year,
-                month: 12
-            }, {
-                year: this.mOpt.date.year,
-                month: this.mOpt.date.month
-            }, false, false);
-            this.mDtSec = dsp;
+            //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+            //    {year: this.mOpt.date.year - 3, month: 1},
+            //    {
+            //        year: this.mOpt.date.year,
+            //        month: 12
+            //    },
+            //    {
+            //        year: this.mOpt.date.year,
+            //        month: this.mOpt.date.month
+            //    }, false, false);
+            //this.mDtSec = dsp;
+            this.createDate({
+                nowDate: Util.date2Str(this.mOpt.date),
+                maxDate: Util.date2Str({
+                    year: this.mOpt.date.year,
+                    month: 12
+                })
+            });
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (opt.comps.length == 1) {
                 this.mCompanySelector.hide();
@@ -40,11 +50,20 @@ var nwbzlqk;
                 _this.updateTypeSelector();
             });
             var inputs = $("#" + this.mOpt.contentType).show();
-            inputs.click(function (e) {
+            $("#" + this.mOpt.contentType).change(function () {
                 var node = _this.triggerYdjdChecked();
+                _this.adjustHeader();
             });
+            //inputs.click((e)=>{
+            //    let node:Util.DataNode = this.triggerYdjdChecked();
+            //});
             this.updateTypeSelector();
             this.updateUI();
+            $(window).resize(function () {
+                _this.adjustHeader();
+                router.to(_this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
+            });
+            this.adjustHeader();
         };
         NwbzlqkFrameView.prototype.checkCompanySupported = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
@@ -73,34 +92,54 @@ var nwbzlqk;
             }
         };
         NwbzlqkFrameView.prototype.triggerYdjdChecked = function () {
-            var inputs = $("#" + this.mOpt.contentType + " input");
+            //let inputs = $("#" + (<FrameOption>this.mOpt).contentType).val();
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            for (var i = 0; i < inputs.length; i++) {
-                if (true == inputs[i].checked) {
-                    if (inputs[i].id == 'rdyd') {
-                        this.mYdjdType = nwbzlqk.YDJDType.YD;
-                        router.to(this.plugin(node)).send(nwbzlqk.Event.ZLFE_YD_SELECTED);
-                        var dtNow = this.mDtSec.getDate();
-                        $("#" + this.mOpt.dt).empty();
-                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
-                            year: this.mOpt.date.year,
-                            month: 12
-                        }, dtNow, false, false);
-                        this.mDtSec = dsp;
-                    }
-                    else {
-                        this.mYdjdType = nwbzlqk.YDJDType.JD;
-                        var dtNow = this.mDtSec.getDate();
-                        $("#" + this.mOpt.dt).empty();
-                        var dsp = new Util.DateSelectorProxy(this.mOpt.dt, { year: this.mOpt.date.year - 3, month: 1 }, {
-                            year: this.mOpt.date.year,
-                            month: 12
-                        }, dtNow, true, false);
-                        this.mDtSec = dsp;
-                        router.to(this.plugin(node)).send(nwbzlqk.Event.ZLFE_JD_SELECTED);
-                    }
-                }
+            //for (let i = 0; i < inputs.length; i++) {
+            //    if (true == inputs[i].checked) {
+            if ($("#" + this.mOpt.contentType).val() == '0') {
+                this.mYdjdType = nwbzlqk.YDJDType.YD;
+                router.to(this.plugin(node)).send(nwbzlqk.Event.ZLFE_YD_SELECTED);
+                var dtNow = this.getDate();
+                //$("#" + this.mOpt.dt).empty();
+                //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                //    {year: this.mOpt.date.year - 3, month: 1},
+                //    {
+                //        year: this.mOpt.date.year,
+                //        month: 12
+                //    },
+                //    dtNow, false, false);
+                //this.mDtSec = dsp;
+                this.createDate({
+                    nowDate: Util.date2Str(dtNow),
+                    maxDate: Util.date2Str({
+                        year: this.mOpt.date.year,
+                        month: 12
+                    })
+                });
             }
+            else {
+                this.mYdjdType = nwbzlqk.YDJDType.JD;
+                var dtNow = this.getDate();
+                //$("#" + this.mOpt.dt).empty();
+                //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                //    {year: this.mOpt.date.year - 3, month: 1},
+                //    {
+                //        year: this.mOpt.date.year,
+                //        month: 12
+                //    },
+                //    dtNow, true, false);
+                //this.mDtSec = dsp;
+                this.createDate({
+                    nowDate: Util.date2Str(dtNow),
+                    maxDate: Util.date2Str({
+                        year: this.mOpt.date.year,
+                        month: 12
+                    })
+                });
+                router.to(this.plugin(node)).send(nwbzlqk.Event.ZLFE_JD_SELECTED);
+            }
+            //}
+            //}
             return node;
         };
         NwbzlqkFrameView.prototype.updateTypeSelector = function (width) {
@@ -110,6 +149,7 @@ var nwbzlqk;
                 this.mItemSelector.change(function () {
                     _this.checkCompanySupported();
                     _this.checkYdjdSupported();
+                    _this.adjustHeader();
                 });
                 this.checkCompanySupported();
                 this.checkYdjdSupported();
@@ -129,7 +169,7 @@ var nwbzlqk;
                     router.to(this.mCurrentPlugin).send(e.id, $("#commentText").val());
                     break;
                 case nwbzlqk.Event.ZLFE_COMMENT_DENY:
-                    $("#comment").hide();
+                    $(".comment-area").hide();
                     break;
                 case nwbzlqk.Event.ZLFE_APPROVEAUTH_UPDATED:
                     this.onUpdateAuth();
@@ -143,7 +183,7 @@ var nwbzlqk;
         NwbzlqkFrameView.prototype.updateUI = function () {
             var _this = this;
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            var dt = this.mDtSec.getDate();
+            var dt = this.getDate();
             if (dt.month == undefined) {
                 dt.month = 1;
             }
@@ -155,17 +195,16 @@ var nwbzlqk;
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
-            var title = node.getData().value;
-            if (this.mYdjdType == nwbzlqk.YDJDType.YD) {
-                title = "月度" + title;
-            }
-            else if (this.mYdjdType == nwbzlqk.YDJDType.JD) {
-                title = "季度" + title;
-            }
-            if (this.isCompanySupported) {
-                title = this.mCompanySelector.getCompanyName() + " " + title;
-            }
-            $("#headertitle")[0].innerHTML = title;
+            //let title = node.getData().value;
+            //if (this.mYdjdType == YDJDType.YD){
+            //    title = "月度" + title;
+            //}else if (this.mYdjdType == YDJDType.JD){
+            //    title = "季度" + title;
+            //}
+            //if (this.isCompanySupported){
+            //    title = this.mCompanySelector.getCompanyName() + " " + title;
+            //}
+            //$("#headertitle")[0].innerHTML = title;
             if (pageType == PageType.APPROVE) {
                 this.mAjaxAuth.get({ companyId: this.mCurrentComp })
                     .then(function (jsonData) {
@@ -217,21 +256,21 @@ var nwbzlqk;
                             comment: $("#commentText").val()
                         }, zt: zt });
                     if (zt == Util.IndiStatus.INTER_APPROVED_1) {
-                        Util.MessageBox.tip("审核成功", undefined);
+                        Util.Toast.success("审核成功", undefined);
                     }
                     else {
-                        Util.MessageBox.tip("上报成功", undefined);
+                        Util.Toast.success("上报成功", undefined);
                     }
                 });
             }
         };
         NwbzlqkFrameView.prototype.onUpdateComment = function (comment, zt) {
             if (comment.deny == "deny") {
-                $("#comment").hide();
+                $(".comment-area").hide();
                 return;
             }
             this.mCurZt = zt;
-            $("#comment").show();
+            $(".comment-area").show();
             $("#commentText").val(comment.comment);
             $("#commentText").attr("readonly", "readonly");
             if (pageType == PageType.APPROVE) {
@@ -336,8 +375,8 @@ var nwbzlqk;
         __extends(ZlPluginView, _super);
         function ZlPluginView() {
             _super.apply(this, arguments);
-            this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
-            this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
+            this.mCommentSubmit = new Util.Ajax("/BusinessManagement/report/zlfxSubmit.do", false);
+            this.mCommentGet = new Util.Ajax("/BusinessManagement/report/zlfxUpdate.do", false);
         }
         ZlPluginView.prototype.onEvent = function (e) {
             switch (e.id) {

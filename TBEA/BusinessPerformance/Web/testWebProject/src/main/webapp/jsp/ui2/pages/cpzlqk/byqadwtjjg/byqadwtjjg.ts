@@ -34,7 +34,6 @@ module cpzlqk {
             private mData:CpzlqkResp;
             private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/byqadwtjjg/update.do", false);
             private tableAssist:JQTable.JQGridAssistant;
-            private tableAssist:JQTable.JQGridAssistant;
             private mAjaxStatus:Util.Ajax = new Util.Ajax("/BusinessManagement/byqacptjjg/updateStatus.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
@@ -54,22 +53,22 @@ module cpzlqk {
                 switch (e.id) {
                     case Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
-                    case Event.ZLFE_SAVE_COMMENT:
-                        let param = {
-                            condition:Util.Ajax.toUrlParam({
-                                url : this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId:this.mCompType,
-                                ydjd:this.mYdjdType
-                            }),
-                            comment:e.data
-                        }
-                        this.mCommentSubmit.get({
-                            data : JSON.stringify([[param.condition, param.comment]])
-                        }).then((jsonData:any)=>{
-                            Util.MessageBox.tip("保存成功", undefined, 1000);
-                        });
-                        break;
+                    //case Event.ZLFE_SAVE_COMMENT:
+                    //    let param = {
+                    //        condition:Util.Ajax.toUrlParam({
+                    //            url : this.mAjax.baseUrl(),
+                    //            date: this.mDt,
+                    //            companyId:this.mCompType,
+                    //            ydjd:this.mYdjdType
+                    //        }),
+                    //        comment:e.data
+                    //    }
+                    //    this.mCommentSubmit.get({
+                    //        data : JSON.stringify([[param.condition, param.comment]])
+                    //    }).then((jsonData:any)=>{
+                    //        Util.Toast.success("保存成功", undefined, 1000);
+                    //    });
+                    //    break;
                     case Event.ZLFE_APPROVE_COMMENT:
                         let param1 = {
                             condition:Util.Ajax.toUrlParam({
@@ -87,7 +86,7 @@ module cpzlqk {
                                 date: this.mDt,
                                 companyId:this.mCompType
                             }).then((jsonData:any)=>{
-                                Util.MessageBox.tip("审核成功", undefined);
+                                Util.Toast.success("审核成功", undefined);
                                 framework.router
                                     .fromEp(this)
                                     .to(framework.basic.endpoint.FRAME_ID)
@@ -130,7 +129,6 @@ module cpzlqk {
 
                     if (comment != undefined && cpzlqkResp != undefined){
                         this.mData = cpzlqkResp;
-                        this.refresh();
                         if (pageType == PageType.APPROVE){
                             framework.router
                                 .fromEp(this)
@@ -144,6 +142,7 @@ module cpzlqk {
                             .send(Event.ZLFE_COMMENT_UPDATED, {
                                 comment : comment,
                                 zt : cpzlqkResp.zt});
+                        this.refresh();
                     }
                 }
 
@@ -379,6 +378,7 @@ module cpzlqk {
 			
 
             onSaveComment(comment:any):void {
+
                 let param = {
                     condition:Util.Ajax.toUrlParam({
                         url : this.mAjax.baseUrl(),

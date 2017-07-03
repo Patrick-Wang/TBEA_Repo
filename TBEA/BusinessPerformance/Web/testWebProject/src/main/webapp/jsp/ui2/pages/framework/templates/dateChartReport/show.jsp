@@ -252,9 +252,9 @@
 		     pageSlector.change(function(){
 		         if (pageSlector.getPath()[0] == 0){
 		             if (isApproveShow){
-		                 window.location.href="${pageContext.request.contextPath}/cpzlqk/approve.do";
+		                 window.location.href="${pageContext.request.contextPath}/cpzlqk/v2/approve.do?breads=" + breads;
 		             }else{
-		                 window.location.href="${pageContext.request.contextPath}/cpzlqk/show.do";
+		                 window.location.href="${pageContext.request.contextPath}/cpzlqk/v2/show.do?breads=" + breads;
 		             }
 		
 		         }
@@ -262,7 +262,8 @@
 		</script>
 	</c:if>
 	<script>
-		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
+		window.breads = '${param.breads}';
+		Util.Breadcrumb.render(JSON.parse(breads));
 		if (Util.isIframe()) {
 			Util.Breadcrumb.setOnClickListener(function(breadNode) {
 				window.parent['onClickBreadcrumb']

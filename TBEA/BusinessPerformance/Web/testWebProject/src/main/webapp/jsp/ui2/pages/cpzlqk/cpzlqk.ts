@@ -98,9 +98,9 @@ module cpzlqk {
             pageSlector.change(() => {
                 if (pageSlector.getPath()[0] == 1){
                     if (pageType == PageType.APPROVE){
-                        window.location.href="/BusinessManagement/report/v2/yclhglqktj.do?approve=true";
+                        window.location.href="/BusinessManagement/report/v2/yclhglqktj.do?approve=true&breads=" + breads;
                     }else{
-                        window.location.href="/BusinessManagement/report/v2/yclhglqktj.do";
+                        window.location.href="/BusinessManagement/report/v2/yclhglqktj.do?breads=" + breads;
                     }
                 }
             });
@@ -312,7 +312,7 @@ module cpzlqk {
                     router.to(this.mCurrentPlugin).send(e.id, $("#commentText").val());
                     break;
                 case Event.ZLFE_COMMENT_DENY:
-                    $("#comment").hide();
+                    $(".comment-area").hide();
                     break;
                 case Event.ZLFE_APPROVEAUTH_UPDATED:
                     this.onUpdateAuth();
@@ -379,13 +379,13 @@ module cpzlqk {
         private onUpdateComment(comment:Comment, zt:number):void {
 
             if (comment.deny == "deny"){
-                $("#comment").hide();
+                $(".comment-area").hide();
                 return;
             }
 
             this.mCurZt = zt;
 
-            $("#comment").show();
+            $(".comment-areat").show();
             $("#commentText").val(comment.comment);
             $("#commentText").attr("readonly","readonly");
             if (pageType == PageType.APPROVE){//approve
@@ -444,7 +444,7 @@ module cpzlqk {
                     $("#approveComment2").hide();
                     $("#approveComment3").hide();
                     $("#commentText").val("");
-                    $("#comment").hide();
+                    $(".comment-area").hide();
                 }
             }else if (pageType == PageType.ENTRY){//submit
                 $("#approveComment").hide();
@@ -453,7 +453,7 @@ module cpzlqk {
                 $("#approveComment3").hide();
                 $("#commentText").removeAttr("readonly");
                 if (zt == 0){
-                    $("#comment").hide();
+                    $(".comment-area").hide();
                 }
             }else if (pageType == PageType.SHOW){//show
                 $("#approveComment").hide();

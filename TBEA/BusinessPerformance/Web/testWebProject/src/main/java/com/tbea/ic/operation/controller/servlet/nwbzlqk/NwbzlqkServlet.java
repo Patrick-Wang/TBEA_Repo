@@ -26,6 +26,7 @@ import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.ErrorCode;
+import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.CompanySelection.Filter;
@@ -100,7 +101,7 @@ public class NwbzlqkServlet {
 		return compSel;
 	}
 	
-	@RequestMapping(value = "show.do")
+	@RequestMapping(value = {"show.do", "v2/show.do"})
 	public ModelAndView getShow(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -125,11 +126,11 @@ public class NwbzlqkServlet {
 		CompanySelection compSel = selectCompany(comps);
 		compSel.select(map);
 		
-		return new ModelAndView("nwbzlqk/nwbzlqk", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "nwbzlqk/nwbzlqk", map);
 	}
 	
 	
-	@RequestMapping(value = "approve.do")
+	@RequestMapping(value =  {"approve.do", "v2/approve.do"})
 	public ModelAndView getApprove(HttpServletRequest request,
 			HttpServletResponse response) {
 
@@ -160,10 +161,10 @@ public class NwbzlqkServlet {
 		
 		map.put("pageType", PageType.APPROVE.ordinal());
 
-		return new ModelAndView("nwbzlqk/nwbzlqk", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "nwbzlqk/nwbzlqk", map);
 	}
 	
-	@RequestMapping(value = "entry.do")
+	@RequestMapping(value = {"entry.do", "v2/entry.do"})
 	public ModelAndView getEntry(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();	
@@ -174,7 +175,7 @@ public class NwbzlqkServlet {
 				AuthType.QualityEntry);
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);
-		return new ModelAndView("nwbzlqk/nwbzlqkEntry", map);
+		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") + "nwbzlqk/nwbzlqkEntry", map);
 	}
 	
 	@RequestMapping(value = "doApprove.do")

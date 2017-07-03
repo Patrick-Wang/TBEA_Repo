@@ -225,7 +225,8 @@
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootbox/bootbox.js"></script>
 	<%@include file="../loading.jsp"%>
 	<script>
-		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
+		window.breads = '${param.breads}';
+		Util.Breadcrumb.render(JSON.parse(breads));
 		if (Util.isIframe()){
 			Util.Breadcrumb.setOnClickListener(function(breadNode){
 				window.parent['onClickBreadcrumb'] && window.parent['onClickBreadcrumb'](breadNode);

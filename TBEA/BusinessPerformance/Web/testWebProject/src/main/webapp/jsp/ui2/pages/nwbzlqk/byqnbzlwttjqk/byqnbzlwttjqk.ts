@@ -40,12 +40,11 @@ module nwbzlqk {
 
             static ins = new ShowView();
             private mData:CpzlqkResp;
-            private mAjax:Util.Ajax = new Util.Ajax("../byqnbzlwttjqk/update.do", false);
+            private mAjax:Util.Ajax = new Util.Ajax("/BusinessManagement/byqnbzlwttjqk/update.do", false);
             //private mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
             //private mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
             private mDt: string;
             private mCompType:Util.CompanyType;
-
             getId():number {
                 return plugin.byqnbzlwttjqk;
             }
@@ -69,7 +68,7 @@ module nwbzlqk {
             }
 
             pluginGetExportUrl(date:string, compType:Util.CompanyType):string {
-                return "../byqnbzlwttjqk/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/byqnbzlwttjqk/export.do?" + Util.Ajax.toUrlParam({
                         date: date,
                         companyId:compType,
                         ydjd:this.mYdjdType
@@ -140,39 +139,72 @@ module nwbzlqk {
 					.send(framework.basic.FrameEvent.FE_REGISTER, "内部质量问题统计情况");
             }
 
-			private getMonth():number{
-				let curDate : Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-				return month;
-			}
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+            }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-
-                var tableAssist:JQTable.JQGridAssistant;
-                tableAssist = JQGridAssistantFactory.createTable(name);
-
-                let pagername = name + "pager"
+            private createJqassist():JQTable.JQGridAssistant{
+                var pagername = this.jqgridName() + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                tableAssist.mergeTitle();
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-                        datatype: "local",
-                        data: tableAssist.getData(this.mData.tjjg),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
-                        width: 1300,
-                        shrinkToFit: true,
-                        autoScroll: true,
-                        rowNum: this.mData.tjjg.length + 10,
-                        viewrecords : true,
-                        pager:'#' + pagername,
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></table><div id='" + pagername + "'></div>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                this.tableAssist.mergeTitle();
+                return this.tableAssist;
             }
+
+            private updateTable():any {
+                this.createJqassist();
+
+                this.tableAssist.create({
+                    data: this.mData.tjjg,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: true,
+                    rowNum: 15,
+                    autoScroll: true,
+                    pager:'#' + this.jqgridName() + "pager",
+                });
+
+
+            }
+
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+            //
+            //    var tableAssist:JQTable.JQGridAssistant;
+            //    tableAssist = JQGridAssistantFactory.createTable(name);
+            //
+            //    let pagername = name + "pager"
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+            //    tableAssist.mergeTitle();
+            //    this.$(name).jqGrid(
+            //        tableAssist.decorate({
+            //            datatype: "local",
+            //            data: tableAssist.getData(this.mData.tjjg),
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
+            //            width: 1300,
+            //            shrinkToFit: true,
+            //            autoScroll: true,
+            //            rowNum: this.mData.tjjg.length + 10,
+            //            viewrecords : true,
+            //            pager:'#' + pagername,
+            //        }));
+            //}
         }
     }
 }

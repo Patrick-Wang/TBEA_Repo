@@ -17,24 +17,32 @@ module nwbzlqk {
 
         isCompanySupported:boolean = false;
         mYdjdType : YDJDType;
-        mAjaxApprove:Util.Ajax = new Util.Ajax("doApprove.do", false);
-        mAjaxAuth:Util.Ajax = new Util.Ajax("auth.do", false);
+        mAjaxApprove:Util.Ajax = new Util.Ajax("/BusinessManagement/nwbzlqk/doApprove.do", false);
+        mAjaxAuth:Util.Ajax = new Util.Ajax("/BusinessManagement/nwbzlqk/auth.do", false);
         mCurZt:number;
         mAuths:any;
 
         protected init(opt:any):void {
             this.mOpt = opt;
-            let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
-                {year: this.mOpt.date.year - 3, month: 1},
-                {
+            //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+            //    {year: this.mOpt.date.year - 3, month: 1},
+            //    {
+            //        year: this.mOpt.date.year,
+            //        month: 12
+            //    },
+            //    {
+            //        year: this.mOpt.date.year,
+            //        month: this.mOpt.date.month
+            //    }, false, false);
+            //this.mDtSec = dsp;
+
+            this.createDate({
+                nowDate: Util.date2Str(this.mOpt.date),
+                maxDate: Util.date2Str({
                     year: this.mOpt.date.year,
                     month: 12
-                },
-                {
-                    year: this.mOpt.date.year,
-                    month: this.mOpt.date.month
-                }, false, false);
-            this.mDtSec = dsp;
+                })
+            });
 
             this.mCompanySelector = new Util.CompanySelector(false, this.mOpt.comp, this.mOpt.comps);
             if (opt.comps.length == 1) {
@@ -44,12 +52,24 @@ module nwbzlqk {
             this.mCompanySelector.change((selector:any, depth:number) => {
                 this.updateTypeSelector();
             });
+
             let inputs = $("#" + (<FrameOption>this.mOpt).contentType).show();
-            inputs.click((e)=>{
+            $("#" + (<FrameOption>this.mOpt).contentType).change(()=>{
                 let node:Util.DataNode = this.triggerYdjdChecked();
+                this.adjustHeader();
             });
+            //inputs.click((e)=>{
+            //    let node:Util.DataNode = this.triggerYdjdChecked();
+            //});
             this.updateTypeSelector();
             this.updateUI();
+
+            $(window).resize(()=> {
+                this.adjustHeader();
+                router.to(this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
+            });
+
+            this.adjustHeader();
         }
 
         protected checkCompanySupported() {
@@ -79,39 +99,53 @@ module nwbzlqk {
         }
 
         private triggerYdjdChecked() : Util.DataNode {
-            let inputs = $("#" + (<FrameOption>this.mOpt).contentType + " input");
+            //let inputs = $("#" + (<FrameOption>this.mOpt).contentType).val();
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
-            for (let i = 0; i < inputs.length; i++) {
-                if (true == inputs[i].checked) {
-                    if (inputs[i].id == 'rdyd') {
+            //for (let i = 0; i < inputs.length; i++) {
+            //    if (true == inputs[i].checked) {
+                    if ($("#" + (<FrameOption>this.mOpt).contentType).val() == '0') {
                         this.mYdjdType = YDJDType.YD;
                         router.to(this.plugin(node)).send(Event.ZLFE_YD_SELECTED);
-                        let dtNow = this.mDtSec.getDate();
-                        $("#" + this.mOpt.dt).empty();
-                        let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
-                            {year: this.mOpt.date.year - 3, month: 1},
-                            {
+                        let dtNow = this.getDate();
+                        //$("#" + this.mOpt.dt).empty();
+                        //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                        //    {year: this.mOpt.date.year - 3, month: 1},
+                        //    {
+                        //        year: this.mOpt.date.year,
+                        //        month: 12
+                        //    },
+                        //    dtNow, false, false);
+                        //this.mDtSec = dsp;
+                        this.createDate({
+                            nowDate: Util.date2Str(dtNow),
+                            maxDate: Util.date2Str({
                                 year: this.mOpt.date.year,
                                 month: 12
-                            },
-                            dtNow, false, false);
-                        this.mDtSec = dsp;
+                            })
+                        });
                     } else {
                         this.mYdjdType = YDJDType.JD;
-                        let dtNow = this.mDtSec.getDate();
-                        $("#" + this.mOpt.dt).empty();
-                        let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
-                            {year: this.mOpt.date.year - 3, month: 1},
-                            {
+                        let dtNow = this.getDate();
+                        //$("#" + this.mOpt.dt).empty();
+                        //let dsp : any = new Util.DateSelectorProxy(this.mOpt.dt,
+                        //    {year: this.mOpt.date.year - 3, month: 1},
+                        //    {
+                        //        year: this.mOpt.date.year,
+                        //        month: 12
+                        //    },
+                        //    dtNow, true, false);
+                        //this.mDtSec = dsp;
+                        this.createDate({
+                            nowDate: Util.date2Str(dtNow),
+                            maxDate: Util.date2Str({
                                 year: this.mOpt.date.year,
                                 month: 12
-                            },
-                            dtNow, true, false);
-                        this.mDtSec = dsp;
+                            })
+                        });
                         router.to(this.plugin(node)).send(Event.ZLFE_JD_SELECTED);
                     }
-                }
-            }
+                //}
+            //}
             return node;
         }
 
@@ -120,6 +154,7 @@ module nwbzlqk {
                 this.mItemSelector.change(()=>{
                     this.checkCompanySupported();
                     this.checkYdjdSupported();
+                    this.adjustHeader();
                 });
                 this.checkCompanySupported();
                 this.checkYdjdSupported();
@@ -140,7 +175,7 @@ module nwbzlqk {
                     router.to(this.mCurrentPlugin).send(e.id, $("#commentText").val());
                     break;
                 case Event.ZLFE_COMMENT_DENY:
-                    $("#comment").hide();
+                    $(".comment-area").hide();
                     break;
                 case Event.ZLFE_APPROVEAUTH_UPDATED:
                     this.onUpdateAuth();
@@ -155,7 +190,7 @@ module nwbzlqk {
         protected updateUI() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
 
-            let dt:Util.Date = this.mDtSec.getDate();
+            let dt:Util.Date = this.getDate();
             if (dt.month == undefined){
                 dt.month = 1;
             }
@@ -170,18 +205,18 @@ module nwbzlqk {
             this.mCurrentComp = this.mCompanySelector.getCompany();
             this.mCurrentDate = dt;
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
-            let title = node.getData().value;
+            //let title = node.getData().value;
 
-            if (this.mYdjdType == YDJDType.YD){
-                title = "月度" + title;
-            }else if (this.mYdjdType == YDJDType.JD){
-                title = "季度" + title;
-            }
+            //if (this.mYdjdType == YDJDType.YD){
+            //    title = "月度" + title;
+            //}else if (this.mYdjdType == YDJDType.JD){
+            //    title = "季度" + title;
+            //}
 
-            if (this.isCompanySupported){
-                title = this.mCompanySelector.getCompanyName() + " " + title;
-            }
-            $("#headertitle")[0].innerHTML = title;
+            //if (this.isCompanySupported){
+            //    title = this.mCompanySelector.getCompanyName() + " " + title;
+            //}
+            //$("#headertitle")[0].innerHTML = title;
 
             if (pageType == PageType.APPROVE){
                 this.mAjaxAuth.get({companyId: this.mCurrentComp})
@@ -237,9 +272,9 @@ module nwbzlqk {
                         }, zt:zt});
 
                     if (zt == Util.IndiStatus.INTER_APPROVED_1){
-                        Util.MessageBox.tip("审核成功", undefined);
+                        Util.Toast.success("审核成功", undefined);
                     }else{
-                        Util.MessageBox.tip("上报成功", undefined);
+                        Util.Toast.success("上报成功", undefined);
                     }
 
                 });
@@ -249,13 +284,13 @@ module nwbzlqk {
         private onUpdateComment(comment:Comment, zt:number):void {
 
             if (comment.deny == "deny"){
-                $("#comment").hide();
+                $(".comment-area").hide();
                 return;
             }
 
             this.mCurZt = zt;
 
-            $("#comment").show();
+            $(".comment-area").show();
             $("#commentText").val(comment.comment);
             $("#commentText").attr("readonly","readonly");
             if (pageType == PageType.APPROVE){//approve
@@ -355,9 +390,9 @@ module nwbzlqk {
     export abstract class ZlPluginView extends framework.basic.ShowPluginView {
         protected mYdjdType : YDJDType;
         protected mCompSize:number;
-        mCommentSubmit:Util.Ajax = new Util.Ajax("../report/zlfxSubmit.do", false);
-        mCommentGet:Util.Ajax = new Util.Ajax("../report/zlfxUpdate.do", false);
-
+        mCommentSubmit:Util.Ajax = new Util.Ajax("/BusinessManagement/report/zlfxSubmit.do", false);
+        mCommentGet:Util.Ajax = new Util.Ajax("/BusinessManagement/report/zlfxUpdate.do", false);
+        tableAssist:JQTable.JQGridAssistant;
         onEvent(e:framework.route.Event):any {
             switch (e.id) {
                 case Event.ZLFE_IS_YDJD_SUPPORTED:

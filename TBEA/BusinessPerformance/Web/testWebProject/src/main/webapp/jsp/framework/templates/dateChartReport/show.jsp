@@ -264,7 +264,6 @@
                 }else{
                     window.location.href="${pageContext.request.contextPath}/cpzlqk/show.do";
                 }
-
             }
         });
         

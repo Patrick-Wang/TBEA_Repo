@@ -119,6 +119,14 @@ var cpzlqk;
                 }
                 return val == '--' ? 0 : val;
             };
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                this.updateEchart();
+            };
             ShowView.prototype.updateEchart = function () {
                 var title = "按产品统计结果";
                 var legend = [];
@@ -210,6 +218,8 @@ var cpzlqk;
                     yAxis: yAxis,
                     series: series
                 };
+                this.$(echart).empty();
+                this.$(echart).removeAttr("_echarts_instance_");
                 echarts.init(this.$(echart)[0]).setOption(option);
             };
             ShowView.prototype.refresh = function () {
@@ -218,7 +228,7 @@ var cpzlqk;
                 }
                 this.updateTable();
                 this.$(this.option().ctarea).show();
-                this.updateEchart();
+                this.adjustSize();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -226,33 +236,59 @@ var cpzlqk;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "按产品统计结果");
             };
-            ShowView.prototype.getMonth = function () {
-                return Util.toDate(this.mDt).month;
-            };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist = JQGridAssistantFactory.createTable(name, this.mYdjdType);
+            ShowView.prototype.createJqassist = function () {
+                var pagername = this.jqgridName() + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                tableAssist.mergeColum(0);
-                tableAssist.mergeTitle();
-                tableAssist.mergeRow(0);
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + pagername + "'></div>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mYdjdType);
+                this.tableAssist.mergeColum(0);
+                this.tableAssist.mergeTitle();
+                this.tableAssist.mergeRow(0);
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData.tjjg,
                     datatype: "local",
-                    data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     height: '100%',
-                    width: 1200,
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
-                    autoScroll: true,
-                    rowNum: 1000,
-                    viewrecords: true,
-                    caption: "按产品统计结果"
-                }));
+                    rowNum: 10000,
+                    autoScroll: true
+                });
             };
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+            //    var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mYdjdType);
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table>");
+            //    tableAssist.mergeColum(0);
+            //    tableAssist.mergeTitle();
+            //    tableAssist.mergeRow(0);
+            //    this.$(name).jqGrid(
+            //        tableAssist.decorate({
+            //		datatype: "local",
+            //		data: tableAssist.getData(this.mData.tjjg),
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            height: '100%',
+            //            width: 1200,
+            //            shrinkToFit: true,
+            //            autoScroll: true,
+            //            rowNum: 1000,
+            //            viewrecords : true,
+            //            caption:"按产品统计结果"
+            //        }));
+            //}
             ShowView.prototype.onSaveComment = function (comment) {
                 var param = {
                     condition: Util.Ajax.toUrlParam({
@@ -272,7 +308,7 @@ var cpzlqk;
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {
-                    Util.MessageBox.tip("提交成功", undefined);
+                    Util.Toast.success("提交成功");
                 });
             };
             ShowView.ins = new ShowView();

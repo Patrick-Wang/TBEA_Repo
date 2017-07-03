@@ -48,7 +48,7 @@ var nwbzlqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../xlwbzlwttjqk/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/xlwbzlwttjqk/update.do", false);
             }
             ShowView.prototype.onSaveComment = function (data) {
             };
@@ -69,7 +69,7 @@ var nwbzlqk;
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../xlwbzlwttjqk/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/xlwbzlwttjqk/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType
@@ -126,6 +126,7 @@ var nwbzlqk;
                     return;
                 }
                 this.updateTable();
+                this.adjustSize();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -133,34 +134,40 @@ var nwbzlqk;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "外部质量问题统计情况");
             };
-            ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
+                //this.updateEchart();
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist;
-                tableAssist = JQGridAssistantFactory.createTable(name);
-                var pagername = name + "pager";
+            ShowView.prototype.createJqassist = function () {
+                var pagername = this.jqgridName() + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                tableAssist.mergeTitle();
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + pagername + "'></div>");
+                this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
+                this.tableAssist.mergeTitle();
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData.tjjg,
                     datatype: "local",
-                    data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
-                    width: 1300,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
+                    rowNum: 15,
                     autoScroll: true,
-                    rowNum: this.mData.tjjg.length + 10,
-                    viewrecords: true,
-                    pager: '#' + pagername,
-                }));
+                    pager: '#' + this.jqgridName() + "pager",
+                });
             };
             ShowView.ins = new ShowView();
             return ShowView;

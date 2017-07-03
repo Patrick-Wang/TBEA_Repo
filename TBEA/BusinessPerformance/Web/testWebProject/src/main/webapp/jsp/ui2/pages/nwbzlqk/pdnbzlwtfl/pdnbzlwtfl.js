@@ -60,7 +60,7 @@ var nwbzlqk;
             __extends(ShowView, _super);
             function ShowView() {
                 _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("../pdnbzlwtfl/update.do", false);
+                this.mAjax = new Util.Ajax("/BusinessManagement/pdnbzlwtfl/update.do", false);
             }
             ShowView.prototype.getId = function () {
                 return plugin.pdnbzlwtfl;
@@ -78,7 +78,7 @@ var nwbzlqk;
                 return _super.prototype.onEvent.call(this, e);
             };
             ShowView.prototype.pluginGetExportUrl = function (date, compType) {
-                return "../pdnbzlwtfl/export.do?" + Util.Ajax.toUrlParam({
+                return "/BusinessManagement/pdnbzlwtfl/export.do?" + Util.Ajax.toUrlParam({
                     date: date,
                     companyId: compType,
                     ydjd: this.mYdjdType
@@ -100,7 +100,7 @@ var nwbzlqk;
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {
-                    Util.MessageBox.tip("提交成功", undefined);
+                    Util.Toast.success("提交成功", undefined);
                 });
             };
             ShowView.prototype.pluginUpdate = function (date, compType) {
@@ -160,21 +160,22 @@ var nwbzlqk;
                     return;
                 }
                 this.updateTable();
-                if (this.mData.tjjg.length > 0) {
-                    this.$(this.option().ctarea).show();
-                    if (this.mYdjdType == nwbzlqk.YDJDType.JD) {
-                        this.$(this.option().ct1).hide();
-                        this.$(this.option().ct).css("width", "100%");
-                        this.updateJDEchart();
-                    }
-                    else {
-                        this.$(this.option().ct).show();
-                        this.$(this.option().ct1).show();
-                        this.$(this.option().ct).css("width", "50%");
-                        this.$(this.option().ct1).css("width", "50%");
-                        this.updateYDEchart();
-                    }
-                }
+                this.adjustSize();
+                //if (this.mData.tjjg.length > 0){
+                //    this.$(this.option().ctarea).show();
+                //
+                //    if (this.mYdjdType == YDJDType.JD) {
+                //        this.$(this.option().ct1).hide();
+                //        this.$(this.option().ct).css("width", "100%");
+                //        this.updateJDEchart();
+                //    } else {
+                //        this.$(this.option().ct).show();
+                //        this.$(this.option().ct1).show();
+                //        this.$(this.option().ct).css("width", "50%");
+                //        this.$(this.option().ct1).css("width", "50%");
+                //        this.updateYDEchart();
+                //    }
+                //}
             };
             ShowView.prototype.init = function (opt) {
                 framework.router
@@ -182,40 +183,89 @@ var nwbzlqk;
                     .to(framework.basic.endpoint.FRAME_ID)
                     .send(framework.basic.FrameEvent.FE_REGISTER, "内部质量问题分类统计情况");
             };
-            ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+            ShowView.prototype.adjustSize = function () {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                if (this.mData.tjjg.length > 0) {
+                    this.$(this.option().ctarea).show();
+                    if (this.mYdjdType == nwbzlqk.YDJDType.JD) {
+                        this.$(this.option().ct1).parent().hide();
+                        this.$(this.option().ct).parent().css("width", "100%");
+                        this.updateJDEchart();
+                    }
+                    else {
+                        this.$(this.option().ct).parent().show();
+                        this.$(this.option().ct1).parent().show();
+                        this.$(this.option().ct).parent().css("width", "50%");
+                        this.$(this.option().ct1).parent().css("width", "50%");
+                        this.updateYDEchart();
+                    }
+                }
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                var tableAssist;
-                if (this.mCompType == Util.CompanyType.PDCY) {
-                    tableAssist = JQGridAssistantFactory.createZtTable(name, this.mYdjdType);
-                }
-                else {
-                    tableAssist = JQGridAssistantFactory.createFdwTable(name, this.mYdjdType);
-                }
-                var pagername = name + "pager";
+            ShowView.prototype.createJqassist = function () {
+                var pagername = this.jqgridName() + "pager";
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
-                tableAssist.mergeTitle();
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + pagername + "'></div>");
+                if (this.mCompType == Util.CompanyType.PDCY) {
+                    this.tableAssist = JQGridAssistantFactory.createZtTable(this.jqgridName(), this.mYdjdType);
+                }
+                else {
+                    this.tableAssist = JQGridAssistantFactory.createFdwTable(this.jqgridName(), this.mYdjdType);
+                }
+                this.tableAssist.mergeTitle();
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData.tjjg,
                     datatype: "local",
-                    data: tableAssist.getData(this.mData.tjjg),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
-                    width: 1200,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
                     shrinkToFit: true,
+                    rowNum: 15,
                     autoScroll: true,
-                    rowNum: this.mData.tjjg.length + 10,
-                    viewrecords: true,
-                    pager: '#' + pagername,
-                }));
+                    pager: '#' + this.jqgridName() + "pager",
+                });
             };
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+            //    var tableAssist:JQTable.JQGridAssistant;
+            //    if (this.mCompType == Util.CompanyType.PDCY){
+            //        tableAssist = JQGridAssistantFactory.createZtTable(name, this.mYdjdType);
+            //    }else{
+            //        tableAssist = JQGridAssistantFactory.createFdwTable(name, this.mYdjdType);
+            //    }
+            //
+            //    let pagername = name + "pager"
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+            //    tableAssist.mergeTitle();
+            //    this.$(name).jqGrid(
+            //        tableAssist.decorate({
+            //            datatype: "local",
+            //            data: tableAssist.getData(this.mData.tjjg),
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
+            //            width: 1200,
+            //            shrinkToFit: true,
+            //            autoScroll: true,
+            //            rowNum: this.mData.tjjg.length + 10,
+            //            viewrecords : true,
+            //            pager:'#' + pagername,
+            //        }));
+            //}
             ShowView.prototype.updateYDEchart = function () {
                 var title = "内部质量问题分类统计情况";
                 var wtlb = [];

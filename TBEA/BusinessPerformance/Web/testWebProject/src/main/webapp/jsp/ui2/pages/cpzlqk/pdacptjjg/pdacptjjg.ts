@@ -332,7 +332,7 @@ module cpzlqk {
                 this.mCommentSubmit.get({
                     data : JSON.stringify([[param.condition, param.comment]])
                 }).then((jsonData:any)=>{
-                    Util.MessageBox.tip("提交成功", undefined);
+                    Util.Toast.success("提交成功");
                 });
             }
         }

@@ -58,22 +58,22 @@ var cpzlqk;
                 switch (e.id) {
                     case cpzlqk.Event.ZLFE_IS_COMPANY_SUPPORTED:
                         return true;
-                    case cpzlqk.Event.ZLFE_SAVE_COMMENT:
-                        var param = {
-                            condition: Util.Ajax.toUrlParam({
-                                url: this.mAjax.baseUrl(),
-                                date: this.mDt,
-                                companyId: this.mCompType,
-                                ydjd: this.mYdjdType
-                            }),
-                            comment: e.data
-                        };
-                        this.mCommentSubmit.get({
-                            data: JSON.stringify([[param.condition, param.comment]])
-                        }).then(function (jsonData) {
-                            Util.MessageBox.tip("保存成功", undefined, 1000);
-                        });
-                        break;
+                    //case Event.ZLFE_SAVE_COMMENT:
+                    //    let param = {
+                    //        condition:Util.Ajax.toUrlParam({
+                    //            url : this.mAjax.baseUrl(),
+                    //            date: this.mDt,
+                    //            companyId:this.mCompType,
+                    //            ydjd:this.mYdjdType
+                    //        }),
+                    //        comment:e.data
+                    //    }
+                    //    this.mCommentSubmit.get({
+                    //        data : JSON.stringify([[param.condition, param.comment]])
+                    //    }).then((jsonData:any)=>{
+                    //        Util.Toast.success("保存成功", undefined, 1000);
+                    //    });
+                    //    break;
                     case cpzlqk.Event.ZLFE_APPROVE_COMMENT:
                         var param1 = {
                             condition: Util.Ajax.toUrlParam({
@@ -91,7 +91,7 @@ var cpzlqk;
                                 date: _this.mDt,
                                 companyId: _this.mCompType
                             }).then(function (jsonData) {
-                                Util.MessageBox.tip("审核成功", undefined);
+                                Util.Toast.success("审核成功", undefined);
                                 framework.router
                                     .fromEp(_this)
                                     .to(framework.basic.endpoint.FRAME_ID)
@@ -131,7 +131,6 @@ var cpzlqk;
                     }
                     if (comment != undefined && cpzlqkResp != undefined) {
                         _this.mData = cpzlqkResp;
-                        _this.refresh();
                         if (pageType == cpzlqk.PageType.APPROVE) {
                             framework.router
                                 .fromEp(_this)
@@ -144,6 +143,7 @@ var cpzlqk;
                             .send(cpzlqk.Event.ZLFE_COMMENT_UPDATED, {
                             comment: comment,
                             zt: cpzlqkResp.zt });
+                        _this.refresh();
                     }
                 };
                 this.mAjax.get({

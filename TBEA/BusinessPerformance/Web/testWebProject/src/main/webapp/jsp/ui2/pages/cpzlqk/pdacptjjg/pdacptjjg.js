@@ -307,7 +307,7 @@ var cpzlqk;
                 this.mCommentSubmit.get({
                     data: JSON.stringify([[param.condition, param.comment]])
                 }).then(function (jsonData) {
-                    Util.MessageBox.tip("提交成功", undefined);
+                    Util.Toast.success("提交成功");
                 });
             };
             ShowView.ins = new ShowView();

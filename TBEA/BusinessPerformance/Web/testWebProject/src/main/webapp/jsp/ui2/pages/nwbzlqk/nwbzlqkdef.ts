@@ -2,6 +2,14 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 
 module nwbzlqk{
+
+    let echartsInit = echarts.init;
+    echarts.init = function(e){
+        $(e).empty();
+        $(e).removeAttr("_echarts_instance_");
+        return echartsInit.call(echarts, e);
+    }
+
     export interface Option extends framework.basic.PluginOption {
         tb:string;
         ct?:string;

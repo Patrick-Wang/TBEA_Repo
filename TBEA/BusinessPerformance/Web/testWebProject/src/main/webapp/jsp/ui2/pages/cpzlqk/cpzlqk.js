@@ -86,10 +86,10 @@ var cpzlqk;
             pageSlector.change(function () {
                 if (pageSlector.getPath()[0] == 1) {
                     if (pageType == cpzlqk.PageType.APPROVE) {
-                        window.location.href = "/BusinessManagement/report/v2/yclhglqktj.do?approve=true";
+                        window.location.href = "/BusinessManagement/report/v2/yclhglqktj.do?approve=true&breads=" + breads;
                     }
                     else {
-                        window.location.href = "/BusinessManagement/report/v2/yclhglqktj.do";
+                        window.location.href = "/BusinessManagement/report/v2/yclhglqktj.do?breads=" + breads;
                     }
                 }
             });
@@ -278,7 +278,7 @@ var cpzlqk;
                     router.to(this.mCurrentPlugin).send(e.id, $("#commentText").val());
                     break;
                 case cpzlqk.Event.ZLFE_COMMENT_DENY:
-                    $("#comment").hide();
+                    $(".comment-area").hide();
                     break;
                 case cpzlqk.Event.ZLFE_APPROVEAUTH_UPDATED:
                     this.onUpdateAuth();
@@ -333,11 +333,11 @@ var cpzlqk;
         };
         CpzlqkFrameView.prototype.onUpdateComment = function (comment, zt) {
             if (comment.deny == "deny") {
-                $("#comment").hide();
+                $(".comment-area").hide();
                 return;
             }
             this.mCurZt = zt;
-            $("#comment").show();
+            $(".comment-areat").show();
             $("#commentText").val(comment.comment);
             $("#commentText").attr("readonly", "readonly");
             if (pageType == cpzlqk.PageType.APPROVE) {
@@ -399,7 +399,7 @@ var cpzlqk;
                     $("#approveComment2").hide();
                     $("#approveComment3").hide();
                     $("#commentText").val("");
-                    $("#comment").hide();
+                    $(".comment-area").hide();
                 }
             }
             else if (pageType == cpzlqk.PageType.ENTRY) {
@@ -409,7 +409,7 @@ var cpzlqk;
                 $("#approveComment3").hide();
                 $("#commentText").removeAttr("readonly");
                 if (zt == 0) {
-                    $("#comment").hide();
+                    $(".comment-area").hide();
                 }
             }
             else if (pageType == cpzlqk.PageType.SHOW) {
