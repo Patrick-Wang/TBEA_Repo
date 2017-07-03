@@ -61,8 +61,8 @@ var framework;
                             isinitVal: true,
                             isClear: false,
                             isToday: false,
-                            minDate: Util.date2Str(Util.addYear(opt.date, -3)),
-                            maxDate: Util.date2Str(opt.dateEnd),
+                            minDate: Util.date2Str(Util.addYear(opt.date, -3)) + " 00:00:00",
+                            maxDate: Util.date2Str(opt.dateEnd) + " 00:00:00",
                             seasonText: opt.jdName ? opt.jdName : undefined
                         }).removeCss("height")
                             .removeCss("padding")

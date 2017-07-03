@@ -80,8 +80,8 @@ var framework;
                         isinitVal: true,
                         isClear: false,
                         isToday: false,
-                        minDate: Util.date2Str(minDate),
-                        maxDate: Util.date2Str(this.mOpt.date),
+                        minDate: Util.date2Str(minDate) + " 00:00:00",
+                        maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
                         insTrigger: true
                     };
                 }
