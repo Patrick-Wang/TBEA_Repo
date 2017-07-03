@@ -218,13 +218,13 @@
 							</c:if>
 							<c:if test="${pageType == 1}">
 								<%-- 1 为审核页面 --%>
-								<div id="approveComment" class="btn btn-default pull-right"
+								<div id="approveComment" class="btn btn-default"
 									onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT)">同意上报</div>
-								<div id="approveComment1" class="btn btn-default pull-right"
+								<div id="approveComment1" class="btn btn-default"
 									onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT1)">审核</div>
-								<div id="approveComment2" class="btn btn-default pull-right"
+								<div id="approveComment2" class="btn btn-default"
 									onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT2)">同意上报</div>
-								<div id="approveComment3" class="btn btn-default pull-right"
+								<div id="approveComment3" class="btn btn-default"
 									onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_APPROVE_COMMENT3)">同意上报</div>
 							</c:if>
 							</div>

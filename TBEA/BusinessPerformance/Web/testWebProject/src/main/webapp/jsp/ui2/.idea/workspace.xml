@@ -128,9 +128,11 @@
       <file leaf-file-name="show.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/framework/templates/dateChartReport/show.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.631579">
-              <caret line="4" column="47" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="47" />
-              <folding />
+            <state vertical-scroll-proportion="0.3177388">
+              <caret line="222" column="34" selection-start-line="222" selection-start-column="34" selection-end-line="222" selection-end-column="34" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -997,9 +999,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/framework/templates/dateChartReport/show.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.631579">
-          <caret line="4" column="47" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="47" />
-          <folding />
+        <state vertical-scroll-proportion="0.3177388">
+          <caret line="222" column="34" selection-start-line="222" selection-start-column="34" selection-end-line="222" selection-end-column="34" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
