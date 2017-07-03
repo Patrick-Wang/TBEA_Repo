@@ -191,6 +191,7 @@ module cpzlqk {
                         this.updateJDEchart();
                     }
                 }
+                framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_ADJUST_HEADER);
             }
 
             private createJqassist():JQTable.JQGridAssistant{

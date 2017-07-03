@@ -45,6 +45,7 @@ var framework;
             FrameEvent.FE_APPROVED = FrameEvent.lastEvent();
             FrameEvent.FE_GETUNIT = FrameEvent.lastEvent();
             FrameEvent.FE_ADJUST_SZIE = FrameEvent.lastEvent();
+            FrameEvent.FE_ADJUST_HEADER = FrameEvent.lastEvent();
         })(FrameEvent = basic.FrameEvent || (basic.FrameEvent = {}));
         var BasicEndpoint = (function () {
             function BasicEndpoint() {

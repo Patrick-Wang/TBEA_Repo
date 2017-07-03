@@ -15,6 +15,7 @@ module cpzlqk {
 
         import TextAlign = JQTable.TextAlign;
 		import Node = JQTable.Node;
+        import FRAME_ID = framework.basic.endpoint.FRAME_ID;
         class JQGridAssistantFactory {
             public static createTable(gridName:string, ydjd:YDJDType):JQTable.JQGridAssistant {
                 return new JQTable.JQGridAssistant([
@@ -132,6 +133,7 @@ module cpzlqk {
 
                 this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");
                 this.updateEchart();
+                framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_ADJUST_HEADER);
             }
 
             private updateEchart():void {

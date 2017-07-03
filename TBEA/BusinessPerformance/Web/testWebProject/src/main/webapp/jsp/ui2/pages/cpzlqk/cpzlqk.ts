@@ -114,8 +114,8 @@ module cpzlqk {
 
 
             this.updateTypeSelector();
-            this.adjustHeader();
             this.updateUI();
+            this.adjustHeader();
         }
 
         protected register(name:string, plugin:number):void {
@@ -385,7 +385,7 @@ module cpzlqk {
 
             this.mCurZt = zt;
 
-            $(".comment-areat").show();
+            $(".comment-area").show();
             $("#commentText").val(comment.comment);
             $("#commentText").attr("readonly","readonly");
             if (pageType == PageType.APPROVE){//approve
@@ -472,16 +472,16 @@ module cpzlqk {
             $("#approveComment2").hide();
             $("#approveComment3").hide();
             if (Util.indexOf(this.mAuths, 22) >= 0){
-                $("#approveComment").show();
+                $("#approveComment").css("display", "inline-block");
             }
             if (Util.indexOf(this.mAuths, 53) >= 0){
-                $("#approveComment1").show();
+                $("#approveComment1").css("display", "inline-block");
             }
             if (Util.indexOf(this.mAuths, 54) >= 0){
-                $("#approveComment2").show();
+                $("#approveComment2").css("display", "inline-block");
             }
             if (Util.indexOf(this.mAuths, 55) >= 0){
-                $("#approveComment3").show();
+                $("#approveComment3").css("display", "inline-block");
             }
         }
     }

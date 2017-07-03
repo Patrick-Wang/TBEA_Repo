@@ -40,6 +40,7 @@ module framework.basic {
         export let FE_APPROVED : number = lastEvent();
         export let FE_GETUNIT : number = lastEvent();
         export let FE_ADJUST_SZIE : number = lastEvent();
+        export let FE_ADJUST_HEADER : number = lastEvent();
     }
     export interface PluginOption {
         host:string;

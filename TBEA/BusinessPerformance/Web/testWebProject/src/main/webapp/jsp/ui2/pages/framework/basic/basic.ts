@@ -166,6 +166,9 @@ module framework.basic {
                 case FrameEvent.FE_UPDATE:
                     this.updateUI();
                     break;
+                case FrameEvent.FE_ADJUST_HEADER:
+                    this.adjustHeader();
+                    break;
             }
             return super.onEvent(e);
         }

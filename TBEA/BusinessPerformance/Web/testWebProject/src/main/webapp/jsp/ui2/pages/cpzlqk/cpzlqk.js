@@ -98,8 +98,8 @@ var cpzlqk;
                 router.to(_this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
             });
             this.updateTypeSelector();
-            this.adjustHeader();
             this.updateUI();
+            this.adjustHeader();
         };
         CpzlqkFrameView.prototype.register = function (name, plugin) {
             var contains = true;
@@ -337,7 +337,7 @@ var cpzlqk;
                 return;
             }
             this.mCurZt = zt;
-            $(".comment-areat").show();
+            $(".comment-area").show();
             $("#commentText").val(comment.comment);
             $("#commentText").attr("readonly", "readonly");
             if (pageType == cpzlqk.PageType.APPROVE) {
@@ -428,16 +428,16 @@ var cpzlqk;
             $("#approveComment2").hide();
             $("#approveComment3").hide();
             if (Util.indexOf(this.mAuths, 22) >= 0) {
-                $("#approveComment").show();
+                $("#approveComment").css("display", "inline-block");
             }
             if (Util.indexOf(this.mAuths, 53) >= 0) {
-                $("#approveComment1").show();
+                $("#approveComment1").css("display", "inline-block");
             }
             if (Util.indexOf(this.mAuths, 54) >= 0) {
-                $("#approveComment2").show();
+                $("#approveComment2").css("display", "inline-block");
             }
             if (Util.indexOf(this.mAuths, 55) >= 0) {
-                $("#approveComment3").show();
+                $("#approveComment3").css("display", "inline-block");
             }
         };
         return CpzlqkFrameView;

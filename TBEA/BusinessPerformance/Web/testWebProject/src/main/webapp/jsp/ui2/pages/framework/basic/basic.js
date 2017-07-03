@@ -138,6 +138,9 @@ var framework;
                     case basic.FrameEvent.FE_UPDATE:
                         this.updateUI();
                         break;
+                    case basic.FrameEvent.FE_ADJUST_HEADER:
+                        this.adjustHeader();
+                        break;
                 }
                 return _super.prototype.onEvent.call(this, e);
             };
