@@ -67,6 +67,12 @@ module framework.templates.dateReport.gcyzb {
             this.xmmcSel = new Util.UnitedSelector(opt.xmmcNodes,opt.xmmcId);
             this.unitedSelector.change(()=>{
                 this.renderItemSelector(opt.itemId);
+                let id = this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id;
+                if (id >= 3 && id <= 7){
+                    $("#" + opt.dtId).parent().show();
+                }
+
+
             });
             this.renderItemSelector(opt.itemId);
 
@@ -75,20 +81,17 @@ module framework.templates.dateReport.gcyzb {
                 this.renderXmmcSelector(opt.xmmcId);
             });
             super.onInitialize(opt);
+
             $("#" + opt.dtId).parent().hide();
         }
 
 
         getParams(date:Util.Date):any{
             return {
-                //date: this.getDate(date),
+                date: this.getDate(date),
                 item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id,
                 xmmc: this.xmmcSel.getDataNode(this.xmmcSel.getPath()).data.value,
             };
-        }
-
-        getDate(date:Util.Date):string{
-            return "" + (date.year + "-" + (date.month == undefined ? 1 :date.month) + "-" + (date.day == undefined ? 1 :date.day));
         }
 
         update (date:Util.Date){
