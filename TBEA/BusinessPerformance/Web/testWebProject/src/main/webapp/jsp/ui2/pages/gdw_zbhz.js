@@ -142,10 +142,10 @@ var gdw_zbhz;
             parent.append("<table id='" + this.jqgridName() + "'></table>");
             this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
             this.tableAssist.mergeRow(0);
-            for (var i = 0; i < 5; ++i) {
-                this.tableAssist.setRowBgColor(i * 8 + 5, 183, 222, 232);
-                this.tableAssist.setRowBgColor(i * 8 + 7, 183, 222, 232);
-            }
+            //for (var i = 0; i < 5; ++i) {
+            //    this.tableAssist.setRowBgColor(i * 8 + 5, 183, 222, 232);
+            //    this.tableAssist.setRowBgColor(i * 8 + 7, 183, 222, 232);
+            //}
             return this.tableAssist;
         };
         SimpleView.prototype.updateTable = function () {

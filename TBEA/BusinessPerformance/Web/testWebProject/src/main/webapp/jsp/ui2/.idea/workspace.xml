@@ -44,8 +44,20 @@
       <file leaf-file-name="show.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/gcyzb/show.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33264887">
-              <caret line="90" column="34" selection-start-line="90" selection-start-column="27" selection-end-line="90" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.76386034">
+              <caret line="84" column="33" selection-start-line="84" selection-start-column="33" selection-end-line="84" selection-end-column="33" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gdw_zbhz.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/gdw_zbhz.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="8.5">
+              <caret line="163" column="36" selection-start-line="163" selection-start-column="36" selection-end-line="163" selection-end-column="36" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -105,16 +117,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pdwbzlwtfl.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/nwbzlqk/pdwbzlwtfl/pdwbzlwtfl.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.130435">
-              <caret line="15" column="10" selection-start-line="8" selection-start-column="4" selection-end-line="15" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="show.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/gcyzb/show.jsp">
           <provider selected="true" editor-type-id="text-editor">
@@ -148,7 +150,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pages/nwbzlqk/xlwbzlwtfl/xlwbzlwtfl.ts" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/xlnbzlwttjqk/xlnbzlwttjqk.ts" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/xlsczzzlwt/xlsczzzlwt.ts" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/xlsczzzlwtxxxx/xlsczzzlwtxxxx.ts" />
@@ -198,6 +199,7 @@
         <option value="$PROJECT_DIR$/pages/jedate/jquery.jedate.js" />
         <option value="$PROJECT_DIR$/pages/sddb/sddb.jsp" />
         <option value="$PROJECT_DIR$/pages/sddb/sddb.ts" />
+        <option value="$PROJECT_DIR$/pages/gdw_zbhz.ts" />
         <option value="$PROJECT_DIR$/pages/gcyzb/show.ts" />
       </list>
     </option>
@@ -489,13 +491,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmx.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="140" column="121" selection-start-line="140" selection-start-column="121" selection-end-line="140" selection-end-column="121" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/cpzlqk/byqcpycssbhgxxfb/byqcpycssbhgxxfb.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.366667">
@@ -919,10 +914,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pages/gdw_zbhz.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="8.5">
+          <caret line="163" column="36" selection-start-line="163" selection-start-column="36" selection-end-line="163" selection-end-column="36" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pages/gcyzb/show.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33264887">
-          <caret line="90" column="34" selection-start-line="90" selection-start-column="27" selection-end-line="90" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.76386034">
+          <caret line="84" column="33" selection-start-line="84" selection-start-column="33" selection-end-line="84" selection-end-column="33" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

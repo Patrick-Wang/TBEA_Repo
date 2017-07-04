@@ -58,6 +58,9 @@ var framework;
                             if (id >= 3 && id <= 7) {
                                 $("#" + opt.dtId).parent().show();
                             }
+                            else {
+                                $("#" + opt.dtId).parent().hide();
+                            }
                         });
                         this.renderItemSelector(opt.itemId);
                         this.renderXmmcSelector(opt.xmmcId);

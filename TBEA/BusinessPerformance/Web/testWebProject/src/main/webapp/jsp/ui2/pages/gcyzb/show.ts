@@ -70,9 +70,9 @@ module framework.templates.dateReport.gcyzb {
                 let id = this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id;
                 if (id >= 3 && id <= 7){
                     $("#" + opt.dtId).parent().show();
+                }else{
+                    $("#" + opt.dtId).parent().hide();
                 }
-
-
             });
             this.renderItemSelector(opt.itemId);
 
