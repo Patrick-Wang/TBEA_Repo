@@ -44,11 +44,11 @@ var jcycljg;
                 ishmsVal: false,
                 isClear: false,
                 isToday: false,
-                minDate: Util.date2Str(Util.addYear(this.mOpt.date, -3)),
-                maxDate: Util.date2Str(this.mOpt.date),
+                minDate: Util.date2Str(Util.addYear(this.mOpt.date, -3)) + " 00:00:00",
+                maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
                 choosefun: function (elem, val, date) {
                     setTimeout(function () {
-                        end.minDate = Util.date2Str(_this.getStartDate());
+                        end.minDate = Util.date2Str(_this.getStartDate()) + " 00:00:00";
                         endDates();
                     }, 0);
                 }
@@ -60,10 +60,10 @@ var jcycljg;
                 ishmsVal: false,
                 isClear: false,
                 isToday: false,
-                minDate: Util.date2Str(this.mOpt.date),
-                maxDate: Util.date2Str(this.mOpt.date),
+                minDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
+                maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
                 choosefun: function (elem, val, date) {
-                    start.maxDate = Util.date2Str(_this.getEndDate()); //将结束日的初始值设定为开始日的最大日期
+                    start.maxDate = Util.date2Str(_this.getEndDate()) + " 00:00:00"; //将结束日的初始值设定为开始日的最大日期
                 }
             };
             //这里是日期联动的关键

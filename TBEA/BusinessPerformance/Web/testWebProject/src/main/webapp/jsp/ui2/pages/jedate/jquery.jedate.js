@@ -591,8 +591,10 @@ window.console && (console = console || {log : function(){return;}});
 			return isHMtime.match(ymdMacth).join("-");
 		};
         boxCell.find(".jedateprophms").css({bottom:boxCell.find(".jedatebot").height()});
-        var minhms = jet.minDate.split(" ")[1].match(ymdMacth),
-            maxhms = jet.maxDate.split(" ")[1].match(ymdMacth),
+		var minhmsText = jet.minDate.split(" ")[1];
+		var maxhmsText = jet.maxDate.split(" ")[1];
+        var minhms = minhmsText ? minhmsText.match(ymdMacth) : "00:00:00".match(ymdMacth),
+            maxhms = maxhmsText ? maxhmsText.match(ymdMacth) : "00:00:00".match(ymdMacth),
 		    parmathm = parsehms(parseFormat) == "hh-mm";
         //格式为hh-mm时计算时分的列表宽度
 		if(parmathm){

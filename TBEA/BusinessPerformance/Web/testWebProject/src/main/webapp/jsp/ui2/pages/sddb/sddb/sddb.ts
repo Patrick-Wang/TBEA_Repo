@@ -17,19 +17,26 @@ module sddb {
         import router = framework.router;
         import FRAME_ID = framework.basic.endpoint.FRAME_ID;
 
-        class JQGridAssistantFactory {
-            public static createTable(gridName:string, headers:Util.Header[]):JQTable.JQGridAssistant {
-
-                let nodes:Node[] = [];
-                for (let i = 0; i < headers.length; ++i) {
-                    let node = Util.parseHeader(headers[i]);
-                    if (null != node) {
-                        nodes.push(node);
-                    }
-                }
-                return new JQTable.JQGridAssistant(nodes, gridName);
-            }
+        let echartsInit = echarts.init;
+        echarts.init = function(e){
+            $(e).empty();
+            $(e).removeAttr("_echarts_instance_");
+            return echartsInit.call(echarts, e);
         }
+
+        //class JQGridAssistantFactory {
+        //    public static createTable(gridName:string, headers:Util.Header[]):JQTable.JQGridAssistant {
+        //
+        //        let nodes:Node[] = [];
+        //        for (let i = 0; i < headers.length; ++i) {
+        //            let node = Util.parseHeader(headers[i]);
+        //            if (null != node) {
+        //                nodes.push(node);
+        //            }
+        //        }
+        //        return new JQTable.JQGridAssistant(nodes, gridName);
+        //    }
+        //}
 
         interface ChartCtrl {
             xNames:string[];
@@ -45,15 +52,15 @@ module sddb {
 
         interface SddbResp extends Util.ServResp {
             charts:ChartCtrl[];
+            showTime:boolean;
         }
 
         class ShowView extends framework.basic.ShowPluginView {
-            static ins = new ShowView();
+             static ins = new ShowView();
             private mData:SddbResp;
             private mAjax:Util.Ajax;
-            private mDt:string;
             private mCompType:Util.CompanyType;
-
+            tableAssist:JQTable.JQGridAssistant;
 
             getId():number {
                 return plugin.sddb;
@@ -109,7 +116,7 @@ module sddb {
                                 this.refresh();
                             });
                     } else {
-                        Util.MessageBox.tip("起始时间不能晚于结束时间");
+                        Util.Toast.failed("起始时间不能晚于结束时间");
                     }
                 } else {
                     this.mAjax.get({
@@ -140,6 +147,7 @@ module sddb {
 
                 this.updateTable();
                 this.updateCharts();
+                this.adjustSize();
             }
 
             public init(opt:Option):void {
@@ -157,68 +165,129 @@ module sddb {
 
                     let validCount = 0;
                     for (let i = 0; i < this.mData.charts.length; ++i) {
-                        if (this.mData.charts[i].isValid == true) {
+                        if (this.mData.charts[i].isValid == "true") {
                             ++validCount;
                         }
                     }
                     if (validCount != 0) {
                         display = "";
-                        $("#" + this.mOpt.chartId).css("display", "")
-                            .css("width", this.mData.width == undefined ? 1300 : this.mData.width)
-                            .css("height", validCount / 2 * 300 + validCount % 2 * 300);
-                        $("#chartName").css("display", "")[0].innerHTML=this.mData.chartName;
+                        $("#" + this.mOpt.ctarea)
+                            .css("display", "")
+                            .removeClass("single-chart")
+                            .removeClass("multi-chart");
+
+                        if (validCount > 1){
+                            $("#" + this.mOpt.ctarea).addClass("multi-chart");
+                        }else{
+
+                        }$("#" + this.mOpt.ctarea).addClass("single-chart");
+                            //.css("width", this.mData.width == undefined ? 1300 : this.mData.width)
+                            //.css("height", validCount / 2 * 300 + validCount % 2 * 300);
+                        //$("#chartName").css("display", "")[0].innerHTML=this.mData.chartName;
                     }
 
 
                     for (let i = 0; i < this.mData.charts.length; ++i) {
-                        if (this.mData.charts[i].isValid == true) {
-                            let ctSel = $("#" + this.mOpt.chartId + i);
+                        if (this.mData.charts[i].isValid == "true") {
+                            let ctSel = $("#" + this.mOpt.ctarea + i);
                             if (ctSel.length == 0) {
-                                $("#" + this.mOpt.chartId)
-                                    .append("<div id='" + this.mOpt.chartId + i + "' style='float:left;width:49%;height:300px'/>")
+                                $("#" + this.mOpt.ctarea)
+                                    .append(
+                                        '<div class="well" >'+
+                                            ' <div id="' + this.mOpt.ctarea + i + '" class="chart"></div>'+
+                                        '</div>');
                             }
-                            if (validCount == 1){
-                                $("#" + this.mOpt.chartId + "0").css("width", "98%");
-                            }
-                            this.updateChart(this.mOpt.chartId + i, this.mData.charts[i]);
+                            //if (validCount == 1){
+                            //    $("#" + this.mOpt.chartId + "0").css("width", "98%");
+                            //}
+                            this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
                         }
                     }
-
-
                 }
 
-                $("#" + this.mOpt.chartId).css("display", display);
-                $("#chartName").css("display", display);
+                $("#" + this.mOpt.ctarea).css("display", display);
+                //$("#chartName").css("display", display);
             }
 
 
-            private getMonth():number {
-                let curDate:Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-                return month;
+            adjustSize() {
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                $(".chart").each((i, e)=>{
+                    $(e).css("width", this.jqgridHost().width() + "px");
+                });
+
+
+                //if (this.mData.tjjg.length > 0){
+                //    this.$(this.option().ctarea).show();
+                //
+                //    if (this.mYdjdType == YDJDType.JD) {
+                //        this.$(this.option().ct1).parent().hide();
+                //        this.$(this.option().ct).parent().css("width", "100%");
+                //        this.updateJDEchart();
+                //    } else {
+                //        this.$(this.option().ct).parent().show();
+                //        this.$(this.option().ct1).parent().show();
+                //        this.$(this.option().ct).parent().css("width", "50%");
+                //        this.$(this.option().ct1).parent().css("width", "50%");
+                //        this.updateYDEchart();
+                //    }
+                //}
             }
 
-            private updateTable():void {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                //var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mData.header);
+            private createJqassist():JQTable.JQGridAssistant{
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                var tableAssist:JQTable.JQGridAssistant = Util.createTable(name, this.mData);
-                this.$(name).jqGrid(
-                    tableAssist.decorate({
-                        datatype: "local",
-                        data: tableAssist.getData(this.mData.data),
-                        multiselect: false,
-                        drag: false,
-                        resize: false,
-                        autoScroll: true,
-                        rowNum: 1000,
-                        height: this.mData.data.length > 25 ? 550 : '100%',
-                        width: this.mData.width == undefined ? 1300 : this.mData.width,
-                        shrinkToFit: this.mData.shrinkToFit == "false" ? false : true
-                    }));
+                parent.append("<table id='"+ this.jqgridName() +"'></div>");
+                this.tableAssist = Util.createTable(this.jqgridName(), this.mData);
+                return this.tableAssist;
             }
+
+            private updateTable():any {
+                this.createJqassist();
+
+                this.tableAssist.create({
+                    data: this.mData,
+                    datatype: "local",
+                    multiselect: false,
+                    drag: false,
+                    resize: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: this.mData.shrinkToFit == "false" ? false : true,
+                    rowNum: 10000,
+                    autoScroll: true
+                });
+
+
+            }
+
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+            //    //var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mData.header);
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table>");
+            //    var tableAssist:JQTable.JQGridAssistant = Util.createTable(name, this.mData);
+            //    this.$(name).jqGrid(
+            //        tableAssist.decorate({
+            //            datatype: "local",
+            //            data: tableAssist.getData(this.mData.data),
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            autoScroll: true,
+            //            rowNum: 1000,
+            //            height: this.mData.data.length > 25 ? 550 : '100%',
+            //            width: this.mData.width == undefined ? 1300 : this.mData.width,
+            //            shrinkToFit: this.mData.shrinkToFit == "false" ? false : true
+            //        }));
+            //}
 
             private updateChart(ctId:any, chart:ChartCtrl):void {
                 let series = [];

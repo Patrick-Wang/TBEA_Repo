@@ -1,21 +1,24 @@
-<Table id="xnyzb" align="center" style="display: none;">
-    <tr id="tbarea">
-        <td>
-            <div id="table" align="center"></div>
-        </td>
-    </tr>
+<div id="sddb" class="sub-view">
+   <div id="tbarea">
+       <div class="well">
+			<div id="table"></div>
+		</div>
+    </div>
+     <div id="ctarea">
 
-</Table>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/sddb/sddb/sddb.js"></script>
+    </div>
+</div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/sddb/sddb/sddb.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router
             .to(plugin.sddb)
             .send(framework.basic.FrameEvent.FE_INIT_EVENT,{
                 tb: "table",
-                host: "xnyzb",
+                host: "sddb",
                 tbarea:"tbarea",
-                chartId:"chart",
+                ctarea:"ctarea",
+                ct:"chart",
                 title:"${title}",
                 updateUrl:"${updateUrl}.do",
                 exportUrl:"${exportUrl}.do"

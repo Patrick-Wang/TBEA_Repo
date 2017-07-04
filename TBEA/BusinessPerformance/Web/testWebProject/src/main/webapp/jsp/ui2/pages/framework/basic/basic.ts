@@ -60,13 +60,69 @@ module framework.basic {
 
 
         protected createDate(opt){
+            //let className = "";
+            //let fmt = "YYYY年MM月";
+            //if (!this.mOpt.date.month){
+            //    fmt = "YYYY年";
+            //    className = "year";
+            //}else{
+            //    if (this.mOpt.date.day){
+            //        fmt = "YYYY年MM月DD日";
+            //        className = "day";
+            //    }
+            //}
+            //
+            //if (opt.format && opt.format.indexOf("&&") >= 0){
+            //    className = "season";
+            //}
+            //
+            //if (opt.format && opt.format.indexOf("$$") >= 0){
+            //    className = "season-month";
+            //}
+            //
+            //$("#" + this.mOpt.dt)
+            //    .removeClass("year")
+            //    .removeClass("day")
+            //    .removeClass("season")
+            //    .removeClass("season-month");
+            //let minDate = Util.addYear(this.mOpt.date, -3);
+            //minDate.month = 1;
+            //
+            //let oldOpt = $("#" + this.mOpt.dt).jeOpts();
+            //if (!oldOpt){
+            //    oldOpt = {
+            //        skinCell: "jedatedeepgreen",
+            //        format: fmt,
+            //        isTime: false,
+            //        isinitVal: true,
+            //        isClear: false,
+            //        isToday: false,
+            //        minDate: Util.date2Str(minDate) + " 00:00:00",
+            //        maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
+            //        insTrigger:true
+            //    };
+            //}else{
+            //    oldOpt.insTrigger = false;
+            //    oldOpt.format = fmt;
+            //}
+            //$.extend(oldOpt, opt);
+            //
+            //$("#" + this.mOpt.dt).empty().jeDate(oldOpt).removeCss("height")
+            //    .removeCss("padding")
+            //    .removeCss("margin-top")
+            //    .addClass(className);
+            return this.createInternalDate(this.mOpt.dt, this.mOpt.date, opt);
+        }
+
+
+        protected createInternalDate(id, date, opt){
             let className = "";
             let fmt = "YYYY年MM月";
-            if (!this.mOpt.date.month){
+            if (!date.month){
                 fmt = "YYYY年";
                 className = "year";
             }else{
-                if (this.mOpt.date.day){
+                if (date.day){
                     fmt = "YYYY年MM月DD日";
                     className = "day";
                 }
@@ -80,15 +136,15 @@ module framework.basic {
                 className = "season-month";
             }
 
-            $("#" + this.mOpt.dt)
+            $("#" + id)
                 .removeClass("year")
                 .removeClass("day")
                 .removeClass("season")
                 .removeClass("season-month");
-            let minDate = Util.addYear(this.mOpt.date, -3);
+            let minDate = Util.addYear(date, -3);
             minDate.month = 1;
 
-            let oldOpt = $("#" + this.mOpt.dt).jeOpts();
+            let oldOpt = $("#" + id).jeOpts();
             if (!oldOpt){
                 oldOpt = {
                     skinCell: "jedatedeepgreen",
@@ -98,7 +154,7 @@ module framework.basic {
                     isClear: false,
                     isToday: false,
                     minDate: Util.date2Str(minDate) + " 00:00:00",
-                    maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
+                    maxDate: Util.date2Str(date) + " 00:00:00",
                     insTrigger:true
                 };
             }else{
@@ -107,10 +163,11 @@ module framework.basic {
             }
             $.extend(oldOpt, opt);
 
-            $("#" + this.mOpt.dt).empty().jeDate(oldOpt).removeCss("height")
+            $("#" + id).empty().jeDate(oldOpt).removeCss("height")
                 .removeCss("padding")
                 .removeCss("margin-top")
                 .addClass(className);
+            return oldOpt;
         }
 
         protected init(opt:Option):void {

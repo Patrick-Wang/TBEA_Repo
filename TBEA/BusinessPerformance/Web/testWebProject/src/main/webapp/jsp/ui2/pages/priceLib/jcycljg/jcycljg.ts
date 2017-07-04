@@ -65,11 +65,11 @@ module jcycljg {
                 ishmsVal:false,
                 isClear: false,
                 isToday: false,
-                minDate: Util.date2Str(Util.addYear(this.mOpt.date, -3)),
-                maxDate: Util.date2Str(this.mOpt.date),
+                minDate: Util.date2Str(Util.addYear(this.mOpt.date, -3)) + " 00:00:00",
+                maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
                 choosefun: (elem, val, date) =>{
                     setTimeout(()=>{
-                        end.minDate = Util.date2Str(this.getStartDate());
+                        end.minDate = Util.date2Str(this.getStartDate()) + " 00:00:00";
                         endDates();
                     },0);
                 }
@@ -81,10 +81,10 @@ module jcycljg {
                 ishmsVal:false,
                 isClear: false,
                 isToday: false,
-                minDate: Util.date2Str(this.mOpt.date),
-                maxDate: Util.date2Str(this.mOpt.date),
+                minDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
+                maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
                 choosefun: (elem, val, date)=>{
-                    start.maxDate = Util.date2Str(this.getEndDate()); //将结束日的初始值设定为开始日的最大日期
+                    start.maxDate = Util.date2Str(this.getEndDate()) + " 00:00:00"; //将结束日的初始值设定为开始日的最大日期
                 }
             };
 

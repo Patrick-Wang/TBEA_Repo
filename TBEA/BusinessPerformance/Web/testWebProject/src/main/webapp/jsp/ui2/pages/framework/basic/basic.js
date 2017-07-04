@@ -46,14 +46,68 @@ var framework;
                 return this.plugin(nod);
             };
             BasicFrameView.prototype.createDate = function (opt) {
+                //let className = "";
+                //let fmt = "YYYY年MM月";
+                //if (!this.mOpt.date.month){
+                //    fmt = "YYYY年";
+                //    className = "year";
+                //}else{
+                //    if (this.mOpt.date.day){
+                //        fmt = "YYYY年MM月DD日";
+                //        className = "day";
+                //    }
+                //}
+                //
+                //if (opt.format && opt.format.indexOf("&&") >= 0){
+                //    className = "season";
+                //}
+                //
+                //if (opt.format && opt.format.indexOf("$$") >= 0){
+                //    className = "season-month";
+                //}
+                //
+                //$("#" + this.mOpt.dt)
+                //    .removeClass("year")
+                //    .removeClass("day")
+                //    .removeClass("season")
+                //    .removeClass("season-month");
+                //let minDate = Util.addYear(this.mOpt.date, -3);
+                //minDate.month = 1;
+                //
+                //let oldOpt = $("#" + this.mOpt.dt).jeOpts();
+                //if (!oldOpt){
+                //    oldOpt = {
+                //        skinCell: "jedatedeepgreen",
+                //        format: fmt,
+                //        isTime: false,
+                //        isinitVal: true,
+                //        isClear: false,
+                //        isToday: false,
+                //        minDate: Util.date2Str(minDate) + " 00:00:00",
+                //        maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
+                //        insTrigger:true
+                //    };
+                //}else{
+                //    oldOpt.insTrigger = false;
+                //    oldOpt.format = fmt;
+                //}
+                //$.extend(oldOpt, opt);
+                //
+                //$("#" + this.mOpt.dt).empty().jeDate(oldOpt).removeCss("height")
+                //    .removeCss("padding")
+                //    .removeCss("margin-top")
+                //    .addClass(className);
+                return this.createInternalDate(this.mOpt.dt, this.mOpt.date, opt);
+            };
+            BasicFrameView.prototype.createInternalDate = function (id, date, opt) {
                 var className = "";
                 var fmt = "YYYY年MM月";
-                if (!this.mOpt.date.month) {
+                if (!date.month) {
                     fmt = "YYYY年";
                     className = "year";
                 }
                 else {
-                    if (this.mOpt.date.day) {
+                    if (date.day) {
                         fmt = "YYYY年MM月DD日";
                         className = "day";
                     }
@@ -64,14 +118,14 @@ var framework;
                 if (opt.format && opt.format.indexOf("$$") >= 0) {
                     className = "season-month";
                 }
-                $("#" + this.mOpt.dt)
+                $("#" + id)
                     .removeClass("year")
                     .removeClass("day")
                     .removeClass("season")
                     .removeClass("season-month");
-                var minDate = Util.addYear(this.mOpt.date, -3);
+                var minDate = Util.addYear(date, -3);
                 minDate.month = 1;
-                var oldOpt = $("#" + this.mOpt.dt).jeOpts();
+                var oldOpt = $("#" + id).jeOpts();
                 if (!oldOpt) {
                     oldOpt = {
                         skinCell: "jedatedeepgreen",
@@ -81,7 +135,7 @@ var framework;
                         isClear: false,
                         isToday: false,
                         minDate: Util.date2Str(minDate) + " 00:00:00",
-                        maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00",
+                        maxDate: Util.date2Str(date) + " 00:00:00",
                         insTrigger: true
                     };
                 }
@@ -90,10 +144,11 @@ var framework;
                     oldOpt.format = fmt;
                 }
                 $.extend(oldOpt, opt);
-                $("#" + this.mOpt.dt).empty().jeDate(oldOpt).removeCss("height")
+                $("#" + id).empty().jeDate(oldOpt).removeCss("height")
                     .removeCss("padding")
                     .removeCss("margin-top")
                     .addClass(className);
+                return oldOpt;
             };
             BasicFrameView.prototype.init = function (opt) {
                 var _this = this;

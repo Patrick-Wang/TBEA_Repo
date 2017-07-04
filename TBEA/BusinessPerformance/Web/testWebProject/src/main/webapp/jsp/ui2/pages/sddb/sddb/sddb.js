@@ -20,21 +20,12 @@ var sddb;
     (function (sddb) {
         var router = framework.router;
         var FRAME_ID = framework.basic.endpoint.FRAME_ID;
-        var JQGridAssistantFactory = (function () {
-            function JQGridAssistantFactory() {
-            }
-            JQGridAssistantFactory.createTable = function (gridName, headers) {
-                var nodes = [];
-                for (var i = 0; i < headers.length; ++i) {
-                    var node = Util.parseHeader(headers[i]);
-                    if (null != node) {
-                        nodes.push(node);
-                    }
-                }
-                return new JQTable.JQGridAssistant(nodes, gridName);
-            };
-            return JQGridAssistantFactory;
-        })();
+        var echartsInit = echarts.init;
+        echarts.init = function (e) {
+            $(e).empty();
+            $(e).removeAttr("_echarts_instance_");
+            return echartsInit.call(echarts, e);
+        };
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
@@ -91,7 +82,7 @@ var sddb;
                         });
                     }
                     else {
-                        Util.MessageBox.tip("起始时间不能晚于结束时间");
+                        Util.Toast.failed("起始时间不能晚于结束时间");
                     }
                 }
                 else {
@@ -120,6 +111,7 @@ var sddb;
                 }
                 this.updateTable();
                 this.updateCharts();
+                this.adjustSize();
             };
             ShowView.prototype.init = function (opt) {
                 this.mAjax = new Util.Ajax(opt.updateUrl, false);
@@ -133,59 +125,112 @@ var sddb;
                 if (undefined != this.mData.charts) {
                     var validCount = 0;
                     for (var i = 0; i < this.mData.charts.length; ++i) {
-                        if (this.mData.charts[i].isValid == true) {
+                        if (this.mData.charts[i].isValid == "true") {
                             ++validCount;
                         }
                     }
                     if (validCount != 0) {
                         display = "";
-                        $("#" + this.mOpt.chartId).css("display", "")
-                            .css("width", this.mData.width == undefined ? 1300 : this.mData.width)
-                            .css("height", validCount / 2 * 300 + validCount % 2 * 300);
-                        $("#chartName").css("display", "")[0].innerHTML = this.mData.chartName;
+                        $("#" + this.mOpt.ctarea)
+                            .css("display", "")
+                            .removeClass("single-chart")
+                            .removeClass("multi-chart");
+                        if (validCount > 1) {
+                            $("#" + this.mOpt.ctarea).addClass("multi-chart");
+                        }
+                        else {
+                        }
+                        $("#" + this.mOpt.ctarea).addClass("single-chart");
                     }
                     for (var i = 0; i < this.mData.charts.length; ++i) {
-                        if (this.mData.charts[i].isValid == true) {
-                            var ctSel = $("#" + this.mOpt.chartId + i);
+                        if (this.mData.charts[i].isValid == "true") {
+                            var ctSel = $("#" + this.mOpt.ctarea + i);
                             if (ctSel.length == 0) {
-                                $("#" + this.mOpt.chartId)
-                                    .append("<div id='" + this.mOpt.chartId + i + "' style='float:left;width:49%;height:300px'/>");
+                                $("#" + this.mOpt.ctarea)
+                                    .append('<div class="well" >' +
+                                    ' <div id="' + this.mOpt.ctarea + i + '" class="chart"></div>' +
+                                    '</div>');
                             }
-                            if (validCount == 1) {
-                                $("#" + this.mOpt.chartId + "0").css("width", "98%");
-                            }
-                            this.updateChart(this.mOpt.chartId + i, this.mData.charts[i]);
+                            //if (validCount == 1){
+                            //    $("#" + this.mOpt.chartId + "0").css("width", "98%");
+                            //}
+                            this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
                         }
                     }
                 }
-                $("#" + this.mOpt.chartId).css("display", display);
-                $("#chartName").css("display", display);
+                $("#" + this.mOpt.ctarea).css("display", display);
+                //$("#chartName").css("display", display);
             };
-            ShowView.prototype.getMonth = function () {
-                var curDate = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                var month = curDate.getMonth() + 1;
-                return month;
+            ShowView.prototype.adjustSize = function () {
+                var _this = this;
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+                $(".chart").each(function (i, e) {
+                    $(e).css("width", _this.jqgridHost().width() + "px");
+                });
+                //if (this.mData.tjjg.length > 0){
+                //    this.$(this.option().ctarea).show();
+                //
+                //    if (this.mYdjdType == YDJDType.JD) {
+                //        this.$(this.option().ct1).parent().hide();
+                //        this.$(this.option().ct).parent().css("width", "100%");
+                //        this.updateJDEchart();
+                //    } else {
+                //        this.$(this.option().ct).parent().show();
+                //        this.$(this.option().ct1).parent().show();
+                //        this.$(this.option().ct).parent().css("width", "50%");
+                //        this.$(this.option().ct1).parent().css("width", "50%");
+                //        this.updateYDEchart();
+                //    }
+                //}
             };
-            ShowView.prototype.updateTable = function () {
-                var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
-                //var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mData.header);
+            ShowView.prototype.createJqassist = function () {
                 var parent = this.$(this.option().tb);
                 parent.empty();
-                parent.append("<table id='" + name + "'></table>");
-                var tableAssist = Util.createTable(name, this.mData);
-                this.$(name).jqGrid(tableAssist.decorate({
+                parent.append("<table id='" + this.jqgridName() + "'></div>");
+                this.tableAssist = Util.createTable(this.jqgridName(), this.mData);
+                return this.tableAssist;
+            };
+            ShowView.prototype.updateTable = function () {
+                this.createJqassist();
+                this.tableAssist.create({
+                    data: this.mData,
                     datatype: "local",
-                    data: tableAssist.getData(this.mData.data),
                     multiselect: false,
                     drag: false,
                     resize: false,
-                    autoScroll: true,
-                    rowNum: 1000,
-                    height: this.mData.data.length > 25 ? 550 : '100%',
-                    width: this.mData.width == undefined ? 1300 : this.mData.width,
-                    shrinkToFit: this.mData.shrinkToFit == "false" ? false : true
-                }));
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
+                    height: '100%',
+                    width: this.jqgridHost().width(),
+                    shrinkToFit: this.mData.shrinkToFit == "false" ? false : true,
+                    rowNum: 10000,
+                    autoScroll: true
+                });
             };
+            //private updateTable():void {
+            //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+            //    //var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mData.header);
+            //    var parent = this.$(this.option().tb);
+            //    parent.empty();
+            //    parent.append("<table id='" + name + "'></table>");
+            //    var tableAssist:JQTable.JQGridAssistant = Util.createTable(name, this.mData);
+            //    this.$(name).jqGrid(
+            //        tableAssist.decorate({
+            //            datatype: "local",
+            //            data: tableAssist.getData(this.mData.data),
+            //            multiselect: false,
+            //            drag: false,
+            //            resize: false,
+            //            autoScroll: true,
+            //            rowNum: 1000,
+            //            height: this.mData.data.length > 25 ? 550 : '100%',
+            //            width: this.mData.width == undefined ? 1300 : this.mData.width,
+            //            shrinkToFit: this.mData.shrinkToFit == "false" ? false : true
+            //        }));
+            //}
             ShowView.prototype.updateChart = function (ctId, chart) {
                 var series = [];
                 for (var i in chart.yNames) {
