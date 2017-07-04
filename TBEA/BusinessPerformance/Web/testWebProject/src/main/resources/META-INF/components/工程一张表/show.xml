@@ -1,6 +1,7 @@
 <components>
  <controller id="gcyzbUpdate">
   <context key="item" value="${request.item.asInt}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
   <context key="xmmc" value="${request.xmmc.asString}"/>
   <if test="${item == 1}">
    <callcontroller id="project_basic_info_update"/>
@@ -32,6 +33,7 @@
  </controller>
  <controller id="gcyzbExport">
   <context key="item" value="${request.item.asInt}"/>
+  <context key="cal" value="${request.date.asCalendar}"/>
   <context key="xmmc" value="${request.xmmc.asString}"/>
   <if test="${item == 1}">
    <callcontroller id="project_basic_info_export"/>
@@ -63,14 +65,11 @@
  </controller>
  <service id="serv_project_names" transaction="transactionManager">
   <sql id="data">select 
-	NC.id,
-	PM.project_name
+	id,
+	pro_name
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
-where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	project_comprehensive_table_pm_ex 
+</sql>
   <list id="xmIds" sql="data" value="0" export="true" type="int">
    <item insert="0">0</item>
   </list>
@@ -105,46 +104,54 @@ where
  <service id="serv_project_basic_info" transaction="transactionManager">
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.xmlx,
-	PM.project_category,
-	IMP.project_capacity,
-	PM.customer_name,
-	PM.contract_amount,
-	PM.contract_date,
-	PM.completion_date,
-	PM.payment_mode,
-	PM.prepayment
+	pm_ex.pro_company,
+	pm_ex.pro_no,
+	pm_ex.pro_name,
+	pm_ex.pro_type,
+	pm_ex.pro_category,
+	pm_ex.pro_capacity,
+	pm_ex.is_sign_by_jointstock_company,
+	pm_ex.customer_name,
+	pm_ex.contract_amount,
+	pm_ex.contract_amount_carry_down,
+	pm_ex.design_company_name,
+	pm_ex.contract_sign_date,
+	pm_ex.contract_start_time,
+	pm_ex.contract_completion_time,
+	pm_ex.actual_start_time,
+	pm_ex.payment_mode,
+	pm_ex.prepayment,
+	pm_ex.shareholding_ratio
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
-where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	project_comprehensive_table_pm_ex pm_ex
+</sql>
   </if>
   <else>
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.xmlx,
-	PM.project_category,
-	IMP.project_capacity,
-	PM.customer_name,
-	PM.contract_amount,
-	PM.contract_date,
-	PM.completion_date,
-	PM.payment_mode,
-	PM.prepayment
+	pm_ex.pro_company,
+	pm_ex.pro_no,
+	pm_ex.pro_name,
+	pm_ex.pro_type,
+	pm_ex.pro_category,
+	pm_ex.pro_capacity,
+	pm_ex.is_sign_by_jointstock_company,
+	pm_ex.customer_name,
+	pm_ex.contract_amount,
+	pm_ex.contract_amount_carry_down,
+	pm_ex.design_company_name,
+	pm_ex.contract_sign_date,
+	pm_ex.contract_start_time,
+	pm_ex.contract_completion_time,
+	pm_ex.actual_start_time,
+	pm_ex.payment_mode,
+	pm_ex.prepayment,
+	pm_ex.shareholding_ratio
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex pm_ex
+
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and
-	PM.project_name = ${xmmc}</sql>
+	
+	pm_ex.pro_name = ${xmmc}</sql>
   </else>
   <list id="ids" type="int">
    <item from="1" to="${data.size}"/>
@@ -178,22 +185,40 @@ where
      <name>项目容量</name>
     </item>
     <item>
+     <name>是否是以股份公司名义签订合同</name>
+    </item>
+    <item>
      <name>客户全称</name>
     </item>
     <item>
      <name>合同金额</name>
     </item>
     <item>
+     <name>含结转到今年的合同额</name>
+    </item>
+    <item>
+     <name>设计单位名称</name>
+    </item>
+    <item>
      <name>签约日期</name>
     </item>
     <item>
-     <name>要求完工日期</name>
+     <name>合同约定开工时间</name>
+    </item>
+    <item>
+     <name>合同约定竣工时间</name>
+    </item>
+    <item>
+     <name>实际开工时间</name>
     </item>
     <item>
      <name>合同付款方式</name>
     </item>
     <item>
      <name>预付款金额（万元）</name>
+    </item>
+    <item>
+     <name>项目持股比例</name>
     </item>
    </header>
    <data>${fmtServ.result}</data>
@@ -202,8 +227,11 @@ where
  <controller id="project_basic_info_format">
   <formatter id="fmtData" export="true">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="5,7,11"/>
+    <DefaultMatcher cols="5,8,9,16"/>
    </NumberFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="17"/>
+   </PercentFormatter>
   </formatter>
  </controller>
  <controller id="project_basic_info_export">
@@ -216,12 +244,19 @@ where
 项目类型,
 工程类别,
 项目容量,
+是否是以股份公司名义签订合同,
 客户全称,
 合同金额,
+含结转到今年的合同额,
+设计单位名称,
 签约日期,
-要求完工日期,
+合同约定开工时间,
+合同约定竣工时间,
+实际开工时间,
 合同付款方式,
-预付款金额（万元）</list>
+预付款金额（万元）,
+项目持股比例
+</list>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -244,38 +279,33 @@ where
  <service id="serv_budget_control" transaction="transactionManager">
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	PM.income,
-	PM.bid_budget_cost,
-	PM.target_cost,
-	PM.dynamic_cost,
-	PM.unit_dynamic_cost
+	pro_no,
+	pro_name,
+	amount_received,
+	bid_budget_cost,
+	target_cost,
+	dynamic_cost,
+	unit_dynamic_cost,
+	earned_value,
+	actual_cost
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
-where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	project_comprehensive_table_pm_ex</sql>
   </if>
   <else>
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	PM.income,
-	PM.bid_budget_cost,
-	PM.target_cost,
-	PM.dynamic_cost,
-	PM.unit_dynamic_cost
+	pro_no,
+	pro_name,
+	amount_received,
+	bid_budget_cost,
+	target_cost,
+	dynamic_cost,
+	unit_dynamic_cost,
+	earned_value,
+	actual_cost
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
-	PM.project_name = ${xmmc}</sql>
+	pro_name = ${xmmc}</sql>
   </else>
   <list id="ids" type="int">
    <item from="1" to="${data.size}"/>
@@ -290,9 +320,6 @@ where
   </formatterServer>
   <response type="json">
    <header type="array">
-    <item>
-     <name>项目公司/事业部</name>
-    </item>
     <item>
      <name>项目编号</name>
     </item>
@@ -314,6 +341,12 @@ where
     <item>
      <name>单位动态总成本（元/瓦）</name>
     </item>
+    <item>
+     <name>已完工程计划成本</name>
+    </item>
+    <item>
+     <name>已完工程实际成本</name>
+    </item>
    </header>
    <data>${fmtServ.result}</data>
   </response>
@@ -321,7 +354,7 @@ where
  <controller id="budget_control_format">
   <formatter id="fmtData" export="true">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="3,4,5,6,7"/>
+    <DefaultMatcher cols="2,3,4,5,6,7,8"/>
    </NumberFormatter>
   </formatter>
  </controller>
@@ -329,14 +362,16 @@ where
   <callservice id="serv_budget_control"/>
   <callcontroller id="budget_control_format"/>
   <ExcelTemplate id="excelTemplate" sheet="项目预算控制情况"/>
-  <list id="title" type="string">项目公司/事业部,
-项目编号,
+  <list id="title" type="string">项目编号,
 项目全称,
 收入金额（万元）,
 投标预算总成本（万元）,
 目标总成本（万元）,
 动态总成本（万元）,
-单位动态总成本（元/瓦）</list>
+单位动态总成本（元/瓦）,
+已完工程计划成本,
+已完工程实际成本
+</list>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -359,67 +394,68 @@ where
  <service id="serv_business_indicator" transaction="transactionManager">
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	PM.finacial_record_gross_profit_rate,
-	NC.bysjqrsr,
-	NC.bysjkpje,
-	PM.finacial_record_gross_profit_rate * NC.bysjqrsr,
-	NC.bysjrzch,
-	PM.current_month_fund_restream,
-	NC.ljqrsr,
-	NC.ljqrsr/nullif(PM.income,0) as name1,
-	NC.ljtxml,
-	NC.ljkpje,
-	NC.ljkpje/nullif(PM.contract_amount,0)  as name2,
-	PM.cumulative_fund_restream,
-	PM.cumulative_fund_restream/nullif(PM.contract_amount,0)  as name3,
-	NC.zmysye,
-	NC.ljrzch,
-	NC.chye,
-	NC.qzzmch,
-	NC.qzyxmgszcxsxcdchye,
-	PM.dynamic_gross_profit_rate,
-	PM.overdue_payment	
+	pro_no,
+	pro_name,
+	finacial_record_gross_profit_rate,
+	actual_revenue_current_month,
+	make_out_the_invoice,
+	gross_profit_current_month,
+	recorded_inventory_current_mont,
+	fund_restream_current_month,
+	accu_revenue,
+	accu_revenue/nullif(amount_received,0) as name1,
+	accu_gross_profit,
+	accu_make_out_the_invoice,
+	accu_make_out_the_invoice/nullif(contract_amount,0) as name2,
+	accu_fund_restream,
+	accu_fund_restream/nullif(contract_amount,0) as name3,
+	accu_fund_restream_of_plan,
+	amount_receivable,
+	accu_recorded_inventory,
+	balance_of_inventory,
+	book_inventory,
+	balance_inventory,
+	carry_down_inventory,
+	dynamic_gross_profit_rate,
+	overdue_payment	
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex
+
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	statistical_year = ${cal.year} and statistical_month = ${cal.month}</sql>
   </if>
   <else>
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	PM.finacial_record_gross_profit_rate,
-	NC.bysjqrsr,
-	NC.bysjkpje,
-	PM.finacial_record_gross_profit_rate * NC.bysjqrsr,
-	NC.bysjrzch,
-	PM.current_month_fund_restream,
-	NC.ljqrsr,
-	NC.ljqrsr/nullif(PM.income,0) as name1,
-	NC.ljtxml,
-	NC.ljkpje,
-	NC.ljkpje/nullif(PM.contract_amount,0)  as name2,
-	PM.cumulative_fund_restream,
-	PM.cumulative_fund_restream/nullif(PM.contract_amount,0)  as name3,
-	NC.zmysye,
-	NC.ljrzch,
-	NC.chye,
-	NC.qzzmch,
-	NC.qzyxmgszcxsxcdchye,
-	PM.dynamic_gross_profit_rate,
-	PM.overdue_payment	
+	pro_no,
+	pro_name,
+	finacial_record_gross_profit_rate,
+	actual_revenue_current_month,
+	make_out_the_invoice,
+	gross_profit_current_month,
+	recorded_inventory_current_mont,
+	fund_restream_current_month,
+	accu_revenue,
+	accu_revenue/nullif(amount_received,0) as name1,
+	accu_gross_profit,
+	accu_make_out_the_invoice,
+	accu_make_out_the_invoice/nullif(contract_amount,0) as name2,
+	accu_fund_restream,
+	accu_fund_restream/nullif(contract_amount,0) as name3,
+	accu_fund_restream_of_plan,
+	amount_receivable,
+	accu_recorded_inventory,
+	balance_of_inventory,
+	book_inventory,
+	balance_inventory,
+	carry_down_inventory,
+	dynamic_gross_profit_rate,
+	overdue_payment	
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex
+
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	statistical_year = ${cal.year} and
+	statistical_month = ${cal.month}and
 	PM.project_name = ${xmmc}</sql>
   </else>
   <list id="ids" type="int">
@@ -435,9 +471,6 @@ where
   </formatterServer>
   <response type="json">
    <header type="array">
-    <item>
-     <name>项目公司/事业部</name>
-    </item>
     <item>
      <name>项目编号</name>
     </item>
@@ -484,7 +517,11 @@ where
      <name>累计回款比例（%）</name>
     </item>
     <item>
-     <name>账面应收余额（万元）</name>
+     <name>累计应回款金额（根据合同）</name>
+    </item>
+    <item>
+     <name>账面应收余额（万元）
+</name>
     </item>
     <item>
      <name>累计入账存货（万元）</name>
@@ -497,6 +534,9 @@ where
     </item>
     <item>
      <name>其中：已项目公司资产形式形成的存货余额</name>
+    </item>
+    <item>
+     <name>已结转存货</name>
     </item>
     <item>
      <name>动态毛利率（%）</name>
@@ -513,10 +553,10 @@ where
  <controller id="business_indicator_format">
   <formatter id="fmtData" export="true">
    <EmptyFormatter reservedCount="1">
-    <DefaultMatcher cols="0,1,2"/>
+    <DefaultMatcher cols="0,1"/>
    </EmptyFormatter>
    <PercentFormatter reservedCount="1">
-    <DefaultMatcher cols="3,10,13,15,21"/>
+    <DefaultMatcher cols="2,9,12,14,22"/>
    </PercentFormatter>
    <NumberFormatter reservedCount="1"/>
   </formatter>
@@ -525,8 +565,7 @@ where
   <callservice id="serv_business_indicator"/>
   <callcontroller id="business_indicator_format"/>
   <ExcelTemplate id="excelTemplate" sheet="项目经营指标情况"/>
-  <list id="title" type="string">项目公司/事业部,
-项目编号,
+  <list id="title" type="string">项目编号,
 项目全称,
 财务备案毛利率（%）,
 本月实际确认收入（万元）,
@@ -541,13 +580,16 @@ where
 累计开票比例（%）,
 累计回款金额（万元）,
 累计回款比例（%）,
+累计应回款金额（根据合同）,
 账面应收余额（万元）,
 累计入账存货（万元）,
 存货余额（万元）,
 其中：账面存货,
 其中：已项目公司资产形式形成的存货余额,
+已结转存货,
 动态毛利率（%）,
-逾期款金额</list>
+逾期款金额
+</list>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -570,35 +612,32 @@ where
  <service id="serv_business_indicator_plan" transaction="transactionManager">
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.xyjhqrsr,
-	IMP.xyjhkpje,
-	IMP.xyjhrzch,
-	PM.next_month_fund_restream	
+	pro_no,
+	pro_name,
+	revenue_next_month,
+	make_out_the_invoice_next_month,
+	recorded_inventory_next_month,
+	received_payment_next_month,
+	payment_next_month	
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
-where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	project_comprehensive_table_pm_ex
+where 
+	statistical_year = ${cal.year} and statistical_month = ${cal.month}
+</sql>
   </if>
   <else>
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.xyjhqrsr,
-	IMP.xyjhkpje,
-	IMP.xyjhrzch,
-	PM.next_month_fund_restream	
+	pro_no,
+	pro_name,
+	revenue_next_month,
+	make_out_the_invoice_next_month,
+	recorded_inventory_next_month,
+	received_payment_next_month,
+	payment_next_month	
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
-where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	project_comprehensive_table_pm_ex 
+where 
+	statistical_year = ${cal.year} and statistical_month = ${cal.month}
 	PM.project_name = ${xmmc}</sql>
   </else>
   <list id="ids" type="int">
@@ -614,9 +653,6 @@ where
   </formatterServer>
   <response type="json">
    <header type="array">
-    <item>
-     <name>项目公司/事业部</name>
-    </item>
     <item>
      <name>项目编号</name>
     </item>
@@ -635,6 +671,9 @@ where
     <item>
      <name>下月计划回款金额（万元）</name>
     </item>
+    <item>
+     <name>下月计划完成目标金额（万元）</name>
+    </item>
    </header>
    <data>${fmtServ.result}</data>
   </response>
@@ -642,7 +681,7 @@ where
  <controller id="business_indicator_plan_format">
   <formatter id="fmtData" export="true">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="3,4,5,6"/>
+    <DefaultMatcher cols="2,3,4,5,6"/>
    </NumberFormatter>
   </formatter>
  </controller>
@@ -650,13 +689,13 @@ where
   <callservice id="serv_business_indicator_plan"/>
   <callcontroller id="business_indicator_plan_format"/>
   <ExcelTemplate id="excelTemplate" sheet="项目经营指标规划"/>
-  <list id="title" type="string">项目公司/事业部,
-项目编号,
+  <list id="title" type="string">项目编号,
 项目全称,
 下月计划确认收入（万元）,
 下月计划开票金额（万元）,
 下月计划入账存货（万元）,
-下月计划回款金额（万元）</list>
+下月计划回款金额（万元）,
+下月计划支付金额（万元）</list>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -679,50 +718,68 @@ where
  <service id="serv_construction" transaction="transactionManager">
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.jcsgrq,
-	PM.progress_percentage,
-	IMP.installed_capacity,
-	IMP.xmsjjgrq,
-	IMP.xmsjjsrq,
-	IMP.sfzjsyz,
-	IMP.syzdydj,
-	IMP.syzrl,
-	IMP.sfzjwx,
-	IMP.wxdydj,
-	IMP.wxcd	
+	pro_no,
+	pro_name,
+	commencement_date,
+	visual_schedule_percent,
+	actual_installed_capacity,
+	estimated_completion_date,
+	actual_completion_date,
+	actual_final_date,
+	is_booster_station_build_byself,
+	booster_station_voltage_level,
+	booster_station_capacity,
+	is_outside_connections_build_byself,
+	outside_connections_voltage_level,
+	outside_connections_length,
+	project_verification_owner,
+	project_verification_simulation,
+	accu_project_verification_owner,
+	accu_project_verification_simulation,
+	project_verification_change_owner,
+	project_verification_change_simulation,
+	accu_project_verification_change_owner,
+	accu_project_verification_change_simulation,
+	project_payment_for_approval,
+	project_payment_for_authorization	
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex 
+
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	statistical_year = ${cal.year} and statistical_month = ${cal.month}</sql>
   </if>
   <else>
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.jcsgrq,
-	PM.progress_percentage,
-	IMP.installed_capacity,
-	IMP.xmsjjgrq,
-	IMP.xmsjjsrq,
-	IMP.sfzjsyz,
-	IMP.syzdydj,
-	IMP.syzrl,
-	IMP.sfzjwx,
-	IMP.wxdydj,
-	IMP.wxcd	
+	pro_no,
+	pro_name,
+	commencement_date,
+	visual_schedule_percent,
+	actual_installed_capacity,
+	estimated_completion_date,
+	actual_completion_date,
+	actual_final_date,
+	is_booster_station_build_byself,
+	booster_station_voltage_level,
+	booster_station_capacity,
+	is_outside_connections_build_byself,
+	outside_connections_voltage_level,
+	outside_connections_length,
+	project_verification_owner,
+	project_verification_simulation,
+	accu_project_verification_owner,
+	accu_project_verification_simulation,
+	project-verification_change_owner,
+	project_verification_change_simulation,
+	accu_project_verification_change_owner,
+	accu_project_verification_change_simulation,
+	project_payment_for_approval,
+	project_payment_for_authorization	
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex 
+
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
-	PM.project_name = ${xmmc}</sql>
+	statistical_year = ${cal.year} and statistical_month = ${cal.month}
+	pro_name = ${xmmc}</sql>
   </else>
   <list id="ids" type="int">
    <item from="1" to="${data.size}"/>
@@ -737,9 +794,6 @@ where
   </formatterServer>
   <response type="json">
    <header type="array">
-    <item>
-     <name>项目公司/事业部</name>
-    </item>
     <item>
      <name>项目编号</name>
     </item>
@@ -756,7 +810,10 @@ where
      <name>实际装机容量（MW）</name>
     </item>
     <item>
-     <name>项目实际（预计）竣工日期</name>
+     <name>项目预计竣工日期</name>
+    </item>
+    <item>
+     <name>项目实际竣工日期</name>
     </item>
     <item>
      <name>项目实际（预计）决算日期</name>
@@ -779,36 +836,81 @@ where
     <item>
      <name>外线长度(kM)</name>
     </item>
+    <item>
+     <name>本月签证金额（业主）已确认</name>
+    </item>
+    <item>
+     <name>本月签证金额（业主）拟提交</name>
+    </item>
+    <item>
+     <name>签证累计金额（业主）已确认</name>
+    </item>
+    <item>
+     <name>签证累计金额（业主）拟提交</name>
+    </item>
+    <item>
+     <name>本月变更金额（业主）已确认</name>
+    </item>
+    <item>
+     <name>本月变更金额（业主）拟提交</name>
+    </item>
+    <item>
+     <name>变更累计金额（业主）已确认</name>
+    </item>
+    <item>
+     <name>变更累计金额（业主）拟提交</name>
+    </item>
+    <item>
+     <name>工程结算（业务）报审金额</name>
+    </item>
+    <item>
+     <name>工程结算（业务）审定金额</name>
+    </item>
    </header>
    <data>${fmtServ.result}</data>
+   <width>1300</width>
+   <shrinkToFit>false</shrinkToFit>
   </response>
  </controller>
  <controller id="construction_format">
   <formatter id="fmtData" export="true">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="5,9,10,12,13"/>
-    <PercentMatcher cols="4"/>
+    <DefaultMatcher cols="4,9,10,12,13,14,15,16,17,18,19,20,21,22,23"/>
    </NumberFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="3"/>
+   </PercentFormatter>
   </formatter>
  </controller>
  <controller id="construction_export">
   <callservice id="serv_construction"/>
   <callcontroller id="construction_format"/>
   <ExcelTemplate id="excelTemplate" sheet="建设情况"/>
-  <list id="title" type="string">项目公司/事业部,
-项目编号,
+  <list id="title" type="string">项目编号,
 项目全称,
 进场施工日期,
 形象进度百分比（%）,
 实际装机容量（MW）,
-项目实际（预计）竣工日期,
+项目预计竣工日期,
+项目实际竣工日期,
 项目实际（预计）决算日期,
 是否自建升压站,
 升压站电压等级(kV),
 升压站容量(kVA),
 是否自建外线,
 外线电压等级(kV),
-外线长度(kM)</list>
+外线长度(kM),
+本月签证金额（业主）已确认,
+本月签证金额（业主）拟提交,
+签证累计金额（业主）已确认,
+签证累计金额（业主）拟提交,
+本月变更金额（业主）已确认,
+本月变更金额（业主）拟提交,
+变更累计金额（业主）已确认,
+变更累计金额（业主）拟提交,
+工程结算（业务）报审金额,
+工程结算（业务）审定金额
+</list>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -831,44 +933,40 @@ where
  <service id="serv_electricity" transaction="transactionManager">
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.qzbwrq,
-	IMP.ybwrl,
-	IMP.njllyxfdxss,
-	IMP.bypjfh,
-	IMP.byjhfdl,
-	IMP.bysjfdl,
-	IMP.ndljswdl,
-	IMP.xyjhfdl	
+	pro_no,
+	pro_name,
+	grid_onnection_all_stations,
+	grid_connectioned_capacity,
+	generate_electricity_hours,
+	average_load,
+	generating_capacity_plan,
+	generating_capacity_actual,
+	accu_ongrid_energy,
+	generating_capacity_plan_next_month	
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex
+
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	statistical_year = ${cal.year} and statistical_month = ${cal.month}</sql>
   </if>
   <else>
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.qzbwrq,
-	IMP.ybwrl,
-	IMP.njllyxfdxss,
-	IMP.bypjfh,
-	IMP.byjhfdl,
-	IMP.bysjfdl,
-	IMP.ndljswdl,
-	IMP.xyjhfdl	
+	pro_no,
+	pro_name,
+	grid_onnection_all_stations,
+	grid_connectioned_capacity,
+	generate_electricity_hours,
+	average_load,
+	generating_capacity_plan,
+	generating_capacity_actual,
+	accu_ongrid_energy,
+	generating_capacity_plan_next_month	
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex
+
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
-	PM.project_name = ${xmmc}</sql>
+	statistical_year = ${cal.year} and statistical_month = ${cal.month}
+	pro_name = ${xmmc}</sql>
   </else>
   <list id="ids" type="int">
    <item from="1" to="${data.size}"/>
@@ -883,9 +981,6 @@ where
   </formatterServer>
   <response type="json">
    <header type="array">
-    <item>
-     <name>项目公司/事业部</name>
-    </item>
     <item>
      <name>项目编号</name>
     </item>
@@ -923,7 +1018,7 @@ where
  <controller id="electricity_format">
   <formatter id="fmtData" export="true">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="4,5,6,7,8,9,10"/>
+    <DefaultMatcher cols="3,4,5,6,7,8,9"/>
    </NumberFormatter>
   </formatter>
  </controller>
@@ -931,8 +1026,7 @@ where
   <callservice id="serv_electricity"/>
   <callcontroller id="electricity_format"/>
   <ExcelTemplate id="excelTemplate" sheet="发电情况"/>
-  <list id="title" type="string">项目公司/事业部,
-项目编号,
+  <list id="title" type="string">项目编号,
 项目全称,
 全站并网日期,
 已并网容量（MW）,
@@ -964,36 +1058,29 @@ where
  <service id="serv_quality_assurance" transaction="transactionManager">
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.htydzbq,
-	IMP.zbqqsbz,
-	IMP.zbqqssj,
-	IMP.sfbhhzbj
+	pro_no,
+	pro_name,
+	time_of_warranty_contract,
+	time_of_warranty_standard,
+	time_of_warranty_start_time,
+	is_replace_by_guarantee,
+	deal_with_in_warranty
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
-where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	project_comprehensive_table_pm_ex </sql>
   </if>
   <else>
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.htydzbq,
-	IMP.zbqqsbz,
-	IMP.zbqqssj,
-	IMP.sfbhhzbj
+	pro_no,
+	pro_name,
+	time_of_warranty_contract,
+	time_of_warranty_standard,
+	time_of_warranty_start_time,
+	is_replace_by_guarantee,
+	deal_with_in_warranty
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex 
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
-	PM.project_name = ${xmmc}</sql>
+	pro_name = ${xmmc}</sql>
   </else>
   <list id="ids" type="int">
    <item from="1" to="${data.size}"/>
@@ -1008,9 +1095,6 @@ where
   </formatterServer>
   <response type="json">
    <header type="array">
-    <item>
-     <name>项目公司/事业部</name>
-    </item>
     <item>
      <name>项目编号</name>
     </item>
@@ -1029,6 +1113,9 @@ where
     <item>
      <name>是否保函换质保金</name>
     </item>
+    <item>
+     <name>质保期间的问题反馈沟通处理</name>
+    </item>
    </header>
    <data>${fmtServ.result}</data>
   </response>
@@ -1042,13 +1129,13 @@ where
   <callservice id="serv_quality_assurance"/>
   <callcontroller id="quality_assurance_format"/>
   <ExcelTemplate id="excelTemplate" sheet="质保情况"/>
-  <list id="title" type="string">项目公司/事业部,
-项目编号,
+  <list id="title" type="string">项目编号,
 项目全称,
 合同约定质保期（月）,
 质保期起算标准,
 质保期起算时间,
-是否保函换质保金</list>
+是否保函换质保金,
+质保期间的问题反馈沟通处理</list>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -1071,48 +1158,49 @@ where
  <service id="serv_risk" transaction="transactionManager">
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.khzczbj,
-	IMP.khqyxz,
-	IMP.khdbdyfkbhqk,
-	IMP.sfdzyw,
-	IMP.xmsfhfhg,
-	IMP.gqsfywjcsdfx,
-	IMP.gjsbcghtzbqjqssjsffgEPCht,
-	IMP.fdlcnqk,
-	IMP.sfxyzcjgbhbzwj,
-	IMP.xmfxjyh	
+	pro_no,
+	pro_name,
+	registered_principal_customer,
+	enterprise_nature_customer,
+	guarantee_status_customer,
+	is_advance_money,
+	is_legitimate_of_project,
+	is_delay,
+	is_cover_EPC,
+	generating_capacity_promise,
+	is_show_guarantee_to_customer,
+	project_risk,
+	exchange_rate_risk,
+	multicurrency_risk,
+	local_labour_services_risk,
+	equipment_logistics_material_risk
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
-where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	project_comprehensive_table_pm_ex
+
+</sql>
   </if>
   <else>
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.khzczbj,
-	IMP.khqyxz,
-	IMP.khdbdyfkbhqk,
-	IMP.sfdzyw,
-	IMP.xmsfhfhg,
-	IMP.gqsfywjcsdfx,
-	IMP.gjsbcghtzbqjqssjsffgEPCht,
-	IMP.fdlcnqk,
-	IMP.sfxyzcjgbhbzwj,
-	IMP.xmfxjyh	
+	pro_no,
+	pro_name,
+	registered_principal_customer,
+	enterprise_nature_customer,
+	guarantee_status_customer,
+	is_advance_money,
+	is_legitimate_of_project,
+	is_delay,
+	is_cover_EPC,
+	generating_capacity_promise,
+	is_show_guarantee_to_customer,
+	project_risk,
+	exchange_rate_risk,
+	multicurrency_risk,
+	local_labour_services_risk,
+	equipment_logistics_material_risk
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
-	PM.project_name = ${xmmc}</sql>
+	pro_name = ${xmmc}</sql>
   </else>
   <list id="ids" type="int">
    <item from="1" to="${data.size}"/>
@@ -1127,9 +1215,6 @@ where
   </formatterServer>
   <response type="json">
    <header type="array">
-    <item>
-     <name>项目公司/事业部</name>
-    </item>
     <item>
      <name>项目编号</name>
     </item>
@@ -1166,6 +1251,18 @@ where
     <item>
      <name>项目风险及隐患</name>
     </item>
+    <item>
+     <name>汇率风险</name>
+    </item>
+    <item>
+     <name>多币种风险</name>
+    </item>
+    <item>
+     <name>当地劳务风险（民工工资发放）</name>
+    </item>
+    <item>
+     <name>设备、物流、物资风险</name>
+    </item>
    </header>
    <data>${fmtServ.result}</data>
   </response>
@@ -1173,7 +1270,7 @@ where
  <controller id="risk_format">
   <formatter id="fmtData" export="true">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="3"/>
+    <DefaultMatcher cols="2"/>
    </NumberFormatter>
   </formatter>
  </controller>
@@ -1181,8 +1278,7 @@ where
   <callservice id="serv_risk"/>
   <callcontroller id="risk_format"/>
   <ExcelTemplate id="excelTemplate" sheet="风险情况"/>
-  <list id="title" type="string">项目公司/事业部,
-项目编号,
+  <list id="title" type="string">项目编号,
 项目全称,
 客户注册资本金,
 客户企业性质,
@@ -1193,7 +1289,12 @@ where
 关键设备采购合同质保期及起算时间是否覆盖EPC合同,
 发电量承诺情况,
 是否向业主出具过保函、保证文件,
-项目风险及隐患</list>
+项目风险及隐患,
+汇率风险,
+多币种风险,
+当地劳务风险（民工工资发放）,
+设备、物流、物资风险
+</list>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -1216,43 +1317,39 @@ where
  <service id="serv_output_value" transaction="transactionManager">
   <if test="${'xmmc' == '全部项目'}">
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.cost_control_plan_amount,
-	IMP.achieve_amount_of_cumup	,
-	IMP.achieve_amount_of_cumua,
-	IMP.achieve_amount_of_curp,
-	IMP.achieve_amount_of_cura,
-	IMP.achieve_amount_of_nextp,
-	IMP.payment_of_current_month,
-	IMP.cumulative_payment
+	pro_no,
+	pro_name,
+	cost_control_of_plan_amount,
+	accu_completion_of_plan_amount,
+	accu_completion_of_actual_amount,
+	completion_target_plan_this_month,
+	completion_target_actual_this_month,
+	completion_target_plan_next_month,
+	payment_this_month,
+	accu_payment_this_month
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex
+
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%'</sql>
+	statistical_year = ${cal.year} and statistical_month = ${cal.month}</sql>
   </if>
   <else>
    <sql id="data" export="true">select 
-	IMP.xmgs,
-	PM.project_num,
-	PM.project_name,
-	IMP.cost_control_plan_amount,
-	IMP.achieve_amount_of_cumup	,
-	IMP.achieve_amount_of_cumua,
-	IMP.achieve_amount_of_curp,
-	IMP.achieve_amount_of_cura,
-	IMP.achieve_amount_of_nextp,
-	IMP.payment_of_current_month,
-	IMP.cumulative_payment
+	pro_no,
+	pro_name,
+	cost_control_of_plan_amount,
+	accu_completion_of_plan_amount,
+	accu_completion_of_actual_amount,
+	completion_target_plan_this_month,
+	completion_target_actual_this_month,
+	completion_target_plan_next_month,
+	payment_this_month,
+	accu_payment_this_month
 from 
-	project_comprehensive_table_nc NC, 
-	project_comprehensive_table_pm PM, 
-	project_comprehensive_table_imported IMP
+	project_comprehensive_table_pm_ex
+
 where
-	NC.xmqc like '%' + IMP.xmqc +'%' and NC.xmqc like '%' + PM.project_name +'%' and 
+	statistical_year = ${cal.year} and statistical_month = ${cal.month}
 	PM.project_name = ${xmmc}</sql>
   </else>
   <list id="ids" type="int">
@@ -1268,9 +1365,6 @@ where
   </formatterServer>
   <response type="json">
    <header type="array">
-    <item>
-     <name>项目公司/事业部</name>
-    </item>
     <item>
      <name>项目编号</name>
     </item>
@@ -1308,7 +1402,7 @@ where
  <controller id="output_value_format">
   <formatter id="fmtData" export="true">
    <NumberFormatter reservedCount="1">
-    <DefaultMatcher cols="3,4,5,6,7,8,9,10"/>
+    <DefaultMatcher cols="2,3,4,5,6,7,8,9"/>
    </NumberFormatter>
   </formatter>
  </controller>
@@ -1316,8 +1410,7 @@ where
   <callservice id="serv_output_value"/>
   <callcontroller id="output_value_format"/>
   <ExcelTemplate id="excelTemplate" sheet="产值情况"/>
-  <list id="title" type="string">项目公司/事业部,
-项目编号,
+  <list id="title" type="string">项目编号,
 项目全称,
 成本管控目标金额（万元）,
 累计计划完成目标金额（万元）,
