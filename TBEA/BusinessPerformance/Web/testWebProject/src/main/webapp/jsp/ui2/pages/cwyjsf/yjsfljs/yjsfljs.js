@@ -55,7 +55,7 @@ var cwyjsf;
                     companyId: cpType
                 });
             };
-            ShowView.prototype.nEvent = function (e) {
+            ShowView.prototype.onEvent = function (e) {
                 switch (e.id) {
                     case cwyjsf.Event.CW_ISMONTH_SUPPORTED:
                         return true;

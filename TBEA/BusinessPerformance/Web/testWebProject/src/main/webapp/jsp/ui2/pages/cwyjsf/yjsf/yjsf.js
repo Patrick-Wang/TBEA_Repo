@@ -76,6 +76,7 @@ var cwyjsf;
                     .then(function (jsonData) {
                     _this.mData = jsonData;
                     _this.updateTable();
+                    _this.adjustSize();
                 });
                 this.mAjax.get({
                     date: (this.getYear() - 1) + "-" + this.getMonth() + "-1",
@@ -84,6 +85,7 @@ var cwyjsf;
                     .then(function (jsonData) {
                     _this.mData1 = jsonData;
                     _this.updateTable1();
+                    _this.adjustSize();
                 });
             };
             ShowView.prototype.refresh = function () {

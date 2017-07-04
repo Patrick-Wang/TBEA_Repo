@@ -53,7 +53,7 @@ module cwyjsf {
                     });
             }
 
-            nEvent(e:framework.route.Event):any {
+            onEvent(e:framework.route.Event):any {
                 switch (e.id) {
                     case Event.CW_ISMONTH_SUPPORTED:
                         return true;

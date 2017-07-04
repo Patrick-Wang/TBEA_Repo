@@ -45,7 +45,7 @@ module sddb {
             type:string;
             data:any[];
             boundaryGap:boolean;
-            isValid:string;
+            isValid:boolean;
             chartName:string;
             percentage:boolean;
         }
@@ -165,7 +165,7 @@ module sddb {
 
                     let validCount = 0;
                     for (let i = 0; i < this.mData.charts.length; ++i) {
-                        if (this.mData.charts[i].isValid == "true") {
+                        if (this.mData.charts[i].isValid) {
                             ++validCount;
                         }
                     }
@@ -188,7 +188,7 @@ module sddb {
 
 
                     for (let i = 0; i < this.mData.charts.length; ++i) {
-                        if (this.mData.charts[i].isValid == "true") {
+                        if (this.mData.charts[i]. isValid) {
                             let ctSel = $("#" + this.mOpt.ctarea + i);
                             if (ctSel.length == 0) {
                                 $("#" + this.mOpt.ctarea)
@@ -213,6 +213,14 @@ module sddb {
             adjustSize() {
                 var jqgrid = this.jqgrid();
                 if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
                     jqgrid.setGridWidth(this.jqgridHost().width());
                 }
 
@@ -250,13 +258,13 @@ module sddb {
                 this.createJqassist();
 
                 this.tableAssist.create({
-                    data: this.mData,
+                    data: this.mData.data,
                     datatype: "local",
                     multiselect: false,
                     drag: false,
                     resize: false,
                     cellsubmit: 'clientArray',
-                    cellEdit: true,
+                    cellEdit: false,
                     height: '100%',
                     width: this.jqgridHost().width(),
                     shrinkToFit: this.mData.shrinkToFit == "false" ? false : true,

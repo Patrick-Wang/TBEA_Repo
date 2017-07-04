@@ -239,8 +239,8 @@ module companys_zbhz_prediction{
           /*  this.mActualMonth = (parseInt($("#grid-season").val()) - 1) * 3 + parseInt($("#grid-season-month").val());*/
             var compType = this.mCompanySelector.getCompany();
     
-            $("#grid-export")[0].action = "hzb_companys_prediction_export.do?" + Util.Ajax.toUrlParam($.extend(this.getDate(), {companyId:compType}));
-            $("#grid-export")[0].submit();
+            $("#exportExcel")[0].action = "/BusinessManagement/ydzb/hzb_companys_prediction_export.do?" + Util.Ajax.toUrlParam($.extend(this.getDate(), {companyId:compType}));
+            $("#exportExcel")[0].submit();
     
         }
 

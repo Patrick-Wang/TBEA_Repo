@@ -84,6 +84,7 @@ module cwgbjyxxjl {
                 }
 
                 this.updateTable();
+                this.adjustSize();
             }
 
             public init(opt:Option):void {

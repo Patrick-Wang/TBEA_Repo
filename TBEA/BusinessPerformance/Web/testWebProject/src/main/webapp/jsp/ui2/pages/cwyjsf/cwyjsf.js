@@ -14,21 +14,31 @@ var cwyjsf;
         function CwyjsfFrameView() {
             _super.apply(this, arguments);
         }
-        CwyjsfFrameView.prototype.updateUI = function () {
-            _super.prototype.updateUI.call(this);
+        CwyjsfFrameView.prototype.updateDate = function () {
             this.date = $.extend(this.date, this.getDate());
-            if (router.to(this.mCurrentPlugin).send(cwyjsf.Event.CW_ISMONTH_SUPPORTED)) {
-                this.createDate({ nowDate: Util.date2Str(this.date) });
+            if (router.to(this.plugin(this.mItemSelector.getDataNode(this.mItemSelector.getPath()))).send(cwyjsf.Event.CW_ISMONTH_SUPPORTED)) {
+                this.createInternalDate(this.mOpt.dt, { year: this.mOpt.date.year, month: this.mOpt.date.month }, { nowDate: Util.date2Str(this.date) });
             }
             else {
-                this.createDate({
-                    format: "YYYY年",
-                    nowDate: Util.date2Str(this.date) });
+                this.createInternalDate(this.mOpt.dt, { year: this.mOpt.date.year }, { nowDate: Util.date2Str(this.date) });
             }
+        };
+        CwyjsfFrameView.prototype.updateUI = function () {
+            _super.prototype.updateUI.call(this);
+        };
+        CwyjsfFrameView.prototype.updateTypeSelector = function (width) {
+            var _this = this;
+            if (width === void 0) { width = 285; }
+            var ret = _super.prototype.updateTypeSelector.call(this, width);
+            this.mItemSelector.change(function () {
+                _this.updateDate();
+            });
+            return ret;
         };
         CwyjsfFrameView.prototype.init = function (opt) {
             this.date = $.extend({}, opt.date);
             _super.prototype.init.call(this, opt);
+            this.updateDate();
         };
         return CwyjsfFrameView;
     })(framework.basic.ShowFrameView);

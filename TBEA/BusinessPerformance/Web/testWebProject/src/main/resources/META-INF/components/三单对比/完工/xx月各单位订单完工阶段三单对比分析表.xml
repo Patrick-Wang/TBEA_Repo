@@ -462,6 +462,7 @@ where
      <boundaryGap>${true}</boundaryGap>
      <isValid>${!sbCtData.isEmpty}</isValid>
      <type>bar</type>
+     <title>沈变完工用量对比</title>
      <xNames type="array">硅钢用量,
 铜用量,
 油用量,
@@ -475,6 +476,7 @@ where
      <boundaryGap>${true}</boundaryGap>
      <isValid>${!hbCtData.isEmpty}</isValid>
      <type>bar</type>
+     <title>衡变完工用量对比</title>
      <xNames type="array">硅钢用量,
 铜用量,
 油用量,
@@ -488,6 +490,7 @@ where
      <boundaryGap>${true}</boundaryGap>
      <isValid>${!xbCtData.isEmpty}</isValid>
      <type>bar</type>
+     <title>新变完工用量对比</title>
      <xNames type="array">硅钢用量,
 铜用量,
 油用量,
@@ -501,6 +504,7 @@ where
      <isValid>${compIds.size > 1}</isValid>
      <boundaryGap>${true}</boundaryGap>
      <type>bar</type>
+     <title>新变、衡变、新变完工用量对比</title>
      <xNames type="array">硅钢用量,
 铜用量,
 油用量,

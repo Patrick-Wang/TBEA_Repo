@@ -74,6 +74,7 @@ module cwyjsf {
                     .then((jsonData:any) => {
                         this.mData = jsonData;
                         this.updateTable();
+                        this.adjustSize();
                     });
                 this.mAjax.get({
                         date: (this.getYear() - 1) + "-" + this.getMonth() + "-1",
@@ -82,6 +83,7 @@ module cwyjsf {
                     .then((jsonData:any) => {
                         this.mData1 = jsonData;
                         this.updateTable1();
+                        this.adjustSize();
                     });
             }
 

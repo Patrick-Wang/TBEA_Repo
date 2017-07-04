@@ -477,6 +477,7 @@ group by
      <boundaryGap>${false}</boundaryGap>
      <type>line</type>
      <xNames type="jarray">${dates1.asJson}</xNames>
+     <title>毛利率趋势</title>
      <yNames type="array">中标,
 执行,
 完工</yNames>
@@ -487,6 +488,7 @@ group by
      <isValid>${compIds.size > 1}</isValid>
      <boundaryGap>${false}</boundaryGap>
      <type>line</type>
+      <title>沈变、衡变、新变毛利率趋势</title>
      <xNames type="jarray">${dates1.asJson}</xNames>
      <yNames type="array">沈变,
 衡变,

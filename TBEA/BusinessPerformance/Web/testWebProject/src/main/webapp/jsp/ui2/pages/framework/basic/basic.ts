@@ -195,7 +195,6 @@ module framework.basic {
 
             this.updateTypeSelector();
             this.adjustHeader();
-
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
             this.updateUI();
         }
