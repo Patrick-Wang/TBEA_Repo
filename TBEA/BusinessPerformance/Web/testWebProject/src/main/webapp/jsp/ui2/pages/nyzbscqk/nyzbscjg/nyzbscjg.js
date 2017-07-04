@@ -70,6 +70,7 @@ var nyzbscqk;
                     return;
                 }
                 this.updateTable();
+                this.adjustSize();
             };
             ShowView.prototype.isSupported = function (compType) {
                 if (this.mZbkqId == plugin.wcwzbkqjg) {

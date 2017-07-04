@@ -111,6 +111,7 @@ module nyzbscqk {
                     return;
                 }
                 this.updateTable();
+                this.adjustSize();
             }
 
             protected init(opt:Option):void {

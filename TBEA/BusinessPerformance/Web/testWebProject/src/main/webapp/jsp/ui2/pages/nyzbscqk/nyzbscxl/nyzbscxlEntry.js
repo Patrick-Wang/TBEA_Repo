@@ -110,6 +110,7 @@ var nyzbscqk;
                     return;
                 }
                 this.updateTable();
+                this.adjustSize();
             };
             EntryView.prototype.init = function (opt) {
                 framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "月销量");

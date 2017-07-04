@@ -65,9 +65,11 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		for (int i = 0; i < order.size(); ++i){
 			objs.add(null);
 			for (int j = 0; j < sqlRet.size(); ++j){
-				if (order.get(i).equals(sqlRet.get(j)[by])){
-					objs.set(objs.size() - 1, sqlRet.get(j)[index]);
-					break;
+				if (sqlRet.get(j).length > by && sqlRet.get(j).length > index){
+					if (order.get(i).equals(sqlRet.get(j)[by])){
+						objs.set(objs.size() - 1, sqlRet.get(j)[index]);
+						break;
+					}
 				}
 			}
 		}
@@ -75,7 +77,9 @@ public class ListXmlInterpreter implements XmlInterpreter {
 
 	private void injectFromSql(List<Object> objs, List<Object[]> sqlRet, int index) {
 		for (int i = 0; i < sqlRet.size(); ++i){
-			objs.add(sqlRet.get(i)[index]);
+			if (sqlRet.get(i).length > index){
+				objs.add(sqlRet.get(i)[index]);
+			}
 		}
 	}
 	

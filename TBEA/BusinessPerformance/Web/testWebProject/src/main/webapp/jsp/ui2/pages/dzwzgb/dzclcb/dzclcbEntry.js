@@ -70,10 +70,10 @@ var dzwzgb;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -87,7 +87,7 @@ var dzwzgb;
                         submitData[i].push(allData[i][j]);
                         submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j - 2]) {
-                            Util.MessageBox.tip("有空内容 无法提交");
+                            Util.Toast.failed("有空内容 无法提交");
                             return;
                         }
                     }
@@ -99,10 +99,10 @@ var dzwzgb;
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         _this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -124,6 +124,7 @@ var dzwzgb;
                     return;
                 }
                 this.updateTable();
+                this.adjustSize();
             };
             EntryView.prototype.init = function (opt) {
                 framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");

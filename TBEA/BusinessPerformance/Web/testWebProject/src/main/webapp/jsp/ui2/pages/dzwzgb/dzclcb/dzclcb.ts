@@ -83,6 +83,7 @@ module dzwzgb {
                     return;
                 }
                 this.updateTable();
+                this.adjustSize();
             }
 
             public init(opt:Option):void {

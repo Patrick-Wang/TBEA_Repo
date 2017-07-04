@@ -66,9 +66,9 @@ module dzwzgb {
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("保存 成功");
+                        Util.Toast.success("保存 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -82,7 +82,7 @@ module dzwzgb {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j - 2] = submitData[i][j - 2].replace(new RegExp(' ', 'g'), '');
                         if ("" == submitData[i][j - 2]) {
-                            Util.MessageBox.tip("有空内容 无法提交")
+                            Util.Toast.failed("有空内容 无法提交")
                             return;
                         }
                     }
@@ -94,9 +94,9 @@ module dzwzgb {
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
                         this.pluginUpdate(dt, compType);
-                        Util.MessageBox.tip("提交 成功");
+                        Util.Toast.success("提交 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -120,6 +120,7 @@ module dzwzgb {
                 }
 
                 this.updateTable();
+                this.adjustSize();
             }
 
             protected init(opt:Option):void {

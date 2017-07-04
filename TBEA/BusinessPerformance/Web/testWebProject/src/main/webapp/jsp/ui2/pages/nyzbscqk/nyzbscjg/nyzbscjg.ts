@@ -66,6 +66,7 @@ module nyzbscqk {
                     return;
                 }
                 this.updateTable();
+                this.adjustSize();
             }
 
             protected isSupported(compType:Util.CompanyType):boolean {

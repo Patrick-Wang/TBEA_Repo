@@ -87,6 +87,7 @@ var dzwzgb;
                     return;
                 }
                 this.updateTable();
+                this.adjustSize();
             };
             ShowView.prototype.init = function (opt) {
                 framework.router.fromEp(this).to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_REGISTER, "大宗材料控成本");
