@@ -118,16 +118,29 @@ var tab;
             this.onClickHome = onClick;
             return this;
         };
-        Tab.prototype.internalOnClosed = function () {
+        Tab.prototype.internalOnBegin = function (id) {
             //if (this.closelist.length > 0){
             //    let id:any = this.closelist.splice(0, 1);
             //    this.interalCloseTab(id);
             //}else{
             //    this.closeStarted = false;
             //}
+            this.q("#" + id).prop("disabled", true);
+            this.q(".tab-close").prop("disabled", true);
+        };
+        Tab.prototype.internalOnEnd = function (id) {
+            //if (this.closelist.length > 0){
+            //    let id:any = this.closelist.splice(0, 1);
+            //    this.interalCloseTab(id);
+            //}else{
+            //    this.closeStarted = false;
+            //}
+            this.q("#" + id).prop("disabled", false);
+            this.q(".tab-close").prop("disabled", false);
         };
         Tab.prototype.interalCloseTab = function (id) {
             var _this = this;
+            this.internalOnBegin(id);
             var closed1 = false;
             var closed2 = false;
             var tabInfo;
@@ -189,7 +202,7 @@ var tab;
                     animHelper.remove();
                     closed1 = true;
                     if (closed1 && closed2) {
-                        _this.internalOnClosed();
+                        _this.internalOnEnd(id);
                     }
                 });
             }
@@ -210,7 +223,7 @@ var tab;
                 _this.q("#" + id).remove();
                 closed2 = true;
                 if (closed1 && closed2) {
-                    _this.internalOnClosed();
+                    _this.internalOnEnd(id);
                 }
             });
             if (undefined == this.getActiveTab()) {

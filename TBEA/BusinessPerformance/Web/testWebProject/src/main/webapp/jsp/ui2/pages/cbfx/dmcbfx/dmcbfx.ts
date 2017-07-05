@@ -147,7 +147,7 @@ module cbfx {
                 }
 
                 let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-                this.tableAssist.resizeHeight(maxTableBodyHeight);
+                this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
 
                 if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
                     jqgrid.setGridWidth(this.jqgridHost().width());

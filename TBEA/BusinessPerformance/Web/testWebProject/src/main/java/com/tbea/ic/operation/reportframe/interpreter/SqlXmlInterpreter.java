@@ -116,6 +116,8 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		lp = new LoggerProxy();
 		if (e.hasAttribute("logger")){
 			lp.getLogger(e.getAttribute("logger"));
+		}else{
+			lp.getLogger("SQL");
 		}
 		
 		lp.info("database : " + trans);

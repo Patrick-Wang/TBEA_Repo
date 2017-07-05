@@ -1,0 +1,369 @@
+<components>
+	<service id="servCwsfSjtj" transaction="transactionManager">
+		<list type="string" id="gs">特变电工（德阳）电缆股份有限公司,
+			特变电工山东鲁能泰山电缆有限公司 ,
+			特变电工衡阳变压器有限公司,
+			天津市特变电工变压器有限公司,
+			特变电工沈阳变压器集团有限公司,
+			特变电工股份有限公司新疆线缆厂本部 ,
+			特变电工新疆电工材料有限公司 ,
+			西北电线电缆检测中心有限公司 ,
+			新疆中特物流有限公司 ,
+			特变电工股份有限公司新疆变压器厂本部 ,
+			特变电工智能电器有限公司 ,
+			特变电工超高压电气有限公司 ,
+			新疆特变电工国际贸易有限公司 ,
+			新疆新特国际物流有限公司 ,
+			特变电工股份有限公司（机关） ,
+			新疆天池能源有限责任公司,
+			特变电工国际工程有限公司 ,
+			特变电工股份有限公司新疆后勤管理分公司 ,
+			新疆特变电工工业文化旅游有限责任公司 ,
+			特变电工股份有限公司能源动力分公司） ,
+			新特能源股份有限公司 ,
+			特变电工新疆新能源股份有限公司 ,
+			新疆众和股份有限公司,
+			新疆特变电工集团有限公司
+		</list>
+
+		<sql id="data" order="gs" by="0" colcount="27">select
+				companyName,--"公司名称"
+				VAT ,-- "增值税"
+				salesIncome ,-- "企业所得税"
+				tariff ,-- "关税"
+				businessTax ,-- "营业税(数字 单位元)"
+				urbanConstructionTax ,-- "城建税(数字 单位元)"
+				educationSurtax ,-- "教育费附加(数字单位元)"
+				localEducationSurtax ,-- "地方教育附加(数字 单位元)"
+				stampTax ,-- "印花税(数字单位元)"
+				personalIncomeTax ,-- "个人所得税(数字 单位元)"
+				buildingTax ,-- "房产税(数字单位元)"
+				landUseTax ,-- "土地使用税(数字 单位元)"
+				landVTA ,-- "土地增值税(数字 单位元)"
+				landOccupationTax ,-- "耕地占用税(数字 单位元)"
+				vehicleAndVesselTax ,--"车船使用税(数字 单位元)"
+				resourceTax ,-- "资源税(数字 单位元)"
+				deedTax ,-- "契税(数字 单位元)",
+				isnull( VAT ,0) +
+				isnull( salesIncome ,0) +
+				isnull( tariff ,0) +
+				isnull( businessTax ,0) +
+				isnull( urbanConstructionTax ,0) +
+				isnull(	educationSurtax ,0) +
+				isnull( localEducationSurtax ,0) +
+				isnull(	stampTax ,0) +
+				isnull( personalIncomeTax ,0) +
+				isnull( buildingTax ,0)	+
+				isnull( landUseTax ,0) +
+				isnull( landVTA ,0) +
+				isnull(landOccupationTax ,0) +
+				isnull( vehicleAndVesselTax ,0) +
+				isnull(	resourceTax ,0) +
+				isnull( deedTax ,0) total,
+				floodPreventionCharges ,--"防洪费(数字 单位元)"
+				waterConservancyFund ,-- "水利基金(数字 单位元)"
+				mineralResourceCompensation ,-- "矿产资源补偿费(数字 单位元)"
+				mtzydfjjfzf ,--"煤炭资源地方经济发展费(数字 单位元)"
+				coalFee ,-- "排污费(数字 单位元)"
+				labourUunionExpenditure ,-- "工会经费(数字 单位元)"
+				employmentSecurityForDisabledPersons ,-- "残疾人就业保障金(数字 单位元)"
+				other ,--"其他(数字 单位元)"
+				isnull( floodPreventionCharges ,0) +
+				isnull(waterConservancyFund ,0) +
+				isnull( mineralResourceCompensation ,0) +
+				isnull( mtzydfjjfzf ,0) +
+				isnull( coalFee ,0) +
+				isnull(	labourUunionExpenditure ,0) +
+				isnull(employmentSecurityForDisabledPersons ,0) +
+				isnull( other ,0) total2
+			from
+				financial_tax
+			where
+				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
+ 				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 
+		</sql>
+		<list id="ids" type="int">
+			<item from="1" to="${data.size}" />
+		</list>
+
+		<list type="string" id="qy">疆外 ,
+			疆外 ,
+			疆外 ,
+			疆外 ,
+			疆外 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉州 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉州 ,
+			新疆 ,
+			新疆 ,
+			新疆
+		</list>
+
+		<context value="${counterFactory.newCounter}" key="counter" />
+		<table id="result" rowIds="ids" export="true">
+			<col list="qy" />
+			<col list="gs" />
+			<list sql="data" value="${counter.reset[1].val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+		</table>
+	</service>
+	<controller id="servFmtterCwsfSjtj">
+		<formatter id="fmtData" export="true">
+			<EmptyFormatter>
+				<DefaultMatcher cols="0,1" />
+			</EmptyFormatter>
+			<NumberFormatter reservedCount="1">
+			</NumberFormatter>
+		</formatter>
+	</controller>
+	<controller id="cwsfSjtjUpdate">
+		<context key="dStart" value="${request.dStart.asCalendar}"/>
+  		<context key="dEnd" value="${request.dEnd.asCalendar}"/>
+		<callservice id="servCwsfSjtj" />
+		<callcontroller id="servFmtterCwsfSjtj" />
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+		<response type="json">
+			<header type="array">
+				<item>
+					<name> 区域划分			</name>
+				</item>
+				<item>
+					<name> 单位名称			</name>
+				</item>
+				<item>
+					<name> 税金			</name>
+					<sub type="array">
+						<item>
+							<name> 增值税	</name>
+						</item>
+						<item>
+							<name> 企业所得税	</name>
+						</item>
+						<item>
+							<name> 关税	</name>
+						</item>
+						<item>
+							<name> 营业税	</name>
+						</item>
+						<item>
+							<name> 城建税	</name>
+						</item>
+						<item>
+							<name> 教育费附加	</name>
+						</item>
+						<item>
+							<name> 地方教育附加	</name>
+						</item>
+						<item>
+							<name> 印花税	</name>
+						</item>
+						<item>
+							<name> 个人所得税	</name>
+						</item>
+						<item>
+							<name> 房产税	</name>
+						</item>
+						<item>
+							<name> 土地使用税	</name>
+						</item>
+						<item>
+							<name> 土地增值税	</name>
+						</item>
+						<item>
+							<name> 耕地占用税	</name>
+						</item>
+						<item>
+							<name> 车船使用税	</name>
+						</item>
+						<item>
+							<name> 资源税	</name>
+						</item>
+						<item>
+							<name> 契税	</name>
+						</item>
+					</sub>
+				</item>
+				<item>
+					<name> 税金合计			</name>
+				</item>
+				<item>
+					<name> 行政事业收费			</name>
+					<sub type="array">
+						<item>
+							<name> 防洪费	</name>
+						</item>
+						<item>
+							<name> 水利基金	</name>
+						</item>
+						<item>
+							<name> 矿产资源补偿费	</name>
+						</item>
+						<item>
+							<name> 煤炭资源地方经济发展费	</name>
+						</item>
+						<item>
+							<name> 排污费	</name>
+						</item>
+						<item>
+							<name> 工会经费 </name>
+						</item>
+						<item>
+							<name> 残疾人就业保障金	</name>
+						</item>
+						<item>
+							<name> 其他	</name>
+						</item>
+					</sub>
+				</item>
+				<item>
+					<name> 行政事业收费合计	</name>
+				</item>
+
+			</header>
+			<width>1300</width>
+
+			<data>${fmtServ.result}</data>
+		</response>
+	</controller>
+	<controller id="cwsfSjtjExport">
+		<context key="dStart" value="${request.dStart.asCalendar}"/>
+  		<context key="dEnd" value="${request.dEnd.asCalendar}"/>
+		<callservice id="servCwsfSjtj" />
+		<callcontroller id="servFmtterCwsfSjtj" inline="true" />
+		<ExcelTemplate id="excelTemplate" sheet="税金统计" />
+		<list id="title" type="string">
+			区域划分 ,
+			单位名称 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金 ,
+			税金合计 ,
+			行政事业收费 ,
+			行政事业收费 ,
+			行政事业收费 ,
+			行政事业收费 ,
+			行政事业收费 ,
+			行政事业收费 ,
+			行政事业收费 ,
+			行政事业收费 ,
+			行政事业收费合计
+		</list>
+		<list id="title1" type="string">
+			区域划分 ,
+			单位名称 ,
+			增值税 ,
+			企业所得税 ,
+			关税 ,
+			营业税 ,
+			城建税 ,
+			教育费附加 ,
+			地方教育附加 ,
+			印花税 ,
+			个人所得税 ,
+			房产税 ,
+			土地使用税 ,
+			土地增值税 ,
+			耕地占用税 ,
+			车船使用税 ,
+			资源税 ,
+			契税 ,
+			税金合计 ,
+			防洪费 ,
+			水利基金 ,
+			矿产资源补偿费 ,
+			煤炭资源地方经济发展费 ,
+			排污费 ,
+			工会经费 ,
+			残疾人就业保障金 ,
+			其他 ,
+			行政事业收费合计
+		</list>
+		<formatter id="excel">
+			<ExcelTitleFilter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="0" col="0" />
+				<titles>
+					<title ref="title" />
+					<title ref="title1" />
+				</titles>
+			</ExcelTitleFilter>
+			<ExcelHeaderCenterFormatter>
+				<DefaultMatcher cols="0, 1" />
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="2" col="0" />
+			</ExcelHeaderCenterFormatter>
+			<ExcelOffsetFormatter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="2" col="0" />
+			</ExcelOffsetFormatter>
+		</formatter>
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+			<formatter ref="excel" />
+		</formatterServer>
+		<response type="excel" ref="excelTemplate" name="${request.dStart.asString}到${request.dEnd.asString}税金统计.xls"
+			serv="fmtServ" />
+	</controller>
+	<controller id="cwsfSjtj">
+		<response type="jsp" name="sddb/sddb">
+			<map key="date" value="${calendar.current.format}" />
+			<map key="dateStart" value="2014-1-1" />
+			<map key="updateUrl" value="cwsfSjtjUpdate" />
+			<map key="exportUrl" value="cwsfSjtjExport" />
+			<map key="title" value="税金统计" />
+		</response>
+	</controller>
+</components>

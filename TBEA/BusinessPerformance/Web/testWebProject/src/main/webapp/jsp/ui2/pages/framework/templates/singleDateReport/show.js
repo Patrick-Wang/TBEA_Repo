@@ -127,7 +127,7 @@ var framework;
                         jqgrid.setGridWidth($("#" + this.opt.host).width());
                     }
                     var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-                    this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                    this.mTableAssist && this.mTableAssist.resizeHeight(maxTableBodyHeight);
                     if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
                         jqgrid.setGridWidth($("#" + this.opt.host).width());
                     }

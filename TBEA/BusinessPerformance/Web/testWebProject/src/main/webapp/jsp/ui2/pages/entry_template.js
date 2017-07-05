@@ -335,7 +335,7 @@ var entry_template;
                 jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
             }
             var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-            this.mTableAssist.resizeHeight(maxTableBodyHeight);
+            this.mTableAssist && this.mTableAssist.resizeHeight(maxTableBodyHeight);
             if ($("#" + this.mOpt.tableId).width() < $("#" + this.mOpt.tableId).children().eq(0).width()) {
                 jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
             }

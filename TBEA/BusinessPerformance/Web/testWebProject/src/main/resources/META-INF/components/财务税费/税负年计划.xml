@@ -1,41 +1,42 @@
 <components>
- <service id="servCwsfnjhImportEntry" transaction="transactionManager">
-  <context key="counter" value="${counterFactory.newCounter}"/>
-  <merge data="${data}" table="financial_tax_year_plan">
-  	<where>
-    <companyName		type="string"	 ref="0"/>
-	<year		type="int"	 ref="1"/>
-	<month		type="int"	 ref="2"/>
-   </where>
-   <set>
-    <companyName	type="string"	 ref="${counter.reset[0].val}"/>
-	<year	type="int"	 ref="${counter.next.val}"/>
-	<month	type="int"	 ref="${counter.next.val}"/>
-	<totalTaxBudget	type="string"	 ref="${counter.next.val}"/>
-	<saleIncome	type="string"	 ref="${counter.next.val}"/>
-	<VTA	type="string"	 ref="${counter.next.val}"/>
-	<totalProfit	type="string"	 ref="${counter.next.val}"/>
-	<corporateIncomeTax	type="string"	 ref="${counter.next.val}"/>
-    <source type="string" value="${src}"/>
-    <time type="date" value="${time}"/>
-   </set>
-  </merge>
- </service>
- <controller id="cwsfnjhImport">
-  <context key="data" value="${request.upfile.asExcel}"/>
-  <context key="src" value="${session.account.name} Excel 导入"/>
- <context key="compId" value="${orgs.BMDBOrganization.ids[request.compId.asInt]}"/>
-  <context key="time" value="${calendar.current.secondFormat}"/>
-  <callservice id="servCwsfnjhImportEntry"/>
-  <response type="json">
-   <errorCode>0</errorCode>
-   <message>OK</message>
-  </response>
- </controller>
- <controller id="cwsfnjhImportJsp">
-  <response type="jsp" name="components/import_data">
-   <map key="importUrl" value="cwsfnjhImport"/>
-   <map key="title" value="税负年计划导入"/>
-  </response>
- </controller>
+	<service id="servCwsfnjhImportEntry" transaction="transactionManager">
+		<context key="counter" value="${counterFactory.newCounter}" />
+		<merge data="${data}" table="financial_tax_year_plan">
+			<where>
+				<companyName type="string" ref="0" />
+				<year type="int" ref="1" />
+				<month type="int" ref="2" />
+			</where>
+			<set>
+				<companyName type="string" ref="${counter.reset[0].val}" />
+				<year type="int" ref="${counter.next.val}" />
+				<month type="int" ref="${counter.next.val}" />
+				<totalTaxBudget type="string" ref="${counter.next.val}" />
+				<saleIncome type="string" ref="${counter.next.val}" />
+				<VTA type="string" ref="${counter.next.val}" />
+				<totalProfit type="string" ref="${counter.next.val}" />
+				<corporateIncomeTax type="string" ref="${counter.next.val}" />
+				<source type="string" value="${src}" />
+				<time type="date" value="${time}" />
+			</set>
+		</merge>
+	</service>
+	<controller id="cwsfnjhImport">
+		<context key="data" value="${request.upfile.asExcel}" />
+		<context key="src" value="${session.account.name} Excel 导入" />
+		<context key="compId"
+			value="${orgs.BMDBOrganization.ids[request.compId.asInt]}" />
+		<context key="time" value="${calendar.current.secondFormat}" />
+		<callservice id="servCwsfnjhImportEntry" />
+		<response type="json">
+			<errorCode>0</errorCode>
+			<message>OK</message>
+		</response>
+	</controller>
+	<controller id="cwsfnjhImportJsp">
+		<response type="jsp" name="components/import_data">
+			<map key="importUrl" value="cwsfnjhImport" />
+			<map key="title" value="税负年计划导入" />
+		</response>
+	</controller>
 </components>

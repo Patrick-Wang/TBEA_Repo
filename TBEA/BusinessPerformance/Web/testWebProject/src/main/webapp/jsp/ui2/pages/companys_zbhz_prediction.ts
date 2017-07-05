@@ -251,7 +251,7 @@ module companys_zbhz_prediction{
             }
 
             let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 38 - 42 - $(".page-breadcrumbs").height() - $(".page-header").height();
-            this.tableAssist.resizeHeight(maxTableBodyHeight);
+            this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
 
             if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
                 jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());

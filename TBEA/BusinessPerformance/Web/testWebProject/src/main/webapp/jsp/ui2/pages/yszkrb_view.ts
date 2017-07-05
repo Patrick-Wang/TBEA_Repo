@@ -142,7 +142,7 @@ module yszkrb_view {
             }
 
             let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-            this.tableAssist.resizeHeight(maxTableBodyHeight);
+            this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
 
             if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
                 jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());

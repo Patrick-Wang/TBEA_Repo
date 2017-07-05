@@ -132,7 +132,7 @@ module sbdscqyqk {
                 }
 
                 let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-                this.mTableAssist.resizeHeight(maxTableBodyHeight);
+                this.mTableAssist && this.mTableAssist.resizeHeight(maxTableBodyHeight);
 
                 if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
                     jqgrid.setGridWidth(this.jqgridHost().width());

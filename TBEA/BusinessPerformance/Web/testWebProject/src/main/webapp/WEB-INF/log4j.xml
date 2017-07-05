@@ -87,6 +87,13 @@
       <appender-ref ref="console" />
    </logger>  
    
+   <logger name="SQL">  
+      <level value="INFO" />  
+      <appender-ref ref=" DEFAULT-APPENDER" />
+      <appender-ref ref="console" />
+   </logger>  
+   
+   
    <logger name="ACCOUNT">  
       <level value="DEBUG" />  
       <appender-ref ref="DEFAULT-APPENDER" />
