@@ -12,6 +12,7 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE tax_auth
 CREATE TABLE [dbo].[tax_auth](	
 	[id] 	[int] IDENTITY(1,1) NOT NULL	,		
+	area varchar(50),
 	company	varchar(100)	,--	"公司名称（请严格参照公司名称对照表）"
 	userName	varchar(1000)	--	"用户名"
 PRIMARY KEY CLUSTERED 			

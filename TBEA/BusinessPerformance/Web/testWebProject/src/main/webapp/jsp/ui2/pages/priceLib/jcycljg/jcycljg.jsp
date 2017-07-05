@@ -149,8 +149,6 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/hzb_companys.js"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
-<script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/priceLib/jcycljg/jcycljgdef.js"
 	type="text/javascript"></script>
 <script
@@ -260,5 +258,7 @@
 	</script>
 
 </body>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
 <!--  /Body -->
 </html>

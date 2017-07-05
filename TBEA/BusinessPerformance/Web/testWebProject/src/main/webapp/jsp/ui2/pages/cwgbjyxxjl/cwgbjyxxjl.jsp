@@ -147,8 +147,6 @@
 <%@include file="../framework/basic/basicShow.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/ui2/pages/cwgbjyxxjl/cwgbjyxxjldef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/ui2/pages/cwgbjyxxjl/cwgbjyxxjl.js" type="text/javascript"></script>
-<script
-	src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <%@include file="../../ie8-b.jsp"%>
 </head>
 <!-- /Head -->
@@ -246,5 +244,7 @@
 	</script>
 
 </body>
+<script
+	src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <!--  /Body -->
 </html>

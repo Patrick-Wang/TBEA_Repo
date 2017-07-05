@@ -20,12 +20,6 @@ var sddb;
     (function (sddb) {
         var router = framework.router;
         var FRAME_ID = framework.basic.endpoint.FRAME_ID;
-        var echartsInit = echarts.init;
-        echarts.init = function (e) {
-            $(e).empty();
-            $(e).removeAttr("_echarts_instance_");
-            return echartsInit.call(echarts, e);
-        };
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {

@@ -17,12 +17,7 @@ module sddb {
         import router = framework.router;
         import FRAME_ID = framework.basic.endpoint.FRAME_ID;
 
-        let echartsInit = echarts.init;
-        echarts.init = function(e){
-            $(e).empty();
-            $(e).removeAttr("_echarts_instance_");
-            return echartsInit.call(echarts, e);
-        }
+
 
         //class JQGridAssistantFactory {
         //    public static createTable(gridName:string, headers:Util.Header[]):JQTable.JQGridAssistant {

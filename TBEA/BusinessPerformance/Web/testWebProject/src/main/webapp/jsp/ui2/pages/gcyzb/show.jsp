@@ -156,8 +156,6 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/messageBox.js"
 	type="text/javascript"></script>
-<script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
 <%@include file="../framework/basic/basicShow.jsp"%>
 	<script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/singleDateReport/show.js"></script>
 <script
@@ -305,5 +303,7 @@
 	</script>
 
 </body>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
 <!--  /Body -->
 </html>

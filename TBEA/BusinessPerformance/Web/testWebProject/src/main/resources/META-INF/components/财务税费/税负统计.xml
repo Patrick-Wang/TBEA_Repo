@@ -1,17 +1,41 @@
 <components>
 	<service id="servCwsfSjtj" transaction="transactionManager">
+		<list type="string" id="gs">特变电工（德阳）电缆股份有限公司,
+			特变电工山东鲁能泰山电缆有限公司 ,
+			特变电工衡阳变压器有限公司,
+			天津市特变电工变压器有限公司,
+			特变电工沈阳变压器集团有限公司,
+			特变电工股份有限公司新疆线缆厂本部 ,
+			特变电工新疆电工材料有限公司 ,
+			西北电线电缆检测中心有限公司 ,
+			新疆中特物流有限公司 ,
+			特变电工股份有限公司新疆变压器厂本部 ,
+			特变电工智能电器有限公司 ,
+			特变电工超高压电气有限公司 ,
+			新疆特变电工国际贸易有限公司 ,
+			新疆新特国际物流有限公司 ,
+			特变电工股份有限公司（机关） ,
+			新疆天池能源有限责任公司,
+			特变电工国际工程有限公司 ,
+			特变电工股份有限公司新疆后勤管理分公司 ,
+			新疆特变电工工业文化旅游有限责任公司 ,
+			特变电工股份有限公司能源动力分公司） ,
+			新特能源股份有限公司 ,
+			特变电工新疆新能源股份有限公司 ,
+			新疆众和股份有限公司,
+			新疆特变电工集团有限公司
+		</list>
 
 		<sql id="gsSql">select
-				area,
 				company
 			from
 				tax_auth
 			where
-				userName = ${session.account.name}
+				userName = ${request.account.name}
 		</sql>
-		
-		<list type="string" id="gs" sql="gsSql" value="1"/>
-		<list type="string" id="qy" sql="gsSql" value="0"/>
+
+		<list id="gs" sql="gsSql" value="${0}" />
+
 		<sql id="data" order="gs" by="0" colcount="27">select
 				companyName,--"公司名称"
 				isnull(sum(isnull(	VAT 	  ,0)), 0 )	c1,
@@ -74,6 +98,31 @@
 			<item from="1" to="${data.size}" />
 		</list>
 
+		<list type="string" id="qy">疆外 ,
+			疆外 ,
+			疆外 ,
+			疆外 ,
+			疆外 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉州 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉市 ,
+			昌吉州 ,
+			新疆 ,
+			新疆 ,
+			新疆
+		</list>
 
 		<context value="${counterFactory.newCounter}" key="counter" />
 		<table id="result" rowIds="ids" export="true">

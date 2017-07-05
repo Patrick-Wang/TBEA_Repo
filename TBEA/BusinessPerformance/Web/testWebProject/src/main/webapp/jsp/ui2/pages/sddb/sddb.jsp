@@ -155,8 +155,6 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/sddb/sddbdef.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/sddb/sddb.js"></script>
-<script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
 <%@include file="../../ie8-b.jsp"%>
 
 <style>
@@ -318,5 +316,7 @@
 	</script>
 
 </body>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
 <!--  /Body -->
 </html>

@@ -2,12 +2,6 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 var nwbzlqk;
 (function (nwbzlqk) {
-    var echartsInit = echarts.init;
-    echarts.init = function (e) {
-        $(e).empty();
-        $(e).removeAttr("_echarts_instance_");
-        return echartsInit.call(echarts, e);
-    };
     (function (PageType) {
         PageType[PageType["NONE"] = 0] = "NONE";
         PageType[PageType["APPROVE"] = 1] = "APPROVE";
