@@ -21,18 +21,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="nyzbscjgEntry.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/nyzbscqk/nyzbscjg/nyzbscjgEntry.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="114" column="13" selection-start-line="114" selection-start-column="13" selection-end-line="114" selection-end-column="13" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="tab.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tabs/tab.ts">
           <provider selected="true" editor-type-id="text-editor">
@@ -85,7 +73,43 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <folding>
+                <marker date="1499244901380" expanded="true" signature="345:12874" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="709:792" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="819:914" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="942:1042" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="1050:1153" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="1160:1264" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="1294:1387" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="1394:1489" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="1496:1595" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="1602:1700" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="1863:1945" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="2030:2141" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="2173:2289" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="2368:2468" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="2477:2600" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="2655:2750" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="3043:3140" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="3279:3386" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="3457:3537" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="3684:3797" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="3868:3953" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="4107:4225" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="4234:4355" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="4364:4486" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="4495:4611" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="4620:4736" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="4769:4877" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="4951:4984" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="5213:5318" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="5327:5434" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="5443:5551" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="5561:5663" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="5728:5748" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="5876:5972" placeholder="..." />
+                <marker date="1499244901380" expanded="true" signature="5982:6068" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -100,14 +124,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nwbzlqkdef.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="nwbzlqkdef.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/nwbzlqk/nwbzlqkdef.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0862866">
+            <state vertical-scroll-proportion="0.0">
               <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="echarts-plain-2-0-0.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.9098229">
+              <caret line="43" column="1" selection-start-line="43" selection-start-column="1" selection-end-line="43" selection-end-column="1" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -128,7 +162,7 @@
         <entry file="file://$PROJECT_DIR$/pages/sddb/sddb.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-0.6086956">
-              <caret line="262" column="26" selection-start-line="262" selection-start-column="26" selection-end-line="262" selection-end-column="26" />
+              <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="262" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -196,8 +230,8 @@
         <option value="$PROJECT_DIR$/tabs/tab.ts" />
         <option value="$PROJECT_DIR$/jquery/jqueryex.js" />
         <option value="$PROJECT_DIR$/pages/sddb/sddb/sddb.ts" />
-        <option value="$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/nwbzlqkdef.ts" />
+        <option value="$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js" />
       </list>
     </option>
   </component>
@@ -302,29 +336,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sddb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui2" />
+              <option name="myItemId" value="www2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sddb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sddb" />
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -432,7 +448,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="886" extended-state="7" />
+    <frame x="-8" y="-8" width="1456" height="886" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20803949" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -763,7 +779,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -840,7 +856,7 @@
     <entry file="file://$PROJECT_DIR$/pages/sddb/sddb.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.6086956">
-          <caret line="262" column="26" selection-start-line="262" selection-start-column="26" selection-end-line="262" selection-end-column="26" />
+          <caret line="262" column="0" selection-start-line="262" selection-start-column="0" selection-end-line="262" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -865,16 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8647343">
-          <caret line="43" column="1" selection-start-line="43" selection-start-column="1" selection-end-line="43" selection-end-column="1" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/sddb/sddb/sddb.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -889,7 +895,43 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <marker date="1499244901380" expanded="true" signature="345:12874" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="709:792" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="819:914" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="942:1042" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="1050:1153" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="1160:1264" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="1294:1387" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="1394:1489" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="1496:1595" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="1602:1700" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="1863:1945" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="2030:2141" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="2173:2289" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="2368:2468" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="2477:2600" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="2655:2750" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="3043:3140" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="3279:3386" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="3457:3537" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="3684:3797" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="3868:3953" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="4107:4225" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="4234:4355" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="4364:4486" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="4495:4611" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="4620:4736" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="4769:4877" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="4951:4984" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="5213:5318" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="5327:5434" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="5443:5551" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="5561:5663" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="5728:5748" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="5876:5972" placeholder="..." />
+            <marker date="1499244901380" expanded="true" signature="5982:6068" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -903,11 +945,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/nwbzlqk/nwbzlqkdef.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0862866">
+        <state vertical-scroll-proportion="0.0">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9098229">
+          <caret line="43" column="1" selection-start-line="43" selection-start-column="1" selection-end-line="43" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
