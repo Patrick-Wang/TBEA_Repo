@@ -21,18 +21,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dzwzgb.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/dzwzgb/dzwzgb.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="dzclcb.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/dzwzgb/dzclcb/dzclcb.ts">
           <provider selected="true" editor-type-id="text-editor">
@@ -81,15 +69,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tab.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tab.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tabs/tab.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7625202">
+            <state vertical-scroll-proportion="-15.733334">
               <caret line="279" column="13" selection-start-line="279" selection-start-column="13" selection-end-line="279" selection-end-column="13" />
               <folding>
                 <marker date="1499238104842" expanded="true" signature="1364:1376" placeholder="..." />
                 <marker date="1499238104842" expanded="true" signature="6434:6460" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jqueryex.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jquery/jqueryex.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6687211">
+              <caret line="130" column="60" selection-start-line="130" selection-start-column="60" selection-end-line="130" selection-end-column="60" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -151,7 +149,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pages/nwbzlqk/byqysazzlwt/byqysazzlwt.ts" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/byqwbzlwttjqk/byqwbzlwttjqk.jsp" />
         <option value="$PROJECT_DIR$/pages/cpzlqk/cpzlqk.jsp" />
         <option value="$PROJECT_DIR$/pages/cpzlqk/xlacptjjg/xlacptjjgEntry.js" />
@@ -202,6 +199,7 @@
         <option value="$PROJECT_DIR$/pages/nyzbscqk/nyzbscjg/nyzbscjgEntry.ts" />
         <option value="$PROJECT_DIR$/pages/nyzbscqk/nyzbscxl/nyzbscxlEntry.ts" />
         <option value="$PROJECT_DIR$/tabs/tab.ts" />
+        <option value="$PROJECT_DIR$/jquery/jqueryex.js" />
       </list>
     </option>
   </component>
@@ -257,6 +255,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jquery" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -346,7 +358,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1456" height="886" extended-state="7" />
+    <frame x="-8" y="-8" width="1456" height="886" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20803949" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -384,13 +396,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/priceLib/jcycljg/jcycljg.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/priceLib/jcycljg/jcycljg.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -402,6 +407,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.9130435">
           <caret line="13" column="78" selection-start-line="13" selection-start-column="78" selection-end-line="13" selection-end-column="78" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -437,6 +443,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.4347825">
           <caret line="262" column="26" selection-start-line="262" selection-start-column="26" selection-end-line="262" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -458,6 +465,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-29.391304">
           <caret line="298" column="34" selection-start-line="298" selection-start-column="28" selection-end-line="298" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -682,7 +690,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -765,12 +773,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tabs/tab.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7625202">
+        <state vertical-scroll-proportion="-15.733334">
           <caret line="279" column="13" selection-start-line="279" selection-start-column="13" selection-end-line="279" selection-end-column="13" />
           <folding>
             <marker date="1499238104842" expanded="true" signature="1364:1376" placeholder="..." />
             <marker date="1499238104842" expanded="true" signature="6434:6460" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jquery/jqueryex.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6687211">
+          <caret line="130" column="60" selection-start-line="130" selection-start-column="60" selection-end-line="130" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>

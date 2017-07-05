@@ -26,61 +26,73 @@
 			新疆特变电工集团有限公司
 		</list>
 
+		<sql id="gsSql">select
+				company
+			from
+				tax_auth
+			where
+				userName = ${request.account.name}
+		</sql>
+
+		<list id="gs" sql="gsSql" value="${0}" />
+
 		<sql id="data" order="gs" by="0" colcount="27">select
 				companyName,--"公司名称"
-				VAT ,-- "增值税"
-				salesIncome ,-- "企业所得税"
-				tariff ,-- "关税"
-				businessTax ,-- "营业税(数字 单位元)"
-				urbanConstructionTax ,-- "城建税(数字 单位元)"
-				educationSurtax ,-- "教育费附加(数字单位元)"
-				localEducationSurtax ,-- "地方教育附加(数字 单位元)"
-				stampTax ,-- "印花税(数字单位元)"
-				personalIncomeTax ,-- "个人所得税(数字 单位元)"
-				buildingTax ,-- "房产税(数字单位元)"
-				landUseTax ,-- "土地使用税(数字 单位元)"
-				landVTA ,-- "土地增值税(数字 单位元)"
-				landOccupationTax ,-- "耕地占用税(数字 单位元)"
-				vehicleAndVesselTax ,--"车船使用税(数字 单位元)"
-				resourceTax ,-- "资源税(数字 单位元)"
-				deedTax ,-- "契税(数字 单位元)",
-				isnull( VAT ,0) +
-				isnull( salesIncome ,0) +
-				isnull( tariff ,0) +
-				isnull( businessTax ,0) +
-				isnull( urbanConstructionTax ,0) +
-				isnull(	educationSurtax ,0) +
-				isnull( localEducationSurtax ,0) +
-				isnull(	stampTax ,0) +
-				isnull( personalIncomeTax ,0) +
-				isnull( buildingTax ,0)	+
-				isnull( landUseTax ,0) +
-				isnull( landVTA ,0) +
-				isnull(landOccupationTax ,0) +
-				isnull( vehicleAndVesselTax ,0) +
-				isnull(	resourceTax ,0) +
-				isnull( deedTax ,0) total,
-				floodPreventionCharges ,--"防洪费(数字 单位元)"
-				waterConservancyFund ,-- "水利基金(数字 单位元)"
-				mineralResourceCompensation ,-- "矿产资源补偿费(数字 单位元)"
-				mtzydfjjfzf ,--"煤炭资源地方经济发展费(数字 单位元)"
-				coalFee ,-- "排污费(数字 单位元)"
-				labourUunionExpenditure ,-- "工会经费(数字 单位元)"
-				employmentSecurityForDisabledPersons ,-- "残疾人就业保障金(数字 单位元)"
-				other ,--"其他(数字 单位元)"
-				isnull( floodPreventionCharges ,0) +
-				isnull(waterConservancyFund ,0) +
-				isnull( mineralResourceCompensation ,0) +
-				isnull( mtzydfjjfzf ,0) +
-				isnull( coalFee ,0) +
-				isnull(	labourUunionExpenditure ,0) +
-				isnull(employmentSecurityForDisabledPersons ,0) +
-				isnull( other ,0) total2
+				isnull(sum(isnull(	VAT 	  ,0)), 0 )	c1
+				isnull(sum(isnull(	salesIncome 	  ,0)), 0 )	c2
+				isnull(sum(isnull(	tariff 	  ,0)), 0 )	c3
+				isnull(sum(isnull(	businessTax 	  ,0)), 0 )	c4
+				isnull(sum(isnull(	urbanConstructionTax 	  ,0)), 0 )	c5
+				isnull(sum(isnull(	educationSurtax 	  ,0)), 0 )	c6
+				isnull(sum(isnull(	localEducationSurtax 	  ,0)), 0 )	c7
+				isnull(sum(isnull(	stampTax 	  ,0)), 0 )	c8
+				isnull(sum(isnull(	personalIncomeTax 	  ,0)), 0 )	c9
+				isnull(sum(isnull(	buildingTax 	  ,0)), 0 )	c10
+				isnull(sum(isnull(	landUseTax 	  ,0)), 0 )	c11
+				isnull(sum(isnull(	landVTA 	  ,0)), 0 )	c12
+				isnull(sum(isnull(	landOccupationTax 	  ,0)), 0 )	c13
+				isnull(sum(isnull(	vehicleAndVesselTax 	  ,0)), 0 )	c14
+				isnull(sum(isnull(	resourceTax 	  ,0)), 0 )	c15
+				isnull(sum(isnull(	deedTax 	  ,0)), 0 )	c16
+				isnull(sum(isnull(	VAT 	  ,0)), 0 )	+
+				isnull(sum(isnull(	salesIncome 	  ,0)), 0 )	+
+				isnull(sum(isnull(	tariff 	  ,0)), 0 )	+
+				isnull(sum(isnull(	businessTax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	urbanConstructionTax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	educationSurtax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	localEducationSurtax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	stampTax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	personalIncomeTax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	buildingTax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	landUseTax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	landVTA 	  ,0)), 0 )	+
+				isnull(sum(isnull(	landOccupationTax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	vehicleAndVesselTax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	resourceTax 	  ,0)), 0 )	+
+				isnull(sum(isnull(	deedTax 	  ,0)), 0 )	s1,
+				isnull(sum(isnull(	floodPreventionCharges 	  ,0)), 0 )	d1
+				isnull(sum(isnull(	waterConservancyFund 	  ,0)), 0 )	d2
+				isnull(sum(isnull(	mineralResourceCompensation 	  ,0)), 0 )	d3
+				isnull(sum(isnull(	mtzydfjjfzf 	  ,0)), 0 )	d4
+				isnull(sum(isnull(	coalFee 	  ,0)), 0 )	d5
+				isnull(sum(isnull(	labourUunionExpenditure 	  ,0)), 0 )	d6
+				isnull(sum(isnull(	employmentSecurityForDisabledPersons 	  ,0)), 0 )	d7
+				isnull(sum(isnull(	other 	  ,0)), 0 )	d8
+				isnull(sum(isnull(	floodPreventionCharges 	  ,0)), 0 )	+
+				isnull(sum(isnull(	waterConservancyFund 	  ,0)), 0 )	+
+				isnull(sum(isnull(	mineralResourceCompensation 	  ,0)), 0 )	+
+				isnull(sum(isnull(	mtzydfjjfzf 	  ,0)), 0 )	+
+				isnull(sum(isnull(	coalFee 	  ,0)), 0 )	+
+				isnull(sum(isnull(	labourUunionExpenditure 	  ,0)), 0 )	+
+				isnull(sum(isnull(	employmentSecurityForDisabledPersons 	  ,0)), 0 )	+
+				isnull(sum(isnull(	other 	  ,0)), 0 )	s2
 			from
 				financial_tax
 			where
 				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
  				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 
+ 			group by
+ 				companyName
 		</sql>
 		<list id="ids" type="int">
 			<item from="1" to="${data.size}" />

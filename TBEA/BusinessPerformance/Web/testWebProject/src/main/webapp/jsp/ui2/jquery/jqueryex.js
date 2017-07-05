@@ -120,7 +120,7 @@
 
 
                 if (window.parent){
-                    if(!$(window.parent.document.getElementsByName(window.name)).hasClass("gone")){
+                    if(!$(window.parent.document).find('iframe[name="' + window.name + '"]').hasClass("gone")){
                         onResize();
                     }else{
                         /*for (var i = 0; i < _un_resize_list__.length; ++i){
