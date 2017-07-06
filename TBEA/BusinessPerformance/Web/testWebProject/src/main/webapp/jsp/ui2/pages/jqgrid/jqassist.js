@@ -1375,7 +1375,7 @@ var JQTable;
             else {
                 grid.setGridHeight(ids.length * 28);
                 var bd = $("#gbox_" + this.mGridName + " .ui-jqgrid-bdiv")[0];
-                if (bd.clientHeight < bd.scrollHeight) {
+                if (bd && bd.clientHeight < bd.scrollHeight) {
                     grid.setGridHeight(ids.length * 28 + bd.scrollHeight - bd.clientHeight);
                 }
             }
