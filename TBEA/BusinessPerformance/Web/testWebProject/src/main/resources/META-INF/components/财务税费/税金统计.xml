@@ -1,72 +1,74 @@
 <components>
 	<service id="servCwsfSjtj" transaction="transactionManager">
 
+		<context key="usrName" value="%${session.account.name}%"></context>
 		<sql id="gsSql">select
 				area,
 				company
 			from
 				tax_auth
 			where
-				userName = ${session.account.name}
+				userName like ${usrName}
 		</sql>
 		
 		<list type="string" id="gs" sql="gsSql" value="1"/>
 		<list type="string" id="qy" sql="gsSql" value="0"/>
 		<sql id="data" order="gs" by="0" colcount="27">select
 				companyName,--"公司名称"
-				isnull(sum(isnull(	VAT 	  ,0)), 0 )	c1,
-				isnull(sum(isnull(	salesIncome 	  ,0)), 0 )	c2,
-				isnull(sum(isnull(	tariff 	  ,0)), 0 )	c3,
-				isnull(sum(isnull(	businessTax 	  ,0)), 0 )	c4,
-				isnull(sum(isnull(	urbanConstructionTax 	  ,0)), 0 )	c5,
-				isnull(sum(isnull(	educationSurtax 	  ,0)), 0 )	c6,
-				isnull(sum(isnull(	localEducationSurtax 	  ,0)), 0 )	c7,
-				isnull(sum(isnull(	stampTax 	  ,0)), 0 )	c8,
-				isnull(sum(isnull(	personalIncomeTax 	  ,0)), 0 )	c9,
-				isnull(sum(isnull(	buildingTax 	  ,0)), 0 )	c10,
-				isnull(sum(isnull(	landUseTax 	  ,0)), 0 )	c11,
-				isnull(sum(isnull(	landVTA 	  ,0)), 0 )	c12,
-				isnull(sum(isnull(	landOccupationTax 	  ,0)), 0 )	c13,
-				isnull(sum(isnull(	vehicleAndVesselTax 	  ,0)), 0 )	c14,
-				isnull(sum(isnull(	resourceTax 	  ,0)), 0 )	c15,
-				isnull(sum(isnull(	deedTax 	  ,0)), 0 )	c16,
-				isnull(sum(isnull(	VAT 	  ,0)), 0 )	+
-				isnull(sum(isnull(	salesIncome 	  ,0)), 0 )	+
-				isnull(sum(isnull(	tariff 	  ,0)), 0 )	+
-				isnull(sum(isnull(	businessTax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	urbanConstructionTax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	educationSurtax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	localEducationSurtax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	stampTax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	personalIncomeTax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	buildingTax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	landUseTax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	landVTA 	  ,0)), 0 )	+
-				isnull(sum(isnull(	landOccupationTax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	vehicleAndVesselTax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	resourceTax 	  ,0)), 0 )	+
-				isnull(sum(isnull(	deedTax 	  ,0)), 0 )	s1,
-				isnull(sum(isnull(	floodPreventionCharges 	  ,0)), 0 )	d1,
-				isnull(sum(isnull(	waterConservancyFund 	  ,0)), 0 )	d2,
-				isnull(sum(isnull(	mineralResourceCompensation 	  ,0)), 0 )	d3,
-				isnull(sum(isnull(	mtzydfjjfzf 	  ,0)), 0 )	d4,
-				isnull(sum(isnull(	coalFee 	  ,0)), 0 )	d5,
-				isnull(sum(isnull(	labourUunionExpenditure 	  ,0)), 0 )	d6,
-				isnull(sum(isnull(	employmentSecurityForDisabledPersons 	  ,0)), 0 )	d7,
-				isnull(sum(isnull(	other 	  ,0)), 0 )	d8,
-				isnull(sum(isnull(	floodPreventionCharges 	  ,0)), 0 )	+
-				isnull(sum(isnull(	waterConservancyFund 	  ,0)), 0 )	+
-				isnull(sum(isnull(	mineralResourceCompensation 	  ,0)), 0 )	+
-				isnull(sum(isnull(	mtzydfjjfzf 	  ,0)), 0 )	+
-				isnull(sum(isnull(	coalFee 	  ,0)), 0 )	+
-				isnull(sum(isnull(	labourUunionExpenditure 	  ,0)), 0 )	+
-				isnull(sum(isnull(	employmentSecurityForDisabledPersons 	  ,0)), 0 )	+
-				isnull(sum(isnull(	other 	  ,0)), 0 )	s2
+				sum(isnull(	VAT 	  ,0))	c1,
+				sum(isnull(	salesIncome 	  ,0))	c2,
+				sum(isnull(	tariff 	  ,0))	c3,
+				sum(isnull(	businessTax 	  ,0))	c4,
+				sum(isnull(	urbanConstructionTax 	  ,0))	c5,
+				sum(isnull(	educationSurtax 	  ,0))	c6,
+				sum(isnull(	localEducationSurtax 	  ,0))	c7,
+				sum(isnull(	stampTax 	  ,0))	c8,
+				sum(isnull(	personalIncomeTax 	  ,0))	c9,
+				sum(isnull(	buildingTax 	  ,0))	c10,
+				sum(isnull(	landUseTax 	  ,0))	c11,
+				sum(isnull(	landVTA 	  ,0))	c12,
+				sum(isnull(	landOccupationTax 	  ,0))	c13,
+				sum(isnull(	vehicleAndVesselTax 	  ,0))	c14,
+				sum(isnull(	resourceTax 	  ,0))	c15,
+				sum(isnull(	deedTax 	  ,0))	c16,
+				sum(isnull(	VAT 	  ,0))	+
+				sum(isnull(	salesIncome 	  ,0))	+
+				sum(isnull(	tariff 	  ,0))	+
+				sum(isnull(	businessTax 	  ,0))	+
+				sum(isnull(	urbanConstructionTax 	  ,0))	+
+				sum(isnull(	educationSurtax 	  ,0))	+
+				sum(isnull(	localEducationSurtax 	  ,0))	+
+				sum(isnull(	stampTax 	  ,0))	+
+				sum(isnull(	personalIncomeTax 	  ,0))	+
+				sum(isnull(	buildingTax 	  ,0))	+
+				sum(isnull(	landUseTax 	  ,0))	+
+				sum(isnull(	landVTA 	  ,0))	+
+				sum(isnull(	landOccupationTax 	  ,0))	+
+				sum(isnull(	vehicleAndVesselTax 	  ,0))	+
+				sum(isnull(	resourceTax 	  ,0))	+
+				sum(isnull(	deedTax 	  ,0))	s1,
+				sum(isnull(	floodPreventionCharges 	  ,0))	d1,
+				sum(isnull(	waterConservancyFund 	  ,0))	d2,
+				sum(isnull(	mineralResourceCompensation 	  ,0))	d3,
+				sum(isnull(	mtzydfjjfzf 	  ,0))	d4,
+				sum(isnull(	coalFee 	  ,0))	d5,
+				sum(isnull(	labourUunionExpenditure 	  ,0))	d6,
+				sum(isnull(	employmentSecurityForDisabledPersons 	  ,0))	d7,
+				sum(isnull(	other 	  ,0))	d8,
+				sum(isnull(	floodPreventionCharges 	  ,0))	+
+				sum(isnull(	waterConservancyFund 	  ,0))	+
+				sum(isnull(	mineralResourceCompensation 	  ,0))	+
+				sum(isnull(	mtzydfjjfzf 	  ,0))	+
+				sum(isnull(	coalFee 	  ,0))	+
+				sum(isnull(	labourUunionExpenditure 	  ,0))	+
+				sum(isnull(	employmentSecurityForDisabledPersons 	  ,0))	+
+				sum(isnull(	other 	  ,0))	s2
 			from
 				financial_tax
 			where
 				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
- 				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 
+ 				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 and
+ 				companyName in ${gs}
  			group by
  				companyName
 		</sql>
