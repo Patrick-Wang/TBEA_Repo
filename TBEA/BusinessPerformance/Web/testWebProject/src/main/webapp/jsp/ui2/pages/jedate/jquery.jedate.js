@@ -270,6 +270,11 @@ window.console && (console = console || {log : function(){return;}});
 					that.current = new Date(tmsArr[0], parseInt(tmsArr[1])-1,  tmsArr[2], tmsArr[3], tmsArr[4], tmsArr[5]);
 				}
 			}
+
+			if (that.isSeason() && !that.isSeasonMonth()){
+				that.current = new Date(that.current.getFullYear(), parseInt("" + that.current.getMonth() / 3) * 3 - 1, that.current.getDate());
+			}
+
 			return that.current;
 		}
 
