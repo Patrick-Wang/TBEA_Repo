@@ -198,7 +198,7 @@
 							<div id="sels" class="pull-left">
 								<div id="item-sel" class="pull-left"></div>
 								<div id="item-sel1" class="pull-left"></div>
-								<label id="item-label" class="pull-left"></label>
+								<!-- <label id="item-label" class="pull-left"></label> -->
 								<div id="item-sel2" class="pull-left"></div>
 								<div id="comp-sel" class="pull-left"></div>
 							</div>
@@ -254,12 +254,12 @@
 			});
 		}
 		
-		var itemLabel = '${itemLabel}';
+		/* var itemLabel = '${itemLabel}';
 		if (itemLabel == ''){
 			$("#item-label").css("display", "none");
 		}else{
 			$("#item-label")[0].innerHTML = itemLabel;
-		}
+		} */
 
 		var date = undefined;
 		var dateStart = undefined;
