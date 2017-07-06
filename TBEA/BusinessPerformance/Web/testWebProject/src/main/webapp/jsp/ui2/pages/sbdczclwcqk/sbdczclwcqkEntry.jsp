@@ -150,7 +150,6 @@
 <%@include file="../framework/basic/basicEntry.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/ui2/pages/sbdczclwcqk/sbdczclwcqkdef.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/jsp/ui2/pages/sbdczclwcqk/sbdczclwcqkEntry.js" type="text/javascript"></script>
-<script
 <%@include file="../../ie8-b.jsp"%>
 </head>
 <!-- /Head -->
