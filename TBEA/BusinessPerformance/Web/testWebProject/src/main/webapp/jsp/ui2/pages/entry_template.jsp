@@ -15,7 +15,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-
+<%@include file="../ie8-t.jsp"%>
 
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
@@ -149,7 +149,7 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/route/route.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/entry_template.js"></script>
-
+<%@include file="../ie8-b.jsp"%>
 </head>
 <!-- /Head -->
 <!-- Body -->
