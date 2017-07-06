@@ -3,14 +3,14 @@
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
-/// <reference path="../sddbdef.ts"/>
-///<reference path="../sddb.ts"/>
+/// <reference path="../cwsfdef.ts"/>
+///<reference path="../cwsf.ts"/>
 
 module plugin {
-    export let sddb:number = framework.basic.endpoint.lastId();
+    export let cwsf:number = framework.basic.endpoint.lastId();
 }
 
-module sddb {
+module cwsf {
     export module sddb {
         import TextAlign = JQTable.TextAlign;
         import Node = JQTable.Node;
@@ -51,25 +51,23 @@ module sddb {
             static ins = new ShowView();
             private mData:SddbResp;
             private mAjax:Util.Ajax;
-            private mDt:string;
-            private mCompType:Util.CompanyType;
 
 
             getId():number {
-                return plugin.sddb;
+                return plugin.cwsf;
             }
 
             onEvent(e:framework.route.Event):any {
                 switch (e.id) {
                     case framework.basic.FrameEvent.FE_UPDATE:
                     {
-                        this.pluginUpdate(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item, e.data.item0);
+                        this.pluginUpdate(e.data.dStart, e.data.dEnd, e.data.comps, e.data.item);
                     }
                         return;
                     case framework.basic.FrameEvent.FE_GET_EXPORTURL:
                     {
 
-                        return this.pluginGetExportUrl(e.data.dStart, e.data.dEnd, e.data.compType, e.data.item, e.data.item0);
+                        return this.pluginGetExportUrl(e.data.dStart, e.data.dEnd, e.data.comps, e.data.item);
                     }
                     default:
                         break;
@@ -77,13 +75,12 @@ module sddb {
                 return super.onEvent(e);
             }
 
-            pluginGetExportUrl(dStart:string, dEnd:string, compType:Util.CompanyType, item:any, item0:any):string {
+            pluginGetExportUrl(dStart:string, dEnd:string, comps : string, item:any):string {
                 return this.option().exportUrl + "?" + Util.Ajax.toUrlParam({
                         dStart: dStart,
                         dEnd: dEnd,
-                        item: compType,
-                        model: item,
-                        item0: item0
+                        comps: comps,
+                        item: item
                     });
             }
 
@@ -91,8 +88,8 @@ module sddb {
                 return <Option>this.mOpt;
             }
 
-            public pluginUpdate(dStart:string, dEnd:string, compType:Util.CompanyType, item:any, item0:any):void {
-                this.mCompType = compType;
+            public pluginUpdate(dStart:string, dEnd:string, comps : string, item:any):void {
+
                 if (undefined != dStart) {
                     let dS = new Date(Date.parse(dStart.replace(/-/g, '/'))).getTime();
                     let dE = new Date(Date.parse(dEnd.replace(/-/g, '/'))).getTime();
@@ -100,9 +97,8 @@ module sddb {
                         this.mAjax.get({
                                 dStart: dStart,
                                 dEnd: dEnd,
-                                item: compType,
-                                model: item,
-                                item0: item0
+                                comps: comps,
+                                item: item
                             })
                             .then((jsonData:any) => {
                                 this.mData = jsonData;
@@ -115,9 +111,8 @@ module sddb {
                     this.mAjax.get({
                             dStart: dStart,
                             dEnd: dEnd,
-                            item: compType,
-                            model: item,
-                            item0: item0
+                            comps: comps,
+                            item: item
                         })
                         .then((jsonData:any) => {
                             this.mData = jsonData;
@@ -131,15 +126,7 @@ module sddb {
                     return;
                 }
 
-                if (this.mData.showTime == false){
-                    router.to(FRAME_ID).send(SDDBEvent.FE_HIDETIME);
-                }else{
-                    router.to(FRAME_ID).send(SDDBEvent.FE_SHOWTIME);
-                }
-
-
                 this.updateTable();
-                this.updateCharts();
             }
 
             public init(opt:Option):void {
@@ -150,53 +137,6 @@ module sddb {
                     .send(framework.basic.FrameEvent.FE_REGISTER, opt.title);
             }
 
-            private updateCharts():void {
-
-                let display = "none";
-                if (undefined != this.mData.charts) {
-
-                    let validCount = 0;
-                    for (let i = 0; i < this.mData.charts.length; ++i) {
-                        if (this.mData.charts[i].isValid == true) {
-                            ++validCount;
-                        }
-                    }
-                    if (validCount != 0) {
-                        display = "";
-                        $("#" + this.mOpt.chartId).css("display", "")
-                            .css("width", this.mData.width == undefined ? 1300 : this.mData.width)
-                            .css("height", validCount / 2 * 300 + validCount % 2 * 300);
-                        $("#chartName").css("display", "")[0].innerHTML=this.mData.chartName;
-                    }
-
-
-                    for (let i = 0; i < this.mData.charts.length; ++i) {
-                        if (this.mData.charts[i].isValid == true) {
-                            let ctSel = $("#" + this.mOpt.chartId + i);
-                            if (ctSel.length == 0) {
-                                $("#" + this.mOpt.chartId)
-                                    .append("<div id='" + this.mOpt.chartId + i + "' style='float:left;width:49%;height:300px'/>")
-                            }
-                            if (validCount == 1){
-                                $("#" + this.mOpt.chartId + "0").css("width", "98%");
-                            }
-                            this.updateChart(this.mOpt.chartId + i, this.mData.charts[i]);
-                        }
-                    }
-
-
-                }
-
-                $("#" + this.mOpt.chartId).css("display", display);
-                $("#chartName").css("display", display);
-            }
-
-
-            private getMonth():number {
-                let curDate:Date = new Date(Date.parse(this.mDt.replace(/-/g, '/')));
-                let month = curDate.getMonth() + 1;
-                return month;
-            }
 
             private updateTable():void {
                 var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
@@ -218,66 +158,6 @@ module sddb {
                         width: this.mData.width == undefined ? 1300 : this.mData.width,
                         shrinkToFit: this.mData.shrinkToFit == "false" ? false : true
                     }));
-            }
-
-            private updateChart(ctId:any, chart:ChartCtrl):void {
-                let series = [];
-                for (let i in chart.yNames) {
-                    series.push({
-                        name: chart.yNames[i],
-                        type: chart.type,
-                        smooth: true,
-                        //barCategoryGap: "50%",
-                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                        data: chart.data[i].length < 1 ? [0] : Util.replaceNull(chart.data[i])
-                    })
-                }
-
-                let tooltip : any = {
-                    trigger: 'axis'
-                };
-                let yAxis : any = [
-                    {
-                        type: 'value'
-                    }
-                ];
-                if (chart.percentage){
-                    tooltip.formatter =  function (params) {
-                        var ret = params[0][1];
-                        for (var i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 1.0).toFixed(2) + "%";
-                        }
-                        return ret;
-                    };
-                    yAxis[0].axisLabel = {
-                        formatter: '{value} %'
-                    };
-                }
-
-                var option = {
-                    title: {
-                        text: chart.title
-                    },
-                    tooltip: tooltip,
-                    legend: {
-                        data: chart.yNames
-                    },
-                    toolbox: {
-                        show: true,
-                    },
-                    calculable: false,
-                    xAxis: [
-                        {
-                            type: 'category',
-                            boundaryGap: chart.boundaryGap,
-                            data: chart.xNames.length < 1 ? [0] : chart.xNames
-                        }
-                    ],
-                    yAxis: yAxis,
-                    series: series
-                };
-
-                echarts.init($("#" + ctId)[0]).setOption(option);
             }
         }
     }

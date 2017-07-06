@@ -3,44 +3,17 @@
 ///<reference path="../components/dateSelectorProxy.ts"/>
 ///<reference path="../unitedSelector.ts"/>
 
-module sddb{
+module cwsf{
 
     import router = framework.router;
     import FrameEvent = framework.basic.FrameEvent;
 
-    export module SDDBEvent {
-        export let FE_SHOWTIME : number = FrameEvent.lastEvent();
-        export let FE_HIDETIME : number = FrameEvent.lastEvent();
-    }
 
+    class CwsfShowView extends framework.basic.ShowFrameView{
 
-    class SddbShowView extends framework.basic.ShowFrameView{
         mDStartSel : Util.DateSelectorProxy;
         mDEndSel : Util.DateSelectorProxy;
         unitedSelector : Util.UnitedSelector;
-        unitedSelector0 : Util.UnitedSelector;
-
-
-        onEvent(e:framework.route.Event):any {
-            switch (e.id) {
-                case SDDBEvent.FE_SHOWTIME:
-                    if (this.mOpt.date != undefined) {
-                        $("#dstart").css("display", "");
-                        $("#dEnd").css("display", "");
-                        $("#dstartLabel").css("display", "");
-                        $("#dEndLabel").css("display", "");
-                    }
-                    break;
-                case SDDBEvent.FE_HIDETIME: if (this.mOpt.date != undefined) {
-                        $("#dstart").css("display", "none");
-                        $("#dEnd").css("display", "none");
-                        $("#dstartLabel").css("display", "none");
-                        $("#dEndLabel").css("display", "none");
-                    }
-                    break;
-            }
-            return super.onEvent(e);
-        }
 
         private renderItemSelector(itemId:string):void{
             let sels = $("#" + itemId + " select");
@@ -71,101 +44,91 @@ module sddb{
             }
         }
 
-        private renderSelector2(sels:any):void{
-            let opts = $(sels).find("option");
-            let items = [];
-            for (let j = 0; j < opts.length; ++j){
-                items.push(opts[j].text);
+        private getMaxWidth(opts : any) : number{
+            var max = 0;
+            var tmp = 0;
+            var fontSize = Util.isMSIE() ? 14 : 13;
+            for (var i = 0; i < opts.length; ++i){
+                tmp = $(opts[i]).text().getWidth(fontSize) + 25;
+                if (max < tmp){
+                    max = tmp;
+                }
             }
-            $(sels).css("width", Math.max(Util.getUIWidth(items), 80))
-                .css("height", "20px")
-                .select2({
-                    language: "cn"
-                });
+            return max;
         }
 
         protected init(opt:any):void {
+
             this.mOpt = opt;
-            if (opt.itemNodes != '' && opt.itemNodes.length != 0) {
-                this.unitedSelector = new Util.UnitedSelector(opt.itemNodes, opt.itemId);
-                this.unitedSelector.change(()=> {
-                    this.renderItemSelector(opt.itemId);
-                });
-                this.renderItemSelector(opt.itemId);
-            }else{
-                $("#itemLabel").css("display", "none");
-            }
-            if (opt.itemNodes0 != '') {
-                this.unitedSelector0 = new Util.UnitedSelector(opt.itemNodes0, opt.itemId0);
-                this.unitedSelector0.change(()=> {
-                    this.renderItemSelector(opt.itemId0);
-                });
-                this.renderItemSelector(opt.itemId0);
-            }
+            this.unitedSelector = new Util.UnitedSelector(opt.itemNodes, opt.itemId);
 
+            var sel = $("#" + opt.itemId);
+            var width = this.getMaxWidth(sel.children());
+            sel.css("width", width);
+            sel .multiselect({
+                multiple: false,
+                header: false,
+                minWidth: 120,
+                height: '100%',
+                // noneSelectedText: "请选择月份",
+                selectedList: 1
+            });
 
+            this.mDStartSel = new Util.DateSelectorProxy("dstart",
+                opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart,
+                opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd,
+                Util.addDay(opt.date, -5 * 7)
+            );
 
-            if (opt.date != undefined) {
-                this.mDStartSel = new Util.DateSelectorProxy("dstart",
-                    opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart,
-                    opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd,
-                    Util.addDay(opt.date, -5 * 7)
-                );
+            this.mDEndSel = new Util.DateSelectorProxy("dEnd",
+                opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart,
+                opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd,
+                opt.date
+            );
 
-                this.mDEndSel = new Util.DateSelectorProxy("dEnd",
-                    opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart,
-                    opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd,
-                    opt.date
-                );
-
-                this.mDEndSel.change((date:any)=>{
-                    let d = this.mDStartSel.getDate();
-                    let dS = Util.uDate2sDate(d).getTime();
-                    let dE = Util.uDate2sDate(date).getTime();
-                    if (dS > dE){
-                        this.mDStartSel.setDate(date);
-                    }
-                });
-            } else {
-                $("#dstart").css("display", "none");
-                $("#dEnd").css("display", "none");
-                $("#dstartLabel").css("display", "none");
-                $("#dEndLabel").css("display", "none");
-            }
-            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
-            if (this.mOpt.comps != '') {
-
-                this.mCompanySelector = new Util.UnitedSelector(this.mOpt.comps, this.mOpt.comp);
-
-                $("#" + this.mOpt.comp).multiselect({
-                    multiple: multi,
-                    header: true,
-                    minWidth: minWidth,
-                    minHeight: 20,
-                    noneSelectedText : this.mOpt.noneSelectedText,
-                    selectedText: this.mOpt.selectedText,
-                    height　: '100%',//itemCount * itemHeight + 3,
-                    // noneSelectedText: "请选择月份",
-                    selectedList: 1
-                });
-                if (opt.comps.length == 1) {
-                    this.mCompanySelector.hide();
+            this.mDEndSel.change((date:any)=>{
+                let d = this.mDStartSel.getDate();
+                let dS = Util.uDate2sDate(d).getTime();
+                let dE = Util.uDate2sDate(date).getTime();
+                if (dS > dE){
+                    this.mDStartSel.setDate(date);
                 }
+            });
 
-                this.mCompanySelector.change((selector:any, depth:number) => {
-                    this.updateTypeSelector();
-                });
-            }else{
-                $("#" + this.mOpt.comp).hide();
+            $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
+
+            this.mCompanySelector = new Util.CompanySelector(true, this.mOpt.comp, this.mOpt.comps);
+
+
+            if (opt.comps.length <= 10) {
+                this.mCompanySelector.hide();
             }
 
-            if ((opt.itemNodes == '' || opt.itemNodes.length == 0)&& opt.itemNodes0 == '' && opt.date == undefined && this.mOpt.comps == ''){
-                $("#doUpdate").css("display", "none");
-            }
+            this.mCompanySelector.checkAll();
 
-            this.mCurrentDate = {year:2010, month:1, day:1};
-            this.updateTypeSelector();
+
             this.updateUI();
+        }
+
+
+        onEvent(e:framework.route.Event):any {
+            switch (e.id) {
+                case FrameEvent.FE_EXPORTEXCEL:
+                    this.exportExcel(e.data);
+                    break;
+            }
+            return super.onEvent(e);
+        }
+
+        //不可以起名叫做export 在IE中有冲突
+        public exportExcel(elemId:string) {
+            let url:string = router.to(this.mCurrentPlugin).send(FrameEvent.FE_GET_EXPORTURL, {
+                date: this.mCurrentDate,
+                compType: this.mCurrentComp
+            });
+
+            $("#" + elemId)[0].action = url;
+            $("#" + elemId)[0].submit();
         }
 
         protected updateUI() {
@@ -175,19 +138,10 @@ module sddb{
             this.mCurrentPlugin = this.plugin(node);
             router.broadcast(FrameEvent.FE_HIDE);
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
-            if (this.mCompanySelector == undefined){
-                $("#headertitle")[0].innerHTML = node.getData().value;
-            }else{
-                this.mCurrentComp = this.mCompanySelector.getCompany();
-                if (null != this.mCurrentComp){
-                    $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
-                }
-                else {
-                    $("#headertitle")[0].innerHTML = node.getData().value;
-                }
-            }
 
+            $("#headertitle")[0].innerHTML = node.getData().value;
 
+            this.mCompanySelector.getCompanyNames();
 
             //let unit = router.to(this.mCurrentPlugin).send(FrameEvent.FE_GETUNIT);
             //if (undefined != unit){
@@ -199,8 +153,7 @@ module sddb{
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
                 dStart:this.mDStartSel == undefined ? undefined : Util.date2Str(this.mDStartSel.getDate()),
                 dEnd:this.mDEndSel == undefined ? undefined : Util.date2Str(this.mDEndSel.getDate()),
-                compType:this.mCurrentComp,
-                item0:this.unitedSelector0 != undefined ? this.unitedSelector0.getDataNode(this.unitedSelector0.getPath()).data.value:undefined,
+                comps:JSON.stringify(this.mCompanySelector.getCompanyNames()),
                 item:this.unitedSelector != undefined ? this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.value:undefined
             });
         }
@@ -209,7 +162,7 @@ module sddb{
             let url:string = router.to(this.mCurrentPlugin).send(FrameEvent.FE_GET_EXPORTURL, {
                 dStart:this.mDStartSel == undefined ? undefined : Util.date2Str(this.mDStartSel.getDate()),
                 dEnd:this.mDEndSel == undefined ? undefined : Util.date2Str(this.mDEndSel.getDate()),
-                compType:this.mCurrentComp,
+                comps:JSON.stringify(this.mCompanySelector.getCompanyNames()),
                 item:this.unitedSelector != undefined ? this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.value:undefined
             });
 
@@ -217,5 +170,5 @@ module sddb{
             $("#" + elemId)[0].submit();
         }
     }
-    let ins = new SddbShowView();
+    let ins = new CwsfShowView();
 }

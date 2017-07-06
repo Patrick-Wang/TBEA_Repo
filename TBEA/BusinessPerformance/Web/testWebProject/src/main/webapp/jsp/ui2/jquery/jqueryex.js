@@ -34,8 +34,8 @@
             $(this).each(function(i, e){
                 var style = $(e).attr("style");
                 if (style != undefined){
-                    var reger = new RegExp(name + "\\s*:\\s*.*;*","gm");
-                    style = style.replace(reger,"");
+                    var reger = new RegExp(name + "\\s*:\\s*[^;]*","gm");
+                    style = style.toLowerCase().replace(reger,"");
                     if (style.replace(/\s*/g, "").length == 0){
                         $(e).removeAttr("style");
                     }else{

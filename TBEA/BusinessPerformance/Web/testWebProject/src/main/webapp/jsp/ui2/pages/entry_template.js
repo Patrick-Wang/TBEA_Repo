@@ -75,7 +75,7 @@ var entry_template;
                         isClear: false,
                         isToday: false,
                         minDate: Util.date2Str(minDate),
-                        maxDate: Util.date2Str(Util.addMonth(opt.date, 3))
+                        maxDate: Util.date2Str(Util.addMonth(opt.date, 3)),
                     }).removeCss("height")
                         .removeCss("padding")
                         .removeCss("margin-top")
@@ -93,7 +93,7 @@ var entry_template;
                             isClear: false,
                             isToday: false,
                             minDate: Util.date2Str(minDate_1),
-                            maxDate: Util.date2Str(opt.date)
+                            maxDate: Util.date2Str(opt.date),
                         }).removeCss("height")
                             .removeCss("padding")
                             .removeCss("margin-top");
@@ -113,7 +113,7 @@ var entry_template;
                             isClear: false,
                             isToday: false,
                             minDate: Util.date2Str(minDate_2),
-                            maxDate: Util.date2Str(opt.date)
+                            maxDate: Util.date2Str(opt.date),
                         }).removeCss("height")
                             .removeCss("padding")
                             .removeCss("margin-top");

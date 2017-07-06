@@ -9,7 +9,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router
-            .to(plugin.sddb)
+            .to(plugin.cwsf)
             .send(framework.basic.FrameEvent.FE_INIT_EVENT,{
                 tb: "table",
                 host: "cwsf",

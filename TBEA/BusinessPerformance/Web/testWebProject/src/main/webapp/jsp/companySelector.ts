@@ -102,7 +102,7 @@ module Util {
             firstComp?: number, 
             opt ? : ICompanySelectorOption) {
             this.mMulti = multi;
-           this.mDivId = divId;
+            this.mDivId = divId;
             if (isExist(opt)){
                 this.mOpt = opt;    
             }
