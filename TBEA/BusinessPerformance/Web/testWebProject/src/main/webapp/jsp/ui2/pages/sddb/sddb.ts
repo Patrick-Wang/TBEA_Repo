@@ -143,7 +143,7 @@ module sddb{
                 let startOpt = this.createInternalDate("dstart", opt.date, {
                     nowDate: Util.date2Str(Util.addDay(opt.date, -5 * 7)),
                     minDate: Util.date2Str(opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart),
-                    maxDate: Util.date2Str(Util.addDay(opt.date, -5 * 7)),
+                    maxDate: Util.date2Str(opt.date),
                     choosefun: (elem, val, date) =>{
                         setTimeout(()=>{
                             endOpt.minDate = Util.date2Str(this.getStartDate());
@@ -153,7 +153,7 @@ module sddb{
                 });
 
                 let endOpt = this.createInternalDate("dEnd", opt.date, {
-                    nowDate: Util.date2Str(Util.addDay(opt.date, -5 * 7)),
+                    nowDate: Util.date2Str(opt.date),
                     minDate: startOpt.nowDate,
                     maxDate: Util.date2Str(opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd),
                     choosefun: (elem, val, date)=>{

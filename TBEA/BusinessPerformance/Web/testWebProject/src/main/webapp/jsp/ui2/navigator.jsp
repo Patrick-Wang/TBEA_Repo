@@ -108,16 +108,37 @@
 				builder.register('bbxx', function() {
 					return createNode('经营指标完成情况', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 						.append(builder.build('gczt'))
-						.append(createNode('单位指标完成情况', 'ydzb/v2/hzb_companys.do'))
+						.append(builder.build('dwzbqk'))
 						.append(builder.build('gcyzb'))
 						.append(builder.build('ztzbycwcqk'))
-						.append(createNode('单位指标预测完成情况', 'ydzb/v2/hzb_companys_prediction.do'))
+						.append(builder.build('dwzbycqk'))
 						.append(builder.build('wdjyzbyc'))
 						.append(builder.build('sjztbqk'))
 						.append(builder.build('Zhzlzb'))
 						.append(builder.build('Zhfzgszlzb'));
 				});
+
 	 		</script>
+	 		
+	 		<c:if test="${!QualityAuth}">
+				<script>
+	 			builder.register('dwzbqk', function () {
+						return [
+						    createNode('单位指标完成情况', 'ydzb/v2/hzb_companys.do')				   
+						];
+					});
+	 			</script>
+	 		</c:if>
+	 		
+	 		<c:if test="${!QualityAuth}">
+				<script>
+	 			builder.register('dwzbycqk', function () {
+						return [
+							createNode('单位指标预测完成情况', 'ydzb/v2/hzb_companys_prediction.do')		   
+						];
+					});
+	 			</script>
+	 		</c:if>
 
 			<c:if test="${CorpAuth}">
 				<script>
@@ -290,7 +311,7 @@
 				<script>
 					builder.register('SddbLookup', function () {
 						return [
-						   createNode('订单全过程管控', "report/v2/bidCollectionWrapper.do"),
+						   createNode('投标订单汇总', "report/v2/bidCollectionWrapper.do"),
 						   createNode('中标产品分型号汇总', "report/v2/WinBidModelCollection.do"),
 						   createNode('分阶段单位订单成本汇总', "report/v2/gdwddfxhCollection.do"),
 						   createNode('订单成本汇总表(按型号)', "report/v2/gdwddCollection.do"),
