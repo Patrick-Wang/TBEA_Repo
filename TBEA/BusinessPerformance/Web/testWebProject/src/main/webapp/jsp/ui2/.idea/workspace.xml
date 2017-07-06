@@ -55,16 +55,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nwbzlqk.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/nwbzlqk/nwbzlqk.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="nwbzlqk.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/nwbzlqk/nwbzlqk.ts">
           <provider selected="true" editor-type-id="text-editor">
@@ -91,13 +81,13 @@
         <entry file="file://$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="29" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="29" />
+              <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
               <folding>
-                <marker date="1499307858078" expanded="true" signature="362:628" placeholder="/*...*/" />
-                <marker date="1499307858078" expanded="true" signature="630:828" placeholder="/*...*/" />
-                <marker date="1499307858078" expanded="true" signature="31101:31186" placeholder="..." />
-                <marker date="1499307858078" expanded="true" signature="154113:154173" placeholder="..." />
-                <marker date="1499307858078" expanded="true" signature="439451:439452" placeholder="{...}" />
+                <marker date="1499312780128" expanded="true" signature="362:628" placeholder="/*...*/" />
+                <marker date="1499312780128" expanded="true" signature="630:828" placeholder="/*...*/" />
+                <marker date="1499312780128" expanded="true" signature="31101:31186" placeholder="..." />
+                <marker date="1499312780128" expanded="true" signature="154113:154173" placeholder="..." />
+                <marker date="1499312780128" expanded="true" signature="439437:439438" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -125,11 +115,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jquery.jedate.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="jquery.jedate.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/jedate/jquery.jedate.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42808798">
-              <caret line="277" column="28" selection-start-line="277" selection-start-column="28" selection-end-line="277" selection-end-column="28" />
+            <state vertical-scroll-proportion="-4.8448277">
+              <caret line="279" column="0" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
               <folding>
                 <marker date="1499312754851" expanded="true" signature="14502:14535" placeholder="..." />
                 <marker date="1499312754851" expanded="true" signature="14586:14596" placeholder="..." />
@@ -139,6 +129,16 @@
                 <marker date="1499312754851" expanded="true" signature="16037:16048" placeholder="..." />
                 <marker date="1499312754851" expanded="true" signature="16092:16103" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jqassist.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7059774">
+              <caret line="1514" column="61" selection-start-line="1514" selection-start-column="61" selection-end-line="1514" selection-end-column="61" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -156,7 +156,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pages/cpzlqk/xlacptjjg/xlacptjjgEntry.js" />
         <option value="$PROJECT_DIR$/pages/cpzlqk/byqacptjjg/byqacptjjgEntry.ts" />
         <option value="$PROJECT_DIR$/pages/cpzlqk/pdacptjjg/pdacptjjgEntry.ts" />
         <option value="$PROJECT_DIR$/pages/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxEntry.ts" />
@@ -207,6 +206,7 @@
         <option value="$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js" />
         <option value="$PROJECT_DIR$/pages/sddb/sddb.jsp" />
         <option value="$PROJECT_DIR$/pages/jedate/jquery.jedate.js" />
+        <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
       </list>
     </option>
   </component>
@@ -292,7 +292,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jedate" />
+              <option name="myItemId" value="jqgrid" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -421,13 +421,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/nwbzlqk/pdwbzlwtfl/pdwbzlwtfl.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.130435">
-          <caret line="15" column="10" selection-start-line="8" selection-start-column="4" selection-end-line="15" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/gcyzb/show.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-29.391304">
@@ -750,13 +743,13 @@
     <entry file="file://$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="29" selection-start-line="39" selection-start-column="29" selection-end-line="39" selection-end-column="29" />
+          <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
           <folding>
-            <marker date="1499307858078" expanded="true" signature="362:628" placeholder="/*...*/" />
-            <marker date="1499307858078" expanded="true" signature="630:828" placeholder="/*...*/" />
-            <marker date="1499307858078" expanded="true" signature="31101:31186" placeholder="..." />
-            <marker date="1499307858078" expanded="true" signature="154113:154173" placeholder="..." />
-            <marker date="1499307858078" expanded="true" signature="439451:439452" placeholder="{...}" />
+            <marker date="1499312780128" expanded="true" signature="362:628" placeholder="/*...*/" />
+            <marker date="1499312780128" expanded="true" signature="630:828" placeholder="/*...*/" />
+            <marker date="1499312780128" expanded="true" signature="31101:31186" placeholder="..." />
+            <marker date="1499312780128" expanded="true" signature="154113:154173" placeholder="..." />
+            <marker date="1499312780128" expanded="true" signature="439437:439438" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -809,8 +802,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/jedate/jquery.jedate.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42808798">
-          <caret line="277" column="28" selection-start-line="277" selection-start-column="28" selection-end-line="277" selection-end-column="28" />
+        <state vertical-scroll-proportion="-4.8448277">
+          <caret line="279" column="0" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
           <folding>
             <marker date="1499312754851" expanded="true" signature="14502:14535" placeholder="..." />
             <marker date="1499312754851" expanded="true" signature="14586:14596" placeholder="..." />
@@ -820,6 +813,14 @@
             <marker date="1499312754851" expanded="true" signature="16037:16048" placeholder="..." />
             <marker date="1499312754851" expanded="true" signature="16092:16103" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7059774">
+          <caret line="1514" column="61" selection-start-line="1514" selection-start-column="61" selection-end-line="1514" selection-end-column="61" />
+          <folding />
         </state>
       </provider>
     </entry>
