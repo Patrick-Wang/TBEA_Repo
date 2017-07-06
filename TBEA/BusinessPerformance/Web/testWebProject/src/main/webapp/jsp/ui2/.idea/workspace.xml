@@ -103,11 +103,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/entry_template.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="817" column="0" selection-start-line="817" selection-start-column="0" selection-end-line="818" selection-end-column="31" />
+            <state vertical-scroll-proportion="-0.0259366">
+              <caret line="120" column="73" selection-start-line="120" selection-start-column="73" selection-end-line="120" selection-end-column="73" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -118,25 +118,25 @@
       <file leaf-file-name="jquery.jedate.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/jedate/jquery.jedate.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.8448277">
-              <caret line="279" column="0" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
+            <state vertical-scroll-proportion="-3.637931">
+              <caret line="274" column="69" selection-start-line="274" selection-start-column="69" selection-end-line="274" selection-end-column="69" />
               <folding>
-                <marker date="1499312754851" expanded="true" signature="14502:14535" placeholder="..." />
-                <marker date="1499312754851" expanded="true" signature="14586:14596" placeholder="..." />
-                <marker date="1499312754851" expanded="true" signature="14804:14814" placeholder="..." />
-                <marker date="1499312754851" expanded="true" signature="15024:15035" placeholder="..." />
-                <marker date="1499312754851" expanded="true" signature="15255:15269" placeholder="..." />
-                <marker date="1499312754851" expanded="true" signature="16037:16048" placeholder="..." />
-                <marker date="1499312754851" expanded="true" signature="16092:16103" placeholder="..." />
+                <marker date="1499319981300" expanded="true" signature="14508:14541" placeholder="..." />
+                <marker date="1499319981300" expanded="true" signature="14592:14602" placeholder="..." />
+                <marker date="1499319981300" expanded="true" signature="14810:14820" placeholder="..." />
+                <marker date="1499319981300" expanded="true" signature="15030:15041" placeholder="..." />
+                <marker date="1499319981300" expanded="true" signature="15261:15275" placeholder="..." />
+                <marker date="1499319981300" expanded="true" signature="16043:16054" placeholder="..." />
+                <marker date="1499319981300" expanded="true" signature="16098:16109" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jqassist.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="jqassist.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7059774">
+            <state vertical-scroll-proportion="-14.566667">
               <caret line="1514" column="61" selection-start-line="1514" selection-start-column="61" selection-end-line="1514" selection-end-column="61" />
               <folding />
             </state>
@@ -156,7 +156,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pages/cpzlqk/byqacptjjg/byqacptjjgEntry.ts" />
         <option value="$PROJECT_DIR$/pages/cpzlqk/pdacptjjg/pdacptjjgEntry.ts" />
         <option value="$PROJECT_DIR$/pages/cpzlqk/byqcpycssbhgwtmx/byqcpycssbhgwtmxEntry.ts" />
         <option value="$PROJECT_DIR$/pages/cpzlqk/pdcpycssbhgwtmx/pdcpycssbhgwtmxEntry.ts" />
@@ -205,8 +204,9 @@
         <option value="$PROJECT_DIR$/pages/nwbzlqk/nwbzlqkdef.ts" />
         <option value="$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js" />
         <option value="$PROJECT_DIR$/pages/sddb/sddb.jsp" />
-        <option value="$PROJECT_DIR$/pages/jedate/jquery.jedate.js" />
         <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
+        <option value="$PROJECT_DIR$/pages/jedate/jquery.jedate.js" />
+        <option value="$PROJECT_DIR$/pages/entry_template.ts" />
       </list>
     </option>
   </component>
@@ -292,8 +292,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jqgrid" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="entry_template.ts" />
+              <option name="myItemType" value="com.intellij.lang.typescript.compiler.ui.projectView.TypeScriptNestingTreeNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -388,7 +388,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20803949" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0996016" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0996016" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -790,37 +790,37 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/entry_template.ts">
+    <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="817" column="0" selection-start-line="817" selection-start-column="0" selection-end-line="818" selection-end-column="31" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-14.566667">
+          <caret line="1514" column="61" selection-start-line="1514" selection-start-column="61" selection-end-line="1514" selection-end-column="61" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/jedate/jquery.jedate.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.8448277">
-          <caret line="279" column="0" selection-start-line="279" selection-start-column="0" selection-end-line="279" selection-end-column="0" />
+        <state vertical-scroll-proportion="-3.637931">
+          <caret line="274" column="69" selection-start-line="274" selection-start-column="69" selection-end-line="274" selection-end-column="69" />
           <folding>
-            <marker date="1499312754851" expanded="true" signature="14502:14535" placeholder="..." />
-            <marker date="1499312754851" expanded="true" signature="14586:14596" placeholder="..." />
-            <marker date="1499312754851" expanded="true" signature="14804:14814" placeholder="..." />
-            <marker date="1499312754851" expanded="true" signature="15024:15035" placeholder="..." />
-            <marker date="1499312754851" expanded="true" signature="15255:15269" placeholder="..." />
-            <marker date="1499312754851" expanded="true" signature="16037:16048" placeholder="..." />
-            <marker date="1499312754851" expanded="true" signature="16092:16103" placeholder="..." />
+            <marker date="1499319981300" expanded="true" signature="14508:14541" placeholder="..." />
+            <marker date="1499319981300" expanded="true" signature="14592:14602" placeholder="..." />
+            <marker date="1499319981300" expanded="true" signature="14810:14820" placeholder="..." />
+            <marker date="1499319981300" expanded="true" signature="15030:15041" placeholder="..." />
+            <marker date="1499319981300" expanded="true" signature="15261:15275" placeholder="..." />
+            <marker date="1499319981300" expanded="true" signature="16043:16054" placeholder="..." />
+            <marker date="1499319981300" expanded="true" signature="16098:16109" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
+    <entry file="file://$PROJECT_DIR$/pages/entry_template.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7059774">
-          <caret line="1514" column="61" selection-start-line="1514" selection-start-column="61" selection-end-line="1514" selection-end-column="61" />
-          <folding />
+        <state vertical-scroll-proportion="-0.0259366">
+          <caret line="120" column="73" selection-start-line="120" selection-start-column="73" selection-end-line="120" selection-end-column="73" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

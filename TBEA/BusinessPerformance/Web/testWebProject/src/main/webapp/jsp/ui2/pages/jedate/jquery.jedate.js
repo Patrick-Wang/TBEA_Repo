@@ -272,7 +272,7 @@ window.console && (console = console || {log : function(){return;}});
 			}
 
 			if (that.isSeason() && !that.isSeasonMonth()){
-				that.current = new Date(that.current.getFullYear(), parseInt("" + that.current.getMonth() / 3) * 3 - 1, that.current.getDate());
+				that.current = new Date(that.current.getFullYear(), (parseInt("" + that.current.getMonth() / 3) + 1) * 3 - 1, that.current.getDate());
 			}
 
 			return that.current;
