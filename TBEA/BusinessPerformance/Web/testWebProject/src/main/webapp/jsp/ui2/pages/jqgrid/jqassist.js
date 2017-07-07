@@ -1097,7 +1097,7 @@ var JQTable;
             for (var i = 0; i < this.completeList.length; i++) {
                 remove = this.completeList[i]();
                 if (remove) {
-                    this.completeList.slice(i, 1);
+                    this.completeList.splice(i, 1);
                     --i;
                 }
             }
