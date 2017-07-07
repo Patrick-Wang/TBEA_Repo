@@ -1,0 +1,137 @@
+<components>
+	<service id="servCwsfYstj" transaction="transactionManager">
+		
+		<sql id="ysjhs" order="gs" by="0" colcount="2">select
+				companyName,--"公司名称"
+				sum(isnull(totalTaxBudget, 0)) c1
+			from
+				financial_tax_year_plan
+			where
+				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
+ 				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 and
+ 				companyName in ${gs}
+ 			group by
+ 				companyName
+		</sql>
+		
+		<sql id="yszxs" order="gs" by="0" colcount="2">select
+				companyName,--"公司名称"
+				sum(isnull( VAT ,0)) +
+				sum(isnull( salesIncome ,0)) +
+				sum(isnull( tariff ,0)) +
+				sum(isnull( businessTax ,0)) +
+				sum(isnull( urbanConstructionTax ,0)) +
+				sum(isnull( educationSurtax ,0)) +
+				sum(isnull( localEducationSurtax ,0)) +
+				sum(isnull( stampTax ,0)) +
+				sum(isnull( personalIncomeTax ,0)) +
+				sum(isnull( buildingTax ,0)) +
+				sum(isnull( landUseTax ,0)) +
+				sum(isnull( landVTA ,0)) +
+				sum(isnull( landOccupationTax ,0)) +
+				sum(isnull( vehicleAndVesselTax ,0)) +
+				sum(isnull( resourceTax ,0)) +
+				sum(isnull( deedTax ,0)) s1
+			from
+				financial_tax
+			where
+				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')),${dStart.date}) &lt;= 0 and
+				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')),${dEnd.date}) &gt;= 0 and
+				companyName in ${gs}
+			group by
+				companyName
+		</sql>
+		<list id="ids" type="int">
+			<item from="1" to="${gs.size}" />
+		</list>
+
+		<table id="result" rowIds="ids" export="true">
+			<col list="qy" />
+			<col list="gs" />
+			<list sql="ysjhs" value="1" />
+			<list sql="yszxs" value="1" />
+			<col instruction="执行率"/>
+			<divCol toCol="4" sub="3" base="2"/>
+		</table>
+		
+	</service>
+	<controller id="servFmtterCwsfYstj">
+		<formatter id="fmtData" export="true">
+			<EmptyFormatter>
+				<DefaultMatcher cols="0,1" />
+			</EmptyFormatter>
+			<NumberFormatter reservedCount="1">
+			</NumberFormatter>
+		</formatter>
+	</controller>
+	<controller id="cwsfYstjUpdate">
+		<context key="dStart" value="${request.dStart.asCalendar}"/>
+  		<context key="dEnd" value="${request.dEnd.asCalendar}"/>
+		<callservice id="servCwsfYstj" />
+		<callcontroller id="servFmtterCwsfYstj" />
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+		<response type="json">
+			<header type="array">
+				<item>
+					<name> 区域划分			</name>
+				</item>
+				<item>
+					<name> 单位名称			</name>
+				</item>
+				<item>
+					<name> 预算计划数		</name>
+				</item>
+				<item>
+					<name> 预算执行数		</name>
+				</item>
+				<item>
+					<name> 执行率		</name>
+				</item>
+			</header>
+			<width>1300</width>
+
+			<data>${fmtServ.result}</data>
+		</response>
+	</controller>
+	<controller id="cwsfYstjExport">
+		<context key="dStart" value="${request.dStart.asCalendar}"/>
+  		<context key="dEnd" value="${request.dEnd.asCalendar}"/>
+		<callservice id="servCwsfYstj" />
+		<callcontroller id="servFmtterCwsfYstj" inline="true" />
+		<ExcelTemplate id="excelTemplate" sheet="预算统计" />
+		<list id="title" type="string">
+			区域划分 ,
+			单位名称 ,
+			预算计划数,
+			预算执行数,
+			执行率
+		</list>
+		
+		<formatter id="excel">
+			<ExcelTitleFilter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="0" col="0" />
+				<titles>
+					<title ref="title" />
+				</titles>
+			</ExcelTitleFilter>
+			<ExcelHeaderCenterFormatter>
+				<DefaultMatcher cols="0, 1" />
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="1" col="0" />
+			</ExcelHeaderCenterFormatter>
+			<ExcelOffsetFormatter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="1" col="0" />
+			</ExcelOffsetFormatter>
+		</formatter>
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+			<formatter ref="excel" />
+		</formatterServer>
+		<response type="excel" ref="excelTemplate" name="${request.dStart.asString}到${request.dEnd.asString}预算统计.xls"
+			serv="fmtServ" />
+	</controller>
+</components>

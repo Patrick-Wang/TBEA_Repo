@@ -16,35 +16,6 @@ var cwsf;
         function CwsfShowView() {
             _super.apply(this, arguments);
         }
-        CwsfShowView.prototype.renderItemSelector = function (itemId) {
-            var sels = $("#" + itemId + " select");
-            for (var i = 0; i < sels.length; ++i) {
-                if (sels.length == i + 1 && sels.length > 1) {
-                    this.renderSelector2(sels[i]);
-                }
-                else {
-                    var opts = $("#" + itemId + " select:eq(" + i + ") option");
-                    var items = [];
-                    for (var j = 0; j < opts.length; ++j) {
-                        items.push(opts[j].text);
-                    }
-                    var hasScroll = $(sels).find("option").length > 10;
-                    var extendWidth = hasScroll ? 27 : 0;
-                    var width = Util.getUIWidth(items);
-                    $(sels[i]).multiselect({
-                        multiple: false,
-                        header: false,
-                        minWidth: width < 80 ? 80 + extendWidth : width + 20 + extendWidth,
-                        height: hasScroll ? 270 : '100%',
-                        // noneSelectedText: "请选择月份",
-                        selectedList: 1
-                    })
-                        .css("padding", "2px 0 2px 4px")
-                        .css("text-align", "left")
-                        .css("font-size", "12px");
-                }
-            }
-        };
         CwsfShowView.prototype.getMaxWidth = function (opts) {
             var max = 0;
             var tmp = 0;
@@ -60,18 +31,6 @@ var cwsf;
         CwsfShowView.prototype.init = function (opt) {
             var _this = this;
             this.mOpt = opt;
-            this.unitedSelector = new Util.UnitedSelector(opt.itemNodes, opt.itemId);
-            var sel = $("#" + opt.itemId);
-            var width = this.getMaxWidth(sel.children());
-            sel.css("width", width);
-            sel.multiselect({
-                multiple: false,
-                header: false,
-                minWidth: 120,
-                height: '100%',
-                // noneSelectedText: "请选择月份",
-                selectedList: 1
-            });
             this.mDStartSel = new Util.DateSelectorProxy("dstart", opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart, opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd, Util.addDay(opt.date, -5 * 7));
             this.mDEndSel = new Util.DateSelectorProxy("dEnd", opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart, opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd, opt.date);
             this.mDEndSel.change(function (date) {
@@ -83,11 +42,33 @@ var cwsf;
                 }
             });
             $("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
+            var nodes = [];
+            for (var i = 0; i < this.mNodesAll.length; ++i) {
+                if (router.to(this.plugin(this.mNodesAll[i])).send(FrameEvent.FE_IS_COMPANY_SUPPORTED)) {
+                    nodes.push(this.mNodesAll[i]);
+                }
+            }
+            this.mItemSelector = new Util.UnitedSelector(nodes, this.mOpt.type);
+            if (nodes.length == 1) {
+                this.mItemSelector.hide();
+            }
             this.mCompanySelector = new Util.CompanySelector(true, this.mOpt.comp, this.mOpt.comps);
             if (opt.comps.length <= 10) {
                 this.mCompanySelector.hide();
             }
             this.mCompanySelector.checkAll();
+            this.unitedSelector = new Util.UnitedSelector(opt.itemNodes, opt.itemId);
+            var sel = $("#" + opt.itemId + " select");
+            var width = this.getMaxWidth(sel.children());
+            sel.css("width", width);
+            sel.multiselect({
+                multiple: false,
+                header: false,
+                minWidth: 120,
+                height: '100%',
+                // noneSelectedText: "请选择月份",
+                selectedList: 1
+            });
             this.updateUI();
         };
         CwsfShowView.prototype.onEvent = function (e) {
@@ -97,15 +78,6 @@ var cwsf;
                     break;
             }
             return _super.prototype.onEvent.call(this, e);
-        };
-        //不可以起名叫做export 在IE中有冲突
-        CwsfShowView.prototype.exportExcel = function (elemId) {
-            var url = router.to(this.mCurrentPlugin).send(FrameEvent.FE_GET_EXPORTURL, {
-                date: this.mCurrentDate,
-                compType: this.mCurrentComp
-            });
-            $("#" + elemId)[0].action = url;
-            $("#" + elemId)[0].submit();
         };
         CwsfShowView.prototype.updateUI = function () {
             var node = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
@@ -124,7 +96,7 @@ var cwsf;
                 dStart: this.mDStartSel == undefined ? undefined : Util.date2Str(this.mDStartSel.getDate()),
                 dEnd: this.mDEndSel == undefined ? undefined : Util.date2Str(this.mDEndSel.getDate()),
                 comps: JSON.stringify(this.mCompanySelector.getCompanyNames()),
-                item: this.unitedSelector != undefined ? this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.value : undefined
+                item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.value
             });
         };
         CwsfShowView.prototype.exportExcel = function (elemId) {
@@ -132,7 +104,7 @@ var cwsf;
                 dStart: this.mDStartSel == undefined ? undefined : Util.date2Str(this.mDStartSel.getDate()),
                 dEnd: this.mDEndSel == undefined ? undefined : Util.date2Str(this.mDEndSel.getDate()),
                 comps: JSON.stringify(this.mCompanySelector.getCompanyNames()),
-                item: this.unitedSelector != undefined ? this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.value : undefined
+                item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.value
             });
             $("#" + elemId)[0].action = url;
             $("#" + elemId)[0].submit();

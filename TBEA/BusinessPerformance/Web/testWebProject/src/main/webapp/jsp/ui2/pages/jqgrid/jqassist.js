@@ -176,6 +176,10 @@ var JQTable;
                 if (isNaN(nwidth)) {
                     return;
                 }
+                var oldWidth = $t.grid.width;
+                if (oldWidth == nwidth) {
+                    return;
+                }
                 nwidth = parseInt(nwidth, 10);
                 $t.grid.width = $t.p.width = nwidth;
                 $("#gbox_" + $.jgrid.jqID($t.p.id)).css("width", nwidth + "px");
@@ -288,7 +292,7 @@ var JQTable;
                     }
                 }
                 //触发onComplete 重新调整合并表头
-                if ($.isFunction($t.p.gridComplete)) {
+                if ($.isFunction($t.p.gridComplete) && oldWidth != nwidth) {
                     $t.p.gridComplete.call($t);
                 }
             });
@@ -837,6 +841,7 @@ var JQTable;
                     if (_this.mOnMergedRows != undefined) {
                         _this.mOnMergedRows(iCol, iRowStart, ilen);
                     }
+                    return true;
                 });
             }
             else {
@@ -862,6 +867,7 @@ var JQTable;
                     if (mergelen > 1) {
                         _this.mergeRow(iCol, mya.length - mergelen, mergelen);
                     }
+                    return true;
                 });
             }
         };
@@ -930,6 +936,7 @@ var JQTable;
                             rightCell.removeClass("ui-state-highlight");
                         }
                     });
+                    return true;
                 });
             }
             else {
@@ -951,6 +958,7 @@ var JQTable;
                             }
                         }
                     }
+                    return true;
                 });
             }
         };
@@ -1085,8 +1093,13 @@ var JQTable;
             });
         };
         JQGridAssistant.prototype.complete = function () {
+            var remove = false;
             for (var i = 0; i < this.completeList.length; i++) {
-                this.completeList[i]();
+                remove = this.completeList[i]();
+                if (remove) {
+                    this.completeList.slice(i, 1);
+                    --i;
+                }
             }
         };
         JQGridAssistant.prototype.disableCellEdit = function (cells) {

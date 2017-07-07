@@ -1,76 +1,66 @@
 <components>
 	<service id="servCwsfSjtj" transaction="transactionManager">
 
-		<context key="usrName" value="%${session.account.name}%"></context>
-		<sql id="gsSql">select
-				area,
-				company
-			from
-				tax_auth
-			where
-				userName like ${usrName}
-		</sql>
-		
-		<list type="string" id="gs" sql="gsSql" value="1"/>
-		<list type="string" id="qy" sql="gsSql" value="0"/>
 		<sql id="data" order="gs" by="0" colcount="27">select
-				companyName,--"公司名称"
-				sum(isnull(	VAT 	  ,0))	c1,
-				sum(isnull(	salesIncome 	  ,0))	c2,
-				sum(isnull(	tariff 	  ,0))	c3,
-				sum(isnull(	businessTax 	  ,0))	c4,
-				sum(isnull(	urbanConstructionTax 	  ,0))	c5,
-				sum(isnull(	educationSurtax 	  ,0))	c6,
-				sum(isnull(	localEducationSurtax 	  ,0))	c7,
-				sum(isnull(	stampTax 	  ,0))	c8,
-				sum(isnull(	personalIncomeTax 	  ,0))	c9,
-				sum(isnull(	buildingTax 	  ,0))	c10,
-				sum(isnull(	landUseTax 	  ,0))	c11,
-				sum(isnull(	landVTA 	  ,0))	c12,
-				sum(isnull(	landOccupationTax 	  ,0))	c13,
-				sum(isnull(	vehicleAndVesselTax 	  ,0))	c14,
-				sum(isnull(	resourceTax 	  ,0))	c15,
-				sum(isnull(	deedTax 	  ,0))	c16,
-				sum(isnull(	VAT 	  ,0))	+
-				sum(isnull(	salesIncome 	  ,0))	+
-				sum(isnull(	tariff 	  ,0))	+
-				sum(isnull(	businessTax 	  ,0))	+
-				sum(isnull(	urbanConstructionTax 	  ,0))	+
-				sum(isnull(	educationSurtax 	  ,0))	+
-				sum(isnull(	localEducationSurtax 	  ,0))	+
-				sum(isnull(	stampTax 	  ,0))	+
-				sum(isnull(	personalIncomeTax 	  ,0))	+
-				sum(isnull(	buildingTax 	  ,0))	+
-				sum(isnull(	landUseTax 	  ,0))	+
-				sum(isnull(	landVTA 	  ,0))	+
-				sum(isnull(	landOccupationTax 	  ,0))	+
-				sum(isnull(	vehicleAndVesselTax 	  ,0))	+
-				sum(isnull(	resourceTax 	  ,0))	+
-				sum(isnull(	deedTax 	  ,0))	s1,
-				sum(isnull(	floodPreventionCharges 	  ,0))	d1,
-				sum(isnull(	waterConservancyFund 	  ,0))	d2,
-				sum(isnull(	mineralResourceCompensation 	  ,0))	d3,
-				sum(isnull(	mtzydfjjfzf 	  ,0))	d4,
-				sum(isnull(	coalFee 	  ,0))	d5,
-				sum(isnull(	labourUunionExpenditure 	  ,0))	d6,
-				sum(isnull(	employmentSecurityForDisabledPersons 	  ,0))	d7,
-				sum(isnull(	other 	  ,0))	d8,
-				sum(isnull(	floodPreventionCharges 	  ,0))	+
-				sum(isnull(	waterConservancyFund 	  ,0))	+
-				sum(isnull(	mineralResourceCompensation 	  ,0))	+
-				sum(isnull(	mtzydfjjfzf 	  ,0))	+
-				sum(isnull(	coalFee 	  ,0))	+
-				sum(isnull(	labourUunionExpenditure 	  ,0))	+
-				sum(isnull(	employmentSecurityForDisabledPersons 	  ,0))	+
-				sum(isnull(	other 	  ,0))	s2
+			companyName,--"公司名称"
+			sum(isnull( VAT ,0)) c1,
+			sum(isnull( salesIncome ,0)) c2,
+			sum(isnull( tariff ,0)) c3,
+			sum(isnull( businessTax ,0)) c4,
+			sum(isnull( urbanConstructionTax ,0)) c5,
+			sum(isnull( educationSurtax ,0)) c6,
+			sum(isnull( localEducationSurtax ,0)) c7,
+			sum(isnull( stampTax ,0)) c8,
+			sum(isnull( personalIncomeTax ,0)) c9,
+			sum(isnull( buildingTax ,0)) c10,
+			sum(isnull( landUseTax ,0)) c11,
+			sum(isnull( landVTA ,0)) c12,
+			sum(isnull( landOccupationTax ,0)) c13,
+			sum(isnull( vehicleAndVesselTax ,0)) c14,
+			sum(isnull( resourceTax ,0)) c15,
+			sum(isnull( deedTax ,0)) c16,
+			sum(isnull( VAT ,0)) +
+			sum(isnull( salesIncome ,0)) +
+			sum(isnull( tariff ,0)) +
+			sum(isnull( businessTax ,0)) +
+			sum(isnull( urbanConstructionTax ,0)) +
+			sum(isnull( educationSurtax ,0)) +
+			sum(isnull( localEducationSurtax ,0)) +
+			sum(isnull( stampTax ,0)) +
+			sum(isnull( personalIncomeTax ,0)) +
+			sum(isnull( buildingTax ,0)) +
+			sum(isnull( landUseTax ,0)) +
+			sum(isnull( landVTA ,0)) +
+			sum(isnull( landOccupationTax ,0)) +
+			sum(isnull( vehicleAndVesselTax ,0)) +
+			sum(isnull( resourceTax ,0)) +
+			sum(isnull( deedTax ,0)) s1,
+			sum(isnull( floodPreventionCharges ,0)) d1,
+			sum(isnull( waterConservancyFund ,0)) d2,
+			sum(isnull( mineralResourceCompensation ,0)) d3,
+			sum(isnull( mtzydfjjfzf ,0)) d4,
+			sum(isnull( coalFee ,0)) d5,
+			sum(isnull( labourUunionExpenditure ,0)) d6,
+			sum(isnull( employmentSecurityForDisabledPersons ,0)) d7,
+			sum(isnull( other ,0)) d8,
+			sum(isnull( floodPreventionCharges ,0)) +
+			sum(isnull( waterConservancyFund ,0)) +
+			sum(isnull( mineralResourceCompensation ,0)) +
+			sum(isnull( mtzydfjjfzf ,0)) +
+			sum(isnull( coalFee ,0)) +
+			sum(isnull( labourUunionExpenditure ,0)) +
+			sum(isnull( employmentSecurityForDisabledPersons ,0)) +
+			sum(isnull( other ,0)) s2
 			from
-				financial_tax
+			financial_tax
 			where
-				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
- 				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 and
- 				companyName in ${gs}
- 			group by
- 				companyName
+			dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')),
+			${dStart.date}) &lt;= 0 and
+			dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')),
+			${dEnd.date}) &gt;= 0 and
+			companyName in ${gs}
+			group by
+			companyName
 		</sql>
 		<list id="ids" type="int">
 			<item from="1" to="${data.size}" />
@@ -79,10 +69,9 @@
 
 		<context value="${counterFactory.newCounter}" key="counter" />
 		<table id="result" rowIds="ids" export="true">
-			<col list="qy" />
-			<col list="gs" />
+			<col list="${qy}" />
+			<col list="${gs}" />
 			<list sql="data" value="${counter.reset[1].val}" />
-			<list sql="data" value="${counter.next.val}" />
 			<list sql="data" value="${counter.next.val}" />
 			<list sql="data" value="${counter.next.val}" />
 			<list sql="data" value="${counter.next.val}" />
@@ -120,8 +109,8 @@
 		</formatter>
 	</controller>
 	<controller id="cwsfSjtjUpdate">
-		<context key="dStart" value="${request.dStart.asCalendar}"/>
-  		<context key="dEnd" value="${request.dEnd.asCalendar}"/>
+		<context key="dStart" value="${request.dStart.asCalendar}" />
+		<context key="dEnd" value="${request.dEnd.asCalendar}" />
 		<callservice id="servCwsfSjtj" />
 		<callcontroller id="servFmtterCwsfSjtj" />
 		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
@@ -231,8 +220,8 @@
 		</response>
 	</controller>
 	<controller id="cwsfSjtjExport">
-		<context key="dStart" value="${request.dStart.asCalendar}"/>
-  		<context key="dEnd" value="${request.dEnd.asCalendar}"/>
+		<context key="dStart" value="${request.dStart.asCalendar}" />
+		<context key="dEnd" value="${request.dEnd.asCalendar}" />
 		<callservice id="servCwsfSjtj" />
 		<callcontroller id="servFmtterCwsfSjtj" inline="true" />
 		<ExcelTemplate id="excelTemplate" sheet="税金统计" />
@@ -246,7 +235,8 @@
 			税金 ,
 			税金 ,
 			税金 ,
-			税金 ,
+			税金
+			,
 			税金 ,
 			税金 ,
 			税金 ,
@@ -305,6 +295,10 @@
 					<title ref="title1" />
 				</titles>
 			</ExcelTitleFilter>
+			<ExcelMergeFormatter>
+				<ExcelTemplate ref="excelTemplate" />
+				<MergeRegion x="0" y="0" width="${title.size}" height="2" />
+			</ExcelMergeFormatter>
 			<ExcelHeaderCenterFormatter>
 				<DefaultMatcher cols="0, 1" />
 				<ExcelTemplate ref="excelTemplate" />
@@ -319,7 +313,8 @@
 			<formatter ref="fmtData" />
 			<formatter ref="excel" />
 		</formatterServer>
-		<response type="excel" ref="excelTemplate" name="${request.dStart.asString}到${request.dEnd.asString}税金统计.xls"
+		<response type="excel" ref="excelTemplate"
+			name="${request.dStart.asString}到${request.dEnd.asString}税金统计.xls"
 			serv="fmtServ" />
 	</controller>
 	<controller id="cwsfSjtj">

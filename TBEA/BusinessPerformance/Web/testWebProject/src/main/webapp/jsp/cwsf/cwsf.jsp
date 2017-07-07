@@ -60,8 +60,8 @@
 	<script src="${pageContext.request.contextPath}/jsp/components/dateSelectorProxy.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/companySelector.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/jsp/framework/route/route.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/sddb/sddbdef.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/sddb/sddb.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/cwsf/cwsfdef.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/cwsf/cwsf.js" type="text/javascript"></script>
 <title>${title}</title>
 
 <style type="text/css">
@@ -220,6 +220,9 @@ th.ui-th-ltr {
 				<div id="dEnd" style="float: left;width: 100px;margin-right:10px"></div>
 				<div id="type" style="float: left"></div>
 				<div id="compid" style="float: left"></div>
+				<div style="float: left">
+					<div id="item-sel" style="float: left"></div>
+				</div>
 				<input id="doUpdate" type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
 				onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)" />
 			</td>
@@ -279,13 +282,13 @@ th.ui-th-ltr {
 		}
 
 		framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
-			type: "type",
+			type:"type",
 			comp:"compid",
 			comps : comps == '' ? comps : JSON.parse(comps),
 			date: date,
 			dateStart : dateStart,
 			dateEnd:dateEnd,
-			itemId:"item",
+			itemId:"item-sel",
 			itemNodes:items == '' ? items : JSON.parse(items)
 		});
         $("#exportButton")

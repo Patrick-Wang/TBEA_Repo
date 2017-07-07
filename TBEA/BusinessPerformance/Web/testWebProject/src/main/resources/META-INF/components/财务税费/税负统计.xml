@@ -1,18 +1,7 @@
 <components>
 	<service id="servCwsfSftj" transaction="transactionManager">
 		<context key="usrName" value="%${session.account.name}%"></context>
-		<sql id="gsSql">select
-				area,
-				company
-			from
-				tax_auth
-			where
-				userName like ${usrName}
-		</sql>
-		
-		<list type="string" id="gs" sql="gsSql" value="1"/>
-		<list type="string" id="qy" sql="gsSql" value="0"/>
-		<sql id="data" order="gs" by="0" colcount="27">select
+		<sql id="data" order="gs" by="0" colcount="7">select
 				companyName,--"公司名称"
 				sum(isnull(VAT, 0)) c1	,
 				sum(isnull(xssr, 0)) c2	,
@@ -30,7 +19,7 @@
  				companyName
 		</sql>
 		
-		<sql id="dataLastYear" order="gs" by="0" colcount="27">select
+		<sql id="dataLastYear" order="gs" by="0" colcount="3">select
 				companyName,--"公司名称"
 				sum(isnull(VAT, 0)) / nullif(sum(isnull(xssr, 0)), 0) r1,
 				sum(isnull(salesIncome, 0)) / nullif(sum(isnull(totalProfit, 0)), 0) r2
@@ -132,7 +121,7 @@
   		<context key="dEnd" value="${request.dEnd.asCalendar}"/>
 		<callservice id="servCwsfSftj" />
 		<callcontroller id="servFmtterCwsfSftj" inline="true" />
-		<ExcelTemplate id="excelTemplate" sheet="税金统计" />
+		<ExcelTemplate id="excelTemplate" sheet="税负统计" />
 		<list id="title" type="string">
 			区域划分 ,
 			单位名称 ,
@@ -148,7 +137,7 @@
 		<list id="title1" type="string">
 			区域划分 ,
 			单位名称 ,
-			增值税 ,
+			增值税,
 			销售收入 ,
 			税负率,
 			上年同期税负率 ,
@@ -166,6 +155,11 @@
 					<title ref="title1" />
 				</titles>
 			</ExcelTitleFilter>
+			<ExcelMergeFormatter>
+		    	<ExcelTemplate ref="excelTemplate"/>
+		    	<MergeRegion x="0" y="0" width="2" height="2"/>
+		    	<MergeRegion x="2" y="0" width="8" height="1"/>
+		   </ExcelMergeFormatter>
 			<ExcelHeaderCenterFormatter>
 				<DefaultMatcher cols="0, 1" />
 				<ExcelTemplate ref="excelTemplate" />
@@ -180,16 +174,7 @@
 			<formatter ref="fmtData" />
 			<formatter ref="excel" />
 		</formatterServer>
-		<response type="excel" ref="excelTemplate" name="${request.dStart.asString}到${request.dEnd.asString}税金统计.xls"
+		<response type="excel" ref="excelTemplate" name="${request.dStart.asString}到${request.dEnd.asString}税负统计.xls"
 			serv="fmtServ" />
-	</controller>
-	<controller id="cwsfSftj">
-		<response type="jsp" name="sddb/sddb">
-			<map key="date" value="${calendar.current.format}" />
-			<map key="dateStart" value="2014-1-1" />
-			<map key="updateUrl" value="cwsfSftjUpdate" />
-			<map key="exportUrl" value="cwsfSftjExport" />
-			<map key="title" value="税负统计" />
-		</response>
 	</controller>
 </components>

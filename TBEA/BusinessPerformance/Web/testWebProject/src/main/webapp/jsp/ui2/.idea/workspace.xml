@@ -31,35 +31,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sddb.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/sddb/sddb.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sddb.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/sddb/sddb/sddb.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="55" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tree.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tree.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tree/tree.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.07734807">
-              <caret line="55" column="22" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="50" column="66" selection-start-line="50" selection-start-column="66" selection-end-line="50" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -68,18 +44,8 @@
       <file leaf-file-name="tree.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tree/tree.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.956522">
-              <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sddb.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/sddb/sddb/sddb.jsp">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+              <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -88,7 +54,7 @@
       <file leaf-file-name="sddb.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/sddb/sddb.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.73913">
+            <state vertical-scroll-proportion="0.0">
               <caret line="198" column="68" selection-start-line="198" selection-start-column="68" selection-end-line="198" selection-end-column="68" />
               <folding />
             </state>
@@ -98,7 +64,7 @@
       <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/entry_template.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6">
+            <state vertical-scroll-proportion="0.0">
               <caret line="120" column="73" selection-start-line="120" selection-start-column="73" selection-end-line="120" selection-end-column="73" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -110,7 +76,7 @@
       <file leaf-file-name="jquery.jedate.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/jedate/jquery.jedate.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.637931">
+            <state vertical-scroll-proportion="0.0">
               <caret line="274" column="69" selection-start-line="274" selection-start-column="69" selection-end-line="274" selection-end-column="69" />
               <folding>
                 <marker date="1499319981300" expanded="true" signature="14508:14541" placeholder="..." />
@@ -125,11 +91,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jqassist.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="jqassist.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.566667">
-              <caret line="1514" column="61" selection-start-line="1514" selection-start-column="61" selection-end-line="1514" selection-end-column="61" />
+            <state vertical-scroll-proportion="1.5639446">
+              <caret line="1038" column="23" selection-start-line="1038" selection-start-column="23" selection-end-line="1038" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/gcyzb/show.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="118.695656">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -172,7 +148,6 @@
         <option value="$PROJECT_DIR$/pages/sddb/sddb/sddb.jsp" />
         <option value="$PROJECT_DIR$/pages/sddb/sddb.ts" />
         <option value="$PROJECT_DIR$/pages/gdw_zbhz.ts" />
-        <option value="$PROJECT_DIR$/pages/gcyzb/show.ts" />
         <option value="$PROJECT_DIR$/pages/companys_zbhz_prediction.ts" />
         <option value="$PROJECT_DIR$/pages/cwyjsf/cwyjsf.jsp" />
         <option value="$PROJECT_DIR$/pages/cwyjsf/yjsfljs/yjsfljs.ts" />
@@ -193,12 +168,13 @@
         <option value="$PROJECT_DIR$/pages/nwbzlqk/nwbzlqkdef.ts" />
         <option value="$PROJECT_DIR$/pages/www2/js/echarts-plain-2-0-0.js" />
         <option value="$PROJECT_DIR$/pages/sddb/sddb.jsp" />
-        <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
         <option value="$PROJECT_DIR$/pages/jedate/jquery.jedate.js" />
         <option value="$PROJECT_DIR$/pages/entry_template.ts" />
         <option value="$PROJECT_DIR$/tree/tree.css" />
         <option value="$PROJECT_DIR$/jquery/jqueryex.js" />
         <option value="$PROJECT_DIR$/tree/tree.ts" />
+        <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
+        <option value="$PROJECT_DIR$/pages/gcyzb/show.ts" />
       </list>
     </option>
   </component>
@@ -238,6 +214,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -266,7 +243,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tree" />
+              <option name="myItemId" value="pages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -280,14 +257,17 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jquery" />
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cwyjsf" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -376,7 +356,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20803949" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0996016" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0996016" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -409,28 +389,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/companys_zbhz_prediction.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.9130435">
-          <caret line="199" column="45" selection-start-line="199" selection-start-column="34" selection-end-line="199" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/companys_zbhz_prediction.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.93333334">
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/cwyjsf/cwyjsf.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.521739">
-          <caret line="238" column="20" selection-start-line="238" selection-start-column="16" selection-end-line="238" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/unitedSelector.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.4">
@@ -576,6 +534,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -625,6 +584,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="48" selection-start-line="20" selection-start-column="48" selection-end-line="20" selection-end-column="48" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -660,9 +620,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -678,7 +635,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -686,9 +642,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -696,13 +649,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
-          <folding>
-            <marker date="1499312780128" expanded="true" signature="362:628" placeholder="/*...*/" />
-            <marker date="1499312780128" expanded="true" signature="630:828" placeholder="/*...*/" />
-            <marker date="1499312780128" expanded="true" signature="31101:31186" placeholder="..." />
-            <marker date="1499312780128" expanded="true" signature="154113:154173" placeholder="..." />
-            <marker date="1499312780128" expanded="true" signature="439437:439438" placeholder="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -711,7 +657,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -721,7 +667,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="26" column="55" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -736,23 +682,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/sddb/sddb.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.73913">
+        <state vertical-scroll-proportion="0.0">
           <caret line="198" column="68" selection-start-line="198" selection-start-column="68" selection-end-line="198" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.566667">
-          <caret line="1514" column="61" selection-start-line="1514" selection-start-column="61" selection-end-line="1514" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/jedate/jquery.jedate.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.637931">
+        <state vertical-scroll-proportion="0.0">
           <caret line="274" column="69" selection-start-line="274" selection-start-column="69" selection-end-line="274" selection-end-column="69" />
           <folding>
             <marker date="1499319981300" expanded="true" signature="14508:14541" placeholder="..." />
@@ -770,15 +708,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.36740333">
           <caret line="22" column="32" selection-start-line="22" selection-start-column="28" selection-end-line="22" selection-end-column="32" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/entry_template.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6">
+        <state vertical-scroll-proportion="0.0">
           <caret line="120" column="73" selection-start-line="120" selection-start-column="73" selection-end-line="120" selection-end-column="73" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -796,8 +731,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tree/tree.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.956522">
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -812,8 +747,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tree/tree.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07734807">
-          <caret line="55" column="22" selection-start-line="55" selection-start-column="22" selection-end-line="55" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="66" selection-start-line="50" selection-start-column="66" selection-end-line="50" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/gcyzb/show.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="118.695656">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/framework/templates/singleDateReport/show.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27786753">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/gcyzb/show.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38449112">
+          <caret line="17" column="67" selection-start-line="17" selection-start-column="67" selection-end-line="17" selection-end-column="67" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5639446">
+          <caret line="1038" column="23" selection-start-line="1038" selection-start-column="23" selection-end-line="1038" selection-end-column="23" />
           <folding />
         </state>
       </provider>

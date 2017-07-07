@@ -1,0 +1,135 @@
+<components>
+	<service id="servCwsfNdjh" transaction="transactionManager">
+		
+		<sql id="ndjh" order="gs" by="0" colcount="8">select
+				companyName,--"公司名称"
+				sum(isnull(totalTaxBudget, 0)) c1,
+				sum(isnull(saleIncome, 0)) c2,
+				sum(isnull(VTA, 0)) c3,
+				sum(isnull(VTA, 0)) / nullif(sum(isnull(saleIncome, 0)), 0) c4,
+				sum(isnull(totalProfit, 0)) c5,
+				sum(isnull(corporateIncomeTax, 0)) c6,
+				sum(isnull(corporateIncomeTax, 0)) / nullif(sum(isnull(totalProfit, 0)), 0) c7
+			from
+				financial_tax_year_plan
+			where
+				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
+ 				dateDiff(mm, dateadd(mm, month - 1, dateadd(yy, year -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 and
+ 				companyName in ${gs}
+ 			group by
+ 				companyName
+		</sql>
+		
+		<list id="ids" type="int">
+			<item from="1" to="${gs.size}" />
+		</list>
+		<context value="${counterFactory.newCounter}" key="counter" />
+		<table id="result" rowIds="ids" export="true">
+			<col list="qy" />
+			<col list="gs" />
+			<list sql="data" value="${counter.reset[1].val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+			<list sql="data" value="${counter.next.val}" />
+		</table>
+		
+	</service>
+	<controller id="servFmtterCwsfNdjh">
+		<formatter id="fmtData" export="true">
+			<EmptyFormatter>
+				<DefaultMatcher cols="0,1" />
+			</EmptyFormatter>
+			<NumberFormatter reservedCount="1">
+			</NumberFormatter>
+		</formatter>
+	</controller>
+	<controller id="cwsfNdjhUpdate">
+		<context key="dStart" value="${request.dStart.asCalendar}"/>
+  		<context key="dEnd" value="${request.dEnd.asCalendar}"/>
+		<callservice id="servCwsfNdjh" />
+		<callcontroller id="servFmtterCwsfNdjh" />
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+		<response type="json">
+			<header type="array">
+				<item>
+					<name> 区域划分			</name>
+				</item>
+				<item>
+					<name> 单位名称			</name>
+				</item>
+				<item>
+					<name> 税金预算合计		</name>
+				</item>
+				<item>
+					<name>销售收入计划数		</name>
+				</item>
+				<item>
+					<name> 增值税计划数	</name>
+				</item>
+				<item>
+					<name> 增值税税负率	</name>
+				</item>
+				<item>
+					<name> 利润总额计划数	</name>
+				</item>
+				<item>
+					<name> 企业所得税计划数	</name>
+				</item>
+				<item>
+					<name> 企业所得税税负率	</name>
+				</item>
+			</header>
+			<width>1300</width>
+
+			<data>${fmtServ.result}</data>
+		</response>
+	</controller>
+	<controller id="cwsfNdjhExport">
+		<context key="dStart" value="${request.dStart.asCalendar}"/>
+  		<context key="dEnd" value="${request.dEnd.asCalendar}"/>
+		<callservice id="servCwsfNdjh" />
+		<callcontroller id="servFmtterCwsfNdjh" inline="true" />
+		<ExcelTemplate id="excelTemplate" sheet="年度计划" />
+		<list id="title" type="string">
+			区域划分 ,
+			单位名称 ,
+			税金预算合计,
+			销售收入计划数,
+			增值税计划数,
+			增值税税负率,
+			利润总额计划数,
+			企业所得税计划数,
+			企业所得税税负率
+		</list>
+		
+		<formatter id="excel">
+			<ExcelTitleFilter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="0" col="0" />
+				<titles>
+					<title ref="title" />
+				</titles>
+			</ExcelTitleFilter>
+			<ExcelHeaderCenterFormatter>
+				<DefaultMatcher cols="0, 1" />
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="1" col="0" />
+			</ExcelHeaderCenterFormatter>
+			<ExcelOffsetFormatter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset row="1" col="0" />
+			</ExcelOffsetFormatter>
+		</formatter>
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+			<formatter ref="excel" />
+		</formatterServer>
+		<response type="excel" ref="excelTemplate" name="${request.dStart.asString}到${request.dEnd.asString}年度计划.xls"
+			serv="fmtServ" />
+	</controller>
+</components>

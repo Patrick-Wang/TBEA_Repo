@@ -198,6 +198,12 @@ module JQTable {
                 if (isNaN(nwidth)) {
                     return;
                 }
+                var oldWidth = $t.grid.width;
+
+                if (oldWidth == nwidth){
+                    return;
+                }
+
                 nwidth = parseInt(nwidth, 10);
                 $t.grid.width = $t.p.width = nwidth;
                 $("#gbox_" + $.jgrid.jqID($t.p.id)).css("width", nwidth + "px");
@@ -309,7 +315,7 @@ module JQTable {
                     }
                 }
                 //触发onComplete 重新调整合并表头
-                if($.isFunction($t.p.gridComplete)) {$t.p.gridComplete.call($t);}
+                if($.isFunction($t.p.gridComplete) && oldWidth != nwidth) {$t.p.gridComplete.call($t);}
             });
         }
     });
@@ -934,6 +940,7 @@ module JQTable {
                     if (this.mOnMergedRows != undefined) {
                         this.mOnMergedRows(iCol, iRowStart, ilen);
                     }
+                    return true;
                 });
             }
             else {
@@ -959,6 +966,7 @@ module JQTable {
                     if (mergelen > 1) {
                         this.mergeRow(iCol, mya.length - mergelen, mergelen);
                     }
+                    return true;
                 });
             }
         }
@@ -1029,6 +1037,7 @@ module JQTable {
                             rightCell.removeClass("ui-state-highlight");
                         }
                     });
+                    return true;
                 });
             }
             else {
@@ -1050,6 +1059,7 @@ module JQTable {
                             }
                         }
                     }
+                    return true;
                 });
             }
         }
@@ -1194,8 +1204,13 @@ module JQTable {
         }
 
         public complete():void {
+            let remove = false;
             for (var i = 0; i < this.completeList.length; i++) {
-                this.completeList[i]();
+                remove = this.completeList[i]();
+                if (remove){
+                    this.completeList.slice(i, 1);
+                    --i;
+                }
             }
         }
 

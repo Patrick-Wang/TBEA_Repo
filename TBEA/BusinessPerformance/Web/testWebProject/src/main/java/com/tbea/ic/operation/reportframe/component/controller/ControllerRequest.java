@@ -39,6 +39,16 @@ public class ControllerRequest extends PropMap{
 			return JSONArray.fromObject(val);
 		}
 		
+		public List asList(){
+			String val = req.getParameter(paraName);
+			JSONArray arr = JSONArray.fromObject(val);
+			List ret = new ArrayList();
+			for (int i = 0; i < arr.size(); ++i){
+				ret.add(arr.get(i));
+			}
+			return ret;
+		}
+		
 		public JSONObject asJsonObject(){
 			String val = req.getParameter(paraName);
 			return JSONObject.fromObject(val);

@@ -64,6 +64,13 @@ var framework;
                     this.xmmcSel = new Util.UnitedSelector(opt.xmmcNodes, opt.xmmcId);
                     this.unitedSelector.change(function () {
                         _this.renderItemSelector(opt.itemId);
+                        var id = _this.unitedSelector.getDataNode(_this.unitedSelector.getPath()).data.id;
+                        if (id >= 3 && id <= 7) {
+                            $("#" + opt.dtId).show();
+                        }
+                        else {
+                            $("#" + opt.dtId).hide();
+                        }
                     });
                     this.renderItemSelector(opt.itemId);
                     this.renderXmmcSelector(opt.xmmcId);
@@ -75,7 +82,7 @@ var framework;
                 };
                 ShowView.prototype.getParams = function (date) {
                     return {
-                        //date: this.getDate(date),
+                        date: this.getDate(date),
                         item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id,
                         xmmc: this.xmmcSel.getDataNode(this.xmmcSel.getPath()).data.value
                     };

@@ -164,7 +164,12 @@ module Util {
         }
         
         public checkAll(){
-            $(this.mUnitedSelector.getSelect()[1]).multiselect("checkAll");
+            if (this.mUnitedSelector.getSelect().length > 1){
+                $(this.mUnitedSelector.getSelect()[1]).multiselect("checkAll");
+            }else{
+                $(this.mUnitedSelector.getSelect()[0]).multiselect("checkAll");
+            }
+
         }
 
         public getRawCompanyData(): Util.IData[] {
