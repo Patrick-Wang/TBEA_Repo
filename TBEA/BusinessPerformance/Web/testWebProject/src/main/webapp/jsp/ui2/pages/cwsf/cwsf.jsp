@@ -151,9 +151,9 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/scroll/js/jquery.mCustomScrollbar.js"></script>
 <%@include file="../framework/basic/basicShow.jsp"%>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/sddb/sddbdef.js"></script>
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/cwsf/cwsfdef.js"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/sddb/sddb.js"></script>
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/cwsf/cwsf.js"></script>
 <%@include file="../../ie8-b.jsp"%>
 
 <style>
@@ -197,8 +197,6 @@
 							<div id="sels" class="pull-left">
 								<div id="item-sel" class="pull-left"></div>
 								<div id="item-sel1" class="pull-left"></div>
-								<!-- <label id="item-label" class="pull-left"></label> -->
-								<div id="item-sel2" class="pull-left"></div>
 								<div id="comp-sel" class="pull-left"></div>
 							</div>
 							<div id="grid-update" class="btn btn-default"
@@ -218,7 +216,7 @@
 				<div class="page-body">
 					<div class="row">
 						<div class="col-lg-12 col-sm-12 col-xs-12">
-							<%@include file="sddb/sddb.jsp"%>
+							<%@include file="cwsf/cwsf.jsp"%>
 						</div>
 					</div>
 				</div>
@@ -288,7 +286,6 @@
 		}
 
 		var items = '${itemNodes}'.replace(/\n/g, "");
-		var items0 = '${itemNodes0}'.replace('/\n/g', "");
 		var comps = '${nodeData}';
 
 
@@ -306,9 +303,7 @@
 				date: date,
 				dateStart : dateStart,
 				dateEnd:dateEnd,
-				itemId0:"item-sel1",
-				itemNodes0:items0 == '' ? items0 : JSON.parse(items0),
-				itemId:"item-sel2",
+				itemId:"item-sel1",
 				itemNodes:items == '' ? items : JSON.parse(items)
 			});
 		});
