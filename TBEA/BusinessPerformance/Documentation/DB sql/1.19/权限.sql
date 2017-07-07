@@ -1,6 +1,8 @@
 ﻿SET IDENTITY_INSERT [dbo].[auth_instruction] ON
 INSERT INTO [dbo].[auth_instruction] (id, [instruction]) VALUES (73, '财务税费导入')
 INSERT INTO [dbo].[auth_instruction] (id, [instruction]) VALUES (74, '财务税费查看')
+INSERT INTO [dbo].[auth_instruction] (id, [instruction]) VALUES (75, '经营指标完成情况查看')
+INSERT INTO [dbo].[auth_instruction] (id, [instruction]) VALUES (76, '经营指标预测情况查看')
 SET IDENTITY_INSERT [dbo].[auth_instruction] OFF
 
 insert into system_extend_auth (account_id, auth_type) values
