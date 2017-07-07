@@ -25,9 +25,11 @@
 
 <c:if test="${notSbqgb}">
 	<div>
+		<c:if test="${CorpAuth || _75}">
 		<h3>
 			经营指标完成情况<a name="zbhz"> </a>
 		</h3>
+		</c:if>
 		<div class="section">
 			<div class="thumb3">
 				<ul class="slides">
@@ -83,9 +85,11 @@
 
 
 <div>
-	<h3>
-		经营指标预测情况<a name="zbPrediction"> </a>
-	</h3>
+	<c:if test="${CorpAuth || _76}">
+		<h3>
+			经营指标预测情况<a name="zbPrediction"> </a>
+		</h3>
+	</c:if>
 	<div class="section">
 		<div class="thumb3">
 			<ul class="slides">
@@ -128,7 +132,7 @@
 		</div>
 	</div>
 </div>
-<c:if test="${isJydw || scgsdbqx || FinanceLookup}">
+<c:if test="${isJydw || scgsdbqx || FinanceLookup || _73 || _74}">
 	<div>
 		<h3>
 			财务分析<a name="NChz"> </a>
@@ -141,6 +145,7 @@
 							target="_blank"><img src="../images/charts/scatter2.png">
 								<span><strong>公司整体财务指标完成情况</strong></span></a></li>
 					</c:if>
+					<c:if test="${isJydw || scgsdbqx}">
 					<li><a href="../NCzb/CompanysNC.do" target="_blank"><img
 							src="../images/charts/scatter4.png"> <span><strong>经营单位财务指标完成情况</strong></span></a>
 					</li>
@@ -150,6 +155,8 @@
 					<li><a href="../report/jjzjz.do" target="_blank"><img
 							src="../images/charts/bar2.png"> <span><strong>经济增加值</strong></span></a>
 					</li>
+					</c:if>
+				
 					<c:if test="${FinanceLookup}">
 						<li><a href="../cwyjsf/show.do" target="_blank"><img
 								src="../images/charts/bar5.png"> <span><strong>财务-应交税费</strong></span></a>
@@ -164,9 +171,20 @@
 								src="../images/charts/bar2.png"> <span><strong>三项费用明细</strong></span></a>
 						</li>
 					</c:if>
+					<c:if test="${_73}">
+					<li><a href="../report/cwsjsfImportJsp.do" target="_blank"><img
+								src="../images/charts/bar5.png"> <span><strong>税务-数据维护</strong></span></a>
+					</c:if>
+					
+					<c:if test="${_74}">
+							<li><a href="../report/cwsfysjhWrapper.do" target="_blank"><img
+								src="../images/charts/bar4.png"> <span><strong>税务-预算统计</strong></span></a>
+							<li><a href="../report/cwsfsjsfWrapper.do" target="_blank"><img
+								src="../images/charts/bar2.png"> <span><strong>税务-税金税负统计</strong></span></a>
+					</c:if>
 				</ul>
 			</div>
-		</div>
+		</div>	
 	</div>
 </c:if>
 <c:if test="${JYAnalysisLookup}">

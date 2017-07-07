@@ -120,7 +120,7 @@
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
 								</c:if> 
-								<c:if test="${isJydw || scgsdbqx || FinanceLookup}">
+								<c:if test="${isJydw || scgsdbqx || FinanceLookup || _73 || _74}">
 									<li style="background-color: transparent;"><i
 										class="ec-icon ec-icon-line"></i> <a href="#NChz"
 										style="color: rgb(62, 152, 197);">财务分析</a></li>

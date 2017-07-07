@@ -61,7 +61,7 @@
 	<controller id="cwsfysjhWrapper">
 		<callservice id="servCwsfysjh" />
 		<list id="ids" type="int">1,2</list>
-		<list id="vals" type="string">预算统计, 年度计划</list>
+		<list id="vals" type="string">税务-预算统计, 税务-年度计划</list>
 		<response type="jsp" name="cwsf/cwsf">
 			<map key="date" value="${calendar.current.format}" />
 			<map key="dateStart" value="${calendar.current.lastYear.lastYear.lastYear.format}" />
@@ -70,7 +70,7 @@
 			<map key="exportUrl" value="cwsfysjhWrapperExport" />
 			<map key="nodeData" value="${dataNodeFactory[gsIds][gs].asJson}" />
 			<map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}" />
-			<map key="title" value="预算统计、计划" />
+			<map key="title" value="税务-预算统计" />
 		</response>
 	</controller>
 </components>
