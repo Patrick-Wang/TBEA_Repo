@@ -278,7 +278,7 @@ module Util {
             }
             let selectTmp:any = select;
 
-            select.change((s: any) => {
+            select[0].onchange =((s: any) => {
                 var selOpt = selectTmp.children('option:selected');
                 if (selOpt.length > 0) {
                     var path = [];

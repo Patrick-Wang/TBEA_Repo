@@ -228,7 +228,7 @@ var Util;
                 }
             }
             var selectTmp = select;
-            select.change(function (s) {
+            select[0].onchange = (function (s) {
                 var selOpt = selectTmp.children('option:selected');
                 if (selOpt.length > 0) {
                     var path = [];
