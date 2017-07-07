@@ -1,7 +1,7 @@
 <components>
  <service id="servCwsjsfImportEntry" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
-  <merge data="${data}" table="financial_tax">
+  <merge data="${data}" table="financial_tax" from="2">
    <where>
     <companyName		type="string"	 ref="0"/>
 	<year		type="int"	 ref="1"/>
@@ -45,7 +45,6 @@
  <controller id="cwsjsfImport">
   <context key="data" value="${request.upfile.asExcel}"/>
   <context key="src" value="${session.account.name} Excel 导入"/>
- <context key="compId" value="${orgs.BMDBOrganization.ids[request.compId.asInt]}"/>
   <context key="time" value="${calendar.current.secondFormat}"/>
   <callservice id="servCwsjsfImportEntry"/>
   <response type="json">

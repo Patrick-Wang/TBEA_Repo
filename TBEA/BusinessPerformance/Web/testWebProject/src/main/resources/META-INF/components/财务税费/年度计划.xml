@@ -27,13 +27,13 @@
 		<table id="result" rowIds="ids" export="true">
 			<col list="qy" />
 			<col list="gs" />
-			<list sql="data" value="${counter.reset[1].val}" />
-			<list sql="data" value="${counter.next.val}" />
-			<list sql="data" value="${counter.next.val}" />
-			<list sql="data" value="${counter.next.val}" />
-			<list sql="data" value="${counter.next.val}" />
-			<list sql="data" value="${counter.next.val}" />
-			<list sql="data" value="${counter.next.val}" />
+			<list sql="ndjh" value="${counter.reset[1].val}" />
+			<list sql="ndjh" value="${counter.next.val}" />
+			<list sql="ndjh" value="${counter.next.val}" />
+			<list sql="ndjh" value="${counter.next.val}" />
+			<list sql="ndjh" value="${counter.next.val}" />
+			<list sql="ndjh" value="${counter.next.val}" />
+			<list sql="ndjh" value="${counter.next.val}" />
 		</table>
 		
 	</service>

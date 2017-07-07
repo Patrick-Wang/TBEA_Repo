@@ -54,6 +54,8 @@ CREATE TABLE [dbo].[financial_tax_year_plan](
 	VTA	numeric(18,4)	,--	"增值税计划数(数字 单位元)"
 	totalProfit	numeric(18,4)	,--	"利润总额计划数(数字 单位元)"
 	corporateIncomeTax	numeric(18,4)	,--	企业所得税计划数(数字 单位元)
+	source	varchar(100)	,--	"公司名称（请严格参照公司名称对照表）"
+	time datetime
 PRIMARY KEY CLUSTERED 			
 (			
 	[id] ASC		

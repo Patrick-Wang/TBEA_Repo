@@ -24,8 +24,6 @@
 	<controller id="cwsfnjhImport">
 		<context key="data" value="${request.upfile.asExcel}" />
 		<context key="src" value="${session.account.name} Excel 导入" />
-		<context key="compId"
-			value="${orgs.BMDBOrganization.ids[request.compId.asInt]}" />
 		<context key="time" value="${calendar.current.secondFormat}" />
 		<callservice id="servCwsfnjhImportEntry" />
 		<response type="json">
