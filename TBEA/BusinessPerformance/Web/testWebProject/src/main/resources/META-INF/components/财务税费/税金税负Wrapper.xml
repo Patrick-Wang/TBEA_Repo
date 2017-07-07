@@ -6,7 +6,7 @@
 		<callservice id="servCwsfSjsfqy"></callservice>
 		
 		<context key="type" value="${request.item.asString}" />
-		<if test="${'type' == '税金统计'}">
+		<if test="${'type' == '财务-税金统计'}">
 			<callcontroller id="cwsfSjtjUpdate" />
 		</if>
 		<else>
@@ -20,7 +20,7 @@
 		<callservice id="servCwsfSjsfqy"></callservice>
 		
 		<context key="type" value="${request.item.asString}" />
-		<if test="${'type' == '税金统计'}">			
+		<if test="${'type' == '财务-税金统计'}">			
 			<callcontroller id="cwsfSjtjExport" />
 		</if>
 		<else>
@@ -70,7 +70,7 @@
 			<map key="exportUrl" value="cwsfsjsfWrapperExport" />
 			<map key="nodeData" value="${dataNodeFactory[gsIds][gs].asJson}" />
 			<map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}" />
-			<map key="title" value="税务-税金税负统计" />
+			<map key="title" value="财务-税金税负统计" />
 		</response>
 	</controller>
 </components>
