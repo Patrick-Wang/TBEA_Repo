@@ -103,7 +103,9 @@
 	 		</script>
 		</c:if>
 <!--------------------------------------------------------Company index begin ------------------------------------>
-		<c:if test="${notSbqgb}">
+<!--------------------------------------------------------CorpAuth refer_account table ------------------------------------>
+
+		<c:if test="${CorpAuth || _75 || _76 || zhzlLookup || JYEntryLookup || zhAuth || zhJyfxLookupAuth}">
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('经营指标完成情况', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
@@ -120,7 +122,8 @@
 
 	 		</script>
 	 		
-	 		<c:if test="${!QualityAuth}">
+
+	 		<c:if test="${_75}">
 				<script>
 	 			builder.register('dwzbqk', function () {
 						return [
@@ -130,7 +133,7 @@
 	 			</script>
 	 		</c:if>
 	 		
-	 		<c:if test="${!QualityAuth}">
+	 		<c:if test="${_76}">
 				<script>
 	 			builder.register('dwzbycqk', function () {
 						return [
@@ -251,18 +254,17 @@
 
 <!--------------------------------------------------------Finance analysis start ---------------------------->
 
-		<c:if test="${isJydw || scgsdbqx || FinanceLookup}">
+		<c:if test="${isJydw || scgsdbqx || FinanceLookup || _73 || _74}">
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('财务数据分析', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
 						.append(builder.build('gsztcwwcqk'))
-						.append(createNode('单位财务指标完成情况', 'NCzb/v2/CompanysNC.do'))
-						.append(createNode('财务对标需求', 'report/v2/dbxq.do'))
-						.append(createNode('经济增加值', 'report/v2/jjzjz.do'))
+						.append(builder.build('gdwcwzbxx'))
 						.append(builder.build('cwfxLookup'))
-						.append(builder.build('externalFinData'));
+						.append(builder.build('externalFinData'))
+						.append(builder.build('tax'));
 				})
-			</script>
+			</script>		
 	
 			<c:if test="${CorpAuth}">
 				<script>
@@ -271,7 +273,17 @@
 					});
 				</script>
 			</c:if>
-	
+			
+			<c:if test="${isJydw || scgsdbqx}">
+				<script>
+				builder.register('gdwcwzbxx', function() {
+					return [createNode('单位财务指标完成情况', 'NCzb/v2/CompanysNC.do'),
+					        createNode('财务对标需求', 'report/v2/dbxq.do'),
+					        createNode('经济增加值', 'report/v2/jjzjz.do')
+					        ];
+				});
+				</script>
+			</c:if>
 			<c:if test="${FinanceLookup}">
 				<script>
 					builder.register('cwfxLookup', function () {
@@ -293,6 +305,16 @@
 					        ];
 				});
 			</script>
+		</c:if>
+			
+		<c:if test="${_74}">
+			<script>
+				builder.register('tax', function() {
+					return [createNode('税务-预算统计', 'report/v2/cwsfysjhWrapper.do'),
+					         createNode('税务-税金税负统计', 'report/v2/cwsfsjsfWrapper.do')
+					        ];
+				});
+			</script>		
 		</c:if>
 		
 <!--------------------------------------------------------Finance analysis end ---------------------------->
@@ -496,7 +518,9 @@
 				</script>
 			</c:if>
 		 </c:if>
-<!--------------------------------------------------------XNY Management end -------------------------------->	        
+<!--------------------------------------------------------XNY Management end -------------------------------->	 
+
+<!--------------------------------------------------------Index entry start -------------------------------->	        
 	 
 		<c:if test="${entryPlan}">
 			<script>
@@ -518,7 +542,7 @@
 				});
 			</script>
 		</c:if>
-	
+<!--------------------------------------------------------Index entry end -------------------------------->	
 		<c:if test="${isJydw}">
 			<script>
 				builder.register('entryxx', function() {
@@ -558,7 +582,7 @@
 				});
 			</script>
 		</c:if>
-	
+<!--------------------------------------------------------Index approve start -------------------------------->	 	
 	
 		<c:if test="${approvePlan}">
 			<script>
@@ -581,7 +605,7 @@
 			</script>
 		</c:if>
 	
-	
+<!--------------------------------------------------------Index approve end -------------------------------->	 	
 	<%--      <ul id="navlist3" style="padding: 10px 0; display: none">
 	        <li style="background-color: transparent; diplay: none"><i
 	            class="ec-icon ec-icon-force"></i> <a href="#finincial"
@@ -652,14 +676,31 @@
 				});
 			</script>
 		</c:if>
+		
+		
 	    <c:if test="${FinanceEntry}">
 	         <script>
 	         	builder.register('entryxx', function() {
 					return createNode('财务报表录入')
-						.append(createNode('财务-经营性现金流录入', 'cwgbjyxxjl/v2/entry.do'));
+						.append(createNode('财务-经营性现金流录入', 'cwgbjyxxjl/v2/entry.do'))
+						.append(builder.build('taximport'));
 				});
 			</script>
 	    </c:if>
+	    
+	    
+	    <c:if test="${_73}">
+	    	 <script>
+	    	 builder.register('taximport', function () {
+					return [
+					    createNode('税务-数据维护', 'report/v2/cwsjsfImportJsp.do')				   
+					];
+				});
+	    	 </script>
+	    
+	    </c:if>
+					
+	    
 		<c:if test="${QualityLookup || QualityApprove}">
 			<script>
 				builder.register('quality', function() {
