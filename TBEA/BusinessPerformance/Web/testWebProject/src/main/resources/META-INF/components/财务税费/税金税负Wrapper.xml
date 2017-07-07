@@ -31,7 +31,7 @@
 	<service id="servCwsfSjsfqy" transaction="transactionManager">
 		<context key="usrName" value="%${session.account.name}%"></context>
 		<sql id="gsSql">select
-			company,
+			ltrim(rtrim(company)) c0,
 			area
 			from
 			tax_auth
@@ -48,7 +48,7 @@
 		<sql id="gsSql">select
 			id,
 			area,
-			company
+			ltrim(rtrim(company)) c0
 			from
 			tax_auth
 			where

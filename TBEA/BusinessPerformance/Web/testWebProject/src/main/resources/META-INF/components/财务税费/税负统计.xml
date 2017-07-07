@@ -2,7 +2,7 @@
 	<service id="servCwsfSftj" transaction="transactionManager">
 		<context key="usrName" value="%${session.account.name}%"></context>
 		<sql id="data" order="gs" by="0" colcount="7">select
-				companyName,--"公司名称"
+				ltrim(rtrim(companyName)) c0,--"公司名称"
 				sum(isnull(VAT, 0)) c1	,
 				sum(isnull(xssr, 0)) c2	,
 				sum(isnull(VAT, 0)) / nullif(sum(isnull(xssr, 0)), 0) r1,
@@ -20,7 +20,7 @@
 		</sql>
 		
 		<sql id="dataLastYear" order="gs" by="0" colcount="3">select
-				companyName,--"公司名称"
+				ltrim(rtrim(companyName)) c0,--"公司名称"
 				sum(isnull(VAT, 0)) / nullif(sum(isnull(xssr, 0)), 0) r1,
 				sum(isnull(salesIncome, 0)) / nullif(sum(isnull(totalProfit, 0)), 0) r2
 			from

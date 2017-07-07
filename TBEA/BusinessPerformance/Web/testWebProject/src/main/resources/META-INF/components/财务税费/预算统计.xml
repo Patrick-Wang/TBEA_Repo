@@ -2,7 +2,7 @@
 	<service id="servCwsfYstj" transaction="transactionManager">
 		
 		<sql id="ysjhs" order="gs" by="0" colcount="2">select
-				companyName,--"公司名称"
+				ltrim(rtrim(companyName)) c0,--"公司名称"
 				sum(isnull(totalTaxBudget, 0)) c1
 			from
 				financial_tax_year_plan
@@ -15,7 +15,7 @@
 		</sql>
 		
 		<sql id="yszxs" order="gs" by="0" colcount="2">select
-				companyName,--"公司名称"
+				ltrim(rtrim(companyName)) c0,--"公司名称"
 				sum(isnull( VAT ,0)) +
 				sum(isnull( salesIncome ,0)) +
 				sum(isnull( tariff ,0)) +

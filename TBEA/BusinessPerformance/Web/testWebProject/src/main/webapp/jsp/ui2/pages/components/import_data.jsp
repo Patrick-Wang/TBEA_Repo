@@ -1,508 +1,246 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+﻿<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!-- Head -->
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="utf-8" />
+<title></title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!-- jquery -->
+
+<%@include file="../../ie8-t.jsp"%>
+
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/img/favicon.png"
+	type="image/x-icon">
+
+<!--Basic Styles-->
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/bootstrap.min.css"
+	rel="stylesheet" />
+
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/weather-icons.min.css"
+	rel="stylesheet" />
+
+
+<!--Beyond styles-->
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/demo.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/typicons.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/animate.min.css"
+	rel="stylesheet" />
+<link id="skin-link" href="" rel="stylesheet" type="text/css" />
+
+<!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
+
+
+<!-- jquery ui -->
+<!-- jquery ui gray -->
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.css" />
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
+<!-- jquery ui blue -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/redmond/jquery-ui-custom.css">
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery-ui-custom.min.js"
+	type="text/javascript"></script>
+
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/webuploader.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/bootstrap-theme.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/syntax.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/styleWebuploader.css">
-
-<!-- message box -->
-<link
-	href="${pageContext.request.contextPath}/jsp/message-box/css/style.css"
-	rel="stylesheet" type="text/css">
-
-<!-- jquery -->
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
-<!-- jquery ui blue -->
-<link rel="stylesheet" type="text/css" media="screen"
-	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/jsp/jqgrid/themes/jquery-ui-1.11.1.custom/jquery-ui.js"></script>
+	src="${pageContext.request.contextPath}/js/webuploader/webuploader.js"></script>
 <!-- 多选菜单 -->
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.css" />
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/jquery.multiselect.css" />
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/jsp/multi-select/assets/style.css" />
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/assets/style.css" />
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/jsp/multi-select/assets/prettify.css" />
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/assets/prettify.css" />
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/jsp/multi-select/assets/prettify.js"></script>
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/assets/prettify.js"></script>
 <script type="text/javascript"
-	src="${pageContext.request.contextPath}/jsp/multi-select/jquery.multiselect.js"></script>
-
-
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/jquery.multiselect.js"></script>
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<!-- jedate -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/skin/jedate.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/skin/deepgreen.css">
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/jquery.jedate.js"
+	type="text/javascript"></script>
 <!-- jqgrid -->
 <link rel="stylesheet" type="text/css" media="screen"
-	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.jqgrid.css">
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/ui.jqgrid.css">
 <link rel="stylesheet" type="text/css" media="screen"
-	href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.multiselect.css">
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/themes/ui.multiselect.css">
 <script
-	src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.tablednd.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery.tablednd.js"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.contextmenu.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery.contextmenu.js"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/jqgrid/js/i18n/grid.locale-cn.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/i18n/grid.locale-cn.js"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.layout.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery.layout.js"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery.jqGrid.js"
 	type="text/javascript"></script>
 
 <!-- jqgrid assist -->
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js"
-	type="text/javascript"></script>
-
-<script src="${pageContext.request.contextPath}/jsp/json2.js"
-	type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/util.js"
-	type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/jqgrid/vector.js"
-	type="text/javascript"></script>
-
-<!-- message box -->
 <script
-	src="${pageContext.request.contextPath}/jsp/message-box/js/Sweefty.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/jqassist.js"
+	type="text/javascript"></script>
+
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/json2.js"
+	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/util.js"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/message-box/js/moaModal.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/vector.js"
 	type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/messageBox.js"
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/dateSelector.js"
 	type="text/javascript"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/webuploader/webuploader.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/jsp/util.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/jsp/unitedSelector.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/jsp/companySelector.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/unitedSelector.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/companySelector.js"
+	type="text/javascript"></script>
 
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jqueryex.js"
+	type="text/javascript"></script>
+<link href="${pageContext.request.contextPath}/jsp/ui2/ui2.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/scroll/css/jquery.mCustomScrollbar.min.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/scroll/js/jquery.mCustomScrollbar.js"></script>
 
-
-<style type="text/css">
-.wu-example {
-	width: 600px;
-	position: relative;
-	padding: 45px 15px 15px;
-	margin: 15px 0;
-	background-color: #fafafa;
-	box-shadow: inset 0 3px 6px rgba(0, 0, 0, .05);
-	border-color: #e5e5e5 #eee #eee;
-	border-style: solid;
-	border-width: 1px 0;
-}
-
-.uploader-list {
-	width: 100%;
-	overflow: hidden;
-}
-
-.btn-default {
-	width: 72px;
-	height: 29px;
-	font-size: 12px;
-}
-
-.panel-content-border {
-	height: 350px;
-	width: 1000px;
-	border: 2px solid #e3e3e3;
-	margin: 0;
-	padding: 0;
-	align: center;
-	valign: center;
-	text-align: center;
-}
-
-.panel-content {
-	height: 100%;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-}
-
-.right {
-	width: 45%;
-	height: 180px;
-	float: left;
-	padding-top: 20px;
-	margin-left: 225px;
-}
-
-.contract {
-	text-align: center;
-}
-
-.contract h1 {
-	display: none;
-	color: #003B8F;
-}
-
-.btn_loading, .btn_detail {
-	width: 100px;
-	height: 30px;
-	padding: 5px, 10px;
-	font-size: 12px;
-	line-height: 1.5;
-	boder-radius: 3px;
-	background-color: #5cb85c;
-	boder-color: #4cae4c;
-	color: #fff;
-}
-
-.header {
-	width: 100%;
-	height: 60px;
-}
-
-.header h1 {
-	text-align: center;
-}
-
-.companyname h1 {
-	width: 30px;
-	font-size: 30px;
-	word-wrap: break-word;
-	letter-spacing: 20px;
-	color: #5cb85c;
-	float: left;
-}
-
-.lxian {
-	margin-left: 30px;
-	width: 1px;
-	height: 175px;
-	background: #5cb85c;
-	float: left;
-}
-
-.hrclass hr {
-	width: 1100px;
-	height: 1px;
-	margin-top: 10px;
-	margin-left: 90px;
-	border: 0;
-	background-color: #5cb85c;
-}
-
-th.ui-th-column div {
-	/* jqGrid columns name wrap  */
-	white-space: normal !important;
-	height: auto !important;
-	padding: 0px;
-}
-
-th.ui-th-ltr {
-	/* jqGrid columns name wrap  */
-	font-size: 14px;
-}
-
-.ui-multiselect {
-	padding: 2px 0 2px 4px;
-	text-align: left;
-	font-size: 12px;
-}
-</style>
-
-<script type="text/javascript">
-	function renderItemSelector(itemId) {
-		var sels = $("#" + itemId + " select");
-		for (var i = 0; i < sels.length; ++i) {
-			var opts = $("#" + itemId + " select:eq(" + i + ") option");
-			var items = [];
-			for (var j = 0; j < opts.length; ++j) {
-				items.push(opts[j].text);
-			}
-			$(sels[i]).multiselect({
-				multiple : false,
-				header : false,
-				minWidth : Util.getUIWidth(items) * 1.2,
-				height : '100%',
-				// noneSelectedText: "请选择月份",
-				selectedList : 1
-			}).css("padding", "2px 0 2px 4px").css("text-align", "left").css(
-					"font-size", "12px");
-		}
-	}
-
-	var selectVal = 1;
-	var $list;
-	var uploader;
-	$(document).ready(function() {
-			var $ = jQuery, $btn = $('#ctlBtn'), state = 'pending';
-			var nodeData = '${nodeData}';
-			if (nodeData.length > 0) {
-				var comps = JSON.parse(nodeData);
-				compSelctor = new Util.CompanySelector(false,
-						"compid", comps);
-				if (comps.length == 1) {
-					compSelctor.hide();
-					document.getElementsByTagName("title").innerHTML = compSelctor
-							.getCompanyName()
-							+ " " + $("title").text();
-					//$("title").text(compSelctor.getCompanyName() + " " + $("title").text());
-					$("h1").text(
-							compSelctor.getCompanyName() + " "
-									+ $("h1").text());
-				}
-			}
-			var unitedSelector;
-			var itemNodes = '${itemNodes}';
-			if (itemNodes != '') {
-				var nodes = JSON.parse(itemNodes);
-				unitedSelector = new Util.UnitedSelector(nodes,
-						"item");
-				unitedSelector.change(function() {
-					renderItemSelector("item");
-				});
-				renderItemSelector("item");
-			}
-
-			$list = $('#thelist');
-			uploader = WebUploader.create({
-						// swf文件路径
-						swf : '${pageContext.request.contextPath}/js/webuploader/Uploader.swf',
-
-						// 文件接收服务端。
-						server : '${importUrl}.do',
-
-						// 选择文件的按钮。可选。
-						// 内部根据当前运行是创建，可能是input元素，也可能是flash.
-						pick : '#picker',
-
-						formData : {
-							compId : nodeData.length > 0 ? compSelctor
-									.getCompany()
-									: undefined,
-							item : unitedSelector == undefined ? undefined
-									: unitedSelector
-											.getDataNode(unitedSelector
-													.getPath()).data.id
-						},
-
-						fileVal : 'upfile',
-						// 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-						resize : false,
-						timeout:false
-					});
-
-			uploader.on('beforeFileQueued', function(file) {
-				var files = uploader.getFiles();
-				for (var i = 0; i < files.length; ++i) {
-					uploader.removeFile(files[i], true);
-				}
-				uploader.reset();
-
-			});
-
-			uploader.on('fileQueued', function(file) {
-				$list.empty();
-				var files = uploader.getFiles();
-				for (var i = 0; i < files.length; ++i) {
-					$list
-							.append('<div id="' + files[i].id + '" class="item">'
-									+ '<h4 class="info">'
-									+ files[i].name
-									+ '</h4>'
-									+ '<p class="state">等待上传...</p>'
-									+ '</div>');
-				}
-
-			});
-
-			uploader.on('uploadProgress', function(file, percentage) {
-				var $li = $('#' + file.id), $percent = $li
-						.find('.progress .progress-bar');
-
-				// 避免重复创建
-				if (!$percent.length) {
-					$percent = $(
-							'<div class="progress progress-striped active">'
-									+ '<div class="progress-bar" role="progressbar" style="width: 0%">'
-									+ '</div>'
-									+ '</div>')
-							.appendTo($li)
-							.find('.progress-bar');
-				}
-
-				$li.find('p.state').text('上传中');
-
-				$percent.css('width', percentage
-						* 100 + '%');
-			});
-
-			uploader.on('uploadSuccess', function(file, ret) {
-				if (ret.errorCode == 0) {
-					$('#' + file.id).find('p.state').text('已上传');
-				} else {
-					$('#' + file.id).find('p.state').text(
-							ret.message);
-				}
-			});
-
-			uploader.on('uploadError', function(file) {
-				$('#' + file.id).find('p.state').text('上传出错');
-			});
-
-			uploader.on('uploadComplete', function(file) {
-				$('#' + file.id).find('.progress').fadeOut();
-			});
-
-			$btn.on('click', function() {
-				if (state === 'uploading') {
-					uploader.stop();
-				} else {
-					if (selectVal == 1) {
-						$('#docsStatus').css(
-								"display", "");
-						//$('#docsStatus').text("请选择需要导入的文档");
-						$('#docsStatus')[0].innerHTML = "请从下拉列表中选择需要导入的文档类型！";
-
-					} else {
-						var files = uploader
-								.getFiles();
-
-						if (files.length == 0) {
-							$('#docsStatus').css(
-									"display",
-									"block");
-							$('#docsStatus')[0].innerHTML = "请选择要上传的文件！";
-						} else {
-							//uploader.options.formData.filetype = selectVal;
-							uploader.options.formData = {
-								filetype : selectVal,
-								compId : nodeData.length > 0 ? compSelctor
-										.getCompany()
-										: undefined,
-								item : unitedSelector == undefined ? undefined
-										: unitedSelector
-												.getDataNode(unitedSelector
-														.getPath()).data.id
-							}
-							uploader.upload();
-							$('#docsStatus').css(
-									"display",
-									"none");
-						}
-
-					}
-
-				}
-			});
-
-			//Initial the combox
-			//onIndexSelected();
-			selectVal = $('#documenttype').val();
-		});
-
-	function onIndexSelected() {
-		selectVal = $('#documenttype').val();
-		$list.empty();
-		var files = uploader.getFiles();
-		for (var i = 0; i < files.length; ++i) {
-			uploader.removeFile(files[i], true);
-		}
-		uploader.reset();
-	}
-</script>
-<title>${title}</title>
+<%@include file="../../ie8-b.jsp"%>
 </head>
+<!-- /Head -->
+<!-- Body -->
 <body>
+	<!-- Main Container -->
+	<div class="main-container container-fluid">
+		<!-- Page Container -->
+		<div class="page-container">
 
-	<div class=" header" align="center">
-		<h1>${title}</h1>
-	</div>
-	<br />
+			<!-- Page Content -->
+			<div class="page-content">
+				<!-- Page Breadcrumb -->
+				<div class="page-breadcrumbs">
+					<ul class="breadcrumb">
+					</ul>
+				</div>
+				<!-- /Page Breadcrumb -->
 
-	<table id="documentTypeSelector" cellspacing="0" cellpadding="0"
-		align="center">
-		<tr>
-			<td>
-				<div id="compid" style="float: left"></div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div id="item" style="float: left; margin-right: 5px"></div>
-			</td>
-		</tr>
-
-
-		<tr>
-			<td>
-				<div id="uploader" class="wu-example">
-					<!--用来存放文件信息-->
-					<div id="thelist" class="uploader-list"></div>
-
-					<div class="btns">
-						<table>
-							<tr>
-								<td><div id="picker">选择文件</div></td>
-								<td width="10px"></td>
-								<td>
-									<button id="ctlBtn" class="btn btn-default">开始上传</button>
-								</td>
-								<!-- <td>
-					<div id="docsStatus" style="font-size: 30px; color: red ;font-weight: 400;  width: 100px; height:20px;display:none"></div>
-					</td> -->
-							</tr>
-						</table>
+				<!-- Page Header -->
+				<div class="page-header position-relative">
+					<div class="header-title">
+						<div id="headerHost" class="pull-left">
+							<div class="workinput pull-left">
+								<input id="grid-date" type="text" readonly="readonly"><i
+									class="fa fa-calendar"></i>
+							</div>
+							<div id="comp-sel" class="pull-left"></div>
+							<div id="item-sel" class="pull-left"></div>
+							<div id="grid-update" class="btn btn-default" onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)">
+								查找 <i class="fa fa-search"></i>
+							</div>						
+							<div id="grid-export" class="btn btn-default"   onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'exportExcel')">
+								导出 <i class="fa fa-file-excel-o"></i>
+							</div>
+						</div>
+						<form id="exportExcel" style="display: none" method="post"></form>
+					</div>
+					<span id="unit"></span>
+				</div>
+				<!-- /Page Header -->
+				<!-- Page Body -->
+				<div class="page-body">
+					<div class="row">
+						<div class="col-lg-12 col-sm-12 col-xs-12">
+							<span id="unit" style="float: right;margin-right:10px;padding-top:10px"></span>
+							<%@include file="cpdlml/cpdlml.jsp"%>
+						</div>
 					</div>
 				</div>
-			</td>
-		</tr>
-
-	</table>
-
-
-
-
-	<table align="center">
-		<tr>
-			<td>
-				<div id="docsStatus"
-					style="font-size: 30px; color: red; font-weight: 400; display: none;">
-				</div>
-			</td>
-		</tr>
-	</table>
-
-
-
-
-
-
-	<!-- <table id="importRes">
-	<tr>							
-		<td>
-			<div id="result" style="font-size: 30px; color: red ;font-weight: 400; display:none">
+				<!-- /Page Body -->
 			</div>
-		</td>
-	</tr>
-	</table> -->
+			<!-- /Page Content -->
+		</div>
+		<!-- /Page Container -->
+		<!-- Main Container -->
+	</div>
+	<!--Basic Scripts-->
 
-	</table>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!--Beyond Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/beyond.min.js"></script>
+
+	<!--Page Related Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootbox/bootbox.js"></script>
+	<%@include file="../loading.jsp"%>
+	<script>
+		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
+		if (Util.isIframe()) {
+			Util.Breadcrumb.setOnClickListener(function(breadNode) {
+				window.parent['onClickBreadcrumb']
+						&& window.parent['onClickBreadcrumb'](breadNode);
+			});
+		}
+		$(document).ready(function() {
+			var nodeData = '${nodeData}';
+			framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
+				type: "item-sel",
+				comp: "comp-sel",
+				comps : nodeData ?　JSON.parse(nodeData)　: undefined
+			});
+		});
+	</script>
+
 </body>
-
+<script
+	src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
+<!--  /Body -->
 </html>

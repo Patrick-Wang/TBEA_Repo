@@ -2,7 +2,7 @@
 	<service id="servCwsfNdjh" transaction="transactionManager">
 		
 		<sql id="ndjh" order="gs" by="0" colcount="8">select
-				companyName,--"公司名称"
+				ltrim(rtrim(companyName)) c0,--"公司名称"
 				sum(isnull(totalTaxBudget, 0)) c1,
 				sum(isnull(saleIncome, 0)) c2,
 				sum(isnull(VTA, 0)) c3,
