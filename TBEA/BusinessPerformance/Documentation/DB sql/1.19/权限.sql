@@ -68,7 +68,10 @@ insert into system_extend_auth (account_id, auth_type) values
 ((select id from jygk_account where name='151291'), 74),
 ((select id from jygk_account where name='585110'), 74),
 ((select id from jygk_account where name='595191'), 74),
-((select id from jygk_account where name='529611'), 74);
+((select id from jygk_account where name='529611'), 74),
+((select id from jygk_account where name='539326'), 74),
+((select id from jygk_account where name='820998'), 74),
+((select id from jygk_account where name='395952'), 74);
 
 
 
