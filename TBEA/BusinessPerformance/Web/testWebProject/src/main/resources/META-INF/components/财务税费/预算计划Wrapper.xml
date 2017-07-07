@@ -6,7 +6,7 @@
 		<callservice id="servCwsfysjhqy"></callservice>
 		
 		<context key="type" value="${request.item.asString}" />
-		<if test="${'type' == '预算统计'}">
+		<if test="${'type' == '税务-预算统计'}">
 			<callcontroller id="cwsfYstjUpdate" />
 		</if>
 		<else>
@@ -20,7 +20,7 @@
 		<callservice id="servCwsfysjhqy"></callservice>
 		
 		<context key="type" value="${request.item.asString}" />
-		<if test="${'type' == '预算统计'}">			
+		<if test="${'type' == '税务-预算统计'}">			
 			<callcontroller id="cwsfYstjExport" />
 		</if>
 		<else>
