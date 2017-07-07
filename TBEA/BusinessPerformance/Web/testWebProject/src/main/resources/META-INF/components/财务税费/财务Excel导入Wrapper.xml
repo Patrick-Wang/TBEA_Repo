@@ -1,0 +1,23 @@
+<components>
+	<controller id="cwsfwrapperImport">
+		<context key="item" value="${request.item.asInt}" />
+		<if test="${item == 1}">
+			<callcontroller id="cwsfnjhImport"></callcontroller>
+		</if>
+		<else>
+			<callcontroller id="cwsjsfImport"></callcontroller>
+		</else>
+
+	</controller>
+	<controller id="cwsfImportWrapperJsp">
+		<list id="ids" type="int">1,2</list>
+		<list id="vals" type="string">
+			预算,税金税负
+		</list>
+		<response type="jsp" name="components/import_data">
+			<map key="importUrl" value="cwsfwrapperImport" />
+			<map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}" />
+			<map key="title" value="财务税费" />
+		</response>
+	</controller>
+</components>
