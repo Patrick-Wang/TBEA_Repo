@@ -12,6 +12,13 @@ public class DataNode {
 	private Data data;
 	private DataNode parent;
 	private List<DataNode> subNodes = new ArrayList<DataNode>();
+	public DataNode(Data data) {
+		super();
+		this.data = data;
+	}
+	public DataNode() {
+		super();
+	}
 	/**
 	 * @return the data
 	 */

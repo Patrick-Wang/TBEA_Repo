@@ -3,6 +3,14 @@ package com.tbea.ic.operation.common;
 public class Data {
 	Integer id;
     String value;
+	public Data(Integer id, String value) {
+		super();
+		this.id = id;
+		this.value = value;
+	}
+	public Data() {
+		super();
+	}
 	/**
 	 * @return the id
 	 */

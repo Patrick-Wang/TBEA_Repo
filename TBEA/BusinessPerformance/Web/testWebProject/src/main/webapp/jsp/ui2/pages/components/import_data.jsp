@@ -216,7 +216,8 @@
 						<div id="headerHost" class="pull-left">
 							<div id="item-sel" class="pull-left"></div>
 							<div id="comp-sel" class="pull-left"></div>
-							<div id="picker" class="pull-left">选择文件</div>
+							<div id="picker-proxy" class="btn btn-default  pull-left">选择文件</div>
+							<button id="picker" class="pull-left" style="display:none">选择文件</button>
 							<div id="ctlBtn" class="btn btn-default pull-left">开始上传</div>
 						</div>
 					</div>
@@ -283,147 +284,173 @@
 		}
 		
 		
-		function renderItemSelector(itemId) {
-			var sels = $("#" + itemId + " select");
-			for (var i = 0; i < sels.length; ++i) {
-				var opts = $("#" + itemId + " select:eq(" + i + ") option");
-				var items = [];
-				for (var j = 0; j < opts.length; ++j) {
-					items.push(opts[j].text);
-				}
+		var nodeData = '${nodeData}';
+		var compSelctor;
+		if (nodeData.length > 0) {
+			var comps = JSON.parse(nodeData);
+			compSelctor = new Util.CompanySelector(false,
+					"comp-sel", comps);
+			if (comps.length == 1) {
+				compSelctor.hide();
 			}
 		}
-
-		var selectVal = 1;
+		var unitedSelector;
+		var itemNodes = '${itemNodes}';
+		if (itemNodes != '') {
+			var nodes = JSON.parse(itemNodes);
+			unitedSelector = new Util.UnitedSelector(nodes,	"item-sel");
+			unitedSelector.change(function() {
+				updateBtnsStatus();
+			});
+		}
+		
 		var $list;
 		var uploader;
+		
+		function updateBtnsStatus(){
+			if ($(".wait").length == 0){
+				$("#ctlBtn").attr("disabled", true);
+				$("#ctlBtn").prop("disabled", true);
+			}else{
+				$("#ctlBtn").attr("disabled", false);
+				$("#ctlBtn").prop("disabled", false);
+			}
+			
+			var opVal = $("#item-sel option:selected").val();
+			if (opVal < 0){
+				$("#picker-proxy").attr("disabled", true);
+			}else{
+				$("#picker-proxy").attr("disabled", false);
+			}
+		}		
+		
+		
+		
+		function doUpload(){
+			return $(".wait:eq(0)").each(function(i, e){
+				$e = $(e);
+				uploader.options.formData = {
+					compId : $e.attr("cid"),
+					item : $e.attr("iid")
+				}
+				
+				uploader.upload($e.attr("id"));
+			}).length > 0;
+		}
+		
+		function getCompId(){
+			if (compSelctor){
+				return compSelctor.getCompany();
+			}
+			return "";
+		}
+
+		function getItemId(){
+			if (unitedSelector){
+				return unitedSelector.getDataNode(unitedSelector.getPath()).data.id;
+			}
+			return "";
+		}
+		
+		function getProText(){
+			var ret = "";
+			if (compSelctor){
+				ret = compSelctor.getCompanyName() + " ";
+			}
+			if (unitedSelector){
+				ret += unitedSelector.getDataNode(unitedSelector.getPath()).data.value;
+			}
+			
+			if (ret.length > 0){
+				ret += " : ";
+			}
+			return ret;
+		}
+		
+		var pauseRetry = "true";
+
 		$(document).ready(function() {
 				var $ = jQuery, $btn = $('#ctlBtn'), state = 'pending';
-				var nodeData = '${nodeData}';
-				var compSelctor;
-				if (nodeData.length > 0) {
-					var comps = JSON.parse(nodeData);
-					compSelctor = new Util.CompanySelector(false,
-							"comp-sel", comps);
-					if (comps.length == 1) {
-						compSelctor.hide();
-						document.getElementsByTagName("title").innerHTML = compSelctor
-								.getCompanyName()
-								+ " " + $("title").text();
+				
+				$btn.on('click', function() {
+					if ($btn.attr("disabled") == "disabled"){
+						return;	
 					}
-				}
-				var unitedSelector;
-				var itemNodes = '${itemNodes}';
-				if (itemNodes != '') {
-					var nodes = JSON.parse(itemNodes);
-					unitedSelector = new Util.UnitedSelector(nodes,
-							"item-sel");
-					unitedSelector.change(function() {
-						renderItemSelector("item-sel");
-					});
-					renderItemSelector("item-sel");
-				}
-
-				function getProText(){
-					var ret = "";
-					if (compSelctor){
-						ret = compSelctor.getCompanyName() + " ";
+					doUpload();
+				});
+				
+				$("#picker-proxy").on("click", function(){
+					if ($("#picker-proxy").attr("disabled") == "disabled"){
+						return;	
 					}
-					if (unitedSelector){
-						ret += unitedSelector.getDataNode(unitedSelector.getPath()).data.value;
-					}
-					
-					if (ret.length > 0){
-						ret += " : ";
-					}
-					return ret;
-				}
+					$("#picker input").trigger("click");
+				});
+				
+				updateBtnsStatus();
 				
 				$list = $('#thelist');
 				uploader = WebUploader.create({
-							// swf文件路径
-							swf : '${pageContext.request.contextPath}/js/webuploader/Uploader.swf',
+					// swf文件路径
+					swf : '${pageContext.request.contextPath}/js/webuploader/Uploader.swf',
 
-							// 文件接收服务端。
-							server : '${importUrl}.do',
+					// 文件接收服务端。
+					server : '${importUrl}.do',
 
-							// 选择文件的按钮。可选。
-							// 内部根据当前运行是创建，可能是input元素，也可能是flash.
-							pick : '#picker',
+					// 选择文件的按钮。可选。
+					// 内部根据当前运行是创建，可能是input元素，也可能是flash.
+					pick : {
+						id : '#picker',
+						multiple : true
+					},
 
-							formData : {
-								compId : nodeData.length > 0 ? compSelctor
-										.getCompany()
-										: undefined,
-								item : unitedSelector == undefined ? undefined
-										: unitedSelector
-												.getDataNode(unitedSelector
-														.getPath()).data.id
-							},
-							accept:{
-							    title: 'excel',
-							    extensions: 'xlsx',
-							    mimeTypes: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-							},
-							
-							fileVal : 'upfile',
-							// 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-							resize : false,
-							timeout:false
-						});
-
-				uploader.on('beforeFileQueued', function(file) {
-					var files = uploader.getFiles();
-					for (var i = 0; i < files.length; ++i) {
-						uploader.removeFile(files[i], true);
-					}
-					uploader.reset();
-
+					accept:{
+					    title: 'excel',
+					    extensions: 'xls,xlsx',
+					    mimeTypes: 'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+					},
+					duplicate : true,
+					fileVal : 'upfile',
+					// 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+					resize : false,
+					timeout:false
 				});
 
 				uploader.on('fileQueued', function(file) {
+					$("#ctlBtn").attr("disabled", false);
 					var files = uploader.getFiles();
 					var template = $(".template").html();
-					for (var i = 0; i < files.length; ++i) {
-						$list.append(template);
-						var jqtemplate = $list.find(".inner-template");
-						jqtemplate.removeClass("inner-template");
-						jqtemplate.attr("id", files[i].id);
-						jqtemplate.find(".result-body-left").append('<div>' + 
-								getProText() + files[i].name + 
-								'</div>')
-						jqtemplate.find(".result-body-right").append('<div style="float:left; margin-right:5px"><i class="fa fa-cloud-upload"></i>' + 
-								' 等待上传' + 
-								'</div>' +
-								'<div class="progress progress-striped" style="display:none">'
-								+ '<div class="progress-bar" role="progressbar" style="width: 0%">'
-								+ '</div>'
-								+ '</div>');
-					}
-
+					$list.append(template);
+					var jqtemplate = $list.find(".inner-template");
+					jqtemplate.removeClass("inner-template");
+					jqtemplate.addClass("wait");
+					jqtemplate.attr("id", file.id);
+					jqtemplate.attr("cid", getCompId());
+					jqtemplate.attr("iid", getItemId());
+					
+					jqtemplate.find(".result-body-left").append('<div>' + 
+							getProText() + file.name + 
+					'</div>');
+					jqtemplate.find(".result-body-right").append('<div style="float:left; margin-right:5px"><i class="fa fa-times" style="cursor:pointer"></i>' + 
+							' 等待上传' + 
+							'</div>' +
+							'<div class="progress progress-striped" style="display:none">'
+							+ '<div class="progress-bar" role="progressbar" style="width: 0%">'
+							+ '</div>'
+							+ '</div>');
+					jqtemplate.find(".fa-times").on("click", function(){
+						uploader.removeFile(file.id, true);
+						jqtemplate.remove();
+						updateBtnsStatus();
+					});
 				});
 
 				uploader.on('uploadProgress', function(file, percentage) {
-					/* var $li = $('#' + file.id), = $li
-							.find('.progress .progress-bar'); */
 					var jqtemplate = $('#' + file.id);
 							jqtemplate.find('.progress').show();
 					$percent = jqtemplate.find('.progress .progress-bar');
-					// 避免重复创建
-					/* if (!$percent.length) {
-						$percent = $(
-								'<div class="progress progress-striped active">'
-										+ '<div class="progress-bar" role="progressbar" style="width: 0%">'
-										+ '</div>'
-										+ '</div>')
-								.appendTo($li)
-								.find('.progress-bar');
-					} */
-					
 					jqtemplate.find(".result-body-right div").eq(0).empty()
-						.html('<i class="fa fa-cloud-upload"></i>' + 
+						.html('<i class="fa fa-upload"></i>' + 
 								' 上传中...');
-					
 					$percent.css('width', percentage * 100 + '%');
 				});
 
@@ -431,90 +458,54 @@
 					var jqtemplate = $('#' + file.id);
 					if (ret.errorCode == 0) {
 						jqtemplate.find(".result-body-right div").eq(0).empty()
-						.html('<i class="fa fa-hand-peace-o"></i>' + 
+						.html('<i class="fa fa-check"></i>' + 
 								' 上传成功');
-						//jqtemplate.find('p.state').text('已上传');
 					} else {
 						jqtemplate.find(".result-body-right div").eq(0).empty()
-						.html('<i class="fa fa-bolt"></i>' + 
+						.html('<i class="fa fa-refresh"></i>' + 
 								' ' + ret.message);
-						//$('#' + file.id).find('p.state').text(
-							//	ret.message);
+						jqtemplate.find(".fa-refresh").css("cursor", "pointer").on("click", function(){
+							if (pauseRetry){
+								return;
+							}
+							uploader.options.formData = {
+								compId : jqtemplate.attr("cid"),
+								item : jqtemplate.attr("iid")
+							}
+							uploader.retry(file);
+							pauseRetry = true;
+						});
 					}
 				});
 
 				uploader.on('uploadError', function(file) {
 					var jqtemplate = $('#' + file.id);
 					jqtemplate.find(".result-body-right div").eq(0).empty()
-					.html('<i class="fa fa-bolt"></i>' + 
+					.html('<i class="fa fa-refresh"></i>' + 
 							' 上传出错');
-					//$('#' + file.id).find('p.state').text('上传出错');
+					jqtemplate.find(".fa-refresh").css("cursor", "pointer").on("click", function(){
+						if (pauseRetry){
+							return;
+						}
+						uploader.options.formData = {
+							compId : jqtemplate.attr("cid"),
+							item : jqtemplate.attr("iid")
+						}
+						uploader.retry(file);
+						pauseRetry = true;
+					});
 				});
 
 				uploader.on('uploadComplete', function(file) {
+					var jqtemplate = $('#' + file.id);
 					$('#' + file.id).find('.progress').fadeOut();
+					$('#' + file.id).removeClass("wait");
+					updateBtnsStatus();
+					doUpload();
+					pauseRetry = false;
 				});
-
-				$btn.on('click', function() {
-					if (state === 'uploading') {
-						uploader.stop();
-					} else {
-						if (selectVal == 1) {
-							$('#docsStatus').css(
-									"display", "");
-							//$('#docsStatus').text("请选择需要导入的文档");
-							$('#docsStatus')[0].innerHTML = "请从下拉列表中选择需要导入的文档类型！";
-
-						} else {
-							var files = uploader
-									.getFiles();
-
-							if (files.length == 0) {
-								$('#docsStatus').css(
-										"display",
-										"block");
-								$('#docsStatus')[0].innerHTML = "请选择要上传的文件！";
-							} else {
-								//uploader.options.formData.filetype = selectVal;
-								uploader.options.formData = {
-									filetype : selectVal,
-									compId : nodeData.length > 0 ? compSelctor
-											.getCompany()
-											: undefined,
-									item : unitedSelector == undefined ? undefined
-											: unitedSelector
-													.getDataNode(unitedSelector
-															.getPath()).data.id
-								}
-								uploader.upload();
-								$('#docsStatus').css(
-										"display",
-										"none");
-							}
-
-						}
-
-					}
-				});
-
-				//Initial the combox
-				//onIndexSelected();
-				selectVal = $('#documenttype').val();
-				
-				$("#picker .webuploader-pick")
-				.addClass("btn btn-default")
-				.removeClass("webuploader-pick")
 			});
 
-		function onIndexSelected() {
-			selectVal = $('#documenttype').val();
-			$list.empty();
-			var files = uploader.getFiles();
-			for (var i = 0; i < files.length; ++i) {
-				uploader.removeFile(files[i], true);
-			}
-			uploader.reset();
-		}
 
 	</script>
 
