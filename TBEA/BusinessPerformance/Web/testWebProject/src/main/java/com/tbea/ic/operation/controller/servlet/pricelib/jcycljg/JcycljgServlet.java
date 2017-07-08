@@ -89,7 +89,7 @@ public class JcycljgServlet {
 			itemNodes.add(new DataNode(new Data(17, "PMI、CPI、PPI")));
 			itemNodes.add(new DataNode(new Data(18, "银行基准利率")));
 			map.put("itemNodes", JSONArray.fromObject(itemNodes).toString());
-			map.put("importUrl", "import");
+			map.put("importUrl", "../import")
 		}
 		
 		
@@ -98,7 +98,7 @@ public class JcycljgServlet {
 		return new ModelAndView((Url.isV2(request) ? "ui2/pages/components/import_data" : "priceLib/jcycljg/jcycljg_import_data"), map);
 	}
 	
-	@RequestMapping(value = {"import.do", "v2/import"})
+	@RequestMapping(value = {"import.do", "v2/import.do"})
 	public @ResponseBody byte[] importExcel(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam("upfile") CommonsMultipartFile file)
