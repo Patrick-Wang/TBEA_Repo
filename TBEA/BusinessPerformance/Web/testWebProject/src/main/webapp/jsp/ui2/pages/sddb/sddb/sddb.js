@@ -115,6 +115,7 @@ var sddb;
                     .send(framework.basic.FrameEvent.FE_REGISTER, opt.title);
             };
             ShowView.prototype.updateCharts = function () {
+                var _this = this;
                 var display = "none";
                 if (undefined != this.mData.charts) {
                     var validCount = 0;
@@ -133,8 +134,8 @@ var sddb;
                             $("#" + this.mOpt.ctarea).addClass("multi-chart");
                         }
                         else {
+                            $("#" + this.mOpt.ctarea).addClass("single-chart");
                         }
-                        $("#" + this.mOpt.ctarea).addClass("single-chart");
                     }
                     for (var i = 0; i < this.mData.charts.length; ++i) {
                         if (this.mData.charts[i].isValid) {
@@ -145,30 +146,35 @@ var sddb;
                                     ' <div id="' + this.mOpt.ctarea + i + '" class="chart"></div>' +
                                     '</div>');
                             }
-                            //if (validCount == 1){
-                            //    $("#" + this.mOpt.chartId + "0").css("width", "98%");
-                            //}
-                            this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
                         }
                     }
+                    setTimeout(function () {
+                        for (var i = 0; i < _this.mData.charts.length; ++i) {
+                            if (_this.mData.charts[i].isValid) {
+                                _this.updateChart(_this.mOpt.ctarea + i, _this.mData.charts[i]);
+                            }
+                        }
+                    }, 10);
                 }
                 $("#" + this.mOpt.ctarea).css("display", display);
                 //$("#chartName").css("display", display);
             };
             ShowView.prototype.adjustSize = function () {
                 var _this = this;
-                var jqgrid = this.jqgrid();
-                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
-                    jqgrid.setGridWidth(this.jqgridHost().width());
+                if (this.mData != undefined) {
+                    var jqgrid = this.jqgrid();
+                    if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                        jqgrid.setGridWidth(this.jqgridHost().width());
+                    }
+                    var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                    this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
+                    if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                        jqgrid.setGridWidth(this.jqgridHost().width());
+                    }
+                    $(".chart").each(function (i, e) {
+                        $(e).css("width", _this.jqgridHost().width() + "px");
+                    });
                 }
-                var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-                this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
-                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
-                    jqgrid.setGridWidth(this.jqgridHost().width());
-                }
-                $(".chart").each(function (i, e) {
-                    $(e).css("width", _this.jqgridHost().width() + "px");
-                });
                 //if (this.mData.tjjg.length > 0){
                 //    this.$(this.option().ctarea).show();
                 //

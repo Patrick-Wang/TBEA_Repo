@@ -174,8 +174,8 @@ module sddb {
                         if (validCount > 1){
                             $("#" + this.mOpt.ctarea).addClass("multi-chart");
                         }else{
-
-                        }$("#" + this.mOpt.ctarea).addClass("single-chart");
+                            $("#" + this.mOpt.ctarea).addClass("single-chart");
+                        }
                             //.css("width", this.mData.width == undefined ? 1300 : this.mData.width)
                             //.css("height", validCount / 2 * 300 + validCount % 2 * 300);
                         //$("#chartName").css("display", "")[0].innerHTML=this.mData.chartName;
@@ -195,9 +195,17 @@ module sddb {
                             //if (validCount == 1){
                             //    $("#" + this.mOpt.chartId + "0").css("width", "98%");
                             //}
-                            this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
+                            //this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
                         }
                     }
+
+                    setTimeout(()=>{
+                        for (let i = 0; i < this.mData.charts.length; ++i) {
+                            if (this.mData.charts[i]. isValid) {
+                                this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
+                            }
+                        }
+                    }, 0);
                 }
 
                 $("#" + this.mOpt.ctarea).css("display", display);
@@ -206,23 +214,23 @@ module sddb {
 
 
             adjustSize() {
-                var jqgrid = this.jqgrid();
-                if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
-                    jqgrid.setGridWidth(this.jqgridHost().width());
+                if (this.mData != undefined){
+                    var jqgrid = this.jqgrid();
+                    if (this.jqgridHost().width() != this.jqgridHost().find(".ui-jqgrid").width()) {
+                        jqgrid.setGridWidth(this.jqgridHost().width());
+                    }
+
+                    let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                    this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+                    if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                        jqgrid.setGridWidth(this.jqgridHost().width());
+                    }
+
+                    $(".chart").each((i, e)=>{
+                        $(e).css("width", this.jqgridHost().width() + "px");
+                    });
                 }
-
-
-                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-                this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
-
-                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
-                    jqgrid.setGridWidth(this.jqgridHost().width());
-                }
-
-                $(".chart").each((i, e)=>{
-                    $(e).css("width", this.jqgridHost().width() + "px");
-                });
-
 
                 //if (this.mData.tjjg.length > 0){
                 //    this.$(this.option().ctarea).show();
