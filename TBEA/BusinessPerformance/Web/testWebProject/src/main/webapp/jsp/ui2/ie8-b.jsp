@@ -68,8 +68,6 @@
 	  visibility:visible;
 	}
 	
-
-	
 	.tab .active{
 	  color:black;
 	}
