@@ -88,22 +88,22 @@ module cwcpdlml {
                 parent.append("<table id='"+ this.jqgridName() +"'></table>");
                 this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName());
                 this.tableAssist.mergeRow(0);
-                this.tableAssist.mergeColum(0);
+                //this.tableAssist.mergeColum(0);
                 return this.tableAssist;
             }
 
             adjustSize() {
-//                var jqgrid = this.jqgrid();
-//                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
-//                    jqgrid.setGridWidth(this.jqgridHost().width());
-//                }
-//
-//                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-//                this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
-//
-//                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
-//                    jqgrid.setGridWidth(this.jqgridHost().width());
-//                }
+                var jqgrid = this.jqgrid();
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
+
+                let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+                this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
+
+                if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
+                    jqgrid.setGridWidth(this.jqgridHost().width());
+                }
 
                 //this.$(this.option().ct).css("height", "300px");
                 //this.$(this.option().ct).css("width", this.jqgridHost().width() + "px");

@@ -103,8 +103,12 @@ public class JcycljgServlet {
 			HttpServletResponse response,
 			@RequestParam("upfile") CommonsMultipartFile file)
 			throws IOException {
-
-		int type = Integer.valueOf(request.getParameter("filetype")).intValue();
+		
+		String filetype = request.getParameter("filetype");
+		if (filetype == null){
+			filetype = request.getParameter("item");
+		}
+		int type = Integer.valueOf(filetype).intValue();
 		String msg = "导入失败";
 		ErrorCode ec = ErrorCode.PRICELIB_JCYCLJG_IMPORT_ERROR;
 		try {

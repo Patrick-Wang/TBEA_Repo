@@ -994,6 +994,38 @@ module JQTable {
             })
         }
 
+        private domergeColumn(col:number, grid:any, mya:any, i:any){
+            var leftCell = grid.find("#" + mya[i] + " #" + this.id(col) + mya[i]);
+            var rightCell = leftCell.next();
+            if (leftCell.css("display") != "none" && rightCell.css("display") != "none") {
+                if (grid.getCell(mya[i], col) == grid.getCell(mya[i], col + 1)) {
+                    var content = grid.getCell(mya[i], col);
+                    grid.setCell(mya[i], col, content.substring(0, content.length / 2));
+                    grid.setCell(mya[i], col + 1, content.substring(content.length / 2, content.length));
+                    this.mergeColum(col, i);
+                }
+                else if (grid.getCell(mya[i], col + 1) == "") {
+                    this.mergeColum(col, i);
+                }
+            }
+        }
+
+
+        private sliceMergeColumn(col:number, start:number = 0){
+            var grid = $("#" + this.mGridName + "");
+            var mya = grid.getDataIDs();
+            for (var i = start; i < mya.length; i++) {
+                this.domergeColumn(col, grid, mya, i);
+                if ((i - start) > 40){
+                    setTimeout(()=>{
+                        this.sliceMergeColumn(col, i + 1);
+                        this.complete();
+                    }, 0);
+                    break;
+                }
+            }
+        }
+
         public mergeColum(col:number, row?:number, align?:TextAlign) {
             if (row != undefined) {
                 this.completeList.push(() => {
@@ -1002,7 +1034,7 @@ module JQTable {
                     }
                     var grid = $("#" + this.mGridName + "");
                     var mya = grid.getDataIDs();
-                    var leftCell = $("#" + this.mGridName + " #" + mya[row] + " #" + this.id(col) + mya[row]);
+                    var leftCell = grid.find("#" + mya[row] + " #" + this.id(col) + mya[row]);
                     var rightCell = leftCell.next();
                     leftCell.css("text-align", "right");
                     rightCell.css("text-align", "left");
@@ -1042,23 +1074,24 @@ module JQTable {
             }
             else {
                 this.completeList.push(() => {
-                    var grid = $("#" + this.mGridName + "");
-                    var mya = grid.getDataIDs();
-                    for (var i = 0; i < mya.length; i++) {
-                        var leftCell = $("#" + this.mGridName + " #" + mya[i] + " #" + this.id(col) + mya[i]);
-                        var rightCell = leftCell.next();
-                        if (leftCell.css("display") != "none" && rightCell.css("display") != "none") {
-                            if (grid.getCell(mya[i], col) == grid.getCell(mya[i], col + 1)) {
-                                var content = grid.getCell(mya[i], col);
-                                grid.setCell(mya[i], col, content.substring(0, content.length / 2));
-                                grid.setCell(mya[i], col + 1, content.substring(content.length / 2, content.length));
-                                this.mergeColum(col, i);
-                            }
-                            else if (grid.getCell(mya[i], col + 1) == "") {
-                                this.mergeColum(col, i);
-                            }
-                        }
-                    }
+                    //var grid = $("#" + this.mGridName + "");
+                    //var mya = grid.getDataIDs();
+                    //for (var i = 0; i < mya.length; i++) {
+                    //    var leftCell = grid.find("#" + mya[i] + " #" + this.id(col) + mya[i]);
+                    //    var rightCell = leftCell.next();
+                    //    if (leftCell.css("display") != "none" && rightCell.css("display") != "none") {
+                    //        if (grid.getCell(mya[i], col) == grid.getCell(mya[i], col + 1)) {
+                    //            var content = grid.getCell(mya[i], col);
+                    //            grid.setCell(mya[i], col, content.substring(0, content.length / 2));
+                    //            grid.setCell(mya[i], col + 1, content.substring(content.length / 2, content.length));
+                    //            this.mergeColum(col, i);
+                    //        }
+                    //        else if (grid.getCell(mya[i], col + 1) == "") {
+                    //            this.mergeColum(col, i);
+                    //        }
+                    //    }
+                    //}
+                    this.sliceMergeColumn(col, 0);
                     return true;
                 });
             }

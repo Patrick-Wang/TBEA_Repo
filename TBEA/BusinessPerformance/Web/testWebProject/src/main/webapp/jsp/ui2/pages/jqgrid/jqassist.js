@@ -893,6 +893,37 @@ var JQTable;
                 $("#" + _this.mGridName + " #" + (row + 1)).css("background", "rgb(" + r + "," + g + "," + b + ")");
             });
         };
+        JQGridAssistant.prototype.domergeColumn = function (col, grid, mya, i) {
+            var leftCell = grid.find("#" + mya[i] + " #" + this.id(col) + mya[i]);
+            var rightCell = leftCell.next();
+            if (leftCell.css("display") != "none" && rightCell.css("display") != "none") {
+                if (grid.getCell(mya[i], col) == grid.getCell(mya[i], col + 1)) {
+                    var content = grid.getCell(mya[i], col);
+                    grid.setCell(mya[i], col, content.substring(0, content.length / 2));
+                    grid.setCell(mya[i], col + 1, content.substring(content.length / 2, content.length));
+                    this.mergeColum(col, i);
+                }
+                else if (grid.getCell(mya[i], col + 1) == "") {
+                    this.mergeColum(col, i);
+                }
+            }
+        };
+        JQGridAssistant.prototype.sliceMergeColumn = function (col, start) {
+            var _this = this;
+            if (start === void 0) { start = 0; }
+            var grid = $("#" + this.mGridName + "");
+            var mya = grid.getDataIDs();
+            for (var i = start; i < mya.length; i++) {
+                this.domergeColumn(col, grid, mya, i);
+                if ((i - start) > 40) {
+                    setTimeout(function () {
+                        _this.sliceMergeColumn(col, i + 1);
+                        _this.complete();
+                    }, 0);
+                    break;
+                }
+            }
+        };
         JQGridAssistant.prototype.mergeColum = function (col, row, align) {
             var _this = this;
             if (row != undefined) {
@@ -902,7 +933,7 @@ var JQTable;
                     }
                     var grid = $("#" + _this.mGridName + "");
                     var mya = grid.getDataIDs();
-                    var leftCell = $("#" + _this.mGridName + " #" + mya[row] + " #" + _this.id(col) + mya[row]);
+                    var leftCell = grid.find("#" + mya[row] + " #" + _this.id(col) + mya[row]);
                     var rightCell = leftCell.next();
                     leftCell.css("text-align", "right");
                     rightCell.css("text-align", "left");
@@ -941,23 +972,24 @@ var JQTable;
             }
             else {
                 this.completeList.push(function () {
-                    var grid = $("#" + _this.mGridName + "");
-                    var mya = grid.getDataIDs();
-                    for (var i = 0; i < mya.length; i++) {
-                        var leftCell = $("#" + _this.mGridName + " #" + mya[i] + " #" + _this.id(col) + mya[i]);
-                        var rightCell = leftCell.next();
-                        if (leftCell.css("display") != "none" && rightCell.css("display") != "none") {
-                            if (grid.getCell(mya[i], col) == grid.getCell(mya[i], col + 1)) {
-                                var content = grid.getCell(mya[i], col);
-                                grid.setCell(mya[i], col, content.substring(0, content.length / 2));
-                                grid.setCell(mya[i], col + 1, content.substring(content.length / 2, content.length));
-                                _this.mergeColum(col, i);
-                            }
-                            else if (grid.getCell(mya[i], col + 1) == "") {
-                                _this.mergeColum(col, i);
-                            }
-                        }
-                    }
+                    //var grid = $("#" + this.mGridName + "");
+                    //var mya = grid.getDataIDs();
+                    //for (var i = 0; i < mya.length; i++) {
+                    //    var leftCell = grid.find("#" + mya[i] + " #" + this.id(col) + mya[i]);
+                    //    var rightCell = leftCell.next();
+                    //    if (leftCell.css("display") != "none" && rightCell.css("display") != "none") {
+                    //        if (grid.getCell(mya[i], col) == grid.getCell(mya[i], col + 1)) {
+                    //            var content = grid.getCell(mya[i], col);
+                    //            grid.setCell(mya[i], col, content.substring(0, content.length / 2));
+                    //            grid.setCell(mya[i], col + 1, content.substring(content.length / 2, content.length));
+                    //            this.mergeColum(col, i);
+                    //        }
+                    //        else if (grid.getCell(mya[i], col + 1) == "") {
+                    //            this.mergeColum(col, i);
+                    //        }
+                    //    }
+                    //}
+                    _this.sliceMergeColumn(col, 0);
                     return true;
                 });
             }
