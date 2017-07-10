@@ -108,6 +108,17 @@ module sddb {
                             })
                             .then((jsonData:any) => {
                                 this.mData = jsonData;
+                                 if (this.mData.data.length == 0) {
+                                        $("#table").hide();
+                                        var pro = $("#prompt");
+                                        pro.empty();
+                                        pro.append("<b>暂时没有数据！</b>");
+                                        }
+                                else {
+                                        $("#table").show();
+                                        var pro = $("#prompt");
+                                        pro.empty();
+                                    }
                                 this.refresh();
                             });
                     } else {
@@ -123,6 +134,17 @@ module sddb {
                         })
                         .then((jsonData:any) => {
                             this.mData = jsonData;
+                            if (this.mData.data.length == 0) {
+                                $("#table").hide();
+                                var pro = $("#prompt");
+                                pro.empty();
+                                pro.append("<b>暂时没有数据！</b>");
+                            }
+                            else {
+                                $("#table").show();
+                                var pro = $("#prompt");
+                                pro.empty();
+                            }
                             this.refresh();
                         });
                 }

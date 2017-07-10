@@ -72,6 +72,17 @@ var sddb;
                         })
                             .then(function (jsonData) {
                             _this.mData = jsonData;
+                            if (_this.mData.data.length == 0) {
+                                $("#table").hide();
+                                var pro = $("#prompt");
+                                pro.empty();
+                                pro.append("<b>暂时没有数据！</b>");
+                            }
+                            else {
+                                $("#table").show();
+                                var pro = $("#prompt");
+                                pro.empty();
+                            }
                             _this.refresh();
                         });
                     }
@@ -89,6 +100,17 @@ var sddb;
                     })
                         .then(function (jsonData) {
                         _this.mData = jsonData;
+                        if (_this.mData.data.length == 0) {
+                            $("#table").hide();
+                            var pro = $("#prompt");
+                            pro.empty();
+                            pro.append("<b>暂时没有数据！</b>");
+                        }
+                        else {
+                            $("#table").show();
+                            var pro = $("#prompt");
+                            pro.empty();
+                        }
                         _this.refresh();
                     });
                 }
