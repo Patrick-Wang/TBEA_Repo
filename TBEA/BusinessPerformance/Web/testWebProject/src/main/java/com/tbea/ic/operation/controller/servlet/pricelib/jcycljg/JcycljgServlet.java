@@ -89,7 +89,7 @@ public class JcycljgServlet {
 			itemNodes.add(new DataNode(new Data(17, "PMI、CPI、PPI")));
 			itemNodes.add(new DataNode(new Data(18, "银行基准利率")));
 			map.put("itemNodes", JSONArray.fromObject(itemNodes).toString());
-			map.put("importUrl", "../import")
+			map.put("importUrl", "../import");
 		}
 		
 		
