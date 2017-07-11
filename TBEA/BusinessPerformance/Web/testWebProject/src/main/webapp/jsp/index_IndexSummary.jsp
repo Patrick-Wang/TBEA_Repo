@@ -172,7 +172,7 @@
 						</li>
 					</c:if>
 					<c:if test="${_73}">
-					<li><a href="../report/cwsjsfImportJsp.do" target="_blank"><img
+					<li><a href="../report/cwsfImportWrapperJsp.do" target="_blank"><img
 								src="../images/charts/bar5.png"> <span><strong>税务-数据维护</strong></span></a>
 					</c:if>
 					
