@@ -262,7 +262,8 @@
 						.append(builder.build('gdwcwzbxx'))
 						.append(builder.build('cwfxLookup'))
 						.append(builder.build('externalFinData'))
-						.append(builder.build('tax'));
+						.append(builder.build('tax'))
+						.append(builder.build('taximport'));
 				})
 			</script>		
 	
@@ -306,6 +307,18 @@
 				});
 			</script>
 		</c:if>
+		
+		<c:if test="${_73}">
+	    	 <script>
+	    	 builder.register('taximport', function () {
+					return [
+					    createNode('税务-数据维护', 'report/v2/cwsfImportWrapperJsp.do')				   
+					];
+				});
+	    	 </script>
+	    
+	    </c:if>
+					
 			
 		<c:if test="${_74}">
 			<script>
@@ -682,25 +695,11 @@
 	         <script>
 	         	builder.register('entryxx', function() {
 					return createNode('财务报表录入')
-						.append(createNode('财务-经营性现金流录入', 'cwgbjyxxjl/v2/entry.do'))
-						.append(builder.build('taximport'));
+						.append(builder.build('财务-经营性现金流录入', 'cwgbjyxxjl/v2/entry.do'));
 				});
 			</script>
 	    </c:if>
-	    
-	    
-	    <c:if test="${_73}">
-	    	 <script>
-	    	 builder.register('taximport', function () {
-					return [
-					    createNode('税务-数据维护', 'report/v2/cwsjsfImportJsp.do')				   
-					];
-				});
-	    	 </script>
-	    
-	    </c:if>
-					
-	    
+ 
 		<c:if test="${QualityLookup || QualityApprove}">
 			<script>
 				builder.register('quality', function() {

@@ -12,7 +12,7 @@
 	<controller id="cwsfImportWrapperJsp">
 		<list id="ids" type="int">1,2</list>
 		<list id="vals" type="string">
-			预算,税金税负
+			预算-数据维护,税金税负-数据维护
 		</list>
 		<response type="jsp" name="components/import_data">
 			<map key="importUrl" value="cwsfwrapperImport" />
