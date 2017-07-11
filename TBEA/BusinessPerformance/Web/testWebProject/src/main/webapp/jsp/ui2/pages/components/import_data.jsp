@@ -156,6 +156,18 @@
 	background-color: #e6e6e6;
 }
 
+.webuploader-pick {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    background: white;
+    padding: 0px 0px;
+    color: white;
+    text-align: center;
+    border-radius: 0px;
+    overflow: hidden;
+}
+
 .result-title-left{
 	border:solid 1px lightgray;
 	padding:15px 15px 15px 15px;
@@ -216,8 +228,7 @@
 						<div id="headerHost" class="pull-left">
 							<div id="item-sel" class="pull-left"></div>
 							<div id="comp-sel" class="pull-left"></div>
-							<div id="picker-proxy" class="btn btn-default  pull-left">选择文件</div>
-							<button id="picker" class="pull-left" style="display:none">选择文件</button>
+							<div id="picker" class="pull-left btn btn-default">选择文件</div>
 							<div id="ctlBtn" class="btn btn-default pull-left">开始上传</div>
 						</div>
 					</div>
@@ -318,24 +329,28 @@
 			
 			var opVal = $("#item-sel option:selected").val();
 			if (opVal < 0){
-				$("#picker-proxy").attr("disabled", true);
+				$("#picker").attr("disabled", true);
+				$("#picker").children().css("display", "none");
 			}else{
-				$("#picker-proxy").attr("disabled", false);
+				$("#picker").attr("disabled", false);
+				$("#picker").children().css("display", "");
 			}
 		}		
 		
 		
 		
-		function doUpload(){
-			return $(".wait:eq(0)").each(function(i, e){
-				$e = $(e);
-				uploader.options.formData = {
-					compId : $e.attr("cid"),
-					item : $e.attr("iid")
-				}
-				
-				uploader.upload($e.attr("id"));
-			}).length > 0;
+		function chainUpload(){
+			if (!isRetrying){
+				$(".wait:eq(0)").each(function(i, e){
+					$e = $(e);
+					uploader.options.formData = {
+						compId : $e.attr("cid"),
+						item : $e.attr("iid")
+					}
+					
+					uploader.upload($e.attr("id"));
+				}).length > 0;
+			}
 		}
 		
 		function getCompId(){
@@ -367,7 +382,7 @@
 			return ret;
 		}
 		
-		var pauseRetry = "true";
+		var isRetrying = false;
 
 		$(document).ready(function() {
 				var $ = jQuery, $btn = $('#ctlBtn'), state = 'pending';
@@ -376,17 +391,12 @@
 					if ($btn.attr("disabled") == "disabled"){
 						return;	
 					}
-					doUpload();
+					chainUpload();
 				});
 				
-				$("#picker-proxy").on("click", function(){
-					if ($("#picker-proxy").attr("disabled") == "disabled"){
-						return;	
-					}
-					$("#picker input").trigger("click");
-				});
 				
-				updateBtnsStatus();
+				
+				
 				
 				$list = $('#thelist');
 				uploader = WebUploader.create({
@@ -465,15 +475,16 @@
 						.html('<i class="fa fa-refresh"></i>' + 
 								' ' + ret.message);
 						jqtemplate.find(".fa-refresh").css("cursor", "pointer").on("click", function(){
-							if (pauseRetry){
+							if (isRetrying){
 								return;
 							}
+							isRetrying = true;
 							uploader.options.formData = {
 								compId : jqtemplate.attr("cid"),
 								item : jqtemplate.attr("iid")
 							}
 							uploader.retry(file);
-							pauseRetry = true;
+							
 						});
 					}
 				});
@@ -484,15 +495,16 @@
 					.html('<i class="fa fa-refresh"></i>' + 
 							' 上传出错');
 					jqtemplate.find(".fa-refresh").css("cursor", "pointer").on("click", function(){
-						if (pauseRetry){
+						if (isRetrying){
 							return;
 						}
+						isRetrying = true;
 						uploader.options.formData = {
 							compId : jqtemplate.attr("cid"),
 							item : jqtemplate.attr("iid")
 						}
 						uploader.retry(file);
-						pauseRetry = true;
+						
 					});
 				});
 
@@ -501,9 +513,22 @@
 					$('#' + file.id).find('.progress').fadeOut();
 					$('#' + file.id).removeClass("wait");
 					updateBtnsStatus();
-					doUpload();
-					pauseRetry = false;
+					chainUpload();
+					isRetrying = false;
 				});
+				
+				var $webpick = $(".webuploader-pick");
+				$webpick.removeClass("webuploader-pick");
+				setTimeout(function(){
+					$webpick.next().css("width", "100%")
+					.css("height", "100%")
+					.css("left", "0")
+					.css("top", "0");
+					$webpick.parent().append($webpick.text());
+					$webpick.remove();
+					updateBtnsStatus();
+				}, 10);
+				
 			});
 
 

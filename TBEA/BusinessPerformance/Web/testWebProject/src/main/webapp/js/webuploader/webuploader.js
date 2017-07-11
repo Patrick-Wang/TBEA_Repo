@@ -3039,7 +3039,7 @@
                 if ( file ) {
                     file = file.id ? file : me.queue.getFile( file );
                     file.setStatus( Status.QUEUED );
-                    noForceStart || me.request('start-upload');
+                    noForceStart || me.request('start-upload', file);
                     return;
                 }
     
