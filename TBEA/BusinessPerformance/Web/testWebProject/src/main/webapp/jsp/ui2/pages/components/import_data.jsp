@@ -246,7 +246,7 @@
 											<div class="col-lg-5 col-sm-5 col-xs-5"></div>
 											<div class="info">文件名称</div>
 										</div>
-										<div class="col-lg-4 col-sm-4 col-xs-3 result-title-right">
+										<div class="col-lg-4 col-sm-4 col-xs-4 result-title-right">
 											<div class="col-lg-5 col-sm-5 col-xs-5"></div>
 											<div class="info">上传状态</div>
 										</div>
@@ -268,7 +268,7 @@
 		<div class="row inner-template">
 			<div class="col-lg-8 col-sm-8 col-xs-8 result-body-left">
 			</div>
-			<div class="col-lg-4 col-sm-4 col-xs-3 result-body-right">
+			<div class="col-lg-4 col-sm-4 col-xs-4 result-body-right">
 			</div>
 		</div>
 	</div>
