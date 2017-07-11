@@ -159,6 +159,11 @@ module home {
         }
     }).triggerClickHome();
 
+    $(window).resize(()=>{
+        topTab.rearrange();
+    });
+
+
     var leftTree = new tree.Tree("tree");
     let treeNodes:TreeNode[] = leftTree.render(builder.build('root'));
 
@@ -279,10 +284,20 @@ module home {
             }, 'fast', ()=> {
                 $(".nav-left").addClass("nav-hide");
             });
+
+            topTab.fixedHeight();
             $(".content-right").animate({
                 width: "100%"
-            }, 'fast', ()=> {
-                stopClick = false;
+            }, {
+                duration: 'fast',
+                done : ()=> {
+                    stopClick = false;
+                    topTab.unFixedHeight();
+                    topTab.rearrange();
+                },
+                step : ()=>{
+
+                }
             });
 
             $(".nav-other").addClass("nav-other-clicked");
@@ -295,11 +310,20 @@ module home {
             }, 'fast', ()=> {
                 $(".nav-left").removeCss("margin-left");
             });
+            topTab.fixedHeight();
             $(".content-right").animate({
                 width: 500 / 6 + "%"
-            }, 'fast', ()=> {
-                $(".content-right").removeCss("width");
-                stopClick = false;
+            }, {
+                duration: 'fast',
+                done : ()=> {
+                    $(".content-right").removeCss("width");
+                    stopClick = false;
+                    topTab.unFixedHeight();
+                    topTab.rearrange();
+                },
+                step : ()=>{
+
+                }
             });
             $(".nav-other-clicked").addClass("nav-other");
             $(".nav-other-clicked").removeClass("nav-other-clicked");

@@ -52,9 +52,7 @@ module tab {
             this.q(".tab-home div").click(()=> {
                 this.triggerClickHome();
             });
-            $(window).resize(()=> {
-                this.rearrange();
-            });
+
             $('.tab-more').click(()=> {
                 setTimeout(()=> {
                     this.adjustDropDownHeight();
@@ -346,6 +344,14 @@ module tab {
             this.bindTab(data);
         }
 
+        fixedHeight(){
+            this.q(".tab").css("height", $(".tab").outerHeight() + "px");
+        }
+
+        unFixedHeight(){
+            $(".tab").removeCss("height");
+        }
+
         hasTooManyTabs():boolean {
             if (this.tabs.length > 0) {
                 let top = this.q(".tab-home").offset().top;
@@ -489,7 +495,7 @@ module tab {
             }
         }
 
-        private rearrange():void {
+        rearrange():void {
             let tmpTabs = [];
 
             let activeTabId:string = this.getActiveTabId();

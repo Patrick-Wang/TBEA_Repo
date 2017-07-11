@@ -142,6 +142,9 @@ var home;
             $("#tabContent #" + data.id).remove();
         }
     }).triggerClickHome();
+    $(window).resize(function () {
+        topTab.rearrange();
+    });
     var leftTree = new tree.Tree("tree");
     var treeNodes = leftTree.render(builder.build('root'));
     $(treeNodes).each(function (i, e) {
@@ -248,10 +251,18 @@ var home;
             }, 'fast', function () {
                 $(".nav-left").addClass("nav-hide");
             });
+            topTab.fixedHeight();
             $(".content-right").animate({
                 width: "100%"
-            }, 'fast', function () {
-                stopClick = false;
+            }, {
+                duration: 'fast',
+                done: function () {
+                    stopClick = false;
+                    topTab.unFixedHeight();
+                    topTab.rearrange();
+                },
+                step: function () {
+                }
             });
             $(".nav-other").addClass("nav-other-clicked");
             $(".nav-other").removeClass("nav-other");
@@ -264,11 +275,19 @@ var home;
             }, 'fast', function () {
                 $(".nav-left").removeCss("margin-left");
             });
+            topTab.fixedHeight();
             $(".content-right").animate({
                 width: 500 / 6 + "%"
-            }, 'fast', function () {
-                $(".content-right").removeCss("width");
-                stopClick = false;
+            }, {
+                duration: 'fast',
+                done: function () {
+                    $(".content-right").removeCss("width");
+                    stopClick = false;
+                    topTab.unFixedHeight();
+                    topTab.rearrange();
+                },
+                step: function () {
+                }
             });
             $(".nav-other-clicked").addClass("nav-other");
             $(".nav-other-clicked").removeClass("nav-other-clicked");

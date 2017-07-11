@@ -136,5 +136,22 @@
             });
             return $(this);
         }
+
+        //eResize : function(onResize){
+        //    var _this = $(this);
+        //    var oldSize = [];
+        //    _this.each(function(i, e){
+        //        oldSize.push([$(e).width(), $(e).height()]);
+        //    });
+        //    setInterval(function(){
+        //        _this.each(function(i, e){
+        //            if ($(e).width() != oldSize[i][0] || $(e).height() != oldSize[i][1]){
+        //                oldSize[i][0] = $(e).width();
+        //                oldSize[i][1] = $(e).height();
+        //                onResize(e);
+        //            }
+        //        });
+        //    }, 50);
+        //}
     });
 })();

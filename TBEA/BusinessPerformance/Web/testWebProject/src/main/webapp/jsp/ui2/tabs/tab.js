@@ -22,9 +22,6 @@ var tab;
             this.q(".tab-home div").click(function () {
                 _this.triggerClickHome();
             });
-            $(window).resize(function () {
-                _this.rearrange();
-            });
             $('.tab-more').click(function () {
                 setTimeout(function () {
                     _this.adjustDropDownHeight();
@@ -295,6 +292,12 @@ var tab;
         Tab.prototype.addTab = function (data) {
             this.tabs.push(data);
             this.bindTab(data);
+        };
+        Tab.prototype.fixedHeight = function () {
+            this.q(".tab").css("height", $(".tab").outerHeight() + "px");
+        };
+        Tab.prototype.unFixedHeight = function () {
+            $(".tab").removeCss("height");
         };
         Tab.prototype.hasTooManyTabs = function () {
             if (this.tabs.length > 0) {
