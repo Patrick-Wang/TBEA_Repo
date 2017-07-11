@@ -272,7 +272,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		} else {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("error", true);
-			return new ModelAndView("login", map);
+			return new ModelAndView("ui2/pages/login", map);
 		}
 	}
 	
