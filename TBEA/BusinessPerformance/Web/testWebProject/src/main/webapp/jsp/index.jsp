@@ -110,12 +110,12 @@
 										style="color: rgb(62, 152, 197);">Dashboard</a></li>
 								</c:if>
 
-								<c:if test="${_75}">
+								<c:if test="${CorpAuth || _75}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标完成情况</a></li>
 								</c:if>
-								<c:if test="${_76}">
+								<c:if test="${CorpAuth || _76}">
 								<li style="background-color: transparent;"><i
 									class="ec-icon ec-icon-line"></i> <a href="#zbhz"
 									style="color: rgb(62, 152, 197);">经营指标预测情况</a></li>
