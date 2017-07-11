@@ -137,7 +137,6 @@ var sddb;
                     .send(framework.basic.FrameEvent.FE_REGISTER, opt.title);
             };
             ShowView.prototype.updateCharts = function () {
-                var _this = this;
                 var display = "none";
                 if (undefined != this.mData.charts) {
                     var validCount = 0;
@@ -168,15 +167,12 @@ var sddb;
                                     ' <div id="' + this.mOpt.ctarea + i + '" class="chart"></div>' +
                                     '</div>');
                             }
+                            //if (validCount == 1){
+                            //    $("#" + this.mOpt.chartId + "0").css("width", "98%");
+                            //}
+                            this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
                         }
                     }
-                    setTimeout(function () {
-                        for (var i = 0; i < _this.mData.charts.length; ++i) {
-                            if (_this.mData.charts[i].isValid) {
-                                _this.updateChart(_this.mOpt.ctarea + i, _this.mData.charts[i]);
-                            }
-                        }
-                    }, 10);
                 }
                 $("#" + this.mOpt.ctarea).css("display", display);
                 //$("#chartName").css("display", display);
@@ -196,6 +192,7 @@ var sddb;
                     $(".chart").each(function (i, e) {
                         $(e).css("width", _this.jqgridHost().width() + "px");
                     });
+                    this.updateCharts();
                 }
                 //if (this.mData.tjjg.length > 0){
                 //    this.$(this.option().ctarea).show();

@@ -50,7 +50,7 @@ module Util {
                         '</li>');
                 }
 
-                $(".breadcrumb").append('<li class="fa fa-caret-right">' +
+                $(".breadcrumb").append('<li>' +
                     breads[breads.length - 1].value +
                     '</li>');
             }

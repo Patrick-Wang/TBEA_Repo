@@ -217,17 +217,17 @@ module sddb {
                             //if (validCount == 1){
                             //    $("#" + this.mOpt.chartId + "0").css("width", "98%");
                             //}
-                            //this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
+                           this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
                         }
                     }
 
-                    setTimeout(()=>{
-                        for (let i = 0; i < this.mData.charts.length; ++i) {
-                            if (this.mData.charts[i]. isValid) {
-                                this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
-                            }
-                        }
-                    }, 0);
+                    //setTimeout(()=>{
+                    //    for (let i = 0; i < this.mData.charts.length; ++i) {
+                    //        if (this.mData.charts[i]. isValid) {
+                    //            this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
+                    //        }
+                    //    }
+                    //}, 0);
                 }
 
                 $("#" + this.mOpt.ctarea).css("display", display);
@@ -252,6 +252,8 @@ module sddb {
                     $(".chart").each((i, e)=>{
                         $(e).css("width", this.jqgridHost().width() + "px");
                     });
+
+                    this.updateCharts();
                 }
 
                 //if (this.mData.tjjg.length > 0){

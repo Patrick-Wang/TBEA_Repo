@@ -41,7 +41,7 @@ var Util;
                         '<a href="#"  onclick="Util.Breadcrumb.onClickBread(' + i + ')">' + breads[i].value + '</a>' +
                         '</li>');
                 }
-                $(".breadcrumb").append('<li class="fa fa-caret-right">' +
+                $(".breadcrumb").append('<li>' +
                     breads[breads.length - 1].value +
                     '</li>');
             }
