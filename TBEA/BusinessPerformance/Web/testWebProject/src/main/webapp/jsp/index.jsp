@@ -54,6 +54,11 @@
 </head>
 
 <body>
+
+	<script>
+		window.location.href = "${pageContext.request.contextPath}/Login/v2/index.do";
+	</script>
+
 	<!-- Fixed navbar -->
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation"
 		id="head"></div>

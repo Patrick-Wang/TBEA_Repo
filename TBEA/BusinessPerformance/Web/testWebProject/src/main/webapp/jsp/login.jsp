@@ -21,7 +21,7 @@
 	src="${pageContext.request.contextPath}/jsp/util.js"></script>
 
 <script type="text/javascript">
-
+	window.location.href = "${pageContext.request.contextPath}/Login/v2/login.do";
 	Util.Ajax.parentInvalidate(window.location.href);
 
 	function formSubmit() {
