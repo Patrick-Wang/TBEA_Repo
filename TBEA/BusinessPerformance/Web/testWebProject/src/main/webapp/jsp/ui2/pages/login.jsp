@@ -20,6 +20,9 @@
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/ui2/login.css" />
+	<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/font-awesome.min.css"
+	rel="stylesheet" />
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.min.js"></script>
 <script type="text/javascript"
@@ -50,9 +53,19 @@
 		}
 	}
 </script>
+<!--[if IE 8]> 
+
+
 <style>
-	
+.login-area .fa{
+	padding: 9px 7px 7px 7px; 
+}
+
+.login-area .fa-lock{
+	padding: 9px 10px 7px 8px;
+}
 </style>
+<![endif]-->
 </head>
 <body>
 	<div style="text-align: center;">
@@ -64,16 +77,16 @@
 
 			<form id="loginForm" class="login-area" action="validate.do"
 				method="post">
+				<div class="welcome">欢迎登录</div>
 				<fieldset>
-					
 					<label for="j_username">用户名：</label> 
-					<input type="text"
+					<div><div class="fa fa-user" ></div><input type="text" 
 						name="j_username" id="j_username" onkeydown="doSubmit(event)"
-						autocomplete="on" /> 
+						autocomplete="on" /></div>
 					<label for="j_password">密码：</label> 
-					<input type="password" name="j_password" id="j_password"
+					<div><div class="fa fa-lock"></div><input type="password" name="j_password" id="j_password" 
 						onkeydown="doSubmit(event)" />
-					<input type="hidden" name="transmissionStr" id="transmissionStr" />
+					<input type="hidden" name="transmissionStr" id="transmissionStr" /></div>
 					<c:choose>
 						<c:when test="${(!empty error) && error}">
 							<div class="errors">用户名或密码错误，请重新输入。</div>
