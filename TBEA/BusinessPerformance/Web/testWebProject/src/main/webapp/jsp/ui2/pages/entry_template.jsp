@@ -223,6 +223,7 @@
 	<!--Page Related Scripts-->
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootbox/bootbox.js"></script>
+	<%@include file="loading.jsp"%>
 	<script>
 		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
 		if (Util.isIframe()){
@@ -237,7 +238,7 @@
 			entryType : ${entryType}
 		});
     </script>
-	<%@include file="loading.jsp"%>
+	
 </body>
 <!--  /Body -->
 </html>
