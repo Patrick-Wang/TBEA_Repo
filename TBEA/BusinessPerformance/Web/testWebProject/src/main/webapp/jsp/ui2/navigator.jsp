@@ -760,7 +760,8 @@
 					builder.register('qulityxxRoot', function () {
 						var quality = createNode("质量数据管控");
 						quality.data.icon = "fa fa-cogs";
-						quality.data.iconOpen = undefined;	
+						quality.data.iconOpen = undefined;
+						quality.data.extracted = true;
 						quality.append(builder.build("quality"));
 						return quality;
 					});
@@ -804,12 +805,17 @@
 	/* 	var ztfx = createNode("主题分析");
 		ztfx.data.icon = "fa fa-bar-chart";
 		ztfx.data.iconOpen = undefined; */
-		var bbxx = createNode("报表信息");
-		bbxx.data.extracted = true;
-		bbxx.data.icon = "fa fa-table";
-		bbxx.data.iconOpen = undefined;
-		bbxx.append(builder.build('bbxx'));	
+		var bbxx = [];	
 
+		var subNodes = builder.build('bbxx');
+		if (subNodes.length > 0){
+			bbxx = createNode("报表信息");
+			bbxx.data.extracted = true;
+			bbxx.data.icon = "fa fa-table";
+			bbxx.data.iconOpen = undefined;
+			bbxx.append(subNodes);	
+		}
+		
 		/* root.append(ztfx) */
 		root.append(bbxx)
 			.append(builder.build("entryxxRoot"))
