@@ -43,17 +43,33 @@
 	}
 	
 	.header-title .btn{
-		padding-top: 2px;
+		padding-top: 4px;
+		height:28px;
+		margin-top:7px;
+	}
+	
+	.header-title .btn-group{
+		margin-top:7px;
 	}
 	
 	.header-title select {
-		height: 25px;
+		height: 28px;
 		padding-top: 3px;
 		padding-bottom: 2px;
 		padding-left:3px;
 		padding-right:3px;
+		margin-top:7px;
 	}
 
+	.united-sel select {
+		margin-top: 0px;
+		margin-left: 0px;
+	}
+	
+	.united-sel {
+		margin-top: 4px;
+	}
+	
 	.tab-normal>div {
 	    padding-top: 10px;
 	}
