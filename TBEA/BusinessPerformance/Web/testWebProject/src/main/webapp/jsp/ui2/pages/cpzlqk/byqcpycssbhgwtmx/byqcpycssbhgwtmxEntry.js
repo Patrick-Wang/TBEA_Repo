@@ -185,12 +185,14 @@ var cpzlqk;
                 parent.empty();
                 parent.append("<table id='" + this.jqgridName() + "'></table><div id='" + this.jqgridName() + "pager'></div>");
                 this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), Util.ZBStatus.APPROVED == this.mData.status, this.mData.bhglx, this.mData.zrlb);
+                this.mTableAssist.mergeTitle(0);
+                this.mTableAssist.mergeRow(0);
                 return this.mTableAssist;
             };
             EntryView.prototype.updateTable = function () {
                 this.createJqassist();
                 this.mTableAssist.create({
-                    data: this.mData.tjjg,
+                    dataWithId: this.mData.tjjg,
                     datatype: "local",
                     multiselect: false,
                     drag: false,

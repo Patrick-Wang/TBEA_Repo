@@ -192,7 +192,7 @@ module cpzlqk {
                 this.createJqassist();
 
                 this.mTableAssist.create({
-                    data: this.mData.tjjg,
+                    dataWithId: this.mData.tjjg,
                     datatype: "local",
                     multiselect: false,
                     drag: false,

@@ -181,6 +181,7 @@ var cpzlqk;
                 this.mTableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), Util.ZBStatus.APPROVED == this.mData.status);
                 this.mTableAssist.mergeColum(0);
                 this.mTableAssist.mergeRow(0);
+                this.mTableAssist.mergeTitle();
                 return this.mTableAssist;
             };
             EntryView.prototype.updateTable = function () {
