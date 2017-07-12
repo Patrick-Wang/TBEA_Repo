@@ -202,7 +202,7 @@ module cpzlqk {
                 this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), this.mData.bhglbs, this.mYdjdType);
                 this.tableAssist.mergeColum(0);
                 this.tableAssist.mergeTitle(0);
-                this.tableAssist.mergeRow(0);
+                this.tableAssist.mergeRow();
                 return this.tableAssist;
             }
 
