@@ -52,6 +52,25 @@
 			formSubmit();
 		}
 	}
+	
+	var curBg = 0;
+	var fadout = true;
+	$(document).ready(function(){
+		setInterval(function(){
+			var i = curBg % ($(".middlebg").length - 1);
+			if (fadout){
+				$(".middlebg").eq(i).fadeOut(2500);
+			}else{
+				$(".middlebg").eq(i).fadeIn(2500);
+			}
+			
+			if (i == $(".middlebg").length - 2){
+				fadout = !fadout;
+			}			
+			++curBg;
+		}, 5000);
+	});
+	
 </script>
 <!--[if IE 8]> 
 
@@ -70,21 +89,25 @@
 <body>
 	<div style="text-align: center;">
 		<img class="top-title" src="${pageContext.request.contextPath}/jsp/ui2/img/login_title.png">
-		<img class="middlebg" src="${pageContext.request.contextPath}/jsp/ui2/img/middle_bg.jpg">
-		<img class="summary" src="${pageContext.request.contextPath}/jsp/ui2/img/tbea_summary.jpg">
-
+		<img class="headerbg" src="${pageContext.request.contextPath}/jsp/ui2/img/login_header.png">
+		<img class="middlebg z3" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg3.png">
+		<img class="middlebg z2" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg2.jpg">
+		<img class="middlebg z1" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg1.jpg">
+		<img class="bottombg" src="${pageContext.request.contextPath}/jsp/ui2/img/login_header.png">
 		<div align="center">
 
 			<form id="loginForm" class="login-area" action="validate.do"
 				method="post">
 				<div class="welcome">欢迎登录</div>
+				<div class="diveder"></div>
 				<fieldset>
 					<label for="j_username">用户名：</label> 
-					<div><div class="fa fa-user" ></div><input type="text" 
+					<div><div class="fa fa-user" ></div>
+					<input type="text" placeholder="用户名"
 						name="j_username" id="j_username" onkeydown="doSubmit(event)"
 						autocomplete="on" /></div>
 					<label for="j_password">密码：</label> 
-					<div><div class="fa fa-lock"></div><input type="password" name="j_password" id="j_password" 
+					<div><div class="fa fa-lock"></div><input type="password"  placeholder="用户名" name="j_password" id="j_password" 
 						onkeydown="doSubmit(event)" />
 					<input type="hidden" name="transmissionStr" id="transmissionStr" /></div>
 					<c:choose>
