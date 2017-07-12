@@ -63,7 +63,7 @@ body:before {
 	position: absolute;
 	z-index: 10;
 	right: 7%;
-	top: 25%;
+	top: 26%;
 	background-color: rgba(255, 255, 255, 0.7);
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#B2FFFFFF,endColorstr=#B2FFFFFF);    /*IE8 argb*/
 	border: 1px solid #E1E1DC;
