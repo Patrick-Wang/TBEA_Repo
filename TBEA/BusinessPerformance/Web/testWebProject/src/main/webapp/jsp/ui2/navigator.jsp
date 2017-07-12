@@ -695,7 +695,7 @@
 	         <script>
 	         	builder.register('entryxx', function() {
 					return createNode('财务报表录入')
-						.append(builder.build('财务-经营性现金流录入', 'cwgbjyxxjl/v2/entry.do'));
+						.append(createNode('财务-经营性现金流录入', 'cwgbjyxxjl/v2/entry.do'));
 				});
 			</script>
 	    </c:if>
@@ -801,17 +801,17 @@
 	builder.register('root', function(){
 
 		var root = createNode();
-		var ztfx = createNode("主题分析");
+	/* 	var ztfx = createNode("主题分析");
 		ztfx.data.icon = "fa fa-bar-chart";
-		ztfx.data.iconOpen = undefined;
+		ztfx.data.iconOpen = undefined; */
 		var bbxx = createNode("报表信息");
 		bbxx.data.extracted = true;
 		bbxx.data.icon = "fa fa-table";
 		bbxx.data.iconOpen = undefined;
 		bbxx.append(builder.build('bbxx'));	
 
-		root.append(ztfx)
-			.append(bbxx)
+		/* root.append(ztfx) */
+		root.append(bbxx)
 			.append(builder.build("entryxxRoot"))
 			.append(builder.build("ApprovexxRoot"))
 			.append(builder.build("qulityxxRoot"))
