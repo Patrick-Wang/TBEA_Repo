@@ -42,6 +42,10 @@
 		margin-top: 7px;
 	}
 	
+	.header-title .btn{
+		padding-top: 2px;
+	}
+	
 	.header-title select {
 		height: 25px;
 		padding-top: 3px;
