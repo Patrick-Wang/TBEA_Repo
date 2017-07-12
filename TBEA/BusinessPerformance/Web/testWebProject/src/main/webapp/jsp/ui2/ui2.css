@@ -1,6 +1,6 @@
 body {
 	margin: 0px;
-	font-family: Microsoft YaHei UI;
+	font-family: "Microsoft YaHei";
 }
 
 .panel-content-border {
@@ -115,13 +115,13 @@ th.ui-th-ltr {
 }
 
 .ui-widget {
-	font-family: Microsoft YaHei UI;
+	font-family: "Microsoft YaHei";
 	font-size: 1.1em;
 }
 
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button
 	{
-	font-family: Microsoft YaHei UI;
+	font-family: "Microsoft YaHei";
 	font-size: 1em;
 }
 /* Corner radius */

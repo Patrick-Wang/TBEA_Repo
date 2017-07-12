@@ -6,7 +6,7 @@ body {
 	overflow: hidden;
 	background-color: #214273;
 	margin: 0;
-	font-family: Microsoft Yahei;
+	font-family: "Microsoft YaHei";
 }
 
 body:before {
@@ -93,7 +93,7 @@ body:before {
 .login-area .diveder{
 	border-bottom: solid 1px gray;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .login-area .btn{
@@ -111,6 +111,7 @@ body:before {
 	width: 100%;
 	padding: 10px 10px 10px 40px;
     margin-bottom:20px;
+    font-family: "Microsoft YaHei";
 }
 
 .login-area fieldset {

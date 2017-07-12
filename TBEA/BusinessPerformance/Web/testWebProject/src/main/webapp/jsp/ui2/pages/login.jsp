@@ -91,8 +91,8 @@
 		<img class="top-title" src="${pageContext.request.contextPath}/jsp/ui2/img/login_title.png">
 		<img class="headerbg" src="${pageContext.request.contextPath}/jsp/ui2/img/login_header.png">
 		<img class="middlebg z3" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg3.png">
-		<img class="middlebg z2" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg2.jpg">
-		<img class="middlebg z1" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg1.jpg">
+		<img class="middlebg z2" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg1.jpg">
+		<img class="middlebg z1" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg2.jpg">
 		<img class="bottombg" src="${pageContext.request.contextPath}/jsp/ui2/img/login_header.png">
 		<div align="center">
 
