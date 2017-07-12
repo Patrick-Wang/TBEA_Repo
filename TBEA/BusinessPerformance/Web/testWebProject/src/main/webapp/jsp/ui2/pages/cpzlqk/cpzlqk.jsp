@@ -14,7 +14,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<%@include file="../../ie8-t.jsp"%>
+<script>
+	Date.now = function(){
+		return new Date();
+	}
+</script>
+
 
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
