@@ -18,7 +18,7 @@ module wlyddqk {
                     nodeFirst = new JQTable.Node("生产单元（项目公司）", "scdy", readOnly, TextAlign.Center, 0, "text", undefined, false);
                 } else {
                     let vals:string = "";
-                    for (let i in cplb) {
+                    for (var i = 0; i < cplb.length; ++i) {
                         if (i < cplb.length - 1) {
                             vals += cplb[i] + ':' + cplb[i] + ';';
                         } else {
