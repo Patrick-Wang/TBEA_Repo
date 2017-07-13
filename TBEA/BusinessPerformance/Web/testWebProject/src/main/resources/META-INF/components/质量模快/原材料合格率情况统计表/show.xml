@@ -266,7 +266,7 @@ where
   <context key="isJydw" value="${[50000,50001].indexOf(compId) &lt; 0}"/>
   <context key="isByqcy" value="${50000 == compId}"/>
   <context key="isXlcy" value="${50001 == compId}"/>
-  <list type="int" id="zt" export="true">1</list>
+  <context key="zt" export="true" value="${zlzts[request.item.asInt]}"/>
   <if test="${auth[40]}">
    <list id="zt" type="int" export="true">1,2,3,4,5,6,7</list>
   </if>
