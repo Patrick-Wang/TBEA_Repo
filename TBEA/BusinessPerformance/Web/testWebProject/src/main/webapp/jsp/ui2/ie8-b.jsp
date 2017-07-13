@@ -75,7 +75,8 @@
 	}
 	
 	.tab-normal>div {
-	    padding-top: 10px;
+	    padding-top: 7px;
+	    padding-bottom: 7px;
 	}
 	
 	.tab-close:before{
