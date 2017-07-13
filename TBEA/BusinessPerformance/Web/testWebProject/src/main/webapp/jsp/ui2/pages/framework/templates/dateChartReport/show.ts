@@ -148,17 +148,17 @@ module framework.templates.dateChartReport {
 
         update (date:Util.Date){
             let nodes : DataNode[] = this.chartSelector.getNodes();
-            this.mChartUpdate.get($.extend({
-                chart:nodes[nodes.length - 1].data.id
-            }, this.getParams(date))).then((jsonData:any) => {
-                this.mChartResp = jsonData;
-                this.updateChart();
-            });
+
 
             this.mAjaxUpdate.get(this.getParams(date))
                 .then((jsonData:any) => {
                     this.resp = jsonData;
-                    this.updateTable();
+                    this.mChartUpdate.get($.extend({
+                        chart:nodes[nodes.length - 1].data.id
+                    }, this.getParams(date))).then((jsonData:any) => {
+                        this.mChartResp = jsonData;
+                        this.updateTable();
+                    });
                 });
         }
 
@@ -185,10 +185,11 @@ module framework.templates.dateChartReport {
             //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
             //    jqgrid.setGridWidth(this.jqgridHost().width());
             //}
-
-            $("#" + this.option().chartId).css("height", "300px");
-            $("#" + this.option().chartId).css("width", $("#" + this.opt.host).width() + "px");
-            this.updateChart();
+            if(this.mChartResp){
+                $("#" + this.option().chartId).css("height", "300px");
+                $("#" + this.option().chartId).css("width", $("#" + this.opt.host).width() + "px");
+                this.updateChart();
+            }
         }
 
         private updateChart():void {

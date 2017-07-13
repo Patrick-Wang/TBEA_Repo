@@ -182,7 +182,7 @@
 						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_UPDATE)">
 							查找 <i class="fa fa-search"></i>
 						</div>
-						<div id="submit" class="btn btn-default pull-right" style="display:none"
+						<div id="submit" class="btn btn-default btn-w5 pull-right" style="display:none"
 							onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)">
 							提交并分析 <i class="fa fa-upload"></i>
 						</div>

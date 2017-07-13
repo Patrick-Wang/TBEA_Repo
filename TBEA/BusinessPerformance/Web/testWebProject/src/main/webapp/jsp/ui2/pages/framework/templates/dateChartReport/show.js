@@ -108,16 +108,15 @@ var framework;
                 SimpleShowView.prototype.update = function (date) {
                     var _this = this;
                     var nodes = this.chartSelector.getNodes();
-                    this.mChartUpdate.get($.extend({
-                        chart: nodes[nodes.length - 1].data.id
-                    }, this.getParams(date))).then(function (jsonData) {
-                        _this.mChartResp = jsonData;
-                        _this.updateChart();
-                    });
                     this.mAjaxUpdate.get(this.getParams(date))
                         .then(function (jsonData) {
                         _this.resp = jsonData;
-                        _this.updateTable();
+                        _this.mChartUpdate.get($.extend({
+                            chart: nodes[nodes.length - 1].data.id
+                        }, _this.getParams(date))).then(function (jsonData) {
+                            _this.mChartResp = jsonData;
+                            _this.updateTable();
+                        });
                     });
                 };
                 SimpleShowView.prototype.adjustHeader = function () {
@@ -141,9 +140,11 @@ var framework;
                     //if (this.jqgridHost().width() != this.jqgridHost().children().eq(0).width()) {
                     //    jqgrid.setGridWidth(this.jqgridHost().width());
                     //}
-                    $("#" + this.option().chartId).css("height", "300px");
-                    $("#" + this.option().chartId).css("width", $("#" + this.opt.host).width() + "px");
-                    this.updateChart();
+                    if (this.mChartResp) {
+                        $("#" + this.option().chartId).css("height", "300px");
+                        $("#" + this.option().chartId).css("width", $("#" + this.opt.host).width() + "px");
+                        this.updateChart();
+                    }
                 };
                 SimpleShowView.prototype.updateChart = function () {
                     $("#" + this.option().chartId).empty();

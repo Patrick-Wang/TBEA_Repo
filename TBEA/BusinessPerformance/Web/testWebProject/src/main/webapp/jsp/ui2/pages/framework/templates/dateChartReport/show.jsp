@@ -7,15 +7,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
-<meta charset="utf-8" />
-<title></title>
 
 <meta name="description" content="modals and wells" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<%@include file="../../../../ie8-t.jsp"%>
+<script>
+	Date.now = function(){
+		return new Date();
+	}
+</script>
 
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
@@ -301,7 +303,6 @@
 	        });
 		});
 	</script>
-
 </body>
 <script src="${pageContext.request.contextPath}/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
 <!--  /Body -->
