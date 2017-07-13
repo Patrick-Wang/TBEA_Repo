@@ -472,9 +472,9 @@ module entry_template {
                 data: JSON.stringify(submitData)
             }).then((data: ISubmitResult) => {
                 if ("true" == data.result) {
-                    Util.Toast.success("保存 成功");
+                    Util.Toast.success("提交 成功");
                 } else if ("false" == data.result) {
-                    Util.Toast.failed("保存 失败");
+                    Util.Toast.failed("提交 失败");
                 } else {
                     Util.Toast.failed(data.result);
                 }

@@ -326,6 +326,10 @@ th.ui-th-ltr {
 	padding: 3px 0px 0px 0px;
 }
 
+.header-title .btn-w4{
+	width: 105px;
+}
+
 .select2-container--default .select2-selection--single,
 	.select2-dropdown {
 	border-radius: 0px 0px 0px 0px;

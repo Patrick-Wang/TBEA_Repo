@@ -53,21 +53,20 @@
 		}
 	}
 	
-	var curBg = 0;
-	var fadout = true;
 	$(document).ready(function(){
+		var queueLength = $(".middlebg").length;
+		var queue = $(".middlebg");
+		var header = 0;
 		setInterval(function(){
-			var i = curBg % ($(".middlebg").length - 1);
-			if (fadout){
-				$(".middlebg").eq(i).fadeOut(2500);
-			}else{
-				$(".middlebg").eq(i).fadeIn(2500);
-			}
-			
-			if (i == $(".middlebg").length - 2){
-				fadout = !fadout;
-			}			
-			++curBg;
+			queue.eq(header).fadeOut(2500, function(){
+				var oldHeader = header;			
+				header = (header + 1) % queueLength;			
+				for(var i = 0; i < queueLength; ++i){
+					queue.eq((i + header) % queueLength).css("z-index", "" + (queueLength - i));
+				}
+				queue.eq(oldHeader).fadeIn(10);
+				
+			});
 		}, 5000);
 	});
 	

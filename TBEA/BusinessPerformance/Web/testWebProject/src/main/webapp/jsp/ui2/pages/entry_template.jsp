@@ -182,8 +182,8 @@
 						<div id="submit" class="btn btn-default pull-right">
 							提交 <i class="fa fa-upload"></i>
 						</div>
-						<div id="submitToDeputy" class="btn btn-default pull-right" style="display:none">
-							内部审核 <i class="fa fa-user-circle"></i>
+						<div id="submitToDeputy" class="btn btn-default btn-w4 pull-right" style="display:none">
+							内部审核 <i class="fa fa-gavel"></i>
 						</div>
 						<div id="save" class="btn btn-default pull-right">
 							保存 <i class="fa fa-floppy-o"></i>
