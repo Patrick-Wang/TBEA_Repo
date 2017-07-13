@@ -14,6 +14,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=8">
 <title>特变电工经营管控信息平台</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/jsp/ui2/images/logo.png"
+	type="image/x-icon">
+	
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.css"
 	rel="stylesheet" />
@@ -75,12 +79,12 @@
 
 
 <style>
-.login-area .fa{
-	padding: 9px 7px 7px 7px; 
-}
-
-.login-area .fa-lock{
-	padding: 9px 10px 7px 8px;
+.login-area .ico-left{
+	position:absolute;
+	margin-top:0px;
+	margin-left:0px;
+	padding: 7px 6px 5px 6px; 
+	background:#427fed;
 }
 </style>
 <![endif]-->
@@ -101,12 +105,12 @@
 				<div class="diveder"></div>
 				<fieldset>
 					<label for="j_username">用户名：</label> 
-					<div><div class="fa fa-user" ></div>
+					<div><div class="ico-left" ><img src="${pageContext.request.contextPath}/jsp/ui2/img/user.png"></div>
 					<input type="text" placeholder="用户名"
 						name="j_username" id="j_username" onkeydown="doSubmit(event)"
 						autocomplete="on" /></div>
 					<label for="j_password">密码：</label> 
-					<div><div class="fa fa-lock"></div><input type="password"  placeholder="用户名" name="j_password" id="j_password" 
+					<div><div class="ico-left"><img src="${pageContext.request.contextPath}/jsp/ui2/img/lock.png"></div><input type="password"  placeholder="用户名" name="j_password" id="j_password" 
 						onkeydown="doSubmit(event)" />
 					<input type="hidden" name="transmissionStr" id="transmissionStr" /></div>
 					<c:choose>
