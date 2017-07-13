@@ -10,8 +10,8 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/jsp/ui2/images/logo.png"
+<link rel="Shortcut Icon"
+	href="${pageContext.request.contextPath}/jsp/ui2/images/logo.ico"
 	type="image/x-icon">
 <%@include file="ie8-t.jsp"%>
 <script

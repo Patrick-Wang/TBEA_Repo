@@ -14,9 +14,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=8">
 <title>特变电工经营管控信息平台</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/jsp/ui2/images/logo.png"
+<link rel="Shortcut Icon"
+	href="${pageContext.request.contextPath}/jsp/ui2/images/logo.ico"
 	type="image/x-icon">
+	<link rel="icon" href="${pageContext.request.contextPath}/jsp/ui2/images/logo.ico" />
 	
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.css"
