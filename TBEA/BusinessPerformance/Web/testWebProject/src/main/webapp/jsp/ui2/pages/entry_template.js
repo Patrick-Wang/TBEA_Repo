@@ -96,7 +96,8 @@ var entry_template;
                             maxDate: Util.date2Str(opt.date),
                         }).removeCss("height")
                             .removeCss("padding")
-                            .removeCss("margin-top");
+                            .removeCss("margin-top")
+                            .addClass("year");
                     }
                     break;
                 case Util.ZBType.BY20YJ:
