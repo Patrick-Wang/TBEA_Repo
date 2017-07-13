@@ -24,7 +24,7 @@ var wlyddqk;
                 }
                 else {
                     var vals = "";
-                    for (var i in cplb) {
+                    for (var i = 0; i < cplb.length; ++i) {
                         if (i < cplb.length - 1) {
                             vals += cplb[i] + ':' + cplb[i] + ';';
                         }
