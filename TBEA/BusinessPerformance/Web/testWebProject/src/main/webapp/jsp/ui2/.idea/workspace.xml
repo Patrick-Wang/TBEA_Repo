@@ -25,9 +25,23 @@
         <entry file="file://$PROJECT_DIR$/pages/cpzlqk/pdcpycssbhgxxfb/pdcpycssbhgxxfb.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="70" selection-start-line="17" selection-start-column="70" selection-end-line="17" selection-end-column="70" />
+              <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1499925427423" expanded="true" signature="10179:11937" placeholder="{...}" />
+                <marker date="1499925427423" expanded="true" signature="10425:10480" placeholder="{&quot;trigger&quot;: 'axis'...}" />
+                <marker date="1499925427423" expanded="true" signature="10516:10617" placeholder="[...]" />
+                <marker date="1499925427423" expanded="true" signature="10538:10599" placeholder="{&quot;type&quot;: 'value'...}" />
+                <marker date="1499925427423" expanded="true" signature="10670:11085" placeholder="{...}" />
+                <marker date="1499925427423" expanded="true" signature="10767:11065" placeholder="{&quot;type&quot;: 'line'...}" />
+                <marker date="1499925427423" expanded="true" signature="11131:11191" placeholder="{...}" />
+                <marker date="1499925427423" expanded="true" signature="11223:11919" placeholder="{&quot;calculable&quot;: false...}" />
+                <marker date="1499925427423" expanded="true" signature="11252:11311" placeholder="{...}" />
+                <marker date="1499925427423" expanded="true" signature="11379:11439" placeholder="{...}" />
+                <marker date="1499925427423" expanded="true" signature="11470:11529" placeholder="{&quot;show&quot;: true...}" />
+                <marker date="1499925427423" expanded="true" signature="11597:11831" placeholder="[...]" />
+                <marker date="1499925427423" expanded="true" signature="11623:11809" placeholder="{&quot;type&quot;: 'category'...}" />
+                <marker date="1499925427423" expanded="true" signature="15349:15440" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -37,9 +51,22 @@
         <entry file="file://$PROJECT_DIR$/pages/cpzlqk/byqcpycssbhgxxfb/byqcpycssbhgxxfb.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="204" column="44" selection-start-line="204" selection-start-column="44" selection-end-line="204" selection-end-column="44" />
+              <caret line="200" column="44" selection-start-line="200" selection-start-column="44" selection-end-line="200" selection-end-column="44" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1499925428793" expanded="true" signature="9886:11641" placeholder="{...}" />
+                <marker date="1499925428793" expanded="true" signature="10132:10187" placeholder="{&quot;trigger&quot;: 'axis'...}" />
+                <marker date="1499925428793" expanded="true" signature="10223:10324" placeholder="[...]" />
+                <marker date="1499925428793" expanded="true" signature="10245:10306" placeholder="{&quot;type&quot;: 'value'...}" />
+                <marker date="1499925428793" expanded="true" signature="10377:10792" placeholder="{...}" />
+                <marker date="1499925428793" expanded="true" signature="10474:10772" placeholder="{&quot;type&quot;: 'line'...}" />
+                <marker date="1499925428793" expanded="true" signature="10838:10898" placeholder="{...}" />
+                <marker date="1499925428793" expanded="true" signature="10930:11626" placeholder="{&quot;calculable&quot;: false...}" />
+                <marker date="1499925428793" expanded="true" signature="10959:11018" placeholder="{...}" />
+                <marker date="1499925428793" expanded="true" signature="11177:11236" placeholder="{&quot;show&quot;: true...}" />
+                <marker date="1499925428793" expanded="true" signature="11304:11538" placeholder="[...]" />
+                <marker date="1499925428793" expanded="true" signature="11330:11516" placeholder="{&quot;type&quot;: 'category'...}" />
+                <marker date="1499925428793" expanded="true" signature="15090:15181" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -48,8 +75,8 @@
       <file leaf-file-name="show.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/framework/templates/dateChartReport/show.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.42512077">
-              <caret line="164" column="23" selection-start-line="164" selection-start-column="23" selection-end-line="164" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.65458935">
+              <caret line="165" column="27" selection-start-line="165" selection-start-column="27" selection-end-line="165" selection-end-column="27" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -453,8 +480,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1452" height="886" extended-state="1" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1452" height="886" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20682451" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -792,9 +819,23 @@
     <entry file="file://$PROJECT_DIR$/pages/cpzlqk/pdcpycssbhgxxfb/pdcpycssbhgxxfb.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="70" selection-start-line="17" selection-start-column="70" selection-end-line="17" selection-end-column="70" />
+          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1499925427423" expanded="true" signature="10179:11937" placeholder="{...}" />
+            <marker date="1499925427423" expanded="true" signature="10425:10480" placeholder="{&quot;trigger&quot;: 'axis'...}" />
+            <marker date="1499925427423" expanded="true" signature="10516:10617" placeholder="[...]" />
+            <marker date="1499925427423" expanded="true" signature="10538:10599" placeholder="{&quot;type&quot;: 'value'...}" />
+            <marker date="1499925427423" expanded="true" signature="10670:11085" placeholder="{...}" />
+            <marker date="1499925427423" expanded="true" signature="10767:11065" placeholder="{&quot;type&quot;: 'line'...}" />
+            <marker date="1499925427423" expanded="true" signature="11131:11191" placeholder="{...}" />
+            <marker date="1499925427423" expanded="true" signature="11223:11919" placeholder="{&quot;calculable&quot;: false...}" />
+            <marker date="1499925427423" expanded="true" signature="11252:11311" placeholder="{...}" />
+            <marker date="1499925427423" expanded="true" signature="11379:11439" placeholder="{...}" />
+            <marker date="1499925427423" expanded="true" signature="11470:11529" placeholder="{&quot;show&quot;: true...}" />
+            <marker date="1499925427423" expanded="true" signature="11597:11831" placeholder="[...]" />
+            <marker date="1499925427423" expanded="true" signature="11623:11809" placeholder="{&quot;type&quot;: 'category'...}" />
+            <marker date="1499925427423" expanded="true" signature="15349:15440" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -802,9 +843,22 @@
     <entry file="file://$PROJECT_DIR$/pages/cpzlqk/byqcpycssbhgxxfb/byqcpycssbhgxxfb.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="204" column="44" selection-start-line="204" selection-start-column="44" selection-end-line="204" selection-end-column="44" />
+          <caret line="200" column="44" selection-start-line="200" selection-start-column="44" selection-end-line="200" selection-end-column="44" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1499925428793" expanded="true" signature="9886:11641" placeholder="{...}" />
+            <marker date="1499925428793" expanded="true" signature="10132:10187" placeholder="{&quot;trigger&quot;: 'axis'...}" />
+            <marker date="1499925428793" expanded="true" signature="10223:10324" placeholder="[...]" />
+            <marker date="1499925428793" expanded="true" signature="10245:10306" placeholder="{&quot;type&quot;: 'value'...}" />
+            <marker date="1499925428793" expanded="true" signature="10377:10792" placeholder="{...}" />
+            <marker date="1499925428793" expanded="true" signature="10474:10772" placeholder="{&quot;type&quot;: 'line'...}" />
+            <marker date="1499925428793" expanded="true" signature="10838:10898" placeholder="{...}" />
+            <marker date="1499925428793" expanded="true" signature="10930:11626" placeholder="{&quot;calculable&quot;: false...}" />
+            <marker date="1499925428793" expanded="true" signature="10959:11018" placeholder="{...}" />
+            <marker date="1499925428793" expanded="true" signature="11177:11236" placeholder="{&quot;show&quot;: true...}" />
+            <marker date="1499925428793" expanded="true" signature="11304:11538" placeholder="[...]" />
+            <marker date="1499925428793" expanded="true" signature="11330:11516" placeholder="{&quot;type&quot;: 'category'...}" />
+            <marker date="1499925428793" expanded="true" signature="15090:15181" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -879,8 +933,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/framework/templates/dateChartReport/show.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42512077">
-          <caret line="164" column="23" selection-start-line="164" selection-start-column="23" selection-end-line="164" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.65458935">
+          <caret line="165" column="27" selection-start-line="165" selection-start-column="27" selection-end-line="165" selection-end-column="27" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

@@ -82,8 +82,6 @@ module yszkgb { export module yszkyjtztjqs {
 
         private updateEchart(data:any[]):void {
             let title = "应收账款账面与预警值变化情况";
-            this.$(this.option().ct).empty();
-            this.$(this.option().ct).removeAttr("_echarts_instance_");
             let legendOrg:Array<string> = [
                 "财务账面应收净收余额",
                 "",
@@ -159,8 +157,6 @@ module yszkgb { export module yszkyjtztjqs {
 
         private updateEchart1(data:any[]):void {
             let title = "因素变化趋势";
-            this.$(this.option().ct1).empty();
-            this.$(this.option().ct1).removeAttr("_echarts_instance_");
             let legendOrg:Array<string> = [
                 "",
                 "",

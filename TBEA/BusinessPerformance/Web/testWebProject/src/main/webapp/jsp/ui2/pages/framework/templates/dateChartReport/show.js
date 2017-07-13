@@ -147,8 +147,6 @@ var framework;
                     }
                 };
                 SimpleShowView.prototype.updateChart = function () {
-                    $("#" + this.option().chartId).empty();
-                    $("#" + this.option().chartId).removeAttr("_echarts_instance_");
                     var series = [];
                     for (var i in this.mChartResp.yNames) {
                         series.push({

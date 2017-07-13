@@ -154,8 +154,6 @@ var jcycljg;
                     ],
                     series: series
                 };
-                this.$(echart).empty();
-                this.$(echart).removeAttr("_echarts_instance_");
                 echarts.init(this.$(echart)[0]).setOption(option);
             };
             TksView.prototype.adjustSize = function () {

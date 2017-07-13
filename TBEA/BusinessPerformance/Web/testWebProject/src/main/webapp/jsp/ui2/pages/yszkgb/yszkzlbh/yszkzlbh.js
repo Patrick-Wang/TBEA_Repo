@@ -67,8 +67,6 @@ var yszkgb;
                 this.adjustSize();
             };
             SimpleView.prototype.updateEchart = function (data) {
-                this.$(this.option().ct).empty();
-                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 var title = "应收账款账龄变化";
                 var legend = ["5年以上",
                     "4-5年",

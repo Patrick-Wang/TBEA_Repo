@@ -194,9 +194,6 @@ module framework.templates.dateChartReport {
 
         private updateChart():void {
 
-            $("#" + this.option().chartId).empty();
-            $("#" + this.option().chartId).removeAttr("_echarts_instance_");
-
             let series = [];
             for (let i in this.mChartResp.yNames) {
                 series.push({

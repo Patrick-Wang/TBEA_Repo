@@ -535,7 +535,5 @@
 	</script>
 
 </body>
-<script
-	src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
 <!--  /Body -->
 </html>

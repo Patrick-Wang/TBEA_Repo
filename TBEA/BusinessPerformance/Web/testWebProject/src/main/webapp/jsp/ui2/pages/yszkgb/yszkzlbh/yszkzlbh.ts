@@ -78,8 +78,6 @@ module yszkgb { export module yszkzlbh {
 
         private updateEchart(data:any[]):void {
 
-            this.$(this.option().ct).empty();
-            this.$(this.option().ct).removeAttr("_echarts_instance_");
             let title = "应收账款账龄变化";
 
             let legend:Array<string> = ["5年以上",

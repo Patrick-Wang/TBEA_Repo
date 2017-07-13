@@ -71,8 +71,6 @@ var yszkgb;
             };
             SimpleView.prototype.updateEchart = function (data) {
                 var title = "应收账款账面与预警值变化情况";
-                this.$(this.option().ct).empty();
-                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 var legendOrg = [
                     "财务账面应收净收余额",
                     "",
@@ -138,8 +136,6 @@ var yszkgb;
             };
             SimpleView.prototype.updateEchart1 = function (data) {
                 var title = "因素变化趋势";
-                this.$(this.option().ct1).empty();
-                this.$(this.option().ct1).removeAttr("_echarts_instance_");
                 var legendOrg = [
                     "",
                     "",

@@ -274,8 +274,6 @@ var cpzlqk;
                     yAxis: yAxis,
                     series: series
                 };
-                this.$(this.option().ct).empty();
-                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 echarts.init(this.$(this.option().ct)[0]).setOption(option);
             };
             ShowView.prototype.toCtVal = function (val) {
@@ -360,16 +358,12 @@ var cpzlqk;
                         calculable: true,
                         series: series
                     };
-                    this.$(this.option().ct1).empty();
-                    this.$(this.option().ct1).removeAttr("_echarts_instance_");
                     echarts.init(this.$(this.option().ct1)[0]).setOption(option1);
                 }
                 else {
                     this.$(this.option().ct).css("width", "100%");
                     this.$(this.option().ct1).hide();
                 }
-                this.$(this.option().ct).empty();
-                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 echarts.init(this.$(this.option().ct)[0]).setOption(option);
             };
             ShowView.prototype.onSaveComment = function (comment) {

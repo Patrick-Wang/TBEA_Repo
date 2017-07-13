@@ -242,6 +242,6 @@
 </body>
 
 <script
-	src="${pageContext.request.contextPath}/jsp/www2/js/echarts-plain-2-0-0.js"></script>
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
 <!--  /Body -->
 </html>

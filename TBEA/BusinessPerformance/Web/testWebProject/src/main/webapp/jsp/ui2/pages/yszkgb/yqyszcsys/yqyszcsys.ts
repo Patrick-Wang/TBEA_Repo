@@ -79,8 +79,6 @@ module yszkgb { export module yqyszcsys {
 
         private updateEchart(data:any[]):void {
 
-            this.$(this.option().ct).empty();
-            this.$(this.option().ct).removeAttr("_echarts_instance_");
 
             let title = "逾期应收账产生因素";
 

@@ -68,8 +68,6 @@ var yszkgb;
                 this.adjustSize();
             };
             SimpleView.prototype.updateEchart = function (data) {
-                this.$(this.option().ct).empty();
-                this.$(this.option().ct).removeAttr("_echarts_instance_");
                 var title = "逾期应收账产生因素";
                 var legend = [
                     "内部因素",
