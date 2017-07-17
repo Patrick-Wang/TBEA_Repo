@@ -291,7 +291,8 @@
 						return [
 						    createNode('财务-应交税费', 'cwyjsf/v2/show.do'),
 						    createNode('财务-产品大类毛利表', 'cwcpdlml/v2/show.do'),
-						    createNode('财务-经营性现金流', 'cwgbjyxxjl/v2/show.do')
+						    createNode('财务-经营性现金流', 'cwgbjyxxjl/v2/show.do'),
+						    createNode('财务-三项费用明细', 'report/v2/sxfy.do')
 						];
 					});
 				</script>
@@ -372,12 +373,15 @@
 
 
 <!--------------------------------------------------------market start ---------------------------->	
-		<c:if test="${scbsjLookup || scbsjEntry}">
+		<c:if test="${scbsjLookup || scbsjEntry || _71 || _72}">
 			<script>
 				builder.register('bbxx', function() {
-					return createNode('市场签约信息')
+					return createNode('市场分析')
 						.append(builder.build('ScqyLookup'))
-						.append(builder.build('ScqyEntry'));
+						.append(builder.build('ScqyEntry'))
+						.append(builder.build('GnscEntry'))
+						.append(builder.build('GnscLookup'));
+					
 				});
 			</script>
 			<c:if test="${scbsjLookup}">
@@ -401,6 +405,27 @@
 					});
 				</script>
 			</c:if>
+			<c:if test="${_72}">
+				<script>
+					builder.register('GnscEntry',function () {
+						return [
+						   createNode('国内市场项目签约导入', "report/v2/gnscxmqywrapperImportJsp.do")
+						];
+					});
+				</script>
+			</c:if>
+			<c:if test="${_71}">
+				<script>
+					builder.register('GnscLookup',function () {
+						return [
+						   createNode('合同明细', "report/v2/gnscxmqyHtmx.do"),
+						   createNode('投标明细', "report/v2/gnscxmqyTbmx.do"),
+						   createNode('项目明细', "report/v2/gnscxmqyXmmx.do")
+						];
+					});
+				</script>
+			</c:if>
+			
 		</c:if>
 <!--------------------------------------------------------market end ---------------------------->
 
