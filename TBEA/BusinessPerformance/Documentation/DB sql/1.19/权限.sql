@@ -6,6 +6,7 @@ INSERT INTO [dbo].[auth_instruction] (id, [instruction]) VALUES (76, '经营指�
 SET IDENTITY_INSERT [dbo].[auth_instruction] OFF
 
 insert into system_extend_auth (account_id, auth_type) values
+((select id from jygk_account where name='512851'), 73)
 ((select id from jygk_account where name='539326'), 73),
 ((select id from jygk_account where name='223203'), 73),
 ((select id from jygk_account where name='525601'), 73),
@@ -72,6 +73,7 @@ insert into system_extend_auth (account_id, auth_type) values
 ((select id from jygk_account where name='539326'), 74),
 ((select id from jygk_account where name='820998'), 74),
 ((select id from jygk_account where name='395952'), 74),
+((select id from jygk_account where name='052861'), 74),
 
 
 ((select id from jygk_account where name='155165'), 59);
