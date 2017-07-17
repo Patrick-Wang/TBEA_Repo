@@ -52,7 +52,7 @@ module Util {
             sel = $(sel);
             var width = this.getMaxWidth(sel.children());
             var minWidth = 120;
-            var itemHeight = Util.isMSIE() ? 27.5 : 27;
+            var maxHeight = Util.isMSIE() ? 315 : 310;
 
             if (multi) {
                 var text : any = "n个 项目公司被选中";
@@ -64,7 +64,7 @@ module Util {
                     minHeight: 20,
                     noneSelectedText : this.mOpt.noneSelectedText,
                     selectedText: this.mOpt.selectedText,
-                    height　: '100%',//itemCount * itemHeight + 3,
+                    height　: itemCount < 10 ? '100%' : maxHeight,
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });

@@ -51,6 +51,9 @@ var cwsf;
         CwsfShowView.prototype.init = function (opt) {
             var _this = this;
             this.mOpt = opt;
+            opt.date.day = undefined;
+            opt.dateStart.day = undefined;
+            opt.dateEnd.day = undefined;
             var startOpt = this.createInternalDate("dstart", opt.date, {
                 nowDate: Util.date2Str(Util.addMonth(opt.date, -1)),
                 minDate: Util.date2Str(opt.dateStart),

@@ -58,7 +58,9 @@ module cwsf{
         protected init(opt:any):void {
 
             this.mOpt = opt;
-
+            opt.date.day = undefined;
+            opt.dateStart.day = undefined;
+            opt.dateEnd.day = undefined;
             let startOpt = this.createInternalDate("dstart", opt.date, {
                 nowDate: Util.date2Str(Util.addMonth(opt.date, -1)),
                 minDate: Util.date2Str(opt.dateStart),

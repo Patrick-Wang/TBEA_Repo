@@ -8,9 +8,9 @@
 	<month		type="int"	 ref="2"/>
    </where>
    <set>
-    <companyName		type="string"	 ref="${counter.reset[0].val}"/>
-	<year		type="int"	 ref="${counter.next.val}"/>
-	<month		type="int"	 ref="${counter.next.val}"/>
+    <companyName		type="string"	 ref="${counter.reset[0].val}"  test="${this != null}"/>
+	<year		type="int"	 ref="${counter.next.val}"  test="${this != null}"/>
+	<month		type="int"	 ref="${counter.next.val}"  test="${this != null}"/>
 	<VAT		type="string"	 ref="${counter.next.val}"/>
 	<xssr		type="string"	 ref="${counter.next.val}"/>
 	<salesIncome		type="string"	 ref="${counter.next.val}"/>
