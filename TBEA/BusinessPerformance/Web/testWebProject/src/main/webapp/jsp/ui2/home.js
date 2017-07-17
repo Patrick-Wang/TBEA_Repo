@@ -338,5 +338,8 @@ var home;
             }
         });
         dialog.modal("show");
+        if (Util.isMSIE()) {
+            $('input[placeholder]').placeholder();
+        }
     });
 })(home || (home = {}));

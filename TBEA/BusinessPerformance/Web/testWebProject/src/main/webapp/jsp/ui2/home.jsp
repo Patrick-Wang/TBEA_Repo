@@ -163,6 +163,14 @@
 	rel="stylesheet">
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/react/0.13.2/react.js"></script>
+	
+<!--[if IE 8]> 
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery.placeholder.min.js"></script>
+	
+<![endif]-->
+	
+	
 <%@include file="ie8-b.jsp"%>
 <title>经营管控平台</title>
 </head>
