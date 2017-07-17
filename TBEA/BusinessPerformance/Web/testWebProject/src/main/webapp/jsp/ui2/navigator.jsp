@@ -772,6 +772,8 @@
 	function createNode(value, url, icon, iconOpen){
 	    if (url != undefined){
 	        url = '${pageContext.request.contextPath}/' + url;
+	        icon = "fa fa-dot-circle-o";
+	    	iconOpen = "fa fa-dot-circle-o";	        
 	    }else{
 	    	icon = "fa fa-plus-square-o";
 	    	iconOpen = "fa fa-minus-square-o";

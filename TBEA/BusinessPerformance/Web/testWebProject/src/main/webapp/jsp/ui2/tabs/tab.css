@@ -42,7 +42,7 @@
 }
 
 .tab-normal>div{
-  padding:8px 3px 8px 15px;
+  padding:7px 3px 8px 15px;
   overflow:hidden;
   font-size:14px;
 }
@@ -117,10 +117,10 @@
 }
 
 .tab-more, .tab-normal div, .tab-home{
-  -moz-user-select:none;/*鐏嫄*/
-  -webkit-user-select:none;/*webkit娴忚鍣�*/
+  -moz-user-select:none;/*閻忣偆瀚�*/
+  -webkit-user-select:none;/*webkit濞村繗顫嶉崳锟�*/
   -ms-user-select:none;/*IE10*/
-  -khtml-user-select:none;/*鏃╂湡娴忚鍣�*/
+  -khtml-user-select:none;/*閺冣晜婀″ù蹇氼潔閸ｏ拷*/
   user-select:none;
 }
 

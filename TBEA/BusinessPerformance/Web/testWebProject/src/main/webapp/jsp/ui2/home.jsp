@@ -62,7 +62,12 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery-ui-custom.min.js"
 	type="text/javascript"></script>
-
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/components/select2/css/select2.min.css">
+	<script src="${pageContext.request.contextPath}/jsp/ui2/pages/components/select2/js/select2.min.js" type="text/javascript"></script>
+	<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/components/select2/js/i18n/zh-CN.js"></script>
+	
 <!-- 多选菜单 -->
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/jquery.multiselect.css" />
@@ -177,6 +182,7 @@
 								${userName}
 							</a>
 							<ul class="dropdown-menu">
+								<li><a href="#" id="btnReturnOld" style="display:none">旧版切换</a></li>
 								<li><a href="#" id="btnResetPassword">修改密码</a></li>
 								<li><a href="#" id="logoutBtn">退出登录</a></li>
 							</ul>
@@ -231,6 +237,9 @@
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootbox/bootbox.js"></script>
 	<script>
 		window["userName"] = '${userName}';
+		$("#btnReturnOld").click(function(){
+			window.location.href = "${pageContext.request.contextPath}/Login/index.do?from=new"
+		});
 	</script>
 	<script src="${pageContext.request.contextPath}/jsp/ui2/home.js"></script>
 </body>

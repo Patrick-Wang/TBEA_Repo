@@ -132,8 +132,8 @@ body{
 
 .search-btn{
     float:right;
-    height:32px;
-    width:32px;
+    height:28px;
+    width:28px;
     background-image:url("img/search-normal.png");
     background-size:cover;
     padding: 0px;
@@ -144,6 +144,10 @@ body{
 
 .search-btn:hover{
     background-image:url("img/search-press.png");
+}
+
+.combo-input {
+    padding: 8px 10px 8px 10px;
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -190,13 +194,14 @@ body{
 }
 
 .search-area{
-    margin-top: 7px;
+    margin-top: 8px;
 }
 
 .combo-select{
 	border:0;
 	width:220px;
 	margin-bottom:0px;
+	font-family: "Microsoft YaHei";
 }
 
 #tabContent{

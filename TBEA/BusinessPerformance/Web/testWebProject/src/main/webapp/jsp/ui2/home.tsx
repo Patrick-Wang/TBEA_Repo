@@ -65,7 +65,7 @@ module home {
         updateFrameSize();
         $(document.body).css("visibility", "visible").show();
         $(".container-fluid").css("visibility", "visible").show();
-        //myTab.triggerClickHome();
+        topTab.triggerClickHome();
         $(window).resize(()=> {
             updateFrameSize();
         });
@@ -157,7 +157,7 @@ module home {
         } else {
             $("#tabContent #" + data.id).remove();
         }
-    }).triggerClickHome();
+    });
 
     $(window).resize(()=>{
         topTab.rearrange();

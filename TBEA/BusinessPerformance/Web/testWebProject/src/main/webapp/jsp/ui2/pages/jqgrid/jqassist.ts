@@ -669,6 +669,9 @@ module JQTable {
             var nodes:Node[];
             this.mGridName = gridName;
             this.mTitle = titleNodes;
+            if (!this.mTitle[this.mTitle.length - 1]){
+            	this.mTitle.splice(this.mTitle.length - 1, 1);
+            }
             for (var i = 0; i < this.mTitle.length; ++i) {
                 //this.mTitle[i].mOpts.id = this.mGridName + this.mTitle[i].mOpts.id;
                 nodes = this.mTitle[i].leaves();

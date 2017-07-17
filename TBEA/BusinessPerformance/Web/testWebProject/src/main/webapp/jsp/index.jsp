@@ -56,7 +56,9 @@
 <body>
 
 	<script>
-		window.location.href = "${pageContext.request.contextPath}/Login/v2/index.do";
+		if ('${param.from}' != 'new'){
+			window.location.href = "${pageContext.request.contextPath}/Login/v2/index.do";
+		}
 	</script>
 
 	<!-- Fixed navbar -->

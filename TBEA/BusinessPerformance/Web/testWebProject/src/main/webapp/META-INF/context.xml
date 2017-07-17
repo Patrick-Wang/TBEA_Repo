@@ -45,37 +45,43 @@
 		url="jdbc:sqlserver://10.1.4.106:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
-	<!-- <Resource name="jdbc/yszk_db" auth="Container" type="javax.sql.DataSource" 
-		username="sa" password="6553275" driverClassName="net.sourceforge.jtds.jdbc.Driver" 
-		url="jdbc:jtds:sqlserver://192.168.7.15:1433;DatabaseName=zhbb" initialSize="35" 
-		maxActive="70" maxIdle="10" validationQuery="select 1" removeAbandoned="true" 
-		removeAbandonedTimeout="60000" logAbandoned="true" /> <Resource name="jdbc/dbNc" 
-		auth="Container" type="javax.sql.DataSource" username="iufo" password="cwf5e7n9" 
-		driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@172.28.8.154:1521/orcl" 
-		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1 from 
-		dual" removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" 
-		/> <Resource name="jdbc/dbDl" auth="Container" type="javax.sql.DataSource" 
-		username="dlxxsa" password="zhhzz" driverClassName="net.sourceforge.jtds.jdbc.Driver" 
-		url="jdbc:jtds:sqlserver://172.27.10.5;DatabaseName=ZHBB_ZJ" initialSize="35" 
-		maxActive="70" maxIdle="10" validationQuery="select 1" removeAbandoned="true" 
-		removeAbandonedTimeout="60000" logAbandoned="true" /> <Resource name="jdbc/dbXl" 
-		auth="Container" type="javax.sql.DataSource" username="xlcyjtz" password="P@$$w0rd" 
-		driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://192.168.7.125;DatabaseName=testmid" 
-		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1" removeAbandoned="true" 
-		removeAbandonedTimeout="60000" logAbandoned="true" /> <Resource name="jdbc/dbSb" 
-		auth="Container" type="javax.sql.DataSource" username="sa" password="shenbian8112" 
-		driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://10.10.90.53;DatabaseName=质量问题_中间表" 
-		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1" removeAbandoned="true" 
-		removeAbandonedTimeout="60000" logAbandoned="true" /> <Resource name="jdbc/dbTb" 
-		auth="Container" type="javax.sql.DataSource" username="tbea" password="Tbea@)!@" 
-		driverClassName="net.sourceforge.jtds.jdbc.Driver" url="jdbc:jtds:sqlserver://172.30.10.10;DatabaseName=LiveBos" 
-		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1" removeAbandoned="true" 
-		removeAbandonedTimeout="60000" logAbandoned="true" /> <Resource name="jdbc/dbLl" 
-		auth="Container" type="javax.sql.DataSource" username="gfgs" password="gfgs2016" 
-		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" url="jdbc:sqlserver://172.21.1.10:1433; 
-		DatabaseName=LLJYGK" initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 
-		1" removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" 
-		/> -->
+<!-- 	<Resource name="jdbc/yszk_db" auth="Container" type="javax.sql.DataSource"
+		username="sa" password="6553275" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://192.168.7.15:1433;DatabaseName=zhbb"
+		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+	<Resource name="jdbc/dbNc" auth="Container" type="javax.sql.DataSource"
+		username="iufo" password="cwf5e7n9" driverClassName="oracle.jdbc.driver.OracleDriver"
+		url="jdbc:oracle:thin:@172.28.8.154:1521/orcl" initialSize="35"
+		maxActive="70" maxIdle="10" validationQuery="select 1 from dual"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+	<Resource name="jdbc/dbDl" auth="Container" type="javax.sql.DataSource"
+		username="dlxxsa" password="zhhzz" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://172.27.10.5;DatabaseName=ZHBB_ZJ"
+		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+	<Resource name="jdbc/dbXl" auth="Container" type="javax.sql.DataSource"
+		username="xlcyjtz" password="P@$$w0rd" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://192.168.7.125;DatabaseName=testmid"
+		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+	<Resource name="jdbc/dbSb" auth="Container" type="javax.sql.DataSource"
+		username="sa" password="shenbian8112" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://10.10.90.53;DatabaseName=质量问题_中间表"
+		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+	<Resource name="jdbc/dbTb" auth="Container" type="javax.sql.DataSource"
+		username="tbea" password="Tbea@)!@" driverClassName="net.sourceforge.jtds.jdbc.Driver"
+		url="jdbc:jtds:sqlserver://172.30.10.10;DatabaseName=LiveBos"
+		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+	<Resource name="jdbc/dbLl" auth="Container" type="javax.sql.DataSource"
+		username="gfgs" password="gfgs2016"
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://172.21.1.10:1433; 
+		DatabaseName=LLJYGK"
+		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" /> -->
 
 	<!-- 连接Test数据库 -->
 	<Resource name="jdbc/dbXb" auth="Container" type="javax.sql.DataSource"
