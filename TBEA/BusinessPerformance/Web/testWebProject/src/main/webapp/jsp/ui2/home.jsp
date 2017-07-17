@@ -240,6 +240,7 @@
 		$("#btnReturnOld").click(function(){
 			window.location.href = "${pageContext.request.contextPath}/Login/index.do?from=new"
 		});
+		var _77 = '${_77}'.length == 0 ? false : true;
 	</script>
 	<script src="${pageContext.request.contextPath}/jsp/ui2/home.js"></script>
 </body>
