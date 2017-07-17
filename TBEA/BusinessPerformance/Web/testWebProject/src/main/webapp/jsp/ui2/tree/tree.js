@@ -27,8 +27,8 @@ var tree;
                     treeNode.getData().extracted = false;
                     treeNode.data.height = ul.css("height");
                     if (treeNode.data.icon && treeNode.data.iconOpen) {
-                        this.q("#" + treeNode.data.id + ">i").removeClass();
-                        this.q("#" + treeNode.data.id + ">i").addClass(treeNode.data.icon);
+                        this.q("#" + treeNode.data.id + ">div i").removeClass();
+                        this.q("#" + treeNode.data.id + ">div i").addClass(treeNode.data.icon);
                     }
                     ul.animate({
                         height: "0px"
@@ -37,8 +37,8 @@ var tree;
                 else {
                     treeNode.getData().extracted = true;
                     if (treeNode.data.icon && treeNode.data.iconOpen) {
-                        this.q("#" + treeNode.data.id + ">i").removeClass();
-                        this.q("#" + treeNode.data.id + ">i").addClass(treeNode.data.iconOpen);
+                        this.q("#" + treeNode.data.id + ">div i").removeClass();
+                        this.q("#" + treeNode.data.id + ">div i").addClass(treeNode.data.iconOpen);
                     }
                     ul.animate({
                         height: treeNode.getData().height
