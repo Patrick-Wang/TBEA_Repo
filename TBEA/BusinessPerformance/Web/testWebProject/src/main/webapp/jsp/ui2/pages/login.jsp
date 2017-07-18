@@ -15,9 +15,9 @@
 <title>特变电工经营管控信息平台</title>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
 <link rel="Shortcut Icon"
-	href="${pageContext.request.contextPath}/jsp/ui2/images/logo.ico"
+	href="${pageContext.request.contextPath}/jsp/ui2/images/logo.png"
 	type="image/x-icon">
-	<link rel="icon" href="${pageContext.request.contextPath}/jsp/ui2/images/logo.ico" />
+	<link rel="icon" href="${pageContext.request.contextPath}/jsp/ui2/images/logo.png" />
 	
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.css"
@@ -76,7 +76,7 @@
 	});
 	
 </script>
-<!--[if IE 8]> 
+<!--[if gte IE 8]> 
 
 
 <style>
@@ -94,7 +94,7 @@
 	<div style="text-align: center;">
 		<img class="top-title" src="${pageContext.request.contextPath}/jsp/ui2/img/login_title.png">
 		<img class="headerbg" src="${pageContext.request.contextPath}/jsp/ui2/img/login_header.png">
-		<img class="middlebg z3" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg3.png">
+		<img class="middlebg z3" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg3.jpg">
 		<img class="middlebg z2" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg1.jpg">
 		<img class="middlebg z1" src="${pageContext.request.contextPath}/jsp/ui2/img/bottom_bg2.jpg">
 		<img class="bottombg" src="${pageContext.request.contextPath}/jsp/ui2/img/login_header.png">
@@ -111,7 +111,8 @@
 						name="j_username" id="j_username" onkeydown="doSubmit(event)"
 						autocomplete="on" /></div>
 					<label for="j_password">密码：</label> 
-					<div><div class="ico-left"><img src="${pageContext.request.contextPath}/jsp/ui2/img/lock.png"></div><input type="password"  placeholder="用户名" name="j_password" id="j_password" 
+					<div><div class="ico-left"><img src="${pageContext.request.contextPath}/jsp/ui2/img/lock.png"></div>
+					<input type="password"  placeholder="密码" name="j_password" id="j_password" 
 						onkeydown="doSubmit(event)" />
 					<input type="hidden" name="transmissionStr" id="transmissionStr" /></div>
 					<c:choose>
