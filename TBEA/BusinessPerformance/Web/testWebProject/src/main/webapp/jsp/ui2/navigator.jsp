@@ -586,7 +586,39 @@
 			</c:if>
 		</c:if>
 
+		<c:if test="${_66 || _68}">
+			<script>
+				builder.register('bbxx', function() {
+					return createNode('人力资源信息', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
+						.append(builder.build('rlzyxtbb'))
+						.append(builder.build('rlzyxxdr'));
+				});
+		 	</script>
+			<c:if test="${_66}">
+				<script>
+					builder.register('rlzyxtbb', function() {
+						return createNode('人力资源系统报表', "report/v2/rlzyxibb.do");
+					});
+	
+		 		</script>
 
+			</c:if>
+			<c:if test="${_68}">
+				<script>
+					builder.register('rlzyxxdr', function() {
+						return createNode('人力资源信息导入', "report/v2/rlzyxtbbImportJsp.do");
+					});
+		 		</script>
+			</c:if>
+		</c:if>
+		<c:if test="${_67}">
+			<script>
+				builder.register('bbxx', function() {
+					return createNode('新产品信息', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
+						.append(createNode('新产品信息', "report/v2/xcpjjxy.do"));
+				});
+		 	</script>
+		</c:if>
 		<!--------------------------------------------------------Index entry start -------------------------------->
 
 		<c:if test="${entryPlan}">
