@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<!--[if IE 8]> 
+<!--[if gte IE 8]> 
 <style>
 	.modal-dialog {
 	    width: 600px;

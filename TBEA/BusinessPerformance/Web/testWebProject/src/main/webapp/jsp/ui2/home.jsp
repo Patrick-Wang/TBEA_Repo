@@ -164,7 +164,7 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/react/0.13.2/react.js"></script>
 	
-<!--[if IE 8]> 
+<!--[if gte IE 8]> 
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery.placeholder.min.js"></script>
 	
