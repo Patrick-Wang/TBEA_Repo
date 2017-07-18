@@ -70,7 +70,7 @@
 		</c:if>
 
 		<c:if test="${QualityLookup || QualityApprove}">
- 			<c:if test="${!QualityApprove}">
+			<c:if test="${!QualityApprove}">
 				<script>
 					builder.register('qualityShow', function() {
 						return [
@@ -102,10 +102,10 @@
 				});
 	 		</script>
 		</c:if>
-<!--------------------------------------------------------Company index begin ------------------------------------>
-<!--------------------------------------------------------CorpAuth refer_account table ------------------------------------>
-
-		<c:if test="${CorpAuth || _75 || _76 || zhzlLookup || JYEntryLookup || zhAuth || zhJyfxLookupAuth}">
+		<!--------------------------------------------------------Company index begin ------------------------------------>
+		<!--------------------------------------------------------CorpAuth refer_account table ------------------------------------>
+		<c:if
+			test="${CorpAuth || _75 || _76 || zhzlLookup || JYEntryLookup || zhAuth || zhJyfxLookupAuth}">
 			<script>
 				builder.register('bbxx', function() {
 					return createNode('经营指标完成情况', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
@@ -121,9 +121,9 @@
 				});
 
 	 		</script>
-	 		
 
-	 		<c:if test="${_75}">
+
+			<c:if test="${_75}">
 				<script>
 	 			builder.register('dwzbqk', function () {
 						return [
@@ -131,9 +131,9 @@
 						];
 					});
 	 			</script>
-	 		</c:if>
-	 		
-	 		<c:if test="${_76}">
+			</c:if>
+
+			<c:if test="${_76}">
 				<script>
 	 			builder.register('dwzbycqk', function () {
 						return [
@@ -141,7 +141,7 @@
 						];
 					});
 	 			</script>
-	 		</c:if>
+			</c:if>
 
 			<c:if test="${CorpAuth}">
 				<script>
@@ -162,7 +162,7 @@
 		 		</script>
 			</c:if>
 		</c:if>
-					
+
 		<c:if test="${CorpAuth}">
 			<script>
 				builder.register('ztzbycwcqk', function() {
@@ -170,7 +170,7 @@
 				});
 			</script>
 		</c:if>
-	
+
 		<c:if test="${CorpAuth}">
 			<script>
 				builder.register('wdjyzbyc', function() {
@@ -181,7 +181,7 @@
 				});
 			</script>
 		</c:if>
-		
+
 		<c:if test="${JYEntryLookup || zhAuth}">
 			<script>
 				builder.register('sjztbqk', function() {
@@ -189,7 +189,7 @@
 				});
 			</script>
 		</c:if>
-		
+
 		<!--------------------------------------------------------ZH Company begin --------------------->
 		<c:if test="${zhzlLookup}">
 			<script>
@@ -200,7 +200,7 @@
 				});
 			</script>
 		</c:if>
-	
+
 		<c:if test="${zhJyfxLookupAuth}">
 			<script>
 				builder.register('Zhfzgszlzb', function () {
@@ -212,13 +212,13 @@
 				});
 			</script>
 		</c:if>
-		<!--------------------------------------------------------ZH Company end ------------------------->	
-<!--------------------------------------------------------Company index end ------------------------------------>
+		<!--------------------------------------------------------ZH Company end ------------------------->
+		<!--------------------------------------------------------Company index end ------------------------------------>
 
 
 
-<!--------------------------------------------------------Management analysis begin ---------------------------->
-		
+		<!--------------------------------------------------------Management analysis begin ---------------------------->
+
 		<c:if test="${JYAnalysisLookup}">
 			<script>
 				builder.register('bbxx', function() {
@@ -250,9 +250,9 @@
 				</script>
 			</c:if>
 		</c:if>
-<!--------------------------------------------------------Management analysis end --------------------------->
+		<!--------------------------------------------------------Management analysis end --------------------------->
 
-<!--------------------------------------------------------Finance analysis start ---------------------------->
+		<!--------------------------------------------------------Finance analysis start ---------------------------->
 
 		<c:if test="${isJydw || scgsdbqx || FinanceLookup || _73 || _74}">
 			<script>
@@ -265,8 +265,8 @@
 						.append(builder.build('tax'))
 						.append(builder.build('taximport'));
 				})
-			</script>		
-	
+			</script>
+
 			<c:if test="${CorpAuth}">
 				<script>
 					builder.register('gsztcwwcqk', function() {
@@ -274,7 +274,7 @@
 					});
 				</script>
 			</c:if>
-			
+
 			<c:if test="${isJydw || scgsdbqx}">
 				<script>
 				builder.register('gdwcwzbxx', function() {
@@ -297,8 +297,8 @@
 					});
 				</script>
 			</c:if>
-		</c:if>	
-		
+		</c:if>
+
 		<c:if test="${scgsdbqx}">
 			<script>
 				builder.register('externalFinData', function() {
@@ -308,19 +308,19 @@
 				});
 			</script>
 		</c:if>
-		
+
 		<c:if test="${_73}">
-	    	 <script>
+			<script>
 	    	 builder.register('taximport', function () {
 					return [
 					    createNode('税务-数据维护', 'report/v2/cwsfImportWrapperJsp.do')				   
 					];
 				});
 	    	 </script>
-	    
-	    </c:if>
-					
-			
+
+		</c:if>
+
+
 		<c:if test="${_74}">
 			<script>
 				builder.register('tax', function() {
@@ -328,13 +328,13 @@
 					         createNode('税务-税金税负统计', 'report/v2/cwsfsjsfWrapper.do')
 					        ];
 				});
-			</script>		
+			</script>
 		</c:if>
-		
-<!--------------------------------------------------------Finance analysis end ---------------------------->
+
+		<!--------------------------------------------------------Finance analysis end ---------------------------->
 
 
-<!--------------------------------------------------------cost start ---------------------------->			
+		<!--------------------------------------------------------cost start ---------------------------->
 		<c:if test="${sddbLookup || sddbImport}">
 			<script>
 				builder.register('bbxx', function() {
@@ -367,12 +367,12 @@
 				</script>
 			</c:if>
 		</c:if>
-		
-
-<!--------------------------------------------------------cost end ---------------------------->	
 
 
-<!--------------------------------------------------------market start ---------------------------->	
+		<!--------------------------------------------------------cost end ---------------------------->
+
+
+		<!--------------------------------------------------------market start ---------------------------->
 		<c:if test="${scbsjLookup || scbsjEntry || _71 || _72}">
 			<script>
 				builder.register('bbxx', function() {
@@ -425,11 +425,11 @@
 					});
 				</script>
 			</c:if>
-			
-		</c:if>
-<!--------------------------------------------------------market end ---------------------------->
 
-<!--------------------------------------------------------price database begin -------------------------------------->		
+		</c:if>
+		<!--------------------------------------------------------market end ---------------------------->
+
+		<!--------------------------------------------------------price database begin -------------------------------------->
 		<c:if test="${PriceLibAuth}">
 			<script>
 				builder.register('bbxx', function() {
@@ -439,10 +439,10 @@
 				});
 			</script>
 		</c:if>
-		
-<!--------------------------------------------------------price database end -------------------------------------->		
-		
-<!--------------------------------------------------------kind of gb begin -------------------------------------->	
+
+		<!--------------------------------------------------------price database end -------------------------------------->
+
+		<!--------------------------------------------------------kind of gb begin -------------------------------------->
 		<c:if test="${ComGbLookup}">
 			<script>
 				builder.register('bbxx', function() {
@@ -484,9 +484,9 @@
 							];
 					});
 			</script>
-	    </c:if>
+		</c:if>
 		<c:if test="${NygbLookup}">
-	       <script>
+			<script>
 				builder.register('nygbModule', function() {
 					return [createNode('成本分析', "cbfx/v2/show.do"),
 					        createNode('能源-周边市场情况', "nyzbscqk/v2/show.do")
@@ -495,7 +495,7 @@
 			</script>
 		</c:if>
 		<c:if test="${XnygbLookup}">
-				<script>
+			<script>
 					builder.register('xnygbModule', function () {
 						return [
 						   createNode('新能源存货', "xnychFrame/v2/show.do")
@@ -503,10 +503,10 @@
 					});
 				</script>
 		</c:if>
-		
-<!--------------------------------------------------------kind of gb end -------------------------------------->
 
-<!--------------------------------------------------------XNY Management start -------------------------------->		
+		<!--------------------------------------------------------kind of gb end -------------------------------------->
+
+		<!--------------------------------------------------------XNY Management start -------------------------------->
 		<c:if test="${gcyzbLookup || gcyzbImport || xnyJyfxLookupAuth}">
 			<script>
 				builder.register('bbxx', function() {
@@ -517,7 +517,7 @@
 						.append(builder.build('xnyrb'));
 				});
 			</script>
-			
+
 			<c:if test="${gcyzbLookup}">
 				<script>
 					builder.register('Gcyzb', function () {
@@ -547,7 +547,7 @@
 					});
 				</script>
 			</c:if>
-			
+
 			<c:if test="${xtnyrbLookupAuth}">
 				<script>
 					builder.register('xnyrb', function() {
@@ -555,11 +555,40 @@
 					});
 				</script>
 			</c:if>
-		 </c:if>
-<!--------------------------------------------------------XNY Management end -------------------------------->	 
+		</c:if>
+		<!--------------------------------------------------------XNY Management end -------------------------------->
 
-<!--------------------------------------------------------Index entry start -------------------------------->	        
-	 
+		<c:if test="${_69 || _70}">
+			<script>
+				builder.register('bbxx', function() {
+					return createNode('存货管控', undefined, "fa fa-plus-square-o", "fa fa-minus-square-o")
+						.append(builder.build('chgkShow'))
+						.append(builder.build('chgkEntry'));
+				});
+		 	</script>
+			<c:if test="${_69}">
+				<script>
+					builder.register('chgkShow', function() {
+						return [
+							createNode('存货入库年份统计', "report/v2/kcchrunftj.do"),
+							createNode('积压物资汇总', "report/v2/kcjywz.do")];
+					});
+	
+		 		</script>
+			</c:if>
+			<c:if test="${_70}">
+				<script>
+					builder.register('chgkEntry', function() {
+						return createNode('存货导入', "report/v2/kcwrapperImportJsp.do");
+					});
+	
+		 		</script>
+			</c:if>
+		</c:if>
+
+
+		<!--------------------------------------------------------Index entry start -------------------------------->
+
 		<c:if test="${entryPlan}">
 			<script>
 				builder.register('entryxx', function() {
@@ -569,7 +598,7 @@
 				});
 			</script>
 		</c:if>
-	
+
 		<c:if test="${entryPredict}">
 			<script>
 				builder.register('entryxx', function() {
@@ -580,7 +609,7 @@
 				});
 			</script>
 		</c:if>
-<!--------------------------------------------------------Index entry end -------------------------------->	
+		<!--------------------------------------------------------Index entry end -------------------------------->
 		<c:if test="${isJydw}">
 			<script>
 				builder.register('entryxx', function() {
@@ -611,7 +640,7 @@
 			</c:if>
 
 		</c:if>
-		
+
 		<c:if test="${zhzlEntry}">
 			<script>
 				builder.register('bbxx', function() {
@@ -620,8 +649,8 @@
 				});
 			</script>
 		</c:if>
-<!--------------------------------------------------------Index approve start -------------------------------->	 	
-	
+		<!--------------------------------------------------------Index approve start -------------------------------->
+
 		<c:if test="${approvePlan}">
 			<script>
 				builder.register('Approve', function() {
@@ -631,7 +660,7 @@
 				});
 			</script>
 		</c:if>
-	
+
 		<c:if test="${approvePredict}">
 			<script>
 				builder.register('Approve', function() {
@@ -642,14 +671,14 @@
 				});
 			</script>
 		</c:if>
-	
-<!--------------------------------------------------------Index approve end -------------------------------->	 	
-	<%--      <ul id="navlist3" style="padding: 10px 0; display: none">
+
+		<!--------------------------------------------------------Index approve end -------------------------------->
+		<%--      <ul id="navlist3" style="padding: 10px 0; display: none">
 	        <li style="background-color: transparent; diplay: none"><i
 	            class="ec-icon ec-icon-force"></i> <a href="#finincial"
 	            style="color: rgb(62, 152, 197);">财务指标汇总</a></li>
 	    </ul> --%>
-	
+
 		<c:if test="${ComGbEntry}">
 			<script>
 				builder.register('entryxx', function() {
@@ -677,7 +706,7 @@
 				</script>
 			</c:if>
 		</c:if>
-		<c:if test="${SbdgbEntry}">	
+		<c:if test="${SbdgbEntry}">
 			<script>
 				builder.register('entryxx', function() {
 					return createNode('输变电产业经营管报录入')
@@ -688,8 +717,8 @@
 				});
 			</script>
 		</c:if>
-	    <c:if test="${NygbEntry}">
-	        <script>
+		<c:if test="${NygbEntry}">
+			<script>
 	        	builder.register('entryxx', function() {
 					return createNode('能源产业经营报表录入')
 						.append(createNode('成本分析录入', 'cbfx/v2/entry.do'))
@@ -697,34 +726,34 @@
 				});
 			</script>
 		</c:if>
-		
-		 <c:if test="${NYzbscqkEntry}">
-	        <script>
+
+		<c:if test="${NYzbscqkEntry}">
+			<script>
 	        	builder.register('nyzbscqk', function() {
 					return createNode('能源-周边市场情况录入', "nyzbscqk/v2/entry.do");
 				});
 			</script>
 		</c:if>
-	
+
 		<c:if test="${XnygbEntry}">
-	        <script>
+			<script>
 	        	builder.register('bbxx', function() {
 					return createNode('新能源产业经营报表录入')
 						.append(createNode('新能源存货录入', 'xnychFrame/v2/entry.do'));
 				});
 			</script>
 		</c:if>
-		
-		
-	    <c:if test="${FinanceEntry}">
-	         <script>
+
+
+		<c:if test="${FinanceEntry}">
+			<script>
 	         	builder.register('entryxx', function() {
 					return createNode('财务报表录入')
 						.append(createNode('财务-经营性现金流录入', 'cwgbjyxxjl/v2/entry.do'));
 				});
 			</script>
-	    </c:if>
- 
+		</c:if>
+
 		<c:if test="${QualityLookup || QualityApprove}">
 			<script>
 				builder.register('quality', function() {
@@ -756,8 +785,8 @@
 		</c:if>
 	</c:otherwise>
 </c:choose>
-			<c:if test="${entryPlan}">
-				<script>
+<c:if test="${entryPlan}">
+	<script>
 					builder.register('entryxxRoot', function () {
 						var entryxx = createNode("数据录入");
 						entryxx.data.icon = "fa fa-pencil-square-o";
@@ -766,10 +795,10 @@
 						return entryxx;
 					});
 				</script>
-			</c:if>
-			
-			<c:if test="${approvePlan}">
-				<script>
+</c:if>
+
+<c:if test="${approvePlan}">
+	<script>
 					builder.register('ApprovexxRoot', function () {
 						var Approve = createNode("数据审核");
 						Approve.data.icon = "fa fa-check-square-o";
@@ -778,10 +807,10 @@
 						return Approve;
 					});
 				</script>
-			</c:if>
-			
-			<c:if test="${QualityAuth}">
-				<script>
+</c:if>
+
+<c:if test="${QualityAuth}">
+	<script>
 					builder.register('qulityxxRoot', function () {
 						var quality = createNode("质量数据管控");
 						quality.data.icon = "fa fa-cogs";
@@ -791,7 +820,7 @@
 						return quality;
 					});
 				</script>
-			</c:if>
+</c:if>
 
 <script>
 	function createNode(value, url, icon, iconOpen){
