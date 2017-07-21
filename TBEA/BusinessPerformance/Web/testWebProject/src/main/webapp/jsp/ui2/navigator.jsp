@@ -7,6 +7,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="${pageContext.request.contextPath}/jsp/ui2/navigator.js"></script>
 
+<c:if test="${admin}">
+	<script>
+		builder.register('glkzt', function() {
+			return createNode("管理控制台", undefined, "fa fa-tachometer", "fa fa-tachometer")
+					.append(createNode("在线用户", 'dashboard/user_status.do'));
+		});
+		</script>
+</c:if>
 <c:choose>
 	<c:when test="${MarketAuth}">
 		<c:if test="${scbsjLookup || scbsjEntry}">
@@ -94,14 +102,6 @@
 	</c:when>
 
 	<c:otherwise>
-
-		<c:if test="${admin}">
-			<script>
-				builder.register('bbxx', function() {
-					return createNode("Dashboard", 'dashboard/user_status.do');
-				});
-	 		</script>
-		</c:if>
 		<!--------------------------------------------------------Company index begin ------------------------------------>
 		<!--------------------------------------------------------CorpAuth refer_account table ------------------------------------>
 		<c:if
@@ -858,11 +858,11 @@
 	function createNode(value, url, icon, iconOpen){
 	    if (url != undefined){
 	        url = '${pageContext.request.contextPath}/' + url;
-	        icon = "fa fa-dot-circle-o";
-	    	iconOpen = "fa fa-dot-circle-o";	        
+	        icon = icon ? icon : "fa fa-dot-circle-o";
+	    	iconOpen = iconOpen ? iconOpen : "fa fa-dot-circle-o";	        
 	    }else{
-	    	icon = "fa fa-plus-square-o";
-	    	iconOpen = "fa fa-minus-square-o";
+	    	icon = icon ? icon : "fa fa-plus-square-o";
+	    	iconOpen = iconOpen ? iconOpen : "fa fa-minus-square-o";
 	    }
 	    var node = {
 	        data : {
@@ -893,6 +893,9 @@
 	/* 	var ztfx = createNode("主题分析");
 		ztfx.data.icon = "fa fa-bar-chart";
 		ztfx.data.iconOpen = undefined; */
+		
+		root.append(builder.build("glkzt"));
+		
 		var bbxx = [];	
 
 		var subNodes = builder.build('bbxx');
