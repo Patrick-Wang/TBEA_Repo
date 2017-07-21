@@ -164,6 +164,10 @@ th.ui-th-ltr {
 	border-bottom-style: solid;
 }
 
+.ui-jqgrid .ui-jqgrid-resize {
+	height: 100% !important;
+}
+
 /*  .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: none; background: none; color: none; } */
 /* .ui-state-highlight a, .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a { color: none; } */
 

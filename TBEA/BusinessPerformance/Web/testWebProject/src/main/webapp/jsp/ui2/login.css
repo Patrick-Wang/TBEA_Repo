@@ -80,6 +80,7 @@ body:before {
 	margin-left:0px;
 	padding: 8px 6px 6px 6px; 
 	background:#427fed;
+	box-sizing: border-box;
 }
 
 .login-area .welcome{

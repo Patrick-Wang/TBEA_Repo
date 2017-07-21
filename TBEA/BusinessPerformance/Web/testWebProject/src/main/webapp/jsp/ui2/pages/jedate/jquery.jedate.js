@@ -214,7 +214,7 @@ window.console && (console = console || {log : function(){return;}});
 	var jedfn = jeDate.prototype;
 
 	jedfn.init = function(){
-		var that = this, opts = that.opts, zIndex = opts.zIndex == undefined ? 2099 : opts.zIndex,
+		var that = this, opts = that.opts, zIndex = opts.zIndex == undefined ? 10000000 : opts.zIndex,
 			isinitVal = (opts.isinitVal == undefined || opts.isinitVal == false) ? false : true,
 		    createDiv = $("<div id="+jet.boxCell.replace(/\#/g,"")+" class='jedatebox "+(opts.skinCell || config.skinCell)+"'></div");
 		jet.fixed = jet.isBool(opts.fixed);

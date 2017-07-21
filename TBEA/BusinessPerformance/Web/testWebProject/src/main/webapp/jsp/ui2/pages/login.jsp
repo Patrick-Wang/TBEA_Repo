@@ -73,6 +73,7 @@
 				
 			});
 		}, 3500);
+		
 	});
 	
 </script>
@@ -86,6 +87,7 @@
 	margin-left:0px;
 	padding: 7px 6px 5px 6px; 
 	background:#427fed;
+	box-sizing: border-box;
 }
 </style>
 <![endif]-->
@@ -134,4 +136,7 @@
 	</div>
 
 </body>
+	<script type="text/javascript">
+	$(".login-area .ico-left").css("height", $("#j_password").outerHeight() + "px");
+	</script>
 </html>
