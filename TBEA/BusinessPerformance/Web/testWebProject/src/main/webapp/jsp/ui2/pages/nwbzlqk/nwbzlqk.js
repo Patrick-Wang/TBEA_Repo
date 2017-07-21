@@ -134,7 +134,9 @@ var nwbzlqk;
                     maxDate: Util.date2Str({
                         year: this.mOpt.date.year,
                         month: 12
-                    })
+                    }),
+                    format: "YYYY年  &&MM月",
+                    seasonText: ["一季度", "半年度", "三季度", "年度"]
                 });
                 router.to(this.plugin(node)).send(nwbzlqk.Event.ZLFE_JD_SELECTED);
             }

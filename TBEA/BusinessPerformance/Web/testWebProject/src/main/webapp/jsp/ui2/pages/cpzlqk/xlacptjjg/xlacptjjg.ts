@@ -183,9 +183,14 @@ module cpzlqk {
                 let tooltip : any = {
                     trigger: 'axis',
                     formatter : (params) => {
-                        let ret = params[0][1];
-                        for (let i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 100.0).toFixed(2) + "%";
+                       // let ret = params[0][1];
+                      //  for (let i = 0; i < params.length; ++i) {
+                       //     ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 100.0).toFixed(2) + "%";
+                       // }
+                       // return ret;
+                        var ret = params[0].axisValue;
+                        for (var i = 0; i < params.length; ++i) {
+                            ret += "<br/>" + params[i].seriesName + ' : ' + (params[i].data * 100.0).toFixed(2) + "%";
                         }
                         return ret;
                     }
@@ -193,7 +198,12 @@ module cpzlqk {
                 };
                 let yAxis : any = [
                     {
-                        type: 'value'
+                        type: 'value',
+                        axisLabel : {
+                            formatter : (value, index) => {
+                                return value * 100 + "%";
+                            }
+                        }
                     }
                 ];
                 if (this.mYdjdType == YDJDType.YD){
@@ -218,7 +228,7 @@ module cpzlqk {
                         dy.push(this.toCtVal(this.mData.tjjg[i][4]));
                         qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
                     }
-                    legend = ["当月", "去年同期"];
+                    legend = ["当期", "去年同期"];
                     series.push({
                         name: legend[0],
                         type: 'bar',
@@ -237,9 +247,14 @@ module cpzlqk {
                         formatter: '{value} %'
                     };
                     tooltip.formatter = (params) => {
-                        let ret = this.findTotal(params[0][1]);
-                        for (let i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                       // let ret = this.findTotal(params[0][1]);
+                       // for (let i = 0; i < params.length; ++i) {
+                       //     ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                       // }
+                        //return ret;
+                        var ret = this.findTotal(params[0].axisValue);
+                        for (var i = 0; i < params.length; ++i) {
+                            ret += "<br/>" + params[i].seriesName + ' : ' + (params[i].data * 1.0).toFixed(2) + "%";
                         }
                         return ret;
                     };

@@ -69,8 +69,8 @@ var jcycljg;
             //这里是日期联动的关键
             function endDates() {
                 //将结束日期的事件改成 false 即可
-                end.insTrigger = false;
-                $("#inpend").jeDate(end);
+                // end.insTrigger = false;
+                //$("#inpend").jeDate(end);
             }
             $('#' + this.mOpt.dts).jeDate(start);
             $('#' + this.mOpt.dte).jeDate(end);

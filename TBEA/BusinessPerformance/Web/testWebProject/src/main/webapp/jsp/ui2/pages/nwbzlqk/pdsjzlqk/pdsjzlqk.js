@@ -169,7 +169,6 @@ var nwbzlqk;
                 //return valShort;
             };
             ShowView.prototype.updateEchart = function () {
-                var _this = this;
                 var title = "";
                 var legend = [];
                 var echart = this.option().ct;
@@ -217,9 +216,14 @@ var nwbzlqk;
                             }
                         }
                         tooltip.formatter = function (params) {
-                            var ret = _this.findTotal(params[0][1]);
+                            // let ret = this.findTotal(params[0][1]);
+                            // for (let i = 0; i < params.length; ++i) {
+                            //     ret += "<br/>" + params[i][0] + ' : ' + params[i][2];
+                            // }
+                            //  return ret;
+                            var ret = params[0].axisValue;
                             for (var i = 0; i < params.length; ++i) {
-                                ret += "<br/>" + params[i][0] + ' : ' + params[i][2];
+                                ret += "<br/>" + params[i].seriesName + ' : ' + params[i].data;
                             }
                             return ret;
                         };

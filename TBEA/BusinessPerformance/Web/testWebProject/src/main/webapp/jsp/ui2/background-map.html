@@ -1,5 +1,8 @@
 ﻿<html>
 <head>
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/font-awesome.min.css"
+	rel="stylesheet" />
 <meta charset="utf-8" />
 
 <style>
@@ -21,6 +24,18 @@ body {
 	padding: 10px 15px 10px 15px;
 	font-size: 14px;
 }
+
+	.tip-item{
+		cursor:pointer;
+		float:left;
+		padding-right: 7px;
+	}
+	.tip-item-tag{
+		float:left;
+		padding: 3px 7px;
+   	 	padding-left: 5px;
+   	 	color:#ffa022;
+	}
 </style>
 
 </head>
@@ -596,11 +611,11 @@ body {
 				'自贡' : [ 104.46, 29.23 ],
 				'资阳' : [ 104.38, 30.09 ],
 				'台北' : [ 121.3, 25.03 ],
-				'天津' : [ 117.12, 39.02 ],
+				'天津' : [ 117.3, 38.7 ], // [ 117.12, 39.02 ]
 				'拉萨' : [ 91.08, 29.39 ],
 				'日喀则' : [ 88.51, 29.16 ],
 				'香港' : [ 115.12, 21.23 ],
-				'乌鲁木齐' : [ 87.36, 43.45 ],
+				'乌鲁木齐' : [ 88, 43 ],//[ 87.36, 43.45 ]
 				'阿克苏' : [ 80.19, 41.09 ],
 				'阿勒泰' : [ 88.12, 47.5 ],
 				'阿图什' : [ 76.08, 39.42 ],
@@ -770,7 +785,7 @@ body {
 					min : 3,
 					max : 3
 				},
-				text : "新变厂<br/>新缆厂<br/>新能源"
+				text : "新变厂,新缆厂,新能源"
 			}, {
 				name : '乌鲁木齐',
 				coord : geoCoordMap['乌鲁木齐'],
@@ -812,8 +827,8 @@ body {
 				},
 				text : "衡变公司"
 			}, {
-				name : '新泰',
-				coord : geoCoordMap['新泰'],
+				name : '泰安',
+				coord : geoCoordMap['泰安'],
 				scaleLimit : {
 					min : 3,
 					max : 3
@@ -881,10 +896,18 @@ body {
 			value : geoCoordMap['昌吉']
 					.concat([80])
 		});
+		var myChart;
+		function onClickTipItem(name){
+			//alert(name);
+			//myChart.dispatchAction({
+			//    type: 'hideTip'
+			//});
+			//window.location.href = "${pageContext.request.contextPath}/jsp/ui2/dashboard.jsp";
+		}
 		
 		
 		function updateChart(){
-			var myChart = echarts.init(document.getElementById("mp"));
+			myChart = echarts.init(document.getElementById("mp"));
 			myChart.setOption({
 				backgroundColor : '#323c48',
 				title : {
@@ -896,7 +919,28 @@ body {
 					}
 				},
 				tooltip : {
-			        trigger: 'item'
+			        trigger: 'item'//,
+//					formatter : function(params, ticket, callback){
+//						var html = "";
+//
+//						for (var i = 0; i < locations.length; ++i){
+//							if (params.data.name == locations[i].name){
+//								var comps = locations[i].text.split(",");
+//
+//								for (var j = 0; j < comps.length; ++j){
+//									html += '<i class="fa fa-angle-right tip-item-tag"></i>' + "<div class='tip-item' onclick='onClickTipItem(\"" + comps[j] +"\")'>" + comps[j] + "</div>";
+//									if (j != comps.length - 1){
+//										html += "<br/>";
+//									}
+//								}
+//
+//								break;
+//							}
+//						}
+//						return html;
+//					},
+//					enterable : true,
+//					padding:[10,10,10,10]
 			    },
 				legend : {
 					orient : 'vertical',

@@ -174,16 +174,26 @@ var cpzlqk;
                 var tooltip = {
                     trigger: 'axis',
                     formatter: function (params) {
-                        var ret = params[0][1];
+                        // let ret = params[0][1];
+                        //  for (let i = 0; i < params.length; ++i) {
+                        //     ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 100.0).toFixed(2) + "%";
+                        // }
+                        // return ret;
+                        var ret = params[0].axisValue;
                         for (var i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 100.0).toFixed(2) + "%";
+                            ret += "<br/>" + params[i].seriesName + ' : ' + (params[i].data * 100.0).toFixed(2) + "%";
                         }
                         return ret;
                     }
                 };
                 var yAxis = [
                     {
-                        type: 'value'
+                        type: 'value',
+                        axisLabel: {
+                            formatter: function (value, index) {
+                                return value * 100 + "%";
+                            }
+                        }
                     }
                 ];
                 if (this.mYdjdType == cpzlqk.YDJDType.YD) {
@@ -209,7 +219,7 @@ var cpzlqk;
                         dy.push(this.toCtVal(this.mData.tjjg[i][4]));
                         qntq.push(this.toCtVal(this.mData.tjjg[i][7]));
                     }
-                    legend = ["当月", "去年同期"];
+                    legend = ["当期", "去年同期"];
                     series.push({
                         name: legend[0],
                         type: 'bar',
@@ -228,9 +238,14 @@ var cpzlqk;
                         formatter: '{value} %'
                     };
                     tooltip.formatter = function (params) {
-                        var ret = _this.findTotal(params[0][1]);
+                        // let ret = this.findTotal(params[0][1]);
+                        // for (let i = 0; i < params.length; ++i) {
+                        //     ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                        // }
+                        //return ret;
+                        var ret = _this.findTotal(params[0].axisValue);
                         for (var i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + params[i][2] + "%";
+                            ret += "<br/>" + params[i].seriesName + ' : ' + (params[i].data * 1.0).toFixed(2) + "%";
                         }
                         return ret;
                     };

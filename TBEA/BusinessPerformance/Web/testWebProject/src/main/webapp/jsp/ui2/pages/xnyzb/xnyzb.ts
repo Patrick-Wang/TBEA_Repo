@@ -90,7 +90,7 @@ module xnyzb{
             //这里是日期联动的关键
             function endDates() {
                 //将结束日期的事件改成 false 即可
-                end.insTrigger = false;
+               // end.insTrigger = false;
                 //$("#grid-date-end").jeDate(end);
                 $("#grid-date-end").jePopup();
             }

@@ -165,7 +165,7 @@ module sddb{
                 function endDates() {
                     //将结束日期的事件改成 false 即可
                     endOpt.insTrigger = false;
-                    $("#dEnd").jeDate(endOpt).jePopup();
+                    $("#dEnd").jePopup();
                 }
 
 

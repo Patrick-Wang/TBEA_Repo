@@ -162,9 +162,14 @@ var cpzlqk;
                 var tooltip = {
                     trigger: 'axis',
                     formatter: function (params) {
-                        var ret = params[0][1];
+                        //let ret = params[0][1];
+                        // for (let i = 0; i < params.length; ++i) {
+                        //     ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 1.0).toFixed(2) + "%";
+                        // }
+                        //return ret;
+                        var ret = params[0].axisValue;
                         for (var i = 0; i < params.length; ++i) {
-                            ret += "<br/>" + params[i][0] + ' : ' + (params[i][2] * 1.0).toFixed(2) + "%";
+                            ret += "<br/>" + params[i].seriesName + ' : ' + (params[i].data * 1.0).toFixed(2) + "%";
                         }
                         return ret;
                     }

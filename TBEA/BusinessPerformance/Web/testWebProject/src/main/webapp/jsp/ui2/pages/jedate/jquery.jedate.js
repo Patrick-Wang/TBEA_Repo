@@ -29,13 +29,7 @@ window.console && (console = console || {log : function(){return;}});
 
 	$.fn.jeDate = function(options){
 		return this.each(function(){
-			var jdt = findJeDate(this);
-			if (!jdt){
-				jdt = [this, null];
-				jedatesAll.push(jdt);
-			}
-			jdt[1] = new jeDate($(this),options||{});
-			return jdt[1];
+			return new jeDate($(this),options||{});
 		});
 	};
 
@@ -205,6 +199,14 @@ window.console && (console = console || {log : function(){return;}});
 	};
 	jet.boxCell = "#jedatebox";
 	function jeDate(elem, opts){
+		var jdt = findJeDate(elem[0]);
+		if (!jdt){
+			jdt = [elem[0], this];
+			jedatesAll.push(jdt);
+		}else{
+			elem.off("click");
+			jdt[1] = this;
+		}
 		this.opts = opts;
 		this.valCell = elem;
 		this.init();
@@ -286,13 +288,13 @@ window.console && (console = console || {log : function(){return;}});
 			that.setHtml(that.opts);
 		}
 
-		if (jet.isBool(opts.insTrigger)) {
+		//if (jet.isBool(opts.insTrigger)) {
 			that.valCell.on("click", function (ev) {
 				ev.stopPropagation();
 				if ($(jet.boxCell).length > 0) return;
 				jet.popup(that);
 			});
-		}
+		//}
 	};
 	//方位辨别
 	jedfn.orien = function(obj, self, pos) {  
@@ -322,8 +324,10 @@ window.console && (console = console || {log : function(){return;}});
 		return this.isSeason() && this.opts.format.indexOf("$$") >= 0;
 	}
 
-	jedfn.parseSeason = function(dateText){
-		this.dateBeforeSeason = dateText;
+	jedfn.parseSeason = function(dateText, unrecord){
+		if (!unrecord){
+			this.dateBeforeSeason = dateText;
+		}
 		if (this.opts.format && this.opts.format.indexOf("&&") >= 0){
 			var nyr = dateText.match(ymdMacth);
 			var jd = parseInt(((nyr[1] - 1) / 3) + "");
@@ -543,7 +547,7 @@ window.console && (console = console || {log : function(){return;}});
 			var minArr = jet.parseMatch(jet.minDate), maxArr = jet.parseMatch(jet.maxDate),
 				thisDate = new Date(y, jet.digit(val), "01"), minTime = new Date(minArr[0], minArr[1], minArr[2]), maxTime = new Date(maxArr[0], maxArr[1], maxArr[2]);
 
-			var dt = _this.parseSeason(y + "年" + jet.digit(val) + "月");
+			var dt = _this.parseSeason(y + "年" + jet.digit(val) + "月", true);
 			if (isSeason){
 				var index = dt.indexOf("年");
 				dt = dt.substring(index + 1);

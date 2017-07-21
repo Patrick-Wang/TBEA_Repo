@@ -72,7 +72,7 @@
 				queue.eq(oldHeader).fadeIn(10);
 				
 			});
-		}, 5000);
+		}, 3500);
 	});
 	
 </script>

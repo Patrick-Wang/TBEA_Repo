@@ -79,9 +79,9 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/assets/prettify.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/jquery.multiselect.js"></script>
-<link
+<%-- <link
 	href="${pageContext.request.contextPath}/jsp/ui2/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet">
+	rel="stylesheet"> --%>
 <!-- jedate -->
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/skin/jedate.css">
