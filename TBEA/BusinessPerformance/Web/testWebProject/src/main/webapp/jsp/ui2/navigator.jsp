@@ -302,8 +302,8 @@
 		<c:if test="${scgsdbqx}">
 			<script>
 				builder.register('externalFinData', function() {
-					return [createNode('外部单位经营数据总体分析', 'report/v2/ztdbfx.do'),
-					         createNode('外部单位经营数据分类分析', 'report/v2/fldbfx.do')
+					return [createNode('外部单位数据总体分析', 'report/v2/ztdbfx.do'),
+					         createNode('外部单位数据分类分析', 'report/v2/fldbfx.do')
 					        ];
 				});
 			</script>
