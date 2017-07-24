@@ -216,7 +216,7 @@ public class DashboardController {
 		if ("null".equals(str)){
 			return "--";
 		}
-		return String.format("%.2f",  (Double.valueOf(str) * 100)) + "%";		
+		return String.format("%.0f",  (Double.valueOf(str) * 100)) + "%";		
 	}
 	
 	private String getNumber(String str){
@@ -245,7 +245,7 @@ public class DashboardController {
 		for(int i = 0; i < zbs.size(); ++i){
 			JSONObject item = new JSONObject();
 			item.put("ndjhwcl", getPercent(zbs.get(i)[13]));
-			item.put("ndlj", getNumber(zbs.get(i)[12]));
+			item.put("ndlj", getNumber0(zbs.get(i)[12]));
 			item.put("ndljtbzf", getPercent(zbs.get(i)[15]));
 			zt.add(item);
 		}

@@ -84,15 +84,15 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="61.1"
 										data-animate="1000" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span id="lrzewcl" class="white font-90">0%</span>
+										<span id="lrzewcl" class="white font-90">--</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white">
 								<span id="lrze"  class="databox-number orange">--</span>
-								<div class="databox-text darkgray">利润总额（年度累计）</div>
+								<div class="databox-text darkgray">利润总额</div>
 								<div class="databox-stat bg-orange radius-bordered">
-									<div  id="lrzetbzf"  class="stat-text">0%</div>
+									<div  id="lrzetbzf"  class="stat-text">--</div>
 									<i class="stat-icon fa fa-arrow-up"></i>
 								</div>
 							</div>
@@ -107,17 +107,17 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="49.1"
 										data-animate="1500" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span  id="xssrwcl"  class="white font-90">0%</span>
+										<span  id="xssrwcl"  class="white font-90">--</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white">
 								<span id="xssr" class="databox-number" style="color: #03B3B2">--
 									</span>
-								<div class="databox-text darkgray">销售收入（年度累计）</div>
+								<div class="databox-text darkgray">销售收入</div>
 								<div class="databox-stat radius-bordered"
 									style="background-color: #03B3B2">
-									<div id="xssrtbzf" class="stat-text white">0%</div>
+									<div id="xssrtbzf" class="stat-text white">--</div>
 									<i class="stat-icon fa fa-arrow-up white"></i>
 								</div>
 							</div>
@@ -132,17 +132,17 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="102.9"
 										data-animate="2000" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span id="yszkwcl" class="white font-40">0%</span>
+										<span id="yszkwcl" class="white font-40">--</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white ">
 								<span id="yszk"  class="databox-number" style="color: #0072C6;">--
 									</span>
-								<div class="databox-text darkgray">应收账款（年度累计）</div>
+								<div class="databox-text darkgray">应收账款</div>
 								<div class="databox-stat radius-bordered"
 									style="background-color: #0072C6;">
-									<div id="yszktbzf" class="stat-text white">0%</div>
+									<div id="yszktbzf" class="stat-text white">--</div>
 									<i class="stat-icon fa fa-arrow-up white"></i>
 								</div>
 							</div>
@@ -157,15 +157,15 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="128.4"
 										data-animate="2000" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span  id="chwcl" class="white font-40">0%</span>
+										<span  id="chwcl" class="white font-40">--</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white">
 								<span  id="ch" class="databox-number lightred">--</span>
-								<div class="databox-text darkgray">存货（年度累计）</div>
+								<div class="databox-text darkgray">存货</div>
 								<div class="databox-stat bg-lightred radius-bordered">
-									<div  id="chtbzf" class="stat-text">0%</div>
+									<div  id="chtbzf" class="stat-text">--</div>
 									<i class="stat-icon fa fa-arrow-up"></i>
 								</div>
 							</div>
@@ -235,7 +235,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 						<div
 							class="databox databox-xxlg databox-vertical databox-inverted">
 							<div class="databox-top bg-white no-padding"
@@ -333,7 +333,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 						<div
 							class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
 							<div class="databox-top">
