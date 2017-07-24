@@ -56,7 +56,7 @@
 			<EmptyFormatter>
 				<DefaultMatcher cols="0,1" />
 			</EmptyFormatter>
-			<PercentFormatter>
+			<PercentFormatter reservedCount="2">
 			<DefaultMatcher cols="4,5,8,9" />
 			</PercentFormatter>
 			<NumberFormatter reservedCount="1">

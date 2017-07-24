@@ -60,6 +60,9 @@
 			<EmptyFormatter>
 				<DefaultMatcher cols="0,1" />
 			</EmptyFormatter>
+			<PercentFormatter reservedCount="2">
+			<DefaultMatcher cols="4" />
+			</PercentFormatter>
 			<NumberFormatter reservedCount="1">
 			</NumberFormatter>
 		</formatter>
