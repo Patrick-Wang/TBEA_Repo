@@ -48,4 +48,12 @@ public interface SJZBDao  extends AbstractReadWriteDao<SJZB>{
 	Timestamp getApprovedTime(Date date, Company comp);
 
 	Double getZb(Integer indi, Date d, List<Integer> ids);
+
+	List<Double> getLjSjzbs(List<Company> jydw, Integer[] zbs, Date date);
+
+	Double getYdSjzbs(List<Company> jydw, Integer value, Integer nf, int yf);
+
+	List<Object[]> getZbpm(List<Company> comps, Integer[] integers, Date date);
+
+	Double getZbzt(List<Company> sbds, Integer zb, Date current);
 }

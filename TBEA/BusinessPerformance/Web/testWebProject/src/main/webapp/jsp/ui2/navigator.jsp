@@ -854,6 +854,18 @@
 				</script>
 </c:if>
 
+<c:if test="${_77}">
+	<script>
+					builder.register('jyjsc', function () {
+						var jyjsc = createNode("经营驾驶舱");
+						jyjsc.data.icon = "fa fa-bar-chart";
+						jyjsc.data.iconOpen = undefined;
+						jyjsc.append(createNode("经营驾驶舱", "dashboard/dashboard.do"));
+						return jyjsc;
+					});
+				</script>
+</c:if>
+
 <script>
 	function createNode(value, url, icon, iconOpen){
 	    if (url != undefined){
@@ -907,8 +919,8 @@
 			bbxx.append(subNodes);	
 		}
 		
-		/* root.append(ztfx) */
-		root.append(bbxx)
+		root.append(builder.build("jyjsc"))
+			.append(bbxx)
 			.append(builder.build("entryxxRoot"))
 			.append(builder.build("ApprovexxRoot"))
 			.append(builder.build("qulityxxRoot"))

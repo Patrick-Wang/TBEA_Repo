@@ -224,6 +224,16 @@ public class BMDepartmentDB extends AbstractOrganization {
 		return getJydw(mgr.getBMDBOrganization().getCompany(CompanyType.GFGS).getSubCompanies());
 	}
 	
+	public static List<Company> valueOf(CompanyManager mgr, CompanyType[] types){
+		List<Company> comps = new ArrayList<Company>();
+		Organization org = mgr.getBMDBOrganization();
+		for (CompanyType ct : types){
+			comps.add(org.getCompany(ct));
+		}
+		return comps;
+	}
+	
+	
 	public static List<Company> getMainlyJydw(CompanyManager mgr){
 		Organization org = mgr.getBMDBOrganization();
 		List<Company> sybs = org.getCompany(CompanyType.GFGS).getSubCompanies();

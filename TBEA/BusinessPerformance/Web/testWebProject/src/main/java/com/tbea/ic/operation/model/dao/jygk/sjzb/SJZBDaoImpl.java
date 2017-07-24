@@ -1,6 +1,5 @@
 package com.tbea.ic.operation.model.dao.jygk.sjzb;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -17,14 +16,15 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-
+import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
 import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
+
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 @Repository
 @Transactional("transactionManager")
 public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBDao{
@@ -464,6 +464,65 @@ public class SJZBDaoImpl extends AbstractReadWriteDaoImpl<SJZB> implements SJZBD
 		q.setParameter("comp", companies);
 		List<Double> ret = q.getResultList();
 		return ret.get(0);
+	}
+
+	@Override
+	public List<Double> getLjSjzbs(List<Company> jydw, Integer[] zbs, Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select sum(sjz) from SJZB where nf = :nf and yf <= :yf and dwxx.id in (" + 
+		Util.toString(jydw) + 
+		") and zbxx.id in :zbs group by zbxx.id order by zbxx.id");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("zbs", new EasyList(zbs).toList());
+		return q.getResultList();
+	}
+
+	@Override
+	public Double getYdSjzbs(List<Company> jydw, Integer zb, Integer nf, int yf) {
+		Query q = this.getEntityManager().createQuery("select sjz from SJZB where nf = :nf and yf = :yf and dwxx.id in (" + 
+		Util.toString(jydw) + 
+		") and zbxx.id = :zb");
+		q.setParameter("nf", nf);
+		q.setParameter("yf", yf);
+		q.setParameter("zb", zb);
+		List ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
+		}
+		return (Double) ret.get(0);
+	}
+
+	@Override
+	public List<Object[]> getZbpm(List<Company> comps, Integer[] zb, Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select dwxx.name, sum(sjz) from SJZB where nf = :nf and yf <= :yf and dwxx.id in (" + 
+				Util.toString(comps) + 
+				") and zbxx.id in :zbs group by dwxx.name order by sum(sjz) desc");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("zbs", new EasyList(zb).toList());
+		List ret = q.getResultList();
+		return ret;
+	}
+
+	@Override
+	public Double getZbzt(List<Company> sbds, Integer zb, Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		Query q = this.getEntityManager().createQuery("select sum(sjz) from SJZB where nf = :nf and yf <= :yf and dwxx.id in (" + 
+				Util.toString(sbds) + 
+				") and zbxx.id = :zb");
+		q.setParameter("nf", cal.get(Calendar.YEAR));
+		q.setParameter("yf", cal.get(Calendar.MONTH) + 1);
+		q.setParameter("zb", zb);
+		List ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
+		}
+		return (Double) ret.get(0);
 	}
 	
 }

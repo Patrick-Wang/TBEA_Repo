@@ -30,10 +30,7 @@
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/weather-icons.min.css"
 	rel="stylesheet" />
 
-<!--Fonts-->
-<link
-	href="../fonts.googleapis.com/css@family=open+sans_3a300italic,400italic,600italic,700italic,400,600,700,300.css"
-	rel="stylesheet" type="text/css">
+
 
 <!--Beyond styles-->
 <link id="beyond-link"
@@ -42,7 +39,7 @@
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/demo.min.css"
 	rel="stylesheet" />
-<link href="assets/css/typicons.min.css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/typicons.min.css" rel="stylesheet" />
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/animate.min.css"
 	rel="stylesheet" />
@@ -53,7 +50,14 @@
 <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
-<%@include file="ie8-b.jsp"%>
+<style>
+.legendColorBox {
+    padding-left: 10px;
+    vertical-align: middle;
+  	padding-top: 0px;
+}
+
+</style>
 
 </head>
 <!-- /Head -->
@@ -80,15 +84,15 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="61.1"
 										data-animate="1000" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span id="lrzewcl" class="white font-90">61.1%</span>
+										<span id="lrzewcl" class="white font-90">0%</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white">
-								<span id="lrze"  class="databox-number orange">243503 万元</span>
+								<span id="lrze"  class="databox-number orange">--</span>
 								<div class="databox-text darkgray">利润总额（年度累计）</div>
 								<div class="databox-stat bg-orange radius-bordered">
-									<div  id="lrzetbzf"  class="stat-text">23.7%</div>
+									<div  id="lrzetbzf"  class="stat-text">0%</div>
 									<i class="stat-icon fa fa-arrow-up"></i>
 								</div>
 							</div>
@@ -103,18 +107,18 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="49.1"
 										data-animate="1500" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span  id="xssrwcl"  class="white font-90">49.1%</span>
+										<span  id="xssrwcl"  class="white font-90">0%</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white">
-								<span id="xssr" class="databox-number" style="color: #03B3B2">2579742
-									万元</span>
+								<span id="xssr" class="databox-number" style="color: #03B3B2">--
+									</span>
 								<div class="databox-text darkgray">销售收入（年度累计）</div>
 								<div class="databox-stat radius-bordered"
 									style="background-color: #03B3B2">
-									<div id="xssrtbzf" class="stat-text white">3.8%</div>
-									<i class="stat-icon fa fa-arrow-down white"></i>
+									<div id="xssrtbzf" class="stat-text white">0%</div>
+									<i class="stat-icon fa fa-arrow-up white"></i>
 								</div>
 							</div>
 						</div>
@@ -128,17 +132,17 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="102.9"
 										data-animate="2000" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span id="yszkwcl" class="white font-40">102.9%</span>
+										<span id="yszkwcl" class="white font-40">0%</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white ">
-								<span id="yszk"  class="databox-number" style="color: #0072C6;">1212786
-									万元</span>
+								<span id="yszk"  class="databox-number" style="color: #0072C6;">--
+									</span>
 								<div class="databox-text darkgray">应收账款（年度累计）</div>
 								<div class="databox-stat radius-bordered"
 									style="background-color: #0072C6;">
-									<div id="yszktbzf" class="stat-text white">4.8%</div>
+									<div id="yszktbzf" class="stat-text white">0%</div>
 									<i class="stat-icon fa fa-arrow-up white"></i>
 								</div>
 							</div>
@@ -153,16 +157,16 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="128.4"
 										data-animate="2000" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span  id="chwcl" class="white font-40">128.4%</span>
+										<span  id="chwcl" class="white font-40">0%</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white">
-								<span  id="ch" class="databox-number lightred">1347845 万元</span>
+								<span  id="ch" class="databox-number lightred">--</span>
 								<div class="databox-text darkgray">存货（年度累计）</div>
 								<div class="databox-stat bg-lightred radius-bordered">
-									<div  id="chtbzf" class="stat-text">12.8%</div>
-									<i class="stat-icon fa fa-arrow-down"></i>
+									<div  id="chtbzf" class="stat-text">0%</div>
+									<i class="stat-icon fa fa-arrow-up"></i>
 								</div>
 							</div>
 						</div>
@@ -180,7 +184,6 @@
 													href="#total_profit"> 利润总额 </a></li>
 												<li><a data-toggle="tab" href="#sales_income">
 														销售收入 </a></li>
-
 												<li><a data-toggle="tab" href="#accounts_receivable">
 														应收账款 </a></li>
 												<li><a data-toggle="tab" href="#stock"> 存货 </a></li>
@@ -240,40 +243,40 @@
 								<div class="databox-row row-3 bg-orange">
 									<div
 										class="databox-cell cell-5 no-padding padding-5 text-align-center">
-										<span
-											class="databox-number number-xxlg  white no-margin padding-top-5">5493259</span>
+										<span id="gsqy"
+											class="databox-number number-xxlg  white no-margin padding-top-5">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">公司整体市场签约（万元）</span>
 									</div>
 									<div
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
-										<span
-											class="databox-number number-lg  white no-margin padding-top-5">412559</span>
+										<span id="zzyqy"
+											class="databox-number number-lg  white no-margin padding-top-5">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">制造业签约</span>
 									</div>
 									<div
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
-										<span
-											class="databox-number number-lg white no-margin padding-top-5">32769</span>
+										<span id="jcfwqy"
+											class="databox-number number-lg white no-margin padding-top-5">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">集成服务业签约</span>
 									</div>
-									<div
+									<div 
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
-										<span
-											class="databox-number number-lg  white no-margin padding-top-5">18504</span>
+										<span id="qtqy"
+											class="databox-number number-lg  white no-margin padding-top-5">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">其他签约</span>
 									</div>
 								</div>
 								<div class="databox-row row-9 no-padding bg-white">
 									<div class="databox-sparkline">
 										<!--11A9CC-->
-										<span data-sparkline="line" data-height="198px"
+										<span id="ydqy" data-sparkline="line" data-height="198px"
 											data-width="100%" data-fillcolor="#37c2e2"
 											data-linecolor="#37c2e2" data-spotcolor="#fafafa"
 											data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
 											data-highlightspotcolor="#f5f5f5 "
 											data-highlightlinecolor="#f5f5f5" data-linewidth="2"
 											data-spotradius="0">
-											5000,7000,6000,5534,6876,4778,4334,7444,8567,7654,5254,6565 </span>
+											0,0,0,0,0,0,0,0,0,0,0,0 </span>
 									</div>
 								</div>
 							</div>
@@ -336,8 +339,8 @@
 							<div class="databox-top">
 								<div class="databox-row row-12">
 									<div class="databox-cell cell-3 text-right">
-										<div
-											class="databox-number orange number-xxlg no-margin padding-top-5">4683258</div>
+										<div id="ztscqy"
+											class="databox-number orange number-xxlg no-margin padding-top-5">--</div>
 									</div>
 									<div
 										class="databox-cell cell-1 text-left no-margin no-padding padding-top-10">
@@ -353,9 +356,9 @@
 										</div>
 										<div class="databox-row row-6">
 											<div class="progress bg-yellow progress-no-radius">
-												<div class="progress-bar progress-bar-palegreen"
-													role="progressbar" aria-valuenow="68" aria-valuemin="0"
-													aria-valuemax="100" style="width: 68%"></div>
+												<div id="scqygnzb" class="progress-bar progress-bar-palegreen"
+													role="progressbar" aria-valuenow="50" aria-valuemin="0"
+													aria-valuemax="100" style="width: 50%"></div>
 											</div>
 										</div>
 									</div>
@@ -370,74 +373,66 @@
 											style="height: 12.5%">
 											<span
 												class="databox-text sonic-silver darkgray pull-left no-margin">国内市场签约排名</span>
-											<span
+											<span 
 												class="databox-text sonic-silver darkgray pull-right no-margin uppercase">签约额</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span class="badge badge-blue badge-empty pull-left margin-5"></span>
-											<span
+											<span id="gnpm_gs1"
 												class="databox-text darkgray pull-left no-margin hidden-xs">沈变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">277656万元</span>
+											<span id="gnpm_val1"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span
 												class="badge badge-orange badge-empty pull-left margin-5"></span>
-											<span
+											<span id="gnpm_gs2"
 												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gnpm_val2"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span class="badge badge-pink badge-empty pull-left margin-5"></span>
-											<span
-												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gnpm_gs3"
+												class="databox-text darkgray pull-left no-margin hidden-xs">新变</span>
+											<span id="gnpm_val3"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span
 												class="badge badge-palegreen badge-empty pull-left margin-5"></span>
-											<span
-												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gnpm_gs4"
+												class="databox-text darkgray pull-left no-margin hidden-xs">鲁缆</span>
+											<span id="gnpm_val4"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span
 												class="badge badge-blueberry badge-empty pull-left margin-5"></span>
-											<span
-												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gnpm_gs5"
+												class="databox-text darkgray pull-left no-margin hidden-xs">新缆</span>
+											<span id="gnpm_val5"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span
 												class="badge badge-yellow badge-empty pull-left margin-5"></span>
-											<span
-												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
-										</div>
-										<div class="databox-row padding-5" style="height: 12.5%">
-											<span
-												class="badge badge-default badge-empty pull-left margin-5"></span>
-											<span
-												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gnpm_gs6"
+												class="databox-text darkgray pull-left no-margin hidden-xs">德缆</span>
+											<span id="gnpm_val6"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 									</div>
 									<div
@@ -457,67 +452,59 @@
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span class="badge badge-blue badge-empty pull-left margin-5"></span>
-											<span
+											<span id="gjpm_gs1"
 												class="databox-text darkgray pull-left no-margin hidden-xs">沈变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">277656万元</span>
+											<span id="gjpm_val1"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span
 												class="badge badge-orange badge-empty pull-left margin-5"></span>
-											<span
+											<span id="gjpm_gs2"
 												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gjpm_val2"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span class="badge badge-pink badge-empty pull-left margin-5"></span>
-											<span
+											<span id="gjpm_gs3"
 												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gjpm_val3"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span
 												class="badge badge-palegreen badge-empty pull-left margin-5"></span>
-											<span
+											<span id="gjpm_gs4"
 												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gjpm_val4"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span
 												class="badge badge-blueberry badge-empty pull-left margin-5"></span>
-											<span
+											<span id="gjpm_gs5"
 												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gjpm_val5"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 										<div
 											class="databox-row bordered-bottom bordered-ivory padding-5"
 											style="height: 12.5%">
 											<span
 												class="badge badge-yellow badge-empty pull-left margin-5"></span>
-											<span
+											<span id="gjpm_gs6"
 												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
-										</div>
-										<div class="databox-row padding-5" style="height: 12.5%">
-											<span
-												class="badge badge-default badge-empty pull-left margin-5"></span>
-											<span
-												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
-											<span
-												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+											<span id="gjpm_val6"
+												class="databox-text darkgray pull-right no-margin uppercase">--万元</span>
 										</div>
 									</div>
 								</div>
@@ -576,146 +563,256 @@
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris-init.js"></script>
 
 
-
+	<script src="${pageContext.request.contextPath}/jsp/ui2/pages/util.js"
+		type="text/javascript"></script>
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/chartjs/chart.js"></script>
+		<%@include file="pages/loading.jsp"%>
 	<script>
+	
+	Util.Breadcrumb.render(JSON.parse('${param.breads}'));
+	if (Util.isIframe()) {
+		Util.Breadcrumb.setOnClickListener(function(breadNode) {
+			window.parent['onClickBreadcrumb']
+					&& window.parent['onClickBreadcrumb'](breadNode);
+		});
+	}
 
 	window.data = JSON.parse('${data}');
 	
-	$("#lrzewcl").text(data.zt[0].ndjhwcl);
-	$("#lrze").text(data.zt[0].ndlj + "万元");
-	$("#lrzetbzf").text(data.zt[0].ndljtbzf);
-	
-	
-	$("#xssrwcl").text(data.zt[1].ndjhwcl);
-	$("#xssr").text(data.zt[1].ndlj + "万元");
-	$("#xssrtbzf").text(data.zt[1].ndljtbzf);
-	
-	$("#yszkwcl").text(data.zt[2].ndjhwcl);
-	$("#yszk").text(data.zt[2].ndlj + "万元");
-	$("#yszktbzf").text(data.zt[2].ndljtbzf);
-	
-	$("#chwcl").text(data.zt[3].ndjhwcl);
-	$("#ch").text(data.zt[3].ndlj + "万元");
-	$("#chtbzf").text(data.zt[3].ndljtbzf);
-	
-    //-----------------------------Pie Charts-----------------------------------------//
-    InitiateEasyPieChart.init();
+	bindPart1Data();
+	function bindPart1Data(){
+		$("#lrzewcl").text(data.zt[0].ndjhwcl)
+		.parent().attr("data-percent", data.zt[0].ndjhwcl.replace("%", ""));
+		$("#lrze").text(data.zt[0].ndlj);
+		$("#lrzetbzf").text(data.zt[0].ndljtbzf);
+		if (data.zt[0].ndljtbzf[0] == '-'){
+			$("#lrzetbzf")
+			.text(data.zt[0].ndljtbzf.substring(1))
+			.next()
+			.removeClass("fa-arrow-up")
+			.addClass("fa-arrow-down");
+		}
+		
+		$("#xssrwcl").text(data.zt[1].ndjhwcl)
+		.parent().attr("data-percent", data.zt[1].ndjhwcl.replace("%", ""));
+		$("#xssr").text(data.zt[1].ndlj);
+		$("#xssrtbzf").text(data.zt[1].ndljtbzf);
+		if (data.zt[1].ndljtbzf[0] == '-'){
+			$("#xssrtbzf")
+			.text(data.zt[1].ndljtbzf.substring(1))
+			.next()
+			.removeClass("fa-arrow-up")
+			.addClass("fa-arrow-down");
+		}
+		
+		$("#yszkwcl").text(data.zt[2].ndjhwcl)
+		.parent().attr("data-percent", data.zt[2].ndjhwcl.replace("%", ""));
+		$("#yszk").text(data.zt[2].ndlj);
+		$("#yszktbzf").text(data.zt[2].ndljtbzf);
+		if (data.zt[2].ndljtbzf[0] == '-'){
+			$("#yszktbzf")
+			.text(data.zt[2].ndljtbzf.substring(1))
+			.next()
+			.removeClass("fa-arrow-up")
+			.addClass("fa-arrow-down");
+		}
+		
+		$("#chwcl").text(data.zt[3].ndjhwcl)
+		.parent().attr("data-percent", data.zt[3].ndjhwcl.replace("%", ""));
+		$("#ch").text(data.zt[3].ndlj);
+		$("#chtbzf").text(data.zt[3].ndljtbzf);
+		if (data.zt[3].ndljtbzf[0] == '-'){
+			$("#chtbzf")
+			.text(data.zt[3].ndljtbzf.substring(1))
+			.next()
+			.removeClass("fa-arrow-up")
+			.addClass("fa-arrow-down");
+		}
+		
+		$("#gsqy").text(data.scqy.gszt);
+		$("#zzyqy").text(data.scqy.zzy);
+		$("#jcfwqy").text(data.scqy.jcfw);
+		$("#qtqy").text(data.scqy.qt);
+		
+		$("#ydqy").text(data.scqy.ydzbs.join().replace(/--/g, "0"));
+		
+		$("#ztscqy").text(data.scqypm.sbdztqy);
+		$("#scqygnzb").css("width", data.scqypm.gnzb)
+		.attr("aria-valuenow", data.scqypm.gnzb.replace("%", ""));
+		
+		function forShort(name){
+			if (name.indexOf("沈") >= 0){
+				return "沈变";
+			}
+			if (name.indexOf("衡") >= 0){
+				return "衡变";
+			}
+			if (name.indexOf("新疆变压器") >= 0){
+				return "新变";
+			}
+			if (name.indexOf("鲁") >= 0){
+				return "鲁缆";
+			}
+			if (name.indexOf("新疆线缆") >= 0){
+				return "新缆";
+			}
+			if (name.indexOf("德") >= 0){
+				return "德缆";
+			}
+		}
+		
+		for (var i = 0; i < data.scqypm.gnsc.length; ++i){
+			$("#gnpm_gs" + (i + 1)).text(forShort(data.scqypm.gnsc[i][0]));
+			$("#gnpm_val" + (i + 1)).text(data.scqypm.gnsc[i][1] + " 万元");
+			$("#gjpm_gs" + (i + 1)).text(forShort(data.scqypm.gjsc[i][0]));
+			$("#gjpm_val" + (i + 1)).text(data.scqypm.gjsc[i][1] + " 万美元");
+		}
+		
 
-    //-------------------定义数据、维度------------------------------------------------//
-    var chartfirstcolor = "#57b5e3";
-    var chartsecondcolor = "#f4b400";
-    var chartthirdcolor = "#d73d32";
-    var chartfourthcolor = "#8cc474";
-    var chartfifthcolor = "#bc5679";
-    var gridbordercolor = "#eee";
-
-    function getChartOpt(index){
-    
-	    var d1_year_plan = [];
-	    //插入动态数据
-	    for (var i = 1; i <= 13; i += 1)
-	        d1_year_plan.push([i, data.jydw[index][i - 1].ndjh]);
-	
-	    var d1_year_amount = [];
-	    //插入动态数据
-	    for (var i = 1; i <= 13; i += 1)
-	        d1_year_amount.push([i, data.jydw[index][i - 1].ndlj]);
-	
-	    var d1_last_year_amount = [];
-	    //插入动态数据
-	    for (var i = 1; i <= 13; i += 1)
-	        d1_last_year_amount.push([i, data.jydw[index][i - 1].qntq]);
-	
-	    var d1_ticks = [[1, '沈变'], [2, '衡变'], [3, '新变'], [4, '鲁缆'], [5, '新缆'], [6, '德缆'], [7, '新能源'],
-	        [8, '新特能源'], [9, '天池能源'], [10, '能动'], [11, '众和'], [12, '进出口'], [13, '国际工程']];
-	
-	    var data_flot_bar_chart = [
-	        {
-	            label: "年度计划",
-	            data: d1_year_plan,
-	            bars: {
-	                show: true,
-	                order: 1,
-	                fillColor: { colors: [{ color: chartthirdcolor }, { color: chartthirdcolor }] }
-	            },
-	            color: chartthirdcolor
-	        },
-	        {
-	            label: "年度累计",
-	            data: d1_year_amount,
-	            bars: {
-	                show: true,
-	                order: 2,
-	                fillColor: { colors: [{ color: chartsecondcolor }, { color: chartsecondcolor }] }
-	            },
-	            color: chartsecondcolor
-	        },
-	        {
-	            label: "去年同期累计",
-	            data: d1_last_year_amount,
-	            bars: {
-	                show: true,
-	                order: 3,
-	                fillColor: { colors: [{ color: chartfirstcolor }, { color: chartfirstcolor }] }
-	            },
-	            color: chartfirstcolor
-	        }
-	    ];
+		//-------------------------Initiates Sparkline Chart instances in page------------------//
+	    InitiateSparklineCharts.init();
 	    
-    
-	    //-------------------Chart设置参数------------------------------------------------//
-	    var options_flot_bar_chart = {
-	        bars: {
-	            barWidth: 0.2,
-	            lineWidth: 0,
-	            borderWidth: 0,
-	            fillColor: { colors: [{ opacity: 0.4 }, { opacity: 1 }] }
-	        },
-	        xaxis: {
-	            ticks: d1_ticks,
-	            color: gridbordercolor
-	        },
-	        yaxis: {
-	            color: gridbordercolor
-	        },
-	        grid: {
-	            hoverable: true,
-	            clickable: false,
-	            borderWidth: 0,
-	            aboveData: false
-	        },
-	        legend: {
-	            noColumns: 4
-	        },
-	        tooltip: true,
-	        tooltipOpts: {
-	            defaultTheme: false,
-	            content: "<b>%s</b> : <span>%y 万元</span>",
-	        }
-	    };
-	    return [data_flot_bar_chart, options_flot_bar_chart];
-    }
-    
-    //------------------实例化Flot Chart-----------------------------------------------//
-   
-    var opt = getChartOpt(0);
-    var placeholder_total_profit = $("#dashboard-chart-total-profit");
-    var plot_total_profit = $.plot(placeholder_total_profit, opt[0], opt[1]);
-    opt = getChartOpt(1);
-    var placeholder_sales_income = $("#dashboard-chart-sales-income");
-    var plot_sales_income = $.plot(placeholder_sales_income, opt[0], opt[1]);
-    opt = getChartOpt(2);
-    var placeholder_accounts_receivable = $("#dashboard-chart-accounts-receivable");
-    var plot_accounts_receivable = $.plot(placeholder_accounts_receivable, opt[0], opt[1]);
-    opt = getChartOpt(3);
-    var placeholder_stock = $("#dashboard-chart-stock");
-    var plot_stock = $.plot(placeholder_stock, opt[0], opt[1]);
-
-    //-------------------------Initiates Sparkline Chart instances in page------------------//
-    InitiateSparklineCharts.init();
-
+	    //-----------------------------Pie Charts-----------------------------------------//
+	    InitiateEasyPieChart.init();
+	}
+	
+	function bindPart2Data(){
+		
+	    //-------------------定义数据、维度------------------------------------------------//
+	    var chartfirstcolor = "#57b5e3";
+	    var chartsecondcolor = "#f4b400";
+	    var chartthirdcolor = "#d73d32";
+	    var chartfourthcolor = "#8cc474";
+	    var chartfifthcolor = "#bc5679";
+	    var gridbordercolor = "#eee";
+	
+	    function getChartOpt(index){
+	    
+		    var d1_year_plan = [];
+		    //插入动态数据
+		    for (var i = 1; i <= 13; i += 1)
+		        d1_year_plan.push([i, parseFloat(data.jydw[index][i - 1].ndjh)]);
+		
+		    var d1_year_amount = [];
+		    //插入动态数据
+		    for (var i = 1; i <= 13; i += 1)
+		        d1_year_amount.push([i, parseFloat(data.jydw[index][i - 1].ndlj)]);
+		
+		    var d1_last_year_amount = [];
+		    //插入动态数据
+		    for (var i = 1; i <= 13; i += 1)
+		        d1_last_year_amount.push([i, parseFloat(data.jydw[index][i - 1].qntq)]);
+		
+		    var d1_ticks = [[1, '沈变'], [2, '衡变'], [3, '新变'], [4, '鲁缆'], [5, '新缆'], [6, '德缆'], [7, '新能源'],
+		        [8, '新特能源'], [9, '天池能源'], [10, '能动'], [11, '众和'], [12, '进出口'], [13, '国际工程']];
+		
+		    var data_flot_bar_chart = [
+		        {
+		            label: "年度计划",
+		            data: d1_year_plan,
+		            bars: {
+		                show: true,
+		                order: 1,
+		                fillColor: { colors: [{ color: chartthirdcolor }, { color: chartthirdcolor }] }
+		            },
+		            color: chartthirdcolor
+		        },
+		        {
+		            label: "年度累计",
+		            data: d1_year_amount,
+		            bars: {
+		                show: true,
+		                order: 2,
+		                fillColor: { colors: [{ color: chartsecondcolor }, { color: chartsecondcolor }] }
+		            },
+		            color: chartsecondcolor
+		        },
+		        {
+		            label: "去年同期累计",
+		            data: d1_last_year_amount,
+		            bars: {
+		                show: true,
+		                order: 3,
+		                fillColor: { colors: [{ color: chartfirstcolor }, { color: chartfirstcolor }] }
+		            },
+		            color: chartfirstcolor
+		        }
+		    ];
+		    
+	    
+		    //-------------------Chart设置参数------------------------------------------------//
+		    var options_flot_bar_chart = {
+		        bars: {
+		            barWidth: 0.2,
+		            lineWidth: 0,
+		            borderWidth: 0,
+		            fillColor: { colors: [{ opacity: 0.4 }, { opacity: 1 }] }
+		        },
+		        xaxis: {
+		            ticks: d1_ticks,
+		            color: gridbordercolor
+		        },
+		        yaxis: {
+		            color: gridbordercolor
+		        },
+		        grid: {
+		            hoverable: true,
+		            clickable: false,
+		            borderWidth: 0,
+		            aboveData: false
+		        },
+		        legend: {
+		            noColumns: 4
+		        },
+		        tooltip: true,
+		        tooltipOpts: {
+		            defaultTheme: false,
+		            content: "<b>%s</b> : <span>%y 万元</span>"
+		        }
+		    };
+		    return [data_flot_bar_chart, options_flot_bar_chart];
+	    }
+	    
+	    //------------------实例化Flot Chart-----------------------------------------------//
+	   
+	    var opt = getChartOpt(0);
+	    var placeholder_total_profit = $("#dashboard-chart-total-profit");
+	    var plot_total_profit = $.plot(placeholder_total_profit, opt[0], opt[1]);
+	/*     opt = getChartOpt(1);
+	    var placeholder_sales_income = $("#dashboard-chart-sales-income");
+	    var plot_sales_income = $.plot(placeholder_sales_income, opt[0], opt[1]);
+	    opt = getChartOpt(2);
+	    var placeholder_accounts_receivable = $("#dashboard-chart-accounts-receivable");
+	    var plot_accounts_receivable = $.plot(placeholder_accounts_receivable, opt[0], opt[1]);
+	    opt = getChartOpt(3);
+	    var placeholder_stock = $("#dashboard-chart-stock");
+	    var plot_stock = $.plot(placeholder_stock, opt[0], opt[1]);
+	 */    
+	 	var plotIds = ["#dashboard-chart-total-profit", "#dashboard-chart-sales-income", "#dashboard-chart-accounts-receivable", "#dashboard-chart-stock"];
+		var displayed = [true, false, false, false];
+	    $("#myTab11").on("click", function(){
+	    	setTimeout(function(){
+	    		$("#myTab11 li").each(function(i, e){
+	    			if ($(e).hasClass("active")){
+	    				if (!displayed[i]){
+	    					 var opt = getChartOpt(i);
+	    					 var placeholder_plot = $(plotIds[i]);
+	    					 var plot = $.plot(placeholder_plot, opt[0], opt[1]);
+	    					 displayed[i] = true;
+	    				}
+	    				return false;
+	    			}
+	    		});
+	    	}, 0);
+	    });
+	}
+		
+	ajaxInit = new Util.Ajax("/BusinessManagement/dashboard/dashboard_update.do", false);
+	ajaxInit.get().then(function(data){
+		window.data = data;
+		bindPart2Data();
+	});
 </script>
 
 </body>

@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,13 +25,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.Url;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.tbea.ic.operation.model.entity.ExchangeRate;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
+import com.tbea.ic.operation.service.dashboard.DashboardService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
 
@@ -53,6 +57,10 @@ public class DashboardController {
 
 	@Autowired
 	GszbService gszbService;
+	
+	@Autowired 
+	DashboardService dashboardService;
+	
 	
 	CompanyType[] cps = new CompanyType[]{
 			CompanyType.SBGS,
@@ -218,16 +226,21 @@ public class DashboardController {
 		return String.format("%.2f",  (Double.valueOf(str)));		
 	}
 	
+	private String getNumber0(String str){
+		if ("null".equals(str)){
+			return "--";
+		}
+		return String.format("%.0f",  (Double.valueOf(str)));		
+	}
+	
 	@RequestMapping(value = "dashboard.do")
 	public ModelAndView getDashboard(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		
+		Date current = new java.sql.Date(System.currentTimeMillis());
 		JSONObject jRet = new JSONObject();
-		List<String[]> zbs = gszbService.getDashboardGsztzb(new java.sql.Date(System.currentTimeMillis()));
+		List<String[]> zbs = gszbService.getDashboardGsztzb(current);
 		
 		JSONArray zt = new JSONArray();
-		
-		JSONArray jydw = new JSONArray();
 		
 		for(int i = 0; i < zbs.size(); ++i){
 			JSONObject item = new JSONObject();
@@ -235,10 +248,67 @@ public class DashboardController {
 			item.put("ndlj", getNumber(zbs.get(i)[12]));
 			item.put("ndljtbzf", getPercent(zbs.get(i)[15]));
 			zt.add(item);
+		}
+
+		ExchangeRate er = entryService.getExchangeRate(current);
+		
+		List<Double> ljzbs = dashboardService.getScqyLjzb(current);
+		List<Double> ydzbs = dashboardService.getScqyZtydzb(Calendar.getInstance().get(Calendar.YEAR));
+		
+		JSONObject scqy = new JSONObject();
+		scqy.put("gszt", getNumber0(ljzbs.get(0) + ""));
+		scqy.put("zzy", getNumber0(ljzbs.get(1) + ""));
+		scqy.put("jcfw", getNumber0(ljzbs.get(2) + ""));
+		scqy.put("qt", getNumber0(ljzbs.get(3) + ""));
+		
+		JSONArray scqyYds = new JSONArray();
+		for (Double zb :ydzbs){
+			scqyYds.add(getNumber(zb + ""));
+		}
+		scqy.put("ydzbs", scqyYds);
+		
+		JSONObject scqypm = new JSONObject();
+		
+		List<String[]> gnsc = dashboardService.getSbdgnscqye(current);
+		List<String[]> gjsc = dashboardService.getSbdgjscqye(current);
+		Double sbdzt = dashboardService.getSbdztqye(current);
+		scqypm.put("sbdztqy", getNumber0(sbdzt + ""));
+		scqypm.put("gnsc", JSONArray.fromObject(gnsc));
+		scqypm.put("gjsc", JSONArray.fromObject(gjsc));
+		
+		Double sumgn = 0.0;
+		Double sumgj = 0.0;
+		for (int i = 0; i < gnsc.size(); ++i){
+			sumgn += Util.toDouble(gnsc.get(i)[1]);
+			sumgj += Util.toDouble(gjsc.get(i)[1]) * er.getRate();
+		}
+		
+		Double gnzb = sumgj + sumgn;
+		gnzb = (gnzb) < 0.000001 ? 0 : (sumgn / gnzb);
+		scqypm.put("gnzb", String.format("%.0f", gnzb * 100) + "%");
+		
+		jRet.put("scqypm", scqypm);
+		jRet.put("scqy", scqy);
+		jRet.put("zt", zt);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", jRet.toString().replaceAll("null", ""));
+		return new ModelAndView("ui2/dashboard", map);
+	}
+	
+	
+	@RequestMapping(value = "dashboard_update.do")
+	public @ResponseBody byte[] dashboardUpdate(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date current = new java.sql.Date(System.currentTimeMillis());
+		JSONObject jRet = new JSONObject();
+		JSONArray jydw = new JSONArray();
+		List<String[]> zbs = gszbService.getDashboardGsztzb(current);
+		for(int i = 0; i < zbs.size(); ++i){
 			jydw.add(new JSONArray());
 		}
 		for (CompanyType ct : cps){
-			zbs = gszbService.getDashboardGdwzb(new java.sql.Date(System.currentTimeMillis()), ct);
+			zbs = gszbService.getDashboardGdwzb(current, ct);
 			for (int i = 0; i < zbs.size(); ++i){
 				JSONObject item = new JSONObject();
 				item.put("ndjh",  getNumber(zbs.get(i)[1]));
@@ -248,10 +318,7 @@ public class DashboardController {
 			}
 		}
 		
-		jRet.put("zt", zt);
 		jRet.put("jydw", jydw);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("data", jRet.toString().replaceAll("null", ""));
-		return new ModelAndView("ui2/dashboard", map);
+		return jRet.toString().replaceAll("null", "").getBytes("utf-8");
 	}
 }
