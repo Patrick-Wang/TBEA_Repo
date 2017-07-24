@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
@@ -316,6 +317,32 @@ public class GszbServiceImpl implements GszbService {
 		BasicPipe pipe = new BasicPipe(gsztzbs, BMDepartmentDB.getMainlyJydw(companyManager), date,
 				getConfiguratorFactory().getStandardConfigurator());
 		return makeZbResult(gsztzbs, pipe.getData());
+	}
+	
+	@Override
+	public List<String[]> getDashboardGsztzb(Date date) {
+		List zbs = new EasyList<Integer>(new Integer[]{
+				GSZB.LRZE1.value(),
+				GSZB.XSSR6.value(),
+				GSZB.YSZK32.value(),
+				GSZB.CH35.value()}).toList();
+		BasicPipe pipe = new BasicPipe(zbs, BMDepartmentDB.getMainlyJydw(companyManager), date,
+				getConfiguratorFactory().getStandardConfigurator());
+		return makeZbResult(zbs, pipe.getData());
+	}
+	
+	@Override
+	public List<String[]> getDashboardGdwzb(Date date, CompanyType cpType) {
+		Organization org = companyManager.getBMDBOrganization();
+		Company comp = org.getCompany(cpType);
+		List zbs = new EasyList<Integer>(new Integer[]{
+				GSZB.LRZE1.value(),
+				GSZB.XSSR6.value(),
+				GSZB.YSZK32.value(),
+				GSZB.CH35.value()}).toList();
+		BasicPipe pipe = new BasicPipe(zbs, comp, date,
+				getConfiguratorFactory().getStandardConfigurator());
+		return makeZbResult(zbs, pipe.getData());
 	}
 
 	@Override

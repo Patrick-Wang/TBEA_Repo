@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +32,10 @@ import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
+import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 
 @Controller
@@ -50,6 +51,25 @@ public class DashboardController {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
 
+	@Autowired
+	GszbService gszbService;
+	
+	CompanyType[] cps = new CompanyType[]{
+			CompanyType.SBGS,
+			CompanyType.HBGS,
+			CompanyType.XBC,
+			CompanyType.LLGS,
+			CompanyType.XLC,
+			CompanyType.DLGS,
+			CompanyType.XNYGS,
+			CompanyType.XTNYGS,
+			CompanyType.TCNY,
+			CompanyType.NDGS,
+			CompanyType.ZHGS,
+			CompanyType.JCKGS_JYDW,
+			CompanyType.GJGCGS_GFGS
+	};
+	
 	@RequestMapping(value = "status_update.do")
 	public @ResponseBody byte[] getEntryStatus(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
@@ -182,5 +202,56 @@ public class DashboardController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", jRet.toString());
 		return new ModelAndView("UserStatusView", map);
+	}
+	
+	private String getPercent(String str){
+		if ("null".equals(str)){
+			return "--";
+		}
+		return String.format("%.2f",  (Double.valueOf(str) * 100)) + "%";		
+	}
+	
+	private String getNumber(String str){
+		if ("null".equals(str)){
+			return "--";
+		}
+		return String.format("%.2f",  (Double.valueOf(str)));		
+	}
+	
+	@RequestMapping(value = "dashboard.do")
+	public ModelAndView getDashboard(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		JSONObject jRet = new JSONObject();
+		List<String[]> zbs = gszbService.getDashboardGsztzb(new java.sql.Date(System.currentTimeMillis()));
+		
+		JSONArray zt = new JSONArray();
+		
+		JSONArray jydw = new JSONArray();
+		
+		for(int i = 0; i < zbs.size(); ++i){
+			JSONObject item = new JSONObject();
+			item.put("ndjhwcl", getPercent(zbs.get(i)[13]));
+			item.put("ndlj", getNumber(zbs.get(i)[12]));
+			item.put("ndljtbzf", getPercent(zbs.get(i)[15]));
+			zt.add(item);
+			jydw.add(new JSONArray());
+		}
+		for (CompanyType ct : cps){
+			zbs = gszbService.getDashboardGdwzb(new java.sql.Date(System.currentTimeMillis()), ct);
+			for (int i = 0; i < zbs.size(); ++i){
+				JSONObject item = new JSONObject();
+				item.put("ndjh",  getNumber(zbs.get(i)[1]));
+				item.put("ndlj",  getNumber(zbs.get(i)[12]));
+				item.put("qntq", getNumber(zbs.get(i)[14]));
+				jydw.getJSONArray(i).add(item);
+			}
+		}
+		
+		jRet.put("zt", zt);
+		jRet.put("jydw", jydw);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", jRet.toString().replaceAll("null", ""));
+		return new ModelAndView("ui2/dashboard", map);
 	}
 }

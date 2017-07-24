@@ -7,1474 +7,716 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
-    <meta charset="utf-8" />
-    <title>Databoxes</title>
+<meta charset="utf-8" />
+<title>Databoxes</title>
 
-    <meta name="description" content="databoxes" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/jsp/ui2/assets/img/favicon.png" type="image/x-icon">
+<meta name="description" content="databoxes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/img/favicon.png"
+	type="image/x-icon">
 
-    <!--Basic Styles-->
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/weather-icons.min.css" rel="stylesheet" />
+<!--Basic Styles-->
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link id="bootstrap-rtl-link" href="" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/weather-icons.min.css"
+	rel="stylesheet" />
 
-    <!--Fonts-->
-    <link href="../fonts.googleapis.com/css@family=open+sans_3a300italic,400italic,600italic,700italic,400,600,700,300.css" rel="stylesheet" type="text/css">
+<!--Fonts-->
+<link
+	href="../fonts.googleapis.com/css@family=open+sans_3a300italic,400italic,600italic,700italic,400,600,700,300.css"
+	rel="stylesheet" type="text/css">
 
-    <!--Beyond styles-->
-    <link id="beyond-link" href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/demo.min.css" rel="stylesheet" />
-    <link href="assets/css/typicons.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/animate.min.css" rel="stylesheet" />
-    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+<!--Beyond styles-->
+<link id="beyond-link"
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/demo.min.css"
+	rel="stylesheet" />
+<link href="assets/css/typicons.min.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/animate.min.css"
+	rel="stylesheet" />
+<link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
-    <style>
-    	.databox .databox-right{
-    		position:static;
-    	}
-    
-    </style>
+
+
+<!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
+<%@include file="ie8-b.jsp"%>
+
 </head>
 <!-- /Head -->
 <!-- Body -->
 <body>
+	<!-- Page Breadcrumb -->
+	<div class="page-breadcrumbs">
+		<ul class="breadcrumb">
+		</ul>
+	</div>
+	<!-- /Page Breadcrumb -->
 
-                    <div class="row">
-                        <div class="col-lg-12 col-sm-12 col-xs-12">
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded">
-                                        <div class="databox-left bg-lightred">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="42" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="#f39e93"><span class="white font-90">42%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right">
-                                            <span class="databox-number lightred">322</span>
-                                            <div class="databox-text darkgray">UNIQUE USERS</div>
-                                            <div class="databox-stat bg-lightred radius-bordered">
-                                                <div class="stat-text">4%</div>
-                                                <i class="stat-icon fa fa-arrow-down"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded">
-                                        <div class="databox-left bg-yellow">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="42" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="#f39e93"><span class="white font-90">42%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right">
-                                            <span class="databox-number lightred">322</span>
-                                            <div class="databox-text darkgray">UNIQUE USERS</div>
-                                            <div class="databox-stat bg-lightred radius-bordered">
-                                                <div class="stat-text">4%</div>
-                                                <i class="stat-icon fa fa-arrow-down"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded">
-                                        <div class="databox-left bg-blue">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="42" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="#f39e93"><span class="white font-90">42%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right">
-                                            <span class="databox-number lightred">322</span>
-                                            <div class="databox-text darkgray">UNIQUE USERS</div>
-                                            <div class="databox-stat bg-lightred radius-bordered">
-                                                <div class="stat-text">4%</div>
-                                                <i class="stat-icon fa fa-arrow-down"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded">
-                                        <div class="databox-left bg-lightred">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="42" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="#f39e93"><span class="white font-90">42%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right">
-                                            <span class="databox-number lightred">322</span>
-                                            <div class="databox-text darkgray">UNIQUE USERS</div>
-                                            <div class="databox-stat bg-lightred radius-bordered">
-                                                <div class="stat-text">4%</div>
-                                                <i class="stat-icon fa fa-arrow-down"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox databox-halved radius-bordered databox-shadowed">
-                                        <div class="databox-left bg-whitesmoke">
-                                            <div class="databox-sparkline">
-                                                <span data-sparkline="compositeline" data-height="45px" data-width="100%"
-                                                      data-linecolor="#57b5e3" data-secondlinecolor="#f4b400"
-                                                      data-fillcolor="false" data-secondfillcolor="false"
-                                                      data-highlightspotcolor="#a0d468" data-highlightlinecolor="#a0d468"
-                                                      data-composite="4, 1, 5, 7, 9, 9, 8, 7, 6, 6, 4, 7, 8, 4, 3, 2, 2, 5, 6, 7">
-                                                    8,4,0,0,0,0,1,4,4,10,10,10,10,0,0,0,4,6,5,9,10
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right bg-sky padding-10">
-                                            <span class="databox-title white">Users</span>
-                                            <div class="databox-text white">Visit Statistics</div>
+	<!-- Page Body -->
+	<div class="page-body">
+		<div class="row">
+			<div class="col-lg-12 col-sm-12 col-xs-12">
+				<div class="row">
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+						<div
+							class="databox radius-bordered databox-shadowed databox-graded">
+							<div class="databox-left bg-orange">
+								<div class="databox-piechart">
+									<div data-toggle="easypiechart" class="easyPieChart"
+										data-barcolor="#fff" data-linecap="butt" data-percent="61.1"
+										data-animate="1000" data-linewidth="3" data-size="47"
+										data-trackcolor="rgba(255,255,255,0.1)">
+										<span id="lrzewcl" class="white font-90">61.1%</span>
+									</div>
+								</div>
+							</div>
+							<div class="databox-right bg-white">
+								<span id="lrze"  class="databox-number orange">243503 万元</span>
+								<div class="databox-text darkgray">利润总额（年度累计）</div>
+								<div class="databox-stat bg-orange radius-bordered">
+									<div  id="lrzetbzf"  class="stat-text">23.7%</div>
+									<i class="stat-icon fa fa-arrow-up"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+						<div
+							class="databox radius-bordered databox-shadowed databox-graded">
+							<div class="databox-left" style="background-color: #03B3B2">
+								<div class="databox-piechart">
+									<div data-toggle="easypiechart" class="easyPieChart"
+										data-barcolor="#fff" data-linecap="butt" data-percent="49.1"
+										data-animate="1500" data-linewidth="3" data-size="47"
+										data-trackcolor="rgba(255,255,255,0.1)">
+										<span  id="xssrwcl"  class="white font-90">49.1%</span>
+									</div>
+								</div>
+							</div>
+							<div class="databox-right bg-white">
+								<span id="xssr" class="databox-number" style="color: #03B3B2">2579742
+									万元</span>
+								<div class="databox-text darkgray">销售收入（年度累计）</div>
+								<div class="databox-stat radius-bordered"
+									style="background-color: #03B3B2">
+									<div id="xssrtbzf" class="stat-text white">3.8%</div>
+									<i class="stat-icon fa fa-arrow-down white"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+						<div
+							class="databox radius-bordered databox-shadowed databox-graded">
+							<div class="databox-left" style="background-color: #0072C6;">
+								<div class="databox-piechart">
+									<div data-toggle="easypiechart" class="easyPieChart"
+										data-barcolor="#fff" data-linecap="butt" data-percent="102.9"
+										data-animate="2000" data-linewidth="3" data-size="47"
+										data-trackcolor="rgba(255,255,255,0.1)">
+										<span id="yszkwcl" class="white font-40">102.9%</span>
+									</div>
+								</div>
+							</div>
+							<div class="databox-right bg-white ">
+								<span id="yszk"  class="databox-number" style="color: #0072C6;">1212786
+									万元</span>
+								<div class="databox-text darkgray">应收账款（年度累计）</div>
+								<div class="databox-stat radius-bordered"
+									style="background-color: #0072C6;">
+									<div id="yszktbzf" class="stat-text white">4.8%</div>
+									<i class="stat-icon fa fa-arrow-up white"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+						<div
+							class="databox radius-bordered databox-shadowed databox-graded">
+							<div class="databox-left bg-lightred">
+								<div class="databox-piechart">
+									<div data-toggle="easypiechart" class="easyPieChart"
+										data-barcolor="#fff" data-linecap="butt" data-percent="128.4"
+										data-animate="2000" data-linewidth="3" data-size="47"
+										data-trackcolor="rgba(255,255,255,0.1)">
+										<span  id="chwcl" class="white font-40">128.4%</span>
+									</div>
+								</div>
+							</div>
+							<div class="databox-right bg-white">
+								<span  id="ch" class="databox-number lightred">1347845 万元</span>
+								<div class="databox-text darkgray">存货（年度累计）</div>
+								<div class="databox-stat bg-lightred radius-bordered">
+									<div  id="chtbzf" class="stat-text">12.8%</div>
+									<i class="stat-icon fa fa-arrow-down"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="dashboard-box">
+									<div class="box-tabbs">
+										<div class="tabbable">
+											<ul class="nav nav-tabs tabs-flat nav-justified" id="myTab11">
+												<li class="active"><a data-toggle="tab"
+													href="#total_profit"> 利润总额 </a></li>
+												<li><a data-toggle="tab" href="#sales_income">
+														销售收入 </a></li>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded">
-                                        <div class="databox-left bg-orange">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="50" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="#fa8872"><span class="white font-90">50%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right">
-                                            <span class="databox-number orange">14</span>
-                                            <div class="databox-text darkgray">NEW TASKS</div>
-                                            <div class="databox-stat orange radius-bordered">
-                                                <i class="stat-icon icon-lg fa fa-tasks"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded">
-                                        <div class="databox-left bg-yellow">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="15" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="#fee29f"><span class="white font-90">15%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right">
-                                            <span class="databox-number yellow">1</span>
-                                            <div class="databox-text darkgray">NEW MESSAGE</div>
-                                            <div class="databox-stat yellow radius-bordered">
-                                                <i class="stat-icon  icon-lg fa fa-envelope-o"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded">
-                                        <div class="databox-left bg-azure">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="76" data-animate="500" data-linewidth="3" data-size="47" data-trackcolor="#7fe2fa"><span class="white font-90">76%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right">
-                                            <span class="databox-number azure">98</span>
-                                            <div class="databox-text darkgray">NEW USERS</div>
-                                            <div class="databox-state bg-azure">
-                                                <i class="fa fa-check"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox databox-transparent">
-                                        <div class="databox-left no-padding">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart block-center"
-                                                     data-barcolor="#fb6e52" data-linecap="butt" data-percent="80" data-animate="500"
-                                                     data-linewidth="2" data-size="65" data-trackcolor="#eee">
-                                                    <span class="databox-text darkgray">VISITS</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right">
-                                            <div class="databox-sparkline padding-5">
-                                                <span data-sparkline="compositebar" data-height="50px" data-width="100%"
-                                                      data-barcolor="#fff" data-negbarcolor="#f5f5f5" data-zerocolor="#d73d32"
-                                                      data-barwidth="6px" data-barspacing="5px"
-                                                      data-fillcolor="false" data-linecolor="#fb6e52" data-spotradius="3" data-linewidth="1.5"
-                                                      data-spotcolor="#fff " data-minspotcolor="#fff " data-maxspotcolor="#fff"
-                                                      data-highlightspotcolor="#fff" data-highlightlinecolor="#fff"
-                                                      data-composite="4, 1, 5, 7, 6, 4, 8, 7, 2,4,2,1">
-                                                    6,4,0,1,4,6,2,4,4,8,2,4,1
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+												<li><a data-toggle="tab" href="#accounts_receivable">
+														应收账款 </a></li>
+												<li><a data-toggle="tab" href="#stock"> 存货 </a></li>
+											</ul>
+											<div class="tab-content tabs-flat no-padding">
+												<div id="total_profit"
+													class="tab-pane padding-10 active animated fadeInUp">
+													<div class="row">
+														<div class="col-lg-12 chart-container">
+															<div id="dashboard-chart-total-profit"
+																class="chart chart-lg no-margin" style="width: 100%"></div>
+														</div>
+													</div>
+												</div>
+												<div id="sales_income"
+													class="tab-pane  padding-10 animated fadeInUp">
+													<div class="row">
+														<div class="col-lg-12 chart-container">
+															<div id="dashboard-chart-sales-income"
+																class="chart chart-lg no-margin" style="width: 100%"></div>
+														</div>
+													</div>
+												</div>
+												<div id="accounts_receivable"
+													class="tab-pane padding-10 animated fadeInUp">
+													<div class="row">
+														<div class="col-lg-12 chart-container">
+															<div id="dashboard-chart-accounts-receivable"
+																class="chart chart-lg no-margin" style="width: 100%"></div>
+														</div>
+													</div>
+												</div>
+												<div id="stock"
+													class="tab-pane padding-20 animated fadeInUp"
+													style="width: 100%">
+													<div class="row">
+														<div class="col-lg-12 chart-container">
+															<div id="dashboard-chart-stock"
+																class="chart chart-lg no-margin" style="width: 100%"></div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+						<div
+							class="databox databox-xxlg databox-vertical databox-inverted">
+							<div class="databox-top bg-white no-padding"
+								style="height: 263px">
+								<div class="databox-row row-3 bg-orange">
+									<div
+										class="databox-cell cell-5 no-padding padding-5 text-align-center">
+										<span
+											class="databox-number number-xxlg  white no-margin padding-top-5">5493259</span>
+										<span class="databox-text whitesmoke no-margin padding-top-5">公司整体市场签约（万元）</span>
+									</div>
+									<div
+										class="databox-cell cell-2 no-padding padding-5 text-align-center">
+										<span
+											class="databox-number number-lg  white no-margin padding-top-5">412559</span>
+										<span class="databox-text whitesmoke no-margin padding-top-5">制造业签约</span>
+									</div>
+									<div
+										class="databox-cell cell-2 no-padding padding-5 text-align-center">
+										<span
+											class="databox-number number-lg white no-margin padding-top-5">32769</span>
+										<span class="databox-text whitesmoke no-margin padding-top-5">集成服务业签约</span>
+									</div>
+									<div
+										class="databox-cell cell-2 no-padding padding-5 text-align-center">
+										<span
+											class="databox-number number-lg  white no-margin padding-top-5">18504</span>
+										<span class="databox-text whitesmoke no-margin padding-top-5">其他签约</span>
+									</div>
+								</div>
+								<div class="databox-row row-9 no-padding bg-white">
+									<div class="databox-sparkline">
+										<!--11A9CC-->
+										<span data-sparkline="line" data-height="198px"
+											data-width="100%" data-fillcolor="#37c2e2"
+											data-linecolor="#37c2e2" data-spotcolor="#fafafa"
+											data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
+											data-highlightspotcolor="#f5f5f5 "
+											data-highlightlinecolor="#f5f5f5" data-linewidth="2"
+											data-spotradius="0">
+											5000,7000,6000,5534,6876,4778,4334,7444,8567,7654,5254,6565 </span>
+									</div>
+								</div>
+							</div>
+							<div class="databox-bottom bg-sky no-padding no-border"
+								style="height: 36px">
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">一月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">二月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">三月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">四月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">五月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">六月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">七月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">八月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">九月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">十月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">十一月</span>
+								</div>
+								<div
+									class="databox-cell cell-1 text-align-center no-padding padding-top-5">
+									<span class="databox-text white">十二月</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+						<div
+							class="databox databox-xxlg databox-vertical databox-shadowed bg-white radius-bordered padding-5">
+							<div class="databox-top">
+								<div class="databox-row row-12">
+									<div class="databox-cell cell-3 text-right">
+										<div
+											class="databox-number orange number-xxlg no-margin padding-top-5">4683258</div>
+									</div>
+									<div
+										class="databox-cell cell-1 text-left no-margin no-padding padding-top-10">
+										<div class="databox-text darkgray">万元</div>
+									</div>
+									<div class="databox-cell cell-8 text-align-center">
+										<div class="databox-row row-6 text-left margin-bottom-5">
+											<span
+												class="badge badge-palegreen badge-empty margin-left-10"></span>
+											<span class="databox-inlinetext darkgray margin-left-10">输变电国内市场签约额</span>
+											<span class="badge badge-yellow badge-empty margin-left-10"></span>
+											<span class="databox-inlinetext darkgray margin-left-10">输变电国际市场签约额</span>
+										</div>
+										<div class="databox-row row-6">
+											<div class="progress bg-yellow progress-no-radius">
+												<div class="progress-bar progress-bar-palegreen"
+													role="progressbar" aria-valuenow="68" aria-valuemin="0"
+													aria-valuemax="100" style="width: 68%"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="databox-bottom">
+								<div class="databox-row row-12">
+									<div
+										class="databox-cell cell-5 text-left no-padding-left padding-bottom-5 padding-top-10">
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="databox-text sonic-silver darkgray pull-left no-margin">国内市场签约排名</span>
+											<span
+												class="databox-text sonic-silver darkgray pull-right no-margin uppercase">签约额</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span class="badge badge-blue badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">沈变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">277656万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="badge badge-orange badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span class="badge badge-pink badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="badge badge-palegreen badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="badge badge-blueberry badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="badge badge-yellow badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div class="databox-row padding-5" style="height: 12.5%">
+											<span
+												class="badge badge-default badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+									</div>
+									<div
+										class="databox-cell cell-2 text-left no-padding-left padding-bottom-5 padding-top-10">
+									</div>
+									<div
+										class="databox-cell cell-5 text-left no-padding-left padding-bottom-5 padding-top-10">
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="databox-text sonic-silver darkgray pull-left no-margin">国际市场签约排名</span>
+											<span
+												class="databox-text sonic-silver darkgray pull-right no-margin uppercase">签约额</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span class="badge badge-blue badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">沈变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">277656万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="badge badge-orange badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span class="badge badge-pink badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="badge badge-palegreen badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="badge badge-blueberry badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div
+											class="databox-row bordered-bottom bordered-ivory padding-5"
+											style="height: 12.5%">
+											<span
+												class="badge badge-yellow badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+										<div class="databox-row padding-5" style="height: 12.5%">
+											<span
+												class="badge badge-default badge-empty pull-left margin-5"></span>
+											<span
+												class="databox-text darkgray pull-left no-margin hidden-xs">衡变</span>
+											<span
+												class="databox-text darkgray pull-right no-margin uppercase">228933万元</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                            </div>
-                            <h6 class="row-title before-blue">Large Databoxes</h6>
-                            <div class="row">
-                                <div class="col-lg-4 col-sm-4 col-xs-4">
-                                    <div class="databox databox-lg radius-bordered databox-shadowed">
-                                        <div class="databox-left bg-white">
-                                            <div class="databox-sparkline">
-                                                <span data-sparkline="bar" data-height="40px" data-width="100%" data-barwidth="7px" data-barspacing="3px" data-stackedbarcolor='["#11a9cc", "#ffce55"]'>
-                                                    2:2,2:3,3:2,1:3,3:3
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right bordered-thick bordered-sky bg-white">
-                                            <span class="databox-number sky"><i class="fa fa-user"></i>2485</span>
-                                            <div class="databox-text darkgray">NEW & RETURNING USERS</div>
-                                            <div class="databox-stat bg-sky radius-bordered">
-                                                <div class="stat-text">10 %</div>
-                                                <i class="stat-icon fa fa-long-arrow-up"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-4 col-xs-4">
-                                    <div class="databox databox-lg radius-bordered databox-shadowed databox-graded">
-                                        <div class="databox-left bg-palegreen">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="50" data-animate="500" data-linewidth="3" data-size="60" data-trackcolor="#aadc95"><span class="white font-90">50%</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right">
-                                            <span class="databox-number green">206</span>
-                                            <div class="databox-text darkgray">TRAFFIC USED (GB)</div>
-                                            <div class="databox-stat bg-palegreen radius-bordered">
-                                                <div class="stat-text">10%</div>
-                                                <i class="stat-icon fa fa-arrow-up"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-4 col-xs-4">
-                                    <div class="databox databox-halved databox-lg radius-bordered databox-shadowed">
-                                        <div class="databox-left bg-white">
-                                            <div class="databox-sparkline">
-                                                <span data-sparkline="compositebar" data-height="40px" data-width="100%"
-                                                      data-barcolor="#5db2ff" data-negbarcolor="#f4b400" data-zerocolor="#d73d32"
-                                                      data-barwidth="5px" data-barspacing="4px"
-                                                      data-fillcolor="false" data-linecolor="#e75b8d" data-spotradius="3" data-linewidth="2"
-                                                      data-composite="4, 1, 5, 7, 9, 9, 8, 7, 6, 6, 4, 7">
-                                                    8,4,0,1,4,6,2,4,4,8,10,7,10
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right bg-pink">
-                                            <span class="databox-title white">Users</span>
-                                            <div class="databox-text white">Visit Statistics</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /Page Body -->
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <h6 class="row-title before-darkorange">Larger Databoxes</h6>
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-6 col-xs-12">
-                                    <div class="databox databox-xlg radius-bordered databox-shadowed">
-                                        <div class="databox-left bg-snow">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#11a9cc " data-linecap="butt" data-percent="60" data-animate="500" data-linewidth="7" data-size="150" data-trackcolor="#ffce55">
-                                                    <span class="sky font-150"><i class="fa fa-envelope"></i> Mail</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right no-padding bordered-thick bordered-whitesmoke">
-                                            <div class="databox-row row-6 bg-orange padding-10">
-                                                <div class="databox-sparkline">
-                                                    <span data-sparkline="line" data-height="65px" data-width="100%" data-fillcolor="false" data-linecolor="#fff"
-                                                          data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
-                                                          data-highlightspotcolor="#fff" data-highlightlinecolor="#fff"
-                                                          data-linewidth="3" data-spotradius="5">
-                                                        2,6,7,9,8,5,3,4,4,3,6,7
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-3 bg-yellow padding-10">
-                                                <span class="databox-title pull-left no-margin"><i class="fa fa-envelope"></i> Inbox</span>
-                                                <span class="databox-number pull-right no-margin">129</span>
-                                            </div>
-                                            <div class="databox-row row-3 bg-sky padding-10">
-                                                <span class="databox-title pull-left"><i class="fa fa-mail-forward"></i> Sent</span>
-                                                <span class="databox-number pull-right no-margin">32</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6 col-xs-12">
-                                    <div class="databox databox-xlg radius-bordered databox-shadowed databox-graded">
-                                        <div class="databox-left bg-pink">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#fff" data-linecap="butt" data-percent="60" data-animate="500" data-linewidth="7" data-size="150" data-trackcolor="#f89cbd">
-                                                    <span class="white font-150"><i class="fa fa-bell"></i> Users</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right bordered-thick bordered-warning">
-                                            <div class="databox-row row-6 bordered-bottom bordered-platinum padding-10">
-                                                <div class="databox-cell cell-6 no-padding">
-                                                    <span class="databox-title darkgray">Overview</span>
-                                                    <span class="databox-text darkgray">Your website statistics</span>
-                                                </div>
-                                                <div class="databox-cell cell-6 no-padding">
+	<!--Basic Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 
-                                                </div>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
 
-                                            </div>
-                                            <div class="databox-row row-3 bordered-bottom bordered-platinum">
-                                                <span class="databox-text darkgray padding-10">RETURNING USERS</span>
-                                                <div class="databox-stat bg-yellow radius-bordered">
-                                                    <div class="stat-text">12 %</div>
-                                                    <i class="stat-icon fa fa-arrow-down"></i>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-3">
-                                                <span class="databox-text darkgray padding-10">NEW USERS</span>
-                                                <div class="databox-stat bg-pink radius-bordered">
-                                                    <div class="stat-text">8 %</div>
-                                                    <i class="stat-icon fa fa-arrow-up"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-sm-6 col-xs-12">
-                                    <div class="databox databox-xlg radius-bordered databox-shadowed databox-graded databox-inverted">
-                                        <div class="databox-left bg-orange no-padding">
-                                            <div class="horizontal-space"></div>
-                                            <div class="databox-stat bg-white radius-bordered">
-                                                <div class="stat-text orange">8%</div>
-                                                <i class="stat-icon fa fa-arrow-up orange"></i>
-                                            </div>
-                                            <div class="databox-stat stat-left radius-bordered">
-                                                <div class="stat-text">Burndown</div>
-                                            </div>
-                                            <div class="databox-sparkline">
-                                                <span data-sparkline="line" data-height="158px" data-width="100%" data-fillcolor="#fc8973" data-linecolor="#fff"
-                                                      data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
-                                                      data-highlightspotcolor="#fff" data-highlightlinecolor="#fff"
-                                                      data-linewidth="3" data-spotradius="0">
-                                                    2,6,7,9,8,5,3,4,4,3,6,7
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right bordered-thick bordered-white bg-whitesmoke">
-                                            <div class="databox-row row-3 bordered-bottom bordered-platinum padding-10">
-                                                <span class="databox-text darkgray pull-left no-margin">Messages</span>
-                                                <span class="badge badge-default graded pull-right">1</span>
-                                            </div>
-                                            <div class="databox-row row-3 bordered-bottom bordered-platinum padding-10">
-                                                <span class="databox-text darkgray pull-left no-margin">Tasks In Progress</span>
-                                                <span class="badge badge-default graded pull-right">8</span>
-                                            </div>
-                                            <div class="databox-row row-3 bordered-bottom bordered-platinum padding-10">
-                                                <span class="databox-text darkgray pull-left no-margin">Tasks Done</span>
-                                                <span class="badge badge-default graded pull-right">7</span>
-                                            </div>
-                                            <div class="databox-row row-3 padding-10">
-                                                <span class="databox-text darkgray pull-left no-margin">Backlogs</span>
-                                                <span class="badge badge-default graded pull-right">2</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6 col-xs-12">
-                                    <div class="databox databox-xlg radius-bordered databox-shadowed databox-graded">
-
-                                        <div class="databox-left bg-ivory">
-                                            <div class="databox-piechart padding-10">
-                                                <div data-toggle="easypiechart" class="easyPieChart" data-barcolor="#2dc3e8 " data-linecap="butt"
-                                                     data-percent="25" data-animate="500" data-linewidth="10" data-size="130" data-trackcolor="#fafafa">
-                                                    <span class="sky font-150"><i class="fa fa-cloud-download"></i> 25% </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-right bg-azure bordered-thick bordered-white no-padding">
-                                            <div class="horizontal-space space-lg"></div>
-                                            <div class="databox-stat radius-bordered">
-                                                <div class="stat-text">Download/Upload</div>
-                                            </div>
-                                            <div class="databox-sparkline">
-                                                <span data-sparkline="compositeline" data-height="153px" data-width="100%" data-linecolor="#fff" data-secondlinecolor="#f5f5f5"
-                                                      data-fillcolor="rgb(92,211,240)" data-secondfillcolor="rgba(92,211,240,.10)"
-                                                      data-spotradius="0"
-                                                      data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
-                                                      data-highlightspotcolor="#fff" data-highlightlinecolor="#fff"
-                                                      data-linewidth="2" data-secondlinewidth="2"
-                                                      data-composite="5, 4, 1, 5, 3, 2, 1, 2">
-                                                    3,3,4,3,2,3,3,2
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <h6 class="row-title before-yellow">Largest Databoxes</h6>
-                            <div class="row">
-                                <div class="col-lg-12 col-sm-12 col-xs-12">
-                                    <div class="databox databox-xxlg radius-bordered databox-shadowed databox-halved">
-                                        <div class="databox-left bg-whitesmoke padding-top-10">
-                                            <div class="databox-stat bg-orange radius-bordered">
-                                                <div class="stat-text">24 %</div>
-                                                <i class="stat-icon fa fa-long-arrow-down"></i>
-                                            </div>
-                                            <div class="databox-stat stat-left radius-bordered">
-                                                <div class="stat-text darkgray">CPU USAGE</div>
-                                            </div>
-                                            <canvas id="pie" height="230" width="230"></canvas>
-                                        </div>
-                                        <div class="databox-right bordered-thick bordered-whitesmoke bg-blue no-padding">
-                                            <div class="databox-stat bg-yellow radius-bordered">
-                                                <div class="stat-text">10 %</div>
-                                                <i class="stat-icon fa fa-long-arrow-up"></i>
-                                            </div>
-                                            <div class="databox-stat stat-left radius-bordered">
-                                                <div class="stat-text white">CPU USAGE</div>
-                                            </div>
-                                            <div id="realtime-chart" class="chart chart-lg">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Vertical Databoxes -->
-                            <h6 class="row-title before-azure">Vertical Databoxes</h6>
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded databox-vertical">
-                                        <div class="databox-top bg-blue">
-                                            <div class="databox-icon">
-                                                <i class="fa fa-clock-o"></i>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom text-align-center">
-                                            <span class="databox-text">FRIDAY - 2014 16 MAY</span>
-                                            <span class="databox-text">11:24 - AM</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-vertical">
-                                        <div class="databox-top bg-orange no-padding">
-                                            <div class="databox-row row-2"></div>
-                                            <div class="databox-row row-10">
-                                                <div class="databox-sparkline">
-                                                    <span data-sparkline="bar" data-height="42px" data-width="100%" data-barcolor="#e7573a" data-negbarcolor="#e7573a" data-zerocolor="#e7573a"
-                                                          data-barwidth="7px" data-barspacing="3px">
-                                                        2,4,5,6,3,2,0,4,2,4,3,2,6,4,5,1,4,5,6,9,1
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom no-padding bg-white">
-                                            <div class="databox-row">
-                                                <div class="databox-cell cell-6 text-align-center bordered-right bordered-platinum">
-                                                    <span class="databox-number lightcarbon">206</span>
-                                                    <span class="databox-text sonic-silver no-margin">FOLLOWERS</span>
-                                                </div>
-                                                <div class="databox-cell cell-6 text-align-center">
-                                                    <span class="databox-number lightcarbon">405</span>
-                                                    <span class="databox-text sonic-silver no-margin">FOLLOWING</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded databox-vertical">
-                                        <div class="databox-top no-padding ">
-                                            <div class="databox-row">
-                                                <div class="databox-cell cell-6 text-align-center bg-sky">
-                                                    <span class="databox-number">13</span>
-                                                    <span class="databox-text">TASKS</span>
-                                                </div>
-                                                <div class="databox-cell cell-6 text-align-center bg-azure">
-                                                    <span class="databox-number">9</span>
-                                                    <span class="databox-text">BACKLOGS</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom">
-                                            <span class="databox-text">TASKS</span>
-                                            <div class="progress progress-sm">
-                                                <div class="progress-bar progress-bar-azure" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-                                                    <span class="sr-only">
-                                                        20% Complete
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox radius-bordered databox-shadowed databox-graded databox-vertical">
-                                        <div class="databox-top no-padding ">
-                                            <div class="databox-row">
-                                                <div class="databox-cell cell-6 text-align-center bg-orange">
-                                                    <span class="databox-number">9</span>
-                                                    <span class="databox-text">ORDERS</span>
-                                                </div>
-                                                <div class="databox-cell cell-6 text-align-center bg-darkorange">
-                                                    <span class="databox-number">3</span>
-                                                    <span class="databox-text">DELIVERED</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom">
-                                            <span class="databox-text">DELIVERY PERCENT</span>
-                                            <div class="progress progress-sm">
-                                                <div class="progress-bar progress-bar-orange" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:30%">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <h6 class="row-title before-orange">Large Vertical Databoxes</h6>
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
-                                        <div class="databox-top bg-palegreen no-padding">
-                                            <div class="horizontal-space space-lg"></div>
-                                            <div class="databox-sparkline no-margin">
-                                                <span data-sparkline="compositebar" data-height="82px" data-width="100%"
-                                                      data-barcolor="#b0dc81"
-                                                      data-barwidth="10px" data-barspacing="5px"
-                                                      data-fillcolor="false" data-linecolor="#fff" data-spotradius="3" data-linewidth="2"
-                                                      data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#fff"
-                                                      data-highlightspotcolor="#fff" data-highlightlinecolor="#fff"
-                                                      data-composite="7, 6, 5, 7, 9, 10, 8, 7, 6, 6, 4, 7, 8">
-                                                    8,4,1,2,4,6,2,4,4,8,10,7,10
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom no-padding">
-                                            <div class="databox-row">
-                                                <div class="databox-cell cell-6 text-align-left">
-                                                    <span class="databox-text">Sales Total</span>
-                                                    <span class="databox-number">$23,657</span>
-                                                </div>
-                                                <div class="databox-cell cell-6 text-align-right">
-                                                    <span class="databox-text">September</span>
-                                                    <span class="databox-number font-70">$1,257</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
-                                        <div class="databox-top no-padding">
-                                            <img src="${pageContext.request.contextPath}/jsp/ui2/assets/img/temp1.png" alt="" style="height:100px; width:100%;" />
-                                        </div>
-                                        <div class="databox-bottom no-padding bordered-thick bordered-orange">
-                                            <div class="databox-row">
-                                                <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
-                                                    <span class="databox-number lightcarbon no-margin">510</span>
-                                                    <span class="databox-text sonic-silver  no-margin">Posts</span>
-                                                </div>
-                                                <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
-                                                    <span class="databox-number lightcarbon no-margin">908</span>
-                                                    <span class="databox-text sonic-silver no-margin">Followers</span>
-                                                </div>
-                                                <div class="databox-cell cell-4 no-padding text-align-center">
-                                                    <span class="databox-number lightcarbon no-margin">286</span>
-                                                    <span class="databox-text sonic-silver no-margin">Following</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-6 col-xs-12">
-                                    <div class="databox databox-lg databox-halved radius-bordered databox-shadowed databox-vertical">
-                                        <div class="databox-top bg-darkorange no-padding">
-                                            <div class="databox-icon">
-                                                <i class="wi wi-cloudy-windy"></i>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom bg-white no-padding">
-                                            <div class="databox-row text-align-center">
-                                                <div class="databox-cell cell-6 bordered-right bordered-platinum padding-5">
-                                                    <span class="databox-number lightcarbon">14°</span>
-                                                    <span class="databox-header lightcarbon"><i class="wi wi-strong-wind"></i></span>
+	<!--Beyond Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/beyond.min.js"></script>
 
 
-                                                </div>
-                                                <div class="databox-cell cell-6 padding-5">
-                                                    <span class="databox-number lightcarbon">13°</span>
-                                                    <span class="databox-header lightcarbon"><i class="wi wi-rain"></i></span>
+	<!--Flot Charts Needed Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.resize.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.pie.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.orderbars.js"></script>
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-4 col-xs-6">
-                                    <div class="databox databox-lg databox-vertical databox-inverted bg-white databox-shadowed">
-                                        <div class="databox-top">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart block-center"
-                                                     data-barcolor="#e75b8d" data-linecap="butt" data-percent="40" data-animate="500"
-                                                     data-linewidth="8" data-size="100" data-trackcolor="#eee">
-                                                    <span class="white font-200"><i class="fa fa-tags pink"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom no-padding text-align-center">
-                                            <span class="databox-number lightcarbon no-margin">11</span>
-                                            <span class="databox-text lightcarbon no-margin">NEW TICKETS</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 col-sm-4 col-xs-6">
-                                    <div class="databox databox-lg databox-vertical databox-inverted databox-graded">
-                                        <div class="databox-top">
-                                            <div class="databox-piechart">
-                                                <div data-toggle="easypiechart" class="easyPieChart block-center"
-                                                     data-barcolor="#11a9cc" data-linecap="butt" data-percent="80" data-animate="500"
-                                                     data-linewidth="8" data-size="100" data-trackcolor="#eee">
-                                                    <span class="white font-200"><i class="fa fa-gift sky"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom no-padding text-align-center">
-                                            <span class="databox-number lightcarbon no-margin">9</span>
-                                            <span class="databox-text lightcarbon no-margin">NEW PRODUCTS</span>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <h6 class="row-title before-blueberry">Larger Vertical Databoxes</h6>
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox databox-xlg radius-bordered databox-shadowed databox-vertical">
-                                        <div class="databox-top bg-blue">
-                                            <span class="databox-header">JANUARY 2014</span>
-                                        </div>
-                                        <div class="databox-bottom bg-white no-padding">
-                                            <div id="donut-chart" style="height:150px;"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-4 col-xs-4">
-                                    <div class="databox databox-xlg databox-halved radius-bordered databox-shadowed databox-vertical">
-                                        <div class="databox-top bg-white padding-10">
-                                            <div class="col-lg-4 col-sm-4 col-xs-4">
-                                                <img src="${pageContext.request.contextPath}/jsp/ui2/assets/img/avatars/sergey-azovskiy.jpg" style="width:75px; height:75px;" class="image-circular bordered-3 bordered-palegreen" />
-                                            </div>
-                                            <div class="col-lg-8 col-sm-8 col-xs-8 text-align-left padding-10">
-                                                <span class="databox-header carbon no-margin">Martin James</span>
-                                                <span class="databox-text lightcarbon no-margin"> Software Manager at Microsoft </span>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom bg-white no-padding">
-                                            <div class="databox-row row-12">
-                                                <div class="databox-row row-6 no-padding">
-                                                    <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
-                                                        <span class="databox-text sonic-silver  no-margin">Posts</span>
-                                                        <span class="databox-number lightcarbon no-margin">510</span>
-                                                    </div>
-                                                    <div class="databox-cell cell-4 no-padding text-align-center bordered-right bordered-platinum">
-                                                        <span class="databox-text sonic-silver no-margin">Followers</span>
-                                                        <span class="databox-number lightcarbon no-margin">908</span>
-                                                    </div>
-                                                    <div class="databox-cell cell-4 no-padding text-align-center">
-                                                        <span class="databox-text sonic-silver no-margin">Following</span>
-                                                        <span class="databox-number lightcarbon no-margin">286</span>
-                                                    </div>
-                                                </div>
-                                                <div class="databox-row row-6 padding-10">
-                                                    <button class="btn btn-palegreen btn-sm pull-right">FOLLOW</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-5 col-sm-6 col-xs-12">
-                                    <div class="databox databox-xlg radius-bordered databox-shadowed databox-vertical">
-                                        <div class="databox-top bg-white">
-                                            <span class="databox-header orange">WEEKLY SALE STAT</span>
-                                        </div>
-                                        <div class="databox-bottom bg-white no-padding">
-                                            <div class="databox-sparkline">
-                                                <span data-sparkline="line" data-height="158px" data-width="100%" data-fillcolor="#ffce55" data-linecolor="#fb6e52"
-                                                      data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
-                                                      data-highlightspotcolor="#fb6e52" data-highlightlinecolor="#fb6e52"
-                                                      data-linewidth="3" data-spotradius="0">
-                                                    2,6,7,9,8,5,3,4,4,3,6,7
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <h6 class="row-title before-pink">Larger-er Vertical Databoxes</h6>
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox databox-xxlg databox-inverted databox-vertical databox-shadowed databox-graded">
-                                        <div class="databox-top padding-10">
-                                            <div id="pie-chart-bandwidth" class="chart chart"></div>
-                                            <div class="flot-donut-caption">
-                                                <span class="databox-number lightcarbon no-margin">160GB</span>
-                                                <span class="databox-text sonic-silver  no-margin">Total Usage</span>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom no-padding bg-white bordered bordered-platinum">
-                                            <div class="databox-row row-12 no-padding">
-                                                <div class="databox-cell cell-4 no-padding text-align-center bordered-bottom-5 bordered-sky">
-                                                    <span class="databox-title lightcarbon no-margin"><i class="fa fa-picture-o"></i></span>
-                                                    <span class="databox-text sonic-silver  no-margin">50GB</span>
-                                                </div>
-                                                <div class="databox-cell cell-4 no-padding text-align-center bordered-bottom-5 bordered-yellow">
-                                                    <span class="databox-title lightcarbon no-margin"><i class="fa fa-video-camera"></i></span>
-                                                    <span class="databox-text sonic-silver  no-margin">80GB</span>
-                                                </div>
-                                                <div class="databox-cell cell-4 no-padding text-align-center bordered-bottom-5 bordered-pink">
-                                                    <span class="databox-title lightcarbon no-margin"><i class="fa fa-music"></i></span>
-                                                    <span class="databox-text sonic-silver no-margin">30GB</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6 col-xs-12">
-                                    <div class="databox databox-xxlg databox-vertical databox-inverted">
-                                        <div class="databox-top bg-whitesmoke no-padding">
-                                            <div class="databox-row row-2 bg-orange no-padding">
-                                                <div class="databox-cell cell-1 text-align-center no-padding padding-top-5">
-                                                    <span class="databox-number white"><i class="fa fa-bar-chart-o no-margin"></i></span>
-                                                </div>
-                                                <div class="databox-cell cell-8 no-padding padding-top-5 text-align-left">
-                                                    <span class="databox-number white">PAGE VIEWS</span>
-                                                </div>
-                                                <div class="databox-cell cell-3 text-align-right padding-10">
-                                                    <span class="databox-text white">13 DECEMBER</span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-4">
-                                                <div class="databox-cell cell-6 no-padding padding-10 padding-left-20 text-align-left">
-                                                    <span class="databox-number orange no-margin">534,908</span>
-                                                    <span class="databox-text sky no-margin">OVERAL VIEWS</span>
-                                                </div>
-                                                <div class="databox-cell cell-2 no-padding padding-10 text-align-left">
-                                                    <span class="databox-number orange no-margin">4,129</span>
-                                                    <span class="databox-text darkgray no-margin">THIS WEEK</span>
-                                                </div>
-                                                <div class="databox-cell cell-2 no-padding padding-10 text-align-left">
-                                                    <span class="databox-number orange no-margin">329</span>
-                                                    <span class="databox-text darkgray no-margin">YESTERDAY</span>
-                                                </div>
-                                                <div class="databox-cell cell-2 no-padding padding-10 text-align-left">
-                                                    <span class="databox-number orange no-margin">104</span>
-                                                    <span class="databox-text darkgray no-margin">TODAY</span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-6 no-padding">
-                                                <div class="databox-sparkline">
-                                                    <span data-sparkline="line" data-height="126px" data-width="100%" data-fillcolor="#37c2e2" data-linecolor="#37c2e2"
-                                                          data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
-                                                          data-highlightspotcolor="#f5f5f5 " data-highlightlinecolor="#f5f5f5"
-                                                          data-linewidth="2" data-spotradius="0">
-                                                        5,7,6,5,9,4,3,7,2
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom bg-sky no-padding">
-                                            <div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-                                                <span class="databox-header white">Mon</span>
-                                            </div>
-                                            <div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-                                                <span class="databox-header white">Tues</span>
-                                            </div>
-                                            <div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-                                                <span class="databox-header white">Wed</span>
-                                            </div>
-                                            <div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-                                                <span class="databox-header white">Thu</span>
-                                            </div>
-                                            <div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-                                                <span class="databox-header white">Fri</span>
-                                            </div>
-                                            <div class="databox-cell cell-2 text-align-center no-padding padding-top-5">
-                                                <span class="databox-header white">Sat</span>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox databox-xxlg databox-inverted databox-vertical databox-shadowed databox-graded radius-bordered">
-                                        <div class="databox-top bg-white ">
-                                            <div class="databox-row row-1">
-                                                <div class="databox-stat orange radius-bordered font-120">
-                                                    <i class="stat-icon wi wi-rain icon-xlg"></i>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-8">
-                                                <div id="pie-chart-weather" class="chart" style="height:160px;">
-                                                </div>
-                                                <div class="flot-donut-caption">
-                                                    <span class="databox-number sonic-silver no-margin">2014</span>
-                                                    <span class="databox-text sonic-silver  no-margin">December</span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-3 padding-10">
-                                                <span class="databox-number darkorange no-margin">Weather</span>
-                                                <span class="databox-text carbon no-margin">ALL SEASON</span>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom no-padding bg-white bordered bordered-platinum">
-                                            <div class="databox-row row-12 no-padding">
-                                                <div class="databox-cell cell-3 no-padding text-align-center bg-yellow">
-                                                    <span class="databox-number no-margin">30%</span>
-                                                    <span class="databox-text no-margin">Rain</span>
-                                                </div>
-                                                <div class="databox-cell cell-3 no-padding text-align-center bg-orange">
-                                                    <span class="databox-number no-margin">11%</span>
-                                                    <span class="databox-text no-margin">Wind</span>
-                                                </div>
-                                                <div class="databox-cell cell-3 no-padding text-align-center bg-darkorange">
-                                                    <span class="databox-number no-margin">37%</span>
-                                                    <span class="databox-text no-margin">Sunny</span>
-                                                </div>
-                                                <div class="databox-cell cell-3 no-padding text-align-center bg-danger">
-                                                    <span class="databox-number no-margin">22%</span>
-                                                    <span class="databox-text no-margin">Snow</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox databox-vertical databox-xxlg databox-halved radius-bordered databox-shadowed">
-                                        <div class="databox-top no-padding bg-palegreen">
-                                            <div class="databox-row row-5 text-align-left padding-10">
-                                                <div class="databox-stat white bg-palegreen font-120">
-                                                    <i class="stat-icon fa fa-caret-up icon-xlg"></i>
-                                                </div>
-                                                <span class="databox-number no-margin">639.73</span>
-                                                <span class="databox-text no-margin">-29 (4.2%)</span>
-                                            </div>
-                                            <div class="databox-row row-7">
-                                                <div class="databox-sparkline no-margin">
-                                                    <span data-sparkline="compositebar" data-height="88px" data-width="100%"
-                                                          data-barcolor="#bfe19a"
-                                                          data-barwidth="5px" data-barspacing="5px"
-                                                          data-fillcolor="false" data-linecolor="#fff" data-spotradius="3" data-linewidth="3"
-                                                          data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#fff"
-                                                          data-highlightspotcolor="#fff" data-highlightlinecolor="#fff"
-                                                          data-composite="7, 6, 5, 7, 9, 10, 8, 7, 6, 4, 7, 8, 8,4,1,2,4,6,2,4,8,10">
-                                                        8,4,1,2,4,6,2,4,4,8,10,7, 7, 6, 5, 7, 9, 10, 8, 7, 6, 6
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom bg-white no-padding">
-                                            <div class="databox-row row-2 padding-10">
-                                                <span class="databox-text sonic-silver no-margin"><i class="glyphicon glyphicon-time gray"></i>Today, 4:15 PM</span>
-                                            </div>
-                                            <div class="databox-row row-4 padding-10">
-                                                <div class="col-lg-6 bg-whitesmoke text-align-center">
-                                                    <span class="databox-number gray">16.8 M</span>
-                                                </div>
-                                                <div class="col-lg-6 bg-whitesmoke text-align-center bordered-left-3 bordered-white">
-                                                    <span class="databox-number gray">12 M</span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-2">
-                                                <div class="col-lg-6">
-                                                    <span class="databox-text sonic-silver no-margin"><i class="fa fa-caret-down orange"></i>Monthly</span>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <span class="databox-text sonic-silver no-margin"><i class="fa fa-caret-up palegreen"></i>Yearly</span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-4">
-                                                <div class="col-lg-6 text-align-center">
-                                                    <div class="databox-sparkline">
-                                                        <span data-sparkline="bar" data-height="35px" data-width="100%"
-                                                              data-barwidth="5px" data-barspacing="3px" data-stackedbarcolor='["#a0d468", "#ffce55"]'>
-                                                            2:2,2:3,3:2,1:3,4:2,2:2,3:2,1:3,3:2
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 padding-5 text-align-center">
-                                                    <div class="databox-sparkline">
-                                                        <span data-sparkline="line" data-height="35px" data-width="100%" data-fillcolor="false" data-linecolor="#bfe19a"
-                                                              data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
-                                                              data-highlightspotcolor="#fb6e52 " data-highlightlinecolor="#fb6e52 "
-                                                              data-linewidth="2" data-spotradius="3">
-                                                            2,6,7,9,8,5,3,4,4,3,6,7
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-sm-6 col-xs-12">
-                                    <div class="databox databox-xxlg radius-bordered databox-shadowed databox-vertical databox-graded">
-                                        <div class="databox-top bordered-bottom-2 bordered-orange bg-ivory">
-                                            <div class="col-lg-8 col-sm-8 col-xs-8 text-align-left">
-                                                <span class="databox-text carbon">DATA TRANSFER STATS</span>
-                                                <span class="databox-text carbon no-margin">Last Week</span>
-                                            </div>
-                                            <div class="col-lg-4 col-sm-4 col-xs-4 text-align-right">
-                                                <div class="databox-stat bg-palegreen radius-bordered">
-                                                    <div class="stat-text">58%</div>
-                                                    <i class="stat-icon fa fa-arrow-up"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom">
-                                            <div id="bar-chart" class="chart"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-3 col-xs-3">
-                                    <div class="databox databox-xxlg databox-halved radius-bordered databox-shadowed databox-graded databox-vertical">
-                                        <div class="databox-top bg-pink padding-30">
-                                            <div class="databox-stat stat-left radius-bordered">
-                                                <div class="stat-text white">PAGE VIEWS</div>
-                                            </div>
-                                            <div class="databox-stat white font-120">
-                                                <i class="stat-icon fa fa-caret-down icon-xlg"></i>
-                                            </div>
-                                            <div class="databox-sparkline">
-                                                <span data-sparkline="line" data-height="90px" data-width="100%" data-fillcolor="false" data-linecolor="#fff"
-                                                      data-spotcolor="#fafafa" data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
-                                                      data-highlightspotcolor="#f5f5f5 " data-highlightlinecolor="#f5f5f5"
-                                                      data-linewidth="3" data-spotradius="0">
-                                                    1,3,2,5,4,0,5,7,6,5
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="databox-bottom padding-20">
-                                            <div class="databox-row row-6">
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number pink no-margin">4,129</span>
-                                                    <span class="databox-text darkgray no-margin">Profile</span>
-                                                </div>
-                                                <div class="databox-cell cell-8 padding-10">
-                                                    <div class="databox-sparkline">
-                                                        <span data-sparkline="bar" data-height="20px" data-width="100%" data-barcolor="#ccc" data-negbarcolor="#ccc" data-zerocolor="#ccc"
-                                                              data-barwidth="5px" data-barspacing="2px">
-                                                            2,4,5,6,3,2,0,4,2,4,3,2,6,3,2
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-6">
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number pink no-margin">2,703</span>
-                                                    <span class="databox-text darkgray no-margin">About</span>
-                                                </div>
-                                                <div class="databox-cell cell-8 padding-10">
-                                                    <div class="databox-sparkline">
-                                                        <span data-sparkline="bar" data-height="20px" data-width="100%" data-barcolor="#ccc" data-negbarcolor="#ccc" data-zerocolor="#ccc"
-                                                              data-barwidth="5px" data-barspacing="2px">
-                                                            4,2,4,3,2,6,3,2,2,4,5,6,3,2,0
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <h6 class="row-title before-sky">Largest Vertical Databoxes</h6>
-                            <div class="row">
-                                <div class="col-lg-8 col-sm-12 col-xs-12">
-                                    <div class="databox databox-vertical databox-xxxlg radius-bordered databox-shadowed">
-                                        <div class="databox-top bg-white bordered-bottom-1 bordered-platinum text-align-left padding-10">
-                                            <div class="databox-text darkgray">CONSUMPTION</div>
-                                        </div>
-                                        <div class="databox-bottom bg-white no-padding ">
-                                            <div class="databox-row row-3 block-center bg-ivory">
-                                                <div class="databox-cell cell-4 padding-10">
-                                                    <div class="databox-piechart">
-                                                        <div data-toggle="easypiechart" class="easyPieChart pull-right" style="margin:0 auto;"
-                                                             data-barcolor="#5db2ff" data-linecap="butt" data-percent="60" data-animate="500"
-                                                             data-linewidth="5" data-size="100" data-trackcolor="#eeeeee">
-                                                            <span class="white font-180"><i class="glyphicon glyphicon-map-marker blue"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="databox-cell cell-4 padding-10">
-                                                    <div class="databox-piechart">
-                                                        <div data-toggle="easypiechart" class="easyPieChart block-center" style="margin:0 auto;"
-                                                             data-barcolor="#e75b8d" data-linecap="butt" data-percent="70" data-animate="500"
-                                                             data-linewidth="5" data-size="100" data-trackcolor="#eeeeee">
-                                                            <span class="white font-150"><i class="fa fa-camera pink"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="databox-cell cell-4 padding-10">
-                                                    <div class="databox-piechart">
-                                                        <div data-toggle="easypiechart" class="easyPieChart pull-left" style="margin:0 auto;"
-                                                             data-barcolor="#8cc474" data-linecap="butt" data-percent="60" data-animate="500"
-                                                             data-linewidth="5" data-size="100" data-trackcolor="#eeeeee">
-                                                            <span class="white font-200"><i class="fa fa-bolt green"></i></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-1 bg-ivory bordered-bottom-1 bordered-lightgray" style="border-bottom-style:dashed;">
-                                                <div class="databox-cell cell-4 padding-right-20">
-                                                    <span class="databox-text darkcarbon pull-right no-margin"><i class="fa fa-arrow-up green"></i></span>
-                                                    <span class="databox-number carbon pull-right">909</span>
-                                                    <span class="databox-number gray pull-right"> $</span>
-                                                </div>
-                                                <div class="databox-cell cell-4">
-                                                    <div class="block-center" style="width:75px;">
-                                                        <span class="databox-text darkcarbon pull-right no-margin"><i class="fa fa-check blue"></i></span>
-                                                        <span class="databox-number carbon pull-right">643</span>
-                                                        <span class="databox-number gray pull-right"> $</span>
-                                                    </div>
-                                                </div>
-                                                <div class="databox-cell cell-4 padding-left-30">
-                                                    <span class="databox-number gray pull-left"> $</span>
-                                                    <span class="databox-number carbon pull-left">257</span>
-                                                    <span class="databox-text darkcarbon pull-left no-margin"><i class="fa fa-arrow-down orange"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-2 no-padding bg-ivory">
-                                                <div class="databox-cell cell-12 no-padding bordered-left-3 bordered-pink">
-                                                    <div class="horizontal-space"></div>
-                                                    <div class="databox-sparkline">
-                                                        <span data-sparkline="bar" data-height="62px" data-width="100%" data-barcolor="#cfd3de" data-negbarcolor="#cfd3de" data-zerocolor="#cfd3de"
-                                                              data-barwidth="16px" data-barspacing="5px">
-                                                            2,4,5,6,3,2,0,4,2,4,3,2,6,4,5,1,4,5,6,9,1
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-1 padding-10">
-                                                <div class="databox-text darkgray no-margin">DISTRIBUTION</div>
-                                            </div>
-                                            <div class="databox-row row-3 no-padding bg-ivory bordered-bottom-1 bordered-platinum silver" style="font-size:12px;">
-                                                <table class="table table-condensed table-striped">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="padding-left-10">
-                                                                iPad
-                                                            </td>
-                                                            <td>
-                                                                1208
-                                                            </td>
-                                                            <td>
-                                                                874,993
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="padding-left-10">
-                                                                iPhone
-                                                            </td>
-                                                            <td>
-                                                                7864
-                                                            </td>
-                                                            <td>
-                                                                761,083
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="padding-left-10">
-                                                                iPod
-                                                            </td>
-                                                            <td>
-                                                                903
-                                                            </td>
-                                                            <td>
-                                                                874,032
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="padding-left-10">
-                                                                iMac
-                                                            </td>
-                                                            <td>
-                                                                987
-                                                            </td>
-                                                            <td>
-                                                                165,973
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="databox-row row-2 padding-20 bg-whitesmoke">
-                                                <a href="javascript:void(0);" class="btn btn-default pull-right">Save Report</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-sm-4 col-xs-4">
-                                    <div class="databox databox-vertical databox-xxxlg radius-bordered databox-shadowed">
-                                        <div class="databox-top bg-orange text-align-left padding-left-30">
-                                            <span class="databox-header"><i class="glyphicon glyphicon-map-marker"></i> NEW YORK CITY</span>
-                                        </div>
-                                        <div class="databox-bottom no-padding bg-sky">
-                                            <div class="databox-row row-4 bg-yellow padding-30 text-align-left">
-                                                <span class="databox-text padding-bottom-5" style="font-size:20px;">FRI 29/09</span>
-                                                <span class="databox-number" style="font-size:44px;">14° <i class="wi wi-day-cloudy"></i></span>
-                                            </div>
-                                            <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                                <div class="databox-cell cell-8">
-                                                    <span class="databox-title no-margin">SAT</span>
-                                                </div>
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number">18°  <i class="wi wi-day-cloudy"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                                <div class="databox-cell cell-8">
-                                                    <span class="databox-title no-margin">SUN</span>
-                                                </div>
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number">25°  <i class="wi wi-cloudy-gusts"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                                <div class="databox-cell cell-8">
-                                                    <span class="databox-title no-margin">MON</span>
-                                                </div>
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number">22°  <i class="wi wi-windy"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                                <div class="databox-cell cell-8">
-                                                    <span class="databox-title no-margin">TUE</span>
-                                                </div>
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number">19°  <i class="wi wi-day-showers"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                                <div class="databox-cell cell-8">
-                                                    <span class="databox-title no-margin">WED</span>
-                                                </div>
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number">16°  <i class="wi wi-day-fog"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                                <div class="databox-cell cell-8">
-                                                    <span class="databox-title no-margin">THU</span>
-                                                </div>
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number">14°  <i class="wi wi-day-lightning"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-1 padding-5 padding-left-30 text-align-left bordered-bottom bordered-whitesmoke">
-                                                <div class="databox-cell cell-8">
-                                                    <span class="databox-title no-margin">FRI</span>
-                                                </div>
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number">11°  <i class="wi wi-day-rain-mix"></i></span>
-                                                </div>
-                                            </div>
-                                            <div class="databox-row row-1 padding-5 padding-left-30 text-align-left">
-                                                <div class="databox-cell cell-8">
-                                                    <span class="databox-title no-margin">SAT</span>
-                                                </div>
-                                                <div class="databox-cell cell-4">
-                                                    <span class="databox-number">29°  <i class="wi wi-day-hail"></i></span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-         
-
-    <!--Basic Scripts-->
-<script
-	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
-
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <!--Beyond Scripts-->
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/beyond.min.js"></script>
-
-    <!--Page Related Scripts-->
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/sparkline/jquery.sparkline.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/sparkline/sparkline-init.js"></script>
-	<script src="${pageContext.request.contextPath}/jsp/ui2/assets/excanvas.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/easypiechart/easypiechart-init.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/raphael-2.0.2.min.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris-init.js"></script>
-
- 
-
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/chartjs/chart.js"></script>
-    <script>
-        var chartfirstcolor = "#57b5e3";
-        var chartsecondcolor = "#f4b400";
-        var chartthirdcolor = "#d73d32";
-        var chartfourthcolor = "#8cc474";
-        var chartfifthcolor = "#bc5679";
-        var gridbordercolor = "#eee";
-
-        var pieData = [
-            {
-                value: 30,
-                color: chartfirstcolor
-            },
-            {
-                value: 50,
-                color: chartsecondcolor
-            },
-            {
-                value: 100,
-                color: chartfourthcolor
-            }
-
-        ];
-     //   new Chart(document.getElementById("pie").getContext("2d")).Pie(pieData);
+	<!--Page Related Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/sparkline/jquery.sparkline.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/sparkline/sparkline-init.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/excanvas.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/easypiechart/easypiechart-init.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/raphael-2.0.2.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris-init.js"></script>
 
 
-        InitiateEasyPieChart.init();
-        InitiateSparklineCharts.init();
-        InitiateDonutChart.init();
-        //Pie Chart BandWidth
-        var data = [
-            { data: [[1, 50]], color: '#11a9cc' },
-            { data: [[1, 80]], color: '#ffce55' },
-            { data: [[1, 30]], color: '#e75b8d' }
-        ];
-        var placeholder = $("#pie-chart-bandwidth");
-        placeholder.unbind();
 
-       /*  $.plot(placeholder, data, {
-            series: {
-                pie: {
-                    innerRadius: 0.7,
-                    show: true,
-                    gradient: {
-                        radial: true,
-                        colors: [
-                            { opacity: 1.0 },
-                            { opacity: 1.0 },
-                            { opacity: 1.0 }
-                        ]
-                    }
-                }
-            }
-        }); */
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/chartjs/chart.js"></script>
+	<script>
 
-        //Pie Chart Weather
-        var data = [
-            { data: [[1, 30]], color: '#ffce55' },
-            { data: [[1, 11]], color: '#e46f61' },
-            { data: [[1, 37]], color: '#ed4e2a' },
-            { data: [[1, 22]], color: '#fb6e52' }
-        ];
-        var placeholder = $("#pie-chart-weather");
-        placeholder.unbind();
+	window.data = JSON.parse('${data}');
+	
+	$("#lrzewcl").text(data.zt[0].ndjhwcl);
+	$("#lrze").text(data.zt[0].ndlj + "万元");
+	$("#lrzetbzf").text(data.zt[0].ndljtbzf);
+	
+	
+	$("#xssrwcl").text(data.zt[1].ndjhwcl);
+	$("#xssr").text(data.zt[1].ndlj + "万元");
+	$("#xssrtbzf").text(data.zt[1].ndljtbzf);
+	
+	$("#yszkwcl").text(data.zt[2].ndjhwcl);
+	$("#yszk").text(data.zt[2].ndlj + "万元");
+	$("#yszktbzf").text(data.zt[2].ndljtbzf);
+	
+	$("#chwcl").text(data.zt[3].ndjhwcl);
+	$("#ch").text(data.zt[3].ndlj + "万元");
+	$("#chtbzf").text(data.zt[3].ndljtbzf);
+	
+    //-----------------------------Pie Charts-----------------------------------------//
+    InitiateEasyPieChart.init();
 
-       /*  $.plot(placeholder, data, {
-            series: {
-                pie: {
-                    innerRadius: 0.80,
-                    show: true,
-                    gradient: {
-                        radial: true,
-                        colors: [
-                            { opacity: 1.0 },
-                            { opacity: 1.0 },
-                            { opacity: 1.0 },
-                            { opacity: 1.0 }
-                        ]
-                    }
-                }
-            }
-        }); */
-        //Bar Chart
-        var d1_1 = [];
-        for (var i = 1; i <= 7; i += 1)
-            d1_1.push([i, parseInt(Math.random() * 50)]);
+    //-------------------定义数据、维度------------------------------------------------//
+    var chartfirstcolor = "#57b5e3";
+    var chartsecondcolor = "#f4b400";
+    var chartthirdcolor = "#d73d32";
+    var chartfourthcolor = "#8cc474";
+    var chartfifthcolor = "#bc5679";
+    var gridbordercolor = "#eee";
 
-        var d1_2 = [];
-        for (var i = 1; i <= 7; i += 1)
-            d1_2.push([i, parseInt(Math.random() * 50)]);
+    function getChartOpt(index){
+    
+	    var d1_year_plan = [];
+	    //插入动态数据
+	    for (var i = 1; i <= 13; i += 1)
+	        d1_year_plan.push([i, data.jydw[index][i - 1].ndjh]);
+	
+	    var d1_year_amount = [];
+	    //插入动态数据
+	    for (var i = 1; i <= 13; i += 1)
+	        d1_year_amount.push([i, data.jydw[index][i - 1].ndlj]);
+	
+	    var d1_last_year_amount = [];
+	    //插入动态数据
+	    for (var i = 1; i <= 13; i += 1)
+	        d1_last_year_amount.push([i, data.jydw[index][i - 1].qntq]);
+	
+	    var d1_ticks = [[1, '沈变'], [2, '衡变'], [3, '新变'], [4, '鲁缆'], [5, '新缆'], [6, '德缆'], [7, '新能源'],
+	        [8, '新特能源'], [9, '天池能源'], [10, '能动'], [11, '众和'], [12, '进出口'], [13, '国际工程']];
+	
+	    var data_flot_bar_chart = [
+	        {
+	            label: "年度计划",
+	            data: d1_year_plan,
+	            bars: {
+	                show: true,
+	                order: 1,
+	                fillColor: { colors: [{ color: chartthirdcolor }, { color: chartthirdcolor }] }
+	            },
+	            color: chartthirdcolor
+	        },
+	        {
+	            label: "年度累计",
+	            data: d1_year_amount,
+	            bars: {
+	                show: true,
+	                order: 2,
+	                fillColor: { colors: [{ color: chartsecondcolor }, { color: chartsecondcolor }] }
+	            },
+	            color: chartsecondcolor
+	        },
+	        {
+	            label: "去年同期累计",
+	            data: d1_last_year_amount,
+	            bars: {
+	                show: true,
+	                order: 3,
+	                fillColor: { colors: [{ color: chartfirstcolor }, { color: chartfirstcolor }] }
+	            },
+	            color: chartfirstcolor
+	        }
+	    ];
+	    
+    
+	    //-------------------Chart设置参数------------------------------------------------//
+	    var options_flot_bar_chart = {
+	        bars: {
+	            barWidth: 0.2,
+	            lineWidth: 0,
+	            borderWidth: 0,
+	            fillColor: { colors: [{ opacity: 0.4 }, { opacity: 1 }] }
+	        },
+	        xaxis: {
+	            ticks: d1_ticks,
+	            color: gridbordercolor
+	        },
+	        yaxis: {
+	            color: gridbordercolor
+	        },
+	        grid: {
+	            hoverable: true,
+	            clickable: false,
+	            borderWidth: 0,
+	            aboveData: false
+	        },
+	        legend: {
+	            noColumns: 4
+	        },
+	        tooltip: true,
+	        tooltipOpts: {
+	            defaultTheme: false,
+	            content: "<b>%s</b> : <span>%y 万元</span>",
+	        }
+	    };
+	    return [data_flot_bar_chart, options_flot_bar_chart];
+    }
+    
+    //------------------实例化Flot Chart-----------------------------------------------//
+   
+    var opt = getChartOpt(0);
+    var placeholder_total_profit = $("#dashboard-chart-total-profit");
+    var plot_total_profit = $.plot(placeholder_total_profit, opt[0], opt[1]);
+    opt = getChartOpt(1);
+    var placeholder_sales_income = $("#dashboard-chart-sales-income");
+    var plot_sales_income = $.plot(placeholder_sales_income, opt[0], opt[1]);
+    opt = getChartOpt(2);
+    var placeholder_accounts_receivable = $("#dashboard-chart-accounts-receivable");
+    var plot_accounts_receivable = $.plot(placeholder_accounts_receivable, opt[0], opt[1]);
+    opt = getChartOpt(3);
+    var placeholder_stock = $("#dashboard-chart-stock");
+    var plot_stock = $.plot(placeholder_stock, opt[0], opt[1]);
 
-        var d1_3 = [];
-        for (var i = 1; i <= 7; i += 1)
-            d1_3.push([i, parseInt(Math.random() * 50)]);
+    //-------------------------Initiates Sparkline Chart instances in page------------------//
+    InitiateSparklineCharts.init();
 
-        var data1 = [
-            {
-                label: "Windows Phone",
-                data: d1_1,
-                bars: {
-                    show: true,
-                    order: 1,
-                    fillColor: { colors: [{ color: chartthirdcolor }, { color: chartthirdcolor }] }
-                },
-                color: chartthirdcolor
-            },
-            {
-                label: "Android",
-                data: d1_2,
-                bars: {
-                    show: true,
-                    order: 2,
-                    fillColor: { colors: [{ color: chartsecondcolor }, { color: chartsecondcolor }] }
-                },
-                color: chartsecondcolor
-            },
-            {
-                label: "IOS",
-                data: d1_3,
-                bars: {
-                    show: true,
-                    order: 3,
-                    fillColor: { colors: [{ color: chartfirstcolor }, { color: chartfirstcolor }] }
-                },
-                color: chartfirstcolor
-            }
-        ];
-
-       /*  $.plot($("#bar-chart"), data1, {
-            bars: {
-                barWidth: 0.2,
-                lineWidth: 1,
-                borderWidth: 0,
-                fillColor: { colors: [{ opacity: 0.6 }, { opacity: 1 }] }
-            },
-            xaxis: {
-                ticks: [[1, 'Sun'], [2, 'Mon'], [3, 'Tues'], [4, 'Wed'], [5, 'Thu'], [6, 'Fri'], [7, 'Sat']],
-                color: gridbordercolor
-            },
-            yaxis: {
-                color: gridbordercolor
-            },
-            grid: {
-                hoverable: true,
-                clickable: false,
-                borderWidth: 0,
-                aboveData: false
-            },
-            legend: true,
-            tooltip: true,
-            tooltipOpts: {
-                defaultTheme: false,
-                content: "<b>%s</b> : <span>%x</span> : <span>%y</span>",
-            }
-        }); */
-
-        //Real-Time Chart
-        var data = [],
-            totalPoints = 300;
-
-        function getRandomData() {
-
-            if (data.length > 0)
-                data = data.slice(1);
-
-            // Do a random walk
-
-            while (data.length < totalPoints) {
-
-                var prev = data.length > 0 ? data[data.length - 1] : 50,
-                    y = prev + Math.random() * 10 - 5;
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > 100) {
-                    y = 100;
-                }
-
-                data.push(y);
-            }
-
-            // Zip the generated y values with the x values
-
-            var res = [];
-            for (var i = 0; i < data.length; ++i) {
-                res.push([i, data[i]])
-            }
-
-            return res;
-        }
-
-        // Set up the control widget
-
-        var updateInterval = 100;
-
-       /*  var plot = $.plot("#realtime-chart", [getRandomData()], {
-            yaxis: {
-                color: '#f3f3f3',
-                min: 0,
-                max: 100,
-                tickFormatter: function (val, axis) {
-                    return "";
-                }
-            },
-            xaxis: {
-                color: '#f3f3f3',
-                min: 0,
-                max: 100,
-                tickFormatter: function (val, axis) {
-                    return "";
-                }
-            },
-            colors: ['#fff'],
-            series: {
-                lines: {
-                    lineWidth: 2,
-                    fill: false,
-                    fillColor: {
-                        colors: [{
-                            opacity: 0.5
-                        }, {
-                            opacity: 0
-                        }]
-                    },
-                    steps: false
-                },
-                shadowSize: 0
-            },
-            grid: {
-                show: false,
-                hoverable: true,
-                clickable: false,
-                borderWidth: 0,
-                aboveData: false
-            }
-        }); */
-
-        function update() {
-
-           ///*  */ plot.setData([getRandomData()]);
-           //*  */ plot.draw();
-            setTimeout(update, updateInterval);
-        }
-        update();
-    </script>
+</script>
 
 </body>
 <!--  /Body -->
