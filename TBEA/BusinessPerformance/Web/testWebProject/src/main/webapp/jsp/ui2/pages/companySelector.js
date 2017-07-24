@@ -125,7 +125,8 @@ var Util;
             return null;
         };
         CompanySelector.prototype.checkAll = function () {
-            $(this.mUnitedSelector.getSelect()[1]).multiselect("checkAll");
+		var sel = this.mUnitedSelector.getSelect();
+            $(sel[sel.length - 1]).multiselect("checkAll");
         };
         CompanySelector.prototype.getRawCompanyData = function () {
             var ret = [];
