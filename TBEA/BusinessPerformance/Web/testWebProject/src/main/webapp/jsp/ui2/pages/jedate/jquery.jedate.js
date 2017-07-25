@@ -205,6 +205,7 @@ window.console && (console = console || {log : function(){return;}});
 			jedatesAll.push(jdt);
 		}else{
 			elem.off("click");
+
 			jdt[1] = this;
 		}
 		this.opts = opts;
@@ -217,6 +218,12 @@ window.console && (console = console || {log : function(){return;}});
 		var that = this, opts = that.opts, zIndex = opts.zIndex == undefined ? 10000000 : opts.zIndex,
 			isinitVal = (opts.isinitVal == undefined || opts.isinitVal == false) ? false : true,
 		    createDiv = $("<div id="+jet.boxCell.replace(/\#/g,"")+" class='jedatebox "+(opts.skinCell || config.skinCell)+"'></div");
+
+		createDiv.on("click", function(ev){
+			ev.stopPropagation();
+		});
+
+
 		jet.fixed = jet.isBool(opts.fixed);
 		createDiv.attr("author","chen guojun--www.jayui.com--version:"+$.dateVer);
 		createDiv.css({"z-index": zIndex ,"position":(jet.fixed == true ? "absolute" :"fixed"),"display":"block"});

@@ -11,11 +11,11 @@
 				<companyName type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
 				<year type="int" ref="${counter.next.val}"  test="${this != null}"/>
 				<month type="int" ref="${counter.next.val}"  test="${this != null}"/>
-				<totalTaxBudget type="string" ref="${counter.next.val}" />
-				<saleIncome type="string" ref="${counter.next.val}" />
-				<VTA type="string" ref="${counter.next.val}" />
-				<totalProfit type="string" ref="${counter.next.val}" />
-				<corporateIncomeTax type="string" ref="${counter.next.val}" />
+				<totalTaxBudget type="double" ref="${counter.next.val}" />
+				<saleIncome type="double" ref="${counter.next.val}" />
+				<VTA type="double" ref="${counter.next.val}" />
+				<totalProfit type="double" ref="${counter.next.val}" />
+				<corporateIncomeTax type="double" ref="${counter.next.val}" />
 				<source type="string" value="${src}" />
 				<time type="date" value="${time}" />
 			</set>

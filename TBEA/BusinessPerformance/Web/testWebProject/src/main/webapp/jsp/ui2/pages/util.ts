@@ -210,11 +210,30 @@ module Util {
                 isSortable : sortable,
                 options:{
                 dataInit: function (element) {
-                    $(element).datepicker({
-                        dateFormat: 'yy-mm-dd',
-                        onSelect: function (dateText, inst) {
-                        }
-                    });
+                    var fmt = "YYYY-MM-DD";
+                    var seasonClass = "day";
+                    $(element).jeDate({
+                        skinCell: "jedatedeepgreen",
+                        format: fmt,
+                        isTime: false,
+                        isinitVal: true,
+                        isClear: false,
+                        isToday: false
+                    }).removeCss("height")
+                        .removeCss("padding")
+                        .removeCss("margin-top")
+                        .removeClass(seasonClass)
+                        .addClass(seasonClass)
+                        .jePopup();
+                    //$(element).datepicker({
+                    //    dateFormat: 'yy-mm-dd',
+                    //    monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                    //    dayNames: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+                    //    dayNamesShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                    //    dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'],
+                    //    onSelect: function (dateText, inst) {
+                    //    }
+                    //});
                 }
             }});
         }else if ("text" == header.type){

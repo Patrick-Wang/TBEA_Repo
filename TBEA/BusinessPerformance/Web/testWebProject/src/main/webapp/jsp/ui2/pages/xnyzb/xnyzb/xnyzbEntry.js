@@ -91,7 +91,6 @@ var xnyzb;
             //    });
             //}
             EntryView.prototype.pluginSubmit = function (dStart, dEnd, compType) {
-                var _this = this;
                 var allData = this.mTableAssist.getAllData();
                 var submitData = [];
                 for (var i = 0; i < allData.length; ++i) {
@@ -108,12 +107,10 @@ var xnyzb;
                     compId: compType
                 }).then(function (resp) {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", function () {
-                            _this.pluginUpdate(dStart, dEnd, compType);
-                        });
+                        Util.Toast.success("提交 成功");
                     }
                     else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             };
@@ -170,6 +167,8 @@ var xnyzb;
                     datatype: "local",
                     multiselect: false,
                     drag: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     resize: false,
                     height: '100%',
                     width: this.jqgridHost().width(),

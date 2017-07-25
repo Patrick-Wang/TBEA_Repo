@@ -125,11 +125,9 @@ module xnyzb {
                     compId: compType
                 }).then((resp:Util.IResponse) => {
                     if (Util.ErrorCode.OK == resp.errorCode) {
-                        Util.MessageBox.tip("提交 成功", ()=>{
-                            this.pluginUpdate(dStart, dEnd, compType);
-                        });
+                        Util.Toast.success("提交 成功");
                     } else {
-                        Util.MessageBox.tip(resp.message);
+                        Util.Toast.failed(resp.message);
                     }
                 });
             }
@@ -195,6 +193,8 @@ module xnyzb {
                     datatype: "local",
                     multiselect: false,
                     drag: false,
+                    cellsubmit: 'clientArray',
+                    cellEdit: true,
                     resize: false,
                     height: '100%',
                     width: this.jqgridHost().width(),

@@ -150,12 +150,12 @@ module xnyzb{
             this.mCurrentComp = this.mCompanySelector.getCompany();
 
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
-            if (null != this.mCurrentComp){
-                $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
-            }
-            else{
-                $("#headertitle")[0].innerHTML = node.getData().value;
-            }
+            //if (null != this.mCurrentComp){
+            //    $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+            //}
+            //else{
+            //    $("#headertitle")[0].innerHTML = node.getData().value;
+            //}
 
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_UPDATE, {
                 dStart:Util.date2Str(this.getStartDate()),

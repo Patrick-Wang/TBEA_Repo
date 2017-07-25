@@ -15,7 +15,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 
-<%@include file="../../ie8-t.jsp"%>
+
+	<script>
+	Date.now = function(){
+		return new Date();
+	}
+	</script>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 
@@ -194,7 +199,7 @@
 							</div>
 							<div id="grid-export" class="btn btn-default"
 								onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_SUBMIT)">
-								提交<i class="fa fa-file-excel-o"></i>
+								提交 <i class="fa fa-upload"></i>
 							</div>
 						</div>
 					</div>
