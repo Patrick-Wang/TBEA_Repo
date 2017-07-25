@@ -1,7 +1,7 @@
 <components>
  <service id="servCwsjsfImportEntry" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
-  <merge data="${data}" table="financial_tax" from="2">
+  <merge data="${data}" table="financial_tax">
    <where>
     <companyName		type="string"	 ref="0"/>
 	<year		type="int"	 ref="1"/>
