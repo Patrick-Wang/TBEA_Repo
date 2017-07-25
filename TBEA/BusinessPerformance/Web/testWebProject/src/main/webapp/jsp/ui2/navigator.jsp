@@ -642,7 +642,7 @@
 			</script>
 		</c:if>
 		<!--------------------------------------------------------Index entry end -------------------------------->
-		<c:if test="${isJydw}">
+		<c:if test="${isJydw || xnyJyfxEntryAuth || xtnyrbEntryAuth}">
 			<script>
 				builder.register('entryxx', function() {
 					return createNode('经营分析录入')
@@ -655,6 +655,7 @@
 				<script>
 					builder.register('ZXnyJyfxEntry', function () {
 						return [
+						   createNode('新能源签约周报录入', "report/v2/xnyqyzbEntryJsp.do"),
 						   createNode('新能源生产、发货和价格周报录入', "report/v2/xnyzbEntryJsp.do"),
 						   createNode('新能源应收账款回款周报导入', "report/v2/yszkhkzbImportJsp.do")
 						];
