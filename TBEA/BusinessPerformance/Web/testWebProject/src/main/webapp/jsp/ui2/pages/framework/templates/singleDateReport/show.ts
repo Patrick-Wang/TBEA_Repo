@@ -62,7 +62,11 @@ module framework.templates.singleDateReport {
                 }else if(opt.asSeasonAcc){
                     fmt = "YYYY年 &&MM月";
                     seasonClass = "season";
+                }else if (!opt.date.month){
+                    fmt = "YYYY年";
+                    seasonClass = "year";
                 }
+
 
                 $("#" + this.opt.dtId).jeDate({
                     skinCell: "jedatedeepgreen",

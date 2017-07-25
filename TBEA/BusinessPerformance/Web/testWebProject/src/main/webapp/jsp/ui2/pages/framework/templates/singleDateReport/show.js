@@ -54,6 +54,10 @@ var framework;
                             fmt = "YYYY年 &&MM月";
                             seasonClass = "season";
                         }
+                        else if (!opt.date.month) {
+                            fmt = "YYYY年";
+                            seasonClass = "year";
+                        }
                         $("#" + this.opt.dtId).jeDate({
                             skinCell: "jedatedeepgreen",
                             format: fmt,
