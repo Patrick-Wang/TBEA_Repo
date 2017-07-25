@@ -22,7 +22,7 @@ module xtnyzb{
         updateTable():void {
             $("#" + this.opt.host)
                 .attr("align", "");
-            $("#" + this.opt.host).css("float", "left")
+            $("#" + this.opt.host)
                 .css("margin-top","5px");
 
             let nameDjg = this.opt.host + "_jqgrid_uiframe_djg";

@@ -22,7 +22,7 @@ var xtnyzb;
         XtnyzbEntryView.prototype.updateTable = function () {
             $("#" + this.opt.host)
                 .attr("align", "");
-            $("#" + this.opt.host).css("float", "left")
+            $("#" + this.opt.host)
                 .css("margin-top", "5px");
             var nameDjg = this.opt.host + "_jqgrid_uiframe_djg";
             var nameZbdc = this.opt.host + "_jqgrid_uiframe_zbc";
@@ -34,7 +34,7 @@ var xtnyzb;
             var jqTable = $("#" + nameDjg);
             jqTable.jqGrid(this.mTableAssist.decorate({
                 datatype: "local",
-                data: this.mTableAssist.getDataWithId(this.response().data),
+                dataWithId: this.response().data,
                 multiselect: false,
                 drag: false,
                 resize: false,
@@ -53,9 +53,9 @@ var xtnyzb;
                 caption: "多晶硅产量（吨）"
             }));
             jqTable = $("#" + nameZbdc);
-            jqTable.jqGrid(this.mZbdcAssist.decorate({
+            jqTable.jqGrid(this.mZbdcAssist.create({
                 datatype: "local",
-                data: this.mZbdcAssist.getDataWithId(this.response().zbdc.data),
+                dataWithId: this.response().zbdc.data,
                 multiselect: false,
                 drag: false,
                 resize: false,

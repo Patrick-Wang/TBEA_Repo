@@ -21,7 +21,7 @@ var xtnyzb;
         XtnyzbShowView.prototype.updateTable = function () {
             $("#" + this.opt.host)
                 .attr("align", "");
-            $("#" + this.opt.host).css("float", "left")
+            $("#" + this.opt.host)
                 .css("margin-top", "5px");
             var nameDjg = this.opt.host + "_jqgrid_uiframe_djg";
             var nameZbdc = this.opt.host + "_jqgrid_uiframe_zbc";

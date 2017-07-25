@@ -23,7 +23,7 @@ module xtnyzb{
         updateTable():void {
             $("#" + this.opt.host)
                     .attr("align", "");
-            $("#" + this.opt.host).css("float", "left")
+            $("#" + this.opt.host)
                     .css("margin-top","5px");
 
             let nameDjg = this.opt.host + "_jqgrid_uiframe_djg";
@@ -37,7 +37,7 @@ module xtnyzb{
             jqTable.jqGrid(
                 this.mTableAssist.decorate({
                     datatype: "local",
-                    data: this.mTableAssist.getDataWithId(this.response().data),
+                    dataWithId: this.response().data,
                     multiselect: false,
                     drag: false,
                     resize: false,
@@ -57,9 +57,9 @@ module xtnyzb{
                 }));
             jqTable = $("#" + nameZbdc);
             jqTable.jqGrid(
-                this.mZbdcAssist.decorate({
+                this.mZbdcAssist.create({
                     datatype: "local",
-                    data: this.mZbdcAssist.getDataWithId(this.response().zbdc.data),
+                    dataWithId: this.response().zbdc.data,
                     multiselect: false,
                     drag: false,
                     resize: false,
