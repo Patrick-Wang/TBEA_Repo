@@ -648,7 +648,8 @@
 					return createNode('经营分析录入')
 						.append(createNode('应收账款日报录入', "dailyReport/v2/yszk.do"))
 						.append(builder.build('ZXnyJyfxEntry'))
-						.append(builder.build('ZXtnyrbEntry'));
+						.append(builder.build('ZXtnyrbEntry'))
+					    .append(builder.build('xnychentry'));
 				});
 			</script>
 			<c:if test="${xnyJyfxEntryAuth}">
@@ -770,9 +771,8 @@
 
 		<c:if test="${XnygbEntry}">
 			<script>
-	        	builder.register('bbxx', function() {
-					return createNode('新能源产业经营报表录入')
-						.append(createNode('新能源存货录入', 'xnychFrame/v2/entry.do'));
+	        	builder.register('xnychentry', function() {
+					return createNode('新能源存货录入', 'xnychFrame/v2/entry.do');
 				});
 			</script>
 		</c:if>
