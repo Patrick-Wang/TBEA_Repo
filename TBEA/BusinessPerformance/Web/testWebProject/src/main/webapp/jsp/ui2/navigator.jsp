@@ -861,6 +861,7 @@
 						var jyjsc = createNode("经营驾驶舱");
 						jyjsc.data.icon = "fa fa-bar-chart";
 						jyjsc.data.iconOpen = undefined;
+						jyjsc.data.extracted = true;
 						jyjsc.append(createNode("经营驾驶舱", "dashboard/dashboard.do"));
 						return jyjsc;
 					});
@@ -914,7 +915,6 @@
 		var subNodes = builder.build('bbxx');
 		if (subNodes.length > 0){
 			bbxx = createNode("报表信息");
-			bbxx.data.extracted = true;
 			bbxx.data.icon = "fa fa-table";
 			bbxx.data.iconOpen = undefined;
 			bbxx.append(subNodes);	

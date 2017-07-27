@@ -244,25 +244,25 @@
 									<div
 										class="databox-cell cell-5 no-padding padding-5 text-align-center">
 										<span id="gsqy"
-											class="databox-number number-xxlg  white no-margin padding-top-5">--</span>
+											class="databox-number number-xlg  white no-margin padding-top-5">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">公司整体市场签约（万元）</span>
 									</div>
 									<div
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
 										<span id="zzyqy"
-											class="databox-number number-lg  white no-margin padding-top-5">--</span>
+											class="databox-number number-lg  white no-margin padding-top-5" style="font-size:18px">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">制造业签约</span>
 									</div>
 									<div
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
 										<span id="jcfwqy"
-											class="databox-number number-lg white no-margin padding-top-5">--</span>
+											class="databox-number number-lg white no-margin padding-top-5" style="font-size:18px">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">集成服务业签约</span>
 									</div>
 									<div 
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
 										<span id="qtqy"
-											class="databox-number number-lg  white no-margin padding-top-5">--</span>
+											class="databox-number number-lg  white no-margin padding-top-5"  style="font-size:18px">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">其他签约</span>
 									</div>
 								</div>
@@ -340,7 +340,7 @@
 								<div class="databox-row row-12">
 									<div class="databox-cell cell-3 text-right">
 										<div id="ztscqy"
-											class="databox-number orange number-xxlg no-margin padding-top-5">--</div>
+											class="databox-number orange number-xlg no-margin padding-top-5">--</div>
 									</div>
 									<div
 										class="databox-cell cell-1 text-left no-margin no-padding padding-top-10">
