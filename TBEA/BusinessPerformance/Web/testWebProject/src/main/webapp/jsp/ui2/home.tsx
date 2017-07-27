@@ -179,6 +179,26 @@ module home {
     });
     $("#search-sel").comboSelect();
 
+    function extractNodeAndClickUrl(e:TreeNode, url:string):boolean {
+        let stop = e.accept({
+            visit: (node:TreeNode) => {
+                if (node.getData().url == url) {
+                    let currentNode = node;
+                    while (node.getParent()) {
+                        node = node.getParent();
+                        if (!node.getData().extracted) {
+                            leftTree.triggerClicked(node);
+                        }
+                    }
+                    leftTree.triggerClicked(currentNode);
+                    return true;
+                }
+                return false;
+            }
+        });
+        return stop;
+    }
+
 
     function extractNodeAndClick(e:TreeNode, id:number):boolean {
         let stop = e.accept({
@@ -213,6 +233,12 @@ module home {
     window['onClickBreadcrumb'] = (breadcrumbNode:Util.BreadcrumbNode)=> {
         $(treeNodes).each((i, e:TreeNode)=> {
             return !extractNodeAndClick(e, breadcrumbNode.id);
+        });
+    }
+
+    window['triggerClickUrl'] = (url:string)=> {
+        $(treeNodes).each((i, e:TreeNode)=> {
+            return !extractNodeAndClickUrl(e, url);
         });
     }
 

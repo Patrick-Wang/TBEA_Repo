@@ -88,6 +88,9 @@ var gdw_zbhz;
             }).removeCss("height")
                 .removeCss("padding")
                 .removeCss("margin-top");
+            $("#zk").on("click", function () {
+                window.parent ? window.parent.triggerClickUrl("/BusinessManagement/report/v2/zk.do") : undefined;
+            });
             $(window).resize(function () {
                 _this.adjustSize();
             });

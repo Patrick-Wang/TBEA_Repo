@@ -159,6 +159,25 @@ var home;
         });
     });
     $("#search-sel").comboSelect();
+    function extractNodeAndClickUrl(e, url) {
+        var stop = e.accept({
+            visit: function (node) {
+                if (node.getData().url == url) {
+                    var currentNode = node;
+                    while (node.getParent()) {
+                        node = node.getParent();
+                        if (!node.getData().extracted) {
+                            leftTree.triggerClicked(node);
+                        }
+                    }
+                    leftTree.triggerClicked(currentNode);
+                    return true;
+                }
+                return false;
+            }
+        });
+        return stop;
+    }
     function extractNodeAndClick(e, id) {
         var stop = e.accept({
             visit: function (node) {
@@ -189,6 +208,11 @@ var home;
     window['onClickBreadcrumb'] = function (breadcrumbNode) {
         $(treeNodes).each(function (i, e) {
             return !extractNodeAndClick(e, breadcrumbNode.id);
+        });
+    };
+    window['triggerClickUrl'] = function (url) {
+        $(treeNodes).each(function (i, e) {
+            return !extractNodeAndClickUrl(e, url);
         });
     };
     leftTree.setOnClickListener(function (node) {

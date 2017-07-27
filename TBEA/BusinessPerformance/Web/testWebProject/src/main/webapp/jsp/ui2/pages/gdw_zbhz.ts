@@ -93,6 +93,9 @@ module gdw_zbhz{
                 .removeCss("padding")
                 .removeCss("margin-top");
 
+            $("#zk").on("click", ()=>{
+                    window.parent?window.parent.triggerClickUrl("/BusinessManagement/report/v2/zk.do"):undefined;
+            });
             $(window).resize(()=> {
                 this.adjustSize();
             });
