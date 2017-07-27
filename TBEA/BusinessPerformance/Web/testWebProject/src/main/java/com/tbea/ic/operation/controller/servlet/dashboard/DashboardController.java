@@ -212,25 +212,32 @@ public class DashboardController {
 		return new ModelAndView("UserStatusView", map);
 	}
 	
-	private String getPercent(String str){
-		if ("null".equals(str)){
+	private String getPercent(Double val){
+		if (val == null){
 			return "--";
 		}
-		return String.format("%.0f",  (Double.valueOf(str) * 100)) + "%";		
+		return String.format("%.0f",  (val * 100)) + "%";		
 	}
 	
-	private String getNumber(String str){
-		if ("null".equals(str)){
+	private String getNumber(Double val){
+		if (val == null){
 			return "--";
 		}
-		return String.format("%.2f",  (Double.valueOf(str)));		
+		return String.format("%.2f",  val);		
 	}
 	
-	private String getNumber0(String str){
-		if ("null".equals(str)){
+	private String getNumber(String val){
+		if ("null".equals(val)){
 			return "--";
 		}
-		return String.format("%.0f",  (Double.valueOf(str)));		
+		return String.format("%.2f",  Double.valueOf(val));		
+	}
+	
+	private String getNumber0(Double val){
+		if (val == null){
+			return "--";
+		}
+		return String.format("%.0f",  val);		
 	}
 	
 	@RequestMapping(value = "dashboard.do")
@@ -238,15 +245,15 @@ public class DashboardController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date current = new java.sql.Date(System.currentTimeMillis());
 		JSONObject jRet = new JSONObject();
-		List<String[]> zbs = gszbService.getDashboardGsztzb(current);
+		List<Double[]> zbs = dashboardService.getDashboardGsztzb(current);
 		
 		JSONArray zt = new JSONArray();
 		
 		for(int i = 0; i < zbs.size(); ++i){
 			JSONObject item = new JSONObject();
-			item.put("ndjhwcl", getPercent(zbs.get(i)[13]));
-			item.put("ndlj", getNumber0(zbs.get(i)[12]));
-			item.put("ndljtbzf", getPercent(zbs.get(i)[15]));
+			item.put("ndjhwcl", getPercent(zbs.get(i)[4]));
+			item.put("ndlj", getNumber0(zbs.get(i)[3]));
+			item.put("ndljtbzf", getPercent(zbs.get(i)[6]));
 			zt.add(item);
 		}
 
@@ -256,14 +263,14 @@ public class DashboardController {
 		List<Double> ydzbs = dashboardService.getScqyZtydzb(Calendar.getInstance().get(Calendar.YEAR));
 		
 		JSONObject scqy = new JSONObject();
-		scqy.put("gszt", getNumber0(ljzbs.get(0) + ""));
-		scqy.put("zzy", getNumber0(ljzbs.get(1) + ""));
-		scqy.put("jcfw", getNumber0(ljzbs.get(2) + ""));
-		scqy.put("qt", getNumber0(ljzbs.get(3) + ""));
+		scqy.put("gszt", getNumber0(ljzbs.get(0)));
+		scqy.put("zzy", getNumber0(ljzbs.get(1)));
+		scqy.put("jcfw", getNumber0(ljzbs.get(2)));
+		scqy.put("qt", getNumber0(ljzbs.get(3)));
 		
 		JSONArray scqyYds = new JSONArray();
 		for (Double zb :ydzbs){
-			scqyYds.add(getNumber(zb + ""));
+			scqyYds.add(getNumber(zb));
 		}
 		scqy.put("ydzbs", scqyYds);
 		
@@ -272,7 +279,7 @@ public class DashboardController {
 		List<String[]> gnsc = dashboardService.getSbdgnscqye(current);
 		List<String[]> gjsc = dashboardService.getSbdgjscqye(current);
 		Double sbdzt = dashboardService.getSbdztqye(current);
-		scqypm.put("sbdztqy", getNumber0(sbdzt + ""));
+		scqypm.put("sbdztqy", getNumber0(sbdzt));
 		scqypm.put("gnsc", JSONArray.fromObject(gnsc));
 		scqypm.put("gjsc", JSONArray.fromObject(gjsc));
 		

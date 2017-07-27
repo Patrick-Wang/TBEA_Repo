@@ -6,10 +6,6 @@ import java.util.List;
 public interface DashboardService {
 
 
-
-	public List<Double> getScqyLjzb(Date date);
-
-
 	public List<Double> getScqyZtydzb(Integer nf);
 
 
@@ -20,5 +16,11 @@ public interface DashboardService {
 
 
 	public Double getSbdztqye(Date current);
+
+
+	List<Double[]> getDashboardGsztzb(Date date);
+
+
+	List<Double> getScqyLjzb(Date date);
 
 }
