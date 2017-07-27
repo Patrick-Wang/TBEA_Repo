@@ -857,7 +857,9 @@
 
 <c:if test="${_77}">
 	<script>
+					window.jyjsc = true;
 					builder.register('jyjsc', function () {
+						
 						var jyjsc = createNode("经营驾驶舱");
 						jyjsc.data.icon = "fa fa-bar-chart";
 						jyjsc.data.iconOpen = undefined;
@@ -907,7 +909,6 @@
 	/* 	var ztfx = createNode("主题分析");
 		ztfx.data.icon = "fa fa-bar-chart";
 		ztfx.data.iconOpen = undefined; */
-		
 		root.append(builder.build("glkzt"));
 		
 		var bbxx = [];	
@@ -915,6 +916,7 @@
 		var subNodes = builder.build('bbxx');
 		if (subNodes.length > 0){
 			bbxx = createNode("报表信息");
+			bbxx.data.extracted = !window.jyjsc;
 			bbxx.data.icon = "fa fa-table";
 			bbxx.data.iconOpen = undefined;
 			bbxx.append(subNodes);	
