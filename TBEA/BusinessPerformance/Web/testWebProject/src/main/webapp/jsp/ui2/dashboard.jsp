@@ -250,19 +250,19 @@
 									<div
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
 										<span id="zzyqy"
-											class="databox-number number-lg  white no-margin padding-top-5" style="font-size:18px">--</span>
+											class="databox-number number-lg  white no-margin padding-top-5" style="font-size:16px">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">制造业签约</span>
 									</div>
 									<div
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
 										<span id="jcfwqy"
-											class="databox-number number-lg white no-margin padding-top-5" style="font-size:18px">--</span>
+											class="databox-number number-lg white no-margin padding-top-5" style="font-size:16px">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">集成服务业签约</span>
 									</div>
 									<div 
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
 										<span id="qtqy"
-											class="databox-number number-lg  white no-margin padding-top-5"  style="font-size:18px">--</span>
+											class="databox-number number-lg  white no-margin padding-top-5"  style="font-size:16px">--</span>
 										<span class="databox-text whitesmoke no-margin padding-top-5">其他签约</span>
 									</div>
 								</div>

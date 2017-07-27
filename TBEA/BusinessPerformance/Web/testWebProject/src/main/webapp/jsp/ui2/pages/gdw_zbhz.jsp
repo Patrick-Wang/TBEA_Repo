@@ -187,7 +187,7 @@
 						<div id="grid-export" class="btn btn-default">
 							导出 <i class="fa fa-file-excel-o"></i>
 						</div>
-						<a id="zk" class="pull-right" style="cursor:pointer;margin-top:10px">数据子库详细信息</a>
+						<a id="zk" class="pull-right" style="cursor:pointer;margin-top:12px;margin-right:2px">数据子库详细信息</a>
 						<form id="exportExcel" style="display: none" method="post"></form>
 					</div>
 				</div>
