@@ -36,10 +36,10 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 	ContextHandler orgsContext;
 	
 	@Resource(type = AuthContextHandler.class)
-	AuthContextHandler authContext;	
+	ContextHandler authContext;	
 	
 	@Resource(type = QualityHandler.class)
-	QualityHandler qualityContext;
+	ContextHandler qualityContext;
 
 	@Override
 	public void onSchedule(Context context, Controller controller) throws Exception {
@@ -53,7 +53,6 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 		handlers.onHandle(context);
 		controller.run(context);
 	}
-
 
 
 	@Override
@@ -73,6 +72,8 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 					.add(tranContext)
 					.add(utilContext)
 					.add(orgsContext)
+					.add(authContext)
+					.add(qualityContext)
 					.add(new DataNodeContextHandler());
 			context.put("isSchedule", false);
 			handlers.onHandle(context);

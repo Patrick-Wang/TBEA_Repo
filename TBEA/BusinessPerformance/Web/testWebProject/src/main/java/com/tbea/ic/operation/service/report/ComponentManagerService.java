@@ -8,16 +8,14 @@ import com.tbea.ic.operation.reportframe.component.entity.Context;
 
 public interface ComponentManagerService {
 
+	Context doController(HttpServletRequest request, HttpServletResponse response, String controllor) throws Exception;
 
-	Context doController(HttpServletRequest request,
-			HttpServletResponse response,
-			String controllor) throws Exception;
-	
 	Context doService(String service) throws Exception;
+
 	Context doService(Context context, String service) throws Exception;
-	Context doService(HttpServletRequest request,
-			HttpServletResponse response, String service) throws Exception;
-	
+
+	Context doService(HttpServletRequest request, HttpServletResponse response, String service) throws Exception;
+
 	DataNode getCSN();
 
 }

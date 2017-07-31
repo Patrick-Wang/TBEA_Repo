@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,13 +24,11 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
-import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
-import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
 import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 
 @Component
-public class AuthContextHandler implements ContextHandler {
+public class AuthContextHandler extends ControllerContextHandler {
 
 	@Resource(type = com.tbea.ic.operation.common.companys.CompanyManager.class)
 	CompanyManager companyManager;
@@ -37,11 +36,7 @@ public class AuthContextHandler implements ContextHandler {
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 
-	public void onHandle(Context context) {
-		HttpServletRequest request = (
-				(ControllerRequest) context.get(
-						com.tbea.ic.operation.reportframe.component.Component.REQUEST))
-					.getRequest();
+	public void onHandle(Context context, HttpServletRequest request, HttpServletResponse resp) {
 		
 		context.put("authCompanies", new ClosureMap(){
 
@@ -188,4 +183,5 @@ public class AuthContextHandler implements ContextHandler {
 			}
 		});
 	}
+
 }

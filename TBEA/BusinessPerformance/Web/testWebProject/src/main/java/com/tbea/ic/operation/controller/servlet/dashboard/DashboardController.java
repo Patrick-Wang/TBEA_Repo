@@ -262,6 +262,34 @@ public class DashboardController {
 			zt.add(item);
 		}
 
+		jRet.put("zt", zt);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", jRet.toString().replaceAll("null", ""));
+		return new ModelAndView("ui2/dashboard/dashboard", map);
+	}
+	
+	
+	@RequestMapping(value = "dashboard_update.do")
+	public @ResponseBody byte[] dashboardUpdate(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date current = new java.sql.Date(System.currentTimeMillis());
+		JSONObject jRet = new JSONObject();
+		JSONArray jydw = new JSONArray();
+		List<String[]> zbs = gszbService.getDashboardGsztzb(current);
+		for(int i = 0; i < zbs.size(); ++i){
+			jydw.add(new JSONArray());
+		}
+		for (CompanyType ct : cps){
+			zbs = gszbService.getDashboardGdwzb(current, ct);
+			for (int i = 0; i < zbs.size(); ++i){
+				JSONObject item = new JSONObject();
+				item.put("ndjh",  getNumber(zbs.get(i)[1]));
+				item.put("ndlj",  getNumber(zbs.get(i)[12]));
+				item.put("qntq", getNumber(zbs.get(i)[14]));
+				jydw.getJSONArray(i).add(item);
+			}
+		}
+		
 		ExchangeRate er = entryService.getExchangeRate(current);
 		
 		List<Double> ljzbs = dashboardService.getScqyLjzb(current);
@@ -301,34 +329,6 @@ public class DashboardController {
 		
 		jRet.put("scqypm", scqypm);
 		jRet.put("scqy", scqy);
-		jRet.put("zt", zt);
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("data", jRet.toString().replaceAll("null", ""));
-		return new ModelAndView("ui2/dashboard/dashboard", map);
-	}
-	
-	
-	@RequestMapping(value = "dashboard_update.do")
-	public @ResponseBody byte[] dashboardUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		Date current = new java.sql.Date(System.currentTimeMillis());
-		JSONObject jRet = new JSONObject();
-		JSONArray jydw = new JSONArray();
-		List<String[]> zbs = gszbService.getDashboardGsztzb(current);
-		for(int i = 0; i < zbs.size(); ++i){
-			jydw.add(new JSONArray());
-		}
-		for (CompanyType ct : cps){
-			zbs = gszbService.getDashboardGdwzb(current, ct);
-			for (int i = 0; i < zbs.size(); ++i){
-				JSONObject item = new JSONObject();
-				item.put("ndjh",  getNumber(zbs.get(i)[1]));
-				item.put("ndlj",  getNumber(zbs.get(i)[12]));
-				item.put("qntq", getNumber(zbs.get(i)[14]));
-				jydw.getJSONArray(i).add(item);
-			}
-		}
 		
 		jRet.put("jydw", jydw);
 		return jRet.toString().replaceAll("null", "").getBytes("utf-8");

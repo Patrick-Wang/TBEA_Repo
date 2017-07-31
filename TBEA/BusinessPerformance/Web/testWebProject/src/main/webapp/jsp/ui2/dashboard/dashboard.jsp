@@ -121,7 +121,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+					<div  id="yszk-zq" style="cursor:pointer;" class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 						<div
 							class="databox radius-bordered databox-shadowed databox-graded">
 							<div class="databox-left" style="background-color: #0072C6;">
@@ -135,9 +135,9 @@
 								</div>
 							</div>
 							<div class="databox-right bg-white ">
-								<span id="yszk" class="databox-number" style="cursor:pointer;color: #0072C6;">--
+								<span id="yszk" class="databox-number" style="color: #0072C6;">--
 									</span>
-								<div class="databox-text darkgray">应收账款</div>
+								<div class="databox-text darkgray">应收账款（可钻取）</div>
 								<div class="databox-stat radius-bordered"
 									style="background-color: #0072C6;">
 									<div id="yszktbzf" class="stat-text white">--</div>
@@ -628,6 +628,32 @@
 			.addClass("fa-arrow-down");
 		}
 		
+		
+		
+		
+		$("#yszk-zq").on("click", function(){
+			window.location.href = "/BusinessManagement/dashboard/yszk.do";
+		});
+		
+		
+	
+	    
+	    //-----------------------------Pie Charts-----------------------------------------//
+	    InitiateEasyPieChart.init();
+	}
+	
+	function bindPart2Data(){
+		
+	
+	    //-------------------定义数据、维度------------------------------------------------//
+	    var chartfirstcolor = "#57b5e3";
+	    var chartsecondcolor = "#f4b400";
+	    var chartthirdcolor = "#d73d32";
+	    var chartfourthcolor = "#8cc474";
+	    var chartfifthcolor = "#bc5679";
+	    var gridbordercolor = "#eee";
+	
+	    
 		$("#gsqy").text(data.scqy.gszt);
 		$("#zzyqy").text(data.scqy.zzy);
 		$("#jcfwqy").text(data.scqy.jcfw);
@@ -637,12 +663,7 @@
 		
 		$("#ztscqy").text(data.scqypm.sbdztqy);
 		$("#scqygnzb").css("width", data.scqypm.gnzb)
-		.attr("aria-valuenow", data.scqypm.gnzb.replace("%", ""));
-		
-		
-		$("#yszk").on("click", function(){
-			window.location.href = "/BusinessManagement/dashboard/yszk.do";
-		});
+		.attr("aria-valuenow", data.scqypm.gnzb.replace("%", ""));		
 		
 		function forShort(name){
 			if (name.indexOf("沈") >= 0){
@@ -672,24 +693,7 @@
 			$("#gjpm_val" + (i + 1)).text(data.scqypm.gjsc[i][1] + " 万美元");
 		}
 		
-
-		//-------------------------Initiates Sparkline Chart instances in page------------------//
-	    InitiateSparklineCharts.init();
 	    
-	    //-----------------------------Pie Charts-----------------------------------------//
-	    InitiateEasyPieChart.init();
-	}
-	
-	function bindPart2Data(){
-		
-	    //-------------------定义数据、维度------------------------------------------------//
-	    var chartfirstcolor = "#57b5e3";
-	    var chartsecondcolor = "#f4b400";
-	    var chartthirdcolor = "#d73d32";
-	    var chartfourthcolor = "#8cc474";
-	    var chartfifthcolor = "#bc5679";
-	    var gridbordercolor = "#eee";
-	
 	    function getChartOpt(index){
 	    
 		    var d1_year_plan = [];
@@ -809,6 +813,8 @@
 	    		});
 	    	}, 0);
 	    });
+		//-------------------------Initiates Sparkline Chart instances in page------------------//
+	    InitiateSparklineCharts.init();
 	}
 		
 	ajaxInit = new Util.Ajax("/BusinessManagement/dashboard/dashboard_update.do", false);
