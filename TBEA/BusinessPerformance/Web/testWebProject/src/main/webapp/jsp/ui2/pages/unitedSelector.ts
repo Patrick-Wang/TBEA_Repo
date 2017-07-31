@@ -308,7 +308,7 @@ module Util {
                 pos = path.length > this.mPath.length ? this.mPath.length : path.length;
                 for (var i = 0; i < pos; ++i) {
                     if (path[i] != this.mPath[i]) {
-                        pos = i + 1;
+                        pos = i;
                         break;
                     }
                 }

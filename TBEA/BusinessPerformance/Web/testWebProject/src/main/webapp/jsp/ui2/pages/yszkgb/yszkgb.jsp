@@ -240,6 +240,7 @@
 		$(document).ready(function() {
 			framework.router.to(Util.FAMOUS_VIEW).send(Util.MSG_INIT, {
 				comps : JSON.parse('${nodeData}'),
+				firstItem :'${param.firstItem}',
 				date : Util.parseDate('${year}', '${month}', '${day}')
 			});
 		});

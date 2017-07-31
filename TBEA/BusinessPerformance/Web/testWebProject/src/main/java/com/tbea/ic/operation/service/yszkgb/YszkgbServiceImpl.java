@@ -22,6 +22,7 @@ import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
+import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -139,6 +140,33 @@ public class YszkgbServiceImpl implements YszkgbService {
 	}
 
 	@Override
+	public List<String> getDashboardYszkzlbh(Date d) {
+		List<String> result = Util.resize(new ArrayList<String>(), 7);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.YEAR, -1);
+		cal.add(Calendar.MONTH, 1);
+		
+		List<YszkZlEntity> entities = null;
+		
+		entities = yszkZlDao.getSumByDate(new Date(cal.getTimeInMillis()), d, BMDepartmentDB.getMainlyJydw(companyManager));
+		
+		cal.setTime(d);
+		
+		for (int i = 12; i > 0; --i){
+			for (YszkZlEntity entity : entities){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == (cal.get(Calendar.MONTH) + 1)){
+					return  toList(entity);
+				}
+			}
+			cal.add(Calendar.MONTH, -1);
+		}
+		
+		return result;
+	}
+	
+	
+	@Override
 	public List<List<String>> getYszkkxxz(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		Calendar cal = Calendar.getInstance();
@@ -169,6 +197,28 @@ public class YszkgbServiceImpl implements YszkgbService {
 		return result;
 	}
 
+	@Override
+	public List<String> getDashboardYszkkxxz(Date d) {
+		List<String> result = Util.resize(new ArrayList<String>(), 9);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.YEAR, -1);
+		cal.add(Calendar.MONTH, 1);
+		List<YszkKxxzEntity> entities = null;
+		entities = yszkKxxzDao.getSumByDate(new Date(cal.getTimeInMillis()), d, BMDepartmentDB.getMainlyJydw(companyManager));
+		cal.setTime(d);
+		for (int i = 12; i > 0; --i){
+			for (YszkKxxzEntity entity : entities){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == (cal.get(Calendar.MONTH) + 1)){
+					return  toList(entity);
+				}
+			}
+			cal.add(Calendar.MONTH, -1);
+		}
+		
+		return result;
+	}
+	
 	private List<String> toList(YszkKxxzEntity entity) {
 		List<String> list = new ArrayList<String>();
 		list.add("" + entity.getYq0z1y());
@@ -237,6 +287,35 @@ public class YszkgbServiceImpl implements YszkgbService {
 		
 		return result;
 	}
+	
+	
+	@Override
+	public List<List<String>> getDashboardYszkyjtztjqs(Date d) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.YEAR, -1);
+		cal.add(Calendar.MONTH, 1);
+		List<YszkYjtzTjqsEntity> entities = null;
+		entities = yszkYjtzTjqsDao.getSumByDate(new Date(cal.getTimeInMillis()), d, BMDepartmentDB.getMainlyJydw(companyManager));
+		
+		for (int i = 0; i < 12; ++i){
+			result.add(new ArrayList<String>());
+			for (YszkYjtzTjqsEntity entity : entities){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == (cal.get(Calendar.MONTH) + 1)){
+					result.set(result.size() - 1, toList(entity));
+					entities.remove(entity);
+					break;
+				}
+			}
+			if (result.get(result.size() - 1).isEmpty()){
+				Util.resize(result.get(result.size() - 1), 8);
+			}
+			cal.add(Calendar.MONTH, 1);
+		}
+		
+		return result;
+	}
 
 	private List<String> toList(YszkYjtzTjqsEntity entity) {
 		List<String> list = new ArrayList<String>();
@@ -251,6 +330,35 @@ public class YszkgbServiceImpl implements YszkgbService {
 		return list;
 	}
 
+	@Override
+	public List<List<String>> getDashboardYqyszcsys(Date d) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.YEAR, -1);
+		cal.add(Calendar.MONTH, 1);
+		List<YqyszcsysEntity> entities = null;
+
+		entities = yqyszcsysDao.getSumByDate(new Date(cal.getTimeInMillis()), d, BMDepartmentDB.getMainlyJydw(companyManager));
+
+		for (int i = 0; i < 12; ++i){
+			result.add(new ArrayList<String>());
+			for (YqyszcsysEntity entity : entities){
+				if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == (cal.get(Calendar.MONTH) + 1)){
+					result.set(result.size() - 1, toList(entity));
+					entities.remove(entity);
+					break;
+				}
+			}
+			if (result.get(result.size() - 1).isEmpty()){
+				Util.resize(result.get(result.size() - 1), 8);
+			}
+			cal.add(Calendar.MONTH, 1);
+		}
+		
+		return result;
+	}
+	
 	@Override
 	public List<List<String>> getYqyszcsys(Date d, Company company) {
 		List<List<String>> result = new ArrayList<List<String>>();

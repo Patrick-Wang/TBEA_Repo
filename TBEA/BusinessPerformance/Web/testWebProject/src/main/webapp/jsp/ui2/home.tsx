@@ -182,15 +182,19 @@ module home {
     function extractNodeAndClickUrl(e:TreeNode, url:string):boolean {
         let stop = e.accept({
             visit: (node:TreeNode) => {
-                if (node.getData().url == url) {
+                if (url.indexOf(node.getData().url) >= 0) {
                     let currentNode = node;
+                    let currentData = node.getData();
                     while (node.getParent()) {
                         node = node.getParent();
                         if (!node.getData().extracted) {
                             leftTree.triggerClicked(node);
                         }
                     }
+                    let oldUrl = currentData.url;
+                    currentData.url = url;
                     leftTree.triggerClicked(currentNode);
+                    currentData.url = oldUrl;
                     return true;
                 }
                 return false;
@@ -241,6 +245,33 @@ module home {
             return !extractNodeAndClickUrl(e, url);
         });
     }
+
+    window['triggerClickClose'] = (url:string, onFinish:any)=> {
+        let tab;
+        $(treeNodes).each((i, e:TreeNode)=> {
+            let stop = e.accept({
+                visit: (node:TreeNode) => {
+                    if (url.indexOf(node.getData().url) >= 0) {
+                        let tabId = node.getData().id + "tab";
+                        tab = topTab.findTab(tabId);
+                        if (tab){
+                            topTab.triggerClickClose(tabId, onFinish);
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            return !stop;
+        });
+
+        if (!tab) {
+            if (onFinish){
+                onFinish();
+            }
+        }
+    }
+
 
     leftTree.setOnClickListener((node:any) => {
         if (node.data.url != undefined) {

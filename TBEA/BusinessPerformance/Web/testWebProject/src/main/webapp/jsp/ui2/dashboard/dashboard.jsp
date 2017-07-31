@@ -8,9 +8,7 @@
 <!-- Head -->
 <head>
 <meta charset="utf-8" />
-<title>Databoxes</title>
 
-<meta name="description" content="databoxes" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -137,7 +135,7 @@
 								</div>
 							</div>
 							<div class="databox-right bg-white ">
-								<span id="yszk"  class="databox-number" style="color: #0072C6;">--
+								<span id="yszk" class="databox-number" style="cursor:pointer;color: #0072C6;">--
 									</span>
 								<div class="databox-text darkgray">应收账款</div>
 								<div class="databox-stat radius-bordered"
@@ -567,7 +565,7 @@
 		type="text/javascript"></script>
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/chartjs/chart.js"></script>
-		<%@include file="pages/loading.jsp"%>
+		<%@include file="../pages/loading.jsp"%>
 	<script>
 	
 	Util.Breadcrumb.render(JSON.parse('${param.breads}'));
@@ -640,6 +638,11 @@
 		$("#ztscqy").text(data.scqypm.sbdztqy);
 		$("#scqygnzb").css("width", data.scqypm.gnzb)
 		.attr("aria-valuenow", data.scqypm.gnzb.replace("%", ""));
+		
+		
+		$("#yszk").on("click", function(){
+			window.location.href = "/BusinessManagement/dashboard/yszk.do";
+		});
 		
 		function forShort(name){
 			if (name.indexOf("沈") >= 0){

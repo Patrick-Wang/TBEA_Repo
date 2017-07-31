@@ -37,6 +37,8 @@ import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.dashboard.DashboardService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
+import com.tbea.ic.operation.service.yszkgb.YszkgbService;
+import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -61,6 +63,9 @@ public class DashboardController {
 	@Autowired 
 	DashboardService dashboardService;
 	
+
+	@Resource(name=YszkgbServiceImpl.NAME)
+	YszkgbService yszkgbService;
 	
 	CompanyType[] cps = new CompanyType[]{
 			CompanyType.SBGS,
@@ -300,7 +305,7 @@ public class DashboardController {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("data", jRet.toString().replaceAll("null", ""));
-		return new ModelAndView("ui2/dashboard", map);
+		return new ModelAndView("ui2/dashboard/dashboard", map);
 	}
 	
 	
@@ -328,4 +333,29 @@ public class DashboardController {
 		jRet.put("jydw", jydw);
 		return jRet.toString().replaceAll("null", "").getBytes("utf-8");
 	}
+	
+	@RequestMapping(value = "yszk.do")
+	public ModelAndView getDashboardYszk(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date current = new java.sql.Date(System.currentTimeMillis());
+		JSONObject jRet = new JSONObject();
+		
+		JSONArray zl = JSONArray.fromObject(this.yszkgbService.getDashboardYszkzlbh(current));
+		JSONArray kxxz = JSONArray.fromObject(this.yszkgbService.getDashboardYszkkxxz(current));
+		JSONArray yqys = JSONArray.fromObject(this.yszkgbService.getDashboardYqyszcsys(current));
+		
+
+		JSONArray yjtz = JSONArray.fromObject(this.yszkgbService.getDashboardYszkyjtztjqs(current));
+		
+		jRet.put("zl", zl);
+		jRet.put("kxxz", kxxz);
+		jRet.put("yqys", yqys);
+		jRet.put("yjtz", yjtz);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", jRet.toString().replaceAll("null", "0"));
+		return new ModelAndView("ui2/dashboard/yszk/yszk", map);
+	}
+	
+	
 }

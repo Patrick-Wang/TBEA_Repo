@@ -65,7 +65,11 @@ module framework.templates.singleDateReport {
                 }else if (!opt.date.month){
                     fmt = "YYYY年";
                     seasonClass = "year";
+                } else if(opt.date.day){
+                    fmt = "YYYY年MM月DD日";
+                    seasonClass = "day";
                 }
+
 
 
                 $("#" + this.opt.dtId).jeDate({

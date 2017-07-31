@@ -125,7 +125,7 @@ var tab;
             this.q("#" + id).prop("disabled", true);
             this.q(".tab-close").prop("disabled", true);
         };
-        Tab.prototype.internalOnEnd = function (id) {
+        Tab.prototype.internalOnEnd = function (id, callback) {
             //if (this.closelist.length > 0){
             //    let id:any = this.closelist.splice(0, 1);
             //    this.interalCloseTab(id);
@@ -134,8 +134,11 @@ var tab;
             //}
             this.q("#" + id).prop("disabled", false);
             this.q(".tab-close").prop("disabled", false);
+            if (callback) {
+                callback();
+            }
         };
-        Tab.prototype.interalCloseTab = function (id) {
+        Tab.prototype.interalCloseTab = function (id, callback) {
             var _this = this;
             this.internalOnBegin(id);
             var closed1 = false;
@@ -199,7 +202,7 @@ var tab;
                     animHelper.remove();
                     closed1 = true;
                     if (closed1 && closed2) {
-                        _this.internalOnEnd(id);
+                        _this.internalOnEnd(id, callback);
                     }
                 });
             }
@@ -220,7 +223,7 @@ var tab;
                 _this.q("#" + id).remove();
                 closed2 = true;
                 if (closed1 && closed2) {
-                    _this.internalOnEnd(id);
+                    _this.internalOnEnd(id, callback);
                 }
             });
             if (undefined == this.getActiveTab()) {
@@ -237,14 +240,14 @@ var tab;
                 this.onCloseTab(tabInfo);
             }
         };
-        Tab.prototype.triggerClickClose = function (id) {
+        Tab.prototype.triggerClickClose = function (id, callback) {
             //if (!this.closeStarted){
             //    this.closeStarted = true;
             //    this.interalCloseTab(id);
             //}else{
             //    this.closelist.push(id);
             //}
-            this.interalCloseTab(id);
+            this.interalCloseTab(id, callback);
         };
         Tab.prototype.triggerClickMore = function (id) {
             if (this.onClickMore != undefined) {

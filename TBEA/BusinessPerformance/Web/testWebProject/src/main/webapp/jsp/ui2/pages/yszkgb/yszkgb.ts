@@ -81,6 +81,11 @@ module yszkgb {
             if (this.mNodes.length == 1) {
                 this.mItemSelector.hide();
             }
+            if (opt.firstItem){
+                this.mItemSelector.update([opt.firstItem]);
+            }
+
+
 
             this.mNodes = this.mItemSelector.getTopNodes();
 

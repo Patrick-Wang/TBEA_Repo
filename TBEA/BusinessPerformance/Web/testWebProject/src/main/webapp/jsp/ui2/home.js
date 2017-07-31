@@ -162,15 +162,19 @@ var home;
     function extractNodeAndClickUrl(e, url) {
         var stop = e.accept({
             visit: function (node) {
-                if (node.getData().url == url) {
+                if (url.indexOf(node.getData().url) >= 0) {
                     var currentNode = node;
+                    var currentData = node.getData();
                     while (node.getParent()) {
                         node = node.getParent();
                         if (!node.getData().extracted) {
                             leftTree.triggerClicked(node);
                         }
                     }
+                    var oldUrl = currentData.url;
+                    currentData.url = url;
                     leftTree.triggerClicked(currentNode);
+                    currentData.url = oldUrl;
                     return true;
                 }
                 return false;
@@ -214,6 +218,30 @@ var home;
         $(treeNodes).each(function (i, e) {
             return !extractNodeAndClickUrl(e, url);
         });
+    };
+    window['triggerClickClose'] = function (url, onFinish) {
+        var tab;
+        $(treeNodes).each(function (i, e) {
+            var stop = e.accept({
+                visit: function (node) {
+                    if (url.indexOf(node.getData().url) >= 0) {
+                        var tabId = node.getData().id + "tab";
+                        tab = topTab.findTab(tabId);
+                        if (tab) {
+                            topTab.triggerClickClose(tabId, onFinish);
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            });
+            return !stop;
+        });
+        if (!tab) {
+            if (onFinish) {
+                onFinish();
+            }
+        }
     };
     leftTree.setOnClickListener(function (node) {
         if (node.data.url != undefined) {

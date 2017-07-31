@@ -159,7 +159,7 @@ module tab {
             this.q(".tab-close").prop("disabled", true);
         }
 
-        private internalOnEnd(id:string):void {
+        private internalOnEnd(id:string, callback?:any):void {
             //if (this.closelist.length > 0){
             //    let id:any = this.closelist.splice(0, 1);
             //    this.interalCloseTab(id);
@@ -168,9 +168,12 @@ module tab {
             //}
             this.q("#" + id).prop("disabled", false);
             this.q(".tab-close").prop("disabled", false);
+            if (callback){
+                callback();
+            }
         }
 
-        private interalCloseTab(id:string) {
+        private interalCloseTab(id:string, callback?:any) {
 
             this.internalOnBegin(id);
 
@@ -239,7 +242,7 @@ module tab {
                         animHelper.remove();
                         closed1 = true;
                         if (closed1 && closed2) {
-                            this.internalOnEnd(id);
+                            this.internalOnEnd(id, callback);
                         }
                     });
 
@@ -263,7 +266,7 @@ module tab {
                         this.q("#" + id).remove();
                         closed2 = true;
                         if (closed1 && closed2) {
-                            this.internalOnEnd(id);
+                            this.internalOnEnd(id, callback);
                         }
                     });
 
@@ -282,14 +285,14 @@ module tab {
             }
         }
 
-        triggerClickClose(id:string) {
+        triggerClickClose(id:string, callback?:any) {
             //if (!this.closeStarted){
             //    this.closeStarted = true;
             //    this.interalCloseTab(id);
             //}else{
             //    this.closelist.push(id);
             //}
-            this.interalCloseTab(id);
+            this.interalCloseTab(id, callback);
         }
 
         triggerClickMore(id:string) {

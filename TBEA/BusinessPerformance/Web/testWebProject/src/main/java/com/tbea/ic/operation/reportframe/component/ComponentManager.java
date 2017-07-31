@@ -82,6 +82,10 @@ public class ComponentManager implements ConfigLoadedListener {
 	
 	private static ComponentManager instance;
 	
+	public ComponentManager getInstance(){
+		return instance;
+	}
+	
 	public ComponentManager(Scheduler scheduler) {
  		loader = new WatchConfigLoader();
  		instance = this;
@@ -328,7 +332,7 @@ public class ComponentManager implements ConfigLoadedListener {
 		return null;
 	}
 
-	public DataNode getCSB(){
+	public DataNode getCSN(){
 		return csb.getRootNode();
 	}
 	

@@ -49,5 +49,13 @@ public interface YszkgbService {
 
 	void importYszkzlbhFromNC(Date d, List<Company> yszkgbComps);
 
+	List<String> getDashboardYszkzlbh(Date d);
+
+	List<String> getDashboardYszkkxxz(Date d);
+
+	List<List<String>> getDashboardYqyszcsys(Date d);
+
+	List<List<String>> getDashboardYszkyjtztjqs(Date d);
+
 
 }
