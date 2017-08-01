@@ -254,7 +254,7 @@ var Util;
                 pos = path.length > this.mPath.length ? this.mPath.length : path.length;
                 for (var i = 0; i < pos; ++i) {
                     if (path[i] != this.mPath[i]) {
-                        pos = i;
+                        pos = i + 1;
                         break;
                     }
                 }
@@ -290,6 +290,13 @@ var Util;
                 }
                 else {
                     $("#" + this.mHostId).css("border", "none");
+                }
+                if (start > 0) {
+                    var cursel = $("#" + this.mCtrlId + '_united_' + (start - 1)).val();
+                    var pathSel = $("#" + this.mCtrlId + '_united_' + (start - 1) + " option:eq(" + path[start - 1] + ")").val();
+                    if (cursel != pathSel) {
+                        $("#" + this.mCtrlId + '_united_' + (start - 1) + " option:eq(" + path[start - 1] + ")").attr("selected", true);
+                    }
                 }
             }
         };
