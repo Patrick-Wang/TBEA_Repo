@@ -37,24 +37,35 @@
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/demo.min.css"
 	rel="stylesheet" />
-<link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/typicons.min.css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/typicons.min.css"
+	rel="stylesheet" />
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/animate.min.css"
 	rel="stylesheet" />
 <link id="skin-link" href="" rel="stylesheet" type="text/css" />
-
-
-
+	<link href="${pageContext.request.contextPath}/jsp/ui2/tree/tree.css"
+	rel="stylesheet">
+	
+	<link href="${pageContext.request.contextPath}/jsp/ui2/dashboard/tree.css"
+	rel="stylesheet">
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery.easing.min.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/util.js"
+	type="text/javascript"></script>
+<link href="${pageContext.request.contextPath}/jsp/ui2/ui2.css"
+	rel="stylesheet" />
 <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
 <style>
 .legendColorBox {
-    padding-left: 10px;
-    vertical-align: middle;
-  	padding-top: 0px;
+	padding-left: 10px;
+	vertical-align: middle;
+	padding-top: 0px;
 }
-
 </style>
 
 </head>
@@ -65,8 +76,21 @@
 	<div class="page-breadcrumbs">
 		<ul class="breadcrumb">
 		</ul>
+		<i class="nav-btn fa fa-bars pull-right"></i>
 	</div>
 	<!-- /Page Breadcrumb -->
+
+
+	<script>
+		var breads = JSON.parse('${param.breads}');
+		Util.Breadcrumb.render(breads);
+		if (Util.isIframe()) {
+			Util.Breadcrumb.setOnClickListener(function(breadNode) {
+				window.parent['onClickBreadcrumb']
+						&& window.parent['onClickBreadcrumb'](breadNode);
+			});
+		}
+	</script>
 
 	<!-- Page Body -->
 	<div class="page-body">
@@ -87,10 +111,10 @@
 								</div>
 							</div>
 							<div class="databox-right bg-white">
-								<span id="lrze"  class="databox-number orange">--</span>
+								<span id="lrze" class="databox-number orange">--</span>
 								<div class="databox-text darkgray">利润总额</div>
 								<div class="databox-stat bg-orange radius-bordered">
-									<div  id="lrzetbzf"  class="stat-text">--</div>
+									<div id="lrzetbzf" class="stat-text">--</div>
 									<i class="stat-icon fa fa-arrow-up"></i>
 								</div>
 							</div>
@@ -105,13 +129,13 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="49.1"
 										data-animate="1500" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span  id="xssrwcl"  class="white font-90">--</span>
+										<span id="xssrwcl" class="white font-90">--</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white">
 								<span id="xssr" class="databox-number" style="color: #03B3B2">--
-									</span>
+								</span>
 								<div class="databox-text darkgray">销售收入</div>
 								<div class="databox-stat radius-bordered"
 									style="background-color: #03B3B2">
@@ -121,8 +145,8 @@
 							</div>
 						</div>
 					</div>
-					<div  id="yszk-zq" style="cursor:pointer;" class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-						<div
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+						<div id="yszk-zq" style="cursor: pointer;"
 							class="databox radius-bordered databox-shadowed databox-graded">
 							<div class="databox-left" style="background-color: #0072C6;">
 								<div class="databox-piechart">
@@ -136,7 +160,7 @@
 							</div>
 							<div class="databox-right bg-white ">
 								<span id="yszk" class="databox-number" style="color: #0072C6;">--
-									</span>
+								</span>
 								<div class="databox-text darkgray">应收账款（可钻取）</div>
 								<div class="databox-stat radius-bordered"
 									style="background-color: #0072C6;">
@@ -155,15 +179,15 @@
 										data-barcolor="#fff" data-linecap="butt" data-percent="128.4"
 										data-animate="2000" data-linewidth="3" data-size="47"
 										data-trackcolor="rgba(255,255,255,0.1)">
-										<span  id="chwcl" class="white font-40">--</span>
+										<span id="chwcl" class="white font-40">--</span>
 									</div>
 								</div>
 							</div>
 							<div class="databox-right bg-white">
-								<span  id="ch" class="databox-number lightred">--</span>
+								<span id="ch" class="databox-number lightred">--</span>
 								<div class="databox-text darkgray">存货</div>
 								<div class="databox-stat bg-lightred radius-bordered">
-									<div  id="chtbzf" class="stat-text">--</div>
+									<div id="chtbzf" class="stat-text">--</div>
 									<i class="stat-icon fa fa-arrow-up"></i>
 								</div>
 							</div>
@@ -180,8 +204,8 @@
 											<ul class="nav nav-tabs tabs-flat nav-justified" id="myTab11">
 												<li class="active"><a data-toggle="tab"
 													href="#total_profit"> 利润总额 </a></li>
-												<li><a data-toggle="tab" href="#sales_income">
-														销售收入 </a></li>
+												<li><a data-toggle="tab" href="#sales_income"> 销售收入
+												</a></li>
 												<li><a data-toggle="tab" href="#accounts_receivable">
 														应收账款 </a></li>
 												<li><a data-toggle="tab" href="#stock"> 存货 </a></li>
@@ -248,20 +272,23 @@
 									<div
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
 										<span id="zzyqy"
-											class="databox-number number-lg  white no-margin padding-top-5" style="font-size:16px">--</span>
-										<span class="databox-text whitesmoke no-margin padding-top-5">制造业</span>
+											class="databox-number number-lg  white no-margin padding-top-5"
+											style="font-size: 16px">--</span> <span
+											class="databox-text whitesmoke no-margin padding-top-5">制造业</span>
 									</div>
 									<div
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
 										<span id="jcfwqy"
-											class="databox-number number-lg white no-margin padding-top-5" style="font-size:16px">--</span>
-										<span class="databox-text whitesmoke no-margin padding-top-5">集成服务业</span>
+											class="databox-number number-lg white no-margin padding-top-5"
+											style="font-size: 16px">--</span> <span
+											class="databox-text whitesmoke no-margin padding-top-5">集成服务业</span>
 									</div>
-									<div 
+									<div
 										class="databox-cell cell-2 no-padding padding-5 text-align-center">
 										<span id="qtqy"
-											class="databox-number number-lg  white no-margin padding-top-5"  style="font-size:16px">--</span>
-										<span class="databox-text whitesmoke no-margin padding-top-5">其他</span>
+											class="databox-number number-lg  white no-margin padding-top-5"
+											style="font-size: 16px">--</span> <span
+											class="databox-text whitesmoke no-margin padding-top-5">其他</span>
 									</div>
 								</div>
 								<div class="databox-row row-9 no-padding bg-white">
@@ -273,8 +300,7 @@
 											data-minspotcolor="#fafafa" data-maxspotcolor="#ffce55"
 											data-highlightspotcolor="#f5f5f5 "
 											data-highlightlinecolor="#f5f5f5" data-linewidth="2"
-											data-spotradius="0">
-											0,0,0,0,0,0,0,0,0,0,0,0 </span>
+											data-spotradius="0"> 0,0,0,0,0,0,0,0,0,0,0,0 </span>
 									</div>
 								</div>
 							</div>
@@ -354,7 +380,8 @@
 										</div>
 										<div class="databox-row row-6">
 											<div class="progress bg-yellow progress-no-radius">
-												<div id="scqygnzb" class="progress-bar progress-bar-palegreen"
+												<div id="scqygnzb"
+													class="progress-bar progress-bar-palegreen"
 													role="progressbar" aria-valuenow="50" aria-valuemin="0"
 													aria-valuemax="100" style="width: 50%"></div>
 											</div>
@@ -371,7 +398,7 @@
 											style="height: 12.5%">
 											<span
 												class="databox-text sonic-silver darkgray pull-left no-margin">国内市场签约排名</span>
-											<span 
+											<span
 												class="databox-text sonic-silver darkgray pull-right no-margin uppercase">签约额</span>
 										</div>
 										<div
@@ -513,12 +540,15 @@
 				</div>
 			</div>
 		</div>
+		<div class="side-bar side-bar-hide">
+			<div id="tree"></div>
+		
+		</div>
 	</div>
 	<!-- /Page Body -->
 
+
 	<!--Basic Scripts-->
-	<script
-		src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
@@ -561,268 +591,554 @@
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris-init.js"></script>
 
 
-	<script src="${pageContext.request.contextPath}/jsp/ui2/pages/util.js"
-		type="text/javascript"></script>
+
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/chartjs/chart.js"></script>
-		<%@include file="../pages/loading.jsp"%>
-	<script>
-	
-	Util.Breadcrumb.render(JSON.parse('${param.breads}'));
-	if (Util.isIframe()) {
-		Util.Breadcrumb.setOnClickListener(function(breadNode) {
-			window.parent['onClickBreadcrumb']
-					&& window.parent['onClickBreadcrumb'](breadNode);
-		});
-	}
+	<%@include file="../pages/loading.jsp"%>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jqueryex.js"></script>
+	<script
+	src="${pageContext.request.contextPath}/jsp/ui2/tree/treeNode.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/ui2/tree/tree.js"></script>
 
-	window.data = JSON.parse('${data}');
-	
-	bindPart1Data();
-	function bindPart1Data(){
-		$("#lrzewcl").text(data.zt[0].ndjhwcl)
-		.parent().attr("data-percent", data.zt[0].ndjhwcl.replace("%", ""));
-		$("#lrze").text(data.zt[0].ndlj);
-		$("#lrzetbzf").text(data.zt[0].ndljtbzf);
-		if (data.zt[0].ndljtbzf[0] == '-'){
-			$("#lrzetbzf")
-			.text(data.zt[0].ndljtbzf.substring(1))
-			.next()
-			.removeClass("fa-arrow-up")
-			.addClass("fa-arrow-down");
+	<script>
+		window.data = JSON.parse('${data}');
+
+		bindPart1Data();
+		function bindPart1Data() {
+			$("#lrzewcl").text(data.zt[0].ndjhwcl).parent().attr(
+					"data-percent", data.zt[0].ndjhwcl.replace("%", ""));
+			$("#lrze").text(data.zt[0].ndlj);
+			$("#lrzetbzf").text(data.zt[0].ndljtbzf);
+			if (data.zt[0].ndljtbzf[0] == '-') {
+				$("#lrzetbzf").text(data.zt[0].ndljtbzf.substring(1)).next()
+						.removeClass("fa-arrow-up").addClass("fa-arrow-down");
+			}
+
+			$("#xssrwcl").text(data.zt[1].ndjhwcl).parent().attr(
+					"data-percent", data.zt[1].ndjhwcl.replace("%", ""));
+			$("#xssr").text(data.zt[1].ndlj);
+			$("#xssrtbzf").text(data.zt[1].ndljtbzf);
+			if (data.zt[1].ndljtbzf[0] == '-') {
+				$("#xssrtbzf").text(data.zt[1].ndljtbzf.substring(1)).next()
+						.removeClass("fa-arrow-up").addClass("fa-arrow-down");
+			}
+
+			$("#yszkwcl").text(data.zt[2].ndjhwcl).parent().attr(
+					"data-percent", data.zt[2].ndjhwcl.replace("%", ""));
+			$("#yszk").text(data.zt[2].ndlj);
+			$("#yszktbzf").text(data.zt[2].ndljtbzf);
+			if (data.zt[2].ndljtbzf[0] == '-') {
+				$("#yszktbzf").text(data.zt[2].ndljtbzf.substring(1)).next()
+						.removeClass("fa-arrow-up").addClass("fa-arrow-down");
+			}
+
+			$("#chwcl").text(data.zt[3].ndjhwcl).parent().attr("data-percent",
+					data.zt[3].ndjhwcl.replace("%", ""));
+			$("#ch").text(data.zt[3].ndlj);
+			$("#chtbzf").text(data.zt[3].ndljtbzf);
+			if (data.zt[3].ndljtbzf[0] == '-') {
+				$("#chtbzf").text(data.zt[3].ndljtbzf.substring(1)).next()
+						.removeClass("fa-arrow-up").addClass("fa-arrow-down");
+			}
+
+			$("#yszk-zq")
+					.on(
+							"click",
+							function() {
+								breads
+										.push({
+											id : 100,
+											value : '应收账款',
+											url : '/BusinessManagement/dashboard/yszk.do'
+										});
+								window.open("/BusinessManagement/dashboard/yszk.do?breads="
+										+ JSON.stringify(breads));
+							});
+
+			//-----------------------------Pie Charts-----------------------------------------//
+			InitiateEasyPieChart.init();
 		}
-		
-		$("#xssrwcl").text(data.zt[1].ndjhwcl)
-		.parent().attr("data-percent", data.zt[1].ndjhwcl.replace("%", ""));
-		$("#xssr").text(data.zt[1].ndlj);
-		$("#xssrtbzf").text(data.zt[1].ndljtbzf);
-		if (data.zt[1].ndljtbzf[0] == '-'){
-			$("#xssrtbzf")
-			.text(data.zt[1].ndljtbzf.substring(1))
-			.next()
-			.removeClass("fa-arrow-up")
-			.addClass("fa-arrow-down");
+
+		function bindPart2Data() {
+
+			//-------------------定义数据、维度------------------------------------------------//
+			var chartfirstcolor = "#57b5e3";
+			var chartsecondcolor = "#f4b400";
+			var chartthirdcolor = "#d73d32";
+			var chartfourthcolor = "#8cc474";
+			var chartfifthcolor = "#bc5679";
+			var gridbordercolor = "#eee";
+
+			$("#gsqy").text(data.scqy.gszt);
+			$("#zzyqy").text(data.scqy.zzy);
+			$("#jcfwqy").text(data.scqy.jcfw);
+			$("#qtqy").text(data.scqy.qt);
+
+			$("#ydqy").text(data.scqy.ydzbs.join().replace(/--/g, "0"));
+
+			$("#ztscqy").text(data.scqypm.sbdztqy);
+			$("#scqygnzb").css("width", data.scqypm.gnzb).attr("aria-valuenow",
+					data.scqypm.gnzb.replace("%", ""));
+
+			function forShort(name) {
+				if (name.indexOf("沈") >= 0) {
+					return "沈变";
+				}
+				if (name.indexOf("衡") >= 0) {
+					return "衡变";
+				}
+				if (name.indexOf("新疆变压器") >= 0) {
+					return "新变";
+				}
+				if (name.indexOf("鲁") >= 0) {
+					return "鲁缆";
+				}
+				if (name.indexOf("新疆线缆") >= 0) {
+					return "新缆";
+				}
+				if (name.indexOf("德") >= 0) {
+					return "德缆";
+				}
+			}
+
+			for (var i = 0; i < data.scqypm.gnsc.length; ++i) {
+				$("#gnpm_gs" + (i + 1)).text(forShort(data.scqypm.gnsc[i][0]));
+				$("#gnpm_val" + (i + 1)).text(data.scqypm.gnsc[i][1] + " 万元");
+				$("#gjpm_gs" + (i + 1)).text(forShort(data.scqypm.gjsc[i][0]));
+				$("#gjpm_val" + (i + 1)).text(data.scqypm.gjsc[i][1] + " 万美元");
+			}
+
+			function getChartOpt(index) {
+
+				var d1_year_plan = [];
+				//插入动态数据
+				for (var i = 1; i <= 13; i += 1)
+					d1_year_plan.push([ i,
+							parseFloat(data.jydw[index][i - 1].ndjh) ]);
+
+				var d1_year_amount = [];
+				//插入动态数据
+				for (var i = 1; i <= 13; i += 1)
+					d1_year_amount.push([ i,
+							parseFloat(data.jydw[index][i - 1].ndlj) ]);
+
+				var d1_last_year_amount = [];
+				//插入动态数据
+				for (var i = 1; i <= 13; i += 1)
+					d1_last_year_amount.push([ i,
+							parseFloat(data.jydw[index][i - 1].qntq) ]);
+
+				var d1_ticks = [ [ 1, '沈变' ], [ 2, '衡变' ], [ 3, '新变' ],
+						[ 4, '鲁缆' ], [ 5, '新缆' ], [ 6, '德缆' ], [ 7, '新能源' ],
+						[ 8, '新特能源' ], [ 9, '天池能源' ], [ 10, '能动' ],
+						[ 11, '众和' ], [ 12, '进出口' ], [ 13, '国际工程' ] ];
+
+				var data_flot_bar_chart = [ {
+					label : "年度计划",
+					data : d1_year_plan,
+					bars : {
+						show : true,
+						order : 1,
+						fillColor : {
+							colors : [ {
+								color : chartthirdcolor
+							}, {
+								color : chartthirdcolor
+							} ]
+						}
+					},
+					color : chartthirdcolor
+				}, {
+					label : "年度累计",
+					data : d1_year_amount,
+					bars : {
+						show : true,
+						order : 2,
+						fillColor : {
+							colors : [ {
+								color : chartsecondcolor
+							}, {
+								color : chartsecondcolor
+							} ]
+						}
+					},
+					color : chartsecondcolor
+				}, {
+					label : "去年同期累计",
+					data : d1_last_year_amount,
+					bars : {
+						show : true,
+						order : 3,
+						fillColor : {
+							colors : [ {
+								color : chartfirstcolor
+							}, {
+								color : chartfirstcolor
+							} ]
+						}
+					},
+					color : chartfirstcolor
+				} ];
+
+				//-------------------Chart设置参数------------------------------------------------//
+				var options_flot_bar_chart = {
+					bars : {
+						barWidth : 0.2,
+						lineWidth : 0,
+						borderWidth : 0,
+						fillColor : {
+							colors : [ {
+								opacity : 0.4
+							}, {
+								opacity : 1
+							} ]
+						}
+					},
+					xaxis : {
+						ticks : d1_ticks,
+						color : gridbordercolor
+					},
+					yaxis : {
+						color : gridbordercolor
+					},
+					grid : {
+						hoverable : true,
+						clickable : false,
+						borderWidth : 0,
+						aboveData : false
+					},
+					legend : {
+						noColumns : 4
+					},
+					tooltip : true,
+					tooltipOpts : {
+						defaultTheme : false,
+						content : "<b>%s</b> : <span>%y 万元</span>"
+					}
+				};
+				return [ data_flot_bar_chart, options_flot_bar_chart ];
+			}
+
+			//------------------实例化Flot Chart-----------------------------------------------//
+
+			var opt = getChartOpt(0);
+			var placeholder_total_profit = $("#dashboard-chart-total-profit");
+			var plot_total_profit = $.plot(placeholder_total_profit, opt[0],
+					opt[1]);
+			/*     opt = getChartOpt(1);
+			    var placeholder_sales_income = $("#dashboard-chart-sales-income");
+			    var plot_sales_income = $.plot(placeholder_sales_income, opt[0], opt[1]);
+			    opt = getChartOpt(2);
+			    var placeholder_accounts_receivable = $("#dashboard-chart-accounts-receivable");
+			    var plot_accounts_receivable = $.plot(placeholder_accounts_receivable, opt[0], opt[1]);
+			    opt = getChartOpt(3);
+			    var placeholder_stock = $("#dashboard-chart-stock");
+			    var plot_stock = $.plot(placeholder_stock, opt[0], opt[1]);
+			 */
+			var plotIds = [ "#dashboard-chart-total-profit",
+					"#dashboard-chart-sales-income",
+					"#dashboard-chart-accounts-receivable",
+					"#dashboard-chart-stock" ];
+			var displayed = [ true, false, false, false ];
+			$("#myTab11")
+					.on(
+							"click",
+							function() {
+								setTimeout(
+										function() {
+											$("#myTab11 li")
+													.each(
+															function(i, e) {
+																if ($(e)
+																		.hasClass(
+																				"active")) {
+																	if (!displayed[i]) {
+																		var opt = getChartOpt(i);
+																		var placeholder_plot = $(plotIds[i]);
+																		var plot = $
+																				.plot(
+																						placeholder_plot,
+																						opt[0],
+																						opt[1]);
+																		displayed[i] = true;
+																	}
+																	return false;
+																}
+															});
+										}, 0);
+							});
+			//-------------------------Initiates Sparkline Chart instances in page------------------//
+			InitiateSparklineCharts.init();
 		}
-		
-		$("#yszkwcl").text(data.zt[2].ndjhwcl)
-		.parent().attr("data-percent", data.zt[2].ndjhwcl.replace("%", ""));
-		$("#yszk").text(data.zt[2].ndlj);
-		$("#yszktbzf").text(data.zt[2].ndljtbzf);
-		if (data.zt[2].ndljtbzf[0] == '-'){
-			$("#yszktbzf")
-			.text(data.zt[2].ndljtbzf.substring(1))
-			.next()
-			.removeClass("fa-arrow-up")
-			.addClass("fa-arrow-down");
-		}
-		
-		$("#chwcl").text(data.zt[3].ndjhwcl)
-		.parent().attr("data-percent", data.zt[3].ndjhwcl.replace("%", ""));
-		$("#ch").text(data.zt[3].ndlj);
-		$("#chtbzf").text(data.zt[3].ndljtbzf);
-		if (data.zt[3].ndljtbzf[0] == '-'){
-			$("#chtbzf")
-			.text(data.zt[3].ndljtbzf.substring(1))
-			.next()
-			.removeClass("fa-arrow-up")
-			.addClass("fa-arrow-down");
-		}
-		
-		
-		
-		
-		$("#yszk-zq").on("click", function(){
-			window.location.href = "/BusinessManagement/dashboard/yszk.do";
+
+		ajaxInit = new Util.Ajax(
+				"/BusinessManagement/dashboard/dashboard_update.do", false);
+		ajaxInit.get().then(function(data) {
+			window.data = data;
+			bindPart2Data();
+		});
+
+		$(".page-body").on("click", function() {
+			if ($(".nav-btn").hasClass("nav-btn-active")) {
+				$(".nav-btn").trigger("click");
+			}
+		});
+
+		$(".side-bar").css("margin-right", -$(".side-bar").width() + "px").on(
+				"click", function(e) {
+					e.stopPropagation();
+				}).on("mouseover", function(e) {
+			e.stopPropagation();
+		});
+
+		$(".nav-btn").on("click", function() {
+			if ($(".nav-btn").hasClass("nav-btn-active")) {
+				$(".nav-btn").removeClass("nav-btn-active");
+
+				$(".side-bar").animate({
+					marginRight : -$(".side-bar").width() + "px"
+				}, {
+					duration : 'fast',
+					easing : 'easeInQuart',
+					done : function() {
+						$(".side-bar").addClass("side-bar-hide");
+					},
+					step : function() {
+
+					}
+				});
+			} else {
+				$(".nav-btn").addClass("nav-btn-active");
+				$(".side-bar").removeClass("side-bar-hide");
+
+				$(".side-bar").animate({
+					marginRight : "0px"
+				}, {
+					duration : 'fast',
+					easing : 'easeOutQuart',
+					done : function() {
+
+					},
+					step : function() {
+
+					}
+				});
+			}
 		});
 		
+		var id = 1000;
 		
-	
-	    
-	    //-----------------------------Pie Charts-----------------------------------------//
-	    InitiateEasyPieChart.init();
-	}
-	
-	function bindPart2Data(){
-		
-	
-	    //-------------------定义数据、维度------------------------------------------------//
-	    var chartfirstcolor = "#57b5e3";
-	    var chartsecondcolor = "#f4b400";
-	    var chartthirdcolor = "#d73d32";
-	    var chartfourthcolor = "#8cc474";
-	    var chartfifthcolor = "#bc5679";
-	    var gridbordercolor = "#eee";
-	
-	    
-		$("#gsqy").text(data.scqy.gszt);
-		$("#zzyqy").text(data.scqy.zzy);
-		$("#jcfwqy").text(data.scqy.jcfw);
-		$("#qtqy").text(data.scqy.qt);
-		
-		$("#ydqy").text(data.scqy.ydzbs.join().replace(/--/g, "0"));
-		
-		$("#ztscqy").text(data.scqypm.sbdztqy);
-		$("#scqygnzb").css("width", data.scqypm.gnzb)
-		.attr("aria-valuenow", data.scqypm.gnzb.replace("%", ""));		
-		
-		function forShort(name){
-			if (name.indexOf("沈") >= 0){
-				return "沈变";
-			}
-			if (name.indexOf("衡") >= 0){
-				return "衡变";
-			}
-			if (name.indexOf("新疆变压器") >= 0){
-				return "新变";
-			}
-			if (name.indexOf("鲁") >= 0){
-				return "鲁缆";
-			}
-			if (name.indexOf("新疆线缆") >= 0){
-				return "新缆";
-			}
-			if (name.indexOf("德") >= 0){
-				return "德缆";
-			}
+		function nextId(){
+			return ++id;
 		}
 		
-		for (var i = 0; i < data.scqypm.gnsc.length; ++i){
-			$("#gnpm_gs" + (i + 1)).text(forShort(data.scqypm.gnsc[i][0]));
-			$("#gnpm_val" + (i + 1)).text(data.scqypm.gnsc[i][1] + " 万元");
-			$("#gjpm_gs" + (i + 1)).text(forShort(data.scqypm.gjsc[i][0]));
-			$("#gjpm_val" + (i + 1)).text(data.scqypm.gjsc[i][1] + " 万美元");
+		
+		var getIcon = function(treeNode){
+			if (treeNode.data.checked === true){
+				return "fa fa-check-square-o tree-checkbox";
+			}
+			
+			if (treeNode.data.checked === false){
+				return "fa fa-square-o tree-checkbox";
+			}
+			
+			return "fa fa-square tree-checkbox";
 		}
 		
-	    
-	    function getChartOpt(index){
-	    
-		    var d1_year_plan = [];
-		    //插入动态数据
-		    for (var i = 1; i <= 13; i += 1)
-		        d1_year_plan.push([i, parseFloat(data.jydw[index][i - 1].ndjh)]);
 		
-		    var d1_year_amount = [];
-		    //插入动态数据
-		    for (var i = 1; i <= 13; i += 1)
-		        d1_year_amount.push([i, parseFloat(data.jydw[index][i - 1].ndlj)]);
-		
-		    var d1_last_year_amount = [];
-		    //插入动态数据
-		    for (var i = 1; i <= 13; i += 1)
-		        d1_last_year_amount.push([i, parseFloat(data.jydw[index][i - 1].qntq)]);
-		
-		    var d1_ticks = [[1, '沈变'], [2, '衡变'], [3, '新变'], [4, '鲁缆'], [5, '新缆'], [6, '德缆'], [7, '新能源'],
-		        [8, '新特能源'], [9, '天池能源'], [10, '能动'], [11, '众和'], [12, '进出口'], [13, '国际工程']];
-		
-		    var data_flot_bar_chart = [
-		        {
-		            label: "年度计划",
-		            data: d1_year_plan,
-		            bars: {
-		                show: true,
-		                order: 1,
-		                fillColor: { colors: [{ color: chartthirdcolor }, { color: chartthirdcolor }] }
-		            },
-		            color: chartthirdcolor
-		        },
-		        {
-		            label: "年度累计",
-		            data: d1_year_amount,
-		            bars: {
-		                show: true,
-		                order: 2,
-		                fillColor: { colors: [{ color: chartsecondcolor }, { color: chartsecondcolor }] }
-		            },
-		            color: chartsecondcolor
-		        },
-		        {
-		            label: "去年同期累计",
-		            data: d1_last_year_amount,
-		            bars: {
-		                show: true,
-		                order: 3,
-		                fillColor: { colors: [{ color: chartfirstcolor }, { color: chartfirstcolor }] }
-		            },
-		            color: chartfirstcolor
-		        }
-		    ];
-		    
-	    
-		    //-------------------Chart设置参数------------------------------------------------//
-		    var options_flot_bar_chart = {
-		        bars: {
-		            barWidth: 0.2,
-		            lineWidth: 0,
-		            borderWidth: 0,
-		            fillColor: { colors: [{ opacity: 0.4 }, { opacity: 1 }] }
-		        },
-		        xaxis: {
-		            ticks: d1_ticks,
-		            color: gridbordercolor
-		        },
-		        yaxis: {
-		            color: gridbordercolor
-		        },
-		        grid: {
-		            hoverable: true,
-		            clickable: false,
-		            borderWidth: 0,
-		            aboveData: false
-		        },
-		        legend: {
-		            noColumns: 4
-		        },
-		        tooltip: true,
-		        tooltipOpts: {
-		            defaultTheme: false,
-		            content: "<b>%s</b> : <span>%y 万元</span>"
-		        }
-		    };
-		    return [data_flot_bar_chart, options_flot_bar_chart];
-	    }
-	    
-	    //------------------实例化Flot Chart-----------------------------------------------//
-	   
-	    var opt = getChartOpt(0);
-	    var placeholder_total_profit = $("#dashboard-chart-total-profit");
-	    var plot_total_profit = $.plot(placeholder_total_profit, opt[0], opt[1]);
-	/*     opt = getChartOpt(1);
-	    var placeholder_sales_income = $("#dashboard-chart-sales-income");
-	    var plot_sales_income = $.plot(placeholder_sales_income, opt[0], opt[1]);
-	    opt = getChartOpt(2);
-	    var placeholder_accounts_receivable = $("#dashboard-chart-accounts-receivable");
-	    var plot_accounts_receivable = $.plot(placeholder_accounts_receivable, opt[0], opt[1]);
-	    opt = getChartOpt(3);
-	    var placeholder_stock = $("#dashboard-chart-stock");
-	    var plot_stock = $.plot(placeholder_stock, opt[0], opt[1]);
-	 */    
-	 	var plotIds = ["#dashboard-chart-total-profit", "#dashboard-chart-sales-income", "#dashboard-chart-accounts-receivable", "#dashboard-chart-stock"];
-		var displayed = [true, false, false, false];
-	    $("#myTab11").on("click", function(){
-	    	setTimeout(function(){
-	    		$("#myTab11 li").each(function(i, e){
-	    			if ($(e).hasClass("active")){
-	    				if (!displayed[i]){
-	    					 var opt = getChartOpt(i);
-	    					 var placeholder_plot = $(plotIds[i]);
-	    					 var plot = $.plot(placeholder_plot, opt[0], opt[1]);
-	    					 displayed[i] = true;
-	    				}
-	    				return false;
-	    			}
-	    		});
-	    	}, 0);
-	    });
-		//-------------------------Initiates Sparkline Chart instances in page------------------//
-	    InitiateSparklineCharts.init();
-	}
-		
-	ajaxInit = new Util.Ajax("/BusinessManagement/dashboard/dashboard_update.do", false);
-	ajaxInit.get().then(function(data){
-		window.data = data;
-		bindPart2Data();
-	});
-</script>
+		var leftTree = new tree.Tree("tree");
+		var treeNodes = leftTree.render([{
+	        data : {
+	            id : nextId(),
+	            value: '变压器产业',
+	            icon : getIcon,
+	            iconOpen : getIcon,
+	            extracted:true,
+	            checked : true
+	        },
+	        subNodes:[
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '沈变公司',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    },
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '衡变公司',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    },
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '新变厂',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    },
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '鲁缆公司',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    },
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '新缆厂',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    },
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '德缆公司',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    }
+	        ]
+	    },{
+	        data : {
+	            id : nextId(),
+	            value: '能源产业',
+	            icon : getIcon,
+	            iconOpen : getIcon,
+	            extracted:true,
+	            checked : true
+	        },
+	        subNodes:[
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '新能源公司',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    },
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '新特能源公司',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    },
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '天池能源公司',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    },
+	        	{
+	    	        data : {
+	    	            id : nextId(),
+	    	            value: '能动公司',
+	    	            icon : getIcon,
+	    	            iconOpen : getIcon,
+	    	            checked : true
+	    	        }
+	    	    }
+	        ]
+	    },
+    	{
+	        data : {
+	            id : nextId(),
+	            value: '众和公司',
+	            icon : getIcon,
+	            iconOpen : getIcon,
+	            checked : true
+	        }
+	    },
+    	{
+	        data : {
+	            id : nextId(),
+	            value: '进出口公司',
+	            icon : getIcon,
+	            iconOpen : getIcon,
+	            checked : true
+	        }
+	    },
+    	{
+	        data : {
+	            id : nextId(),
+	            value: '国际工程公司',
+	            icon : getIcon,
+	            iconOpen : getIcon,
+	            checked : true
+	        }
+	    }]);
+		leftTree.setOnClickListener(function(treeNode){
+			
+			if (true === treeNode.data.checked){
+				treeNode.accept({
+		            visit: function(node){
+		            	node.getData().checked = false;
+		            	leftTree.refresh(node);
+		                return false;
+		            }
+		        });
+		        
+				var node = treeNode;
+                while (node.getParent()) {
+                    node = node.getParent();
+                    var checked = false;
+                    for (var i = 0; i < node.subNodes.length; ++i){
+                    	if (false !== node.subNodes[i].data.checked){
+                    		checked = "part";
+                    		break;
+                    	}
+                    }
+                    node.data.checked = checked;
+                    leftTree.refresh(node);
+                }
+                
+			}else{
+				treeNode.accept({
+		            visit: function(node){
+		            	node.getData().checked = true;
+		            	leftTree.refresh(node);
+		                return false;
+		            }
+		        });
+		        
+				var node = treeNode;
+                while (node.getParent()) {
+                    node = node.getParent();
+                    var checked = true;
+                    for (var i = 0; i < node.subNodes.length; ++i){
+                    	if (true !== node.subNodes[i].data.checked){
+                    		checked = "part";
+                    		break;
+                    	}
+                    }
+                    node.data.checked = checked;
+                    leftTree.refresh(node);
+                }
+			}
+			return true;
+		});
+	</script>
 
 </body>
 <!--  /Body -->

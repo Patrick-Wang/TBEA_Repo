@@ -1,0 +1,59 @@
+.tree{
+	padding-left:0px;
+	color:white;
+ }
+
+
+
+.tree li{
+    list-style:none;
+    cursor:pointer;
+}
+
+
+.tree ul{
+    -moz-user-select:none;/*鐏嫄*/
+    -webkit-user-select:none;/*webkit娴忚鍣�*/
+    -ms-user-select:none;/*IE10*/
+    -khtml-user-select:none;/*鏃╂湡娴忚鍣�*/
+    user-select:none;
+}
+
+.tree ul{
+    padding-left:0px;
+    overflow: hidden;
+}
+
+
+.tree .active{
+    background:none;
+}
+
+.tree-item0{
+    font-size:16px;
+    padding:10px 0px 10px 25px;
+}
+.tree-item1{
+    font-size:14px;
+    padding:5px 0px 5px 40px;
+}
+
+.tree-item2{
+    font-size:13px;
+    padding:5px 0px 5px 55px;
+}
+
+.tree-item3{
+    font-size:13px;
+    padding:5px 0px 5px 70px;
+}
+
+.tree li div:hover{
+    background: rgba( 195,195,195, 0.4);
+}
+
+.tree-checkbox{
+	color: cyan;
+	width:20px;
+}
+

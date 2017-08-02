@@ -20,15 +20,31 @@ var tree;
             this.onClick = click;
             return oldFn;
         };
-        Tree.prototype.triggerClicked = function (treeNode) {
+        Tree.prototype.refresh = function (treeNode) {
+            if (treeNode.data.icon && treeNode.data.iconOpen) {
+                this.q("#" + treeNode.data.id + ">div i").removeClass(treeNode.data.icon_);
+                this.q("#" + treeNode.data.id + ">div i").addClass(this.getIcon(treeNode, (treeNode.getData().extracted ? treeNode.data.iconOpen : treeNode.data.icon)));
+            }
+        };
+        Tree.prototype.triggerClicked = function (treeNode, ignoreStop) {
+            var stop = true;
+            if (treeNode.data.click != undefined) {
+                stop = treeNode.data.click(treeNode);
+            }
+            if (undefined != this.onClick) {
+                stop = this.onClick(treeNode);
+            }
+            if (!ignoreStop && stop) {
+                return;
+            }
             if (treeNode.hasChildren()) {
                 var ul = this.q("#" + treeNode.data.id + ">ul");
                 if (treeNode.getData().extracted) {
                     treeNode.getData().extracted = false;
                     treeNode.data.height = ul.css("height");
                     if (treeNode.data.icon && treeNode.data.iconOpen) {
-                        this.q("#" + treeNode.data.id + ">div i").removeClass();
-                        this.q("#" + treeNode.data.id + ">div i").addClass(treeNode.data.icon);
+                        this.q("#" + treeNode.data.id + ">div i").removeClass(treeNode.data.icon_);
+                        this.q("#" + treeNode.data.id + ">div i").addClass(this.getIcon(treeNode, treeNode.data.icon));
                     }
                     ul.animate({
                         height: "0px"
@@ -37,8 +53,8 @@ var tree;
                 else {
                     treeNode.getData().extracted = true;
                     if (treeNode.data.icon && treeNode.data.iconOpen) {
-                        this.q("#" + treeNode.data.id + ">div i").removeClass();
-                        this.q("#" + treeNode.data.id + ">div i").addClass(treeNode.data.iconOpen);
+                        this.q("#" + treeNode.data.id + ">div i").removeClass(treeNode.data.icon_);
+                        this.q("#" + treeNode.data.id + ">div i").addClass(this.getIcon(treeNode, treeNode.data.iconOpen));
                     }
                     ul.animate({
                         height: treeNode.getData().height
@@ -47,14 +63,26 @@ var tree;
                     });
                 }
             }
-            if (treeNode.data.click != undefined) {
-                treeNode.data.click(treeNode);
-            }
-            if (undefined != this.onClick) {
-                this.onClick(treeNode);
-            }
             this.q("div").removeClass("active");
             this.q("#" + treeNode.data.id + ">div").addClass("active");
+        };
+        Tree.prototype.getIcon = function (curNode, icon) {
+            if (icon) {
+                if (typeof icon === 'function') {
+                    return curNode.data.icon_ = icon(curNode);
+                }
+                else {
+                    return curNode.data.icon_ = icon;
+                }
+            }
+        };
+        Tree.prototype.getIconHtml = function (curNode, icon) {
+            var iconHtml = "";
+            var iconClass = this.getIcon(curNode, icon);
+            if (iconClass) {
+                iconHtml = '<i class="' + iconClass + '"></i> ';
+            }
+            return iconHtml;
         };
         Tree.prototype.render = function (tree) {
             var _this = this;
@@ -64,9 +92,10 @@ var tree;
             this.q().append('<ul></ul>');
             for (var i = 0; i < this.treeNodes.length; ++i) {
                 var curNode = this.treeNodes[i];
+                var iconHtml = this.getIconHtml(curNode, curNode.getData().icon);
                 this.q('>ul')
                     .append('<li id="' + curNode.getData().id + '"><div class="tree-item0">' +
-                    (curNode.getData().icon ? ('<i class="' + curNode.getData().icon + '"></i> ') : '') +
+                    iconHtml +
                     curNode.getData().value + '</div></li>');
                 this.q('>ul>li:last>div').click(curNode, function (event) {
                     _this.triggerClicked(event.data);
@@ -83,7 +112,7 @@ var tree;
                 }
             }
             for (var i = 0; i < this.extractedNodes.length; ++i) {
-                this.triggerClicked(this.extractedNodes[i]);
+                this.triggerClicked(this.extractedNodes[i], true);
             }
             this.extractedNodes = [];
             return this.treeNodes;
@@ -93,8 +122,9 @@ var tree;
             var children = parent.subNodes;
             for (var i = 0; i < children.length; ++i) {
                 var curNode = children[i];
+                var iconHtml = this.getIconHtml(curNode, curNode.getData().icon);
                 ul.append('<li id="' + curNode.getData().id + '"><div class="tree-item' + depth + '">' +
-                    (curNode.getData().icon ? ('<i class="' + curNode.getData().icon + '"></i> ') : '') +
+                    iconHtml +
                     curNode.getData().value + '</div></li>');
                 ul.children('li:last').children('div').click(curNode, function (event) {
                     _this.triggerClicked(event.data);
@@ -103,7 +133,7 @@ var tree;
                     ul.children('li:last').append('<ul></ul>');
                     this.renderChildren(ul.children('li:last').children('ul'), curNode, depth + 1);
                     if (curNode.data.extracted) {
-                        this.extractedNodes.push[curNode];
+                        this.extractedNodes.push(curNode);
                     }
                     curNode.data.extracted = false;
                     curNode.data.height = ul.children('li:last').children('ul').css("height");

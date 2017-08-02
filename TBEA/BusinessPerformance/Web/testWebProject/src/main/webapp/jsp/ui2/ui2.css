@@ -501,3 +501,35 @@ th.ui-th-ltr {
 	height: 250px;
 	margin: 0px 0px 0px 0px;
 }
+
+.page-breadcrumbs .nav-btn{
+   	font-size: 22px;
+    margin-top: 2px;
+    margin-right: 20px;
+    cursor: pointer;
+    padding: 2px 5px 2px 5px;
+}
+
+.page-breadcrumbs .nav-btn:hover{
+    color:blue;
+}
+
+.page-breadcrumbs .nav-btn-active{
+    color:blue;
+}
+
+.side-bar{
+	height:100%;
+	width:220px;
+	position:absolute;
+	padding-top:40px;
+	top:0px;
+	right:0px;
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 1000;
+}
+
+.side-bar-hide{
+	display:none;
+}
+

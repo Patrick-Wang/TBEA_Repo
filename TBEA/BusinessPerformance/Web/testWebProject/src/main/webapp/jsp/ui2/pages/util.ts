@@ -27,8 +27,9 @@ module Util {
     export let MSG_REG : number = 3;
 
     export interface BreadcrumbNode{
-        id:number;
+        id:any;
         value:string;
+        url:string;
     }
 
     export class Breadcrumb{

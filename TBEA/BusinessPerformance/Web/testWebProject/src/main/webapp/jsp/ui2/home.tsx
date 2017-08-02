@@ -290,7 +290,8 @@ module home {
                     while (nt) {
                         breadcrumbNode.splice(0, 0, {
                             id: nt.getData().id,
-                            value: nt.getData().value
+                            value: nt.getData().value,
+                            url : nt.getData().url
                         });
                         nt = nt.getParent();
                     }

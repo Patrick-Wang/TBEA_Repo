@@ -5,9 +5,9 @@ module tree {
     export interface INodeData {
         id: number;
         value: string;
-        icon:string;
-        iconOpen:string;
-        click?:(node:ITreeNode)=>void;
+        icon:any;
+        iconOpen:any;
+        click?:(node:ITreeNode)=>boolean;
     }
 
     export interface ITreeNode {

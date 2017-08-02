@@ -7,181 +7,263 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
-    <meta charset="utf-8" />
+<meta charset="utf-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/jsp/ui2/img/logo.png"
+	type="image/x-icon">
+<!--Basic Styles-->
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/bootstrap.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/font-awesome.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/weather-icons.min.css"
+	rel="stylesheet" />
 
-    <!--Basic Styles-->
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/weather-icons.min.css" rel="stylesheet" />
 
-
-    <!--Beyond styles-->
-    <link id="beyond-link" href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/demo.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/ui2/assets/css/typicons.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/ui2${pageContext.request.contextPath}/jsp/ui2/assets/t" />
-    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
-
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
-    <style>
+<!--Beyond styles-->
+<link id="beyond-link"
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/demo.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/typicons.min.css"
+	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/ui2${pageContext.request.contextPath}/jsp/ui2/assets/t" />
+<link id="skin-link" href="" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/jsp/ui2/tree/tree.css"
+	rel="stylesheet">
+	
+	<link href="${pageContext.request.contextPath}/jsp/ui2/dashboard/tree.css"
+	rel="stylesheet">
+<!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/jquery.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery.easing.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jqueryex.js"
+	type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/util.js"
+	type="text/javascript"></script>
+<link href="${pageContext.request.contextPath}/jsp/ui2/ui2.css"
+	rel="stylesheet" />
+<style>
 .legendColorBox {
-    padding-left: 10px;
-    vertical-align: middle;
-  	padding-top: 0px;
+	padding-left: 10px;
+	vertical-align: middle;
+	padding-top: 0px;
 }
-
 </style>
+<title></title>
 </head>
 <!-- /Head -->
 <!-- Body -->
 <body>
+	<!-- Page Breadcrumb -->
+	<div class="page-breadcrumbs">
+		<ul class="breadcrumb">
+		</ul>
+		<i class="nav-btn fa fa-bars pull-right"></i>
+	</div>
+	<!-- /Page Breadcrumb -->
+	<script>
+	var breads = JSON.parse('${param.breads}');
+	Util.Breadcrumb.render(breads);
+	if (Util.isIframe()) {
+		Util.Breadcrumb.setOnClickListener(function(breadNode) {
+			/* if (breadNode.url){
+				for (var i = 0; i < breads.length; ++i){
+					if (breads[i] == breadNode){
+						breads = breads.slice(0, i + 1);
+						break;
+					}
+				}
+				var paramCon = breadNode.url.indexOf("?") > 0 ? "&" : "?";
+				window.location.href = breadNode.url + paramCon + "breads=" + JSON.stringify(breads);
+			}else{
+				window.parent['onClickBreadcrumb'] && window.parent['onClickBreadcrumb'](breadNode);
+			} */
+		});
+	}
+	$("title").text(breads[1].value + "-" + (breads.length - 2));
+</script>
+	<!-- Page Body -->
+	<div class="page-body">
+		<div class="row">
+			<div class="col-lg-12 col-sm-12 col-xs-12">
+				<div class="row">
+					<div class="col-lg-4 col-sm-4 col-xs-4">
+						<div class="widget">
+							<div class="widget-header bg-primary">
+								<i class="widget-icon fa fa-bars"></i> <span
+									class="widget-caption">应收账款 - 账龄分析</span>
+								<div class="widget-buttons">
+									<a href="#" data-toggle="maximize" data-value="yszkzl"> <i
+										class="fa fa-expand"></i>
+									</a> <a href="#"> <i class="fa fa-eye" data-value="1"></i>
+									</a>
+								</div>
+								<!--Widget Buttons-->
+							</div>
+							<!--Widget Header-->
+							<div class="widget-body">
+								<div id="yszkzl" class="chart chart-lg no-margin"></div>
+							</div>
+							<!--Widget Body-->
+						</div>
+						<!--Widget-->
+					</div>
+					<div class="col-lg-4 col-sm-4 col-xs-4">
+						<div class="widget">
+							<div class="widget-header bg-primary">
+								<i class="widget-icon fa fa-bars"></i> <span
+									class="widget-caption">应收账款 - 性质分析</span>
+								<div class="widget-buttons">
+									<a href="#" data-toggle="maximize" data-value="kxxz"> <i
+										class="fa fa-expand"></i>
+									</a> <a href="#"> <i class="fa fa-eye" data-value="2"></i>
+									</a>
+								</div>
+								<!--Widget Buttons-->
+							</div>
+							<!--Widget Header-->
+							<div class="widget-body">
+								<div id="kxxz" class="chart chart-lg no-margin"></div>
+							</div>
+							<!--Widget Body-->
+						</div>
+						<!--Widget-->
+					</div>
+					<div class="col-lg-4 col-sm-4 col-xs-4">
+						<div class="widget">
+							<div class="widget-header bg-primary">
+								<i class="widget-icon fa fa-bars"></i> <span
+									class="widget-caption">逾期应收账 - 产生原因分析</span>
+								<div class="widget-buttons">
+									<a href="#" data-toggle="maximize" data-value="yqysz"> <i
+										class="fa fa-expand"></i>
+									</a> <a href="#"> <i class="fa fa-eye" data-value="4"></i>
+									</a>
+								</div>
+								<!--Widget Buttons-->
+							</div>
+							<!--Widget Header-->
+							<div class="widget-body">
+								<div id="yqysz" class="chart chart-lg no-margin"></div>
+							</div>
+							<!--Widget Body-->
+						</div>
+						<!--Widget-->
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="widget">
+							<div class="widget-header bg-primary">
+								<i class="widget-icon fa fa-bars"></i> <span
+									class="widget-caption">应收账款账面与预警值变化情况分析</span>
+								<div class="widget-buttons">
+									<a href="#" data-toggle="maximize" data-value="yjtz"> <i
+										class="fa fa-expand"></i>
+									</a> <a href="#"> <i class="fa fa-eye" data-value="3"></i>
+									</a>
+								</div>
+								<!--Widget Buttons-->
+							</div>
+							<!--Widget Header-->
+							<div class="widget-body">
+								<div class="row">
+									<div class="col-sm-6 yjtz-bhqs">
+										<div class="databox databox-xxlg">
+											<div id="chart-yjtz" class="chart chart-lg no-padding"></div>
+										</div>
+									</div>
+									<div class="col-sm-6 yjtz-bhqs">
+										<div class="databox databox-xxlg">
+											<div id="chart-bhqs" class="chart chart-lg no-padding"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--Widget Body-->
+						</div>
+						<!--Widget-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="side-bar side-bar-hide">
+			<div id="tree" ></div>
+		</div>
+	</div>
+	<!-- /Page Body -->
 
 
-<!-- Main Container -->
-<div class="main-container container-fluid">
-    <!-- Page Container -->
-    <div class="page-container">
-            <!-- Page Body -->
-            <div class="page-body">
-                <div class="row">
-                    <div class="col-lg-12 col-sm-12 col-xs-12">
-                        <div class="row">
-                            <div class="col-lg-4 col-sm-4 col-xs-4">
-                                <div class="widget">
-                                    <div class="widget-header bg-primary">
-                                        <i class="widget-icon fa fa-bars"></i>
-                                        <span class="widget-caption">应收账款 - 账龄分析</span>
-                                        <div class="widget-buttons">
-                                            <a href="#" data-toggle="maximize" data-value="yszkzl">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="fa fa-eye" data-value="1"></i>
-                                            </a>
-                                        </div><!--Widget Buttons-->
-                                    </div><!--Widget Header-->
-                                    <div class="widget-body">
-                                        <div id="yszkzl" class="chart chart-lg no-margin"></div>
-                                    </div><!--Widget Body-->
-                                </div><!--Widget-->
-                            </div>
-                            <div class="col-lg-4 col-sm-4 col-xs-4">
-                                <div class="widget">
-                                    <div class="widget-header bg-primary">
-                                        <i class="widget-icon fa fa-bars"></i>
-                                        <span class="widget-caption">应收账款 - 性质分析</span>
-                                        <div class="widget-buttons">
-                                            <a href="#" data-toggle="maximize" data-value="kxxz">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="fa fa-eye" data-value="2"></i>
-                                            </a>
-                                        </div><!--Widget Buttons-->
-                                    </div><!--Widget Header-->
-                                    <div class="widget-body">
-                                        <div id="kxxz" class="chart chart-lg no-margin"></div>
-                                    </div><!--Widget Body-->
-                                </div><!--Widget-->
-                            </div>
-                            <div class="col-lg-4 col-sm-4 col-xs-4">
-                                <div class="widget">
-                                    <div class="widget-header bg-primary">
-                                        <i class="widget-icon fa fa-bars"></i>
-                                        <span class="widget-caption">逾期应收账 - 产生原因分析</span>
-                                        <div class="widget-buttons">
-                                            <a href="#" data-toggle="maximize" data-value="yqysz">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="fa fa-eye" data-value="4"></i>
-                                            </a>
-                                        </div><!--Widget Buttons-->
-                                    </div><!--Widget Header-->
-                                    <div class="widget-body">
-                                        <div id="yqysz" class="chart chart-lg no-margin"></div>
-                                    </div><!--Widget Body-->
-                                </div><!--Widget-->
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="widget">
-                                    <div class="widget-header bg-primary">
-                                        <i class="widget-icon fa fa-bars"></i>
-                                        <span class="widget-caption">应收账款账面与预警值变化情况分析</span>
-                                        <div class="widget-buttons">
-                                            <a href="#" data-toggle="maximize" data-value="yjtz">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="fa fa-eye" data-value="3"></i>
-                                            </a>
-                                        </div><!--Widget Buttons-->
-                                    </div><!--Widget Header-->
-                                    <div class="widget-body">
-                                        <div class="row">
-                                            <div class="col-sm-6 yjtz-bhqs">
-                                                <div class="databox databox-xxlg">
-                                                     <div id="chart-yjtz" class="chart chart-lg no-padding"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6 yjtz-bhqs">
-                                                <div class="databox databox-xxlg">
-                                                    <div id="chart-bhqs" class="chart chart-lg no-padding"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!--Widget Body-->
-                                </div><!--Widget-->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Page Body -->
-    </div>
-    <!-- /Page Container -->
-    <!-- Main Container -->
 
-</div>
 
-<!--Basic Scripts-->
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/jquery.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jqueryex.js"
-	type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+	<!--Basic Scripts-->
 
-<!--Beyond Scripts-->
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/beyond.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
 
-<!--Page Related Scripts-->
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/easypiechart/easypiechart-init.js"></script>
+	<!--Beyond Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/beyond.js"></script>
 
-<!--Flot Charts Needed Scripts-->
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.resize.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.pie.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.orderbars.js"></script>
+	<!--Page Related Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/easypiechart/jquery.easypiechart.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/easypiechart/easypiechart-init.js"></script>
 
-<!--morris needed scripts-->
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/raphael-2.0.2.min.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris-init.js"></script>
+	<!--Flot Charts Needed Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.resize.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.pie.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.tooltip.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/flot/jquery.flot.orderbars.js"></script>
 
-<!--Sparkline Charts Needed Scripts-->
-<script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/sparkline/jquery.sparkline.js"></script>
-<script src="/BusinessManagement/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
-<script>
+	<!--morris needed scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/raphael-2.0.2.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/morris/morris-init.js"></script>
+
+	<!--Sparkline Charts Needed Scripts-->
+	<script
+		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/charts/sparkline/jquery.sparkline.js"></script>
+	<script
+		src="/BusinessManagement/jsp/ui2/pages/www2/js/echarts-plain-2-0-0.js"></script>
+
+
+	<script
+	src="${pageContext.request.contextPath}/jsp/ui2/tree/treeNode.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/ui2/tree/tree.js"></script>
+	<script>
+
+
+
 	window.data = JSON.parse('${data}');
 	
 	var zlData = [];
@@ -594,6 +676,269 @@
     updateEchart(window.data.yjtz);
     updateEchart1(window.data.yjtz);
 
+    
+    $(".page-body").on("click", function(){
+		if ($(".nav-btn").hasClass("nav-btn-active")){
+			$(".nav-btn").trigger("click");
+		}
+	});
+	
+	$(".side-bar").css("margin-right", -$(".side-bar").width() + "px")
+	.on("click", function(e){
+		e.stopPropagation();
+	})
+	.on("mouseover", function(e){
+		e.stopPropagation();
+	});
+	
+	$(".nav-btn").on("click", function(){
+    	if ($(".nav-btn").hasClass("nav-btn-active")){
+    		$(".nav-btn").removeClass("nav-btn-active");
+    
+    		$(".side-bar").animate({
+    			marginRight: -$(".side-bar").width() + "px"
+            }, {
+                duration: 'fast',
+                easing: 'easeInQuart',
+                done : function(){
+                	$(".side-bar").addClass("side-bar-hide");
+                },
+                step : function(){
+
+                }
+            });
+    	}
+    	else{
+    		$(".nav-btn").addClass("nav-btn-active");
+    		$(".side-bar").removeClass("side-bar-hide");
+
+    		
+    		$(".side-bar").animate({
+    			marginRight: "0px"
+            }, {
+                duration: 'fast',
+                easing: 'easeOutQuart',
+                done : function(){
+					
+                },
+                step : function(){
+
+                }
+            });
+    	}
+    });
+	
+	var id = 1000;
+	
+	function nextId(){
+		return ++id;
+	}
+	
+	
+	var getIcon = function(treeNode){
+		if (treeNode.data.checked === true){
+			return "fa fa-check-square-o tree-checkbox";
+		}
+		
+		if (treeNode.data.checked === false){
+			return "fa fa-square-o tree-checkbox";
+		}
+		
+		return "fa fa-square tree-checkbox";
+	}
+	
+	
+	var leftTree = new tree.Tree("tree");
+	var treeNodes = leftTree.render([{
+        data : {
+            id : nextId(),
+            value: '变压器产业',
+            icon : getIcon,
+            iconOpen : getIcon,
+            extracted:true,
+            checked : true
+        },
+        subNodes:[
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '沈变公司',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    },
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '衡变公司',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    },
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '新变厂',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    },
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '鲁缆公司',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    },
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '新缆厂',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    },
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '德缆公司',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    }
+        ]
+    },{
+        data : {
+            id : nextId(),
+            value: '能源产业',
+            icon : getIcon,
+            iconOpen : getIcon,
+            extracted:true,
+            checked : true
+        },
+        subNodes:[
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '新能源公司',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    },
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '新特能源公司',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    },
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '天池能源公司',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    },
+        	{
+    	        data : {
+    	            id : nextId(),
+    	            value: '能动公司',
+    	            icon : getIcon,
+    	            iconOpen : getIcon,
+    	            checked : true
+    	        }
+    	    }
+        ]
+    },
+	{
+        data : {
+            id : nextId(),
+            value: '众和公司',
+            icon : getIcon,
+            iconOpen : getIcon,
+            checked : true
+        }
+    },
+	{
+        data : {
+            id : nextId(),
+            value: '进出口公司',
+            icon : getIcon,
+            iconOpen : getIcon,
+            checked : true
+        }
+    },
+	{
+        data : {
+            id : nextId(),
+            value: '国际工程公司',
+            icon : getIcon,
+            iconOpen : getIcon,
+            checked : true
+        }
+    }]);
+	leftTree.setOnClickListener(function(treeNode){
+		
+		if (true === treeNode.data.checked){
+			treeNode.accept({
+	            visit: function(node){
+	            	node.getData().checked = false;
+	            	leftTree.refresh(node);
+	                return false;
+	            }
+	        });
+	        
+			var node = treeNode;
+            while (node.getParent()) {
+                node = node.getParent();
+                var checked = false;
+                for (var i = 0; i < node.subNodes.length; ++i){
+                	if (false !== node.subNodes[i].data.checked){
+                		checked = "part";
+                		break;
+                	}
+                }
+                node.data.checked = checked;
+                leftTree.refresh(node);
+            }
+            
+		}else{
+			treeNode.accept({
+	            visit: function(node){
+	            	node.getData().checked = true;
+	            	leftTree.refresh(node);
+	                return false;
+	            }
+	        });
+	        
+			var node = treeNode;
+            while (node.getParent()) {
+                node = node.getParent();
+                var checked = true;
+                for (var i = 0; i < node.subNodes.length; ++i){
+                	if (true !== node.subNodes[i].data.checked){
+                		checked = "part";
+                		break;
+                	}
+                }
+                node.data.checked = checked;
+                leftTree.refresh(node);
+            }
+		}
+		return true;
+	});
 </script>
 
 </body>
