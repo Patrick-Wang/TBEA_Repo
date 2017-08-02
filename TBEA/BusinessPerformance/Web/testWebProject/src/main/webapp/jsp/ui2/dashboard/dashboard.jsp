@@ -654,6 +654,7 @@
 										});
 								window.open("/BusinessManagement/dashboard/yszk.do?breads="
 										+ JSON.stringify(breads));
+								breads = breads.slice(0, breads.length - 1);
 							});
 
 			//-----------------------------Pie Charts-----------------------------------------//
