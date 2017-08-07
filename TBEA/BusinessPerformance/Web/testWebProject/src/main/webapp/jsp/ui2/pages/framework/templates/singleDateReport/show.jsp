@@ -20,7 +20,7 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 <link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/jsp/ui2/assets/img/favicon.png"
+	href="${pageContext.request.contextPath}/jsp/ui2/img/logo.png"
 	type="image/x-icon">
 
 <!--Basic Styles-->

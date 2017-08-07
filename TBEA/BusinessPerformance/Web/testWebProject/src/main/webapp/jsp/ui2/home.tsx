@@ -3,7 +3,7 @@
 ///<reference path="pages/util.ts"/>
 ///<reference path="navigator.ts"/>
 declare var $;
-module home {
+namespace home {
 
     import TreeNode = tree.TreeNode;
     import ITreeNode = tree.ITreeNode;

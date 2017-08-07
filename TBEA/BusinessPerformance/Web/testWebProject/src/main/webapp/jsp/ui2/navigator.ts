@@ -1,11 +1,57 @@
+
+Array.prototype.pushAll = function(items){
+    for (var i = 0; i < items.length; ++i){
+        this.push(items[i]);
+    }
+    return this;
+}
+
+function createNode(value, url, icon, iconOpen){
+    if (url){
+        url = baseUrl + url;
+        icon = icon ? icon : "fa fa-dot-circle-o";
+        iconOpen = iconOpen ? iconOpen : "fa fa-dot-circle-o";
+    }else{
+        url = undefined;
+        icon = icon ? icon : "fa fa-plus-square-o";
+        iconOpen = iconOpen ? iconOpen : "fa fa-minus-square-o";
+    }
+    var node = {
+        data : {
+            id : navi.uid(),
+            value:value,
+            url : url,
+            icon : icon,
+            iconOpen : iconOpen
+        },
+        subNodes:[]
+    };
+
+    node.append  = function(sub){
+        if (sub != undefined){
+            if (sub instanceof Array){
+                node.subNodes.pushAll(sub);
+            }else{
+                node.subNodes.push(sub);
+            }
+        }
+        return node;
+    }
+    return node;
+}
+
 module navi{
 
     import ITreeNode = tree.ITreeNode;
-    Array.prototype.pushAll = function(items){
-        for (var i = 0; i < items.length; ++i){
-            this.push(items[i]);
-        }
-        return this;
+
+    interface NavigatorItem{
+        id : number;
+        name : string;
+        url : string;
+        extend : number;
+        iconClose : string;
+        iconOpen : string;
+        parent : number;
     }
 
     export class Builder{
@@ -27,6 +73,70 @@ module navi{
                     } else {
                         ret.push(nodes);
                     }
+                }
+            }
+            return ret;
+        }
+
+        static build(naviItems : NavigatorItem[]){
+            let workMap = {};
+            let changed = true;
+            let ret = [];
+            for (let i = 0; i < naviItems.length; ++i) {
+                if (!naviItems[i].parent){
+                    let node = createNode(naviItems[i].name, naviItems[i].url, naviItems[i].iconOpen, naviItems[i].iconClose);
+                    node.data.extracted = (naviItems[i].extend == 1);
+                    ret.push(node);
+                    workMap[naviItems[i].id] = node;
+                }
+            }
+
+
+
+            while (changed) {
+                changed = false;
+                for (let i = 0; i < naviItems.length; ++i) {
+                    if (naviItems[i].parent && workMap[naviItems[i].parent]){
+                        let node = createNode(naviItems[i].name, naviItems[i].url, naviItems[i].iconOpen, naviItems[i].iconClose);
+                        node.data.extracted = (naviItems[i].extend == 1);
+                        workMap[naviItems[i].parent].append(node);
+                        workMap[naviItems[i].id] = node;
+                        naviItems[i].parent = undefined;
+                        changed = true;
+                    }
+                }
+            }
+
+
+            var isExtracted = false;
+
+            function clean(node){
+                for (var i = 0; i < node.subNodes.length; ++i){
+                    if (clean(node.subNodes[i])){
+                        node.subNodes.splice(i, 1);
+                        --i;
+                    }
+                }
+
+                if (node.subNodes.length == 0 && !node.data.url){
+                    return true;
+                }
+
+                if (!isExtracted){
+                    if (node.data.extracted){
+                        isExtracted = true;
+                    }
+                }else{
+                    node.data.extracted = undefined;
+                }
+
+                return false;
+            }
+
+            for (var i = 0; i < ret.length; ++i){
+                if (clean(ret[i])){
+                    ret.splice(i, 1);
+                    --i;
                 }
             }
             return ret;

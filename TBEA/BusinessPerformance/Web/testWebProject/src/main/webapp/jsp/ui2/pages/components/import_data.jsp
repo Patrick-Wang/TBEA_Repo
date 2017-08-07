@@ -19,7 +19,7 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 <link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/jsp/ui2/assets/img/favicon.png"
+	href="${pageContext.request.contextPath}/jsp/ui2/img/logo.png"
 	type="image/x-icon">
 
 <!--Basic Styles-->
@@ -34,7 +34,14 @@
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/weather-icons.min.css"
 	rel="stylesheet" />
 
-
+<!-- jedate -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/skin/jedate.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/skin/deepgreen.css">
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/jquery.jedate.js"
+	type="text/javascript"></script>
 <!--Beyond styles-->
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.css"
@@ -226,6 +233,10 @@
 				<div class="page-header position-relative">
 					<div class="header-title">
 						<div id="headerHost" class="pull-left">
+							<div class="workinput pull-left" style="display:none">
+								<input id="grid-date" type="text" readonly="readonly"><i
+									class="fa fa-calendar"></i>
+							</div>
 							<div id="item-sel" class="pull-left"></div>
 							<div id="comp-sel" class="pull-left"></div>
 							<div id="picker" class="pull-left btn btn-default">选择文件</div>
@@ -286,14 +297,78 @@
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootbox/bootbox.js"></script>
 	<%@include file="../loading.jsp"%>
 	<script>
-		Util.Breadcrumb.render(JSON.parse('${param.breads}'));
-		if (Util.isIframe()) {
-			Util.Breadcrumb.setOnClickListener(function(breadNode) {
-				window.parent['onClickBreadcrumb']
-						&& window.parent['onClickBreadcrumb'](breadNode);
-			});
+		var breads = '${param.breads}';
+		if (breads != ''){
+			Util.Breadcrumb.render(JSON.parse('${param.breads}'));
+			if (Util.isIframe()) {
+				Util.Breadcrumb.setOnClickListener(function(breadNode) {
+					window.parent['onClickBreadcrumb']
+							&& window.parent['onClickBreadcrumb'](breadNode);
+				});
+			}
+		}
+		if ('${date}' == ""){
+        	date = Util.parseDate('${year}', '${month}', '${day}');
+        }else{
+            date = Util.toDate('${date}');
+        }
+		
+		var getDate;
+
+		function createDate(type){
+			$("#grid-date").parent().css("display", "");
+			 var seasonClass = "month";
+            var fmt = "YYYY年MM月";
+            if ('${asSeason}' == 'true') {
+                fmt = "YYYY年 && $$MM月";
+                seasonClass = "season-month";
+            }
+            else if ('${asSeasonAcc}' || type == "season") {
+                fmt = "YYYY年 &&MM月";
+                seasonClass = "season";
+            }
+            else if (!date.month || type == 'year') {
+                fmt = "YYYY年";
+                seasonClass = "year";
+            } 
+            else if (type == 'month') {
+                fmt = "YYYY年MM月";
+                seasonClass = "month";
+            }
+            else if (date.day || type == 'day') {
+                fmt = "YYYY年MM月DD日";
+                seasonClass = "day";
+            }
+            
+            var jdName = '${jdName}' == "" ? undefined : JSON.parse('${jdName}');
+            $("#grid-date").jeDate({
+                skinCell: "jedatedeepgreen",
+                format: fmt,
+                isTime: false,
+                isinitVal: true,
+                isClear: false,
+                isToday: false,
+                seasonText: jdName
+            }).removeCss("height")
+                .removeCss("padding")
+                .removeCss("margin-top")
+                .removeClass("season-month season year month day")
+                .addClass(seasonClass);
 		}
 		
+		if (date.year){
+			 createDate();
+             getDate = function () {
+                 var ret = {};
+                 var curDate =  $("#grid-date").getDate();
+                 ret = {
+                     year: curDate.getFullYear(),
+                     month: curDate.getMonth() + 1,
+                     day: curDate.getDate()
+                 };
+                 return ret;
+             };
+		}
 		
 		var nodeData = '${nodeData}';
 		var compSelctor;
@@ -310,10 +385,24 @@
 		if (itemNodes != '') {
 			var nodes = JSON.parse(itemNodes);
 			unitedSelector = new Util.UnitedSelector(nodes,	"item-sel");
-			unitedSelector.change(function() {
-				updateBtnsStatus();
-			});
+			
+			
+			var dateNodes = '${dateNodes}';
+			if (dateNodes != ''){
+				var dtNodes = JSON.parse(dateNodes);
+				unitedSelector.change(function() {
+					updateBtnsStatus();
+					var itemId = getItemId();
+					createDate(dtNodes[itemId]);
+				});
+			}else{
+				unitedSelector.change(function() {
+					updateBtnsStatus();
+				});
+			}
 		}
+		
+		
 		
 		var $list;
 		var uploader;
@@ -345,7 +434,8 @@
 					$e = $(e);
 					uploader.options.formData = {
 						compId : $e.attr("cid"),
-						item : $e.attr("iid")
+						item : $e.attr("iid"),
+						date : $e.attr("dt")
 					}
 					
 					uploader.upload($e.attr("id"));
@@ -369,8 +459,12 @@
 		
 		function getProText(){
 			var ret = "";
+			if (getDate){
+				ret += $("#grid-date").val() + " ";
+			}
+			
 			if (compSelctor){
-				ret = compSelctor.getCompanyName() + " ";
+				ret += compSelctor.getCompanyName() + " ";
 			}
 			if (unitedSelector){
 				ret += unitedSelector.getDataNode(unitedSelector.getPath()).data.value;
@@ -393,10 +487,6 @@
 					}
 					chainUpload();
 				});
-				
-				
-				
-				
 				
 				$list = $('#thelist');
 				uploader = WebUploader.create({
@@ -436,6 +526,10 @@
 					jqtemplate.attr("id", file.id);
 					jqtemplate.attr("cid", getCompId());
 					jqtemplate.attr("iid", getItemId());
+					if (getDate){
+						var dt = getDate();
+						jqtemplate.attr("dt", dt.year + "-" + dt.month + "-" + dt.day);
+					}					
 					
 					jqtemplate.find(".result-body-left").append('<div>' + 
 							getProText() + file.name + 
@@ -481,7 +575,8 @@
 							isRetrying = true;
 							uploader.options.formData = {
 								compId : jqtemplate.attr("cid"),
-								item : jqtemplate.attr("iid")
+								item : jqtemplate.attr("iid"),
+								date : jqtemplate.attr("dt")
 							}
 							uploader.retry(file);
 							
@@ -501,7 +596,8 @@
 						isRetrying = true;
 						uploader.options.formData = {
 							compId : jqtemplate.attr("cid"),
-							item : jqtemplate.attr("iid")
+							item : jqtemplate.attr("iid"),
+							date : jqtemplate.attr("dt")
 						}
 						uploader.retry(file);
 						

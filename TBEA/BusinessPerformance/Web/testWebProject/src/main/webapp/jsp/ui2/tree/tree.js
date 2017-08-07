@@ -27,7 +27,7 @@ var tree;
             }
         };
         Tree.prototype.triggerClicked = function (treeNode, ignoreStop) {
-            var stop = true;
+            var stop = false;
             if (treeNode.data.click != undefined) {
                 stop = treeNode.data.click(treeNode);
             }

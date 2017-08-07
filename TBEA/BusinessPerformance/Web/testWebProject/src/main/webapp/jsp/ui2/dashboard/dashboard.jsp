@@ -76,7 +76,7 @@
 	<div class="page-breadcrumbs">
 		<ul class="breadcrumb">
 		</ul>
-		<i class="nav-btn fa fa-bars pull-right"></i>
+		<i class="nav-btn fa fa-angle-double-left pull-right"></i>
 	</div>
 	<!-- /Page Breadcrumb -->
 
@@ -98,7 +98,7 @@
 			<div class="col-lg-12 col-sm-12 col-xs-12">
 				<div class="row">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-						<div
+						<div id="lrze-zq"
 							class="databox radius-bordered databox-shadowed databox-graded">
 							<div class="databox-left bg-orange">
 								<div class="databox-piechart">
@@ -112,7 +112,7 @@
 							</div>
 							<div class="databox-right bg-white">
 								<span id="lrze" class="databox-number orange">--</span>
-								<div class="databox-text darkgray">利润总额</div>
+								<div class="databox-text darkgray">利润总额（可钻取）</div>
 								<div class="databox-stat bg-orange radius-bordered">
 									<div id="lrzetbzf" class="stat-text">--</div>
 									<i class="stat-icon fa fa-arrow-up"></i>
@@ -541,8 +541,15 @@
 			</div>
 		</div>
 		<div class="side-bar side-bar-hide">
-			<div id="tree"></div>
-		
+			<div class="side-header">
+				经营单位
+			</div>
+			<div class="side-seperater"></div>
+			<div id="tree" ></div>
+			<div class="side-seperater"></div>
+			<div id="update" class="side-update-btn">
+					确定
+				</div>
 		</div>
 	</div>
 	<!-- /Page Body -->
@@ -643,8 +650,7 @@
 			}
 
 			$("#yszk-zq")
-					.on(
-							"click",
+					.on("click",
 							function() {
 								breads
 										.push({
@@ -657,6 +663,18 @@
 								breads = breads.slice(0, breads.length - 1);
 							});
 
+			$("#lrze-zq").on("click",
+					function() {
+						breads.push({
+							id : 101,
+							value : '利润总额',
+							url : '/BusinessManagement/dashboard/lrze.do'
+						});
+						window.open("/BusinessManagement/dashboard/lrze.do?breads="
+								+ JSON.stringify(breads));
+						breads = breads.slice(0, breads.length - 1);
+					});
+			
 			//-----------------------------Pie Charts-----------------------------------------//
 			InitiateEasyPieChart.init();
 		}
@@ -896,7 +914,8 @@
 		$(".nav-btn").on("click", function() {
 			if ($(".nav-btn").hasClass("nav-btn-active")) {
 				$(".nav-btn").removeClass("nav-btn-active");
-
+				$(".nav-btn").removeClass("fa-angle-double-right");
+				$(".nav-btn").addClass("fa-angle-double-left");
 				$(".side-bar").animate({
 					marginRight : -$(".side-bar").width() + "px"
 				}, {
@@ -912,6 +931,8 @@
 			} else {
 				$(".nav-btn").addClass("nav-btn-active");
 				$(".side-bar").removeClass("side-bar-hide");
+				$(".nav-btn").addClass("fa-angle-double-right");
+				$(".nav-btn").removeClass("fa-angle-double-left");
 
 				$(".side-bar").animate({
 					marginRight : "0px"

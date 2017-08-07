@@ -75,7 +75,7 @@
 	<div class="page-breadcrumbs">
 		<ul class="breadcrumb">
 		</ul>
-		<i class="nav-btn fa fa-bars pull-right"></i>
+		<i class="nav-btn fa fa-angle-double-left pull-right"></i>
 	</div>
 	<!-- /Page Breadcrumb -->
 	<script>
@@ -112,14 +112,13 @@
 								<div class="widget-buttons">
 									<a href="#" data-toggle="maximize" data-value="yszkzl"> <i
 										class="fa fa-expand"></i>
-									</a> <a href="#"> <i class="fa fa-eye" data-value="1"></i>
-									</a>
+									</a> 
 								</div>
 								<!--Widget Buttons-->
 							</div>
 							<!--Widget Header-->
 							<div class="widget-body">
-								<div id="yszkzl" class="chart chart-lg no-margin"></div>
+								<div id="yszkzl" data-value="1" class="chart chart-lg no-margin"></div>
 							</div>
 							<!--Widget Body-->
 						</div>
@@ -133,14 +132,13 @@
 								<div class="widget-buttons">
 									<a href="#" data-toggle="maximize" data-value="kxxz"> <i
 										class="fa fa-expand"></i>
-									</a> <a href="#"> <i class="fa fa-eye" data-value="2"></i>
-									</a>
+									</a> 
 								</div>
 								<!--Widget Buttons-->
 							</div>
 							<!--Widget Header-->
 							<div class="widget-body">
-								<div id="kxxz" class="chart chart-lg no-margin"></div>
+								<div id="kxxz" data-value="2" class="chart chart-lg no-margin"></div>
 							</div>
 							<!--Widget Body-->
 						</div>
@@ -154,14 +152,13 @@
 								<div class="widget-buttons">
 									<a href="#" data-toggle="maximize" data-value="yqysz"> <i
 										class="fa fa-expand"></i>
-									</a> <a href="#"> <i class="fa fa-eye" data-value="4"></i>
-									</a>
+									</a> 
 								</div>
 								<!--Widget Buttons-->
 							</div>
 							<!--Widget Header-->
 							<div class="widget-body">
-								<div id="yqysz" class="chart chart-lg no-margin"></div>
+								<div id="yqysz" data-value="4" class="chart chart-lg no-margin"></div>
 							</div>
 							<!--Widget Body-->
 						</div>
@@ -177,7 +174,6 @@
 								<div class="widget-buttons">
 									<a href="#" data-toggle="maximize" data-value="yjtz"> <i
 										class="fa fa-expand"></i>
-									</a> <a href="#"> <i class="fa fa-eye" data-value="3"></i>
 									</a>
 								</div>
 								<!--Widget Buttons-->
@@ -187,12 +183,12 @@
 								<div class="row">
 									<div class="col-sm-6 yjtz-bhqs">
 										<div class="databox databox-xxlg">
-											<div id="chart-yjtz" class="chart chart-lg no-padding"></div>
+											<div id="chart-yjtz"  data-value="3" class="chart chart-lg no-padding"></div>
 										</div>
 									</div>
 									<div class="col-sm-6 yjtz-bhqs">
 										<div class="databox databox-xxlg">
-											<div id="chart-bhqs" class="chart chart-lg no-padding"></div>
+											<div id="chart-bhqs"  data-value="3" class="chart chart-lg no-padding"></div>
 										</div>
 									</div>
 								</div>
@@ -205,7 +201,15 @@
 			</div>
 		</div>
 		<div class="side-bar side-bar-hide">
+			<div class="side-header">
+				经营单位
+			</div>
+			<div class="side-seperater"></div>
 			<div id="tree" ></div>
+			<div class="side-seperater"></div>
+			<div id="update" class="side-update-btn">
+					确定
+				</div>
 		</div>
 	</div>
 	<!-- /Page Body -->
@@ -214,7 +218,6 @@
 
 
 	<!--Basic Scripts-->
-
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
 	<script
@@ -379,12 +382,11 @@
 		};
 	echarts.init(document.getElementById("kxxz")).setOption(optionXz);
 	
-	$(".fa-eye").on("click", function(e){
-		var count = $(e.currentTarget).attr("data-value");		
-		window.parent ? window.parent.triggerClickClose('/BusinessManagement/yszkgb/v2/show.do?', function(){
-			window.parent ? window.parent.triggerClickUrl("/BusinessManagement/yszkgb/v2/show.do?firstItem=" + count) : undefined;
-		}) : undefined;
-	});
+	var chartLine1;
+	var chartLine2;
+	
+	
+
 	
 	
 	 var yqysLegendData = 
@@ -394,7 +396,7 @@
 	     "项目变化",
 	     "合同因素",
 	     "手续办理", 
-	     "诉讼"]
+	     "诉讼"];
 	var months = (function (){
 		var curDate = new Date();
 		var month = curDate.getMonth() + 1;
@@ -604,7 +606,8 @@
             yAxis: yAxis,
             series: series
         };
-        echarts.init(document.getElementById("chart-yjtz")).setOption(option);
+        chartLine1 = echarts.init(document.getElementById("chart-yjtz"));
+        chartLine1.setOption(option);
     };
     updateEchart1 = function (data) {
         var title = "因素变化趋势";
@@ -669,7 +672,8 @@
             yAxis: yAxis,
             series: series
         };
-        echarts.init(document.getElementById("chart-bhqs")).setOption(option);
+        chartLine2 = echarts.init(document.getElementById("chart-bhqs"));
+        chartLine2.setOption(option);
     };
     
     window.data.yjtz = getYjtzData(window.data.yjtz);
@@ -691,42 +695,43 @@
 		e.stopPropagation();
 	});
 	
-	$(".nav-btn").on("click", function(){
-    	if ($(".nav-btn").hasClass("nav-btn-active")){
-    		$(".nav-btn").removeClass("nav-btn-active");
-    
-    		$(".side-bar").animate({
-    			marginRight: -$(".side-bar").width() + "px"
-            }, {
-                duration: 'fast',
-                easing: 'easeInQuart',
-                done : function(){
-                	$(".side-bar").addClass("side-bar-hide");
-                },
-                step : function(){
+	$(".nav-btn").on("click", function() {
+		if ($(".nav-btn").hasClass("nav-btn-active")) {
+			$(".nav-btn").removeClass("nav-btn-active");
+			$(".nav-btn").removeClass("fa-angle-double-right");
+			$(".nav-btn").addClass("fa-angle-double-left");
+			$(".side-bar").animate({
+				marginRight : -$(".side-bar").width() + "px"
+			}, {
+				duration : 'fast',
+				easing : 'easeInQuart',
+				done : function() {
+					$(".side-bar").addClass("side-bar-hide");
+				},
+				step : function() {
 
-                }
-            });
-    	}
-    	else{
-    		$(".nav-btn").addClass("nav-btn-active");
-    		$(".side-bar").removeClass("side-bar-hide");
+				}
+			});
+		} else {
+			$(".nav-btn").addClass("nav-btn-active");
+			$(".side-bar").removeClass("side-bar-hide");
+			$(".nav-btn").addClass("fa-angle-double-right");
+			$(".nav-btn").removeClass("fa-angle-double-left");
 
-    		
-    		$(".side-bar").animate({
-    			marginRight: "0px"
-            }, {
-                duration: 'fast',
-                easing: 'easeOutQuart',
-                done : function(){
-					
-                },
-                step : function(){
+			$(".side-bar").animate({
+				marginRight : "0px"
+			}, {
+				duration : 'fast',
+				easing : 'easeOutQuart',
+				done : function() {
 
-                }
-            });
-    	}
-    });
+				},
+				step : function() {
+
+				}
+			});
+		}
+	});
 	
 	var id = 1000;
 	
@@ -939,6 +944,31 @@
 		}
 		return true;
 	});
+	
+	var stopClick = false;
+	function onEchartsEvent(name, event){
+		stopClick = true;
+	}
+	
+	chartLine1.on("legendselectchanged", function(event){
+		onEchartsEvent("legendselectchanged", event);
+	});
+	chartLine2.on("legendselectchanged", function(event){
+		onEchartsEvent("legendselectchanged", event);
+	});
+	
+	$(".chart").parent().on("click", function(e){
+		var count = $(e.currentTarget).children().eq(0).attr("data-value");
+		if (!stopClick){
+			window.open("/BusinessManagement/yszkgb/v2/show.do?firstItem=" + count + '&breads=[{"value":"应收账款管报"}]');
+			echarts.init(document.getElementById("yszkzl")).setOption(optionZl);
+			echarts.init(document.getElementById("kxxz")).setOption(optionXz);
+			echarts.init(document.getElementById("yqysz")).setOption(optionYq);
+		}else{
+			stopClick = false;
+		}
+	});
+	
 </script>
 
 </body>

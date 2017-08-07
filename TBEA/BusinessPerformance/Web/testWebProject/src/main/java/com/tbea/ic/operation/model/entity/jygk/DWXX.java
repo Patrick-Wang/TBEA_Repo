@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.model.entity.jygk;
+ package com.tbea.ic.operation.model.entity.jygk;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -9,7 +9,9 @@
 <head>
 <meta charset="utf-8" />
 <title></title>
-
+<link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/jsp/ui2/img/logo.png"
+	type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

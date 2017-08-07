@@ -1,0 +1,107 @@
+<components>
+ <service id="tcnycrdcscbbDayImport" transaction="transactionManager">
+  <merge data="${data}" table="tcnycsdc_day_plan_zb" from="2">
+   <where>
+    <zbid type="int" value="${i + 1}"/>
+    <day type="date" value="${cal.date}"/>
+   </where>
+   <set>
+    <zbid type="int" value="${i + 1}"/>
+    <day type="date" value="${cal.date}"/>
+    <value type="double" ref="${4}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <service id="tcnycrdcscbbMonthImport" transaction="transactionManager">
+  <merge data="${data}" table="tcnycsdc_month_plan_zb" from="2">
+   <where>
+    <zbid type="int" value="${i + 1}"/>
+    <year type="int" value="${cal.year}"/>
+    <month type="int" value="${cal.month}"/>
+   </where>
+   <set>
+    <zbid type="int" value="${i + 1}"/>
+    <year type="int" value="${cal.year}"/>
+    <month type="int" value="${cal.month}"/>
+    <value type="double" ref="${4}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <service id="tcnycrdcscbbSeasonImport" transaction="transactionManager">
+  <merge data="${data}" table="tcnycsdc_season_plan_zb" from="2">
+   <where>
+    <zbid type="int" value="${i + 1}"/>
+    <year type="int" value="${cal.year}"/>
+    <season type="int" value="${cal.season}"/>
+   </where>
+   <set>
+    <zbid type="int" value="${i + 1}"/>
+    <year type="int" value="${cal.year}"/>
+    <season type="int" value="${cal.season}"/>
+    <value type="double" ref="${4}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <service id="tcnycrdcscbbYearImport" transaction="transactionManager">
+  <merge data="${data}" table="tcnycsdc_year_plan_zb" from="2">
+   <where>
+    <zbid type="int" value="${i + 1}"/>
+    <year type="int" value="${cal.year}"/>
+   </where>
+   <set>
+    <zbid type="int" value="${i + 1}"/>
+    <year type="int" value="${cal.year}"/>
+    <value type="double" ref="${4}"/>
+    <source type="string" value="${src}"/>
+    <time type="date" value="${time}"/>
+   </set>
+  </merge>
+ </service>
+ <controller id="tcnycrdcscbbImportWrapper">
+  <context key="item" value="${request.item.asInt}"/>
+  <context key="data" value="${request.upfile.asExcel}"/>
+  <context value="${request.date.asCalendar}" key="cal"/>
+  <context value="${calendar.current.date}" key="time"/>
+  <context value="${session.account.name} Excel 导入" key="src"/>
+  <if test="${item == 1}">
+   <callservice id="tcnycrdcscbbDayImport"/>
+  </if>
+  <elseif test="${item == 2}">
+   <callservice id="tcnycrdcscbbMonthImport"/>
+  </elseif>
+  <elseif test="${item == 3}">
+   <callservice id="tcnycrdcscbbSeasonImport"/>
+  </elseif>
+  <else>
+   <callservice id="tcnycrdcscbbYearImport"/>
+  </else>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="tcnycrdcscbbImportWrapperJsp">
+  <list id="ids" type="int">1,2,3,4</list>
+  <list id="vals" type="string">
+	生产日报,月度计划,季度计划,年度划报
+</list>
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="tcnycrdcscbbImportWrapper"/>
+   <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+   <map key="dateNodes">{
+&quot;1&quot;:&quot;day&quot;,
+&quot;2&quot;:&quot;month&quot;,
+&quot;3&quot;:&quot;season&quot;,
+&quot;4&quot;:&quot;year&quot;
+}</map>
+   <map key="date" value="${calendar.current.format}"/>
+   <map key="title" value="生产报表导入"/>
+  </response>
+ </controller>
+</components>

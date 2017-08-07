@@ -871,37 +871,8 @@
 </c:if>
 
 <script>
-	function createNode(value, url, icon, iconOpen){
-	    if (url != undefined){
-	        url = '${pageContext.request.contextPath}/' + url;
-	        icon = icon ? icon : "fa fa-dot-circle-o";
-	    	iconOpen = iconOpen ? iconOpen : "fa fa-dot-circle-o";	        
-	    }else{
-	    	icon = icon ? icon : "fa fa-plus-square-o";
-	    	iconOpen = iconOpen ? iconOpen : "fa fa-minus-square-o";
-	    }
-	    var node = {
-	        data : {
-	            id : navi.uid(),
-	            value:value,
-	            url : url,
-	            icon : icon,
-	            iconOpen : iconOpen
-	        },
-	        subNodes:[]
-	    };
-	    node.append  = function(sub){
-	        if (sub != undefined){
-	            if (sub instanceof Array){
-	                node.subNodes.pushAll(sub);
-	            }else{
-	                node.subNodes.push(sub);
-	            }
-	        }
-	        return node;
-	    }
-	    return node;
-	}
+	window.baseUrl = '${pageContext.request.contextPath}/';
+
 
 	builder.register('root', function(){
 
@@ -926,7 +897,8 @@
 			.append(bbxx)
 			.append(builder.build("entryxxRoot"))
 			.append(builder.build("ApprovexxRoot"))
-			.append(builder.build("qulityxxRoot"))
+			.append(builder.build("qulityxxRoot"));
+		//return navi.Builder.build(JSON.parse('${naviItems}'));
 		return root.subNodes;
 	});
 </script>

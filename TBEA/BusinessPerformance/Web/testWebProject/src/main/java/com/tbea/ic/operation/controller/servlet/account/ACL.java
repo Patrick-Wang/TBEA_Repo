@@ -53,6 +53,16 @@ public class ACL implements Serializable {
 		return this;
 	}
 	
+	public List<String> getOpenAuths(){
+		List<String> auths = new ArrayList<String>();
+		for (Pair<String, Boolean> ace : aces) {
+			if (ace.getSecond()) {
+				auths.add(ace.getFirst());
+			}
+		}
+		return auths;
+	}
+	
 	public Boolean isOpen(String ace){
 		for (Pair<String, Boolean> pair : aces){
 			if (pair.getFirst().equals(ace)){

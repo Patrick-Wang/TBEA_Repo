@@ -1,0 +1,218 @@
+<components>
+ <service id="servTcnycrdcMonthReportUpdate" transaction="transactionManager">
+  <sql id="zbs">select id, category, name, unit, dailyId from identifier_tcnycsdc_monthly_zb</sql>
+  <list id="ids" sql="zbs" value="0" type="int"/>
+  <list id="dayIds" sql="zbs" value="4" type="int"/>
+  <sql id="njh" order="ids" by="0" colcount="2">select 
+	zbid,
+	value
+from
+	tcnycsdc_year_plan_zb
+where
+	year = ${cal.year}</sql>
+  <sql id="jdjh" order="ids" by="0" colcount="2">select 
+	zbid, 
+	value
+from 
+	tcnycsdc_season_plan_zb
+where
+	year = ${cal.year} and
+	season = ${cal.season}</sql>
+  <sql id="yjh" order="ids" by="0" colcount="2">select 
+	zbid, 
+	value
+from 
+	tcnycsdc_month_plan_zb
+where
+	year = ${cal.year} and
+	month = ${cal.month}</sql>
+  <sql id="ylj" order="dayIds" by="0" colcount="2">select 
+	zbid, 
+   	CASE 
+   		WHEN zbid in (1,2,3,4,9,10,11,12,13,14,15,20,22,26) THEN
+		sum(value)
+  	ELSE 
+  		sum(value) / nullif(count(*), 0) END ylj
+from 
+	tcnycsdc_day_plan_zb
+where
+	day &gt;= ${cal.days[1].date} and 
+	day &lt;=  ${cal.lastDays.date} and
+	zbid in ${dayIds}
+group by
+	zbid
+	</sql>
+  <sql id="jdlj" order="dayIds" by="0" colcount="2">select 
+	zbid, 
+    CASE 
+   		WHEN zbid in (1,2,3,4,9,10,11,12,13,14,15,20,22,26) THEN
+		sum(value)
+  	ELSE 
+  		sum(value) / nullif(count(*), 0) END ylj
+from 
+	tcnycsdc_day_plan_zb
+where
+	day &gt;= ${cal.seasonStart.days[1].date} and 
+	day &lt;=  ${cal.lastDays.date} and
+	zbid in ${dayIds}
+group by
+	zbid
+	</sql>
+  <sql id="ndlj" order="dayIds" by="0" colcount="2">select 
+  	zbid,
+	CASE 
+   		WHEN zbid in (1,2,3,4,9,10,11,12,13,14,15,20,22,26) THEN
+		sum(value)
+  	ELSE 
+  		sum(value) / nullif(count(*), 0) END ylj
+from 
+	tcnycsdc_day_plan_zb
+where
+	day &gt;= ${cal.months[1].days[1].date} and 
+	day &lt;=  ${cal.lastDays.date} and
+	zbid in ${dayIds}
+group by
+	zbid
+	</sql>
+  <table id="result" rowIds="ids" export="true">
+   <list type="string" sql="zbs" value="1"/>
+   <list type="string" sql="zbs" value="2"/>
+   <list type="string" sql="zbs" value="3"/>
+   <list type="double" sql="njh" value="1"/>
+   <list type="double" sql="jdjh" value="1"/>
+   <list type="double" sql="yjh" value="1"/>
+   <list type="double" sql="ylj" value="1"/>
+   <col intruction="月度完成比"/>
+   <list type="double" sql="jdlj" value="1"/>
+   <col intruction="季度完成比"/>
+   <list type="double" sql="ndlj" value="1"/>
+   <col intruction="年度完成比"/>
+   <divCol toCol="7" sub="6" base="5"/>
+   <divCol toCol="9" sub="8" base="4"/>
+   <divCol toCol="11" sub="10" base="3"/>
+  </table>
+ </service>
+ <controller id="fmtterTcnycrdcMonthReport">
+  <formatter id="fmtData" export="true">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0,1,2"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="7,9,11"/>
+   </PercentFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher rows="4,5,26,27,28,33,37"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+ </controller>
+ <controller id="tcnycrdcMonthReportExport">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servTcnycrdcMonthReportUpdate"/>
+  <callcontroller id="fmtterTcnycrdcMonthReport"/>
+  <list id="title" type="string" export="true">条块,
+指标名称,
+单位,
+年计划,
+季度计划,
+月计划,
+月累计完成,
+月度完成比,
+季度累计完成,
+季度完成比,
+年度累计,
+年度完成比</list>
+  <ExcelTemplate id="excelTemplate" sheet="天池能源有限责任公司昌热电厂_月生产报表"/>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="0" col="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="1" width="1" height="${result.ids.size}"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0,1,2"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset row="1" col="0"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}天池能源有限责任公司昌热电厂_月生产报表.xls" serv="fmtServ"/>
+ </controller>
+ <controller id="tcnycrdcMonthReportUpdate">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="servTcnycrdcMonthReportUpdate"/>
+  <callcontroller id="fmtterTcnycrdcMonthReport"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>条块</name>
+    </item>
+    <item>
+     <name>指标名称</name>
+    </item>
+    <item>
+     <name>单位</name>
+    </item>
+    <item>
+     <name>年计划</name>
+    </item>
+    <item>
+     <name>季度计划</name>
+    </item>
+    <item>
+     <name>月计划</name>
+    </item>
+    <item>
+     <name>月累计完成</name>
+    </item>
+    <item>
+     <name>月度完成比</name>
+    </item>
+    <item>
+     <name>季度累计完成</name>
+    </item>
+    <item>
+     <name>季度完成比</name>
+    </item>
+    <item>
+     <name>年度累计</name>
+    </item>
+    <item>
+     <name>年度完成比</name>
+    </item>
+   </header>
+   <mergeRows type="array">
+    <item>
+     <col>0</col>
+    </item>
+   </mergeRows>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="tcnycrdcMonthReport">
+  <response type="jsp" name="framework/templates/singleDateReport/show">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="day" value="${calendar.current.day}"/>
+   <map key="updateUrl" value="tcnycrdcMonthReportUpdate"/>
+   <map key="exportUrl" value="tcnycrdcMonthReportExport"/>
+   <map key="title" value="天池能源有限责任公司昌热电厂"/>
+  </response>
+ </controller>
+</components>

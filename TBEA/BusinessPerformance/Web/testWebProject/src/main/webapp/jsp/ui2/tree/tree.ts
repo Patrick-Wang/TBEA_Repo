@@ -40,7 +40,7 @@ module tree{
 
         triggerClicked(treeNode:TreeNode, ignoreStop?:boolean){
 
-            let stop = true;
+            let stop = false;
             if (treeNode.data.click != undefined){
                 stop = treeNode.data.click(treeNode);
             }

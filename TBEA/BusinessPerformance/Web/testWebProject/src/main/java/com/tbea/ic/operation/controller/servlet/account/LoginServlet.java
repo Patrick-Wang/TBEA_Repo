@@ -3,6 +3,7 @@ package com.tbea.ic.operation.controller.servlet.account;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -25,11 +26,13 @@ import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager.OnSessionChangedListener;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.model.entity.navigator.NavigatorItem;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.DailyReportService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.login.LoginService;
+import com.tbea.ic.operation.service.navigator.NavigatorService;
 
 import net.sf.json.JSONArray;
 
@@ -57,6 +60,9 @@ public class LoginServlet implements OnSessionChangedListener {
 	@Autowired
 	ExtendAuthorityService extAuthServ;
 
+	@Autowired
+	NavigatorService navigatorService;
+	
 	@Autowired
 	public void init(){
 		SessionManager.onChange(this);
@@ -305,11 +311,16 @@ public class LoginServlet implements OnSessionChangedListener {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Account account = SessionManager.getAccount(currentSession);
 		map.put("userName", account.getName());
-		for (Integer auth : extAuthServ.getAuths(account)){
+		List<Integer> auths = extAuthServ.getAuths(account);
+		for (Integer auth : auths){
 			map.put("_" + auth, true);
 		}
-		SessionManager.getAcl(currentSession).select(map);
+		ACL acl = SessionManager.getAcl(currentSession);
+		acl.select(map);
 
+		List<NavigatorItem> navItems = this.navigatorService.getNaviItems(auths, acl.getOpenAuths());
+		map.put("naviItems", JSONArray.fromObject(navItems));
+		
 		return new ModelAndView("ui2/home", map);
 	}
 
