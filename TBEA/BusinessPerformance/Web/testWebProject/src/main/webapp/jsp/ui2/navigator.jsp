@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script src="${pageContext.request.contextPath}/jsp/ui2/navigator.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/ui2/navigator.js?ver=${applicationScope.ver}"></script>
 
 <c:if test="${admin}">
 	<script>
@@ -898,7 +898,7 @@
 			.append(builder.build("entryxxRoot"))
 			.append(builder.build("ApprovexxRoot"))
 			.append(builder.build("qulityxxRoot"));
-		//return navi.Builder.build(JSON.parse('${naviItems}'));
-		return root.subNodes;
+		return navi.Builder.build(JSON.parse('${naviItems}'));
+		//return root.subNodes;
 	});
 </script>

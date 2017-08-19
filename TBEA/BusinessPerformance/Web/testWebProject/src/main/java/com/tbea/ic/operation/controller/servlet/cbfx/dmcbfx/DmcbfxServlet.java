@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -26,16 +24,19 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CbfxSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
 import com.tbea.ic.operation.controller.servlet.cbfx.CbfxType;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxService;
 import com.tbea.ic.operation.service.cbfx.dmcbfx.DmcbfxServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.excel.HeaderFormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.v2.core.DefaultMatcher;
+import com.xml.frame.report.util.v2.core.EmptyFormatter;
+import com.xml.frame.report.util.v2.data.NumberFormatter;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "dmcbfx")
@@ -117,7 +118,7 @@ public class DmcbfxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		List<List<String>> ret = null;
 		int base = 0;
 		if (this.getType(request) == CbfxType.dmcbfx){

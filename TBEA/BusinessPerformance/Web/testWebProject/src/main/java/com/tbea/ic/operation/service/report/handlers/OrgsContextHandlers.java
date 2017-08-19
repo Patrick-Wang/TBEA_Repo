@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.ClosureMap;
+import com.frame.script.util.ClosureMap;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -16,8 +16,8 @@ import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.controller.servlet.report.CMGRClosureMap;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
-import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.component.entity.Context;
 
 @Component
 public class OrgsContextHandlers implements ContextHandler {

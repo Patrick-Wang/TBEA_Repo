@@ -1,6 +1,6 @@
 package com.tbea.ic.operation.service.cpzlqk;
 
-import com.tbea.ic.operation.common.EasyCalendar;
+import com.xml.frame.report.util.EasyCalendar;
 
 public class SeasonUtil {
 	public static EasyCalendar getStart(EasyCalendar ec){

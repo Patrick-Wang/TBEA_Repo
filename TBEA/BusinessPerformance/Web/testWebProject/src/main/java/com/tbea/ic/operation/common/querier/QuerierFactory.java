@@ -26,6 +26,8 @@ public class QuerierFactory {
 		
 		zlApproveQuerier.add(AuthType.QualityApprove.ordinal(), ZBStatus.INTER_APPROVED_3.ordinal());
 		zlApproveQuerier.add(AuthType.QualityApprove.ordinal(), ZBStatus.APPROVED.ordinal());
+		
+		zlApproveQuerier.add(43, ZBStatus.APPROVED.ordinal());
 	}
 	
 	static {

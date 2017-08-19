@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -26,14 +24,15 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.XnychSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
 import com.tbea.ic.operation.service.xnych.xnych.XnychService;
 import com.tbea.ic.operation.service.xnych.xnych.XnychServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.v2.data.NumberFormatter;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "xnych")
@@ -106,7 +105,7 @@ public class XnychServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> ret = xnychService.getXnych(d, company);
-		ExcelTemplate template = ExcelTemplate.createXnychTemplate(XnychSheetType.XNYCH);
+		ExcelHelper template = ExcelTemplate.createXnychTemplate(XnychSheetType.XNYCH);
 	
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();

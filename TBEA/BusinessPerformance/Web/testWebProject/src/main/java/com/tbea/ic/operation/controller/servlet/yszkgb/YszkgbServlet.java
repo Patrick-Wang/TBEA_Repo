@@ -13,9 +13,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -40,16 +37,20 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.YszkgbSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterServer;
+import com.xml.frame.report.util.raw.RawNumberFormatterHandler;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "yszkgb")
@@ -285,7 +286,7 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getZmb(d, company);
-		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.ZMB);
+		ExcelHelper template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.ZMB);
 		
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
@@ -306,7 +307,7 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getYszkzlbh(d, company);
-		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZLBH);
+		ExcelHelper template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZLBH);
 		
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
@@ -354,7 +355,7 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getYszkkxxz(d, company);
-		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKKXXZQK);
+		ExcelHelper template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKKXXZQK);
 		
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
@@ -401,7 +402,7 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getYqyszcsys(d, company);
-		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YQYSCSYS);
+		ExcelHelper template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YQYSCSYS);
 		
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
@@ -448,7 +449,7 @@ public class YszkgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = yszkgbService.getYszkyjtztjqs(d, company);
-		ExcelTemplate template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZMYYJTZTJQS);
+		ExcelHelper template = ExcelTemplate.createYszkgbTemplate(YszkgbSheetType.YSZKZMYYJTZTJQS);
 		
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();

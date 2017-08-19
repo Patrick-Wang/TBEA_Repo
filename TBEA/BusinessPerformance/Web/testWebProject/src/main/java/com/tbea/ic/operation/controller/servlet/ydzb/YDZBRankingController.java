@@ -11,8 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -28,12 +26,15 @@ import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.JYGKPhase2SheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.service.ydzb.rank.RankService;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.HeaderFormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.excel.PercentFormatterHandler;
+
+import net.sf.json.JSONArray;
 
 
 @Controller
@@ -116,7 +117,7 @@ public class YDZBRankingController {
 		int rankingType = Integer.parseInt(request.getParameter("rankingType"));
 		String rankingName = null;
 		String rank = null;
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		List<String[]> data = null;
 		String fileNameAndSheetName = null; 
 		if(rankingType == 1){

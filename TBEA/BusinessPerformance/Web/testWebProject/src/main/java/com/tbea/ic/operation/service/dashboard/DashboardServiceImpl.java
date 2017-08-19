@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.GSZB;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.Company;
@@ -27,6 +26,7 @@ import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.service.util.pipe.core.BasicPipe;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
+import com.xml.frame.report.util.EasyList;
 
 @Service
 @Transactional("transactionManager")

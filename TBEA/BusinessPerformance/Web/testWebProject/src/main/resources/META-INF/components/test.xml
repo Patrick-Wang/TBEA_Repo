@@ -95,20 +95,8 @@
 		<context key="tbs" value="${result.matrix}"/>
 	</service>
 
-	<controller id="test" service="gsztzbhz">
+	<controller id="test">
 
-		<formatter id="data">
-			<EmptyFormatter>
-				<DefaultMatcher cols="0, 1"/>
-			</EmptyFormatter>
-			<PercentFormatter reservedCount="1">
-				<DefaultMatcher rows="${tbs.size - 1}"/>
-			</PercentFormatter>
-			<NumberFormatter reservedCount="1">
-			</NumberFormatter>
-		</formatter>
-		
-		<ExcelTemplate id="excel"/>
 		
 <!-- 		<formatter id="excel"> -->
 <!-- 			<ExcelHeaderCenterFormatter> -->
@@ -121,15 +109,20 @@
 <!-- 				<MergeRegion x="" y="" width="" height=""/> -->
 <!-- 			</ExcelMergeFormatter> -->
 <!-- 		</formatter> -->
-		
-		<formatterServer id="serv" table="${tbs}" acceptNullAs="--">
-			<formatter ref="data"/>
-<!-- 			<formatter ref="excel"/> -->
-<!-- 			<formatter ref="word"/> -->
-		</formatterServer> 
+		<context key="test1" value="你好"/>
+		<context key="test2" value="hello"/>
+		<list id = "ids" type="int"><item from="1" to="30"></item></list>
+		<table id="tb" rowIds="ids">
+			<list type="int"><item from="1" to="30"></item></list>
+			<list type="int"><item from="1" to="30"></item></list>
+			<list type="int"><item from="1" to="30"></item></list>
+			<list type="int"><item from="1" to="30"></item></list>
+			<list type="int"><item from="1" to="30"></item></list>
+			<list type="int"><item from="1" to="30"></item></list>
+		</table>
+		<context key="table" value="${tb.matrix}"></context>
+		<WordTemplate src="D:\\test.docx" dest="d:\\test2.docx"/>
 
-<!-- 		<response type="stream" ref="excel" name=""/> -->
-		
 		
 		<response type="json"> 
 			<header type="array">
@@ -151,7 +144,6 @@
 				<child>随机</child>
 			</testJson>
 			<name>指标汇总</name>
-			<data>${serv.result}</data>
 		</response>
 	</controller> 
 </components>

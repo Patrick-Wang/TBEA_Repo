@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -15,9 +14,9 @@ import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.util.SheetUtil;
 
 import com.tbea.ic.operation.controller.servlet.convertor.Convertor;
+import com.xml.frame.report.util.ExcelHelper;
 
 public class ExcelTemplate {
 	
@@ -198,7 +197,7 @@ public class ExcelTemplate {
 	private static String pathAllCompanysNCTemplate = resPath + "companysNC_template.xls";
 	
 	
-	private static ExcelTemplate createTemplate(String path, int index, int size)
+	private static ExcelHelper createTemplate(String path, int index, int size)
 			throws FileNotFoundException, IOException {
 		HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(new File(
 				path)));
@@ -210,118 +209,118 @@ public class ExcelTemplate {
 			workbook.removeSheetAt(1);
 		}
 
-		return new ExcelTemplate(workbook);
+		return new ExcelHelper(workbook);
 	}
 	
-	public static ExcelTemplate createSbdczclwcqkTemplate(SbdczclwcqkSheetType type) throws IOException {
+	public static ExcelHelper createSbdczclwcqkTemplate(SbdczclwcqkSheetType type) throws IOException {
 		return createTemplate(pathSbdczclwcqkTemplate, type.ordinal(),
 				SbdczclwcqkSheetType.END.ordinal());
 	}
 
-	public static ExcelTemplate createJygkTemplate(JygkSheetType type)
+	public static ExcelHelper createJygkTemplate(JygkSheetType type)
 			throws IOException {
 		return createTemplate(pathJdzbTemplate, type.ordinal(),
 				JygkSheetType.END.ordinal());
 	}
 
-	public static ExcelTemplate createMarketTemplate(MarketSheetType type)
+	public static ExcelHelper createMarketTemplate(MarketSheetType type)
 			throws IOException {
 		return createTemplate(pathMarketTemplate, type.ordinal(),
 				MarketSheetType.END.ordinal());
 	}
 
-	public static ExcelTemplate createJYGKPhase2Template(
+	public static ExcelHelper createJYGKPhase2Template(
 			JYGKPhase2SheetType type) throws IOException {
 		return createTemplate(pathJYGKPhase2Template, type.ordinal(),
 				JYGKPhase2SheetType.END.ordinal());
 	}
 
-	public static ExcelTemplate createYszkgbTemplate(YszkgbSheetType type)
+	public static ExcelHelper createYszkgbTemplate(YszkgbSheetType type)
 			throws IOException {
 		return createTemplate(pathYszkgbTemplate, type.ordinal(),
 				YszkgbSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createChgbTemplate(ChgbSheetType type)
+	public static ExcelHelper createChgbTemplate(ChgbSheetType type)
 			throws IOException {
 		return createTemplate(pathChgbTemplate, type.ordinal(),
 				ChgbSheetType.END.ordinal());
 	}
 
-	public static ExcelTemplate createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType type)
+	public static ExcelHelper createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType type)
 			throws IOException {
 		return createTemplate(pathSbdddcbjpcqkTemplate, type.ordinal(),
 				SbdddcbjpcqkSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createDzwzgbTemplate(DzwzgbSheetType type)
+	public static ExcelHelper createDzwzgbTemplate(DzwzgbSheetType type)
 			throws IOException {
 		return createTemplate(pathDzwzgbTemplate, type.ordinal(),
 				DzwzgbSheetType.END.ordinal());
 	}
 	
 
-	public static ExcelTemplate createYlfxwlyddmlspcsTemplate(YlfxwlyddmlspcsSheetType type)
+	public static ExcelHelper createYlfxwlyddmlspcsTemplate(YlfxwlyddmlspcsSheetType type)
 			throws IOException {
 		return createTemplate(pathYlfxwlyddmlspcsTemplate, type.ordinal(),
 				YlfxwlyddmlspcsSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createYlfxwgcpylnlspcsTemplate(YlfxwgcpylnlspcsSheetType type)
+	public static ExcelHelper createYlfxwgcpylnlspcsTemplate(YlfxwgcpylnlspcsSheetType type)
 			throws IOException {
 		return createTemplate(pathYlfxwgcpylnlspcsTemplate, type.ordinal(),
 				YlfxwgcpylnlspcsSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createCbfxTemplate(CbfxSheetType type) throws IOException {
+	public static ExcelHelper createCbfxTemplate(CbfxSheetType type) throws IOException {
 		return createTemplate(pathCbfxTemplate, type.ordinal(),
 				CbfxSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createSbdscqyqkTemplate(
+	public static ExcelHelper createSbdscqyqkTemplate(
 			SbdscqyqkSheetType type) throws IOException {
 		return createTemplate(pathSbdscqyqkTemplate, type.ordinal(),
 				SbdscqyqkSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createXnychTemplate(XnychSheetType type) throws IOException {
+	public static ExcelHelper createXnychTemplate(XnychSheetType type) throws IOException {
 		return createTemplate(pathXnychTemplate, type.ordinal(),
 				XnychSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createWgcpqkTemplate(WgcpqkSheetType type) throws IOException {
+	public static ExcelHelper createWgcpqkTemplate(WgcpqkSheetType type) throws IOException {
 		return createTemplate(pathWgcpqkTemplate, type.ordinal(),
 				XnychSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createNyzbscqkTemplate(
+	public static ExcelHelper createNyzbscqkTemplate(
 			NyzbscqkSheetType type)  throws IOException {
 		return createTemplate(pathNyzbscqkTemplate, type.ordinal(),
 				NyzbscqkSheetType.END.ordinal());
 	}
 	
-	public static ExcelTemplate createCwcpdlmlTemplate(CwcpdlmlSheetType type)  throws IOException {
+	public static ExcelHelper createCwcpdlmlTemplate(CwcpdlmlSheetType type)  throws IOException {
 		return createTemplate(pathCwcpdlmlTemplate, type.ordinal(),
 				CwcpdlmlSheetType.END.ordinal());
 	}
 	
 
-	public static ExcelTemplate createCwyjsfTemplate(CwyjsfSheetType type)   throws IOException {
+	public static ExcelHelper createCwyjsfTemplate(CwyjsfSheetType type)   throws IOException {
 		return createTemplate(pathCwyjsfTemplate, type.ordinal(),
 				CwyjsfSheetType.END.ordinal());
 	}
 
-	public static ExcelTemplate createCwgbjyxxjlTemplate(CwgbjyxxjlSheetType type)   throws IOException {
+	public static ExcelHelper createCwgbjyxxjlTemplate(CwgbjyxxjlSheetType type)   throws IOException {
 		return createTemplate(pathCwgbjyxxjlTemplate, type.ordinal(),
 				CwgbjyxxjlSheetType.END.ordinal());
 	}
 
-	public static ExcelTemplate createCpzlqkTemplate(CpzlqkSheetType type) throws IOException {
+	public static ExcelHelper createCpzlqkTemplate(CpzlqkSheetType type) throws IOException {
 		return createTemplate(pathCpzlqkTemplate, type.ordinal(),
 				CpzlqkSheetType.END.ordinal());
 	}
 
-	public static ExcelTemplate createCompanysNCTemplate(
+	public static ExcelHelper createCompanysNCTemplate(
 			CompanysNCSheetType type) throws IOException {
 		return createTemplate(pathAllCompanysNCTemplate, type.ordinal(),
 				CompanysNCSheetType.END.ordinal());

@@ -3,27 +3,17 @@ package com.tbea.ic.operation.service.cwcpdlml;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-
-
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.EasyCalendar;
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.CompanyNCCode;
-import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpdlml.CpdlmlDao;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpfl.CpflDao;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpfl.CpflDaoImpl;
@@ -31,10 +21,9 @@ import com.tbea.ic.operation.model.dao.identifier.cwgb.cy.CyDao;
 import com.tbea.ic.operation.model.dao.identifier.cwgb.cy.CyDaoImpl;
 import com.tbea.ic.operation.model.entity.cwcpdlml.CpdlmlEntity;
 import com.tbea.ic.operation.model.entity.cwcpdlml.CpflEntity;
-import com.tbea.ic.operation.model.entity.cwgbjyxxjl.JyxxjlEntity;
-import com.tbea.ic.operation.model.entity.identifier.cwgb.KmEntity;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 import com.tbea.ic.operation.service.util.nc.NCLoggerFactory;
+import com.xml.frame.report.util.EasyCalendar;
 
 @Service(CwcpdlmlServiceImpl.NAME)
 @Transactional("transactionManager")

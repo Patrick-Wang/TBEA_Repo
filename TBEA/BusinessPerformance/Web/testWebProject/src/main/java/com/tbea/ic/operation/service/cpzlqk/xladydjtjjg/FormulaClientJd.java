@@ -9,16 +9,14 @@ import java.util.Map;
 import com.tbea.ic.operation.common.Formula;
 import com.tbea.ic.operation.common.FormulaClient;
 import com.tbea.ic.operation.common.FormulaServer;
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.entity.cpzlqk.XlAdwtjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
+import com.xml.frame.report.util.Pair;
 
 class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>{
 

@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,17 +19,20 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CwyjsfSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.service.cwyjsf.yjsfljs.YjsfljsService;
 import com.tbea.ic.operation.service.cwyjsf.yjsfljs.YjsfljsServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.FormatterServer;
+import com.xml.frame.report.util.excel.HeaderCenterFormatterHandler;
+import com.xml.frame.report.util.excel.MergeRegion;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.raw.RawEmptyHandler;
+import com.xml.frame.report.util.raw.RawFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterServer;
+import com.xml.frame.report.util.raw.RawNumberFormatterHandler;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "yjsfljs")
@@ -69,7 +70,7 @@ public class YjsfljsServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> result = yjsfljsService.getYjsfljs(d, company);
-		ExcelTemplate template = ExcelTemplate.createCwyjsfTemplate(CwyjsfSheetType.YJSFLJS);
+		ExcelHelper template = ExcelTemplate.createCwyjsfTemplate(CwyjsfSheetType.YJSFLJS);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(2));

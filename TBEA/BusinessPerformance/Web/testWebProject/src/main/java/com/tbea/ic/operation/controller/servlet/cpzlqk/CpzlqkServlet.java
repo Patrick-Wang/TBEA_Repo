@@ -15,9 +15,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.CompanySelection.Filter;
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
@@ -41,6 +37,10 @@ import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.util.EasyList;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "cpzlqk")
@@ -60,11 +60,12 @@ public class CpzlqkServlet {
 		List<Company> byqs = new EasyList<Company>(org.getCompany(CompanyType.BYQCY).getSubCompanies()).clone();
 		List<Company> xls = new EasyList<Company>(org.getCompany(CompanyType.XLCY).getSubCompanies()).clone();
 		List<Company> pds = new EasyList<Company>(org.getCompany(CompanyType.PDCY).getSubCompanies()).clone();
-
-		CompanySelection compSel = new CompanySelection(false, org.getTopCompany(), new Filter(){
+		List<Company> tops = new EasyList<Company>(org.getTopCompany()).clone();
+		CompanySelection compSel = new CompanySelection(false, tops, new Filter(){
 
 			@Override
 			public boolean keep(Company comp) {
+				
 				for (Company cp : comps){
 					if (cp.getType() == comp.getType()){
 						byqs.remove(comp);
@@ -96,6 +97,14 @@ public class CpzlqkServlet {
 
 			@Override
 			public boolean keepGroup(Company comp) {
+				if (comp.getType() == CompanyType.XKGS) {
+					for (Company cp : comps){
+						if (cp.getType() == CompanyType.XKGS){
+							return true;
+						}
+					}
+					return false;
+				}
 				return true;
 			}
 		});
@@ -199,6 +208,9 @@ public class CpzlqkServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ZBStatus status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
 		ErrorCode er = cpzlqkService.approve(d, company, status);
 		return Util.response(er);
@@ -209,6 +221,9 @@ public class CpzlqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		Account account = SessionManager.getAccount(request.getSession());
 		List<Integer> auths = extendAuthService.getAuths(account, company);
 		return JSONArray.fromObject(auths).toString().getBytes("utf-8");

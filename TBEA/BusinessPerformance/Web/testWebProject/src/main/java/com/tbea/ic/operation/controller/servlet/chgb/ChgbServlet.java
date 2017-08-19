@@ -13,9 +13,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -41,18 +38,22 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ChgbSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.chgb.ChgbService;
 import com.tbea.ic.operation.service.chgb.ChgbServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.HeaderFormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.raw.RawEmptyHandler;
+import com.xml.frame.report.util.raw.RawFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterServer;
+import com.xml.frame.report.util.raw.RawNumberFormatterHandler;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "chgb")
@@ -309,7 +310,7 @@ public class ChgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChzmb(d, company);
-		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.ZMB);
+		ExcelHelper template = ExcelTemplate.createChgbTemplate(ChgbSheetType.ZMB);
 		
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
@@ -331,7 +332,7 @@ public class ChgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChjykcb(d, company);
-		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.JYKCB);
+		ExcelHelper template = ExcelTemplate.createChgbTemplate(ChgbSheetType.JYKCB);
 		
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(1));
@@ -355,7 +356,7 @@ public class ChgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChzlbhqk(d, company);
-		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHZLBHQK);
+		ExcelHelper template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHZLBHQK);
 		
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
@@ -402,7 +403,7 @@ public class ChgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChxzqk(d, company);
-		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHXZQK);
+		ExcelHelper template = ExcelTemplate.createChgbTemplate(ChgbSheetType.CHXZQK);
 		
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();
@@ -449,7 +450,7 @@ public class ChgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = getCompany(comp);
 		List<List<String>> ret = chgbService.getChnych(d, company);
-		ExcelTemplate template = ExcelTemplate.createChgbTemplate(ChgbSheetType.NYCH);
+		ExcelHelper template = ExcelTemplate.createChgbTemplate(ChgbSheetType.NYCH);
 		
 		FormatterHandler handler = new NumberFormatterHandler(1);
 		HSSFWorkbook workbook = template.getWorkbook();

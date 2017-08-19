@@ -12,8 +12,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +31,19 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.DzwzgbSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbService;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterServer;
+import com.xml.frame.report.util.raw.RawNumberFormatterHandler;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "dzwzgb")
@@ -139,7 +140,7 @@ public class DzwzgbServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		List<List<String>> ret = dzwzgbService.getDzclcb(d, company);
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		if (company.getType() == CompanyType.SBGS ||
 				company.getType() == CompanyType.HBGS ||
 				company.getType() == CompanyType.TBGS ||

@@ -6,8 +6,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.reportframe.component.service.ServiceRunnable;
-import com.tbea.ic.operation.reportframe.component.service.Transaction;
+import com.xml.frame.report.component.service.ServiceRunnable;
+import com.xml.frame.report.component.service.Transaction;
 
 @Service(Trans15.NAME)
 public class Trans15 implements Transaction{

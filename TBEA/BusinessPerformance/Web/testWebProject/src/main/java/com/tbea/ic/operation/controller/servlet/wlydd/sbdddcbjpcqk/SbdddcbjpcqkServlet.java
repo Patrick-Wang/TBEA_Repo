@@ -9,11 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,24 +23,21 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdddcbjpcqkSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.common.formatter.v2.core.Offset;
-import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
-import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderCenterFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.controller.servlet.wlydd.WlyddType;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkService;
 import com.tbea.ic.operation.service.sbdddcbjpcqk.SbdddcbjpcqkServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.v2.core.DefaultMatcher;
+import com.xml.frame.report.util.v2.core.EmptyFormatter;
+import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.v2.core.Offset;
+import com.xml.frame.report.util.v2.data.NumberFormatter;
+import com.xml.frame.report.util.v2.data.PercentFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelHeaderCenterFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelOffsetFormatter;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "sbdddcbjpcqk")
@@ -196,7 +188,7 @@ public class SbdddcbjpcqkServlet {
 		
 		WlyddType type = getType(request);
 		List<List<String>> ret = sbdddcbjpcqkService.getXlkglydd(d, type, company);
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		if (type == WlyddType.SCDY){
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.XLKGLYDD_SCDY);
 		}else{
@@ -240,7 +232,7 @@ public class SbdddcbjpcqkServlet {
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		
 		List<List<String>> ret = sbdddcbjpcqkService.getByqkglydd(d, type, company);
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		if (type == WlyddType.SCDY){
 			template = ExcelTemplate.createSbdddcbjpcqkTemplate(SbdddcbjpcqkSheetType.BYQKGLYDD_SCDY);
 		}else{

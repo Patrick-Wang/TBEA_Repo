@@ -183,6 +183,9 @@ where
  </service>
  <service id="servJydwzyYclhglqktj" transaction="transactionManager">
   <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
+  <if test="${compId == 903}">
+   <context key="cy" value="${2}"/>
+  </if>
   <callservice id="servYclhglqktj"/>
   <sql id="clids">select
  CLDL.id,
@@ -1120,6 +1123,9 @@ where
   </if>
   <if test="${isJydw}">
    <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
+   <if test="${compId == 903}">
+    <context key="cy" value="${2}"/>
+   </if>
    <list type="int" id="dwids" export="true">${compId}</list>
   </if>
   <callservice id="servYclhglqktjChart"/>
@@ -1150,11 +1156,13 @@ where
 {&quot;item&quot;:${orgs.virtualCYOrg.types[4]},&quot;chart&quot;:1},
 {&quot;item&quot;:${orgs.virtualCYOrg.types[5]},&quot;chart&quot;:1},
 {&quot;item&quot;:${orgs.virtualCYOrg.types[6]},&quot;chart&quot;:1},
-{&quot;item&quot;:${orgs.virtualCYOrg.types[50001]},&quot;chart&quot;:1}
+{&quot;item&quot;:${orgs.virtualCYOrg.types[50001]},&quot;chart&quot;:1},
+{&quot;item&quot;:${orgs.virtualCYOrg.types[903]},&quot;chart&quot;:2}
 ]</map>
    <map key="chartNodes">[
 {&quot;chart&quot;:0,&quot;nodes&quot;:${dataNodeFactory[byqClid][byqName].asJson}},
-{&quot;chart&quot;:1,&quot;nodes&quot;:${dataNodeFactory[xlClid][xlName].asJson}}
+{&quot;chart&quot;:1,&quot;nodes&quot;:${dataNodeFactory[xlClid][xlName].asJson}},
+{&quot;chart&quot;:2,&quot;nodes&quot;:${dataNodeFactory[xkClid][xkName].asJson}}
 ]</map>
    <map key="chartUrl" value="yclhglqktjChart"/>
    <map key="relateZl" value="${true}"/>
@@ -1178,10 +1186,20 @@ from
  zl_yclhglqk_cldl CLDL
 where
  CLDL.cy=1</sql>
+  <sql id="xkClids">select
+ CLDL.id,
+ CLDL.name,
+ CLDL.dw
+from
+ zl_yclhglqk_cldl CLDL
+where
+ CLDL.cy=2</sql>
   <list id="byqClid" type="int" sql="byqClids" value="0" export="true"/>
   <list id="byqName" type="string" sql="byqClids" value="1" export="true"/>
   <list id="xlClid" type="int" sql="xlClids" value="0" export="true"/>
   <list id="xlName" type="string" sql="xlClids" value="1" export="true"/>
+  <list id="xkClid" type="int" sql="xkClids" value="0" export="true"/>
+  <list id="xkName" type="string" sql="xkClids" value="1" export="true"/>
   <if test="${'true' == 'request.approve.asString'}">
    <list type="int" id="auths" export="true">22,53,54,55</list>
   </if>

@@ -10,7 +10,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.EasyCalendar;
+import com.xml.frame.report.util.EasyCalendar;
 
 @Repository
 @Transactional("transXl")

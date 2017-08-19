@@ -8,13 +8,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
@@ -29,6 +26,9 @@ import com.tbea.ic.operation.model.dao.identifier.cpzlqk.xlzrlb.XlZrlbDaoImpl;
 import com.tbea.ic.operation.model.entity.cpzlqk.XlBhgwtmxEntity;
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.XlBhglbEntity;
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.XlZrlbEntity;
+import com.xml.frame.report.util.EasyCalendar;
+
+import net.sf.json.JSONArray;
 
 @Service(XlbhgcpmxServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -156,7 +156,7 @@ public class XlbhgcpmxServiceImpl implements XlbhgcpmxService {
 			entity.setCplx(row.getString(start++));
 			entity.setSch(row.getString(start++));
 			entity.setCpxh(row.getString(start++));
-			entity.setBhgsl(Util.toIntNull(row.getString(start++)));
+			entity.setBhgsl(Util.toDoubleNull(row.getString(start++)));
 			entity.setSybhgxx(row.getString(start++));
 			entity.setBhglx(xlBhglbDao.getByName(row.getString(start++)));
 			entity.setYyfx(row.getString(start++));

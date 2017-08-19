@@ -8,10 +8,10 @@ import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.login.LoginService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
+import com.xml.frame.report.util.EasyCalendar;
 
 @WebService
 public class IndicatorsProviderWS {

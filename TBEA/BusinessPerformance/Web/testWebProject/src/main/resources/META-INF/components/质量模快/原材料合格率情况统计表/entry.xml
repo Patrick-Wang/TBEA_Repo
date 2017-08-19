@@ -52,6 +52,9 @@ where
   <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
   <context key="cal" value="${request.date.asCalendar}"/>
   <context key="cy" value="${[1,2,3].indexOf(compId) &gt;= 0 ? 0 : 1}"/>
+  <if test="${compId == 903}">
+   <context key="cy" value="${2}"/>
+  </if>
   <callservice id="servYclhglqktjEntryUpdate"/>
   <if test="${cy==0}">
    <formatter id="data">

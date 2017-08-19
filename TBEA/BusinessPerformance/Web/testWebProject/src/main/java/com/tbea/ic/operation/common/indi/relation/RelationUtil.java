@@ -15,8 +15,8 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
-import com.tbea.ic.operation.reportframe.util.XmlUtil;
-import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.XmlUtil;
+import com.xml.frame.report.util.XmlUtil.OnLoop;
 
 public class RelationUtil {
 	public static Set<CompanyType> parseCompanySet(Element elem, CompanyManager compMgr, DWXXDao dwxxDao) throws Exception {

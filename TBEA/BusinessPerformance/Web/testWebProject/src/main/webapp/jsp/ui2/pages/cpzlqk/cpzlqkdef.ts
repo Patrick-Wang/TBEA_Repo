@@ -11,6 +11,14 @@ module plugin {
     export let byqcpycssbhgxxfb : number = ++startId;
     export let byqybysqfysxxfb : number = ++startId;
     export let byqybyspbcpxxfb : number = ++startId;
+    export let xkacptjjg : number = ++startId;
+    export let xkadwtjjg : number = ++startId;
+    export let xkcpycssbhgwtmx : number = ++startId;
+    export let xkybysqfyswtmx : number = ++startId;
+    export let xkybyspbcpwtmx : number = ++startId;
+    export let xkcpycssbhgxxfb : number = ++startId;
+    export let xkybysqfysxxfb : number = ++startId;
+    export let xkybyspbcpxxfb : number = ++startId;
     export let pdacptjjg : number = ++startId;
     export let pdadwtjjg : number = ++startId;
     export let pdcpycssbhgwtmx : number = ++startId;

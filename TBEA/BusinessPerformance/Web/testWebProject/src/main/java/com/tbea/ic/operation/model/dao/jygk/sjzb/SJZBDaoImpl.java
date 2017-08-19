@@ -16,13 +16,13 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
 import com.tbea.ic.operation.model.entity.jygk.YDZBZT;
+import com.xml.frame.report.util.EasyList;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 @Repository

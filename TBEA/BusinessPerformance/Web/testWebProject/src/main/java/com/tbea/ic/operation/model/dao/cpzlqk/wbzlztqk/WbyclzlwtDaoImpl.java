@@ -336,7 +336,7 @@ public class WbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<WbyclzlwtEntity> 
 		Query q = getEntityManager().createQuery("select count(*) from WbyclzlwtEntity where company_name = :comp and " +
 				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
 				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
-				"issue_type in ('安装问题','运输问题') and " + 
+				"issue_type in ('安装问题','运输问题','运输装卸及施工敷设') and " + 
 				"zt in :zts");
 		q.setParameter("comp", comp.getName());
 		q.setParameter("dStart", date);
@@ -351,7 +351,7 @@ public class WbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<WbyclzlwtEntity> 
 				Util.toNameString(comps) + ") and " +
 				"dateDiff(mm, issue_happen_date, :dStart) <= 0 and " +
 				"dateDiff(mm, issue_happen_date, :dEnd) >= 0 and " + 
-				"issue_type in ('安装问题','运输问题') and " + 
+				"issue_type in ('安装问题','运输问题','运输装卸及施工敷设') and " + 
 				"zt in :zts");
 		q.setParameter("dStart", date);
 		q.setParameter("dEnd", d);
@@ -363,7 +363,7 @@ public class WbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<WbyclzlwtEntity> 
 	public Integer getYsazzlwtCount(Date d, Company company, List<Integer> zts) {
 		Query q = getEntityManager().createQuery("select count(*) from WbyclzlwtEntity where company_name = :comp and " +
 				"datediff(mm, issue_happen_date, :date) = 0 and " + 
-				"issue_type in ('安装问题','运输问题') and " + 
+				"issue_type in ('安装问题','运输问题','运输装卸及施工敷设') and " + 
 				"zt in :zts");
 		q.setParameter("comp", company.getName());
 		q.setParameter("date", d);
@@ -376,7 +376,7 @@ public class WbyclzlwtDaoImpl extends AbstractReadWriteDaoImpl<WbyclzlwtEntity> 
 		Query q = getEntityManager().createQuery("select count(*) from WbyclzlwtEntity where company_name in (" +
 				Util.toNameString(comps) + ") and " +
 				"datediff(mm, issue_happen_date, :date) = 0 and " + 
-				"issue_type in ('安装问题','运输问题') and " + 
+				"issue_type in ('安装问题','运输问题','运输装卸及施工敷设') and " + 
 				"zt in :zts");
 		q.setParameter("date", d);
 		q.setParameter("zts", zts);

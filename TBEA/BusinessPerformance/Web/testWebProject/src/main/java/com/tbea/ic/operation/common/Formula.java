@@ -10,6 +10,8 @@ import java.util.regex.Pattern;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import com.xml.frame.report.util.Pair;
+
 public class Formula {
 
 	// #13456

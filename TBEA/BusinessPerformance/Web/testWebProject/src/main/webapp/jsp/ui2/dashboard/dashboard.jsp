@@ -98,7 +98,7 @@
 			<div class="col-lg-12 col-sm-12 col-xs-12">
 				<div class="row">
 					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-						<div id="lrze-zq"
+						<div id="lrze-zq"  style="cursor: pointer;"
 							class="databox radius-bordered databox-shadowed databox-graded">
 							<div class="databox-left bg-orange">
 								<div class="databox-piechart">
@@ -609,8 +609,22 @@
 	<script src="${pageContext.request.contextPath}/jsp/ui2/tree/tree.js"></script>
 
 	<script>
+		ajaxInit = new Util.Ajax(
+				"/BusinessManagement/dashboard/dashboard_update.do", false);
+		ajaxInit.get().then(function(data) {
+			window.data = data;
+			bindPart2Data();
+		}); 
+	
 		window.data = JSON.parse('${data}');
 
+		var chartfirstcolor = "#57b5e3";
+		var chartsecondcolor = "#f4b400";
+		var chartthirdcolor = "#d73d32";
+		var chartfourthcolor = "#8cc474";
+		var chartfifthcolor = "#bc5679";
+		var gridbordercolor = "#eee";
+		
 		bindPart1Data();
 		function bindPart1Data() {
 			$("#lrzewcl").text(data.zt[0].ndjhwcl).parent().attr(
@@ -658,7 +672,7 @@
 											value : '应收账款',
 											url : '/BusinessManagement/dashboard/yszk.do'
 										});
-								window.open("/BusinessManagement/dashboard/yszk.do?breads="
+								window.open("/BusinessManagement/redirector/redirect.do?url=dashboard/yszk.do&breads="
 										+ JSON.stringify(breads));
 								breads = breads.slice(0, breads.length - 1);
 							});
@@ -667,27 +681,18 @@
 					function() {
 						breads.push({
 							id : 101,
-							value : '利润总额',
-							url : '/BusinessManagement/dashboard/lrze.do'
+							value : '利润总额'
 						});
-						window.open("/BusinessManagement/dashboard/lrze.do?breads="
+						window.open("/BusinessManagement/redirector/redirect.do?url=report/dashboardLrze.do&breads="
 								+ JSON.stringify(breads));
 						breads = breads.slice(0, breads.length - 1);
 					});
 			
 			//-----------------------------Pie Charts-----------------------------------------//
 			InitiateEasyPieChart.init();
-		}
-
-		function bindPart2Data() {
-
+			
 			//-------------------定义数据、维度------------------------------------------------//
-			var chartfirstcolor = "#57b5e3";
-			var chartsecondcolor = "#f4b400";
-			var chartthirdcolor = "#d73d32";
-			var chartfourthcolor = "#8cc474";
-			var chartfifthcolor = "#bc5679";
-			var gridbordercolor = "#eee";
+			
 
 			$("#gsqy").text(data.scqy.gszt);
 			$("#zzyqy").text(data.scqy.zzy);
@@ -727,6 +732,14 @@
 				$("#gjpm_gs" + (i + 1)).text(forShort(data.scqypm.gjsc[i][0]));
 				$("#gjpm_val" + (i + 1)).text(data.scqypm.gjsc[i][1] + " 万美元");
 			}
+			
+			//-------------------------Initiates Sparkline Chart instances in page------------------//
+			InitiateSparklineCharts.init();
+		}
+
+		function bindPart2Data() {
+
+			
 
 			function getChartOpt(index) {
 
@@ -887,17 +900,11 @@
 															});
 										}, 0);
 							});
-			//-------------------------Initiates Sparkline Chart instances in page------------------//
-			InitiateSparklineCharts.init();
+			
 		}
 
-		ajaxInit = new Util.Ajax(
-				"/BusinessManagement/dashboard/dashboard_update.do", false);
-		ajaxInit.get().then(function(data) {
-			window.data = data;
-			bindPart2Data();
-		});
 
+		
 		$(".page-body").on("click", function() {
 			if ($(".nav-btn").hasClass("nav-btn-active")) {
 				$(".nav-btn").trigger("click");
@@ -973,7 +980,7 @@
 		var treeNodes = leftTree.render([{
 	        data : {
 	            id : nextId(),
-	            value: '变压器产业',
+	            value: '输变电产业',
 	            icon : getIcon,
 	            iconOpen : getIcon,
 	            extracted:true,
@@ -1038,7 +1045,7 @@
 	    },{
 	        data : {
 	            id : nextId(),
-	            value: '能源产业',
+	            value: '新能源产业',
 	            icon : getIcon,
 	            iconOpen : getIcon,
 	            extracted:true,
@@ -1062,7 +1069,18 @@
 	    	            iconOpen : getIcon,
 	    	            checked : true
 	    	        }
-	    	    },
+	    	    }
+	        ]
+	    },{
+	        data : {
+	            id : nextId(),
+	            value: '能源产业',
+	            icon : getIcon,
+	            iconOpen : getIcon,
+	            extracted:true,
+	            checked : true
+	        },
+	        subNodes:[	    
 	        	{
 	    	        data : {
 	    	            id : nextId(),
@@ -1160,6 +1178,7 @@
 			}
 			return true;
 		});
+		
 	</script>
 
 </body>

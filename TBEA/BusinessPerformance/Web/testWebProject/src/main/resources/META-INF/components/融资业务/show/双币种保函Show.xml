@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="financingDoubleCurrencyLGShow">
+        <response name="framework/templates/singleDateReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map key="updateUrl" value="financingDoubleCurrencyLGUpdateClr"/>
+            <map key="exportUrl" value="financingDoubleCurrencyLGExportClr"/>
+        </response>
+    </controller>
+    <controller id="financingDoubleCurrencyLGUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="financingDoubleCurrencyLGShowServ"/>
+        <callcontroller id="financingDoubleCurrencyLGFmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>银行名称</name>
+                </item>
+                <item>
+                    <name>起始日</name>
+                </item>
+                <item>
+                    <name>到期日</name>
+                </item>
+                <item>
+                    <name>币种</name>
+                </item>
+                <item>
+                    <name>保函金额</name>
+                </item>
+                <item>
+                    <name>保证金比例</name>
+                </item>
+                <item>
+                    <name>保函种类</name>
+                </item>
+                <item>
+                    <name>保函编号</name>
+                </item>
+                <item>
+                    <name>备注</name>
+                </item>
+                <item>
+                    <name>未注销原因</name>
+                </item>
+                <item>
+                    <name>已处理</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="financingDoubleCurrencyLGFmtClr">
+        <formatter export="true" id="fmtData">
+            <PercentFormatter reservedCount="1">
+                <DefaultMatcher col="5"/>
+            </PercentFormatter>
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="4"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="financingDoubleCurrencyLGExportClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="financingDoubleCurrencyLGShowServ"/>
+        <callcontroller id="financingDoubleCurrencyLGFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="特变电工双币种保函办理情况统计表"/>
+        <list id="title" type="string">银行名称,起始日,到期日,币种,保函金额,保证金比例,保函种类,保函编号,备注,未注销原因,已处理</list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="${request.date.asString}特变电工双币种保函办理情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+    <service id="financingDoubleCurrencyLGShowServ" transaction="transactionManager">
+        <sql id="data">select id,
+bankName,
+CONVERT(varchar(20),beginningDate, 23) tmp1,
+CONVERT(varchar(20),maturityDate, 23) tmp2,
+currency,
+amount,
+marginRatio,
+type,
+guaranteeNumber,
+remark,
+reason,
+solved from financing_double_currency_LG</sql>
+        <list id="ids" sql="data" value="0"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="1"/>
+            <list sql="data" type="date" value="2"/>
+            <list sql="data" type="date" value="3"/>
+            <list sql="data" type="string" value="4"/>
+            <list sql="data" type="double" value="5"/>
+            <list sql="data" type="double" value="6"/>
+            <list sql="data" type="string" value="7"/>
+            <list sql="data" type="string" value="8"/>
+            <list sql="data" type="string" value="9"/>
+            <list sql="data" type="string" value="10"/>
+            <list sql="data" type="string" value="11"/>
+        </table>
+    </service>
+</components>

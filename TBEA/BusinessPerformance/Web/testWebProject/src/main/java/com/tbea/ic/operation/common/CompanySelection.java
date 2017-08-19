@@ -7,10 +7,12 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.sf.json.JSONArray;
-
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.xml.frame.report.util.Data;
+import com.xml.frame.report.util.DataNode;
+
+import net.sf.json.JSONArray;
 
 public class CompanySelection {
 	public interface Filter {

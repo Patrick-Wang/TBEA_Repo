@@ -1,6 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.report;
 
-import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.xml.frame.report.component.entity.Context;
 
 public interface ContextHandler {
 	void onHandle(Context context);

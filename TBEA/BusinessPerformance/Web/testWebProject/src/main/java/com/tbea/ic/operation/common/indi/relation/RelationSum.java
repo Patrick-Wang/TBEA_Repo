@@ -10,8 +10,8 @@ import org.w3c.dom.Element;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
-import com.tbea.ic.operation.reportframe.util.XmlUtil;
-import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.XmlUtil;
+import com.xml.frame.report.util.XmlUtil.OnLoop;
 
 public class RelationSum {
 	RelationGroup target = new RelationGroup();

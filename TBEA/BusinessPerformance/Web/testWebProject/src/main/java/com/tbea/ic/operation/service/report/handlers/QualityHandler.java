@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.ClosureMap;
+import com.frame.script.util.ClosureMap;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.querier.QuerierFactory;
 import com.tbea.ic.operation.common.querier.ZBStatusQuerier;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
-import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.component.entity.Context;
 
 @Component
 public class QualityHandler extends ControllerContextHandler {
@@ -47,7 +47,13 @@ public class QualityHandler extends ControllerContextHandler {
 				CompanyType comp = CompanyType.valueOf((Integer) args.get(0));
 				Company company = companyManager.getVirtualCYOrg().getCompany(comp);
 				List<Integer> zts = new ArrayList<Integer>();
-				List<Integer> auths = extendAuthService.getAuths(SessionManager.getAccount(request.getSession()), company);
+				List<Integer> auths = null;
+				if (company.getType() == CompanyType.BYQCY || company.getType() == CompanyType.XLCY || company.getType() == CompanyType.PDCY) {
+					auths = extendAuthService.getAuths(SessionManager.getAccount(request.getSession()));
+				}else {
+					auths = extendAuthService.getAuths(SessionManager.getAccount(request.getSession()), company);
+				}
+				
 				ZBStatusQuerier querier = QuerierFactory.createZlApproveQuerier();
 				zts.addAll(querier.queryStatus(auths));
 				return zts;

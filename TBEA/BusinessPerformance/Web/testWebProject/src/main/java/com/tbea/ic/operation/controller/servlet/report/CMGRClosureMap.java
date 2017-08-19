@@ -3,7 +3,7 @@ package com.tbea.ic.operation.controller.servlet.report;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import com.tbea.ic.operation.common.ClosureMap;
+import com.frame.script.util.ClosureMap;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.Organization;
 

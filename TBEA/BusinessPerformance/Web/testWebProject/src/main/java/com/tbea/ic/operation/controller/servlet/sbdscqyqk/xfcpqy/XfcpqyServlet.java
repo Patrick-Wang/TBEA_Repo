@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,17 +22,20 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdscqyqkSheetType;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.common.formatter.v2.core.Offset;
-import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleYearScrollerFilter;
 import com.tbea.ic.operation.controller.servlet.sbdscqyqk.SbdscqyqkType;
 import com.tbea.ic.operation.service.sbdscqyqk.xfcpqy.XfcpqyService;
 import com.tbea.ic.operation.service.sbdscqyqk.xfcpqy.XfcpqyServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.v2.core.DefaultMatcher;
+import com.xml.frame.report.util.v2.core.EmptyFormatter;
+import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.v2.core.Offset;
+import com.xml.frame.report.util.v2.data.NumberFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelHeaderFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelOffsetFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelTitleYearScrollerFilter;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "xfcpqy")
@@ -143,7 +144,7 @@ public class XfcpqyServlet {
 		
 		List<List<String>> ret = xfcpqyService.getXfcpqy(d, getCompany(comp), getType(request));
 		
-		ExcelTemplate template = ExcelTemplate.createSbdscqyqkTemplate(SbdscqyqkSheetType.XFCPQY);
+		ExcelHelper template = ExcelTemplate.createSbdscqyqkTemplate(SbdscqyqkSheetType.XFCPQY);
 				
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()

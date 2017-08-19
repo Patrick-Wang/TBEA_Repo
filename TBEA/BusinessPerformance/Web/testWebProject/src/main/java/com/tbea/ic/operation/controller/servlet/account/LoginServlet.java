@@ -76,24 +76,17 @@ public class LoginServlet implements OnSessionChangedListener {
 		Account account = loginServ.SSOLogin(userName);
 
 		if (null != account) {
-			setAuthority(request.getSession(), account);
+			if (Url.isV2(request)) {
+				setAuthority2(request.getSession(), account);
+			}else {
+				setAuthority(request.getSession(), account);
+			}
 			request.getSession().setAttribute("sso", true);
-			Url url = new Url(request.getRequestURI());
 			return new ModelAndView(Url.parse(request.getServletPath()).lastReplace(0, "index.do").redirectUrl());
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("error", true);
 		return new ModelAndView("login", map);
-	}
-
-	@RequestMapping(value = "ssoLogout.do")
-	public void ssoLogout(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession(false);
-		if (null != session) {
-			session.invalidate();
-		}
-//		response.sendRedirect("http://192.168.10.68:10008/cas/logout");
 	}
 
 	@RequestMapping(value = {"login.do", "v2/login.do"}, method = RequestMethod.GET)
@@ -131,7 +124,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		}
 		return ajaxRedirect.toUtf8Bytes();
 	}
-
+	
 	private void setAuthority(HttpSession session, Account account) {
 		ACL acl = new ACL();
 		SessionManager.setAccount(session, account);
@@ -181,7 +174,6 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("QualityLookup", extAuthServ.hasAuthority(account, AuthType.QualityLookup))
 		.add("FinanceLookup", extAuthServ.hasAuthority(account, AuthType.FinanceLookup))
 		.add("FinanceEntry", entry.or(extAuthServ.hasAuthority(account, AuthType.FinanceEntry)))
-//		.add("GbLookup", lookup.value())
 		.add("GbEntry", entry.value())
 		.add("ComGbLookup", comGbLookup.value())
 		.add("ComGbEntry", comGbEntry.value())
@@ -191,9 +183,8 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("isSbdcy",	account.getId() == 8 || account.getId() == 6
 						|| account.getId() == 147 || account.getId() == 119
 						|| account.getId() == 146)
-		.add("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()))
-		.add("notSbqgb", !Account.KNOWN_ACCOUNT_QGB.equals(account.getName()))
-		.add("admin", Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName()))
+		.add("zhAuth", extAuthServ.hasAuthority(account, 81))
+		.add("admin", extAuthServ.hasAuthority(account, 80))
 		.add("debug", false)
 		.add("xnyJyfxEntryAuth", jyfxEntry.or(extAuthServ.hasAuthority(account, 25)||
 				extAuthServ.hasAuthority(account, 29) ||
@@ -205,7 +196,7 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("xtnyrbEntryAuth", jyfxEntry.or(extAuthServ.hasAuthority(account, 35)))
 		.add("xtnyrbLookupAuth", extAuthServ.hasAuthority(account, 36))
 		.add("QualityAuth", account.getRole() == 3 || account.getRole() == 4)
-		.add("I_EQualityImport", account.getName().equals("鲁缆质量部") || account.getName().equals("新变质量部"))
+		.add("I_EQualityImport", jyfxEntry.or(extAuthServ.hasAuthority(account, 78)))
 		.add("jyfxEntry", jyfxEntry.value())
 		.add("scgsdbqx", extAuthServ.hasAuthority(account, 56))
 		.add("scbsjLookup", extAuthServ.hasAuthority(account, 57))
@@ -220,12 +211,21 @@ public class LoginServlet implements OnSessionChangedListener {
 		.add("rl", extAuthServ.hasAuthority(account, 66))
 		.add("xcp", extAuthServ.hasAuthority(account, 67))
 		.add("rlImport", extAuthServ.hasAuthority(account, 68));
-		
-		if (Account.KNOWN_ACCOUNT_AFL.equals(account.getName())){
-			acl.openAll();
-			acl.close("MarketAuth");
-		}
+	}
 
+	private void setAuthority2(HttpSession session, Account account) {
+		ACL acl = new ACL();
+		SessionManager.setAccount(session, account);
+		SessionManager.setAcl(session, acl);
+		acl
+		.add("entryPlan", entryServ.hasEntryPlanPermission(account))
+		.add("entryPredict", entryServ.hasEntryPredictPermission(account))
+		.add("approvePlan", approveServ.hasApprovePlanPermission(account))
+		.add("approvePredict", approveServ.hasApprovePredictPermission(account))
+		.add("CorpAuth", loginServ.hasCorpAuth(account))
+		.add("SbdAuth", loginServ.hasSbdAuth(account))
+		.add("MarketAuth", entryServ.hasMarketPermission(account))
+		.add("QualityAuth", account.getRole() == 3 || account.getRole() == 4);
 	}
 
 	@RequestMapping(value = "validate.do")
@@ -271,7 +271,7 @@ public class LoginServlet implements OnSessionChangedListener {
 
 			HttpSession newSession = request.getSession(true);
 
-			setAuthority(newSession, account);
+			setAuthority2(newSession, account);
 
 			return new ModelAndView("redirect:/Login/v2/index.do");
 
@@ -287,9 +287,10 @@ public class LoginServlet implements OnSessionChangedListener {
 			HttpServletResponse response) {
 
 		HttpSession currentSession = request.getSession(false);
-
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		Account account = SessionManager.getAccount(currentSession);
+		setAuthority(currentSession, account);
 		map.put("userName", account.getName());
 		for (Integer auth : extAuthServ.getAuths(account)){
 			map.put("_" + auth, true);

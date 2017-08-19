@@ -892,9 +892,37 @@ var JQTable;
         };
         JQGridAssistant.prototype.setRowBgColor = function (row, r, g, b) {
             var _this = this;
+            var grid = $("#" + this.mGridName);
             this.completeList.push(function () {
-                $("#" + _this.mGridName + " #" + (row + 1)).css("background", "rgb(" + r + "," + g + "," + b + ")");
+                $("#" + _this.mGridName + " #" + grid[0].p.data[row].id).css("background", "rgb(" + r + "," + g + "," + b + ")");
             });
+        };
+        JQGridAssistant.prototype.updateRowBgColor = function (rid, r, g, b) {
+            if (r && g && b) {
+                $("#" + this.mGridName + " #" + rid).css("background", "rgb(" + r + "," + g + "," + b + ")");
+            }
+            else {
+                $("#" + this.mGridName + " #" + rid).removeCss("background");
+            }
+        };
+        JQGridAssistant.prototype.setSelection = function (rid) {
+            var grid = $("#" + this.mGridName);
+            grid.jqGrid('setSelection', rid);
+        };
+        JQGridAssistant.prototype.getRid = function (row) {
+            var grid = $("#" + this.mGridName);
+            return grid[0].p.data[row].id;
+        };
+        JQGridAssistant.prototype.getSelection = function () {
+            var grid = $("#" + this.mGridName);
+            return grid.jqGrid('getGridParam', 'selarrrow');
+        };
+        JQGridAssistant.prototype.setCellValue = function (rid, col, val) {
+            var grid = $("#" + this.mGridName);
+            $("#" + this.mGridName).setCell(rid, col, val);
+        };
+        JQGridAssistant.prototype.getCellValue = function (rid, col) {
+            return $("#" + this.mGridName).getCell(rid, col);
         };
         JQGridAssistant.prototype.domergeColumn = function (col, grid, mya, i) {
             var leftCell = grid.find("#" + mya[i] + " #" + this.id(col) + mya[i]);

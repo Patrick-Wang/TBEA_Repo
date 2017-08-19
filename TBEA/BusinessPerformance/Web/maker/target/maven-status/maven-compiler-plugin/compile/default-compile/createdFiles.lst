@@ -1,0 +1,5 @@
+com\excel\script\maker\App.class
+com\excel\script\maker\MakerException.class
+com\excel\script\maker\Maker.class
+com\excel\script\maker\xml\XmlComponentMaker.class
+com\excel\script\maker\sql\SqlMaker.class

@@ -3,15 +3,11 @@ package com.tbea.ic.operation.controller.servlet.cpzlqk;
 import java.util.List;
 
 import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawPercentFormatterHandler;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
+import com.xml.frame.report.util.raw.RawEmptyHandler;
+import com.xml.frame.report.util.raw.RawFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterServer;
+import com.xml.frame.report.util.raw.RawNumberFormatterHandler;
+import com.xml.frame.report.util.raw.RawPercentFormatterHandler;
 
 
 

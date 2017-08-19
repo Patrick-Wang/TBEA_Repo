@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
-import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.xml.frame.report.component.entity.Context;
 
 public class ContextHandlers implements ContextHandler{
 	

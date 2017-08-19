@@ -10,9 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,14 +24,6 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CpzlqkSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
-import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
-import com.tbea.ic.operation.common.formatter.excel.TextFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.querier.QuerierFactory;
 import com.tbea.ic.operation.common.querier.ZBStatusQuerier;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
@@ -46,6 +35,18 @@ import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
 import com.tbea.ic.operation.service.cpzlqk.pdcpycssbhgwtmx.PdcpycssbhgwtmxService;
 import com.tbea.ic.operation.service.cpzlqk.pdcpycssbhgwtmx.PdcpycssbhgwtmxServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.FormatterServer;
+import com.xml.frame.report.util.excel.HeaderCenterFormatterHandler;
+import com.xml.frame.report.util.excel.MergeRegion;
+import com.xml.frame.report.util.excel.TextFormatterHandler;
+import com.xml.frame.report.util.raw.RawEmptyHandler;
+import com.xml.frame.report.util.raw.RawFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterServer;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "pdcpycssbhgwtmx")
@@ -70,6 +71,9 @@ public class PdcpycssbhgwtmxServlet {
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
@@ -117,6 +121,9 @@ public class PdcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		List<List<String>> result = pdcpycssbhgwtmxService.getPdcpycssbhgwtmxEntry(d, company);
 		List<String> zrlb = pdcpycssbhgwtmxService.getZrlb();
 		List<String> bhglx = pdcpycssbhgwtmxService.getBhglx();
@@ -135,6 +142,9 @@ public class PdcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = pdcpycssbhgwtmxService.savePdcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
 	}
@@ -146,7 +156,9 @@ public class PdcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = pdcpycssbhgwtmxService.updateStatus(d, company, zt);
 		return Util.response(err);
 	}
@@ -158,6 +170,9 @@ public class PdcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = pdcpycssbhgwtmxService.submitPdcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
 	}
@@ -169,6 +184,9 @@ public class PdcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		List<List<String>> result = null;
 		ZBStatus status = pdcpycssbhgwtmxService.getStatus(d, company);
 		if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED){
@@ -191,7 +209,9 @@ public class PdcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = pdcpycssbhgwtmxService.approvePdcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
 	}
@@ -203,7 +223,9 @@ public class PdcpycssbhgwtmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = pdcpycssbhgwtmxService.unapprovePdcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
 	}
@@ -219,13 +241,16 @@ public class PdcpycssbhgwtmxServlet {
 		zts.add(ZBStatus.APPROVED.ordinal());
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		if (comp == CompanyType.BYQCY){
 			result = pdcpycssbhgwtmxService.getPdcpycssbhgwtmx(d, yjType, zts);
 		}else{
 			result = pdcpycssbhgwtmxService.getPdcpycssbhgwtmx(d, yjType, company, zts);
 		}
 		
-		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQCPYCSSBHGWTMX);
+		ExcelHelper template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.BYQCPYCSSBHGWTMX);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
 		handler.next(new TextFormatterHandler(null, null));

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.tbea.ic.operation.common.Pair;
+import com.xml.frame.report.util.Pair;
 
 public class ACL implements Serializable {
 	/**

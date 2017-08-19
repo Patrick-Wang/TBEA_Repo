@@ -3,11 +3,11 @@ package com.tbea.ic.operation.service.report.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tbea.ic.operation.common.ClosureMap;
-import com.tbea.ic.operation.common.Data;
-import com.tbea.ic.operation.common.DataNode;
+import com.frame.script.util.ClosureMap;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
-import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.xml.frame.report.component.entity.Context;
+import com.xml.frame.report.util.Data;
+import com.xml.frame.report.util.DataNode;
 
 public class DataNodeContextHandler implements ContextHandler {
 

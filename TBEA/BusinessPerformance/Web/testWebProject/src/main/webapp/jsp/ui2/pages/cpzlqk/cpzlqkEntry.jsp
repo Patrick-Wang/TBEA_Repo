@@ -194,6 +194,7 @@
 					<div class="row">
 						<div class="col-lg-12 col-sm-12 col-xs-12">
 							<%@include file="byqacptjjg/byqacptjjgEntry.jsp"%>
+							<%@include file="xkacptjjg/xkacptjjgEntry.jsp"%>
 							<%@include file="byqcpycssbhgwtmx/byqcpycssbhgwtmxEntry.jsp"%>
 							<%@include file="xlacptjjg/xlacptjjgEntry.jsp"%>
 							<%@include file="xlbhgcpmx/xlbhgcpmxEntry.jsp"%>

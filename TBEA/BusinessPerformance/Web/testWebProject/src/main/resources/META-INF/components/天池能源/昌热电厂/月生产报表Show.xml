@@ -28,11 +28,9 @@ where
 	month = ${cal.month}</sql>
   <sql id="ylj" order="dayIds" by="0" colcount="2">select 
 	zbid, 
-   	CASE 
-   		WHEN zbid in (1,2,3,4,9,10,11,12,13,14,15,20,22,26) THEN
-		sum(value)
-  	ELSE 
-  		sum(value) / nullif(count(*), 0) END ylj
+   	CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
+		sum(value) / nullif(count(*), 0)
+	ELSE sum(value) END ylj
 from 
 	tcnycsdc_day_plan_zb
 where
@@ -44,11 +42,9 @@ group by
 	</sql>
   <sql id="jdlj" order="dayIds" by="0" colcount="2">select 
 	zbid, 
-    CASE 
-   		WHEN zbid in (1,2,3,4,9,10,11,12,13,14,15,20,22,26) THEN
-		sum(value)
-  	ELSE 
-  		sum(value) / nullif(count(*), 0) END ylj
+    CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
+		sum(value) / nullif(count(*), 0)
+	ELSE sum(value) END ylj
 from 
 	tcnycsdc_day_plan_zb
 where
@@ -60,11 +56,9 @@ group by
 	</sql>
   <sql id="ndlj" order="dayIds" by="0" colcount="2">select 
   	zbid,
-	CASE 
-   		WHEN zbid in (1,2,3,4,9,10,11,12,13,14,15,20,22,26) THEN
-		sum(value)
-  	ELSE 
-  		sum(value) / nullif(count(*), 0) END ylj
+	CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
+		sum(value) / nullif(count(*), 0)
+	ELSE sum(value) END ylj
 from 
 	tcnycsdc_day_plan_zb
 where
@@ -209,7 +203,6 @@ group by
   <response type="jsp" name="framework/templates/singleDateReport/show">
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
-   <map key="day" value="${calendar.current.day}"/>
    <map key="updateUrl" value="tcnycrdcMonthReportUpdate"/>
    <map key="exportUrl" value="tcnycrdcMonthReportExport"/>
    <map key="title" value="天池能源有限责任公司昌热电厂"/>

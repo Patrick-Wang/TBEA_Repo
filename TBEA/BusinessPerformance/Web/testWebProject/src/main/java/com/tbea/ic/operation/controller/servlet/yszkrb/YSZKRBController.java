@@ -10,8 +10,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -27,12 +25,15 @@ import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.JYGKPhase2SheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.service.yszkrb.YSZKRBService;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.HeaderFormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.excel.PercentFormatterHandler;
+
+import net.sf.json.JSONArray;
 
 
 @Controller
@@ -66,7 +67,7 @@ public class YSZKRBController {
 		List<String[]> data = yszkrbService.getYszkData(d, SessionManager.getAccount(request.getSession()));
 		if (data.size() > 1){
 		
-			ExcelTemplate template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSDialy);
+			ExcelHelper template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSDialy);
 			String fileAndSheetName = (1900 + d.getYear()) + "-" + (d.getMonth() + 1) +"-" + d.getDate() + "应收账款日报";
 	//		CellFormatter formatter = template.createCellFormatter()
 	//				.addType(3, CellFormatter.CellType.PERCENT)
@@ -95,7 +96,7 @@ public class YSZKRBController {
 				
 			template.write(response, fileAndSheetName + ".xls");
 		}else{
-			ExcelTemplate template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSDialyJydw);
+			ExcelHelper template = ExcelTemplate.createJYGKPhase2Template(JYGKPhase2SheetType.YSDialyJydw);
 			String fileAndSheetName = (1900 + d.getYear()) + "-" + (d.getMonth() + 1) +"-" + d.getDate() + "应收账款日报";
 	//		CellFormatter formatter = template.createCellFormatter()
 	//				.addType(3, CellFormatter.CellType.PERCENT)

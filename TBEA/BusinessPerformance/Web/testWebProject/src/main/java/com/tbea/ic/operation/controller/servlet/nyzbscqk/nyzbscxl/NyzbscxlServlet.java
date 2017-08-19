@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,17 +22,20 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.NyzbscqkSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
 import com.tbea.ic.operation.service.nyzbscqk.nyzbscxl.NyzbscxlService;
 import com.tbea.ic.operation.service.nyzbscqk.nyzbscxl.NyzbscxlServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.FormatterServer;
+import com.xml.frame.report.util.excel.HeaderCenterFormatterHandler;
+import com.xml.frame.report.util.excel.MergeRegion;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.raw.RawEmptyHandler;
+import com.xml.frame.report.util.raw.RawFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterServer;
+import com.xml.frame.report.util.raw.RawNumberFormatterHandler;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "nyzbscxl")
@@ -113,7 +114,7 @@ public class NyzbscxlServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getBMDBOrganization().getCompany(comp);
 		List<List<String>> ret = nyzbscxlService.getNyzbscxl(d, company);
-		ExcelTemplate template = ExcelTemplate.createNyzbscqkTemplate(NyzbscqkSheetType.NYZBSCXL);
+		ExcelHelper template = ExcelTemplate.createNyzbscqkTemplate(NyzbscqkSheetType.NYZBSCXL);
 
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);

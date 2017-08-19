@@ -10,8 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -26,17 +24,20 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.WgcpqkSheetType;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.common.formatter.v2.core.Offset;
-import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
-import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleYearScrollerFilter;
 import com.tbea.ic.operation.service.wgcpqk.yclbfqk.YclbfqkService;
 import com.tbea.ic.operation.service.wgcpqk.yclbfqk.YclbfqkServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.v2.core.DefaultMatcher;
+import com.xml.frame.report.util.v2.core.EmptyFormatter;
+import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.v2.core.Offset;
+import com.xml.frame.report.util.v2.data.NumberFormatter;
+import com.xml.frame.report.util.v2.data.PercentFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelHeaderFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelOffsetFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelTitleYearScrollerFilter;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "yclbfqk")
@@ -118,7 +119,7 @@ public class YclbfqkServlet {
 		Company company = getCompany(comp);
 		
 		List<List<String>> ret = yclbfqkService.getYclbfqk(d, company);
-		ExcelTemplate template = ExcelTemplate.createWgcpqkTemplate(WgcpqkSheetType.YCLBFQK);
+		ExcelHelper template = ExcelTemplate.createWgcpqkTemplate(WgcpqkSheetType.YCLBFQK);
 		HSSFWorkbook workbook = template.getWorkbook();
 		String name = workbook.getSheetName(0);
 		workbook.setSheetName(0, name);

@@ -7,6 +7,12 @@
         <dependent-module archiveName="template-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/template/template">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="report-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/report/report">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="el-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/el/el">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/BusinessManagement/target/classes"/>
         <property name="context-root" value="BusinessManagement"/>
     </wb-module>

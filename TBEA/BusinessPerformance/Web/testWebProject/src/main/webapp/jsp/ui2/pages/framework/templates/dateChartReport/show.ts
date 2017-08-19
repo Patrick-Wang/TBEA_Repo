@@ -110,6 +110,7 @@ module framework.templates.dateChartReport {
             });
 
             super.onInitialize(opt);
+            this.adjustHeader();
 
         }
 
@@ -164,17 +165,21 @@ module framework.templates.dateChartReport {
 
         adjustHeader(){
             $("#headerHost").removeCss("width");
+            $(".page-header").removeClass("page-header-double");
             if ($("#headerHost").height() > 40){
                 $(".page-header").addClass("page-header-double");
                 $("#headerHost").css("width", $("#sels").width() + "px");
-            }else{
-                $(".page-header").removeClass("page-header-double");
             }
-            return false;
         }
 
         adjustSize(){
             var jqgrid = this.jqgrid();
+            if(this.mChartResp){
+                $("#" + this.option().chartId).css("height", "300px");
+                $("#" + this.option().chartId).css("width", $("#" + this.opt.host).width() + "px");
+
+            }
+
             if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
                 jqgrid.setGridWidth($("#" + this.opt.host).width());
             }
@@ -186,10 +191,9 @@ module framework.templates.dateChartReport {
             //    jqgrid.setGridWidth(this.jqgridHost().width());
             //}
             if(this.mChartResp){
-                $("#" + this.option().chartId).css("height", "300px");
-                $("#" + this.option().chartId).css("width", $("#" + this.opt.host).width() + "px");
                 this.updateChart();
             }
+            this.adjustHeader();
         }
 
         private updateChart():void {

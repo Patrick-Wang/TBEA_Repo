@@ -1,5 +1,7 @@
 package com.tbea.ic.operation.common;
 
+import com.xml.frame.report.util.Pair;
+
 public interface FormulaClient<T>{
 
 	Pair<Integer, T> onThis(FormulaServer<T> server, Formula formula);

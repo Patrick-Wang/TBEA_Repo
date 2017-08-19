@@ -3,8 +3,8 @@ package com.tbea.ic.operation.service.report;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.tbea.ic.operation.common.DataNode;
-import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.xml.frame.report.component.entity.Context;
+import com.xml.frame.report.util.DataNode;
 
 public interface ComponentManagerService {
 
@@ -19,3 +19,4 @@ public interface ComponentManagerService {
 	DataNode getCSN();
 
 }
+

@@ -757,7 +757,7 @@
 	var treeNodes = leftTree.render([{
         data : {
             id : nextId(),
-            value: '变压器产业',
+            value: '输变电产业',
             icon : getIcon,
             iconOpen : getIcon,
             extracted:true,
@@ -822,7 +822,7 @@
     },{
         data : {
             id : nextId(),
-            value: '能源产业',
+            value: '新能源产业',
             icon : getIcon,
             iconOpen : getIcon,
             extracted:true,
@@ -846,7 +846,18 @@
     	            iconOpen : getIcon,
     	            checked : true
     	        }
-    	    },
+    	    }
+        ]
+    },{
+        data : {
+            id : nextId(),
+            value: '能源产业',
+            icon : getIcon,
+            iconOpen : getIcon,
+            extracted:true,
+            checked : true
+        },
+        subNodes:[	    
         	{
     	        data : {
     	            id : nextId(),

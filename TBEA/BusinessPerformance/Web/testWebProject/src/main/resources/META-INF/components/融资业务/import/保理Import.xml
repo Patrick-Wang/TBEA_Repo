@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="financingFactoringImportJSP">
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="financingFactoringImportClr"/>
+        </response>
+    </controller>
+    <controller id="financingFactoringImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="financingFactoringImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="financingFactoringImportServ" transaction="transactionManager">
+        <merge data="${data}" table="financing_factoring">
+            <set>
+                <beginningDate ref="0" type="date"/>
+                <maturityDate ref="1" type="date"/>
+                <amount ref="2" type="double"/>
+                <beginningOfYearBalance ref="3" type="double"/>
+                <loanReturned ref="4" type="double"/>
+                <balance ref="5" type="double"/>
+                <rate ref="6" type="double"/>
+                <fee ref="7" type="double"/>
+                <costUndertaker ref="8" type="string"/>
+                <clientName ref="9" type="string"/>
+                <remark ref="10" type="string"/>
+                <dwid ref="11" type="int"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

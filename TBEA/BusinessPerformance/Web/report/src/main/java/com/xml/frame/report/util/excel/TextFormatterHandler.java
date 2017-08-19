@@ -1,0 +1,33 @@
+package com.xml.frame.report.util.excel;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+
+import com.xml.frame.report.util.ExcelHelper;
+
+public class TextFormatterHandler extends AbstractFormatterHandler {
+
+	public TextFormatterHandler(String[] rows, Integer[] cols) {
+		super(toList(rows), toList(cols));
+	}
+	
+	public TextFormatterHandler(String[] rows) {
+		this(rows, null);
+	}
+	
+	public TextFormatterHandler() {
+		this(null, null);
+	}
+
+	@Override
+	protected String onHandle(ExcelHelper template, HSSFCell cell, String val) {
+		String ret = val;
+		if (val.contains(" ")){
+			ret = " " + val.trim();
+			cell.setCellValue(ret);
+		}else{
+			cell.setCellValue(val);
+		}
+		cell.setCellStyle(template.getCellStyleText());
+		return ret;
+	}
+
+}

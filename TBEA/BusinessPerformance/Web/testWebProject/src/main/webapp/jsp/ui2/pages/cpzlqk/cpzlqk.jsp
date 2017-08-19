@@ -241,9 +241,11 @@
 				<div class="page-body">
 					<div class="row">
 						<div class="col-lg-12 col-sm-12 col-xs-12">
+							<%@include file="byqacptjjg/byqacptjjg.jsp"%>
 							<%@include file="pdacptjjg/pdacptjjg.jsp"%>
 							<%@include file="xlacptjjg/xlacptjjg.jsp"%>
 							<%@include file="byqadwtjjg/byqadwtjjg.jsp"%>
+							<%@include file="xkadwtjjg/xkadwtjjg.jsp"%>
 							<%@include file="pdadwtjjg/pdadwtjjg.jsp"%>
 							<%@include file="xladydjtjjg/xladydjtjjg.jsp"%>
 							<%@include file="byqcpycssbhgwtmx/byqcpycssbhgwtmx.jsp"%>

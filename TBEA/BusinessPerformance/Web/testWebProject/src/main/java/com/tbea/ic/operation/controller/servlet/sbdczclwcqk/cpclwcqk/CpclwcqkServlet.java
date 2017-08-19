@@ -10,8 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -27,16 +25,19 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.SbdczclwcqkSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
 import com.tbea.ic.operation.controller.servlet.sbdczclwcqk.SbdczclwcqkType;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.CpclwcqkService;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.CpclwcqkServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.HeaderFormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.v2.core.DefaultMatcher;
+import com.xml.frame.report.util.v2.core.EmptyFormatter;
+import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.v2.data.NumberFormatter;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "cpclwcqk")
@@ -136,7 +137,7 @@ public class CpclwcqkServlet {
 		Company company = getCompany(comp);
 		
 		List<List<String>> ret = cpclwcqkService.getCpclwcqk(d, company, getType(request));
-		ExcelTemplate template = ExcelTemplate.createSbdczclwcqkTemplate(getSbdczclwcqkSheetType(getType(request), d));
+		ExcelHelper template = ExcelTemplate.createSbdczclwcqkTemplate(getSbdczclwcqkSheetType(getType(request), d));
 	
 		FormatterHandler handler = new HeaderFormatterHandler(null, new Integer[]{0});
 		handler.next(new NumberFormatterHandler(1));

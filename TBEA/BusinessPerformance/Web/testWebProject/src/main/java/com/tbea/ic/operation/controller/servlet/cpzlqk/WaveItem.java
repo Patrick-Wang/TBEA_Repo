@@ -2,8 +2,8 @@ package com.tbea.ic.operation.controller.servlet.cpzlqk;
 
 import java.util.List;
 
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
-import com.tbea.ic.operation.common.formatter.raw.RawNumberFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterServer;
+import com.xml.frame.report.util.raw.RawNumberFormatterHandler;
 
 public class WaveItem {
 	private String name;

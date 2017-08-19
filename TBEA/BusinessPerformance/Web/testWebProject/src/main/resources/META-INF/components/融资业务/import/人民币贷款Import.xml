@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="financingRMBLoanImportJSP">
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="financingRMBLoanImportClr"/>
+        </response>
+    </controller>
+    <controller id="financingRMBLoanImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="financingRMBLoanImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="financingRMBLoanImportServ" transaction="transactionManager">
+        <merge data="${data}" table="financing_RMB_loan">
+            <set>
+                <bankName ref="0" type="string"/>
+                <beginningDate ref="1" type="date"/>
+                <maturityDate ref="2" type="date"/>
+                <loanDmount ref="3" type="double"/>
+                <loanRate ref="4" type="double"/>
+                <floatingRatio ref="5" type="double"/>
+                <loanTerm ref="6" type="string"/>
+                <loanType ref="7" type="string"/>
+                <guarantyStyle ref="8" type="string"/>
+                <dwid ref="9" type="int"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

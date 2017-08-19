@@ -12,10 +12,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.util.CellRangeAddress;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
-import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.POIUtils;
 import com.tbea.ic.operation.common.Url;
@@ -35,20 +32,24 @@ import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.VirtualJYZBOrganization;
 import com.tbea.ic.operation.common.excel.CompanysNCSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.common.formatter.v2.core.IndicatorMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.Offset;
-import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
-import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.controller.servlet.ydzb.CompanyTypeFilter;
 import com.tbea.ic.operation.service.nczb.NCZBService;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
+import com.xml.frame.report.util.DataNode;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.v2.core.DefaultMatcher;
+import com.xml.frame.report.util.v2.core.EmptyFormatter;
+import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.v2.core.IndicatorMatcher;
+import com.xml.frame.report.util.v2.core.Offset;
+import com.xml.frame.report.util.v2.data.NumberFormatter;
+import com.xml.frame.report.util.v2.data.PercentFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelHeaderFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelOffsetFormatter;
+
+import net.sf.json.JSONArray;
 
 
 @Controller
@@ -126,7 +127,7 @@ public class NCZBController {
 		
 		
 		Offset offset = new Offset(1, 0);
-		ExcelTemplate template = ExcelTemplate.createCompanysNCTemplate(CompanysNCSheetType.AllCompanysNC);
+		ExcelHelper template = ExcelTemplate.createCompanysNCTemplate(CompanysNCSheetType.AllCompanysNC);
 		FormatterServer fs = new FormatterServer();
 		fs.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
@@ -181,7 +182,7 @@ public class NCZBController {
 						org));
 		
 		List<DataNode> nodes = compSel.select(2);
-		ExcelTemplate template = ExcelTemplate.createCompanysNCTemplate(CompanysNCSheetType.JYDWCompanysNC);
+		ExcelHelper template = ExcelTemplate.createCompanysNCTemplate(CompanysNCSheetType.JYDWCompanysNC);
 		int i = 0;
 		for (DataNode node : nodes){
 			for (DataNode sub : node.getSubNodes()){

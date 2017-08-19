@@ -10,9 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,25 +24,28 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CpzlqkSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
-import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
-import com.tbea.ic.operation.common.formatter.excel.TextFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawEmptyHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterHandler;
-import com.tbea.ic.operation.common.formatter.raw.RawFormatterServer;
 import com.tbea.ic.operation.common.querier.QuerierFactory;
 import com.tbea.ic.operation.common.querier.ZBStatusQuerier;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.CpzlqkResp;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.PageType;
-import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
 import com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx.XlbhgcpmxService;
 import com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx.XlbhgcpmxServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.FormatterServer;
+import com.xml.frame.report.util.excel.HeaderCenterFormatterHandler;
+import com.xml.frame.report.util.excel.MergeRegion;
+import com.xml.frame.report.util.excel.TextFormatterHandler;
+import com.xml.frame.report.util.raw.RawEmptyHandler;
+import com.xml.frame.report.util.raw.RawFormatterHandler;
+import com.xml.frame.report.util.raw.RawFormatterServer;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "xlbhgcpmx")
@@ -70,6 +70,9 @@ public class XlbhgcpmxServlet {
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		CpzlqkResp resp = new CpzlqkResp(true);
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
@@ -116,6 +119,9 @@ public class XlbhgcpmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		List<List<String>> result = xlbhgcpmxService.getXlbhgcpmxEntry(d, company);
 		List<String> zrlb = xlbhgcpmxService.getZrlb();
 		List<String> bhglx = xlbhgcpmxService.getBhglx();
@@ -134,6 +140,9 @@ public class XlbhgcpmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = xlbhgcpmxService.saveXlbhgcpmx(d, data, company);
 		return Util.response(err);
 	}
@@ -145,6 +154,9 @@ public class XlbhgcpmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = xlbhgcpmxService.submitXlbhgcpmx(d, data, company);
 		return Util.response(err);
 	}
@@ -156,6 +168,9 @@ public class XlbhgcpmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		List<List<String>> result = null;
 		ZBStatus status = xlbhgcpmxService.getStatus(d, company);
 		if (status == ZBStatus.APPROVED || status == ZBStatus.SUBMITTED){
@@ -178,7 +193,9 @@ public class XlbhgcpmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = xlbhgcpmxService.updateStatus(d, company, zt);
 		return Util.response(err);
 	}
@@ -190,7 +207,9 @@ public class XlbhgcpmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = xlbhgcpmxService.approveXlbhgcpmx(d, data, company);
 		return Util.response(err);
 	}
@@ -202,7 +221,9 @@ public class XlbhgcpmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
-		
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		ErrorCode err = xlbhgcpmxService.unapproveXlbhgcpmx(d, data, company);
 		return Util.response(err);
 	}	
@@ -217,13 +238,16 @@ public class XlbhgcpmxServlet {
 		zts.add(ZBStatus.APPROVED.ordinal());
 		CompanyType comp = CompanySelection.getCompany(request);
 		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		if (null == company) {
+			company = companyManager.getBMDBOrganization().getCompany(comp);
+		}
 		if (comp == CompanyType.XLCY){
 			result = xlbhgcpmxService.getXlbhgcpmx(d, zts);
 		}else{
 			result = xlbhgcpmxService.getXlbhgcpmx(d, company, zts);
 		}
 		
-		ExcelTemplate template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.XLBHGCPMX);
+		ExcelHelper template = ExcelTemplate.createCpzlqkTemplate(CpzlqkSheetType.XLBHGCPMX);
 	
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
 		handler.next(new TextFormatterHandler(null, null));

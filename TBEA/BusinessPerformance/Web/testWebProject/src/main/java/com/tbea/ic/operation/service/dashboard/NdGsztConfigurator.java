@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.DateHelper;
-import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.util.pipe.configurator.ConfiguratorUtil;
@@ -17,6 +16,7 @@ import com.tbea.ic.operation.service.util.pipe.filter.basic.CopyPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.RatioPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.WclPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.ZzlPipeFilter;
+import com.xml.frame.report.util.EasyList;
 
 
 public class NdGsztConfigurator implements IPipeConfigurator {

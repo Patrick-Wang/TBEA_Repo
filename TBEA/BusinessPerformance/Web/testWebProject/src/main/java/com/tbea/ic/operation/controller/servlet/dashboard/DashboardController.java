@@ -36,6 +36,7 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.dashboard.DashboardService;
 import com.tbea.ic.operation.service.entry.EntryService;
+import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
@@ -67,6 +68,9 @@ public class DashboardController {
 	@Resource(name=YszkgbServiceImpl.NAME)
 	YszkgbService yszkgbService;
 	
+	@Autowired
+	ExtendAuthorityService extAuthServ;
+	
 	CompanyType[] cps = new CompanyType[]{
 			CompanyType.SBGS,
 			CompanyType.HBGS,
@@ -94,7 +98,7 @@ public class DashboardController {
 		if (null != request.getParameter("companyType")){
 			companyType = Integer.valueOf((String)request.getParameter("companyType"));
 		}
-		if (Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName())) {
+		if (this.extAuthServ.hasAuthority(account, 81)) {
 			dws = companyManager.getBMDBOrganization().getCompany(CompanyType.ZHGS).getSubCompanies();
 		} else if (companyType == 1){
 			dws = BMDepartmentDB.getMainlyJydw(companyManager);
@@ -105,23 +109,7 @@ public class DashboardController {
 		} else if (companyType == 4){
 			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB));
 		}
-		// 1 all
-		// 2 sbd
-		// 3 ny
-		// 4 xny
-//		else if (Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())){
-//			Organization org = companyManager.getBMDBOrganization();
-//			List<CompanyType> compTypes = CompanySelection.getCompanys(request);
-//			dws = new ArrayList<Company>();
-//			for(int i = 0; i < compTypes.size(); ++i){
-//				Company comp = org.getCompany(compTypes.get(i));
-//				if (null != comp){
-//					dws.add(comp);
-//				} else{
-//					dws.add(CompanyManager.getEmptyCompany());
-//				}
-//			}
-//		}
+
 
 		String result = "[]";
 		if (null != dws && !dws.isEmpty()) {
@@ -150,7 +138,7 @@ public class DashboardController {
 		DateSelection dateSel = new DateSelection();
 		dateSel.select(map);
 		Account account = SessionManager.getAccount(request.getSession(false));
-		map.put("zhAuth", Account.KNOWN_ACCOUNT_ZHGS.equals(account.getName()));
+		map.put("zhAuth", this.extAuthServ.hasAuthority(account, 81));
 		SessionManager.getAcl(request.getSession()).select(map);
 		return new ModelAndView((Url.isV2(request) ? "ui2/pages/" : "") +"gdw_indexInput_summary", map);
 	}
@@ -164,9 +152,6 @@ public class DashboardController {
 		JSONArray arrUsers = new JSONArray();
 		HttpSession latestActiveSession = null;
 		Account account = SessionManager.getAccount(request.getSession(false));
-		if (!SessionManager.getAcl(request.getSession(false)).isOpen("admin")) {
-			return new ModelAndView("");
-		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		int activeCount = 0;
@@ -179,7 +164,7 @@ public class DashboardController {
 	        	try{
 		        	HttpSession session = sessions.get(i.next());
 		        	account = SessionManager.getAccount(session);
-					if (null == account || Account.KNOWN_ACCOUNT_ADMIN.equals(account.getName())) {
+					if (null == account || extAuthServ.hasAuthority(account, 80)) {
 						continue;
 					}
 					++activeCount;
@@ -263,32 +248,8 @@ public class DashboardController {
 		}
 
 		jRet.put("zt", zt);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("data", jRet.toString().replaceAll("null", ""));
-		return new ModelAndView("ui2/dashboard/dashboard", map);
-	}
-	
-	
-	@RequestMapping(value = "dashboard_update.do")
-	public @ResponseBody byte[] dashboardUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		Date current = new java.sql.Date(System.currentTimeMillis());
-		JSONObject jRet = new JSONObject();
-		JSONArray jydw = new JSONArray();
-		List<String[]> zbs = gszbService.getDashboardGsztzb(current);
-		for(int i = 0; i < zbs.size(); ++i){
-			jydw.add(new JSONArray());
-		}
-		for (CompanyType ct : cps){
-			zbs = gszbService.getDashboardGdwzb(current, ct);
-			for (int i = 0; i < zbs.size(); ++i){
-				JSONObject item = new JSONObject();
-				item.put("ndjh",  getNumber(zbs.get(i)[1]));
-				item.put("ndlj",  getNumber(zbs.get(i)[12]));
-				item.put("qntq", getNumber(zbs.get(i)[14]));
-				jydw.getJSONArray(i).add(item);
-			}
-		}
+		
+		
 		
 		ExchangeRate er = entryService.getExchangeRate(current);
 		
@@ -330,6 +291,35 @@ public class DashboardController {
 		jRet.put("scqypm", scqypm);
 		jRet.put("scqy", scqy);
 		
+
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", jRet.toString().replaceAll("null", ""));
+		return new ModelAndView("ui2/dashboard/dashboard", map);
+	}
+	
+	
+	@RequestMapping(value = "dashboard_update.do")
+	public @ResponseBody byte[] dashboardUpdate(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date current = new java.sql.Date(System.currentTimeMillis());
+		JSONObject jRet = new JSONObject();
+		JSONArray jydw = new JSONArray();
+		List<String[]> zbs = gszbService.getDashboardGsztzb(current);
+		for(int i = 0; i < zbs.size(); ++i){
+			jydw.add(new JSONArray());
+		}
+		for (CompanyType ct : cps){
+			zbs = gszbService.getDashboardGdwzb(current, ct);
+			for (int i = 0; i < zbs.size(); ++i){
+				JSONObject item = new JSONObject();
+				item.put("ndjh",  getNumber(zbs.get(i)[1]));
+				item.put("ndlj",  getNumber(zbs.get(i)[12]));
+				item.put("qntq", getNumber(zbs.get(i)[14]));
+				jydw.getJSONArray(i).add(item);
+			}
+		}
+		
 		jRet.put("jydw", jydw);
 		return jRet.toString().replaceAll("null", "").getBytes("utf-8");
 	}
@@ -357,5 +347,27 @@ public class DashboardController {
 		return new ModelAndView("ui2/dashboard/yszk/yszk", map);
 	}
 	
+	@RequestMapping(value = "lrze.do")
+	public ModelAndView getDashboardLrze(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		Date current = new java.sql.Date(System.currentTimeMillis());
+		JSONObject jRet = new JSONObject();
+		
+		JSONArray qsfx = JSONArray.fromObject(this.yszkgbService.getDashboardYszkzlbh(current));
+//		JSONArray kxxz = JSONArray.fromObject(this.yszkgbService.getDashboardYszkkxxz(current));
+//		JSONArray yqys = JSONArray.fromObject(this.yszkgbService.getDashboardYqyszcsys(current));
+//		
+//
+//		JSONArray yjtz = JSONArray.fromObject(this.yszkgbService.getDashboardYszkyjtztjqs(current));
+//		
+//		jRet.put("zl", zl);
+//		jRet.put("kxxz", kxxz);
+//		jRet.put("yqys", yqys);
+//		jRet.put("yjtz", yjtz);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("data", jRet.toString().replaceAll("null", "0"));
+		return new ModelAndView("ui2/dashboard/lrze/lrze", map);
+	}
 	
 }

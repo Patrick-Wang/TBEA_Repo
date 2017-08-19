@@ -356,7 +356,7 @@
                 .addClass(seasonClass);
 		}
 		
-		if (date.year){
+		if (date && date.year){
 			 createDate();
              getDate = function () {
                  var ret = {};

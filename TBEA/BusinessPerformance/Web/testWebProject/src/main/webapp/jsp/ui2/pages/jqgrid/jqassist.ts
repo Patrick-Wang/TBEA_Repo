@@ -992,9 +992,42 @@ module JQTable {
         }
 
         public setRowBgColor(row:number, r:number, g:number, b:number):void {
+            let grid = $("#" + this.mGridName);
             this.completeList.push(() => {
-                $("#" + this.mGridName + " #" + (row + 1)).css("background", "rgb(" + r + "," + g + "," + b + ")");
+                $("#" + this.mGridName + " #" + grid[0].p.data[row].id).css("background", "rgb(" + r + "," + g + "," + b + ")");
             })
+        }
+
+        public updateRowBgColor(rid:number, r:number, g:number, b:number):void {
+            if (r && g && b){
+                $("#" + this.mGridName + " #" + rid).css("background", "rgb(" + r + "," + g + "," + b + ")");
+            }else{
+                $("#" + this.mGridName + " #" + rid).removeCss("background");
+            }
+        }
+
+        public setSelection(rid:number){
+            let grid = $("#" + this.mGridName);
+            grid.jqGrid('setSelection', rid);
+        }
+
+        public getRid(row:number){
+            let grid = $("#" + this.mGridName);
+            return grid[0].p.data[row].id;
+        }
+
+        public getSelection(){
+            let grid = $("#" + this.mGridName);
+            return grid.jqGrid('getGridParam','selarrrow');
+        }
+
+        public setCellValue(rid:number, col:number, val:any){
+            let grid = $("#" + this.mGridName);
+            $("#" + this.mGridName).setCell(rid, col, val);
+        }
+
+        public getCellValue(rid:number, col:number){
+            return $("#" + this.mGridName).getCell(rid, col);
         }
 
         private domergeColumn(col:number, grid:any, mya:any, i:any){

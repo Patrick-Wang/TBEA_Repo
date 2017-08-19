@@ -4,9 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
-import com.tbea.ic.operation.reportframe.component.Component;
-import com.tbea.ic.operation.reportframe.component.controller.ControllerRequest;
-import com.tbea.ic.operation.reportframe.component.entity.Context;
+import com.xml.frame.report.component.Component;
+import com.xml.frame.report.component.controller.ControllerRequest;
+import com.xml.frame.report.component.entity.Context;
 
 public abstract class ControllerContextHandler implements ContextHandler{
 

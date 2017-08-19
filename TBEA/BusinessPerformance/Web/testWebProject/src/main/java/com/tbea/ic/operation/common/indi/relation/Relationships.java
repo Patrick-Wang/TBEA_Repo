@@ -23,15 +23,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.tbea.ic.operation.common.Pair;
 import com.tbea.ic.operation.common.WatchDirectory;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
-import com.tbea.ic.operation.reportframe.component.TimerConfigLoader;
-import com.tbea.ic.operation.reportframe.util.XmlUtil;
-import com.tbea.ic.operation.reportframe.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.Pair;
+import com.xml.frame.report.util.XmlUtil;
+import com.xml.frame.report.util.XmlUtil.OnLoop;
 
 @Repository
 public class Relationships {
@@ -39,7 +38,7 @@ public class Relationships {
 	private static String resPath;
 	static {
 		try {
-			resDir = new URI(TimerConfigLoader.class.getClassLoader().getResource("")
+			resDir = new URI(Relationships.class.getClassLoader().getResource("")
 					.getPath()).getPath().substring(1)
 					+ "META-INF";
 			resPath = resDir + "/指标关联.xml";

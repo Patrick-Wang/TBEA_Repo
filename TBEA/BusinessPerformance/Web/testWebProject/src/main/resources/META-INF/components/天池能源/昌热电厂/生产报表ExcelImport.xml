@@ -89,7 +89,7 @@
  <controller id="tcnycrdcscbbImportWrapperJsp">
   <list id="ids" type="int">1,2,3,4</list>
   <list id="vals" type="string">
-	生产日报,月度计划,季度计划,年度划报
+	生产日报,月度计划,季度计划,年度计划
 </list>
   <response type="jsp" name="components/import_data">
    <map key="importUrl" value="tcnycrdcscbbImportWrapper"/>

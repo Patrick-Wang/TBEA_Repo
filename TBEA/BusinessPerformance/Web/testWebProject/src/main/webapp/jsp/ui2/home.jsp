@@ -79,16 +79,14 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/assets/prettify.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/multi-select/jquery.multiselect.js"></script>
-<%-- <link
-	href="${pageContext.request.contextPath}/jsp/ui2/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet"> --%>
+
 <!-- jedate -->
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/skin/jedate.css">
 <link rel="stylesheet" type="text/css" media="screen"
 	href="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/skin/deepgreen.css">
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/jquery.jedate.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jedate/jquery.jedate.js?ver=${applicationScope.ver}"
 	type="text/javascript"></script>
 <!-- jqgrid -->
 <link rel="stylesheet" type="text/css" media="screen"
@@ -113,41 +111,41 @@
 
 <!-- jqgrid assist -->
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/jqassist.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/jqassist.js?ver=${applicationScope.ver}"
 	type="text/javascript"></script>
 
 <script src="${pageContext.request.contextPath}/jsp/ui2/pages/json2.js"
 	type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/pages/util.js"
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/util.js?ver=${applicationScope.ver}"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/vector.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/vector.js?ver=${applicationScope.ver}"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/dateSelector.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/dateSelector.js?ver=${applicationScope.ver}"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/unitedSelector.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/unitedSelector.js?ver=${applicationScope.ver}"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/companySelector.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/companySelector.js?ver=${applicationScope.ver}"
 	type="text/javascript"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/messageBox.js"
-	type="text/javascript"></script>
-
-<script
-	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jqueryex.js"
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/messageBox.js?ver=${applicationScope.ver}"
 	type="text/javascript"></script>
 
-<link href="${pageContext.request.contextPath}/jsp/ui2/tabs/tab.css"
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jqueryex.js?ver=${applicationScope.ver}"
+	type="text/javascript"></script>
+
+<link href="${pageContext.request.contextPath}/jsp/ui2/tabs/tab.css?ver=${applicationScope.ver}"
 	rel="stylesheet">
-<script src="${pageContext.request.contextPath}/jsp/ui2/tabs/tab.js"></script>
-<link href="${pageContext.request.contextPath}/jsp/ui2/tree/tree.css"
+<script src="${pageContext.request.contextPath}/jsp/ui2/tabs/tab.js?ver=${applicationScope.ver}"></script>
+<link href="${pageContext.request.contextPath}/jsp/ui2/tree/tree.css?ver=${applicationScope.ver}"
 	rel="stylesheet">
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/tree/treeNode.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/tree/tree.js"></script>
+	src="${pageContext.request.contextPath}/jsp/ui2/tree/treeNode.js?ver=${applicationScope.ver}"></script>
+<script src="${pageContext.request.contextPath}/jsp/ui2/tree/tree.js?ver=${applicationScope.ver}"></script>
 
 <link
 	href="${pageContext.request.contextPath}/jsp/ui2/scroll/css/jquery.mCustomScrollbar.min.css"

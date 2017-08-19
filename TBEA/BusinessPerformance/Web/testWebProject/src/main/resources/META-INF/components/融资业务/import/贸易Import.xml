@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="financingTradeImportJSP">
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="financingTradeImportClr"/>
+        </response>
+    </controller>
+    <controller id="financingTradeImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="financingTradeImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="financingTradeImportServ" transaction="transactionManager">
+        <merge data="${data}" table="financing_trade">
+            <set>
+                <bankName ref="0" type="string"/>
+                <beginningDate ref="1" type="date"/>
+                <maturityDate ref="2" type="date"/>
+                <amount ref="3" type="double"/>
+                <rate ref="4" type="double"/>
+                <fee ref="5" type="double"/>
+                <type ref="6" type="string"/>
+                <guarantyStyle ref="7" type="string"/>
+                <dwid ref="8" type="int"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

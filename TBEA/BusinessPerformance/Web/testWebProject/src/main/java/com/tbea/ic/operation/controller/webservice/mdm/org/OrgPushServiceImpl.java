@@ -14,10 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.w3c.dom.Document;
 
 import com.tbea.ic.operation.model.entity.hr.Org;
-import com.tbea.ic.operation.reportframe.component.AbstractConfigLoader;
 import com.tbea.ic.operation.service.hr.org.OrgService;
 import com.tbea.mdm.ws.MDMResponse;
 import com.tbea.mdm.ws.RecordStatus;
+import com.xml.frame.report.component.AbstractConfigLoader;
 
 @Controller
 @WebService

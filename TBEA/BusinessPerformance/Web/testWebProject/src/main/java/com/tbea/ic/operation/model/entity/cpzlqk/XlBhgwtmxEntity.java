@@ -41,7 +41,7 @@ public class XlBhgwtmxEntity extends AbstractReadWriteEntity implements Serializ
 	String cplx;
 	String sch;
 	String cpxh;
-	Integer bhgsl;
+	Double bhgsl;
 	String sybhgxx;
 	XlBhglbEntity bhglx;//bhglxid;
 	String yyfx;
@@ -87,10 +87,10 @@ public class XlBhgwtmxEntity extends AbstractReadWriteEntity implements Serializ
 	public void setCpxh(String cpxh) {
 		this.cpxh = cpxh;
 	}
-	public Integer getBhgsl() {
+	public Double getBhgsl() {
 		return bhgsl;
 	}
-	public void setBhgsl(Integer bhgsl) {
+	public void setBhgsl(Double bhgsl) {
 		this.bhgsl = bhgsl;
 	}
 	public String getSybhgxx() {

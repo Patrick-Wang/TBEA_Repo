@@ -1,15 +1,18 @@
 package com.tbea.ic.operation.service.report.handlers;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
+import com.frame.script.util.PropMap;
 import com.tbea.ic.operation.common.Company15Code;
+import com.tbea.ic.operation.common.CompanyJjzjzCode;
 import com.tbea.ic.operation.common.CompanyNCCode;
-import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.PropMap;
+import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.report.Arrays;
@@ -25,17 +28,31 @@ import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj20zb.YJ20ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
-import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
+import com.tbea.ic.operation.service.report.ComponentManagerServiceImpl;
 import com.tbea.ic.operation.service.report.HBWebService;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
+import com.xml.frame.report.component.Component;
+import com.xml.frame.report.component.entity.Context;
+import com.xml.frame.report.util.EasyCalendar;
 
-@Component(UtilContextHandler.NAME)
+@org.springframework.stereotype.Component(UtilContextHandler.NAME)
 public class UtilContextHandler implements ContextHandler {
 
 	public static final String NAME = "UtilContextHandler";
 
+	protected static String templatePath;
+	static {
+		try {
+			templatePath = new URI(ComponentManagerServiceImpl.class.getClassLoader().getResource("")
+					.getPath()).getPath().substring(1)
+					+ "META-INF/templates/";
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@Autowired
 	NDJHZBDao ndjhzbDao;
 
@@ -78,13 +95,14 @@ public class UtilContextHandler implements ContextHandler {
 	
 	@Override
 	public void onHandle(Context context) {
+		context.put("TEMPLATE", templatePath);
 		context.put("groupSum", new GroupSum());
 		context.put("array", new Arrays());
 		context.put("accFactory", accFac);
 		context.put("compMgr", companyManager);
 		context.put("counterFactory", new Counter());
 		context.put("zlqkWebService", new HBWebService());
-		context.put(com.tbea.ic.operation.reportframe.component.Component.CALENDAR, new EasyCalendar());
+		context.put(Component.CALENDAR, new EasyCalendar());
 		context.put("CompanyType", new PropMap(){
 
 			@Override
@@ -110,6 +128,7 @@ public class UtilContextHandler implements ContextHandler {
 		
 		context.put("NCCode", new CompanyNCCode());
 		context.put("Code15", new Company15Code());
+		context.put("JjzjzCode", new CompanyJjzjzCode());
 		context.put("math", new ReportMath());
 		context.put("logger", new PropMap(){
 
@@ -119,6 +138,8 @@ public class UtilContextHandler implements ContextHandler {
 			}
 			
 		});
+		
+		context.put("jydws", BMDepartmentDB.getJydw(companyManager));
 	}
 
 }

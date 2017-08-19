@@ -11,8 +11,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.model.entity.dzwzgb.TqbzYjjEntity;
+import com.xml.frame.report.util.EasyCalendar;
 
 
 

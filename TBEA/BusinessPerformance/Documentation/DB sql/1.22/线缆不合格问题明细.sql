@@ -1,0 +1,1 @@
+﻿alter table cpzlqk_bhgwtmx_xl alter column bhgsl numeric(18, 4)

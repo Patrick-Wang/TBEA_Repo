@@ -22,7 +22,7 @@ where
 	</sql>
   <sql id="ylj" order="ids" by="0" colcount="2">select 
 	zbid, 
-	CASE WHEN zbid in (5,6,7,8,16,17,18,19,21,23,24,25,27,37,38,41,42) THEN
+	CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
 		sum(value) / nullif(count(*), 0)
 	ELSE sum(value) END ylj
 from 
@@ -35,7 +35,7 @@ group by
 	</sql>
   <sql id="ndlj" order="ids" by="0" colcount="2">select 
 	zbid, 
-	CASE WHEN zbid in (5,6,7,8,16,17,18,19,21,23,24,25,27,37,38,41,42) THEN
+	CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
 		sum(value) / nullif(count(*), 0)
 	ELSE sum(value) END ylj
 from 
@@ -64,10 +64,7 @@ group by
     <DefaultMatcher cols="0,1,2"/>
    </EmptyFormatter>
    <PercentFormatter reservedCount="1">
-    <DefaultMatcher cols="7"/>
-   </PercentFormatter>
-   <PercentFormatter reservedCount="1">
-    <DefaultMatcher rows="4,5,15,16,17,22,26"/>
+    <DefaultMatcher rows="7,8,9,13,14,15"/>
    </PercentFormatter>
    <NumberFormatter reservedCount="1"/>
   </formatter>

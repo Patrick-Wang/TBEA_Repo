@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="financingBankForeignCurrencyCreditShow">
+        <response name="framework/templates/singleDateReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map key="updateUrl" value="financingBankForeignCurrencyCreditUpdateClr"/>
+            <map key="exportUrl" value="financingBankForeignCurrencyCreditExportClr"/>
+        </response>
+    </controller>
+    <controller id="financingBankForeignCurrencyCreditUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="financingBankForeignCurrencyCreditShowServ"/>
+        <callcontroller id="financingBankForeignCurrencyCreditFmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>银行名称</name>
+                </item>
+                <item>
+                    <name>币种</name>
+                </item>
+                <item>
+                    <name>授信额</name>
+                </item>
+                <item>
+                    <name>已使用额度</name>
+                </item>
+                <item>
+                    <name>贷款余额</name>
+                </item>
+                <item>
+                    <name>授信到期日</name>
+                </item>
+                <item>
+                    <name>已处理</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="financingBankForeignCurrencyCreditFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="2,3,4"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="financingBankForeignCurrencyCreditExportClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="financingBankForeignCurrencyCreditShowServ"/>
+        <callcontroller id="financingBankForeignCurrencyCreditFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="各家银行外币授信情况统计表"/>
+        <list id="title" type="string">银行名称,币种,授信额,已使用额度,贷款余额,授信到期日,已处理</list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="${request.date.asString}各家银行外币授信情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+    <service id="financingBankForeignCurrencyCreditShowServ" transaction="transactionManager">
+        <sql id="data">select id,
+bankName,
+currency,
+authCreditAmount,
+usedAmount,
+loanBalance,
+CONVERT(varchar(20),authCreditExpire, 23) tmp5,
+solved from financing_bank_foreign_currency_credit</sql>
+        <list id="ids" sql="data" value="0"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="1"/>
+            <list sql="data" type="string" value="2"/>
+            <list sql="data" type="double" value="3"/>
+            <list sql="data" type="double" value="4"/>
+            <list sql="data" type="double" value="5"/>
+            <list sql="data" type="date" value="6"/>
+            <list sql="data" type="string" value="7"/>
+        </table>
+    </service>
+</components>

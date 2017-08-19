@@ -40,12 +40,12 @@ public class NavigatorItemDaoImpl extends AbstractReadWriteDaoImpl<NavigatorItem
 		EntityManager entityManager = this.getEntityManager();
 		String sqlAuth = "";
 		if (!auths.isEmpty()) {
-			sqlAuth = " authId in :auths ";
+			sqlAuth = " (type = 1 and authId in (:auths)) or (type = 0 and authId not in (:auths)) ";
 		}
 		
 		String sqlAuthNames = "";
 		if (!openAuths.isEmpty()) {
-			sqlAuthNames = " authName in :authNames ";
+			sqlAuthNames = " (type = 1 and authName in (:authNames))  or (type = 0 and authName not in (:authNames)) ";
 		}
 		
 		String sqlAuthTogether = "";
@@ -77,12 +77,12 @@ public class NavigatorItemDaoImpl extends AbstractReadWriteDaoImpl<NavigatorItem
 
 		String sqlAuth = "";
 		if (!auths.isEmpty()) {
-			sqlAuth = " authId in :auths ";
+			sqlAuth = " authId in (:auths) ";
 		}
 		
 		String sqlAuthNames = "";
 		if (!openAuths.isEmpty()) {
-			sqlAuthNames = " authName in :authNames ";
+			sqlAuthNames = " authName in (:authNames) ";
 		}
 		
 		String sqlAuthTogether = "";
@@ -94,7 +94,7 @@ public class NavigatorItemDaoImpl extends AbstractReadWriteDaoImpl<NavigatorItem
 		
 		String sqlWhere = "";
 		if (!excludedItems.isEmpty()) {
-			sqlWhere = " itemId not in :excludes ";
+			sqlWhere = "  itemId not in (:excludes) ";
 		}
 		
 		if (!sqlWhere.isEmpty() && !sqlAuthTogether.isEmpty()) {
@@ -127,7 +127,7 @@ public class NavigatorItemDaoImpl extends AbstractReadWriteDaoImpl<NavigatorItem
 	public List<NavigatorItem> getNaviItems(List<Integer> includeItems) {
 		EntityManager entityManager = this.getEntityManager();
 		Query q = entityManager.createQuery("from NavigatorItem "
-				+ "where id in :includes");
+				+ "where id in (:includes) and (parent is null or parent in (:includes))" );
 		q.setParameter("includes", includeItems);
 		return q.getResultList();
 	}

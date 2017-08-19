@@ -1,0 +1,172 @@
+<components>
+ <service id="servDashboardLrze" transaction="transactionManager">
+  <list id="jh" type="double" export="true"/>
+  <list id="sj" type="double" export="true"/>
+  <context key="cal" value="${calendar.current.lastYear}"/>
+  <loop from="0" to="12">
+   <context key="tmpVal" value="${accFactory.sjAcc.compute&#10;[0]&#10;[cal.date]&#10;[cal.date]&#10;[GSZB.LRZE1.value.packAsList]&#10;[jydws]&#10;[0]}"/>
+   <list id="sj" type="double">
+    <item>${tmpVal}</item>
+   </list>
+   <context key="tmpVal" value="${accFactory.yjhAcc.compute&#10;[0]&#10;[cal.date]&#10;[cal.date]&#10;[GSZB.LRZE1.value.packAsList]&#10;[jydws]&#10;[0]}"/>
+   <list id="jh" type="double">
+    <item>${tmpVal}</item>
+   </list>
+   <context key="cal" value="${cal.nextMonth}"/>
+  </loop>
+  <list id="zbmcs" type="string" export="true">集成服务业务（含工程和检测修试）利润 , 
+制造业利润    ,
+物流贸易利润,
+运营商利润,
+煤炭业务利润,
+项目资金利润,
+其他利润</list>
+  <list id="zbids" type="int">195,
+196,
+197,
+243,
+244,
+198,
+199</list>
+  <context key="zbfx" value="${accFactory.sjAcc.compute&#10;[0]&#10;[cal.months[1].date]&#10;[cal.date]&#10;[zbids]&#10;[jydws]}"/>
+  <list id="stockIds" type="string">000400,
+600550,
+600312,
+601179,
+600406,
+002028</list>
+  <list id="xlstockIds" type="string">002276,
+002471,
+002498,
+002300,
+002533,
+002560,
+002212,
+600869,
+600522</list>
+  <context key="cal" value="${calendar.current.yearBefore[5]}"/>
+  <list id="byqhyjzs" type="double" export="true"/>
+  <list id="xlhyjzs" type="double" export="true"/>
+  <list id="sblrs" type="double" export="true"/>
+  <list id="hblrs" type="double" export="true"/>
+  <list id="xblrs" type="double" export="true"/>
+  <list id="lllrs" type="double" export="true"/>
+  <list id="xllrs" type="double" export="true"/>
+  <list id="dllrs" type="double" export="true"/>
+  <list id="gslrs" type="double" export="true"/>
+  <list id="sbgs" type="int">1</list>
+  <list id="hbgs" type="int">2</list>
+  <list id="xbc" type="int">3</list>
+  <list id="llgs" type="int">4</list>
+  <list id="xlc" type="int">5</list>
+  <list id="dlgs" type="int">6</list>
+  <list id="byq" type="int">1,2,3</list>
+  <list id="xlcy" type="int">4,5,6</list>
+  <list id="rqs" type="string" export="true"/>
+  <loop from="1" to="5" var="i">
+   <sql id="byqhyjz">select 
+	sum(m19) / (nullif(count(*), 0)* 10000) jz
+from
+	stock_lr
+where 
+	stockid in ${stockIds} and
+	dateDiff(mm, report_dt, ${cal.months[12].date}) = 0   </sql>
+   <list id="byqhyjzs" type="double">${byqhyjz[0]}</list>
+   <sql id="xlhyjz">select 
+	sum(m19) / (nullif(count(*), 0)* 10000) jz
+from
+	stock_lr
+where 
+	stockid in ${xlstockIds} and
+	dateDiff(mm, report_dt, ${cal.months[12].date}) = 0   </sql>
+   <list id="xlhyjzs" type="double">${xlhyjz[0]}</list>
+   <list id="sblrs" type="double" export="true">${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.months[12].date]
+[GSZB.LRZE1.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[sbgs]]
+[0]}</list>
+   <list id="hblrs" type="double" export="true">${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.months[12].date]
+[GSZB.LRZE1.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[hbgs]]
+[0]}</list>
+   <list id="xblrs" type="double" export="true">${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.months[12].date]
+[GSZB.LRZE1.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[xbc]]
+[0]}</list>
+   <list id="lllrs" type="double" export="true">${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.months[12].date]
+[GSZB.LRZE1.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[llgs]]
+[0]}</list>
+   <list id="xllrs" type="double" export="true">${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.months[12].date]
+[GSZB.LRZE1.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[xlc]]
+[0]}</list>
+   <list id="dllrs" type="double" export="true">${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.months[12].date]
+[GSZB.LRZE1.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[dlgs]]
+[0]}</list>
+   <list id="byqlrs" type="double" export="true">${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.months[12].date]
+[GSZB.LRZE1.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[byq]]
+[0]}</list>
+   <list id="xlcylrs" type="double" export="true">${accFactory.sjAcc.compute
+[0]
+[cal.months[1].date]
+[cal.months[12].date]
+[GSZB.LRZE1.value.packAsList]
+[orgs.BMDBOrganization.companiesByIds[xlcy]]
+[0]}</list>
+   <list id="rqs" type="string" export="true">${cal.year + '年'}</list>
+   <context key="cal" value="${cal.nextYear}"/>
+  </loop>
+ </service>
+ <controller id="dashboardLrze">
+  <callservice id="servDashboardLrze"/>
+  <response type="jsp" name="ui2/dashboard/lrze/lrze">
+   <map key="data">{
+	&quot;qsfx&quot;:{
+		&quot;jh&quot;:${jh.toFixed[2].asJson},
+		&quot;sj&quot;:${sj.toFixed[2].asJson}	
+	},
+	&quot;lrfx&quot;:{
+		&quot;zbmcs&quot;:${zbmcs.asJson},
+		&quot;zbfx&quot;:${zbfx.toFixed[2].asJson}	
+	},
+	&quot;hydb&quot;:{
+		&quot;rqs&quot;:${rqs.asJson},
+		&quot;byqhyjzs&quot;:${byqhyjzs.toFixed[2].asJson},
+		&quot;xlhyjzs&quot;:${xlhyjzs.toFixed[2].asJson},
+		&quot;sblrs&quot;:${sblrs.toFixed[2].asJson},
+		&quot;hblrs&quot;:${hblrs.toFixed[2].asJson},
+		&quot;xblrs&quot;:${xblrs.toFixed[2].asJson},
+		&quot;lllrs&quot;:${lllrs.toFixed[2].asJson},
+		&quot;xllrs&quot;:${xllrs.toFixed[2].asJson},
+		&quot;dllrs&quot;:${dllrs.toFixed[2].asJson},
+		&quot;byqlrs&quot;:${byqlrs.toFixed[2].asJson},
+		&quot;xlcylrs&quot;:${xlcylrs.toFixed[2].asJson}	
+	}
+}
+			</map>
+  </response>
+ </controller>
+</components>

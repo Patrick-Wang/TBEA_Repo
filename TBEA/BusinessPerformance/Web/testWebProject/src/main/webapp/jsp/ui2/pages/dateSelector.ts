@@ -13,6 +13,15 @@ module Util {
         return sd;
     }
 
+    export function now() : any{
+        let curDate : any = new Date();
+        return {
+            year : curDate.getFullYear(),
+            month : curDate.getMonth() + 1,
+            day:curDate.getDate()
+        };
+    }
+
     export function monthDaysCount(date : Util.Date) : number{
         if (undefined != date.year && undefined != date.month) {
             var temp = new Date(date.year, date.month, 0);

@@ -14,8 +14,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tbea.ic.operation.common.CompanySelection;
+import com.tbea.ic.operation.common.CompanySelection.Filter;
 import com.tbea.ic.operation.common.DateSelection;
-import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
-import com.tbea.ic.operation.common.CompanySelection.Filter;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -40,6 +37,9 @@ import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.util.EasyList;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "nwbzlqk")
@@ -95,6 +95,14 @@ public class NwbzlqkServlet {
 
 			@Override
 			public boolean keepGroup(Company comp) {
+				if (comp.getType() == CompanyType.XKGS) {
+					for (Company cp : comps){
+						if (cp.getType() == CompanyType.XKGS){
+							return true;
+						}
+					}
+					return false;
+				}
 				return true;
 			}
 		});

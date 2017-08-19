@@ -85,7 +85,7 @@ public class POIUtils {
 	public static void copyRow(HSSFWorkbook wb,HSSFRow fromRow,HSSFRow toRow,boolean copyValueFlag){
 		for (Iterator cellIt = fromRow.cellIterator(); cellIt.hasNext();) {
 			HSSFCell tmpCell = (HSSFCell) cellIt.next();
-			HSSFCell newCell = toRow.createCell((int)tmpCell.getCellNum());
+			HSSFCell newCell = toRow.createCell((int)tmpCell.getColumnIndex());
 			copyCell(wb,tmpCell, newCell, copyValueFlag);
 		}
 	}

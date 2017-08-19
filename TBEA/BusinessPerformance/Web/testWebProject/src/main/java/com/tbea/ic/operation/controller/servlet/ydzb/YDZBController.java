@@ -6,7 +6,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +13,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import net.sf.json.JSONArray;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -44,14 +40,16 @@ import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.common.companys.VirtualJYZBOrganization;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.JygkSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.PercentSingleFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.service.ydzb.YDZBService;
 import com.tbea.ic.operation.service.ydzb.gszb.GszbService;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.HeaderFormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.excel.PercentFormatterHandler;
+
+import net.sf.json.JSONArray;
 
 
 @Controller
@@ -117,7 +115,7 @@ public class YDZBController {
 			throws IOException {
 		Date d = DateSelection.getDate(request);
 		String type = request.getParameter("type");
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		List<String[]> data = null;
 		if ("0".equals(type)) {	
 			data = gszbService.getGsztzb(d);
@@ -230,7 +228,7 @@ public class YDZBController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		Date d = DateSelection.getDate(request);
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		List<String[]> data = null;
 
 		//data = gszbService.getGsztzb(d);
@@ -440,7 +438,7 @@ public class YDZBController {
 			HttpServletResponse response) throws IOException {
 		
 		Date d = DateSelection.getDate(request);
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		CompanyType compType = CompanySelection.getCompany(request);
 		String compName = compType.getValue();
 		String fileName = compName + "经营指标完成情况";
@@ -495,7 +493,7 @@ public class YDZBController {
 	public @ResponseBody byte[] getgcy_zbhz_export(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		Date d = DateSelection.getDate(request);
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		List<String[]> data = null;
 		data = gszbService.getGcyzb(d);
 		template = ExcelTemplate.createJygkTemplate(JygkSheetType.GCY_ZBWC);
@@ -536,7 +534,7 @@ public class YDZBController {
 		Date d = DateSelection.getDate(request);
 		int month = Integer.parseInt(request.getParameter("month"));
 		String year = request.getParameter("year");
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		List<String[]> data = null;
 		String fileNameAndSheetName = null; 
 		FormatterHandler formatterChain = null;
@@ -635,7 +633,7 @@ public class YDZBController {
 			HttpServletResponse response) throws IOException {
 		Date d = DateSelection.getDate(request);
 		String gszb = request.getParameter("top5index");
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		List<String[]> data = null;
 		data = gszbService.getCompanyTop5zb(GSZB.valueOf(Integer.valueOf(gszb)), d);
 		template = ExcelTemplate.createJygkTemplate(JygkSheetType.GDWZBWCQK);
@@ -797,7 +795,7 @@ public class YDZBController {
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
 		List<String[]> data = null;
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 //		CellFormatter formatter = null;
 //		;
 		String fileNameAndSheetName = compType.getValue() + request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
@@ -957,7 +955,7 @@ public class YDZBController {
 		Date d = DateSelection.getDate(request);
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
 		FormatterHandler formatterChain = null;
 		if (0 == iMonth % 3) {
@@ -1065,7 +1063,7 @@ public class YDZBController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		String timeStamp = request.getParameter("timeStamp");
-		ExcelTemplate template = (ExcelTemplate) tmpCache.get(timeStamp + "template");
+		ExcelHelper template = (ExcelHelper) tmpCache.get(timeStamp + "template");
 		template.write(response, (String) tmpCache.get(timeStamp + "fileName"));
 		tmpCache.remove(timeStamp + "template");
 		tmpCache.remove(timeStamp + "fileName");
@@ -1081,7 +1079,7 @@ public class YDZBController {
 		String month = request.getParameter("month");
 		int iMonth = Integer.valueOf(month);
 		List<String[]> data = null;
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		String fileNameAndSheetName = request.getParameter("year") + "年第" + DateHelper.getJdCount(iMonth) + "季度";
 		FormatterHandler formatterChain = null;
 		if (0 == iMonth % 3) {
@@ -1319,7 +1317,7 @@ public class YDZBController {
 			GSZB gszb = GSZB.valueOf(Integer.valueOf(zb));
 			String zbName = request.getParameter("zbName");
 			String year = request.getParameter("year");
-			ExcelTemplate template = null;
+			ExcelHelper template = null;
 			List<String[]> data = null;
 			String fileNameAndSheetName = null; 
 //			CellFormatter formatter = null;

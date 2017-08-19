@@ -8,13 +8,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.EasyCalendar;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
@@ -27,10 +24,11 @@ import com.tbea.ic.operation.model.dao.cpzlqk.xlacptjjg.XlAcptjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoImpl;
-import com.tbea.ic.operation.model.entity.cpzlqk.ByqYdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.XlAcptjjgEntity;
-import com.tbea.ic.operation.model.entity.cpzlqk.XlBhgwtmxEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
+import com.xml.frame.report.util.EasyCalendar;
+
+import net.sf.json.JSONArray;
 
 @Service(XlacptjjgServiceImpl.NAME)
 @Transactional("transactionManager")

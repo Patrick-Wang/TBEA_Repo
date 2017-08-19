@@ -3,7 +3,6 @@ package com.tbea.ic.operation.service.dashboard;
 import java.util.List;
 
 import com.tbea.ic.operation.common.DateHelper;
-import com.tbea.ic.operation.common.EasyList;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.sbdzb.SbdNdjhZbDao;
 import com.tbea.ic.operation.service.util.pipe.configurator.ConfiguratorUtil;
@@ -12,6 +11,7 @@ import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurat
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
 import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
 import com.tbea.ic.operation.service.util.pipe.filter.basic.AccPipeFilter;
+import com.xml.frame.report.util.EasyList;
 
 
 public class DyScqyConfigurator implements IPipeConfigurator {

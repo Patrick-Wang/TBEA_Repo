@@ -181,14 +181,14 @@
 								<option value="0" >年度计划指标</option>
 								<option value="1" >月度计划指标</option>
 						</select>
-						<c:if test="${JYEntryLookup}">
+
 						<select id="company-type" class="pull-left">
 							<option value="1" selected="selected">全部经营单位</option>
 							<option value="2" >输变电产业集团项目公司</option>
 							<option value="3" >能源产业集团项目公司</option>
 							<option value="4" >新能源产业集团项目公司</option>
 						</select>
-						</c:if>
+						
 						<div id="grid-update" class="btn btn-default">
 							查找 <i class="fa fa-search"></i>
 						</div>

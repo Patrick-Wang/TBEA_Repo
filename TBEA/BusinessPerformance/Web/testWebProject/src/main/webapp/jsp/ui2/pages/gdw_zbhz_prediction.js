@@ -85,8 +85,7 @@ var gdw_zbhz_prediciton;
         JQGridAssistantFactory.createTable = function (gridName, gridStyle) {
             if (1 == gridStyle) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
-                    new JQTable.Node("产业", "cy"),
+                    new JQTable.Node("公司", "zb", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("当月完成", "dywc")
@@ -111,8 +110,7 @@ var gdw_zbhz_prediciton;
             }
             if (2 == gridStyle) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
-                    new JQTable.Node("产业", "cy"),
+                    new JQTable.Node("公司", "zb", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("当月完成", "dywc")
@@ -141,8 +139,7 @@ var gdw_zbhz_prediciton;
             }
             if (3 == gridStyle) {
                 return new JQTable.JQGridAssistant([
-                    new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
-                    new JQTable.Node("产业", "cy"),
+                    new JQTable.Node("公司", "zb", true, JQTable.TextAlign.Left),
                     new JQTable.Node("年度计划", "ndjh"),
                     new JQTable.Node("本季度计划", "jdjh"),
                     new JQTable.Node("下季度计划", "xjdjh"),

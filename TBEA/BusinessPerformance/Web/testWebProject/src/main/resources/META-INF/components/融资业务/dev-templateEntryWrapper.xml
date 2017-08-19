@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="BAEA6B3D5073197672D2E28C858F9109EntryWrapperJsp">
+        <list id="ids" type="int">0,1,2,3,4,5,6,7,8,9,10,11</list>
+        <list id="vals" type="string">各家银行人民币授信情况统计表,各家银行外币授信情况统计表,特变电工人民币贷款明细统计表,特变电工其他融资明细统计表,特变电工外币贷款明细统计表,特变电工贸易业务明细统计表,特变电工银票办理情况表,特变电工人民币保函办理情况统计表,特变电工外币保函办理情况统计表,特变电工双币种保函办理情况统计表,特变电工信用证明细统计表,特变电工银行保理台账明细表</list>
+        <response name="framework/templates/dateReport/entry" type="jsp">
+            <map key="updateUrl" value="BAEA6B3D5073197672D2E28C858F9109EntryUpdateWrapperClr"/>
+            <map key="submitUrl" value="BAEA6B3D5073197672D2E28C858F9109EntrySubmitWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="BAEA6B3D5073197672D2E28C858F9109EntryUpdateWrapperClr">
+        <context key="item" value="${request.item2.asInt}"/>
+        <context key="dwid" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+        <if test="${item == 0}">
+            <callcontroller id="financingBankRMBCreditEntryUpdateClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="financingBankForeignCurrencyCreditEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 2}">
+            <callcontroller id="financingRMBLoanEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 3}">
+            <callcontroller id="financingOtherDetailEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 4}">
+            <callcontroller id="financingForeignCurrencyLoanEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 5}">
+            <callcontroller id="financingTradeEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 6}">
+            <callcontroller id="financingBankBillEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 7}">
+            <callcontroller id="financingRMBLGEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 8}">
+            <callcontroller id="financingForeignCurrencyLGEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 9}">
+            <callcontroller id="financingDoubleCurrencyLGEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 10}">
+            <callcontroller id="financingLCEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 11}">
+            <callcontroller id="financingFactoringEntryUpdateClr"/>
+        </elseif>
+    </controller>
+    <controller id="BAEA6B3D5073197672D2E28C858F9109EntrySubmitWrapperClr">
+        <context key="item" value="${request.item2.asInt}"/>
+        <context key="dwid" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+        <if test="${item == 0}">
+            <callcontroller id="financingBankRMBCreditEntrySubmitClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="financingBankForeignCurrencyCreditEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 2}">
+            <callcontroller id="financingRMBLoanEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 3}">
+            <callcontroller id="financingOtherDetailEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 4}">
+            <callcontroller id="financingForeignCurrencyLoanEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 5}">
+            <callcontroller id="financingTradeEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 6}">
+            <callcontroller id="financingBankBillEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 7}">
+            <callcontroller id="financingRMBLGEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 8}">
+            <callcontroller id="financingForeignCurrencyLGEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 9}">
+            <callcontroller id="financingDoubleCurrencyLGEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 10}">
+            <callcontroller id="financingLCEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 11}">
+            <callcontroller id="financingFactoringEntrySubmitClr"/>
+        </elseif>
+    </controller>
+</components>

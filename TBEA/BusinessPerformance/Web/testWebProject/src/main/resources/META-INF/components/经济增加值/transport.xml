@@ -281,7 +281,7 @@ where
  where imp.ver in (0, 510)
  and extract(year from to_date(inputdate,'yyyy-mm-dd')) = ${cal.year}
  and extract(month from to_date(inputdate,'yyyy-mm-dd')) =  ${cal.month}
- and unit_code = ${NCCode.code[type]}</sql>
+ and unit_code = ${JjzjzCode.code[type]}</sql>
  </service>
  <controller id="jjzjzTransport" cron="0 0 11 3 * ?">
   <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
@@ -291,7 +291,6 @@ where
    <context key="cal" value="${request.date.asCalendar}"/>
   </if>
   <context key="type" value="${CompanyType.SBGS}"/>
-  <context key="dwid" value="${orgs.BMDBOrganization.ids[type.ordinal]}"/>
   <callservice id="servJjzjzFrom15"/>
   <callservice id="servJjzjzFromNC"/>
   <callservice id="servJjzjzToLocal"/>

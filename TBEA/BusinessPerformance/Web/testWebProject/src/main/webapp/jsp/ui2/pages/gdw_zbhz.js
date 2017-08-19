@@ -29,7 +29,7 @@ var gdw_zbhz;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("指标", "zb", true, JQTable.TextAlign.Left),
+                new JQTable.Node("公司", "zb", true, JQTable.TextAlign.Left),
                 new JQTable.Node("全年计划", "qnjh"),
                 new JQTable.Node("月度", "yd")
                     .append(new JQTable.Node("当月计划", "y1"))

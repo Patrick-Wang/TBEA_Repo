@@ -10,8 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,22 +21,25 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.CwcpdlmlSheetType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.FormatterServer;
-import com.tbea.ic.operation.common.formatter.excel.HeaderCenterFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.MergeRegion;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.TextFormatterHandler;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
-import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.cwcpdlml.cpdlml.CpdlmlService;
 import com.tbea.ic.operation.service.cwcpdlml.cpdlml.CpdlmlServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.FormatterServer;
+import com.xml.frame.report.util.excel.HeaderCenterFormatterHandler;
+import com.xml.frame.report.util.excel.MergeRegion;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.excel.PercentFormatterHandler;
+import com.xml.frame.report.util.excel.TextFormatterHandler;
+import com.xml.frame.report.util.v2.core.DefaultMatcher;
+import com.xml.frame.report.util.v2.core.EmptyFormatter;
+import com.xml.frame.report.util.v2.data.NumberFormatter;
+import com.xml.frame.report.util.v2.data.PercentFormatter;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "cpdlml")
@@ -72,7 +73,7 @@ public class CpdlmlServlet {
 		
 		List<List<String>> result = cpdlmlService.getCpdlml(d, comps);
 		
-		com.tbea.ic.operation.common.formatter.v2.core.FormatterServer serv = new com.tbea.ic.operation.common.formatter.v2.core.FormatterServer();
+		com.xml.frame.report.util.v2.core.FormatterServer serv = new com.xml.frame.report.util.v2.core.FormatterServer();
 		serv.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT2_MATCHER))
 			.add(new PercentFormatter(new DefaultMatcher(null, new Integer[]{3, 6, 7, 10, 11}), 1))
@@ -101,7 +102,7 @@ public class CpdlmlServlet {
 		}
 		
 		List<List<String>> result = cpdlmlService.getCpdlml(d, comps);
-		ExcelTemplate template = ExcelTemplate.createCwcpdlmlTemplate(CwcpdlmlSheetType.CPDLML);
+		ExcelHelper template = ExcelTemplate.createCwcpdlmlTemplate(CwcpdlmlSheetType.CPDLML);
 		FormatterHandler handler = new HeaderCenterFormatterHandler(null, new Integer[]{0});
 		handler.next(new TextFormatterHandler(null, new Integer[]{0, 1}))
 		.next(new PercentFormatterHandler(1, null, new Integer[]{3, 6, 7, 10, 11}))

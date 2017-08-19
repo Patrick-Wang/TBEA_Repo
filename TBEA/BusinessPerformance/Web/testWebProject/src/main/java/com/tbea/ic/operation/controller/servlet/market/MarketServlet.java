@@ -17,9 +17,6 @@ import java.util.zip.GZIPOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -40,13 +37,17 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.JygkSheetType;
 import com.tbea.ic.operation.common.excel.MarketSheetType;
-import com.tbea.ic.operation.common.formatter.excel.FormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.HeaderFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.NumberFormatterHandler;
-import com.tbea.ic.operation.common.formatter.excel.PercentFormatterHandler;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.market.MarketService;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.excel.FormatterHandler;
+import com.xml.frame.report.util.excel.HeaderFormatterHandler;
+import com.xml.frame.report.util.excel.NumberFormatterHandler;
+import com.xml.frame.report.util.excel.PercentFormatterHandler;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "Market")
@@ -299,7 +300,7 @@ public class MarketServlet {
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
 
-		ExcelTemplate marketTemplate = null;
+		ExcelHelper marketTemplate = null;
 		FormatterHandler formatterChain = new HeaderFormatterHandler(null,
 				new Integer[] { 0 });
 		formatterChain.next(
@@ -369,7 +370,7 @@ public class MarketServlet {
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
 
-		ExcelTemplate marketTemplate = null;
+		ExcelHelper marketTemplate = null;
 		FormatterHandler formatterChain = new HeaderFormatterHandler(null,
 				new Integer[] { 0 });
 		formatterChain
@@ -453,7 +454,7 @@ public class MarketServlet {
 				.getParameter("companyName"));
 		List<List<String>> result = null;
 		String type = request.getParameter("type");
-		ExcelTemplate marketTemplate = null;
+		ExcelHelper marketTemplate = null;
 		FormatterHandler formatterChain = new HeaderFormatterHandler(null,
 				new Integer[] { 0 });
 		formatterChain.next(
@@ -506,7 +507,7 @@ public class MarketServlet {
 	}
 
 	private void exportExcel(HttpServletResponse response,
-			ExcelTemplate marketTemplate, int base, String[][] list1,
+			ExcelHelper marketTemplate, int base, String[][] list1,
 			List<List<String>> list2, FormatterHandler handler)
 			throws IOException {
 
@@ -604,7 +605,7 @@ public class MarketServlet {
 
 		list.add(marketService.getPrjData(companyName, year));
 
-		ExcelTemplate template = null;
+		ExcelHelper template = null;
 		template = ExcelTemplate
 				.createJygkTemplate(JygkSheetType.MARKET_PRO);
 		HSSFWorkbook workbook = template.getWorkbook();

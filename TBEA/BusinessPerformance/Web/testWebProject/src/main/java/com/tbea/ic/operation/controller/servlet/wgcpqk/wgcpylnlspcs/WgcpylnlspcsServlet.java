@@ -10,9 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,18 +25,21 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.YlfxwgcpylnlspcsSheetType;
-import com.tbea.ic.operation.common.formatter.v2.core.DefaultMatcher;
-import com.tbea.ic.operation.common.formatter.v2.core.EmptyFormatter;
-import com.tbea.ic.operation.common.formatter.v2.core.FormatterServer;
-import com.tbea.ic.operation.common.formatter.v2.core.Offset;
-import com.tbea.ic.operation.common.formatter.v2.data.NumberFormatter;
-import com.tbea.ic.operation.common.formatter.v2.data.PercentFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelHeaderFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelOffsetFormatter;
-import com.tbea.ic.operation.common.formatter.v2.excel.ExcelTitleYearScrollerFilter;
 import com.tbea.ic.operation.controller.servlet.wgcpqk.WgcpqkType;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsService;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsServiceImpl;
+import com.xml.frame.report.util.ExcelHelper;
+import com.xml.frame.report.util.v2.core.DefaultMatcher;
+import com.xml.frame.report.util.v2.core.EmptyFormatter;
+import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.v2.core.Offset;
+import com.xml.frame.report.util.v2.data.PercentFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelHeaderFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelOffsetFormatter;
+import com.xml.frame.report.util.v2.excel.ExcelTitleYearScrollerFilter;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "wgcpylnlspcs")
@@ -142,7 +142,7 @@ public class WgcpylnlspcsServlet {
 		
 		List<List<String>> ret = wgcpylnlspcsService.getWgcpylnlspcs(d, company, type);
 		
-		ExcelTemplate template = ExcelTemplate.createYlfxwgcpylnlspcsTemplate(getYlfxwgcpylnlspcsSheetType(type, d));
+		ExcelHelper template = ExcelTemplate.createYlfxwgcpylnlspcsTemplate(getYlfxwgcpylnlspcsSheetType(type, d));
 
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()

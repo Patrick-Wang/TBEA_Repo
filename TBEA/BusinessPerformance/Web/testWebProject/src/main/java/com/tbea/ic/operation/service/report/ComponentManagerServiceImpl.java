@@ -1,18 +1,13 @@
 package com.tbea.ic.operation.service.report;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Service;
-
-import com.tbea.ic.operation.common.DataNode;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
-import com.tbea.ic.operation.reportframe.ReportLogger;
-import com.tbea.ic.operation.reportframe.component.ComponentManager;
-import com.tbea.ic.operation.reportframe.component.controller.Controller;
-import com.tbea.ic.operation.reportframe.component.controller.Scheduler;
-import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.service.report.handlers.AuthContextHandler;
 import com.tbea.ic.operation.service.report.handlers.ContextHandlers;
 import com.tbea.ic.operation.service.report.handlers.DataNodeContextHandler;
@@ -21,10 +16,28 @@ import com.tbea.ic.operation.service.report.handlers.QualityHandler;
 import com.tbea.ic.operation.service.report.handlers.RequestContextHandler;
 import com.tbea.ic.operation.service.report.handlers.TransactionContextHandler;
 import com.tbea.ic.operation.service.report.handlers.UtilContextHandler;
-@Service
+import com.xml.frame.report.ReportLogger;
+import com.xml.frame.report.component.ComponentManager;
+import com.xml.frame.report.component.controller.Controller;
+import com.xml.frame.report.component.controller.Scheduler;
+import com.xml.frame.report.component.entity.Context;
+import com.xml.frame.report.component.service.Service;
+import com.xml.frame.report.util.DataNode;
+@org.springframework.stereotype.Service
 public class ComponentManagerServiceImpl implements ComponentManagerService,  Scheduler{
 
-	ComponentManager compMgr = new ComponentManager(this);
+	protected static String resPath;
+	static {
+		try {
+			resPath = new URI(ComponentManagerServiceImpl.class.getClassLoader().getResource("")
+					.getPath()).getPath().substring(1)
+					+ "META-INF/components/";
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	ComponentManager compMgr = new ComponentManager(this, resPath);
 	
 	@Resource(type = TransactionContextHandler.class)
 	ContextHandler tranContext;
@@ -89,7 +102,7 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 
 	@Override
 	public Context doService(Context context, String serviceId) throws Exception {
-		com.tbea.ic.operation.reportframe.component.service.Service service = compMgr.createService(null, serviceId);
+		Service service = compMgr.createService(null, serviceId);
 		if (null != service){
 			ContextHandlers handlers = new ContextHandlers();			
 			handlers.add(tranContext)
@@ -108,7 +121,7 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 	@Override
 	public Context doService(HttpServletRequest request, HttpServletResponse response, String serviceId)
 			throws Exception {
-		com.tbea.ic.operation.reportframe.component.service.Service service = compMgr.createService(null, serviceId);
+		Service service = compMgr.createService(null, serviceId);
 		Context context = new Context();
 		if (null != service){
 			ContextHandlers handlers = new ContextHandlers();			

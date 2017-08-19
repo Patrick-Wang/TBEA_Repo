@@ -14,18 +14,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.ClosureMap;
+import com.frame.script.util.ClosureMap;
+import com.frame.script.util.PropMap;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.CompanySelection.Filter;
-import com.tbea.ic.operation.common.EasyList;
-import com.tbea.ic.operation.common.PropMap;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
-import com.tbea.ic.operation.reportframe.component.entity.Context;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.xml.frame.report.component.entity.Context;
+import com.xml.frame.report.util.EasyList;
 
 @Component
 public class AuthContextHandler extends ControllerContextHandler {

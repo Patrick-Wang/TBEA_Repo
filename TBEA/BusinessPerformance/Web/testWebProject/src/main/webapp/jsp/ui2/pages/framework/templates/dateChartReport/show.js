@@ -77,6 +77,7 @@ var framework;
                         _this.adjustHeader();
                     });
                     _super.prototype.onInitialize.call(this, opt);
+                    this.adjustHeader();
                 };
                 SimpleShowView.prototype.option = function () {
                     return (this.opt);
@@ -121,17 +122,18 @@ var framework;
                 };
                 SimpleShowView.prototype.adjustHeader = function () {
                     $("#headerHost").removeCss("width");
+                    $(".page-header").removeClass("page-header-double");
                     if ($("#headerHost").height() > 40) {
                         $(".page-header").addClass("page-header-double");
                         $("#headerHost").css("width", $("#sels").width() + "px");
                     }
-                    else {
-                        $(".page-header").removeClass("page-header-double");
-                    }
-                    return false;
                 };
                 SimpleShowView.prototype.adjustSize = function () {
                     var jqgrid = this.jqgrid();
+                    if (this.mChartResp) {
+                        $("#" + this.option().chartId).css("height", "300px");
+                        $("#" + this.option().chartId).css("width", $("#" + this.opt.host).width() + "px");
+                    }
                     if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
                         jqgrid.setGridWidth($("#" + this.opt.host).width());
                     }
@@ -141,10 +143,9 @@ var framework;
                     //    jqgrid.setGridWidth(this.jqgridHost().width());
                     //}
                     if (this.mChartResp) {
-                        $("#" + this.option().chartId).css("height", "300px");
-                        $("#" + this.option().chartId).css("width", $("#" + this.opt.host).width() + "px");
                         this.updateChart();
                     }
+                    this.adjustHeader();
                 };
                 SimpleShowView.prototype.updateChart = function () {
                     var series = [];
