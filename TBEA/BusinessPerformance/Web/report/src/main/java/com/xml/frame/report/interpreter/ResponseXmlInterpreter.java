@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.springframework.web.servlet.ModelAndView;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
@@ -120,6 +121,15 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				FormatterServer serv = (FormatterServer) component.getVar(e.getAttribute("serv"));
 				serv.getResult();
 				temp.write(resp, XmlUtil.getString(e.getAttribute("name"), elp));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} else if ("word".equalsIgnoreCase(type)){
+			try {
+				WordprocessingMLPackage pkg = (WordprocessingMLPackage) component.getVar(e.getAttribute("ref"));
+				resp.setContentType("application/octet-stream");
+				resp.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode( XmlUtil.getString(e.getAttribute("name"), elp), "UTF-8")  +"\"");
+				pkg.save(resp.getOutputStream());
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

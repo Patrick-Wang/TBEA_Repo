@@ -113,37 +113,20 @@
 		<context key="test2" value="hello"/>
 		<list id = "ids" type="int"><item from="1" to="30"></item></list>
 		<table id="tb" rowIds="ids">
-			<list type="int"><item from="1" to="30"></item></list>
-			<list type="int"><item from="1" to="30"></item></list>
+			<list type="int"><item repeat="30">1</item></list>
+			<list type="int"><item repeat="30">1</item></list>
 			<list type="int"><item from="1" to="30"></item></list>
 			<list type="int"><item from="1" to="30"></item></list>
 			<list type="int"><item from="1" to="30"></item></list>
 			<list type="int"><item from="1" to="30"></item></list>
 		</table>
 		<context key="table" value="${tb.matrix}"></context>
-		<WordTemplate src="D:\\test.docx" dest="d:\\test2.docx"/>
+		<WordTemplate id="word" src="D:\\test.docx">
+			<merge ref="table" x="0" y="2" width="3" height="3"></merge>
+			<merge ref="table" x="0" y="5" width="3" height="3"></merge>
+		</WordTemplate>
 
 		
-		<response type="json"> 
-			<header type="array">
-				<item>
-					<name>全年计划</name>
-				</item>
-				<item>
-					<name>全年计划</name>
-				</item>
-				<item>
-					<name>月度</name>
-					<sub type="array">
-						<item><name>当月计划</name></item>
-						<item><name>当月计划</name></item>
-					</sub>
-				</item>
-			</header>
-			<testJson>
-				<child>随机</child>
-			</testJson>
-			<name>指标汇总</name>
-		</response>
+		<response type="word" name="test.docx" ref="word"/> 
 	</controller> 
 </components>

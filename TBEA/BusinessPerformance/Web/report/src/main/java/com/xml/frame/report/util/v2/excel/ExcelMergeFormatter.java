@@ -36,20 +36,18 @@ public class ExcelMergeFormatter extends AbstractFormatter {
 		}
 	}	
 	
-	private void merge(HSSFSheet sheet, MergeRegion mergeRegion) {
+	private void merge(HSSFSheet sheet, MergeRegion mr) {
 	
-		if (mergeRegion.getWidth() <= 0 || mergeRegion.getHeight() <= 0){
+		if (mr.getWidth() <= 0 || mr.getHeight() <= 0){
 			return;
 		}
 		
 		String preText = null;
 		
-		
-		
-		for (int i = mergeRegion.getY(); i < mergeRegion.getY() + mergeRegion.getHeight(); ++i){
-			preText = sheet.getRow(i).getCell(mergeRegion.getX()).getStringCellValue();
-			int startCol = mergeRegion.getX();
-			for(int j = mergeRegion.getX() + 1; j < mergeRegion.getX() + mergeRegion.getWidth(); ++j){
+		for (int i = mr.getY(); i < mr.getY() + mr.getHeight(); ++i){
+			preText = sheet.getRow(i).getCell(mr.getX()).getStringCellValue();
+			int startCol = mr.getX();
+			for(int j = mr.getX() + 1; j < mr.getX() + mr.getWidth(); ++j){
 				if (!preText.equals(sheet.getRow(i).getCell(j).getStringCellValue())){
 					preText = sheet.getRow(i).getCell(j).getStringCellValue();
 					if (j - startCol > 1){
@@ -59,15 +57,15 @@ public class ExcelMergeFormatter extends AbstractFormatter {
 				}
 			}
 			
-			if (mergeRegion.getX() + mergeRegion.getWidth() - startCol > 1){
-				sheet.addMergedRegion(new CellRangeAddress(i, i, startCol, mergeRegion.getX() + mergeRegion.getWidth() - 1));
+			if (mr.getX() + mr.getWidth() - startCol > 1){
+				sheet.addMergedRegion(new CellRangeAddress(i, i, startCol, mr.getX() + mr.getWidth() - 1));
 			}
 		}
 		
-		for (int i = mergeRegion.getX(); i < mergeRegion.getX() + mergeRegion.getWidth(); ++i){
-			preText = sheet.getRow(mergeRegion.getY()).getCell(i).getStringCellValue();
-			int startRow = mergeRegion.getY();
-			for(int j = mergeRegion.getY() + 1; j < mergeRegion.getY() + mergeRegion.getHeight(); ++j){
+		for (int i = mr.getX(); i < mr.getX() + mr.getWidth(); ++i){
+			preText = sheet.getRow(mr.getY()).getCell(i).getStringCellValue();
+			int startRow = mr.getY();
+			for(int j = mr.getY() + 1; j < mr.getY() + mr.getHeight(); ++j){
 				if (!preText.equals(sheet.getRow(j).getCell(i).getStringCellValue())){
 					preText = sheet.getRow(j).getCell(i).getStringCellValue();
 					if (j - startRow > 1){
@@ -77,8 +75,8 @@ public class ExcelMergeFormatter extends AbstractFormatter {
 				}
 			}
 			
-			if (mergeRegion.getY() + mergeRegion.getHeight() - startRow > 1){
-				sheet.addMergedRegion(new CellRangeAddress(startRow, mergeRegion.getY() + mergeRegion.getHeight() - 1, i, i));
+			if (mr.getY() + mr.getHeight() - startRow > 1){
+				sheet.addMergedRegion(new CellRangeAddress(startRow, mr.getY() + mr.getHeight() - 1, i, i));
 			}
 		}
 		
