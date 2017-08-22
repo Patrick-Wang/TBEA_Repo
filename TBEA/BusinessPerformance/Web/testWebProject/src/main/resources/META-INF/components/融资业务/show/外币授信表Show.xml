@@ -87,7 +87,7 @@ authCreditAmount,
 usedAmount,
 loanBalance,
 CONVERT(varchar(20),authCreditExpire, 23) tmp5,
-solved from financing_bank_foreign_currency_credit</sql>
+solved from financing_bank_foreign_currency_credit where dwid = ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

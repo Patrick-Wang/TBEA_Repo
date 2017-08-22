@@ -98,7 +98,7 @@ rate,
 fee,
 type,
 guarantyStyle,
-solved from financing_trade</sql>
+solved from financing_trade where dwid = ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

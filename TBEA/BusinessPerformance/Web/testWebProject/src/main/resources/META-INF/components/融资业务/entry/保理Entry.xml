@@ -78,7 +78,7 @@ fee,
 costUndertaker,
 clientName,
 remark,
-solved from financing_factoring</sql>
+solved from financing_factoring where dwid = ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="date" value="1"/>

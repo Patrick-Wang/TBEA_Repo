@@ -94,7 +94,7 @@ loanAmount,
 loanRate,
 floatingRatio,
 loanType,
-solved from financing_other_detail</sql>
+solved from financing_other_detail where dwid = ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

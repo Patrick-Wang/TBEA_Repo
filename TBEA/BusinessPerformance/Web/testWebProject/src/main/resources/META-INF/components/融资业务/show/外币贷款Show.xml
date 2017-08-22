@@ -106,7 +106,7 @@ floatingRatio,
 loanTerm,
 loanType,
 guarantyStyle,
-solved from financing_foreign_currency_loan</sql>
+solved from financing_foreign_currency_loan where dwid = ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

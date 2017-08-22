@@ -74,7 +74,7 @@ type,
 guaranteeNumber,
 remark,
 reason,
-solved from financing_double_currency_LG</sql>
+solved from financing_double_currency_LG where dwid = ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

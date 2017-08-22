@@ -181,8 +181,11 @@ module rzywtj {
             if (this.resp.data.length == 0){
                 $("#tip").removeClass("hidden");
                 $("#" + this.opt.host).hide();
+                $("#grid-solve").addClass("hidden");
+
             }else{
                 $("#tip").addClass("hidden");
+                $("#grid-solve").removeClass("hidden");
                 $("#" + this.opt.host).show();
 
                 this.createJqassist();

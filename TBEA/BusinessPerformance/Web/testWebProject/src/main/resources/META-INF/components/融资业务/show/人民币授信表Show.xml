@@ -83,7 +83,7 @@ authCreditAmount,
 usedAmount,
 loanBalance,
 CONVERT(varchar(20),authCreditExpire, 23) tmp4,
-solved from financing_bank_RMB_credit</sql>
+solved from financing_bank_RMB_credit where dwid = ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
@@ -91,7 +91,7 @@ solved from financing_bank_RMB_credit</sql>
             <list sql="data" type="double" value="3"/>
             <list sql="data" type="double" value="4"/>
             <list sql="data" type="date" value="5"/>
-            <list sql="data" type="string" value="6"/>
+            <list sql="data" type="string" value="6"/> 
         </table>
     </service>
 </components>
