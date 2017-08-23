@@ -37,7 +37,7 @@ public class XmlUtil {
 	public static String elementText(NodeList list, int index) {
 		Element e = element(list, index);
 		if (null != e){
-			return e.getFirstChild().getTextContent();
+			return XmlUtil.getText(e);
 		}
 		return "";
 	}
@@ -520,7 +520,15 @@ public class XmlUtil {
 	}
 
 	public static String getText(Element e) {
-		return e.getFirstChild().getTextContent();
+		String text = "";
+		Node node = e.getFirstChild();
+		while (node != null){
+			if (node.getNodeType() == Node.TEXT_NODE){
+				text += node.getNodeValue();
+			}
+			node = node.getNextSibling();
+		}
+		return text;
 	}
 
 	public static void copyAttr(Element from, Element to) {

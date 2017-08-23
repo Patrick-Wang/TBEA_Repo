@@ -159,7 +159,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		//NodeList children = e.getChildNodes();
 		int type = TypeUtil.typeof(e);
 		if (XmlUtil.hasText(e)){
-			String text = e.getTextContent();
+			String text = XmlUtil.getText(e);
 			if (TypeUtil.STRING == type){
 				objs.addAll(XmlUtil.toStringList(text, elp));
 			} else if (TypeUtil.INT == type){
