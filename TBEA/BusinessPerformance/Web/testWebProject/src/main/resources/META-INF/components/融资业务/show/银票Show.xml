@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
-    <controller id="financingCommercialBillShow">
+    <controller id="financingBankBillShow">
         <response name="framework/templates/singleDateReport/show" type="jsp">
             <map key="year" value="${calendar.current.year}"/>
             <map key="month" value="${calendar.current.month}"/>
-            <map key="updateUrl" value="financingCommercialBillUpdateClr"/>
-            <map key="exportUrl" value="financingCommercialBillExportClr"/>
+            <map key="updateUrl" value="financingBankBillUpdateClr"/>
+            <map key="exportUrl" value="financingBankBillExportClr"/>
         </response>
     </controller>
-    <controller id="financingCommercialBillUpdateClr">
+    <controller id="financingBankBillUpdateClr">
         <context key="cal" value="${request.date.asCalendar}"/>
-        <callservice id="financingCommercialBillShowServ"/>
-        <callcontroller id="financingCommercialBillFmtClr"/>
+        <callservice id="financingBankBillShowServ"/>
+        <callcontroller id="financingBankBillFmtClr"/>
         <formatterServer id="fmtServ" table="${result.matrixNoIds}">
             <formatter ref="fmtData"/>
         </formatterServer>
@@ -29,6 +29,12 @@
                     <name>票面金额</name>
                 </item>
                 <item>
+                    <name>保证金比例</name>
+                </item>
+                <item>
+                    <name>备注</name>
+                </item>
+                <item>
                     <name>未解付原因</name>
                 </item>
                 <item>
@@ -38,20 +44,23 @@
             <data>${fmtServ.result}</data>
         </response>
     </controller>
-    <controller id="financingCommercialBillFmtClr">
+    <controller id="financingBankBillFmtClr">
         <formatter export="true" id="fmtData">
+            <PercentFormatter reservedCount="1">
+                <DefaultMatcher col="4"/>
+            </PercentFormatter>
             <NumberFormatter reservedCount="1">
                 <DefaultMatcher cols="3"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
     </controller>
-    <controller id="financingCommercialBillExportClr">
+    <controller id="financingBankBillExportClr">
         <context key="cal" value="${request.date.asCalendar}"/>
-        <callservice id="financingCommercialBillShowServ"/>
-        <callcontroller id="financingCommercialBillFmtClr"/>
-        <ExcelTemplate id="excelTemplate" sheet="特变电工商票办理情况表"/>
-        <list id="title" type="string">银行名称,出票日,到期日,票面金额,未解付原因,已处理</list>
+        <callservice id="financingBankBillShowServ"/>
+        <callcontroller id="financingBankBillFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="特变电工银票办理情况表"/>
+        <list id="title" type="string">银行名称,出票日,到期日,票面金额,保证金比例,备注,未解付原因,已处理</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -74,24 +83,28 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="${request.date.asString}特变电工商票办理情况表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="${request.date.asString}特变电工银票办理情况表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
-    <controller id="financingCommercialBillShowServ" transaction="transactionManager">
+    <controller id="financingBankBillShowServ" transaction="transactionManager">
         <sql id="data">select id,
 bankName,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
 amount,
+marginRatio,
+remark,
 reason,
-solved from financing_commercial_bill where dwid = ${dwid}</sql>
+solved from financing_bank_bill where dwid = ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
             <list sql="data" type="date" value="2"/>
             <list sql="data" type="date" value="3"/>
             <list sql="data" type="double" value="4"/>
-            <list sql="data" type="string" value="5"/>
+            <list sql="data" type="double" value="5"/>
             <list sql="data" type="string" value="6"/>
+            <list sql="data" type="string" value="7"/>
+            <list sql="data" type="string" value="8"/>
         </table>
     </controller>
 </components>

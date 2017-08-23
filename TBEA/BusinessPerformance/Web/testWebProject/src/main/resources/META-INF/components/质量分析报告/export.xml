@@ -1,0 +1,12 @@
+﻿<components>
+	<controller id="zlfxReportXlClr">
+		<WordTemplate id="word" src="${TEMPLATE}zlfx_xl.docx">
+		</WordTemplate>		
+		<response type="word" name="${dwmc}${year}年${month}月质量分析报告.docx" ref="word"/> 
+	</controller> 
+	<controller id="zlfxReportByqClr">
+		<WordTemplate id="word" src="${TEMPLATE}zlfx_byq.docx">
+		</WordTemplate>		
+		<response type="word" name="${dwmc}${year}年${month}月质量分析报告.docx" ref="word"/> 
+	</controller> 
+</components>

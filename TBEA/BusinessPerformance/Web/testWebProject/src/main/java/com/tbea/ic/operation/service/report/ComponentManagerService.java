@@ -18,5 +18,8 @@ public interface ComponentManagerService {
 
 	DataNode getCSN();
 
+	Context doController(HttpServletRequest request, HttpServletResponse response, String controllor, Context context)
+			throws Exception;
+
 }
 

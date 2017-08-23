@@ -172,29 +172,33 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 			
 			DocxQuery dqTrs = dqTb.q(Tr.class);
 			
-			updateMrs(mrs, rCount, cCount);
+			List<MergeRegion> mrlist = null;
+			if (null != mrs) {
 			
-			List<MergeRegion> mrlist = new ArrayList<MergeRegion>();
-			for (MergeRegion mr : mrs) {
-				mrlist.addAll(detectMerge(table, mr));
+				updateMrs(mrs, rCount, cCount);
+				
+				mrlist = new ArrayList<MergeRegion>();
+				for (MergeRegion mr : mrs) {
+					mrlist.addAll(detectMerge(table, mr));
+				}
 			}
-			
 			for (int i = 0; i < table.size(); ++i) {
 				for (int j = 0; j < table.get(i).size() && j < cCount; ++j) {	
 					Tc tc = (Tc) dqTrs.eq(i + rOffset).find(Tc.class).eq(j + cOffset).val(0);
 					setTc(tc, table.get(i).get(j) + "");
 				}
 			}
-			
-			for (MergeRegion m : mrlist) {
-				for (int i = 0; i < m.getWidth(); ++i) {
-					DocxUtil.mergeCellsVertically((Tbl) dqTb.val(0), cOffset + m.getX() + i, rOffset + m.getY(), rOffset + m.getY() + m.getHeight() - 1);
+			if (null != mrs) {
+				for (MergeRegion m : mrlist) {
+					for (int i = 0; i < m.getWidth(); ++i) {
+						DocxUtil.mergeCellsVertically((Tbl) dqTb.val(0), cOffset + m.getX() + i, rOffset + m.getY(), rOffset + m.getY() + m.getHeight() - 1);
+					}
 				}
-			}
-			
-			for (MergeRegion m : mrlist) {			
-				for (int i = 0; i < m.getHeight(); ++i) {
-					DocxUtil.mergeCellsHorizontalByGridSpan((Tbl) dqTb.val(0), rOffset + m.getY() + i, cOffset + m.getX(), cOffset + m.getX() + m.getWidth() - 1);
+				
+				for (MergeRegion m : mrlist) {			
+					for (int i = 0; i < m.getHeight(); ++i) {
+						DocxUtil.mergeCellsHorizontalByGridSpan((Tbl) dqTb.val(0), rOffset + m.getY() + i, cOffset + m.getX(), cOffset + m.getX() + m.getWidth() - 1);
+					}
 				}
 			}
 		}

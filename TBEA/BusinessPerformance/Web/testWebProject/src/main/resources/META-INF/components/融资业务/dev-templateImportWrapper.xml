@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="BAEA6B3D5073197672D2E28C858F9109ImportWrapperJsp">
-        <list id="ids" type="int">0,1,2,3,4,5,6,7,8,9,10,11</list>
-        <list id="vals" type="string">各家银行人民币授信情况统计表,各家银行外币授信情况统计表,特变电工人民币贷款明细统计表,特变电工其他融资明细统计表,特变电工外币贷款明细统计表,特变电工贸易业务明细统计表,特变电工银票办理情况表,特变电工人民币保函办理情况统计表,特变电工外币保函办理情况统计表,特变电工双币种保函办理情况统计表,特变电工信用证明细统计表,特变电工银行保理台账明细表</list>
+        <list id="ids" type="int">0,1,2,3,4,5,6,7,8,9,10,11,12</list>
+        <list id="vals" type="string">各家银行人民币授信情况统计表,各家银行外币授信情况统计表,特变电工人民币贷款明细统计表,特变电工其他融资明细统计表,特变电工外币贷款明细统计表,特变电工贸易业务明细统计表,特变电工银票办理情况表,特变电工商票办理情况表,特变电工人民币保函办理情况统计表,特变电工外币保函办理情况统计表,特变电工双币种保函办理情况统计表,特变电工信用证明细统计表,特变电工银行保理台账明细表</list>
         <response name="components/import_data" type="jsp">
             <map key="importUrl" value="BAEA6B3D5073197672D2E28C858F9109ImportWrapper"/>
             <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
@@ -33,18 +33,21 @@
             <callcontroller id="financingBankBillImportClr"/>
         </elseif>
         <elseif test="${item == 7}">
-            <callcontroller id="financingRMBLGImportClr"/>
+            <callcontroller id="financingCommercialBillImportClr"/>
         </elseif>
         <elseif test="${item == 8}">
-            <callcontroller id="financingForeignCurrencyLGImportClr"/>
+            <callcontroller id="financingRMBLGImportClr"/>
         </elseif>
         <elseif test="${item == 9}">
-            <callcontroller id="financingDoubleCurrencyLGImportClr"/>
+            <callcontroller id="financingForeignCurrencyLGImportClr"/>
         </elseif>
         <elseif test="${item == 10}">
-            <callcontroller id="financingLCImportClr"/>
+            <callcontroller id="financingDoubleCurrencyLGImportClr"/>
         </elseif>
         <elseif test="${item == 11}">
+            <callcontroller id="financingLCImportClr"/>
+        </elseif>
+        <elseif test="${item == 12}">
             <callcontroller id="financingFactoringImportClr"/>
         </elseif>
     </controller>

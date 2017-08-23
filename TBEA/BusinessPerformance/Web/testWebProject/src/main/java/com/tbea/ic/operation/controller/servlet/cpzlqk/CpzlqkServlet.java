@@ -36,7 +36,17 @@ import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.cpzlqk.CpzlqkService;
+import com.tbea.ic.operation.service.cpzlqk.byqacptjjg.ByqacptjjgService;
+import com.tbea.ic.operation.service.cpzlqk.byqacptjjg.ByqacptjjgServiceImpl;
+import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx.ByqcpycssbhgwtmxService;
+import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx.ByqcpycssbhgwtmxServiceImpl;
+import com.tbea.ic.operation.service.cpzlqk.xlacptjjg.XlacptjjgService;
+import com.tbea.ic.operation.service.cpzlqk.xlacptjjg.XlacptjjgServiceImpl;
+import com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx.XlbhgcpmxService;
+import com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx.XlbhgcpmxServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.tbea.ic.operation.service.report.ComponentManagerService;
+import com.xml.frame.report.component.entity.Context;
 import com.xml.frame.report.util.EasyList;
 
 import net.sf.json.JSONArray;
@@ -227,5 +237,106 @@ public class CpzlqkServlet {
 		Account account = SessionManager.getAccount(request.getSession());
 		List<Integer> auths = extendAuthService.getAuths(account, company);
 		return JSONArray.fromObject(auths).toString().getBytes("utf-8");
+	}
+	
+	@Autowired
+	ComponentManagerService cms;
+	
+	@Resource(name=ByqacptjjgServiceImpl.NAME)
+	ByqacptjjgService byqacptjjgService;
+
+	@Resource(name=XlacptjjgServiceImpl.NAME)
+	XlacptjjgService xlacptjjgService;
+	
+
+	@Resource(name=ByqcpycssbhgwtmxServiceImpl.NAME)
+	ByqcpycssbhgwtmxService byqcpycssbhgwtmxService;
+	
+
+	@Resource(name=XlbhgcpmxServiceImpl.NAME)
+	XlbhgcpmxService xlbhgcpmxService;
+	
+	
+	void removeColumns(List<List<String>> result, int start, int count){
+		for (int i = 0; i < result.size(); ++i) {
+			for (int j = 0; j< count; ++j) {
+				result.get(i).remove(start);
+			}
+		}
+	}
+	
+	@RequestMapping(value = "cpzlfxbg.do")
+	public void cpzlfxbg(HttpServletRequest request,
+			HttpServletResponse response)  {
+		Date d = Date.valueOf(request.getParameter("date"));
+		CompanyType comp = CompanySelection.getCompany(request);
+		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Context context = new Context();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		List<Integer> zts = new ArrayList<Integer>();
+		zts.add(ZBStatus.APPROVED.ordinal());
+		context.put("dwmc", company.getName());
+		context.put("year", cal.get(Calendar.YEAR));
+		context.put("month", cal.get(Calendar.MONTH) + 1);
+		if (company.getType() == CompanyType.BYQCY ||
+			companyManager.getVirtualCYOrg().getCompany(CompanyType.BYQCY).getSubCompanies().contains(company)){
+			
+
+			List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, YDJDType.YD, zts);
+			removeColumns(result, 0, 2);
+			context.put("cpycss", result);
+			
+			if (comp == CompanyType.BYQCY){
+				result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, YDJDType.YD, zts);
+			}else{
+				result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, YDJDType.YD, company, zts);
+			}
+			
+			removeColumns(result, 10, 1);
+			removeColumns(result, 6, 1);
+			removeColumns(result, 1, 2);
+			context.put("ycssbhgcpxx", result);
+			context.put("nwbzlwtqk", "");
+			context.put("sjzlqk", "");
+			context.put("yclzpjzlqk", "");
+			context.put("gczzzlqk", "");
+			context.put("gczzwtdyxmgscjfbqk", "");
+			try {
+				cms.doController(request, response, "zlfxReportByqClr", context);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else {
+			
+			List<List<String>> result = xlacptjjgService.getXlacptjjg(d, company, YDJDType.YD, zts);
+			removeColumns(result, 0, 2);
+			context.put("cpycss", result);
+			
+			if (comp == CompanyType.XLCY){
+				result = xlbhgcpmxService.getXlbhgcpmx(d, zts);
+			}else{
+				result = xlbhgcpmxService.getXlbhgcpmx(d, company, zts);
+			}
+			removeColumns(result, 10, 1);
+			removeColumns(result, 6, 1);
+			removeColumns(result, 1, 2);
+			context.put("ycssbhgcpxx", result);
+			
+			context.put("nwbzlwtqk", "");
+			context.put("gyzlqk", "");
+			context.put("yclzpjzlqk", "");
+			context.put("gczzzlqk", "");
+			context.put("gczzwtdyxmgscjfbqk", "");
+			
+			try {
+				cms.doController(request, response, "zlfxReportXlClr", context);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 }

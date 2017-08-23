@@ -402,7 +402,7 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		Element eRoot = doc.createElement(Schema.TAG_COMPONENTS);
 		Element controller = doc.createElement(Schema.TAG_CONTROLLER);
 		eRoot.appendChild(controller);
-		controller.setAttribute("id", this.getId("importWrapperJsp"));
+		controller.setAttribute("id", this.getId("showWrapperJsp"));
 		
 		Element list = doc.createElement(Schema.TAG_LIST);
 		controller.appendChild(list);
@@ -422,18 +422,30 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		response.setAttribute("name", template);
 		controller.appendChild(response);
 		Element map = doc.createElement("map");
-		map.setAttribute("key", "importUrl");
-		map.setAttribute("value", this.getId("importWrapper"));
+		map.setAttribute("key", "updateUrl");
+		map.setAttribute("value", this.getId("updateWrapperClr"));
 		response.appendChild(map);
 		map = doc.createElement("map");
-		map.setAttribute("key", "itemNodes");
+		map.setAttribute("key", "exportUrl");
+		map.setAttribute("value", this.getId("exportWrapperClr"));
+		response.appendChild(map);
+		map = doc.createElement("map");
+		map.setAttribute("key", "nodeData");
 		map.setAttribute("value", "${dataNodeFactory[ids][vals].asJson}");
 		response.appendChild(map);
+		map = doc.createElement("map");
+		map.setAttribute("key", "year");
+		map.setAttribute("value", "${calendar.current.year}");
+		response.appendChild(map);
 		
+		map = doc.createElement("map");
+		map.setAttribute("key", "month");
+		map.setAttribute("value", "${calendar.current.month}");
+		response.appendChild(map);
 		
 		controller = doc.createElement(Schema.TAG_CONTROLLER);
 		eRoot.appendChild(controller);
-		controller.setAttribute("id", this.getId("importWrapper"));
+		controller.setAttribute("id", this.getId("updateWrapperClr"));
 		
 		Element context = doc.createElement(Schema.TAG_CONTEXT);
 		context.setAttribute("key", "item");
@@ -445,7 +457,7 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		controller.appendChild(IF);
 		
 		Element callcontroller = doc.createElement(Schema.TAG_CALLCONTROLLER);
-		callcontroller.setAttribute("id", controllers.get(0) + "ImportClr");
+		callcontroller.setAttribute("id", controllers.get(0) + "UpdateClr");
 		IF.appendChild(callcontroller);
 	
 		for (int i = 1; i < ids.size(); ++i) {
@@ -454,7 +466,35 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 			controller.appendChild(ELSEIF);
 			
 			callcontroller = doc.createElement(Schema.TAG_CALLCONTROLLER);
-			callcontroller.setAttribute("id", controllers.get(i) + "ImportClr");
+			callcontroller.setAttribute("id", controllers.get(i) + "UpdateClr");
+			ELSEIF.appendChild(callcontroller);
+		}
+		
+		
+		controller = doc.createElement(Schema.TAG_CONTROLLER);
+		eRoot.appendChild(controller);
+		controller.setAttribute("id", this.getId("exportWrapperClr"));
+		
+		context = doc.createElement(Schema.TAG_CONTEXT);
+		context.setAttribute("key", "item");
+		context.setAttribute("value", "${request.item.asInt}");
+		controller.appendChild(context);
+		
+		IF = doc.createElement(Schema.TAG_IF);
+		IF.setAttribute("test", "${item == " + ids.get(0) + "}");
+		controller.appendChild(IF);
+		
+		callcontroller = doc.createElement(Schema.TAG_CALLCONTROLLER);
+		callcontroller.setAttribute("id", controllers.get(0) + "ExportClr");
+		IF.appendChild(callcontroller);
+	
+		for (int i = 1; i < ids.size(); ++i) {
+			Element ELSEIF = doc.createElement(Schema.TAG_ELSEIF);
+			ELSEIF.setAttribute("test", "${item == " + ids.get(i) + "}");
+			controller.appendChild(ELSEIF);
+			
+			callcontroller = doc.createElement(Schema.TAG_CALLCONTROLLER);
+			callcontroller.setAttribute("id", controllers.get(i) + "ExportClr");
 			ELSEIF.appendChild(callcontroller);
 		}
 		

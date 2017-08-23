@@ -77,8 +77,12 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 
 	@Override
 	public Context doController(HttpServletRequest request, HttpServletResponse response, String controllor) throws Exception {
+		return doController(request, response, controllor, new Context());
+	}
+	
+	@Override
+	public Context doController(HttpServletRequest request, HttpServletResponse response, String controllor, Context context) throws Exception {
 		Controller controller = compMgr.createController(null, controllor);
-		Context context = new Context();
 		if (null != controller){
 			ContextHandlers handlers = new ContextHandlers();			
 			handlers.add(new RequestContextHandler(request, response))
