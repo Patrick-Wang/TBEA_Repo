@@ -37,7 +37,6 @@ public class XmlUtil {
 	public static String elementText(NodeList list, int index) {
 		Element e = element(list, index);
 		if (null != e){
-			return ((Element)e.getFirstChild()).getTextContent();
 			return e.getFirstChild().getTextContent();
 		}
 		return "";
