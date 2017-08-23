@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
-    <controller id="BAEA6B3D5073197672D2E28C858F9109EntryWrapperJsp">
-        <list id="ids" type="int">0,1,2,3,4,5,6,7,8,9,10,11,12</list>
-        <list id="vals" type="string">各家银行人民币授信情况统计表,各家银行外币授信情况统计表,特变电工人民币贷款明细统计表,特变电工其他融资明细统计表,特变电工外币贷款明细统计表,特变电工贸易业务明细统计表,特变电工银票办理情况表,特变电工商票办理情况表,特变电工人民币保函办理情况统计表,特变电工外币保函办理情况统计表,特变电工双币种保函办理情况统计表,特变电工信用证明细统计表,特变电工银行保理台账明细表</list>
-        <response name="framework/templates/dateReport/entry" type="jsp">
-            <map key="updateUrl" value="BAEA6B3D5073197672D2E28C858F9109EntryUpdateWrapperClr"/>
-            <map key="submitUrl" value="BAEA6B3D5073197672D2E28C858F9109EntrySubmitWrapperClr"/>
-            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
-            <map key="year" value="${calendar.current.year}"/>
-            <map key="month" value="${calendar.current.month}"/>
-        </response>
-    </controller>
     <controller id="BAEA6B3D5073197672D2E28C858F9109EntryUpdateWrapperClr">
  		<context key="item" value="${request.item2.asInt}"/>
-		<context key="dwid" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+		<if test="${item == 13}">
+            <callcontroller id="financingBankDistributionUpdateClr"/>
+        </if>
+        <elseif test="${item == 14}">
+            <callcontroller id="financingCompDistributionUpdateClr"/>
+        </elseif>
+		<else>
+			<context key="dwid" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+		</else>
         <if test="${item == 0}">
             <callcontroller id="financingBankRMBCreditEntryUpdateClr"/>
         </if>

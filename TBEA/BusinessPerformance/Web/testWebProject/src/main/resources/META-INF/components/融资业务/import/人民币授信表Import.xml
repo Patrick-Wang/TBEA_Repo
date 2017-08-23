@@ -22,7 +22,7 @@
                 <usedAmount ref="2" type="double"/>
                 <loanBalance ref="3" type="double"/>
                 <authCreditExpire ref="4" type="date"/>
-                <dwid ref="5" type="int"/>
+                <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

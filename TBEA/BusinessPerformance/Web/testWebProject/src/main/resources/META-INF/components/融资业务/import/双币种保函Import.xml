@@ -27,7 +27,7 @@
                 <guaranteeNumber ref="7" type="string"/>
                 <remark ref="8" type="string"/>
                 <reason ref="9" type="string"/>
-                <dwid ref="10" type="int"/>
+                <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

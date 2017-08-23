@@ -24,7 +24,7 @@
                 <marginRatio ref="4" type="double"/>
                 <remark ref="5" type="string"/>
                 <reason ref="6" type="string"/>
-                <dwid ref="7" type="int"/>
+                <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

@@ -1,12 +1,28 @@
 ﻿<components>
+	<controller id="zlfxReportFmtClr">
+		<formatter id="fmtData">
+			<PercentFormatter reservedCount="1">
+				<DefaultMatcher cols="2,5" />
+			</PercentFormatter>
+			<NumberFormatter reservedCount="1" />
+		</formatter>
+		<formatterServer id="fmtServ" table="${cpycss}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+		<context key="cpycss" value="${fmtServ.result}"></context>
+	</controller>
 	<controller id="zlfxReportXlClr">
+		<callcontroller id="zlfxReportFmtClr"></callcontroller>
 		<WordTemplate id="word" src="${TEMPLATE}zlfx_xl.docx">
-		</WordTemplate>		
-		<response type="word" name="${dwmc}${year}年${month}月质量分析报告.docx" ref="word"/> 
-	</controller> 
+		</WordTemplate>
+		<response type="word" name="${dwmc}${year}年${month}月质量分析报告.docx"
+			ref="word" />
+	</controller>
 	<controller id="zlfxReportByqClr">
+		<callcontroller id="zlfxReportFmtClr"></callcontroller>
 		<WordTemplate id="word" src="${TEMPLATE}zlfx_byq.docx">
-		</WordTemplate>		
-		<response type="word" name="${dwmc}${year}年${month}月质量分析报告.docx" ref="word"/> 
-	</controller> 
+		</WordTemplate>
+		<response type="word" name="${dwmc}${year}年${month}月质量分析报告.docx"
+			ref="word" />
+	</controller>
 </components>

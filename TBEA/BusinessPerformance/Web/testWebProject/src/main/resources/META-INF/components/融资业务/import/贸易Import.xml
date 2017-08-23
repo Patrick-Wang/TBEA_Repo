@@ -25,7 +25,7 @@
                 <fee ref="5" type="double"/>
                 <type ref="6" type="string"/>
                 <guarantyStyle ref="7" type="string"/>
-                <dwid ref="8" type="int"/>
+                <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

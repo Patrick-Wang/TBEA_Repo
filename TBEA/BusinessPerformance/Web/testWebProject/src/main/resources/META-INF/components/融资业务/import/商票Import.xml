@@ -22,7 +22,7 @@
                 <maturityDate ref="2" type="date"/>
                 <amount ref="3" type="double"/>
                 <reason ref="4" type="string"/>
-                <dwid ref="5" type="int"/>
+                <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

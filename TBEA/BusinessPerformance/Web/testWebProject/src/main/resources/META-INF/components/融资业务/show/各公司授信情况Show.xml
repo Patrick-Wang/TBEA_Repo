@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+ <controller id="financingCompDistributionShow">
+  <response name="framework/templates/singleDateReport/show" type="jsp">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="financingCompDistributionUpdateClr"/>
+   <map key="exportUrl" value="financingCompDistributionExportClr"/>
+  </response>
+ </controller>
+ <controller id="financingCompDistributionUpdateClr">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="financingCompDistributionShowServ"/>
+  <callcontroller id="financingCompDistributionFmtClr"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>公司名称</name>
+    </item>
+    <item>
+     <name>授信总额</name>
+    </item>
+    <item>
+     <name>授信占比</name>
+    </item>
+    <item>
+     <name>已使用额度</name>
+    </item>
+    <item>
+     <name>使用比率</name>
+    </item>
+    <item>
+     <name>六大银行授信额度</name>
+    </item>
+    <item>
+     <name>六大行授信占比</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="financingCompDistributionFmtClr">
+  <formatter export="true" id="fmtData">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="2,4,6"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="2"/>
+  </formatter>
+ </controller>
+ <controller id="financingCompDistributionExportClr">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="financingCompDistributionShowServ"/>
+  <callcontroller id="financingCompDistributionFmtClr"/>
+  <ExcelTemplate id="excelTemplate" sheet="各公司授信情况表"/>
+  <list id="title" type="string">公司名称,授信总额,授信占比,已使用额度,使用比率,六大银行授信额度,六大行授信占比</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="1"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="1"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response name="${request.date.asString}各公司授信情况表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+ </controller>
+ <service id="financingCompDistributionShowServ" transaction="transactionManager">
+  <list id="ids" type="int">0,1,2,3,7,9,4,6,301</list>
+  <list id="names" type="string">股份公司,
+沈变公司,
+衡变公司,
+新特能源,
+天池能源,
+新能源,
+鲁缆公司,
+德缆公司,
+天变公司,
+合计
+</list>
+  <sql id="sxhj">select
+sum(authCreditAmount) aca,
+sum(usedAmount) ua
+from financing_bank_RMB_credit</sql>
+  <sql id="gssx" order="ids" by="0" colcount="4">select 
+        dwid,
+sum(authCreditAmount) aca,
+sum(authCreditAmount) / ${sxhj[0][0] == 0 ? null : sxhj[0][0]} acazb,
+sum(usedAmount) ua
+ from financing_bank_RMB_credit 
+group by dwid</sql>
+  <sql id="ldhhj">select
+sum(authCreditAmount) aca
+from financing_bank_RMB_credit
+where bankName in ('中国进出口银行', '国家开发银行', '中国工商银行','中国农业银行', '中国银行','中国建设银行')
+</sql>
+  <sql id="ldhsx" order="ids" by="0"  colcount="4">select 
+        dwid,
+sum(authCreditAmount) aca,
+sum(authCreditAmount) / ${ldhhj[0] == 0 ? null : ldhhj[0]} acazb
+from financing_bank_RMB_credit 
+where bankName in ('中国进出口银行', '国家开发银行', '中国工商银行','中国农业银行', '中国银行','中国建设银行')
+group by dwid</sql> 
+<list id="ids" type="int">1000</list>
+  <table export="true" id="result" rowIds="ids">
+   <col list="names"/>
+   <list sql="gssx" type="double" value="1">
+    <item>${sxhj[0][0]}</item>
+   </list>
+   <list sql="gssx" type="double" value="2">
+    <item>${sxhj[0][0] == null ? null : 1}</item>
+   </list>
+   <list sql="gssx" type="double" value="3">
+    <item>${sxhj[0][1]}</item>
+   </list>
+   <col intruction="使用比率"/>
+   <list sql="ldhsx" type="double" value="1">
+    <item>${ldhhj[0]}</item>
+   </list>
+   <list sql="ldhsx" type="double" value="2">
+    <item>${ldhhj[0] == null ? null : 1}</item>
+   </list>
+   <divCol toCol="4" base="1" sub="3"/>
+  </table>
+ </service>
+</components>

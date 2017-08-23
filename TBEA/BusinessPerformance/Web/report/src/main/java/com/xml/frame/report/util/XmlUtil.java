@@ -22,6 +22,7 @@ import com.frame.script.el.ELExpression;
 import com.frame.script.el.ELParser;
 import com.frame.script.util.StringUtil;
 import com.frame.script.util.TypeUtil;
+import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
 
 public class XmlUtil {
 	
@@ -37,6 +38,7 @@ public class XmlUtil {
 		Element e = element(list, index);
 		if (null != e){
 			return ((Element)e.getFirstChild()).getTextContent();
+			return e.getFirstChild().getTextContent();
 		}
 		return "";
 	}

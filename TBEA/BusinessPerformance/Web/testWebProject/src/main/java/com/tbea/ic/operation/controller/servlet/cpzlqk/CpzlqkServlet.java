@@ -40,10 +40,14 @@ import com.tbea.ic.operation.service.cpzlqk.byqacptjjg.ByqacptjjgService;
 import com.tbea.ic.operation.service.cpzlqk.byqacptjjg.ByqacptjjgServiceImpl;
 import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx.ByqcpycssbhgwtmxService;
 import com.tbea.ic.operation.service.cpzlqk.byqcpycssbhgwtmx.ByqcpycssbhgwtmxServiceImpl;
+import com.tbea.ic.operation.service.cpzlqk.byqnwbzlztqk.ByqnwbzlztqkService;
+import com.tbea.ic.operation.service.cpzlqk.byqnwbzlztqk.ByqnwbzlztqkServiceImpl;
 import com.tbea.ic.operation.service.cpzlqk.xlacptjjg.XlacptjjgService;
 import com.tbea.ic.operation.service.cpzlqk.xlacptjjg.XlacptjjgServiceImpl;
 import com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx.XlbhgcpmxService;
 import com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx.XlbhgcpmxServiceImpl;
+import com.tbea.ic.operation.service.cpzlqk.xlnwbzlztqk.XlnwbzlztqkService;
+import com.tbea.ic.operation.service.cpzlqk.xlnwbzlztqk.XlnwbzlztqkServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.report.ComponentManagerService;
 import com.xml.frame.report.component.entity.Context;
@@ -256,6 +260,11 @@ public class CpzlqkServlet {
 	@Resource(name=XlbhgcpmxServiceImpl.NAME)
 	XlbhgcpmxService xlbhgcpmxService;
 	
+	@Resource(name=ByqnwbzlztqkServiceImpl.NAME)
+	ByqnwbzlztqkService byqnwbzlztqkService;
+	
+	@Resource(name=XlnwbzlztqkServiceImpl.NAME)
+	XlnwbzlztqkService xlnwbzlztqkService;
 	
 	void removeColumns(List<List<String>> result, int start, int count){
 		for (int i = 0; i < result.size(); ++i) {
@@ -263,6 +272,18 @@ public class CpzlqkServlet {
 				result.get(i).remove(start);
 			}
 		}
+	}
+	
+	List<List<String>> replaceNull(List<List<String>> result){
+		for (int i = 0; i < result.size(); ++i) {
+			for (int j = 0; j< result.get(i).size(); ++j) {
+				if (null == result.get(i).get(j)) {
+					result.get(i).set(j, "--");
+				}
+				
+			}
+		}
+		return result;
 	}
 	
 	@RequestMapping(value = "cpzlfxbg.do")
@@ -297,11 +318,124 @@ public class CpzlqkServlet {
 			removeColumns(result, 6, 1);
 			removeColumns(result, 1, 2);
 			context.put("ycssbhgcpxx", result);
-			context.put("nwbzlwtqk", "");
-			context.put("sjzlqk", "");
-			context.put("yclzpjzlqk", "");
-			context.put("gczzzlqk", "");
-			context.put("gczzwtdyxmgscjfbqk", "");
+			
+			List<List<String>> nwbzlwtqk = new ArrayList<List<String>>();
+			if (comp == CompanyType.BYQCY){
+				result = byqnwbzlztqkService.getYdnwbzlqk(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				nwbzlwtqk.add(result.get(result.size() - 1).subList(1, 4));
+				nwbzlwtqk.add(result.get(result.size() - 1).subList(4, 7));
+				calTmp.add(Calendar.YEAR, -1);
+				result = byqnwbzlztqkService.getYdnwbzlqk(new Date(calTmp.getTimeInMillis()), zts);
+				nwbzlwtqk.add(result.get(result.size() - 1).subList(1, 4));
+				nwbzlwtqk.add(result.get(result.size() - 1).subList(4, 7));
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				result = byqnwbzlztqkService.getYdnwbzlqk(d, company, zts);
+				nwbzlwtqk.add(result.get(0).subList(1, 4));
+				nwbzlwtqk.add(result.get(1).subList(1, 4));
+				calTmp.add(Calendar.YEAR, -1);
+				result = byqnwbzlztqkService.getYdnwbzlqk(new Date(calTmp.getTimeInMillis()), company, zts);
+				nwbzlwtqk.add(result.get(0).subList(1, 4));
+				nwbzlwtqk.add(result.get(1).subList(1, 4));
+			}
+			
+			
+			context.put("nwbzlwtqk", replaceNull(nwbzlwtqk));
+			
+			
+			List<List<String>> sjzlqk = new ArrayList<List<String>>();
+			if (comp == CompanyType.BYQCY){
+				result = byqnwbzlztqkService.getYdsjzlqk(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				sjzlqk.add(result.get(result.size() - 1).subList(1, 4));
+				sjzlqk.add(result.get(result.size() - 1).subList(4, 7));
+				calTmp.add(Calendar.YEAR, -1);
+				result = byqnwbzlztqkService.getYdsjzlqk(new Date(calTmp.getTimeInMillis()), zts);
+				sjzlqk.add(result.get(result.size() - 1).subList(1, 4));
+				sjzlqk.add(result.get(result.size() - 1).subList(4, 7));
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				result = byqnwbzlztqkService.getYdsjzlqk(d, company, zts);
+				sjzlqk.add(result.get(0).subList(1, 4));
+				sjzlqk.add(result.get(1).subList(1, 4));
+				calTmp.add(Calendar.YEAR, -1);
+				result = byqnwbzlztqkService.getYdsjzlqk(new Date(calTmp.getTimeInMillis()), company, zts);
+				sjzlqk.add(result.get(0).subList(1, 4));
+				sjzlqk.add(result.get(1).subList(1, 4));
+			}
+			
+			context.put("sjzlqk", replaceNull(sjzlqk));
+			
+			List<List<String>> yclzpjzlqk = new ArrayList<List<String>>();
+			if (comp == CompanyType.BYQCY){
+				result = byqnwbzlztqkService.getYdYclzlwt(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				yclzpjzlqk.add(result.get(result.size() - 1).subList(1, 5));
+				yclzpjzlqk.add(result.get(result.size() - 1).subList(5, 9));
+				calTmp.add(Calendar.YEAR, -1);
+				result = byqnwbzlztqkService.getYdYclzlwt(new Date(calTmp.getTimeInMillis()), zts);
+				yclzpjzlqk.add(result.get(result.size() - 1).subList(1, 5));
+				yclzpjzlqk.add(result.get(result.size() - 1).subList(5, 9));
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				result = byqnwbzlztqkService.getYdYclzlwt(d, company, zts);
+				yclzpjzlqk.add(result.get(0).subList(1, 5));
+				yclzpjzlqk.add(result.get(1).subList(1, 5));
+				calTmp.add(Calendar.YEAR, -1);
+				result = byqnwbzlztqkService.getYdYclzlwt(new Date(calTmp.getTimeInMillis()), company, zts);
+				yclzpjzlqk.add(result.get(0).subList(1, 5));
+				yclzpjzlqk.add(result.get(1).subList(1, 5));
+			}
+			context.put("yclzpjzlqk", replaceNull(yclzpjzlqk));
+			
+			List<List<String>> gczzzlqk = new ArrayList<List<String>>();
+			if (comp == CompanyType.BYQCY){
+				result = byqnwbzlztqkService.getYdSczzzlqk(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				gczzzlqk.add(result.get(result.size() - 1).subList(1, 4));
+				gczzzlqk.add(result.get(result.size() - 1).subList(4, 7));
+				calTmp.add(Calendar.YEAR, -1);
+				result = byqnwbzlztqkService.getYdSczzzlqk(new Date(calTmp.getTimeInMillis()), zts);
+				gczzzlqk.add(result.get(result.size() - 1).subList(1, 4));
+				gczzzlqk.add(result.get(result.size() - 1).subList(4, 7));
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				result = byqnwbzlztqkService.getYdSczzzlqk(d, company, zts);
+				gczzzlqk.add(result.get(0).subList(1, 4));
+				gczzzlqk.add(result.get(1).subList(1, 4));
+				calTmp.add(Calendar.YEAR, -1);
+				result = byqnwbzlztqkService.getYdSczzzlqk(new Date(calTmp.getTimeInMillis()), company, zts);
+				gczzzlqk.add(result.get(0).subList(1, 4));
+				gczzzlqk.add(result.get(1).subList(1, 4));
+			}			
+			context.put("gczzzlqk", replaceNull(gczzzlqk));
+			
+			List<List<String>> gczzwtdyxmgscjfbqk = null;
+			if (comp == CompanyType.BYQCY){
+				List<List<String>> resultNow = byqnwbzlztqkService.getYdSczzzlqkxxxx(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				calTmp.add(Calendar.YEAR, -1);
+				List<List<String>> resultLast = byqnwbzlztqkService.getYdSczzzlqkxxxx(new Date(calTmp.getTimeInMillis()), zts);
+				gczzwtdyxmgscjfbqk = merge(resultNow, resultLast);
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				List<List<String>> resultNow = byqnwbzlztqkService.getYdSczzzlqkxxxx(d, company, zts);
+				calTmp.add(Calendar.YEAR, -1);
+				List<List<String>> resultLast = byqnwbzlztqkService.getYdSczzzlqkxxxx(new Date(calTmp.getTimeInMillis()), company, zts);
+				gczzwtdyxmgscjfbqk = merge(resultNow, resultLast);
+			}
+			context.put("gczzwtdyxmgscjfbqk", replaceNull(gczzwtdyxmgscjfbqk));
 			try {
 				cms.doController(request, response, "zlfxReportByqClr", context);
 			} catch (Exception e) {
@@ -324,11 +458,120 @@ public class CpzlqkServlet {
 			removeColumns(result, 1, 2);
 			context.put("ycssbhgcpxx", result);
 			
-			context.put("nwbzlwtqk", "");
-			context.put("gyzlqk", "");
-			context.put("yclzpjzlqk", "");
-			context.put("gczzzlqk", "");
-			context.put("gczzwtdyxmgscjfbqk", "");
+			List<List<String>> nwbzlwtqk = new ArrayList<List<String>>();
+			if (comp == CompanyType.XLCY){
+				result = xlnwbzlztqkService.getYdnwbzlqk(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				nwbzlwtqk.add(result.get(result.size() - 1).subList(1, 4));
+				nwbzlwtqk.add(result.get(result.size() - 1).subList(4, 7));
+				calTmp.add(Calendar.YEAR, -1);
+				result = xlnwbzlztqkService.getYdnwbzlqk(new Date(calTmp.getTimeInMillis()), zts);
+				nwbzlwtqk.add(result.get(result.size() - 1).subList(1, 4));
+				nwbzlwtqk.add(result.get(result.size() - 1).subList(4, 7));
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				result = xlnwbzlztqkService.getYdnwbzlqk(d, company, zts);
+				nwbzlwtqk.add(result.get(0).subList(1, 4));
+				nwbzlwtqk.add(result.get(1).subList(1, 4));
+				calTmp.add(Calendar.YEAR, -1);
+				result = xlnwbzlztqkService.getYdnwbzlqk(new Date(calTmp.getTimeInMillis()), company, zts);
+				nwbzlwtqk.add(result.get(0).subList(1, 4));
+				nwbzlwtqk.add(result.get(1).subList(1, 4));
+			}
+			context.put("nwbzlwtqk", replaceNull(nwbzlwtqk));
+			
+			List<List<String>> gyzlqk = new ArrayList<List<String>>();
+			if (comp == CompanyType.XLCY){
+				result = xlnwbzlztqkService.getYdGyzlwt(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				gyzlqk.add(result.get(result.size() - 1).subList(1, 4));
+				gyzlqk.add(result.get(result.size() - 1).subList(4, 7));
+				calTmp.add(Calendar.YEAR, -1);
+				result = xlnwbzlztqkService.getYdGyzlwt(new Date(calTmp.getTimeInMillis()), zts);
+				gyzlqk.add(result.get(result.size() - 1).subList(1, 4));
+				gyzlqk.add(result.get(result.size() - 1).subList(4, 7));
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				result = xlnwbzlztqkService.getYdGyzlwt(d, company, zts);
+				gyzlqk.add(result.get(0).subList(1, 4));
+				gyzlqk.add(result.get(1).subList(1, 4));
+				calTmp.add(Calendar.YEAR, -1);
+				result = xlnwbzlztqkService.getYdGyzlwt(new Date(calTmp.getTimeInMillis()), company, zts);
+				gyzlqk.add(result.get(0).subList(1, 4));
+				gyzlqk.add(result.get(1).subList(1, 4));
+			}
+			context.put("gyzlqk", replaceNull(gyzlqk));
+			
+			List<List<String>> yclzpjzlqk = new ArrayList<List<String>>();
+			if (comp == CompanyType.XLCY){
+				result = xlnwbzlztqkService.getYdYclzlwt(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				yclzpjzlqk.add(result.get(result.size() - 1).subList(1, 5));
+				yclzpjzlqk.add(result.get(result.size() - 1).subList(5, 9));
+				calTmp.add(Calendar.YEAR, -1);
+				result = xlnwbzlztqkService.getYdYclzlwt(new Date(calTmp.getTimeInMillis()), zts);
+				yclzpjzlqk.add(result.get(result.size() - 1).subList(1, 5));
+				yclzpjzlqk.add(result.get(result.size() - 1).subList(5, 9));
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				result = xlnwbzlztqkService.getYdYclzlwt(d, company, zts);
+				yclzpjzlqk.add(result.get(0).subList(1, 5));
+				yclzpjzlqk.add(result.get(1).subList(1, 5));
+				calTmp.add(Calendar.YEAR, -1);
+				result = xlnwbzlztqkService.getYdYclzlwt(new Date(calTmp.getTimeInMillis()), company, zts);
+				yclzpjzlqk.add(result.get(0).subList(1, 5));
+				yclzpjzlqk.add(result.get(1).subList(1, 5));
+			}
+			context.put("yclzpjzlqk", replaceNull(yclzpjzlqk));
+			
+			List<List<String>> gczzzlqk = new ArrayList<List<String>>();
+			if (comp == CompanyType.XLCY){
+				result = xlnwbzlztqkService.getYdSczzzlqk(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				gczzzlqk.add(result.get(result.size() - 1).subList(1, 4));
+				gczzzlqk.add(result.get(result.size() - 1).subList(4, 7));
+				calTmp.add(Calendar.YEAR, -1);
+				result = xlnwbzlztqkService.getYdSczzzlqk(new Date(calTmp.getTimeInMillis()), zts);
+				gczzzlqk.add(result.get(result.size() - 1).subList(1, 4));
+				gczzzlqk.add(result.get(result.size() - 1).subList(4, 7));
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				result = xlnwbzlztqkService.getYdSczzzlqk(d, company, zts);
+				gczzzlqk.add(result.get(0).subList(1, 4));
+				gczzzlqk.add(result.get(1).subList(1, 4));
+				calTmp.add(Calendar.YEAR, -1);
+				result = xlnwbzlztqkService.getYdSczzzlqk(new Date(calTmp.getTimeInMillis()), company, zts);
+				gczzzlqk.add(result.get(0).subList(1, 4));
+				gczzzlqk.add(result.get(1).subList(1, 4));
+			}		
+			context.put("gczzzlqk", replaceNull(gczzzlqk));
+			
+			
+			List<List<String>> gczzwtdyxmgscjfbqk = null;
+			if (comp == CompanyType.XLCY){
+				List<List<String>> resultNow = xlnwbzlztqkService.getYdSczzzlqkxxxx(d, zts);
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				calTmp.add(Calendar.YEAR, -1);
+				List<List<String>> resultLast = xlnwbzlztqkService.getYdSczzzlqkxxxx(new Date(calTmp.getTimeInMillis()), zts);
+				gczzwtdyxmgscjfbqk = merge(resultNow, resultLast);
+			}else{
+				Calendar calTmp = Calendar.getInstance();
+				calTmp.setTime(d);
+				List<List<String>> resultNow = xlnwbzlztqkService.getYdSczzzlqkxxxx(d, company, zts);
+				calTmp.add(Calendar.YEAR, -1);
+				List<List<String>> resultLast = xlnwbzlztqkService.getYdSczzzlqkxxxx(new Date(calTmp.getTimeInMillis()), company, zts);
+				gczzwtdyxmgscjfbqk = merge(resultNow, resultLast);
+			}
+			context.put("gczzwtdyxmgscjfbqk", replaceNull(gczzwtdyxmgscjfbqk));
 			
 			try {
 				cms.doController(request, response, "zlfxReportXlClr", context);
@@ -338,5 +581,36 @@ public class CpzlqkServlet {
 			}
 			
 		}
+	}
+
+	private List<List<String>> merge(List<List<String>> resultNow, List<List<String>> resultLast) {
+		List<List<String>> gczzzlqk = new ArrayList<List<String>>();
+		Map<String, Integer> mergeMap = new HashMap<String, Integer>();
+		for (int i = 0; i < resultNow.size(); ++i) {
+			mergeMap.put(resultNow.get(i).get(1), i);
+			gczzzlqk.add(resultNow.get(i).subList(1, 4));
+		}
+		
+		for (int i = 0; i < resultLast.size(); ++i) {
+			if (!mergeMap.containsKey(resultLast.get(i).get(1))) {
+				mergeMap.put(resultLast.get(i).get(1), gczzzlqk.size());
+				List<String> list = new ArrayList<String>();
+				list.add(resultLast.get(i).get(1));
+				list.add(null);
+				list.add(null);
+				list.add(null);
+			}
+			gczzzlqk.get(mergeMap.get(resultLast.get(i).get(1))).addAll(resultLast.get(i).subList(2, 4));
+		}
+		
+		for (int i = 0; i < gczzzlqk.size(); ++i) {
+			if (gczzzlqk.get(i).size() == 3) {
+				gczzzlqk.get(i).add(null);
+				gczzzlqk.get(i).add(null);
+				gczzzlqk.get(i).add(null);
+			}
+		}
+		
+		return gczzzlqk;
 	}
 }

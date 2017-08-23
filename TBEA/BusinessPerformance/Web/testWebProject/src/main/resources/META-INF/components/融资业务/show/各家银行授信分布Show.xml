@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+ <controller id="financingBankDistributionUpdateClr">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="financingBankDistributionShowServ"/>
+  <callcontroller id="financingBankDistributionFmtClr"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>银行名称</name>
+    </item>
+    <item>
+     <name>疆内授信</name>
+    </item>
+    <item>
+     <name>疆外授信</name>
+    </item>
+    <item>
+     <name>授信总额</name>
+    </item>
+    <item>
+     <name>授信占比</name>
+    </item>
+    <item>
+     <name>已使用额度</name>
+    </item>
+    <item>
+     <name>使用比率</name>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+  </response>
+ </controller>
+ <controller id="financingBankDistributionFmtClr">
+  <formatter export="true" id="fmtData">
+   <EmptyFormatter>
+    <DefaultMatcher cols="0"/>
+   </EmptyFormatter>
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="4,6"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="2"/>
+  </formatter>
+ </controller>
+ <controller id="financingBankDistributionExportClr">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="financingBankDistributionShowServ"/>
+  <callcontroller id="financingBankDistributionFmtClr"/>
+  <ExcelTemplate id="excelTemplate" sheet="各家银行授信分布表"/>
+  <list id="title" type="string">银行名称,疆内授信,疆外授信,授信总额,授信占比,已使用额度,使用比率</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="0"/>
+    <titles>
+     <title ref="title"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="1"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="1"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response name="${request.date.asString}各家银行授信分布表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+ </controller>
+ <service id="financingBankDistributionShowServ" transaction="transactionManager">
+  <list id="yhs" type="string">国开行,
+进出口银行,
+工商银行,
+农业银行,
+中国银行,
+建设银行,
+交通银行,
+浦发银行,
+兴业银行,
+招商银行,
+其他中小银行,
+合计
+</list>
+  <sql id="jnsx" order="yhs" by="0" colcount="2">select 
+	bankNo,
+	sum(authCreditAmount) aca
+from       
+financing_bank_RMB_credit_v
+ where dwid in (3, 5, 7, 8, 9, 10, 12,11) 
+group by
+	bankNo</sql>
+  <sql id="jwsx" order="yhs" by="0" colcount="2">select 
+	bankNo,
+	sum(authCreditAmount) aca
+from       
+financing_bank_RMB_credit_v
+where dwid not in (3, 5, 7, 8, 9, 10, 12,11) 
+group by
+	bankNo</sql>
+  <sql id="hjsx" order="yhs" by="0" colcount="2">select 
+	bankNo,
+	sum(authCreditAmount) aca
+from       
+financing_bank_RMB_credit_v
+group by
+	bankNo</sql>
+  <sql id="sxTotal">select 
+	sum(authCreditAmount) aca
+from 
+financing_bank_RMB_credit_v</sql>
+  <sql id="sxzb" order="yhs" by="0" colcount="2">select 
+	bankNo,
+	sum(authCreditAmount)/nullif(${sxTotal[0]}, 0) aca
+from       
+financing_bank_RMB_credit_v
+group by
+	bankNo</sql>
+  <sql id="ysyed" order="yhs" by="0" colcount="2">select 
+	bankNo,
+	sum(usedAmount) ua
+from  financing_bank_RMB_credit_v
+group by
+	bankNo</sql>
+ 
+  <list id="ids" type="int">
+   <item from="1" to="${yhs.size}"/>
+  </list>
+  <table export="true" id="result" rowIds="ids">
+   <col list="yhs"/>
+   <list sql="jnsz" type="double" value="1" />
+   <list sql="jwsx" type="double" value="1"/>
+   <list sql="hjsx" type="double" value="1"/>
+   <list sql="sxzb" type="double" value="1"/>
+   <list sql="ysyed" type="double" value="1"/>
+   <list instruction="使用比率"/>
+   <sumRow toRow="${yhs.size - 1}">
+    <excludeCol>0</excludeCol>
+    <rangeRows>0, ${yhs.size - 2}</rangeRows>
+   </sumRow>
+   <divCol toCol="6" base="3" sub="5"/>
+  </table>
+ </service>
+</components>

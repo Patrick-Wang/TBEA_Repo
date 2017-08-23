@@ -174,7 +174,9 @@ var Util;
             $("#" + this.mCtrlId).parent().css("display", "");
         };
         UnitedSelector.prototype.change = function (fnChange) {
+            var oldFn = this.mFnChange;
             this.mFnChange = fnChange;
+            return oldFn;
         };
         //selected nodes
         UnitedSelector.prototype.getNodes = function () {

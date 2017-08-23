@@ -36,7 +36,7 @@ public class RelationSum {
 	}
 	
 	public static List<RelationSum> parse(Element e, CompanyManager compMgr, DWXXDao dwxxDao, Map<String, Integer> indiDelc) throws Exception{
-	
+
 		List<RelationGroup> target = RelationGroup.parse(XmlUtil.element(e.getElementsByTagName("target"), 0), compMgr, dwxxDao, indiDelc);
 		
 		

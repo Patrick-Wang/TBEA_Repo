@@ -28,7 +28,7 @@
                 <costUndertaker ref="8" type="string"/>
                 <clientName ref="9" type="string"/>
                 <remark ref="10" type="string"/>
-                <dwid ref="11" type="int"/>
+                <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

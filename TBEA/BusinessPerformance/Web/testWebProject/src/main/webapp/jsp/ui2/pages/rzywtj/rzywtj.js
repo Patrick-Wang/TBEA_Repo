@@ -19,6 +19,7 @@ var rzywtj;
         function ItemShowView() {
             _super.apply(this, arguments);
             this.doubleHeader = false;
+            this.item = 0;
         }
         ItemShowView.prototype.onInitialize = function (opt) {
             var _this = this;
@@ -35,8 +36,17 @@ var rzywtj;
             var item2Hidden = false;
             if (opt.itemNodes2 != undefined) {
                 this.unitedSelector2 = new Util.UnitedSelector(opt.itemNodes2, opt.itemId2);
-                this.unitedSelector.change(function () {
+                this.unitedSelector2.change(function () {
                     _this.adjustHeader();
+                    _this.item = _this.unitedSelector2.getDataNode(_this.unitedSelector2.getPath()).data.id;
+                    if (_this.item == 13 || _this.item == 14) {
+                        _this.unitedSelector.hide();
+                        $("#grid-solve").css("display", "none");
+                    }
+                    else {
+                        _this.unitedSelector.show();
+                        $("#grid-solve").removeCss("display");
+                    }
                 });
                 if (opt.itemNodes2.length == 1) {
                     $("#" + opt.itemId2).hide();
@@ -166,42 +176,54 @@ var rzywtj;
                 $("#grid-solve").removeClass("hidden");
                 $("#" + this.opt.host).show();
                 this.createJqassist();
-                this.mTableAssist.create({
-                    dataWithId: this.resp.data,
+                var data = {};
+                if (this.item != 13 && this.item != 14) {
+                    data.dataWithId = this.resp.data;
+                }
+                else {
+                    data.data = this.resp.data;
+                }
+                this.mTableAssist.create($.extend({
                     datatype: "local",
-                    multiselect: true,
+                    multiselect: this.item != 13 && this.item != 14,
                     drag: false,
                     resize: false,
                     height: '100%',
                     width: $("#" + this.opt.host).width(),
                     shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
-                    rowNum: 2000,
+                    rowNum: 10000,
                     autoScroll: true,
                     onSelectRow: function (rowid, status) {
-                        if (status) {
-                            _this.mTableAssist.setCellValue(rowid, _this.resp.data[0].length - 1, 'Y');
+                        if (_this.item != 13 && _this.item != 14) {
+                            if (status) {
+                                _this.mTableAssist.setCellValue(rowid, _this.resp.data[0].length - 1, 'Y');
+                            }
+                            else {
+                                _this.mTableAssist.setCellValue(rowid, _this.resp.data[0].length - 1, 'N');
+                            }
+                            _this.updateRowColor(rowid);
                         }
-                        else {
-                            _this.mTableAssist.setCellValue(rowid, _this.resp.data[0].length - 1, 'N');
-                        }
-                        _this.updateRowColor(rowid);
                     },
                     onSelectAll: function (rowids, status) {
-                        if (status) {
-                            for (var i = 0; i < rowids.length; ++i) {
-                                _this.mTableAssist.setCellValue(rowids[i], _this.resp.data[0].length - 1, 'Y');
+                        if (_this.item != 13 && _this.item != 14) {
+                            if (status) {
+                                for (var i = 0; i < rowids.length; ++i) {
+                                    _this.mTableAssist.setCellValue(rowids[i], _this.resp.data[0].length - 1, 'Y');
+                                }
                             }
-                        }
-                        else {
-                            for (var i = 0; i < rowids.length; ++i) {
-                                _this.mTableAssist.setCellValue(rowids[i], _this.resp.data[0].length - 1, 'N');
+                            else {
+                                for (var i = 0; i < rowids.length; ++i) {
+                                    _this.mTableAssist.setCellValue(rowids[i], _this.resp.data[0].length - 1, 'N');
+                                }
                             }
+                            _this.updateColor();
                         }
-                        _this.updateColor();
                     }
-                });
-                this.updateStatus();
-                this.updateColor();
+                }, data));
+                if (this.item != 13 && this.item != 14) {
+                    this.updateStatus();
+                    this.updateColor();
+                }
                 this.adjustSize();
             }
         };

@@ -30,6 +30,7 @@ module rzywtj {
         unitedSelector2 : Util.UnitedSelector;
         doubleHeader : boolean = false;
         mAjaxSubmit:Util.Ajax;
+        item = 0;
         onInitialize(opt:ShowOption):void{
             this.mAjaxSubmit = new Util.Ajax(opt.submitUrl, false);
 
@@ -49,8 +50,16 @@ module rzywtj {
             let item2Hidden = false;
             if (opt.itemNodes2 != undefined){
                 this.unitedSelector2 = new Util.UnitedSelector(opt.itemNodes2,opt.itemId2);
-                this.unitedSelector.change(()=>{
+                this.unitedSelector2.change(()=>{
                     this.adjustHeader();
+                    this.item = this.unitedSelector2.getDataNode(this.unitedSelector2.getPath()).data.id;
+                    if (this.item == 13 || this.item == 14){
+                        this.unitedSelector.hide();
+                        $("#grid-solve").css("display", "none");
+                    }else{
+                        this.unitedSelector.show();
+                        $("#grid-solve").removeCss("display");
+                    }
                 });
                 if (opt.itemNodes2.length == 1){
                     $("#" + opt.itemId2).hide();
@@ -70,6 +79,8 @@ module rzywtj {
             });
 
             super.onInitialize(opt);
+
+
         }
 
         onEvent(e:framework.route.Event):any {
@@ -190,42 +201,55 @@ module rzywtj {
 
                 this.createJqassist();
 
-                this.mTableAssist.create({
-                    dataWithId: this.resp.data,
+                let data = {
+
+                };
+                if (this.item != 13 && this.item != 14) {
+                    data.dataWithId = this.resp.data;
+                }else {
+                    data.data = this.resp.data;
+                }
+
+                this.mTableAssist.create( $.extend({
                     datatype: "local",
-                    multiselect: true,
+                    multiselect: this.item != 13 && this.item != 14,
                     drag: false,
                     resize: false,
                     height: '100%',
                     width: $("#" + this.opt.host).width(),
                     shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
-                    rowNum: 2000,
+                    rowNum: 10000,
                     autoScroll: true,
                     onSelectRow: (rowid, status)=>{
-                        if (status){
-                            this.mTableAssist.setCellValue(rowid, this.resp.data[0].length - 1, 'Y');
-                        }else{
-                            this.mTableAssist.setCellValue(rowid, this.resp.data[0].length - 1, 'N');
+                        if (this.item != 13 && this.item != 14){
+                            if (status){
+                                this.mTableAssist.setCellValue(rowid, this.resp.data[0].length - 1, 'Y');
+                            }else{
+                                this.mTableAssist.setCellValue(rowid, this.resp.data[0].length - 1, 'N');
+                            }
+                            this.updateRowColor(rowid);
                         }
-                        this.updateRowColor(rowid);
                     },
                     onSelectAll: (rowids, status)=>{
-                        if (status){
-                            for (let i = 0; i < rowids.length; ++i){
-                                this.mTableAssist.setCellValue(rowids[i], this.resp.data[0].length - 1, 'Y');
+                        if (this.item != 13 && this.item != 14) {
+                            if (status) {
+                                for (let i = 0; i < rowids.length; ++i) {
+                                    this.mTableAssist.setCellValue(rowids[i], this.resp.data[0].length - 1, 'Y');
+                                }
+                            } else {
+                                for (let i = 0; i < rowids.length; ++i) {
+                                    this.mTableAssist.setCellValue(rowids[i], this.resp.data[0].length - 1, 'N');
+                                }
                             }
-                        }else{
-                            for (let i = 0; i < rowids.length; ++i){
-                                this.mTableAssist.setCellValue(rowids[i], this.resp.data[0].length - 1, 'N');
-                            }
+
+                            this.updateColor();
                         }
-
-                        this.updateColor();
                     }
-                });
-
-                this.updateStatus();
-                this.updateColor();
+                }, data));
+                if (this.item != 13 && this.item != 14) {
+                    this.updateStatus();
+                    this.updateColor();
+                }
                 this.adjustSize();
             }
         }

@@ -217,7 +217,9 @@ module Util {
         }
 
         public change(fnChange: (sel: any, depth: number) => void) {
+            var oldFn = this.mFnChange;
             this.mFnChange = fnChange;
+            return oldFn;
         }
 
         //selected nodes
