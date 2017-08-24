@@ -309,9 +309,12 @@ public class CpzlqkServlet {
 		context.put("dwmc", company.getName());
 		context.put("year", cal.get(Calendar.YEAR));
 		context.put("month", cal.get(Calendar.MONTH) + 1);
+		context.put("comp", comp);
+		context.put("isByq", false);
+		context.put("isXl", false);
 		if (company.getType() == CompanyType.BYQCY ||
 				contains(companyManager.getVirtualCYOrg().getCompany(CompanyType.BYQCY).getSubCompanies(), company)){
-			
+			context.put("isByq", true);
 
 			List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, YDJDType.YD, zts);
 			removeColumns(result, 0, 2);
@@ -452,7 +455,7 @@ public class CpzlqkServlet {
 				e.printStackTrace();
 			}
 		}else {
-			
+			context.put("isXl", true);
 			List<List<String>> result = xlacptjjgService.getXlacptjjg(d, company, YDJDType.YD, zts);
 			removeColumns(result, 0, 2);
 			context.put("cpycss", result);

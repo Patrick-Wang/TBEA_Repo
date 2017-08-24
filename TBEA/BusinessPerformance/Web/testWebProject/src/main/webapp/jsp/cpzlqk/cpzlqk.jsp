@@ -272,6 +272,10 @@ th.ui-th-ltr {
 						style="display: none"
 						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'export')">
 				</form>
+				<!-- <form id="exportReport" method="post">
+					<input id="exportReportButton" type="button" value="质量报告"
+						onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.EVENT.ZLFE_ZLREPORT, 'exportReport')">
+				</form> -->
 			</td>
 		</tr>
 	</Table>

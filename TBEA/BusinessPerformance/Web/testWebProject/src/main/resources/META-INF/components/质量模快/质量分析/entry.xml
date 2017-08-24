@@ -8,6 +8,24 @@
 			condition=${condition}
 		</sql>
  </service>
+  <service id="servZlfxUpdate2" transaction="transactionManager">
+  <sql id="comment" export="true">if exists (select
+			comment
+			from
+			cpzlqk_zlfx
+			where
+			condition=${condition})
+			
+			select
+			comment
+			from
+			cpzlqk_zlfx
+			where
+			condition=${condition}
+			else
+			select ''			
+		</sql>
+ </service>
  <service id="servZlfxSubmit" transaction="transactionManager">
   <merge data="data" table="cpzlqk_zlfx">
    <where>

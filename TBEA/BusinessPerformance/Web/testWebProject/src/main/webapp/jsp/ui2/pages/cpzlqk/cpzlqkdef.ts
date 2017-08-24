@@ -107,6 +107,7 @@ module cpzlqk{
         export let ZLFE_DATA_STATUS : number = FrameEvent.lastEvent();
         export let ZLFE_COMMENT_DENY : number = FrameEvent.lastEvent();
         export let ZLFE_APPROVEAUTH_UPDATED : number = FrameEvent.lastEvent();
+        export let ZLFE_ZLREPORT : number = FrameEvent.lastEvent();
     }
 
     export enum NwbzlType {

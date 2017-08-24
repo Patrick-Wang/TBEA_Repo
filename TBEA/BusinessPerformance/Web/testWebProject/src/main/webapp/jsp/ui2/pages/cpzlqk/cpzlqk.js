@@ -286,6 +286,9 @@ var cpzlqk;
                 case cpzlqk.Event.ZLFE_COMMENT_UPDATED:
                     this.onUpdateComment(e.data.comment, e.data.zt);
                     break;
+                case cpzlqk.Event.ZLFE_ZLREPORT:
+                    //this.onUpdateComment(e.data.comment, e.data.zt);
+                    break;
             }
             return _super.prototype.onEvent.call(this, e);
         };

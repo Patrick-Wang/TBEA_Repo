@@ -320,6 +320,9 @@ module cpzlqk {
                 case Event.ZLFE_COMMENT_UPDATED:
                     this.onUpdateComment(e.data.comment, e.data.zt);
                     break;
+                case Event.ZLFE_ZLREPORT:
+                    //this.onUpdateComment(e.data.comment, e.data.zt);
+                    break;
             }
             return super.onEvent(e);
         }
