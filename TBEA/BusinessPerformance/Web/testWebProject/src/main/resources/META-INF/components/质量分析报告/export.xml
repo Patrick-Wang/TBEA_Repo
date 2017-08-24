@@ -4,7 +4,7 @@
 			<PercentFormatter reservedCount="1">
 				<DefaultMatcher cols="2,5" />
 			</PercentFormatter>
-			<NumberFormatter reservedCount="1" />
+			<NumberFormatter reservedCount="2" />
 		</formatter>
 		<formatterServer id="fmtServ" table="${cpycss}">
 			<formatter ref="fmtData" />

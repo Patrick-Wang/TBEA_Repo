@@ -286,6 +286,15 @@ public class CpzlqkServlet {
 		return result;
 	}
 	
+	boolean contains(List<Company> comps, Company comp) {
+		for (Company cp : comps) {
+			if (cp.getType() == comp.getType()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@RequestMapping(value = "cpzlfxbg.do")
 	public void cpzlfxbg(HttpServletRequest request,
 			HttpServletResponse response)  {
@@ -301,7 +310,7 @@ public class CpzlqkServlet {
 		context.put("year", cal.get(Calendar.YEAR));
 		context.put("month", cal.get(Calendar.MONTH) + 1);
 		if (company.getType() == CompanyType.BYQCY ||
-			companyManager.getVirtualCYOrg().getCompany(CompanyType.BYQCY).getSubCompanies().contains(company)){
+				contains(companyManager.getVirtualCYOrg().getCompany(CompanyType.BYQCY).getSubCompanies(), company)){
 			
 
 			List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, YDJDType.YD, zts);
