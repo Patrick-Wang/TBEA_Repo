@@ -103,6 +103,7 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	@Override
 	public void run(Context context) throws Exception {
 		global = context;
+		local.put("_this", this);
 		onRun();
 	}
 

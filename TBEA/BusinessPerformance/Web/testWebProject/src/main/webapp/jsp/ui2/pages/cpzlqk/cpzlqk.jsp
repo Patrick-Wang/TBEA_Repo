@@ -213,6 +213,12 @@
 								onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(framework.basic.FrameEvent.FE_EXPORTEXCEL, 'exportExcel')">
 								导出 <i class="fa fa-file-excel-o"></i>
 							</div>
+							<c:if test="${_86}">
+								<div id="grid-report" class="btn btn-default btn-w4" style="display: none"
+								onclick="framework.router.to(framework.basic.endpoint.FRAME_ID).send(cpzlqk.Event.ZLFE_ZLREPORT, 'grid-report')">
+								质量报告 <i class="fa fa-file-word-o"></i>
+								</div>
+							</c:if>
 							<div class=" comment-area" style="display: inline-block;">
 							<c:if test="${pageType == 2}">
 								<%-- 2 录入页面--%>
@@ -232,7 +238,7 @@
 							</c:if>
 							</div>
 						</div>
-						<form id="exportExcel" style="display: none" method="post"></form>
+						<form id="exportForm" style="display: none" method="post"></form>
 					</div>
 					<span id="unit"></span>
 				</div>

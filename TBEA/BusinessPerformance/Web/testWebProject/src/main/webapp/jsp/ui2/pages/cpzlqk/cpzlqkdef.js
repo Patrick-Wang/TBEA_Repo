@@ -64,6 +64,7 @@ var cpzlqk;
         Event.ZLFE_COMMENT_DENY = FrameEvent.lastEvent();
         Event.ZLFE_APPROVEAUTH_UPDATED = FrameEvent.lastEvent();
         Event.ZLFE_ZLREPORT = FrameEvent.lastEvent();
+        Event.ZLFE_ZLREPORT_SUPPORT = FrameEvent.lastEvent();
     })(Event = cpzlqk.Event || (cpzlqk.Event = {}));
     (function (NwbzlType) {
         NwbzlType[NwbzlType["ZT"] = 0] = "ZT";

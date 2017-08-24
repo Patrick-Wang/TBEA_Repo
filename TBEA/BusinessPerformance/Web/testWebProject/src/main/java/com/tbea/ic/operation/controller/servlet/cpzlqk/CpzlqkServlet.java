@@ -32,6 +32,8 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
+import com.tbea.ic.operation.common.querier.QuerierFactory;
+import com.tbea.ic.operation.common.querier.ZBStatusQuerier;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.model.entity.jygk.Account;
@@ -68,6 +70,9 @@ public class CpzlqkServlet {
 	
 	@Autowired
 	CpzlqkService cpzlqkService;
+	
+	@Autowired
+	ExtendAuthorityService extAuthServ;
 	
 	private CompanySelection selectCompany(List<Company> comps){
 		Organization org = companyManager.getVirtualCYOrg();
@@ -130,6 +135,11 @@ public class CpzlqkServlet {
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
+		Account account = SessionManager.getAccount(request.getSession());
+		for (Integer auth : extAuthServ.getAuths(account)){
+			map.put("_" + auth, true);
+		}
+		
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
 
@@ -172,6 +182,10 @@ public class CpzlqkServlet {
 			HttpServletResponse response) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
+		Account account = SessionManager.getAccount(request.getSession());
+		for (Integer auth : extAuthServ.getAuths(account)){
+			map.put("_" + auth, true);
+		}
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
 		
@@ -204,7 +218,11 @@ public class CpzlqkServlet {
 	@RequestMapping(value = {"entry.do", "v2/entry.do"})
 	public ModelAndView getEntry(HttpServletRequest request,
 			HttpServletResponse response) {
-		Map<String, Object> map = new HashMap<String, Object>();	
+		Map<String, Object> map = new HashMap<String, Object>();
+		Account account = SessionManager.getAccount(request.getSession());
+		for (Integer auth : extAuthServ.getAuths(account)){
+			map.put("_" + auth, true);
+		}
 		DateSelection dateSel = new DateSelection(Calendar.getInstance(), true, false);
 		dateSel.select(map);
 		List<Company> comps = extendAuthService.getAuthedCompanies(
@@ -305,13 +323,34 @@ public class CpzlqkServlet {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		List<Integer> zts = new ArrayList<Integer>();
-		zts.add(ZBStatus.APPROVED.ordinal());
 		context.put("dwmc", company.getName());
 		context.put("year", cal.get(Calendar.YEAR));
 		context.put("month", cal.get(Calendar.MONTH) + 1);
 		context.put("comp", comp);
 		context.put("isByq", false);
 		context.put("isXl", false);
+		
+		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
+		if (pageType == PageType.SHOW){
+			zts.add(ZBStatus.APPROVED.ordinal());
+		} else {
+			Account account = SessionManager.getAccount(request.getSession());
+			List<Integer> auths = extendAuthService.getAuths(account, company);
+
+			if (pageType == PageType.ENTRY){
+				ZBStatusQuerier querier = QuerierFactory.createZlEntryQuerier();			
+				zts = querier.queryStatus(auths);
+			}  else if (pageType == PageType.APPROVE){
+				ZBStatusQuerier querier = QuerierFactory.createZlApproveQuerier();			
+				zts = querier.queryStatus(auths);
+			}
+			
+			if (zts.isEmpty()){
+				zts.add(ZBStatus.NONE.ordinal());
+			}
+		}
+		
+		
 		if (company.getType() == CompanyType.BYQCY ||
 				contains(companyManager.getVirtualCYOrg().getCompany(CompanyType.BYQCY).getSubCompanies(), company)){
 			context.put("isByq", true);
@@ -454,7 +493,8 @@ public class CpzlqkServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}else {
+		}else if(company.getType() == CompanyType.XLCY ||
+				contains(companyManager.getVirtualCYOrg().getCompany(CompanyType.XLCY).getSubCompanies(), company)){
 			context.put("isXl", true);
 			List<List<String>> result = xlacptjjgService.getXlacptjjg(d, company, YDJDType.YD, zts);
 			removeColumns(result, 0, 2);
@@ -591,7 +631,6 @@ public class CpzlqkServlet {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
 	}
 

@@ -22,7 +22,6 @@ import com.frame.script.el.ELExpression;
 import com.frame.script.el.ELParser;
 import com.frame.script.util.StringUtil;
 import com.frame.script.util.TypeUtil;
-import com.sun.org.apache.xerces.internal.dom.DeferredElementImpl;
 
 public class XmlUtil {
 	
@@ -520,15 +519,18 @@ public class XmlUtil {
 	}
 
 	public static String getText(Element e) {
-		String text = "";
-		Node node = e.getFirstChild();
-		while (node != null){
-			if (node.getNodeType() == Node.TEXT_NODE){
-				text += node.getNodeValue();
+		if (null != e) {
+			String text = "";
+			Node node = e.getFirstChild();
+			while (node != null){
+				if (node.getNodeType() == Node.TEXT_NODE){
+					text += node.getNodeValue();
+				}
+				node = node.getNextSibling();
 			}
-			node = node.getNextSibling();
+			return text;
 		}
-		return text;
+		return null;
 	}
 
 	public static void copyAttr(Element from, Element to) {

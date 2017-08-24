@@ -62,6 +62,12 @@ var cpzlqk;
                 else {
                     $("#zlAndyclhgl").show();
                 }
+                if (isPd || compType == Util.CompanyType.XKGS) {
+                    $("#grid-report").hide();
+                }
+                else {
+                    $("#grid-report").show();
+                }
                 _this.updateTypeSelector();
                 _this.adjustHeader();
             });
@@ -97,6 +103,22 @@ var cpzlqk;
                 _this.adjustHeader();
                 router.to(_this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
             });
+            var compType = this.mCompanySelector.getCompany();
+            var isPd = (compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
+                || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
+                || compType == Util.CompanyType.XBXBGS || compType == Util.CompanyType.PDCY);
+            if (isPd) {
+                $("#zlAndyclhgl").hide();
+            }
+            else {
+                $("#zlAndyclhgl").show();
+            }
+            if (isPd || compType == Util.CompanyType.XKGS) {
+                $("#grid-report").hide();
+            }
+            else {
+                $("#grid-report").show();
+            }
             this.updateTypeSelector();
             this.updateUI();
             this.adjustHeader();
@@ -287,10 +309,23 @@ var cpzlqk;
                     this.onUpdateComment(e.data.comment, e.data.zt);
                     break;
                 case cpzlqk.Event.ZLFE_ZLREPORT:
-                    //this.onUpdateComment(e.data.comment, e.data.zt);
+                    this.onExportReport(e.data);
                     break;
             }
             return _super.prototype.onEvent.call(this, e);
+        };
+        CpzlqkFrameView.prototype.onExportReport = function (id) {
+            var compType = this.mCompanySelector.getCompany();
+            var dt = this.getDate();
+            if (dt.month == undefined) {
+                dt.month = 1;
+            }
+            if (dt.day == undefined) {
+                dt.day = 1;
+            }
+            $("#exportForm")[0].action = "/BusinessManagement/cpzlqk/cpzlfxbg.do?companyId=" + compType + "&" +
+                "date=" + Util.date2Str(dt) + "&pageType=" + pageType;
+            $("#exportForm")[0].submit();
         };
         CpzlqkFrameView.prototype.updateUI = function () {
             var _this = this;

@@ -12,7 +12,8 @@
   <context key="cpycss" value="${fmtServ.result}"/>
  </controller>
  <controller id="zlfxReportComment">
- <if test="${comp == CompanyType.BYQCY || comp == CompanyType.BYQCY }">
+ <context key="cal" value="${request.date.asCalendar}"></context>
+ <if test="${comp == CompanyType.BYQCY || comp == CompanyType.XLCY }">
    <context key="ycssbhgcpxxComment" value=""/>
    <context key="nwbzlwtqkComment" value=""/>
    <context key="sjzlqkComment" value=""/>
@@ -21,36 +22,36 @@
    <context key="gczzzlqkComment" value=""/>
   </if>
   <elseif test="${isByq}">
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/byqcpycssbhgwtmx/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/byqcpycssbhgwtmx/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="ycssbhgcpxxComment" value="${comment[0]}"/>
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/byqnwbzlztqk/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/byqnwbzlztqk/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="nwbzlwtqkComment" value="${comment[0]}"/>
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/byqsjzlqk/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/byqsjzlqk/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="sjzlqkComment" value="${comment[0]}"/>
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/byqyclzlwt/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/byqyclzlwt/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="yclzpjzlqkComment" value="${comment[0]}"/>
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/byqsczzzlwt/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/byqsczzzlwt/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="gczzzlqkComment" value="${comment[0]}"/>
   </elseif>
   <elseif test="${isXl}">
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/xlbhgcpmx/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/xlbhgcpmx/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="ycssbhgcpxxComment" value="${comment[0]}"/>
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/xlnwbzlztqk/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/xlnwbzlztqk/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="nwbzlwtqkComment" value="${comment[0]}"/>
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/xlgyzlqk/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/xlgyzlqk/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="gyzlqkComment" value="${comment[0]}"/>
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/xlyclzlwt/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/xlyclzlwt/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="yclzpjzlqkComment" value="${comment[0]}"/>
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${request.date.asString}&amp;url=/BusinessManagement/xlsczzzlwt/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/xlsczzzlwt/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="gczzzlqkComment" value="${comment[0]}"/>
   </elseif>

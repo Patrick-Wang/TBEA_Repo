@@ -69,6 +69,13 @@ module cpzlqk {
                 }else{
                     $("#zlAndyclhgl").show();
                 }
+
+                if (isPd || compType == Util.CompanyType.XKGS){
+                    $("#grid-report").hide();
+                }else{
+                    $("#grid-report").show();
+                }
+
                 this.updateTypeSelector();
                 this.adjustHeader();
             });
@@ -111,7 +118,21 @@ module cpzlqk {
                 router.to(this.mCurrentPlugin).send(FrameEvent.FE_ADJUST_SZIE);
             });
 
+            let compType = this.mCompanySelector.getCompany();
+            let isPd = (compType == Util.CompanyType.SBZTFGS || compType == Util.CompanyType.HBDQFGS
+            || compType == Util.CompanyType.XBZTGS || compType == Util.CompanyType.TBGS
+            || compType == Util.CompanyType.XBXBGS|| compType == Util.CompanyType.PDCY);
+            if (isPd){
+                $("#zlAndyclhgl").hide();
+            }else{
+                $("#zlAndyclhgl").show();
+            }
 
+            if (isPd || compType == Util.CompanyType.XKGS){
+                $("#grid-report").hide();
+            }else{
+                $("#grid-report").show();
+            }
 
             this.updateTypeSelector();
             this.updateUI();
@@ -321,12 +342,26 @@ module cpzlqk {
                     this.onUpdateComment(e.data.comment, e.data.zt);
                     break;
                 case Event.ZLFE_ZLREPORT:
-                    //this.onUpdateComment(e.data.comment, e.data.zt);
+                    this.onExportReport( e.data);
                     break;
             }
             return super.onEvent(e);
         }
 
+        onExportReport(id){
+            let compType = this.mCompanySelector.getCompany();
+            let dt:Util.Date = this.getDate();
+            if (dt.month == undefined){
+                dt.month = 1;
+            }
+
+            if (dt.day == undefined) {
+                dt.day = 1;
+            }
+            $("#exportForm")[0].action = "/BusinessManagement/cpzlqk/cpzlfxbg.do?companyId=" + compType + "&" +
+                    "date=" + Util.date2Str(dt) + "&pageType=" + pageType;
+            $("#exportForm")[0].submit();
+        }
 
         protected updateUI() {
             let node:Util.DataNode = this.mItemSelector.getDataNode(this.mItemSelector.getPath());
