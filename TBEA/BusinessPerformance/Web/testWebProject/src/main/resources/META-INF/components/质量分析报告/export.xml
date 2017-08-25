@@ -34,7 +34,7 @@
    <context key="gczzzlqkComment" value=""/>
   </if>
   <elseif test="${isByq}">
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/byqcpycssbhgwtmx/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/byqacptjjg/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="ycssbhgcpxxComment" value="${comment[0]}"/>
    <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/byqnwbzlztqk/update.do&amp;ydjd=0"/>
@@ -51,7 +51,7 @@
    <context key="gczzzlqkComment" value="${comment[0]}"/>
   </elseif>
   <elseif test="${isXl}">
-   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/xlbhgcpmx/update.do&amp;ydjd=0"/>
+   <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/xlacptjjg/update.do&amp;ydjd=0"/>
    <callservice id="servZlfxUpdate2"/>
    <context key="ycssbhgcpxxComment" value="${comment[0]}"/>
    <context key="condition" value="companyId=${comp.ordinal}&amp;date=${cal.year}-${cal.month}-${cal.day}&amp;url=/BusinessManagement/xlnwbzlztqk/update.do&amp;ydjd=0"/>
