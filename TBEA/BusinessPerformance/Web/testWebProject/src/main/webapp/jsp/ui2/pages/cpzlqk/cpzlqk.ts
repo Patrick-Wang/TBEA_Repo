@@ -502,6 +502,7 @@ module cpzlqk {
                     $("#commentText").val("");
                 }
             }
+            this.adjustHeader();
         }
 
         private onUpdateAuth():void {

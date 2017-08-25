@@ -459,6 +459,7 @@ var cpzlqk;
                     $("#commentText").val("");
                 }
             }
+            this.adjustHeader();
         };
         CpzlqkFrameView.prototype.onUpdateAuth = function () {
             $("#approveComment").hide();
