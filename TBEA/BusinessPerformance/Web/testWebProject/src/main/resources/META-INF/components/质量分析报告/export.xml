@@ -1,10 +1,10 @@
 <components>
  <controller id="zlfxReportFmtClr">
   <formatter id="fmtData">
-   <PercentFormatter reservedCount="1">
+   <PercentFormatter reservedCount="2">
     <DefaultMatcher cols="2,5"/>
    </PercentFormatter>
-   <NumberFormatter reservedCount="2"/>
+   <NumberFormatter reservedCount="0"/>
   </formatter>
   <formatterServer id="fmtServ" table="${cpycss}">
    <formatter ref="fmtData"/>
