@@ -101,6 +101,7 @@ public class GszbServiceImpl implements GszbService {
 		gsztzbs.add(GSZB.HTQY_QT304.value()); //三期加入指标
 		gsztzbs.add(GSZB.ZJHL57.value());
 		gsztzbs.add(GSZB.BHSCZ60.value());
+		gsztzbs.add(GSZB.WXCZ.value());		  //三期新加入指标外协产值
 		gsztzbs.add(GSZB.RS61.value());
 		gsztzbs.add(GSZB.RJLR62.value());
 		gsztzbs.add(GSZB.RJSR63.value());

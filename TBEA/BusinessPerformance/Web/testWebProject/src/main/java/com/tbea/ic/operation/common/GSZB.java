@@ -556,6 +556,7 @@ public enum GSZB {
 	QTRS335(335), // 其他人数
 	MTXLZH346(346), // 其他人数
 	KHLR(347),
+	WXCZ(353),	//外协产值
 	YSZK_DAILY_REPORT(-1);// 应收账款日报
 
 	private Integer value;
