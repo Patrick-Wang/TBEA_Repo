@@ -78,7 +78,7 @@ var home;
         if (homeFrame.length == 0) {
             //let src = '/BusinessManagement/ydzb/v2/hzb_zbhz.do?breads=[{"id":"1498180329800","value":"abc"},{"id":"1498180329801","value":"def"},{"id":"1498180329802","value":"hij"}]';
             var src = "/BusinessManagement/jsp/ui2/background.jsp";
-            if (_77) {
+            if (_77 || _87) {
                 src += "?map=true";
             }
             $("#tabContent").append('<iframe frameborder="0" name="home" id="home" src=' + src + ' style="width:100%;height:100%;"></iframe>');
