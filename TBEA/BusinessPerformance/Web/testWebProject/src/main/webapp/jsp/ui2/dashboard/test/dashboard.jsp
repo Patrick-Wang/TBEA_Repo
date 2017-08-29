@@ -374,9 +374,9 @@
 										<div class="databox-row row-6 text-left margin-bottom-5">
 											<span
 												class="badge badge-palegreen badge-empty margin-left-10"></span>
-											<span class="databox-inlinetext darkgray margin-left-10">输变电国内市场签约额</span>
+											<span class="databox-inlinetext darkgray margin-left-10">XXX国内市场签约额</span>
 											<span class="badge badge-yellow badge-empty margin-left-10"></span>
-											<span class="databox-inlinetext darkgray margin-left-10">输变电国际市场签约额</span>
+											<span class="databox-inlinetext darkgray margin-left-10">XXX国际市场签约额</span>
 										</div>
 										<div class="databox-row row-6">
 											<div class="progress bg-yellow progress-no-radius">
@@ -619,30 +619,30 @@
 				zt : [
 					{
 						ndjhwcl:'92%',
-						ndlj:258124,
+						ndlj:100000,
 						ndljtbzf:"58%"
 					},
 					{
 						ndjhwcl:'98%',
-						ndlj:258121,
+						ndlj:200000,
 						ndljtbzf:"83%"
 					},
 					{
 						ndjhwcl:'110%',
-						ndlj:85916,
+						ndlj:50000,
 						ndljtbzf:"-21%"
 					},
 					{
 						ndjhwcl:'69%',
-						ndlj:36584,
+						ndlj:60000,
 						ndljtbzf:"91%"
 					}
 				],
 				scqy : {
-					gszt:895468,
-					zzy:69521,
-					jcfw:69544,
-					qt:95422,
+					gszt:910000,
+					zzy:100000,
+					jcfw:80000,
+					qt:10000,
 					ydzbs:[2581,6895,2518,3658,9962,210,251,2154,3658,2485,9785,9654]
 				},
 				scqypm :{
