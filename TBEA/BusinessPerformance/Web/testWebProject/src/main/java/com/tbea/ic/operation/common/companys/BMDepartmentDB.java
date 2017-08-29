@@ -141,6 +141,10 @@ public class BMDepartmentDB extends AbstractOrganization {
 		id_typeMap.put(116, CompanyType.SBDQSBGS);
 		id_typeMap.put(310, CompanyType.CTGYGS);
 		id_typeMap.put(511, CompanyType.DXDLJCZXGS);
+		
+		//融资业务
+		id_typeMap.put(2000, CompanyType.JGCGZX);
+		
 	}
 
 	private int m_depth = 0;

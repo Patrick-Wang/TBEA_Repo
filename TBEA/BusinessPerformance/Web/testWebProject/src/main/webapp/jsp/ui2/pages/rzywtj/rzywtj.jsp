@@ -190,10 +190,10 @@
 							onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_UPDATE)">
 							查找 <i class="fa fa-search"></i>
 						</div>
-						<div id="grid-solve" class="btn btn-default"
-							onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(rzywtj.FE_SOLVED)">
-							处理 <i class="fa fa-check"></i>
-						</div>
+						<%--<div id="grid-solve" class="btn btn-default hidden"--%>
+							<%--onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(rzywtj.FE_SOLVED)">--%>
+							<%--处理 <i class="fa fa-check"></i>--%>
+						<%--</div>--%>
 						<div id="grid-export" class="btn btn-default"
 							onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_EXPORTEXCEL, 'exportExcel')">
 							导出 <i class="fa fa-file-excel-o"></i>

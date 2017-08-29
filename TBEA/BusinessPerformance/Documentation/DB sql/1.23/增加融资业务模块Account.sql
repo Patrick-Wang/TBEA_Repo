@@ -1,4 +1,24 @@
-SET IDENTITY_INSERT [dbo].[jygk_account] ON
+delete from jygk_account where name in ('892603',
+                                        '902991',
+                                        '256118',
+                                        '282208',
+                                        '838582',
+                                        '300022',
+                                        '899628',
+                                        '095961',
+                                        '928006',
+                                        '601858',
+                                        '232321',
+                                        '008382',
+                                        '565839',
+                                        '818099',
+                                        '235021',
+                                        '636988',
+                                        '688020',
+                                        '068903',
+                                        '102589',
+                                        '363560');
+
 INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('892603', 1234, 0, 0)
 INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('902991', 1234, 0, 0)
 INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('256118', 1234, 0, 0)
@@ -19,6 +39,3 @@ INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES
 INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('068903', 1234, 0, 0)
 INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('102589', 1234, 0, 0)
 INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('363560', 1234, 0, 0)
-
-
-SET IDENTITY_INSERT [dbo].[jygk_account] OFF

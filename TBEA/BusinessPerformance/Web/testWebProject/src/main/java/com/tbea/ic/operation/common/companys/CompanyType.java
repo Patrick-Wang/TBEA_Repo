@@ -186,7 +186,10 @@ public enum CompanyType {
 	UNKNOWN			("未知"),
 	
 	RSGS			("柔输公司"),
-	PDCY			("配电产业");
+	PDCY			("配电产业"),
+	
+	//融资业务
+	JGCGZX			("机关采购中心")	;
 	//TCNY_and_XJNY	("天池能源+新疆能源公司");
 	private String value;
 

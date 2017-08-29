@@ -24,6 +24,7 @@ import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.tbea.ic.operation.service.report.SystemAuthority;
 import com.xml.frame.report.component.entity.Context;
 import com.xml.frame.report.util.EasyList;
 
@@ -37,6 +38,8 @@ public class AuthContextHandler extends ControllerContextHandler {
 	ExtendAuthorityService extendAuthService;
 
 	public void onHandle(Context context, HttpServletRequest request, HttpServletResponse resp) {
+		
+		context.put("sysAuth", new SystemAuthority(companyManager, SessionManager.getAccount(request.getSession()), extendAuthService));
 		
 		context.put("authCompanies", new ClosureMap(){
 

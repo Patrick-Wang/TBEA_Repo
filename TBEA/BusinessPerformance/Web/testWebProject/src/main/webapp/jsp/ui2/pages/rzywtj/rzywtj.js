@@ -27,6 +27,7 @@ var rzywtj;
             this.unitedSelector = new Util.UnitedSelector(opt.itemNodes, opt.itemId);
             this.unitedSelector.change(function () {
                 _this.adjustHeader();
+                _this.item = _this.unitedSelector.getDataNode(_this.unitedSelector.getPath()).data.id;
             });
             var itemHidden = false;
             if (opt.itemNodes.length == 1) {
@@ -117,20 +118,20 @@ var rzywtj;
             });
         };
         ItemShowView.prototype.updateColor = function () {
-            for (var i = 0; i < this.resp.data.length; ++i) {
-                var dt = this.resp.data[i][this.resp.data[i].length - 2];
-                if (dt && this.mTableAssist.getCellValue(this.mTableAssist.getRid(i), this.resp.data[i].length - 1) == 'N') {
-                    var deadline = Util.toDate(dt);
-                    var dtNow = Util.now();
-                    var dDeadline = new Date(deadline.year, deadline.month, deadline.day);
-                    var dNow = new Date(dtNow.year, dtNow.month, dtNow.day);
-                    if (dDeadline.getTime() <= dNow.getTime()) {
-                        this.mTableAssist.updateRowBgColor(this.mTableAssist.getRid(i), 237, 28, 36);
-                        continue;
-                    }
-                }
-                this.mTableAssist.updateRowBgColor(this.mTableAssist.getRid(i));
-            }
+            //for (var i = 0; i < this.resp.data.length; ++i) {
+            //    let dt = this.resp.data[i][this.resp.data[i].length - 2];
+            //    if (dt && this.mTableAssist.getCellValue(this.mTableAssist.getRid(i), this.resp.data[i].length - 1) == 'N'){
+            //        let deadline = Util.toDate(dt);
+            //        let dtNow = Util.now();
+            //        let dDeadline = new Date(deadline.year, deadline.month, deadline.day);
+            //        let dNow = new Date(dtNow.year, dtNow.month, dtNow.day);
+            //        if (dDeadline.getTime() <= dNow.getTime()){
+            //            this.mTableAssist.updateRowBgColor(this.mTableAssist.getRid(i), 237, 28, 36);
+            //            continue;
+            //        }
+            //    }
+            //    this.mTableAssist.updateRowBgColor(this.mTableAssist.getRid(i));
+            //}
         };
         ItemShowView.prototype.updateRowColor = function (rowid) {
             var dt = this.mTableAssist.getCellValue(rowid, this.resp.data[0].length - 2);
@@ -165,7 +166,6 @@ var rzywtj;
             }
         };
         ItemShowView.prototype.updateTable = function () {
-            var _this = this;
             if (this.resp.data.length == 0) {
                 $("#tip").removeClass("hidden");
                 $("#" + this.opt.host).hide();
@@ -185,40 +185,14 @@ var rzywtj;
                 }
                 this.mTableAssist.create($.extend({
                     datatype: "local",
-                    multiselect: this.item != 13 && this.item != 14,
+                    // multiselect: this.item != 13 && this.item != 14,
                     drag: false,
                     resize: false,
                     height: '100%',
                     width: $("#" + this.opt.host).width(),
                     shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
                     rowNum: 10000,
-                    autoScroll: true,
-                    onSelectRow: function (rowid, status) {
-                        if (_this.item != 13 && _this.item != 14) {
-                            if (status) {
-                                _this.mTableAssist.setCellValue(rowid, _this.resp.data[0].length - 1, 'Y');
-                            }
-                            else {
-                                _this.mTableAssist.setCellValue(rowid, _this.resp.data[0].length - 1, 'N');
-                            }
-                            _this.updateRowColor(rowid);
-                        }
-                    },
-                    onSelectAll: function (rowids, status) {
-                        if (_this.item != 13 && _this.item != 14) {
-                            if (status) {
-                                for (var i = 0; i < rowids.length; ++i) {
-                                    _this.mTableAssist.setCellValue(rowids[i], _this.resp.data[0].length - 1, 'Y');
-                                }
-                            }
-                            else {
-                                for (var i = 0; i < rowids.length; ++i) {
-                                    _this.mTableAssist.setCellValue(rowids[i], _this.resp.data[0].length - 1, 'N');
-                                }
-                            }
-                            _this.updateColor();
-                        }
-                    }
+                    autoScroll: true
                 }, data));
                 if (this.item != 13 && this.item != 14) {
                     this.updateStatus();

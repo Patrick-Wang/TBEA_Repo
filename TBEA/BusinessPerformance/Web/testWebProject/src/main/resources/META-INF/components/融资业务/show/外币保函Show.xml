@@ -46,9 +46,6 @@
                 <item>
                     <name>未注销原因</name>
                 </item>
-                <item>
-                    <name>已处理</name>
-                </item>
             </header>
             <data>${fmtServ.result}</data>
         </response>
@@ -69,7 +66,7 @@
         <callservice id="financingForeignCurrencyLGShowServ"/>
         <callcontroller id="financingForeignCurrencyLGFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="特变电工外币保函办理情况统计表"/>
-        <list id="title" type="string">银行名称,起始日,到期日,币种,保函金额,保证金比例,保函种类,保函编号,备注,未注销原因,已处理</list>
+        <list id="title" type="string">银行名称,起始日,到期日,币种,保函金额,保证金比例,保函种类,保函编号,备注,未注销原因</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -106,7 +103,7 @@ type,
 guaranteeNumber,
 remark,
 reason,
-solved from financing_foreign_currency_LG where dwid = ${dwid}</sql>
+solved from financing_foreign_currency_LG where dwid in ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

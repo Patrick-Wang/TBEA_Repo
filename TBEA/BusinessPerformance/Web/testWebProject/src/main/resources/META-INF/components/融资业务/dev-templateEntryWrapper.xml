@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="BAEA6B3D5073197672D2E28C858F9109EntryUpdateWrapperClr">
- 		<context key="item" value="${request.item2.asInt}"/>
+		<context key="dwid" value="${sysAuth.cids[84]}"/>
+ 		<context key="item" value="${request.item.asInt}"/>
 		<if test="${item == 13}">
             <callcontroller id="financingBankDistributionUpdateClr"/>
         </if>
         <elseif test="${item == 14}">
             <callcontroller id="financingCompDistributionUpdateClr"/>
         </elseif>
-		<else>
-			<context key="dwid" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
-		</else>
+		
         <if test="${item == 0}">
             <callcontroller id="financingBankRMBCreditEntryUpdateClr"/>
         </if>
@@ -51,8 +50,7 @@
         </elseif>
     </controller>
     <controller id="BAEA6B3D5073197672D2E28C858F9109EntrySubmitWrapperClr">
-		<context key="item" value="${request.item2.asInt}"/>
-		<context key="dwid" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+		<context key="item" value="${request.item.asInt}"/>
         <if test="${item == 0}">
             <callcontroller id="financingBankRMBCreditEntrySubmitClr"/>
         </if>
