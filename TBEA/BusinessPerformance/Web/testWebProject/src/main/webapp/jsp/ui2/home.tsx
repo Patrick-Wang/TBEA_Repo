@@ -94,7 +94,7 @@ namespace home {
         if (homeFrame.length == 0) {
             //let src = '/BusinessManagement/ydzb/v2/hzb_zbhz.do?breads=[{"id":"1498180329800","value":"abc"},{"id":"1498180329801","value":"def"},{"id":"1498180329802","value":"hij"}]';
             let src = "/BusinessManagement/jsp/ui2/background.jsp";
-            if (_77){
+            if (_77 || _87){
                 src += "?map=true";
             }
 
