@@ -23,6 +23,7 @@
 			<artifactId>tools</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency> -->
+
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>

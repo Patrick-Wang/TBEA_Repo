@@ -136,9 +136,11 @@ class SCDefault extends StandardConfigurator {
 						.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
 						.excludeZbs(ConfiguratorUtil.getRatioZbs())
 						.excludeZbs(ConfiguratorUtil.getZhHiddenZbs())
-						.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs())).add(
-				copyFilter.add(ConfiguratorUtil.getTimePointNumberZbs(),
-						ColumnType.dyjh.ordinal(), ColumnType.jdjh.ordinal()));
+						.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
+			.add(
+				new AccPipeFilter(yjhAcc, ColumnType.jdjh.ordinal(), DateHelper.getJdEnd(dh.getCur()))
+						.includeCompanies(allCompanies)
+						.includeZbs(ConfiguratorUtil.getTimePointNumberZbs()));
 	}
 
 	@Override

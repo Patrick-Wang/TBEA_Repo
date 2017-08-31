@@ -121,8 +121,9 @@ public class YdhbConfigurator implements IPipeConfigurator {
 					.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
 					.excludeZbs(ConfiguratorUtil.getRatioZbs())
 					.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
-			.addFilter(copyFilter
-					.add(ConfiguratorUtil.getTimePointNumberZbs(), 1, 7))
+			.addFilter(new AccPipeFilter(yjhAcc, 7, DateHelper.getJdEnd(dh.getCur()))
+							.includeCompanies(allCompanies)
+							.includeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
 
 			// 季度累计
 			.addFilter(new AccPipeFilter(sjAcc, 8, dh.getJdStart(), dh.getCur())

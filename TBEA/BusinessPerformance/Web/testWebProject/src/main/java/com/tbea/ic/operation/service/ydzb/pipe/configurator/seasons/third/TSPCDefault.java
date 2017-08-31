@@ -69,8 +69,9 @@ class TSPCDefault extends ThirdSeasonPredictionConfigurator {
 				.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
 				.excludeZbs(ConfiguratorUtil.getRatioZbs())
 				.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
-		.add(copyFilter
-				.add(ConfiguratorUtil.getTimePointNumberZbs(), 3, 1));
+		.add(new AccPipeFilter(yjhAcc, 1, DateHelper.getJdEnd(dh.getCur()))
+				.includeCompanies(allCompanies)
+				.includeZbs(ConfiguratorUtil.getTimePointNumberZbs()));
 
 	}
 

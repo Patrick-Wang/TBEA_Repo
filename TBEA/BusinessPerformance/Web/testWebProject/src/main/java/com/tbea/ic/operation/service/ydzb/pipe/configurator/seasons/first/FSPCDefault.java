@@ -69,8 +69,9 @@ public class FSPCDefault extends FirstSeasonPredictionConfigurator {
 				.excludeZbs(ConfiguratorUtil.getInvisiableZbs())
 				.excludeZbs(ConfiguratorUtil.getRatioZbs())
 				.excludeZbs(ConfiguratorUtil.getTimePointNumberZbs()))
-			.add(copyFilter
-				.add(ConfiguratorUtil.getTimePointNumberZbs(), 2, 1));
+		.add(new AccPipeFilter(yjhAcc, 1, DateHelper.getJdEnd(dh.getCur()))
+				.includeCompanies(allCompanies)
+				.includeZbs(ConfiguratorUtil.getTimePointNumberZbs()));
 		
 	}
 	
