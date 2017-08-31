@@ -196,13 +196,13 @@ public class ZBListenerAggregator implements ZBInjectListener {
 		}
 
 		
-		Double ret = val;
+		Double ret = null;
 		Date d = ec.getDate();
 		for (Entry<Integer, RelationGroup> entry : rs.srcs().entrySet()){
 			RelationGroup rg = entry.getValue();
 			List<Integer> ids = toIds(rg.companies());
-			ids.remove(comp.getId());
-			if (!ids.isEmpty()){
+//			ids.remove(comp.getId());
+//			if (!ids.isEmpty()){
 				switch(zbType){
 				case BY20YJ:
 					ret = MathUtil.sum(ret, yj20zbDao.getZb(rg.indi(), d, ids));
@@ -222,7 +222,7 @@ public class ZBListenerAggregator implements ZBInjectListener {
 				default:
 					break;
 				}
-			}
+//			}
 		}
 		parseSharedRelation(rs.target(), ret, ec);
 		return ret;

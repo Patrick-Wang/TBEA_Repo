@@ -33,6 +33,7 @@
 		<mtxlzh name="煤炭销量总和" />
 		<jekxl name="将二矿销量" />
 		<nltkxl name="南露天矿销量" />
+		<otherxl name ='其他销量'/>
 		<n1 name="南矿大中块" />
 		<n2 name="南矿三八块" />
 		<n3 name="南矿其他" />
@@ -102,15 +103,19 @@
 		<company id="905" />
 	</share>
 	
+	
 	<sum type="月实际,20预计,28预计,月计划,年计划">
 		<target indi="mtxlzh">
 			<company id="7" />
 		</target>
 		<src indi="nltkxl">
-			<company id="701" />
+			<company id="7" />
 		</src>
 		<src indi="jekxl">
-			<company id="702" />
+			<company id="7" />
+		</src>
+		<src indi="otherxl">
+			<company id="7" />
 		</src>
 	</sum>
 </relationships>
