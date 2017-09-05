@@ -15,6 +15,9 @@
 ((select id from jygk_account where name='818099'),	2	, 	 85),
 ((select id from jygk_account where name='235021'),	301	, 	 85),
 ((select id from jygk_account where name='636988'),	2000	, 	 85),
+((select id from jygk_account where name='印能融资'),	115	, 	 85),
+((select id from jygk_account where name='上开融资'),	106	, 	 85),
+
 ((select id from jygk_account where name='068903'),	0	, 	 85),
 ((select id from jygk_account where name='892603'),	3	, 	 84),
 ((select id from jygk_account where name='902991'),	5	, 	 84),
@@ -32,6 +35,10 @@
 ((select id from jygk_account where name='818099'),	2	, 	 84),
 ((select id from jygk_account where name='235021'),	301	, 	 84),
 ((select id from jygk_account where name='636988'),	2000	, 	 84),
+((select id from jygk_account where name='印能融资'),	115	, 	 84),
+((select id from jygk_account where name='上开融资'),	106	, 	 84),
+((select id from jygk_account where name='928006'),	115	, 	 84),
+((select id from jygk_account where name='928006'),	106	, 	 84),
                                                     
 ((select id from jygk_account where name='688020'),	3	, 	 84),
 ((select id from jygk_account where name='688020'),	5	, 	 84),

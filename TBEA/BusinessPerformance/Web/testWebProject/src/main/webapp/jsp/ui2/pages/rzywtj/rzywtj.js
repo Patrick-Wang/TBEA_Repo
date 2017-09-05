@@ -28,7 +28,7 @@ var rzywtj;
             this.unitedSelector.change(function () {
                 _this.adjustHeader();
                 _this.item = _this.unitedSelector.getDataNode(_this.unitedSelector.getPath()).data.id;
-                if (_this.item == 0) {
+                if (_this.item == 0 || _this.item == 14 || _this.item == 13) {
                     $("#grid-date").parent().removeClass("hidden");
                 }
                 else {
@@ -36,7 +36,7 @@ var rzywtj;
                 }
             });
             this.item = this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id;
-            if (this.item == 0) {
+            if (this.item == 0 || _this.item == 14 || _this.item == 13) {
                 $("#grid-date").parent().removeClass("hidden");
             }
             else {

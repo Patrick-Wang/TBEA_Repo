@@ -210,7 +210,7 @@
       </item>
      </sub>
     </item>
-    <item>
+    <item skip="${dwid.size == 1}" >
      <name>合计</name>
      <sub type="array">
       <item>
@@ -226,7 +226,7 @@
     </item>
    </header>
    <data>${fmtServ.result}</data>
-   <shrinkToFit>false</shrinkToFit>
+   <shrinkToFit>${dwid.size == 1 ? 'true' : 'false'}</shrinkToFit>
   </response>
  </controller>
  <controller id="financingBankCurrencyTotalFmtClr">

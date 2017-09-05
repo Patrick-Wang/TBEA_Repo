@@ -39,3 +39,5 @@ INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES
 INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('068903', 1234, 0, 0)
 INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('102589', 1234, 0, 0)
 INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('363560', 1234, 0, 0)
+INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('印能融资', 1234, 0, 0)
+INSERT INTO [dbo].[jygk_account] ([name],[password],[role],[deprecated] ) VALUES ('上开融资', 1234, 0, 0)
