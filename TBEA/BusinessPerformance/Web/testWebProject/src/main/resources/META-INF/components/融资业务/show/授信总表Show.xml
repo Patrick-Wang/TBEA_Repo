@@ -266,8 +266,8 @@
   <list skip="${!dwid.contains[9]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
   <list skip="${!dwid.contains[7}" id="title">天池能源,天池能源,天池能源,天池能源</list>
   <list skip="${!dwid.contains[7]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
-  <list id="title">合计,合计,合计</list>
-  <list id="title1">授信额,已使用额度,贷款余额</list>
+  <list skip="${dwid.size == 1}" id="title">合计,合计,合计</list>
+  <list skip="${dwid.size == 1}" id="title1">授信额,已使用额度,贷款余额</list>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -361,7 +361,7 @@ $,
 QD,
 QD
 </list>
-  <sql id="hj" order="bankNames" by="0" colcount="6">select
+  <sql id="hj" order="bankNames" by="0" colcount="6" skip="${dwid.size == 1}">select
 			bankNo,
 			sum(authCreditAmount) tmp1,
 			sum(usedAmount) tmp3,
@@ -543,9 +543,9 @@ QD
    <list sql="tcny" type="string" value="3" skip="${!dwid.contains[7]}"/>
    <list sql="tcny" type="double" value="4" skip="${!dwid.contains[7]}"/>
    <list sql="tcny" type="double" value="5" skip="${!dwid.contains[7]}"/>
-   <list sql="hj" type="double" value="1"/>
-   <list sql="hj" type="double" value="2"/>
-   <list sql="hj" type="double" value="3"/>
+   <list sql="hj" type="double" value="1" skip="${dwid.size == 1}"/>
+   <list sql="hj" type="double" value="2" skip="${dwid.size == 1}"/>
+   <list sql="hj" type="double" value="3" skip="${dwid.size == 1}"/>
    <sumRow toRow="22">
     <excludeCol>0,1,3,7,11,15,19,23,27,31,35,39,43</excludeCol>
     <rangeRows>0, 21</rangeRows>
