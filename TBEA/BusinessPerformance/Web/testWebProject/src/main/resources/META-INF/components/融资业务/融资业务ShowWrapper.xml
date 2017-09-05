@@ -35,16 +35,14 @@
 
 	<controller id="BAEA6B3D5073197672D2E28C858F9109ExportWrapperClr">
 		<context key="item" value="${request.item.asInt}" />
+		<context key="dwid" value="${sysAuth.cids[84]}" />
 		<if test="${item == 13}">
 			<callcontroller id="financingBankDistributionExportClr" />
 		</if>
 		<elseif test="${item == 14}">
 			<callcontroller id="financingCompDistributionExportClr" />
 		</elseif>
-		<else>
-			<context key="dwid"
-				value="${orgs.BMDBOrganization.ids[request.item.asInt]}" />
-		</else>
+		
 		<if test="${item == 0}">
 			<callcontroller id="financingBankCurrencyTotalExportClr" />
 		</if>

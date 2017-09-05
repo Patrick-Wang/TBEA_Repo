@@ -269,6 +269,8 @@
   <list skip="${!dwid.contains[9]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
   <list skip="${!dwid.contains[7}" id="title">天池能源,天池能源,天池能源,天池能源</list>
   <list skip="${!dwid.contains[7]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list id="title">合计,合计,合计,合计</list>
+  <list id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -296,7 +298,7 @@
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response name="${request.date.asString}授信总表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+  <response name="${cal.year}年${cal.month}月授信总表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
  </controller>
  <service id="financingBankCurrencyTotalShowServ" transaction="transactionManager">
   <list id="bankNames" type="string" export="true">国家开发银行,

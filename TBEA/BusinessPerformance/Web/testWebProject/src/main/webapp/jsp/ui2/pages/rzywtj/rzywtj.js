@@ -36,6 +36,12 @@ var rzywtj;
                 }
             });
             this.item = this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id;
+            if (this.item == 0) {
+                $("#grid-date").parent().removeClass("hidden");
+            }
+            else {
+                $("#grid-date").parent().addClass("hidden");
+            }
             var itemHidden = false;
             if (opt.itemNodes.length == 1) {
                 $("#" + opt.itemId).hide();
