@@ -28,7 +28,14 @@ var rzywtj;
             this.unitedSelector.change(function () {
                 _this.adjustHeader();
                 _this.item = _this.unitedSelector.getDataNode(_this.unitedSelector.getPath()).data.id;
+                if (_this.item == 0) {
+                    $("#grid-date").parent().removeClass("hidden");
+                }
+                else {
+                    $("#grid-date").parent().addClass("hidden");
+                }
             });
+            this.item = this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id;
             var itemHidden = false;
             if (opt.itemNodes.length == 1) {
                 $("#" + opt.itemId).hide();
@@ -177,7 +184,7 @@ var rzywtj;
                 $("#" + this.opt.host).show();
                 this.createJqassist();
                 var data = {};
-                if (this.item != 13 && this.item != 14) {
+                if (this.item != 13 && this.item != 14 && this.item != 0) {
                     data.dataWithId = this.resp.data;
                 }
                 else {

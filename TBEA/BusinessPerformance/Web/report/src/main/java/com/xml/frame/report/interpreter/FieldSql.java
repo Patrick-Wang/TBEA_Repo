@@ -1,7 +1,7 @@
 package com.xml.frame.report.interpreter;
 
 import com.frame.script.el.ELParser;
-import com.xml.frame.report.util.XmlUtil;
+import com.xml.frame.report.util.xml.XmlUtil;
 
 public class FieldSql{
 	ELParser elp;

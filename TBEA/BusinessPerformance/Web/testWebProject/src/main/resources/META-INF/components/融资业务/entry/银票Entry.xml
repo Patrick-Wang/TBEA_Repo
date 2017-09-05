@@ -50,7 +50,7 @@
             <EmptyFormatter/>
         </formatter>
     </controller>
-    <controller id="financingBankBillEntryUpdateServ" transaction="transactionManager">
+    <service id="financingBankBillEntryUpdateServ" transaction="transactionManager">
         <sql id="data">select id,
 bankName,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
@@ -71,7 +71,7 @@ solved from financing_bank_bill where dwid  in  ${dwid}</sql>
             <list sql="data" type="string" value="7"/>
             <list sql="data" type="string" value="8"/>
         </table>
-    </controller>
+    </service>
     <controller id="financingBankBillEntrySubmitClr">
         <context key="cal" value="${request.date.asCalendar}"/>
         <context key="data" value="${request.data.asJsonArray}"/>
@@ -83,7 +83,7 @@ solved from financing_bank_bill where dwid  in  ${dwid}</sql>
             <message>OK</message>
         </response>
     </controller>
-    <controller id="financingBankBillEntrySubmitServ" transaction="transactionManager">
+    <service id="financingBankBillEntrySubmitServ" transaction="transactionManager">
         <merge data="${data}" table="financing_bank_bill">
             <where>
                 <id ref="0" type="int"/>
@@ -94,5 +94,5 @@ solved from financing_bank_bill where dwid  in  ${dwid}</sql>
                 <_time type="date" value="${time}"/>
             </set>
         </merge>
-    </controller>
+    </service>
 </components>

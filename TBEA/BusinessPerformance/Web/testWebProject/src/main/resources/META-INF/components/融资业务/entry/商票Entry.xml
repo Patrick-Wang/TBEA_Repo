@@ -70,7 +70,7 @@ solved from financing_commercial_bill where dwid  in  ${dwid}</sql>
             <message>OK</message>
         </response>
     </controller>
-    <controller id="financingCommercialBillEntrySubmitServ" transaction="transactionManager">
+    <service id="financingCommercialBillEntrySubmitServ" transaction="transactionManager">
         <merge data="${data}" table="financing_commercial_bill">
             <where>
                 <id ref="0" type="int"/>
@@ -81,5 +81,5 @@ solved from financing_commercial_bill where dwid  in  ${dwid}</sql>
                 <_time type="date" value="${time}"/>
             </set>
         </merge>
-    </controller>
+    </service>
 </components>

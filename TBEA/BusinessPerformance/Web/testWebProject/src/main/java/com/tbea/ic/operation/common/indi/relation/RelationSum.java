@@ -10,8 +10,9 @@ import org.w3c.dom.Element;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 public class RelationSum {
 	RelationGroup target = new RelationGroup();
@@ -37,13 +38,13 @@ public class RelationSum {
 	
 	public static List<RelationSum> parse(Element e, CompanyManager compMgr, DWXXDao dwxxDao, Map<String, Integer> indiDelc) throws Exception{
 
-		List<RelationGroup> target = RelationGroup.parse(XmlUtil.element(e.getElementsByTagName("target"), 0), compMgr, dwxxDao, indiDelc);
+		List<RelationGroup> target = RelationGroup.parse(XmlWalker.element(e.getElementsByTagName("target"), null, 0), compMgr, dwxxDao, indiDelc);
 		
 		
 		if (null != target){
 			Map<Integer, RelationGroup> srcs = new HashMap<Integer, RelationGroup>();
 			
-			XmlUtil.each(e.getElementsByTagName("src"), new OnLoop(){
+			XmlWalker.each(e.getElementsByTagName("src"), null, new Loop(){
 
 				@Override
 				public void on(Element elem) throws Exception {

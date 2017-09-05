@@ -10,11 +10,8 @@
         </elseif>
 		
         <if test="${item == 0}">
-            <callcontroller id="financingBankRMBCreditEntryUpdateClr"/>
+            <callcontroller id="financingBankCurrencyTotalUpdateClr"/>
         </if>
-        <elseif test="${item == 1}">
-            <callcontroller id="financingBankForeignCurrencyCreditEntryUpdateClr"/>
-        </elseif>
         <elseif test="${item == 2}">
             <callcontroller id="financingRMBLoanEntryUpdateClr"/>
         </elseif>
@@ -52,11 +49,8 @@
     <controller id="BAEA6B3D5073197672D2E28C858F9109EntrySubmitWrapperClr">
 		<context key="item" value="${request.item.asInt}"/>
         <if test="${item == 0}">
-            <callcontroller id="financingBankRMBCreditEntrySubmitClr"/>
+            <callcontroller id="financingBankCurrencyCreditEntrySubmitClr"/>
         </if>
-        <elseif test="${item == 1}">
-            <callcontroller id="financingBankForeignCurrencyCreditEntrySubmitClr"/>
-        </elseif>
         <elseif test="${item == 2}">
             <callcontroller id="financingRMBLoanEntrySubmitClr"/>
         </elseif>

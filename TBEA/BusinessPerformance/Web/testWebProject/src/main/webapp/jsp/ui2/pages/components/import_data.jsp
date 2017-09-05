@@ -283,6 +283,7 @@
 			</div>
 		</div>
 	</div>
+	<form id="exportForm" style="display:none" method="post"></form>
 	<script
 		src="${pageContext.request.contextPath}/jsp/ui2/assets/js/bootstrap.min.js"></script>
 	<script
@@ -581,6 +582,13 @@
 							uploader.retry(file);
 							
 						});
+					}
+					
+					if (ret.type == 'file'){
+						if (ret.token){
+							$("#exportForm")[0].action = "${exportUrl}.do?token=" + ret.token;
+							$("#exportForm")[0].submit();
+						}
 					}
 				});
 

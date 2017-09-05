@@ -95,6 +95,12 @@ public class ControllerRequest extends PropMap{
 			return new XSSFWorkbook(file.getInputStream());
 		}
 		
+		public String getFileName() throws IOException{
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req; 
+			CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);
+			return file.getFileItem().getName();
+		}
+		
 		public List<String[]> asCSVUtf8() throws IOException{
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req; 
 			CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);

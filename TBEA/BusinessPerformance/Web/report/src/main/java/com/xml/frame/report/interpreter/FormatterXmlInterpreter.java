@@ -8,8 +8,6 @@ import org.w3c.dom.Element;
 import com.frame.script.el.ELParser;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.util.ExcelHelper;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
 import com.xml.frame.report.util.v2.core.DefaultMatcher;
 import com.xml.frame.report.util.v2.core.EmptyFormatter;
 import com.xml.frame.report.util.v2.core.FormatterHandler;
@@ -27,6 +25,10 @@ import com.xml.frame.report.util.v2.excel.ExcelMergeFormatter;
 import com.xml.frame.report.util.v2.excel.ExcelOffsetFormatter;
 import com.xml.frame.report.util.v2.excel.ExcelTextFormatter;
 import com.xml.frame.report.util.v2.excel.ExcelTitleFilter;
+import com.xml.frame.report.util.xml.Each;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 
 
@@ -37,7 +39,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	AbstractXmlComponent component;
 	FormatterMatcher parserMatcher(Element handler) throws Exception{
 		FormatterMatcher[] mRet = new FormatterMatcher[]{null};
-		XmlUtil.eachChildren(handler, new XmlUtil.OnEach(){
+		XmlWalker.eachChildren(handler, elp, new Each(){
 
 			@Override
 			public boolean on(Element elem) throws Exception {
@@ -80,7 +82,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 		this.component = component;
 		elp = new ELParser(component);
 		List<FormatterHandler> handlers = new ArrayList<FormatterHandler>();
-		XmlUtil.eachChildren(e, elp, new OnLoop(){
+		XmlWalker.eachChildren(e, elp, new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {
@@ -149,8 +151,8 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 
 	private List<List<String>> parserTitles(Element item) throws Exception {
 		List<List<String>> titles = new ArrayList<List<String>>();
-		Element ts = XmlUtil.element(item.getElementsByTagName("titles"), 0);
-		XmlUtil.eachChildren(ts, new OnLoop(){
+		Element ts = XmlWalker.element(item.getElementsByTagName("titles"), elp, 0);
+		XmlWalker.eachChildren(ts, elp, new Loop(){
 			@Override
 			public void on(Element elem) {
 				Object obj = component.getVar(elem.getAttribute("ref"));
@@ -167,7 +169,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	}
 	
 	private void parserMergeRegion(ExcelMergeFormatter handler, Element item) throws Exception {
-		XmlUtil.eachChildren(item, new OnLoop(){
+		XmlWalker.eachChildren(item, elp, new Loop(){
 			
 			@Override
 			public void on(Element elem) throws Exception {
@@ -199,7 +201,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 
 	private ExcelHelper parserExcelTemplate(AbstractXmlComponent component,
 			Element item) {
-		Element e = XmlUtil.child(item, "ExcelTemplate");
+		Element e = XmlWalker.child(item, elp, "ExcelTemplate");
 		if (null != e){
 			String refId = e.getAttribute("ref");
 			return (ExcelHelper) component.getVar(refId);
@@ -208,7 +210,7 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 	}
 
 	private Offset parserOffset(Element item) throws Exception {
-		Element e = XmlUtil.child(item, "Offset");
+		Element e = XmlWalker.child(item, elp, "Offset");
 		if (null != e){
 			return new Offset(getIntAttribute(e, "row", 0), 
 					getIntAttribute(e, "col", 0));

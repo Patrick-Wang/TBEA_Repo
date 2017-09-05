@@ -129,7 +129,11 @@ public class ELExpression{
 				JSONObject jsonObj = (JSONObject) obj;
 	 			obj = jsonObj.get(indexs.get(i));
 			}else if (obj instanceof Map){
-				obj = ((Map) obj).get(indexs.get(i));
+				if ("remove".equals(indexs.get(i)) || "put".equals(indexs.get(i))) {
+					obj = getObjectProp(obj, (String)indexs.get(i));
+				} else {
+					obj = ((Map) obj).get(indexs.get(i));
+				}				
 			}else if (null != indexs.get(i) && TypeUtil.isString(indexs.get(i).getClass())){
 				obj = getObjectProp(obj, (String)indexs.get(i));
 			}
@@ -144,7 +148,11 @@ public class ELExpression{
 				JSONObject jsonObj = (JSONObject) obj;
 	 			propValue = jsonObj.get(propName);
 			}else if (obj instanceof Map){
-				propValue = ((Map) obj).get(propName);
+				if ("remove".equals(propName) || "put".equals(propName)) {
+					propValue = getObjectProp(obj, propName);
+				} else {
+					propValue = ((Map) obj).get(propName);
+				}
 			}else { 
 				propValue = getObjectProp(obj, propName);
 			}

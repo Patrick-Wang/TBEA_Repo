@@ -1,4 +1,4 @@
-package com.xml.frame.report.util;
+package com.xml.frame.report.util.xml;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -16,7 +16,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import com.frame.script.el.ELExpression;
 import com.frame.script.el.ELParser;
@@ -24,81 +23,6 @@ import com.frame.script.util.StringUtil;
 import com.frame.script.util.TypeUtil;
 
 public class XmlUtil {
-	
-	public static interface OnEach{
-		boolean on(Element elem) throws Exception;
-	}
-	
-	public static interface OnLoop{
-		void on(Element elem) throws Exception;
-	}
-	
-	public static String elementText(NodeList list, int index) {
-		Element e = element(list, index);
-		if (null != e){
-			return XmlUtil.getText(e);
-		}
-		return "";
-	}
-	
-	public static Element nextElement(Element e) {
-		Node node = e.getNextSibling();
-		while (null != node && !(node instanceof Element)){
-			node = node.getNextSibling();
-		}
-		return (Element)node;
-	}
-	
-	public static Element element(NodeList list, int index) {
-		try {
-			return each(list, new OnEach(){
-				int count;
-				@Override
-				public boolean on(Element elem) {
-					if (count++ == index){
-						return true;
-					}
-					return false;
-				}
-			});
-		} catch (Exception e) {
-			return null;
-		}
-	}
-	
-	
-	public static Element child(Node elem, String tagName) {
-		try {
-			return eachChildren(elem, new OnEach(){
-				@Override
-				public boolean on(Element elem) {
-					if (elem.getTagName().equals(tagName)){
-						return true;
-					}
-					return false;
-				}
-			});
-		} catch (Exception e) {
-			return null;
-		}
-	}
-	
-	@Deprecated
-	public static Element element(NodeList list, String tagName) {
-		try {
-			return each(list, new OnEach(){
-				@Override
-				public boolean on(Element elem) {
-					if (elem.getTagName().equals(tagName)){
-						return true;
-					}
-					return false;
-				}
-			});
-		} catch (Exception e) {
-			return null;
-		}
-	}
 	
 	public static List<Integer> toIntList(String text, ELParser elp) throws Exception{
 		if(null == text){
@@ -282,131 +206,7 @@ public class XmlUtil {
 		}
 		return null;
 	}
-	
-	@Deprecated
-	public static void eachChildren(Node elem, OnLoop onLoop) throws Exception{
-		try{
-			Node node = elem.getFirstChild();
-			while (node != null){
-				if (node instanceof Element){
-					onLoop.on((Element) node);
-				}
-				node = node.getNextSibling();
-			}
-		}catch(java.lang.NullPointerException e){
-			e.printStackTrace();
-		}
-	}
-	
-	public static void eachChildren(Node elem, ELParser elp, OnLoop onLoop) throws Exception{
-		try{
-			Node node = elem.getFirstChild();
-			while (node != null){
-				if (node instanceof Element && !skip((Element) node, elp)){
-					onLoop.on((Element) node);
-				}
-				node = node.getNextSibling();
-			}
-		}catch(java.lang.NullPointerException e){
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public static Element eachChildren(Node elem, ELParser elp, OnEach onEach) throws Exception{
-		try{
-			Node node = elem.getFirstChild();
-			while (node != null){
-				if (node instanceof Element && !skip((Element) node, elp)){
-					if (onEach.on((Element) node)){
-						return (Element)node;
-					}
-				}
-				node = node.getNextSibling();
-			}
-		}catch(java.lang.NullPointerException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	@Deprecated
-	public static Element eachChildren(Node elem, OnEach onEach) throws Exception{
-		try{
-			Node node = elem.getFirstChild();
-			while (node != null){
-				if (node instanceof Element){
-					if (onEach.on((Element) node)){
-						return (Element)node;
-					}
-				}
-				node = node.getNextSibling();
-			}
-		}catch(java.lang.NullPointerException e){
-			e.printStackTrace();
-		}
-		return null;
-	}
-	
-	
 
-	public static void each(NodeList list, ELParser elp, OnLoop onLoop) throws Exception{
-		try{
-			Node node = null;
-			for (int i = 0, len = list.getLength(); i < len; ++i){
-				node = list.item(i);
-				if (node instanceof Element && !skip((Element) node, elp)){
-					onLoop.on((Element) node);
-				}
-			}
-		}catch(java.lang.NullPointerException e){
-			e.printStackTrace();
-		}
-	}
-	
-	public static Element each(NodeList list, ELParser elp, OnEach onEach) throws Exception{
-		Node node = null;
-		for (int i = 0, len = list.getLength(); i < len; ++i){
-			node = list.item(i);
-			if (node instanceof Element && !skip((Element) node, elp)){
-				if (onEach.on((Element) node)){
-					return (Element)node;
-				}
-			}
-		}
-		return null;
-	}
-	
-	@Deprecated
-	public static void each(NodeList list, OnLoop onLoop) throws Exception{
-		try{
-		Node node = null;
-		for (int i = 0, len = list.getLength(); i < len; ++i){
-			node = list.item(i);
-			if (node instanceof Element){
-				onLoop.on((Element) node);
-			}
-		}
-		}catch(java.lang.NullPointerException e){
-			e.printStackTrace();
-		}
-	}
-	
-
-	@Deprecated
-	public static Element each(NodeList list, OnEach onEach) throws Exception{
-		Node node = null;
-		for (int i = 0, len = list.getLength(); i < len; ++i){
-			node = list.item(i);
-			if (node instanceof Element){
-				if (onEach.on((Element) node)){
-					return (Element)node;
-				}
-			}
-		}
-		return null;
-	}
-	
 	public static String toStringFromDoc(Element elem) {
 		String result = null;
 
@@ -503,14 +303,6 @@ public class XmlUtil {
 		return list;
 	}
 
-	
-	static boolean skip(Element elem, ELParser elp) throws Exception{
-		if (!elem.hasAttribute("skip")){
-			return false;
-		}
-		return XmlUtil.getBoolean(elem.getAttribute("skip"), elp);
-	}
-	
 	public static boolean hasText(Element e) {
 		if (e.getFirstChild() != null){
 			return e.getFirstChild().getNodeType() == Node.TEXT_NODE;

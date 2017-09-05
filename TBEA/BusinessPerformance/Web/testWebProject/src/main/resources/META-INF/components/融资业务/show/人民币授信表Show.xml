@@ -47,7 +47,7 @@
         <context key="cal" value="${request.date.asCalendar}"/>
         <callservice id="financingBankRMBCreditShowServ"/>
         <callcontroller id="financingBankRMBCreditFmtClr"/>
-        <ExcelTemplate id="excelTemplate" sheet="各家银行人民币授信情况统计表"/>
+        <ExcelTemplate id="excelTemplate" sheet="各家银行授信情况统计表"/>
         <list id="title" type="string">银行名称,授信额,已使用额度,贷款余额,授信到期日</list>
         <formatter id="excel">
             <ExcelTitleFilter>
@@ -71,16 +71,17 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="${request.date.asString}各家银行人民币授信情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="${request.date.asString}各家银行授信情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="financingBankRMBCreditShowServ" transaction="transactionManager">
         <sql id="data">select id,
 bankName,
+currency,
 authCreditAmount,
 usedAmount,
 loanBalance,
 CONVERT(varchar(20),authCreditExpire, 23) tmp4,
-solved from financing_bank_RMB_credit where dwid in ${dwid}</sql>
+solved from financing_bank_currency_credit where dwid in ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

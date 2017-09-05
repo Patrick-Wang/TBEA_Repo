@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+ <controller id="financingBankCurrencyTotalShow">
+  <response name="framework/templates/singleDateReport/show" type="jsp">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map key="updateUrl" value="financingBankCurrencyTotalUpdateClr"/>
+   <map key="exportUrl" value="financingBankCurrencyTotalExportClr"/>
+  </response>
+ </controller>
+ <controller id="financingBankCurrencyTotalUpdateClr">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="financingBankCurrencyTotalShowServ"/>
+  <callcontroller id="financingBankCurrencyTotalFmtClr"/>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <response type="json">
+   <header type="array">
+    <item>
+     <name>银行名称</name>
+    </item>
+    <item>
+     <name>币种</name>
+    </item>
+    <item skip="${!dwid.contains[0]}">
+     <name>总公司</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[1]}">
+     <name>沈变本部</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[106]}">
+     <name>上开公司</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[115]}">
+     <name>印能公司</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[2]}">
+     <name>衡变公司</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[4]}">
+     <name>鲁缆公司</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[6]}">
+     <name>德缆公司</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[301]}">
+     <name>天变公司</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[10]}">
+     <name>新特能源公司</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[9]}">
+     <name>新能源公司</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item skip="${!dwid.contains[7]}">
+     <name>天池能源</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+    <item>
+     <name>合计</name>
+     <sub type="array">
+      <item>
+       <name>授信额</name>
+      </item>
+      <item>
+       <name>授信到期日</name>
+      </item>
+      <item>
+       <name>已使用额度</name>
+      </item>
+      <item>
+       <name>贷款余额</name>
+      </item>
+     </sub>
+    </item>
+   </header>
+   <data>${fmtServ.result}</data>
+   <shrinkToFit>false</shrinkToFit>
+  </response>
+ </controller>
+ <controller id="financingBankCurrencyTotalFmtClr">
+  <formatter export="true" id="fmtData">
+   <NumberFormatter reservedCount="1">
+    <DefaultMatcher cols="2,4,5,6,8,9,10,12,13,14,16,17,18,20,21,22,24,25,26,28,29,30,34,35,36,38,39,40,42,43,44,46,47,48,50,51"/>
+   </NumberFormatter>
+   <EmptyFormatter/>
+  </formatter>
+ </controller>
+ <controller id="financingBankCurrencyTotalExportClr">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <callservice id="financingBankCurrencyTotalShowServ"/>
+  <callcontroller id="financingBankCurrencyTotalFmtClr"/>
+  <ExcelTemplate id="excelTemplate" sheet="授信总表"/>
+  <list id="title" type="string">银行名称,币种</list>
+  <list id="title1" type="string">银行名称,币种</list>
+  <list skip="${!dwid.contains[0]}" id="title">总公司,总公司,总公司,总公司</list>
+  <list skip="${!dwid.contains[0]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[1]}" id="title">沈变本部,沈变本部,沈变本部,沈变本部</list>
+  <list skip="${!dwid.contains[1]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[106}" id="title">上开公司,上开公司,上开公司,上开公司</list>
+  <list skip="${!dwid.contains[106]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[115}" id="title">印能公司,印能公司,印能公司,印能公司</list>
+  <list skip="${!dwid.contains[115]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[2}" id="title">衡变公司,衡变公司,衡变公司,衡变公司</list>
+  <list skip="${!dwid.contains[2]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[4}" id="title">鲁缆公司,鲁缆公司,鲁缆公司,鲁缆公司</list>
+  <list skip="${!dwid.contains[4]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[6}" id="title">德缆公司,德缆公司,德缆公司,德缆公司</list>
+  <list skip="${!dwid.contains[6]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[301}" id="title">天变公司,天变公司,天变公司,天变公司</list>
+  <list skip="${!dwid.contains[301]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[10}" id="title">新特能源公司,新特能源公司,新特能源公司,新特能源公司</list>
+  <list skip="${!dwid.contains[10]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[9}" id="title">新能源公司,新能源公司,新能源公司,新能源公司</list>
+  <list skip="${!dwid.contains[9]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <list skip="${!dwid.contains[7}" id="title">天池能源,天池能源,天池能源,天池能源</list>
+  <list skip="${!dwid.contains[7]}" id="title1">授信额,授信到期日,已使用额度,贷款余额</list>
+  <formatter id="excel">
+   <ExcelTitleFilter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="0"/>
+    <titles>
+     <title ref="title"/>
+     <title ref="title1"/>
+    </titles>
+   </ExcelTitleFilter>
+   <ExcelMergeFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+   </ExcelMergeFormatter>
+   <ExcelHeaderCenterFormatter>
+    <DefaultMatcher cols="0"/>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="2"/>
+   </ExcelHeaderCenterFormatter>
+   <ExcelOffsetFormatter>
+    <ExcelTemplate ref="excelTemplate"/>
+    <Offset col="0" row="2"/>
+   </ExcelOffsetFormatter>
+  </formatter>
+  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+   <formatter ref="fmtData"/>
+   <formatter ref="excel"/>
+  </formatterServer>
+  <response name="${request.date.asString}授信总表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+ </controller>
+ <service id="financingBankCurrencyTotalShowServ" transaction="transactionManager">
+  <list id="bankNames" type="string" export="true">国家开发银行,
+进出口银行,
+工商银行,
+农业银行,
+中国银行,
+建设银行,
+交通银行,
+浦发银行,
+兴业银行,
+招商银行,
+光大银行,
+广发银行,
+中信银行,
+华夏银行,
+花旗银行,
+民生银行,
+平安银行,
+青岛银行,
+邮储行,
+其他商业银行,
+汇丰（中国）,
+澳新银行（中国）,
+人民币合计,
+汇丰银行,
+HDFC银行,
+印度SBI银行,
+印度ICBC银行,
+美元合计,
+Deuetsche德意志银行,
+第纳尔合计
+</list>
+  <list id="bzs" type="string">
+ RMB,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+ RMB ,
+$,
+$,
+$,
+$,
+$,
+QD,
+QD
+</list>
+  <sql id="hj" order="bankNames" by="0" colcount="6">select
+			bankNo,
+			currency,
+			authCreditAmount tmp1,
+			CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+			usedAmount tmp3,
+			loanBalance tmp4			
+			from financing_bank_currency_credit_total_v where dwid in ${dwid}
+			and 
+			nf=${cal.year} and yf=${cal.month}
+	
+		</sql>
+  <sql id="gf" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[0]}">select
+			bankNo,
+			currency,
+			authCreditAmount tmp1,
+			CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+			usedAmount tmp3,
+			loanBalance tmp4			
+			from financing_bank_currency_credit_total_v where dwid = 0
+			and 
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <sql id="sb" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[1]}">select
+		bankNo,
+		currency,
+		authCreditAmount tmp1,
+		CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+		usedAmount tmp3,
+		loanBalance tmp4			
+		from financing_bank_currency_credit_total_v where dwid = 1
+			and 
+			nf=${cal.year} and yf=${cal.month}
+	
+		</sql>
+  <sql id="sk" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[106]}">select
+	bankNo,
+	currency,
+	authCreditAmount tmp1,
+	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+	usedAmount tmp3,
+	loanBalance tmp4			
+	from financing_bank_currency_credit_total_v where dwid = 106
+			and 
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <sql id="yn" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[115]}">select
+	bankNo,
+	currency,
+	authCreditAmount tmp1,
+	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+	usedAmount tmp3,
+	loanBalance tmp4			
+	from financing_bank_currency_credit_total_v where dwid = 115
+			and 
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <sql id="hb" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[2]}">select
+	bankNo,
+	currency,
+	authCreditAmount tmp1,
+	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+	usedAmount tmp3,
+	loanBalance tmp4			
+	from financing_bank_currency_credit_total_v where dwid = 2
+			and 
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <sql id="ll" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[4]}">select
+	bankNo,
+	currency,
+	authCreditAmount tmp1,
+	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+	usedAmount tmp3,
+	loanBalance tmp4			
+	from financing_bank_currency_credit_total_v where dwid = 4
+			and 
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <sql id="dl" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[6]}">select
+	bankNo,
+	currency,
+	authCreditAmount tmp1,
+	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+	usedAmount tmp3,
+	loanBalance tmp4			
+	from financing_bank_currency_credit_total_v where dwid = 6
+			and 
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <sql id="tb" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[301]}">select
+	bankNo,
+	currency,
+	authCreditAmount tmp1,
+	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+	usedAmount tmp3,
+	loanBalance tmp4			
+	from financing_bank_currency_credit_total_v where dwid = 301
+			and 
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <sql id="xtny" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[10]}">select
+	bankNo,
+	currency,
+	authCreditAmount tmp1,
+	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+	usedAmount tmp3,
+	loanBalance tmp4			
+	from financing_bank_currency_credit_total_v where dwid = 10
+			and 
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <sql id="xny" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[9]}">select
+	bankNo,
+	currency,
+	authCreditAmount tmp1,
+	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+	usedAmount tmp3,
+	loanBalance tmp4			
+	from financing_bank_currency_credit_total_v where dwid = 9
+			and 
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <sql id="tcny" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[7]}">select
+	bankNo,
+	currency,
+	authCreditAmount tmp1,
+	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
+	usedAmount tmp3,
+	loanBalance tmp4			
+	from financing_bank_currency_credit_total_v where dwid = 7
+			and
+			nf=${cal.year} and yf=${cal.month}
+		</sql>
+  <list id="ids" type="int">
+   <item from="0" to="${bankNames.size - 1}"/>
+  </list>
+  <table export="true" id="result" rowIds="ids">
+   <col list="bankNames"/>
+   <col list="bzs"/>
+   <list sql="gf" type="double" value="2" skip="${!dwid.contains[0]}"/>
+   <list sql="gf" type="string" value="3" skip="${!dwid.contains[0]}"/>
+   <list sql="gf" type="double" value="4" skip="${!dwid.contains[0]}"/>
+   <list sql="gf" type="double" value="5" skip="${!dwid.contains[0]}"/>
+   <list sql="sb" type="double" value="2" skip="${!dwid.contains[1]}"/>
+   <list sql="sb" type="string" value="3" skip="${!dwid.contains[1]}"/>
+   <list sql="sb" type="double" value="4" skip="${!dwid.contains[1]}"/>
+   <list sql="sb" type="double" value="5" skip="${!dwid.contains[1]}"/>
+   <list sql="sk" type="double" value="2" skip="${!dwid.contains[106]}"/>
+   <list sql="sk" type="string" value="3" skip="${!dwid.contains[106]}"/>
+   <list sql="sk" type="double" value="4" skip="${!dwid.contains[106]}"/>
+   <list sql="sk" type="double" value="5" skip="${!dwid.contains[106]}"/>
+   <list sql="yn" type="double" value="2" skip="${!dwid.contains[115]}"/>
+   <list sql="yn" type="string" value="3" skip="${!dwid.contains[115]}"/>
+   <list sql="yn" type="double" value="4" skip="${!dwid.contains[115]}"/>
+   <list sql="yn" type="double" value="5" skip="${!dwid.contains[115]}"/>
+   <list sql="hb" type="double" value="2" skip="${!dwid.contains[2]}"/>
+   <list sql="hb" type="string" value="3" skip="${!dwid.contains[2]}"/>
+   <list sql="hb" type="double" value="4" skip="${!dwid.contains[2]}"/>
+   <list sql="hb" type="double" value="5" skip="${!dwid.contains[2]}"/>
+   <list sql="ll" type="double" value="2" skip="${!dwid.contains[4]}"/>
+   <list sql="ll" type="string" value="3" skip="${!dwid.contains[4]}"/>
+   <list sql="ll" type="double" value="4" skip="${!dwid.contains[4]}"/>
+   <list sql="ll" type="double" value="5" skip="${!dwid.contains[4]}"/>
+   <list sql="dl" type="double" value="2" skip="${!dwid.contains[6]}"/>
+   <list sql="dl" type="string" value="3" skip="${!dwid.contains[6]}"/>
+   <list sql="dl" type="double" value="4" skip="${!dwid.contains[6]}"/>
+   <list sql="dl" type="double" value="5" skip="${!dwid.contains[6]}"/>
+   <list sql="tb" type="double" value="2" skip="${!dwid.contains[301]}"/>
+   <list sql="tb" type="string" value="3" skip="${!dwid.contains[301]}"/>
+   <list sql="tb" type="double" value="4" skip="${!dwid.contains[301]}"/>
+   <list sql="tb" type="double" value="5" skip="${!dwid.contains[301]}"/>
+   <list sql="xtny" type="double" value="2" skip="${!dwid.contains[10]}"/>
+   <list sql="xtny" type="string" value="3" skip="${!dwid.contains[10]}"/>
+   <list sql="xtny" type="double" value="4" skip="${!dwid.contains[10]}"/>
+   <list sql="xtny" type="double" value="5" skip="${!dwid.contains[10]}"/>
+   <list sql="xny" type="double" value="2" skip="${!dwid.contains[9]}"/>
+   <list sql="xny" type="string" value="3" skip="${!dwid.contains[9]}"/>
+   <list sql="xny" type="double" value="4" skip="${!dwid.contains[9]}"/>
+   <list sql="xny" type="double" value="5" skip="${!dwid.contains[9]}"/>
+   <list sql="tcny" type="double" value="2" skip="${!dwid.contains[7]}"/>
+   <list sql="tcny" type="string" value="3" skip="${!dwid.contains[7]}"/>
+   <list sql="tcny" type="double" value="4" skip="${!dwid.contains[7]}"/>
+   <list sql="tcny" type="double" value="5" skip="${!dwid.contains[7]}"/>
+   <list sql="hj" type="double" value="2"/>
+   <list sql="hj" type="string" value="3"/>
+   <list sql="hj" type="double" value="4"/>
+   <list sql="hj" type="double" value="5"/>
+   <sumRow toRow="22">
+    <excludeCol>
+    2,4,5,
+    6,8,9,
+    10,12,13,
+    14,16,17,
+    18,20,21,
+    22,24,25,
+    26,28,29,
+    30,34,35,
+    36,38,39,
+    40,42,43,
+    44,46,47,
+    48,50,51</excludeCol>
+    <rangeRows>0, 21</rangeRows>
+   </sumRow>
+   <excludeCol>
+    2,4,5,
+    6,8,9,
+    10,12,13,
+    14,16,17,
+    18,20,21,
+    22,24,25,
+    26,28,29,
+    30,34,35,
+    36,38,39,
+    40,42,43,
+    44,46,47,
+    48,50,51</excludeCol>
+   <sumRow toRow="27">
+    <rangeRows>23, 26</rangeRows>
+   </sumRow>
+   <sumRow toRow="29">
+    <excludeCol>
+    2,4,5,
+    6,8,9,
+    10,12,13,
+    14,16,17,
+    18,20,21,
+    22,24,25,
+    26,28,29,
+    30,34,35,
+    36,38,39,
+    40,42,43,
+    44,46,47,
+    48,50,51</excludeCol>
+    <inRows>28</inRows>
+   </sumRow>
+  </table>
+ </service>
+</components>

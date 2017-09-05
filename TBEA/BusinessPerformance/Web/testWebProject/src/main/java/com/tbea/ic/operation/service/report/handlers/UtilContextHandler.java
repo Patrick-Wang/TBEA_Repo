@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.frame.script.maker.CodeMaker;
 import com.frame.script.util.PropMap;
 import com.tbea.ic.operation.common.Company15Code;
 import com.tbea.ic.operation.common.CompanyJjzjzCode;
@@ -96,6 +97,7 @@ public class UtilContextHandler implements ContextHandler {
 	@Override
 	public void onHandle(Context context) {
 		context.put("TEMPLATE", templatePath);
+		context.put("cmaker", new CodeMaker());
 		context.put("groupSum", new GroupSum());
 		context.put("array", new Arrays());
 		context.put("accFactory", accFac);

@@ -1,0 +1,31 @@
+<components>
+ <controller id="scriptMakerExport">
+  <context key="token" value="${request.token.asString}"/>
+  <context key="tokenName" value="${token}_name"/>
+  <context key="outfName" value="${session.remove[tokenName]}"/>
+  <context key="outFile" value="${session.remove[token]}"/>
+  <response type="file" ref="outFile" name="${outfName}"/>
+ </controller>
+ <controller id="scriptMakerImport">
+  <context key="file" value="${request.upfile.asExcel}"/>
+  <context key="infName" value="${request.upfile.fileName}"/>
+  <context key="outfName" value="${infName}.zip"/>
+  <context key="outFile" value="${cmaker.make[infName][file]}"/>
+  <context key="token" value="${calendar.current.msFormat}"/>
+  <context key="tokenName" value="${token}_name"/>
+  <context key="p1" value="${session.put[token][outFile]}"/>
+  <context key="p2" value="${session.put[tokenName][outfName]}"/>
+  <response type="json">
+	<errorCode>0</errorCode>
+	<message>OK</message>
+	<type>file</type>
+	<token>${token}</token>
+ </response>
+ </controller>
+ <controller id="scriptMaker">
+  <response type="jsp" name="components/import_data">
+   <map key="importUrl" value="scriptMakerImport"/>
+   <map key="exportUrl" value="scriptMakerExport"/>
+  </response>
+ </controller>
+</components>

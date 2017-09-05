@@ -18,8 +18,9 @@ import com.xml.frame.report.component.entity.Table;
 import com.xml.frame.report.util.MathUtil;
 import com.xml.frame.report.util.Pair;
 import com.xml.frame.report.util.Util;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 
 public class TableXmlInterpreter implements XmlInterpreter {
@@ -85,7 +86,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			}
 		}
 
-		XmlUtil.eachChildren(e, elp, new OnLoop() {
+		XmlWalker.eachChildren(e, elp, new Loop() {
 
 			@Override
 			public void on(Element elem) throws Exception {
@@ -292,8 +293,8 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		Integer target = XmlUtil.getIntAttr(elem, "toCol", elp, null);
 		if (sj != null && tq != null && target != null) {
 			NodeList list = elem.getElementsByTagName("excludeCol");
-			List<Integer> excludeRows = parserArray(XmlUtil
-					.elementText(list, 0));
+			List<Integer> excludeRows = parserArray(XmlWalker
+					.elementText(list, elp, 0));
 			List<Object> tarCols = tb.getValues().get(target);
 			List<Object> sjCols = tb.getValues().get(sj);
 			List<Object> tqCols = tb.getValues().get(tq);
@@ -330,8 +331,8 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		Integer target = XmlUtil.getIntAttr(elem, "toCol", elp, null);
 		if (sub != null && base != null && target != null) {
 			NodeList list = elem.getElementsByTagName("excludeRow");
-			List<Integer> excludeRows = parserArray(XmlUtil
-					.elementText(list, 0));
+			List<Integer> excludeRows = parserArray(XmlWalker
+					.elementText(list, elp, 0));
 			List<Object> tarCols = tb.getValues().get(target);
 			List<Object> subCols = tb.getValues().get(sub);
 			List<Object> baseCols = tb.getValues().get(base);
@@ -482,7 +483,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		Set<Integer> rows = new HashSet<Integer>();
 		if (list.getLength() > 0) {
 			List<Integer> rangeRow = idsToRows(
-					parserArray(XmlUtil.elementText(list, 0)), tb);
+					parserArray(XmlWalker.elementText(list, elp, 0)), tb);
 			for (Integer row : rows) {
 				if (row < rangeRow.get(0) || row > rangeRow.get(1)) {
 					rows.remove(row);
@@ -496,7 +497,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 
 		list = item.getElementsByTagName("rangeRows");
 		if (list.getLength() > 0) {
-			List<Integer> rangeRow = parserArray(XmlUtil.elementText(list, 0));
+			List<Integer> rangeRow = parserArray(XmlWalker.elementText(list, elp, 0));
 			for (Integer row : rows) {
 				if (row < rangeRow.get(0) || row > rangeRow.get(1)) {
 					rows.remove(row);
@@ -512,20 +513,20 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			list = item.getElementsByTagName("inIds");
 
 			if (list.getLength() > 0) {
-				List<Integer> ids = parserArray(XmlUtil.elementText(list, 0));
+				List<Integer> ids = parserArray(XmlWalker.elementText(list, elp, 0));
 				rows.addAll(idsToRows(ids, tb));
 			}
 
 			list = item.getElementsByTagName("inRows");
 			if (list.getLength() > 0) {
-				rows.addAll(parserArray(XmlUtil.elementText(list, 0)));
+				rows.addAll(parserArray(XmlWalker.elementText(list, elp, 0)));
 			}
 		}
 
 		list = item.getElementsByTagName("excIds");
 		if (list.getLength() > 0) {
 			List<Integer> excRows = idsToRows(
-					parserArray(XmlUtil.elementText(list, 0)), tb);
+					parserArray(XmlWalker.elementText(list, elp, 0)), tb);
 			for (Integer row : excRows) {
 				rows.remove(row);
 			}
@@ -533,7 +534,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 
 		list = item.getElementsByTagName("excRows");
 		if (list.getLength() > 0) {
-			List<Integer> excRows = parserArray(XmlUtil.elementText(list, 0));
+			List<Integer> excRows = parserArray(XmlWalker.elementText(list, elp, 0));
 			for (Integer row : excRows) {
 				rows.remove(row);
 			}
@@ -545,7 +546,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		NodeList cols = item.getElementsByTagName("excludeCol");
 		Set<Integer> excludeCols = null;
 		if (cols.getLength() > 0) {
-			excludeCols = XmlUtil.toIntSet(XmlUtil.elementText(cols, 0), elp);
+			excludeCols = XmlUtil.toIntSet(XmlWalker.elementText(cols, elp, 0), elp);
 		}
 		return excludeCols;
 	}
@@ -609,8 +610,8 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		Integer target = XmlUtil.getIntAttr(elem, "toCol", elp, null);
 		if (sub != null && base != null && target != null) {
 			NodeList list = elem.getElementsByTagName("excludeRow");
-			List<Integer> excludeRows = parserArray(XmlUtil
-					.elementText(list, 0));
+			List<Integer> excludeRows = parserArray(XmlWalker
+					.elementText(list, elp, 0));
 			List<Object> tarCols = tb.getValues().get(target);
 			List<Object> subCols = tb.getValues().get(sub);
 			List<Object> baseCols = tb.getValues().get(base);
@@ -647,7 +648,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			NodeList list = item.getElementsByTagName("subId");
 			ELParser elp = new ELParser(component);
 			if (list.getLength() > 0) {
-				Integer subId = XmlUtil.getInt(XmlUtil.elementText(list, 0),
+				Integer subId = XmlUtil.getInt(XmlWalker.elementText(list, elp, 0),
 						elp, null);
 				subRow = tb.getIds().indexOf(subId);
 			}
@@ -655,7 +656,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			if (null == subRow) {
 				list = item.getElementsByTagName("subRow");
 				if (list.getLength() > 0) {
-					subRow = XmlUtil.getInt(XmlUtil.elementText(list, 0), elp,
+					subRow = XmlUtil.getInt(XmlWalker.elementText(list, elp, 0), elp,
 							null);
 				}
 			}
@@ -664,14 +665,14 @@ public class TableXmlInterpreter implements XmlInterpreter {
 				list = item.getElementsByTagName("baseId");
 				if (list.getLength() > 0) {
 					Integer baseId = XmlUtil.getInt(
-							XmlUtil.elementText(list, 0), elp, null);
+							XmlWalker.elementText(list, elp, 0), elp, null);
 					baseRow = tb.getIds().indexOf(baseId);
 				}
 
 				if (null == baseRow) {
 					list = item.getElementsByTagName("baseRow");
 					if (list.getLength() > 0) {
-						baseRow = XmlUtil.getInt(XmlUtil.elementText(list, 0),
+						baseRow = XmlUtil.getInt(XmlWalker.elementText(list, elp, 0),
 								elp, null);
 					}
 				}
@@ -679,8 +680,8 @@ public class TableXmlInterpreter implements XmlInterpreter {
 
 			if (subRow != null && baseRow != null) {
 				list = item.getElementsByTagName("excludeCol");
-				List<Integer> excludeCols = parserArray(XmlUtil.elementText(
-						list, 0));
+				List<Integer> excludeCols = parserArray(XmlWalker.elementText(
+						list, elp, 0));
 
 				List<Object> col = null;
 				for (int i = 0; i < tb.getValues().size(); ++i) {

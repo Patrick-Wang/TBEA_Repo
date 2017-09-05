@@ -5,7 +5,7 @@ import org.w3c.dom.NamedNodeMap;
 
 import com.frame.script.el.ELParser;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.util.XmlUtil;
+import com.xml.frame.report.util.xml.XmlUtil;
 
 public class LoopXmlInterpreter implements XmlInterpreter {
 

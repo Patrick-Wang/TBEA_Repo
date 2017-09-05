@@ -6,7 +6,8 @@ import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.util.XmlUtil;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 /***********************************
  * tagName : if/elseif
@@ -28,17 +29,24 @@ import com.xml.frame.report.util.XmlUtil;
 public class IFXmlInterpreter implements XmlInterpreter {
 
 	Stack<Boolean> conditionStack = new Stack<Boolean>();
-	
+	ELParser elp;
 	private Boolean getTest(Element e, AbstractXmlComponent component) throws Exception{
 		String boolVal = e.getAttribute("test");
 		if (boolVal.isEmpty() && XmlUtil.hasText(e)){
 			boolVal = XmlUtil.getText(e);
 		}
-		return XmlUtil.getBoolean(boolVal, new ELParser(component));	
+		return XmlUtil.getBoolean(boolVal, elp);	
 	}
 	
 	private Boolean hasNextCase(Element e){
-		Element eNext = XmlUtil.nextElement(e);
+		Element eNext;
+		try {
+			eNext = XmlWalker.nextElement(e, elp);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return false;
+		}
 		return null != eNext && (Schema.isElse(eNext) || Schema.isElseIf(eNext));
 	}
 	
@@ -46,6 +54,7 @@ public class IFXmlInterpreter implements XmlInterpreter {
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 
 		if (Schema.isIf(e)){
+			elp = new ELParser(component);
 			Boolean condition = getTest(e, component);	
 			if (hasNextCase(e)){
 				conditionStack.add(condition);

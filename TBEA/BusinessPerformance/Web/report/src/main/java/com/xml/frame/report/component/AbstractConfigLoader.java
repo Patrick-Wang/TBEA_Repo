@@ -17,8 +17,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.xml.frame.report.util.Util;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 public abstract class AbstractConfigLoader implements ConfigLoader{
 
@@ -86,7 +86,7 @@ public abstract class AbstractConfigLoader implements ConfigLoader{
 				Document doc = builder.parse(file);
 				NodeList nl = doc.getElementsByTagName("components");
 
-				XmlUtil.eachChildren(nl.item(0), new OnLoop(){
+				XmlWalker.eachChildren(nl.item(0), null, new Loop(){
 
 					@Override
 					public void on(Element e) throws Exception {

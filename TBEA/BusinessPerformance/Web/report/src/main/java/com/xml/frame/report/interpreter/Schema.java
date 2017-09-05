@@ -22,7 +22,7 @@ public class Schema {
 	public static final String TAG_LOG = "log";
 	public static final String TAG_COMPONENTS = "components";
 	public static final String TAG_CONTROLLER = "controller";
-	public static final String TAG_SERVICE = "controller";
+	public static final String TAG_SERVICE = "service";
 	public static final String TAG_WORDTEMPLETE = "WordTemplate";
 	
 	public static boolean isWordTemplete(Element e){

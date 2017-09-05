@@ -38,8 +38,14 @@ module rzywtj {
             this.unitedSelector.change(()=>{
                 this.adjustHeader();
                 this.item = this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id;
+                if (this.item == 0){
+                    $("#grid-date").parent().removeClass("hidden");
+                }else{
+                    $("#grid-date").parent().addClass("hidden");
+                }
             });
 
+            this.item = this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id;
 
             let itemHidden = false;
             if (opt.itemNodes.length == 1){
@@ -61,6 +67,9 @@ module rzywtj {
                         this.unitedSelector.show();
                         $("#grid-solve").removeCss("display");
                     }
+
+
+
                 });
                 if (opt.itemNodes2.length == 1){
                     $("#" + opt.itemId2).hide();
@@ -73,6 +82,7 @@ module rzywtj {
                 $("#sels").hide();
                 $("#" + opt.dtId).hide();
             }
+
 
 
             $(window).resize(()=>{
@@ -205,7 +215,7 @@ module rzywtj {
                 let data = {
 
                 };
-                if (this.item != 13 && this.item != 14) {
+                if (this.item != 13 && this.item != 14 && this.item != 0) {
                     data.dataWithId = this.resp.data;
                 }else {
                     data.data = this.resp.data;

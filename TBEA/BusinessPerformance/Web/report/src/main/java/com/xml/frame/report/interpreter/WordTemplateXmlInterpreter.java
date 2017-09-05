@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
 import org.docx4j.wml.FldChar;
@@ -25,9 +24,10 @@ import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.util.DocxQuery;
 import com.xml.frame.report.util.DocxQuery.OnEach;
 import com.xml.frame.report.util.DocxUtil;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
 import com.xml.frame.report.util.v2.core.MergeRegion;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 
 public class WordTemplateXmlInterpreter implements XmlInterpreter {
@@ -69,7 +69,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 
 	private Map<String, List<MergeRegion>> parseMRs(Element e) throws Exception {
 		Map<String, List<MergeRegion>> mrs = new HashMap<String, List<MergeRegion>>();
-		XmlUtil.each(e.getElementsByTagName("merge"), elp, new OnLoop() {
+		XmlWalker.each(e.getElementsByTagName("merge"), elp, new Loop() {
 
 			@Override
 			public void on(Element elem) throws Exception {

@@ -82,7 +82,7 @@
         </formatterServer>
         <response name="${request.date.asString}特变电工银票办理情况表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
-    <controller id="financingBankBillShowServ" transaction="transactionManager">
+    <service id="financingBankBillShowServ" transaction="transactionManager">
         <sql id="data">select id,
 bankName,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
@@ -103,5 +103,5 @@ solved from financing_bank_bill where dwid in ${dwid}</sql>
             <list sql="data" type="string" value="7"/>
             <list sql="data" type="string" value="8"/>
         </table>
-    </controller>
+    </service>
 </components>

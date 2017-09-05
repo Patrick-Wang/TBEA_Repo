@@ -6,10 +6,11 @@ import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
 import com.xml.frame.report.util.v2.core.FormatterHandler;
 import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 public class FormatterServerXmlInterpreter implements XmlInterpreter {
 
@@ -22,7 +23,7 @@ public class FormatterServerXmlInterpreter implements XmlInterpreter {
 		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 		FormatterServer serv = new FormatterServer();
 		
-		XmlUtil.eachChildren(e, new ELParser(component), new OnLoop(){
+		XmlWalker.eachChildren(e, new ELParser(component), new Loop(){
 			
 			private int group = 0;
 			

@@ -15,13 +15,13 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 public class RelationUtil {
 	public static Set<CompanyType> parseCompanySet(Element elem, CompanyManager compMgr, DWXXDao dwxxDao) throws Exception {
 		Set<CompanyType> comps = new HashSet<CompanyType>();
-		XmlUtil.eachChildren(elem, new OnLoop(){
+		XmlWalker.eachChildren(elem, null, new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {

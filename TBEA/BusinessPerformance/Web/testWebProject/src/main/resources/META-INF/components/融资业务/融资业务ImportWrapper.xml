@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="BAEA6B3D5073197672D2E28C858F9109ImportWrapperJsp">
-        <list id="ids" type="int">0,1,2,3,4,5,6,7,8,9,10,11,12</list>
+        <list id="ids" type="int">0,2,3,4,5,6,7,8,9,10,11,12</list>
         <list id="vals" type="string">
-       各家银行人民币授信情况统计表,
-	各家银行外币授信情况统计表,
+       各家银行授信情况统计表,
         特变电工人民币贷款明细统计表,
         特变电工其他融资明细统计表,
         特变电工外币贷款明细统计表,
@@ -25,11 +24,8 @@
         <context key="item" value="${request.item.asInt}"/>
         <context key="dwid" value="${orgs.BMDBOrganization.ids[request.compId.asInt]}"/>
         <if test="${item == 0}">
-            <callcontroller id="financingBankRMBCreditImportClr"/>
+            <callcontroller id="financingBankCurrencyCreditImportClr"/>
         </if>
-        <elseif test="${item == 1}">
-            <callcontroller id="financingBankForeignCurrencyCreditImportClr"/>
-        </elseif>
         <elseif test="${item == 2}">
             <callcontroller id="financingRMBLoanImportClr"/>
         </elseif>

@@ -7,7 +7,7 @@ import org.w3c.dom.Element;
 import com.frame.script.el.ELParser;
 import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.util.XmlUtil;
+import com.xml.frame.report.util.xml.XmlUtil;
 
 public class LogXmlInterpreter implements XmlInterpreter {
 

@@ -16,7 +16,7 @@ import com.xml.frame.report.component.service.Transaction;
 import com.xml.frame.report.util.DBUtil;
 import com.xml.frame.report.util.LoggerProxy;
 import com.xml.frame.report.util.Pair;
-import com.xml.frame.report.util.XmlUtil;
+import com.xml.frame.report.util.xml.XmlUtil;
 
 import net.sf.json.JSONArray;
 public class SqlXmlInterpreter implements XmlInterpreter {

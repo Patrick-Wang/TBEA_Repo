@@ -25,10 +25,11 @@ import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.component.service.Transaction;
 import com.xml.frame.report.util.Util;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
 import com.xml.frame.report.util.excel.ExcelUtil;
 import com.xml.frame.report.util.excel.ValidationException;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONNull;
@@ -653,11 +654,11 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 
 	private List<FieldSql> compile(NodeList list) throws Exception {
 		List<FieldSql> result = new ArrayList<FieldSql>();
-		XmlUtil.each(list, elp, new OnLoop() {
+		XmlWalker.each(list, elp, new Loop() {
 
 			@Override
 			public void on(Element e) throws Exception {
-				XmlUtil.eachChildren(e, elp, new OnLoop() {
+				XmlWalker.eachChildren(e, elp, new Loop() {
 
 					@Override
 					public void on(Element elem) throws Exception {

@@ -29,8 +29,8 @@ import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.xml.frame.report.util.Pair;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 @Repository
 public class Relationships {
@@ -110,7 +110,7 @@ public class Relationships {
 	}
 	
 	private void parseShare(Document doc) throws Exception{
-		XmlUtil.each(doc.getElementsByTagName("share"), new OnLoop(){
+		XmlWalker.each(doc.getElementsByTagName("share"), null, new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {
@@ -151,7 +151,7 @@ public class Relationships {
 
 	private void parseIndis(Document doc) throws Exception {
 		NodeList indicators = doc.getElementsByTagName("indicators");
-		XmlUtil.eachChildren(XmlUtil.element(indicators, 0), new OnLoop(){
+		XmlWalker.eachChildren(XmlWalker.element(indicators, null, 0), null, new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {
@@ -165,7 +165,7 @@ public class Relationships {
 	}
 
 	private void parseSum(Document doc) throws Exception {
-		XmlUtil.each(doc.getElementsByTagName("sum"), new OnLoop(){
+		XmlWalker.each(doc.getElementsByTagName("sum"), null, new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {

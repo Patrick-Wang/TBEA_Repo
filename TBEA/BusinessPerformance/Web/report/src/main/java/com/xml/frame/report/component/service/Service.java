@@ -18,8 +18,9 @@ import com.xml.frame.report.interpreter.SqlXmlInterpreter;
 import com.xml.frame.report.interpreter.TableXmlInterpreter;
 import com.xml.frame.report.interpreter.WordTemplateXmlInterpreter;
 import com.xml.frame.report.interpreter.XmlInterpreter;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 public class Service extends AbstractXmlComponent implements ServiceRunnable {
 	
@@ -65,7 +66,7 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 
 	@Override
 	public void run() throws Exception{
-		XmlUtil.eachChildren(config, elp, new OnLoop() {
+		XmlWalker.eachChildren(config, elp, new Loop() {
 			@Override
 			public void on(Element elem) throws Exception {
 				for (XmlInterpreter interpreter : interpreters) {	

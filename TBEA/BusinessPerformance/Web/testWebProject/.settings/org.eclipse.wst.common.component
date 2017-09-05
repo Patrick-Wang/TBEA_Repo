@@ -13,6 +13,9 @@
         <dependent-module archiveName="el-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/el/el">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="maker-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/maker/maker">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="ep-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ep/ep">
             <dependency-type>uses</dependency-type>
         </dependent-module>

@@ -36,6 +36,7 @@ public class EasyCalendar {
 	private static final Integer KEY_LastSeason = count++;
 	private static final Integer KEY_Format_Month = count++;
 	private static final Integer KEY_Format_Second = count++;
+	private static final Integer KEY_Format_MS = count++;
 
 	
 	private Object cache(Integer key, Object val){
@@ -155,6 +156,13 @@ public class EasyCalendar {
 			return (String) cache.get(KEY_Format_Second);
 		}
 		return (String) cache(KEY_Format_Second, Util.formatToSecond(this.getTimestamp()));
+	}
+	
+	public String getMsFormat(){
+		if (cache.containsKey(KEY_Format_MS)){
+			return (String) cache.get(KEY_Format_MS);
+		}
+		return (String) cache(KEY_Format_MS, Util.formatToMill(this.getTimestamp()));
 	}
 	
 	public EasyCalendar getSunday(){

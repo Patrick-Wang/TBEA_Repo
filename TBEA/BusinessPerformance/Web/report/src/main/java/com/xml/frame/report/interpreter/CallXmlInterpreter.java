@@ -10,8 +10,9 @@ import org.w3c.dom.Element;
 import com.frame.script.el.ELParser;
 import com.frame.script.util.TypeUtil;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 public class CallXmlInterpreter implements XmlInterpreter {
 
@@ -63,7 +64,7 @@ public class CallXmlInterpreter implements XmlInterpreter {
 			}
 		}
 
-		XmlUtil.eachChildren(e, elp, new OnLoop() {
+		XmlWalker.eachChildren(e, elp, new Loop() {
 			int index = 0;
 
 			@Override

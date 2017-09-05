@@ -16,4 +16,18 @@ public class ControllerSession extends PropMap{
 	public Object getProperty(Object key) throws Exception {
 		return session.getAttribute((String)key);
 	}
+	
+	@Override
+	public Object put(Object key, Object value) {
+		session.setAttribute((String) key, value);
+		return this;
+	}
+	
+	@Override
+	public Object remove(Object key) {
+		Object val = session.getAttribute((String) key);
+		session.removeAttribute((String) key);
+		return val;
+	}
+
 }

@@ -14,7 +14,7 @@
             <message>OK</message>
         </response>
     </controller>
-    <controller id="financingCommercialBillImportServ" transaction="transactionManager">
+    <service id="financingCommercialBillImportServ" transaction="transactionManager">
         <merge data="${data}" table="financing_commercial_bill">
             <set>
                 <bankName ref="0" type="string"/>
@@ -27,5 +27,5 @@
                 <_time type="date" value="${time}"/>
             </set>
         </merge>
-    </controller>
+    </service>
 </components>

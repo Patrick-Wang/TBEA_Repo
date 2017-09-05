@@ -1,26 +1,7 @@
-﻿--各家银行人民币授信情况统计表
-IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'financing_bank_RMB_credit')
-DROP TABLE financing_bank_RMB_credit
-CREATE TABLE [dbo].[financing_bank_RMB_credit](
-	[id] [int] IDENTITY(1,1) NOT NULL,
-	bankName varchar(100), --银行名称
-	authCreditAmount numeric(20, 2), --授信额
-	usedAmount numeric(20, 2), --已使用额度
-	loanBalance numeric(20, 2), --贷款余额
-	authCreditExpire date, --授信到期日
-	dwid int, --公司名称
-	solved varchar(100) DEFAULT 'N', --已处理
-	[_src] [varchar](50),
-	[_time] [datetime]
-	PRIMARY KEY CLUSTERED
-	(
-		[id] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY]
---各家银行外币授信情况统计表
-IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'financing_bank_foreign_currency_credit')
-DROP TABLE financing_bank_foreign_currency_credit
-CREATE TABLE [dbo].[financing_bank_foreign_currency_credit](
+﻿--各家银行授信情况统计表
+IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'financing_bank_currency_credit')
+DROP TABLE financing_bank_currency_credit
+CREATE TABLE [dbo].[financing_bank_currency_credit](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	bankName varchar(100), --银行名称
 	currency varchar(10), --币种
@@ -29,6 +10,8 @@ CREATE TABLE [dbo].[financing_bank_foreign_currency_credit](
 	loanBalance numeric(20, 2), --贷款余额
 	authCreditExpire date, --授信到期日
 	dwid int, --公司名称
+	nf int,
+	yf int,
 	solved varchar(100) DEFAULT 'N', --已处理
 	[_src] [varchar](50),
 	[_time] [datetime]

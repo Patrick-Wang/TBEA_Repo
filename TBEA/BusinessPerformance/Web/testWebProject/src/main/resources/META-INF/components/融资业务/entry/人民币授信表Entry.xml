@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
-    <controller id="financingBankRMBCreditEntryJSP">
+    <controller id="financingBankCurrencyCreditEntryJSP">
         <response name="framework/templates/singleDateReport/entry" type="jsp">
-            <map key="updateUrl" value="financingBankRMBCreditEntryUpdateClr"/>
-            <map key="submitUrl" value="financingBankRMBCreditEntrySubmitClr"/>
+            <map key="updateUrl" value="financingBankCurrencyCreditEntryUpdateClr"/>
+            <map key="submitUrl" value="financingBankCurrencyCreditEntrySubmitClr"/>
         </response>
     </controller>
-    <controller id="financingBankRMBCreditEntryUpdateClr">
+    <controller id="financingBankCurrencyCreditEntryUpdateClr">
         <context key="cal" value="${request.date.asCalendar}"/>
-        <callservice id="financingBankRMBCreditEntryUpdateServ"/>
-        <callcontroller id="financingBankRMBCreditEntryFmtClr"/>
+        <callservice id="financingBankCurrencyCreditEntryUpdateServ"/>
+        <callcontroller id="financingBankCurrencyCreditEntryFmtClr"/>
         <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
             <formatter ref="fmtData"/>
         </formatterServer>
@@ -16,6 +16,9 @@
             <header type="array">
                 <item>
                     <name>银行名称</name>
+                </item>
+                <item>
+                    <name>币种</name>
                 </item>
                 <item>
                     <name>授信额</name>
@@ -33,50 +36,52 @@
             <data>${fmtServ.result}</data>
         </response>
     </controller>
-    <controller id="financingBankRMBCreditEntryFmtClr">
+    <controller id="financingBankCurrencyCreditEntryFmtClr">
         <formatter export="true" id="fmtData">
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="2,3,4"/>
+                <DefaultMatcher cols="3,4,5"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
     </controller>
-    <service id="financingBankRMBCreditEntryUpdateServ" transaction="transactionManager">
+    <service id="financingBankCurrencyCreditEntryUpdateServ" transaction="transactionManager">
         <sql id="data">select id,
 bankName,
+currency,
 authCreditAmount,
 usedAmount,
 loanBalance,
 CONVERT(varchar(20),authCreditExpire, 23) tmp4,
-solved from financing_bank_RMB_credit where dwid  in  ${dwid}</sql>
+solved from financing_bank_currency_credit where dwid  in  ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
-            <list sql="data" type="double" value="2"/>
+            <list sql="data" type="string" value="2"/>
             <list sql="data" type="double" value="3"/>
             <list sql="data" type="double" value="4"/>
-            <list sql="data" type="date" value="5"/>
-            <list sql="data" type="string" value="6"/>
+            <list sql="data" type="double" value="5"/>
+            <list sql="data" type="date" value="6"/>
+            <list sql="data" type="string" value="7"/>
         </table>
     </service>
-    <controller id="financingBankRMBCreditEntrySubmitClr">
+    <controller id="financingBankCurrencyCreditEntrySubmitClr">
         <context key="cal" value="${request.date.asCalendar}"/>
         <context key="data" value="${request.data.asJsonArray}"/>
         <context key="src" value="${session.account.name} 录入"/>
         <context key="time" value="${calendar.current.secondFormat}"/>
-        <callservice id="financingBankRMBCreditEntrySubmitServ"/>
+        <callservice id="financingBankCurrencyCreditEntrySubmitServ"/>
         <response type="json">
             <errorCode>0</errorCode>
             <message>OK</message>
         </response>
     </controller>
-    <service id="financingBankRMBCreditEntrySubmitServ" transaction="transactionManager">
-        <merge data="${data}" table="financing_bank_RMB_credit">
+    <service id="financingBankCurrencyCreditEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="financing_bank_currency_credit">
             <where>
                 <id ref="0" type="int"/>
             </where>
             <set>
-                <solved ref="6" type="string"/>
+                <solved ref="7" type="string"/>
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

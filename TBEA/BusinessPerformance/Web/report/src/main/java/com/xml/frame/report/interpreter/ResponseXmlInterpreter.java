@@ -17,9 +17,10 @@ import com.frame.script.util.StringUtil;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.component.controller.Controller;
 import com.xml.frame.report.util.ExcelHelper;
-import com.xml.frame.report.util.XmlUtil;
-import com.xml.frame.report.util.XmlUtil.OnLoop;
 import com.xml.frame.report.util.v2.core.FormatterServer;
+import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlUtil;
+import com.xml.frame.report.util.xml.XmlWalker;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -31,7 +32,8 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 	
 	JSONObject parseJsonObject(Element pElem) throws Exception{
 		JSONObject pJson = new JSONObject();
-		XmlUtil.eachChildren(pElem, elp, new XmlUtil.OnLoop(){
+		
+		XmlWalker.eachChildren(pElem, elp, new Loop(){
 			@Override
 			public void on(Element elem) throws Exception {
 				if ("array".equals(elem.getAttribute("type"))){
@@ -69,7 +71,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 			ja.addAll(XmlUtil.toStringList(StringUtil.shrink(XmlUtil.getText(elem)), elp));
 		}
 		
-		XmlUtil.eachChildren(elem, elp, new XmlUtil.OnLoop(){
+		XmlWalker.eachChildren(elem, elp, new Loop(){
 			@Override
 			public void on(Element el) throws DOMException, Exception {
 				if ("item".equals(el.getTagName())){
@@ -133,7 +135,16 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		}else if ("jsp".equalsIgnoreCase(type)){
+		} else if ("file".equalsIgnoreCase(type)){
+			try {
+				byte[] file = (byte[]) component.getVar(e.getAttribute("ref"));
+				resp.setContentType("application/octet-stream");
+				resp.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode( XmlUtil.getString(e.getAttribute("name"), elp), "UTF-8")  +"\"");
+				resp.getOutputStream().write(file);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} else if ("jsp".equalsIgnoreCase(type)){
 			ELParser elp = new ELParser(component);
 			String jspName = (String) XmlUtil.getObjectAttr(e, "name", elp);
 			Map map = parseMap(elp, e);
@@ -145,7 +156,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 
 	private Map parseMap(ELParser elp, Element e) throws Exception {
 		Map map = new HashMap();
-		XmlUtil.each(e.getElementsByTagName("map"), elp, new OnLoop(){
+		XmlWalker.each(e.getElementsByTagName("map"), elp, new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {

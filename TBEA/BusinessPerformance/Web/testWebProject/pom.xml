@@ -51,6 +51,11 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>com.excel.script</groupId>
+			<artifactId>maker</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 		    <groupId>com.tbea.lib</groupId>
   			<artifactId>ep</artifactId>
 		    <version>0.0.1-SNAPSHOT</version>
