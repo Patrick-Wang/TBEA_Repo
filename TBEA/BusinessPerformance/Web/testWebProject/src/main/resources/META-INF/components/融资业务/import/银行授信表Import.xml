@@ -16,6 +16,12 @@
     </controller>
     <service id="financingBankCurrencyCreditImportServ" transaction="transactionManager">
         <merge data="${data}" table="financing_bank_currency_credit">
+        	<where>
+        		<bankName type="string" ref="0" />
+				<nf ref="6" type="int"/>
+				<yf ref="7" type="int"/>
+                <dwid type="int" value="${dwid}" />
+        	</where>
             <set>
                 <bankName ref="0" type="string"/>
                 <currency ref="1" type="string"/>
