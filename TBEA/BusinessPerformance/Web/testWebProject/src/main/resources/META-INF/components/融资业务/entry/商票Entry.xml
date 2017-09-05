@@ -41,7 +41,7 @@
             <EmptyFormatter/>
         </formatter>
     </controller>
-    <controller id="financingCommercialBillEntryUpdateServ" transaction="transactionManager">
+    <service id="financingCommercialBillEntryUpdateServ" transaction="transactionManager">
         <sql id="data">select id,
 bankName,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
@@ -58,7 +58,7 @@ solved from financing_commercial_bill where dwid  in  ${dwid}</sql>
             <list sql="data" type="string" value="5"/>
             <list sql="data" type="string" value="6"/>
         </table>
-    </controller>
+    </service>
     <controller id="financingCommercialBillEntrySubmitClr">
         <context key="cal" value="${request.date.asCalendar}"/>
         <context key="data" value="${request.data.asJsonArray}"/>
