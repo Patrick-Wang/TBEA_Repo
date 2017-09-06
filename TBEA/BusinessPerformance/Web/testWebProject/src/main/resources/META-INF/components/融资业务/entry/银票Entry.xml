@@ -9,16 +9,19 @@
         <context key="cal" value="${request.date.asCalendar}"/>
         <callservice id="financingBankBillEntryUpdateServ"/>
         <callcontroller id="financingBankBillEntryFmtClr"/>
-        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+        <formatterServer id="fmtServ" table="${result.matrix}">
             <formatter ref="fmtData"/>
         </formatterServer>
         <response type="json">
             <header type="array">
                 <item>
+                    <name>单位名称</name>
+                </item>
+                <item>
                     <name>银行名称</name>
                 </item>
                 <item>
-                    <name>出票日</name>
+                    <name>起始日</name>
                 </item>
                 <item>
                     <name>到期日</name>
@@ -27,13 +30,16 @@
                     <name>票面金额</name>
                 </item>
                 <item>
-                    <name>保证金比例</name>
+                    <name>保证金金额</name>
                 </item>
                 <item>
-                    <name>备注</name>
+                    <name>交存保证金比例</name>
                 </item>
                 <item>
-                    <name>未解付原因</name>
+                    <name>是否为股份公司票据池出票</name>
+                </item>
+                <item>
+                    <name>备注（未解付原因）</name>
                 </item>
             </header>
             <data>${fmtServ.result}</data>
@@ -42,24 +48,28 @@
     <controller id="financingBankBillEntryFmtClr">
         <formatter export="true" id="fmtData">
             <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="5"/>
+                <DefaultMatcher cols="7"/>
             </PercentFormatter>
-            <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="4"/>
+            <NumberFormatter reservedCount="1" currency="true">
+                <DefaultMatcher cols="5,6"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
     </controller>
     <service id="financingBankBillEntryUpdateServ" transaction="transactionManager">
-        <sql id="data">select id,
+        <sql id="data">select fbb.id,
+       dwxx.name,
 bankName,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
 amount,
+cashAmount,
 marginRatio,
+fromBillPool,
 remark,
-reason,
-solved from financing_bank_bill where dwid  in  ${dwid}</sql>
+solved 
+from financing_bank_bill fbb, jygk_dwxx dwxx 
+where dwid  in  ${dwid} and dwid = dwxx.id</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
@@ -70,6 +80,7 @@ solved from financing_bank_bill where dwid  in  ${dwid}</sql>
             <list sql="data" type="string" value="6"/>
             <list sql="data" type="string" value="7"/>
             <list sql="data" type="string" value="8"/>
+            <list sql="data" type="string" value="9"/>
         </table>
     </service>
     <controller id="financingBankBillEntrySubmitClr">

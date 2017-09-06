@@ -145,9 +145,10 @@ CREATE TABLE [dbo].[financing_bank_bill](
 	beginningDate date, --出票日
 	maturityDate date, --到期日
 	amount numeric(18, 4), --票面金额
+	cashAmount numeric(18, 4), --保证金金额
 	marginRatio numeric(18, 4), --保证金比例
-	remark varchar(100), --备注
-	reason varchar(100), --未解付原因
+	fromBillPool varchar(100), --是否为股份公司票据池出票
+	remark varchar(1000), --备注
 	dwid int, --公司名称
 	solved varchar(100) DEFAULT 'N', --已处理
 	[_src] [varchar](50),
