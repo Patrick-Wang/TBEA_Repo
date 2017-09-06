@@ -14,6 +14,9 @@
         </formatterServer>
         <response type="json">
             <header type="array">
+             	<item>
+                    <name>单位名称</name>
+                </item>
                 <item>
                     <name>银行名称</name>
                 </item>
@@ -30,13 +33,10 @@
                     <name>利率</name>
                 </item>
                 <item>
-                    <name>手续费率</name>
-                </item>
-                <item>
                     <name>品种</name>
                 </item>
                 <item>
-                    <name>担保方式</name>
+                    <name>备注</name>
                 </item>
             </header>
             <data>${fmtServ.result}</data>
@@ -44,26 +44,27 @@
     </controller>
     <controller id="financingTradeEntryFmtClr">
         <formatter export="true" id="fmtData">
-            <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="5,6"/>
+            <PercentFormatter reservedCount="2">
+                <DefaultMatcher cols="6"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="4"/>
+                <DefaultMatcher cols="5"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
     </controller>
     <service id="financingTradeEntryUpdateServ" transaction="transactionManager">
-        <sql id="data">select id,
+        <sql id="data">select ft.id,
+        dwxx.name,
 bankName,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
 amount,
 rate,
-fee,
 type,
-guarantyStyle,
-solved from financing_trade where dwid  in  ${dwid}</sql>
+remark
+from financing_trade ft,jygk_dwxx dwxx 
+where dwid in ${dwid} and dwxx.id = dwid</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
@@ -74,7 +75,6 @@ solved from financing_trade where dwid  in  ${dwid}</sql>
             <list sql="data" type="double" value="6"/>
             <list sql="data" type="string" value="7"/>
             <list sql="data" type="string" value="8"/>
-            <list sql="data" type="string" value="9"/>
         </table>
     </service>
     <controller id="financingTradeEntrySubmitClr">
@@ -94,7 +94,6 @@ solved from financing_trade where dwid  in  ${dwid}</sql>
                 <id ref="0" type="int"/>
             </where>
             <set>
-                <solved ref="9" type="string"/>
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

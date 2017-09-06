@@ -22,9 +22,8 @@
                 <maturityDate ref="2" type="date"/>
                 <amount ref="3" type="double"/>
                 <rate ref="4" type="double"/>
-                <fee ref="5" type="double"/>
-                <type ref="6" type="string"/>
-                <guarantyStyle ref="7" type="string"/>
+                <type ref="5" type="string"/>
+                <remark ref="6" type="string"/>
                 <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
