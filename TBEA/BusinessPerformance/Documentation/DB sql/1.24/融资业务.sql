@@ -69,16 +69,16 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE financing_foreign_currency_loan
 CREATE TABLE [dbo].[financing_foreign_currency_loan](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	bankName varchar(100), --银行名称
+	bankName text, --银行名称
 	beginningDate date, --贷款起始日
 	maturityDate date, --贷款到期日
 	currency varchar(10), --币种
-	loanAmount numeric(20, 2), --贷款金额
+	loanAmount numeric(20, 2), --金额
 	loanRate numeric(18, 4), --利率
-	loanTerm varchar(100), --贷款期限
-	loanType varchar(100), --贷款品种
-	guarantyStyle varchar(100), --担保方式
-	selfAmount numeric(20, 2), --本币金额
+	floatingRatio numeric(18, 4), --浮动幅度
+	loanTerm text, --贷款期限
+	loanType text, --贷款品种
+	guarantyStyle text, --担保方式
 	dwid int, --公司名称
 	solved varchar(100) DEFAULT 'N', --已处理
 	[_src] [varchar](50),
@@ -119,16 +119,14 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE financing_trade
 CREATE TABLE [dbo].[financing_trade](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	bankName text, --银行名称
+	bankName varchar(100), --银行名称
 	beginningDate date, --业务起始日
 	maturityDate date, --业务到期日
 	amount numeric(20, 2), --金额
 	rate numeric(18, 4), --利率
-	fee numeric(18, 4), --手续费率
-	type text, --品种
-	guarantyStyle text, --担保方式
+	type varchar(200), --品种
+	remark varchar(500), --备注
 	dwid int, --公司名称
-	solved varchar(100) DEFAULT 'N', --已处理
 	[_src] [varchar](50),
 	[_time] [datetime]
 	PRIMARY KEY CLUSTERED
@@ -146,8 +144,8 @@ CREATE TABLE [dbo].[financing_bank_bill](
 	maturityDate date, --到期日
 	amount numeric(18, 4), --票面金额
 	marginRatio numeric(18, 4), --保证金比例
-	remark varchar(100), --备注
-	reason varchar(100), --未解付原因
+	remark varchar(500), --备注
+	reason varchar(500), --未解付原因
 	dwid int, --公司名称
 	solved varchar(100) DEFAULT 'N', --已处理
 	[_src] [varchar](50),
@@ -187,7 +185,7 @@ CREATE TABLE [dbo].[financing_RMB_LG](
 	LCamount numeric(18, 4),--保证金金额
 	LCRatio numeric(18, 4), --保证金比例
 	type varchar(200), --保函种类
-	guaranteeNumber text, --保函编号
+	guaranteeNumber varchar(200), --保函编号
 	isTransactByStock varchar(100), --是否以股份公司名义办理
 	reason varchar(500), --未注销原因
 	dwid int, --公司名称
@@ -211,7 +209,7 @@ CREATE TABLE [dbo].[financing_foreign_currency_LG](
 	LCamount numeric(18, 4),--保证金金额
 	LCRatio numeric(18, 4), --保证金比例
 	type varchar(200), --保函种类
-	guaranteeNumber text, --保函编号
+	guaranteeNumber varchar(200), --保函编号
 	isTransactByStock varchar(100), --是否以股份公司名义办理
 	reason varchar(500), --未注销原因
 	dwid int, --公司名称
@@ -258,7 +256,7 @@ CREATE TABLE [dbo].[financing_LC](
 	LCamount numeric(18, 4), --信用证金额
 	cashAmount numeric(18, 4), --保证金金额 
 	cashRate numeric(18, 4), --保证金比例
-	remark varchar(100), --备注
+	remark varchar(500), --备注
 	Lcbalance numeric(18, 4), --信用证余额
 	dwid int, --单位ID
 	[_src] [varchar](50),
@@ -287,7 +285,7 @@ CREATE TABLE [dbo].[financing_factoring](
 	interest_expense numeric(18, 4), --利息支出
 	fee numeric(18, 4), --手续费
 	costUndertaker varchar(100), --利息承担方
-	remark varchar(100), --备注
+	remark varchar(500), --备注
 	[_src] [varchar](50),
 	[_time] [datetime]
 	PRIMARY KEY CLUSTERED
