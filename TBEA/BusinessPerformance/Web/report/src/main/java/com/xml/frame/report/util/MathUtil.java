@@ -125,6 +125,29 @@ public class MathUtil {
 		return val;
 	}
 	
+	public static String currency(String val){
+		int iDot = val.lastIndexOf('.');
+		StringBuilder sbRet = new StringBuilder();
+		if (iDot < 0){
+			iDot = val.length();
+		}
+		int start = iDot % 3;
+		if (start > 0) {
+			sbRet.append(val.substring(0, start));
+		}
+		while (start  < iDot) {
+			if (start > 0) {
+				sbRet.append(",");
+			}
+			sbRet.append(val.substring(start, start + 3));
+			start += 3;
+		}
+		if (iDot < val.length()) {
+			sbRet.append(val.substring(iDot));
+		}
+		return sbRet.toString();
+	}
+	
 	public static Double minus(Double val1, Double val2) {
 		if (val1 == null || val2 == null){
 			return null;
