@@ -44,10 +44,10 @@
     <controller id="financingBankBillFmtClr">
         <formatter export="true" id="fmtData">
             <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="4"/>
+                <DefaultMatcher cols="6"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="3"/>
+                <DefaultMatcher cols="4,5"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -57,7 +57,8 @@
         <callservice id="financingBankBillShowServ"/>
         <callcontroller id="financingBankBillFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="特变电工银票办理情况表"/>
-        <list id="title" type="string">银行名称,出票日,到期日,票面金额,保证金比例,备注,未解付原因</list>
+        <list id="title" type="string">公司名称,出票银行,起始日,到期日, 票面金额 ,保证金金额,	交存保证金比例,是否为股份公司票据池出票,备注（未解付原因）
+</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -80,18 +81,22 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="${request.date.asString}特变电工银票办理情况表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="特变电工银票办理情况表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="financingBankBillShowServ" transaction="transactionManager">
-        <sql id="data">select id,
+        <sql id="data">select fbb.id,
+       dwxx.name,
 bankName,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
 amount,
+cashAmount,
 marginRatio,
+fromBillPool,
 remark,
-reason,
-solved from financing_bank_bill where dwid in ${dwid}</sql>
+solved 
+from financing_bank_bill fbb, jygk_dwxx dwxx 
+where dwid  in  ${dwid} and dwid = dwxx.id</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
@@ -102,6 +107,7 @@ solved from financing_bank_bill where dwid in ${dwid}</sql>
             <list sql="data" type="string" value="6"/>
             <list sql="data" type="string" value="7"/>
             <list sql="data" type="string" value="8"/>
+            <list sql="data" type="string" value="9"/>
         </table>
     </service>
 </components>
