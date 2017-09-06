@@ -70,7 +70,8 @@ LCamount,
 cashAmount,
 cashRate,
 remark,
-Lcbalance from financing_LC flc, jygk_dwxx dwxx 
+Lcbalance 
+from financing_LC flc, jygk_dwxx dwxx 
 where dwid in ${dwid} and dwxx.id = dwid </sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
