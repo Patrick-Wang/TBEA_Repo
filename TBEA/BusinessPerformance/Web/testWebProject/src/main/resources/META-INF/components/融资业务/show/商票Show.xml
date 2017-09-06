@@ -16,6 +16,9 @@
         </formatterServer>
         <response type="json">
             <header type="array">
+            	<item>
+                    <name>单位名称</name>
+                </item>
                 <item>
                     <name>银行名称</name>
                 </item>
@@ -29,7 +32,7 @@
                     <name>票面金额</name>
                 </item>
                 <item>
-                    <name>未解付原因</name>
+                    <name>备注</name>
                 </item>
             </header>
             <data>${fmtServ.result}</data>
@@ -38,7 +41,7 @@
     <controller id="financingCommercialBillFmtClr">
         <formatter export="true" id="fmtData">
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="3"/>
+                <DefaultMatcher cols="4"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -48,7 +51,7 @@
         <callservice id="financingCommercialBillShowServ"/>
         <callcontroller id="financingCommercialBillFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="特变电工商票办理情况表"/>
-        <list id="title" type="string">银行名称,出票日,到期日,票面金额,未解付原因</list>
+        <list id="title" type="string">单位名称,银行名称,出票日,到期日,票面金额,备注</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -71,16 +74,18 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="${request.date.asString}特变电工商票办理情况表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="特变电工商票办理情况表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="financingCommercialBillShowServ" transaction="transactionManager">
-        <sql id="data">select id,
+        <sql id="data">select fcb.id,
+        dwxx.name,
 bankName,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
 amount,
-reason,
-solved from financing_commercial_bill where dwid in ${dwid}</sql>
+reason
+from financing_commercial_bill fcb,jygk_dwxx dwxx 
+where dwid in ${dwid} and dwxx.id = dwid</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
