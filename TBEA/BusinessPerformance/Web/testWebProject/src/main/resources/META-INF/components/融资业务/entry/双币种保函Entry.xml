@@ -1,113 +1,174 @@
-<?xml version="1.0" encoding="UTF-8"?><components>
-    <controller id="financingDoubleCurrencyLGEntryJSP">
-        <response name="framework/templates/singleDateReport/entry" type="jsp">
-            <map key="updateUrl" value="financingDoubleCurrencyLGEntryUpdateClr"/>
-            <map key="submitUrl" value="financingDoubleCurrencyLGEntrySubmitClr"/>
-        </response>
-    </controller>
-    <controller id="financingDoubleCurrencyLGEntryUpdateClr">
-        <context key="cal" value="${request.date.asCalendar}"/>
-        <callservice id="financingDoubleCurrencyLGEntryUpdateServ"/>
-        <callcontroller id="financingDoubleCurrencyLGEntryFmtClr"/>
-        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
-            <formatter ref="fmtData"/>
-        </formatterServer>
-        <response type="json">
-            <header type="array">
-                <item>
-                    <name>银行名称</name>
-                </item>
-                <item>
-                    <name>起始日</name>
-                </item>
-                <item>
-                    <name>到期日</name>
-                </item>
-                <item>
-                    <name>币种</name>
-                </item>
-                <item>
-                    <name>保函金额</name>
-                </item>
-                <item>
-                    <name>保证金比例</name>
-                </item>
-                <item>
-                    <name>保函种类</name>
-                </item>
-                <item>
-                    <name>保函编号</name>
-                </item>
-                <item>
-                    <name>备注</name>
-                </item>
-                <item>
-                    <name>未注销原因</name>
-                </item>
-            </header>
-            <data>${fmtServ.result}</data>
-        </response>
-    </controller>
-    <controller id="financingDoubleCurrencyLGEntryFmtClr">
-        <formatter export="true" id="fmtData">
-            <PercentFormatter reservedCount="1">
-                <DefaultMatcher col="6"/>
-            </PercentFormatter>
-            <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="5"/>
-            </NumberFormatter>
-            <EmptyFormatter/>
-        </formatter>
-    </controller>
-    <service id="financingDoubleCurrencyLGEntryUpdateServ" transaction="transactionManager">
-        <sql id="data">select id,
-bankName,
-CONVERT(varchar(20),beginningDate, 23) tmp1,
-CONVERT(varchar(20),maturityDate, 23) tmp2,
-currency,
-amount,
-marginRatio,
-type,
-guaranteeNumber,
-remark,
-reason,
-solved from financing_double_currency_LG where dwid  in  ${dwid}</sql>
-        <list id="ids" sql="data" value="0"/>
-        <table export="true" id="result" rowIds="ids">
-            <list sql="data" type="string" value="1"/>
-            <list sql="data" type="date" value="2"/>
-            <list sql="data" type="date" value="3"/>
-            <list sql="data" type="string" value="4"/>
-            <list sql="data" type="double" value="5"/>
-            <list sql="data" type="double" value="6"/>
-            <list sql="data" type="string" value="7"/>
-            <list sql="data" type="string" value="8"/>
-            <list sql="data" type="string" value="9"/>
-            <list sql="data" type="string" value="10"/>
-            <list sql="data" type="string" value="11"/>
-        </table>
-    </service>
-    <controller id="financingDoubleCurrencyLGEntrySubmitClr">
-        <context key="cal" value="${request.date.asCalendar}"/>
-        <context key="data" value="${request.data.asJsonArray}"/>
-        <context key="src" value="${session.account.name} 录入"/>
-        <context key="time" value="${calendar.current.secondFormat}"/>
-        <callservice id="financingDoubleCurrencyLGEntrySubmitServ"/>
-        <response type="json">
-            <errorCode>0</errorCode>
-            <message>OK</message>
-        </response>
-    </controller>
-    <service id="financingDoubleCurrencyLGEntrySubmitServ" transaction="transactionManager">
-        <merge data="${data}" table="financing_double_currency_LG">
-            <where>
-                <id ref="0" type="int"/>
-            </where>
-            <set>
-                <solved ref="11" type="string"/>
-                <_src type="string" value="${src}"/>
-                <_time type="date" value="${time}"/>
-            </set>
-        </merge>
-    </service>
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+	<controller id="financingDoubleCurrencyLGEntryJSP">
+		<response name="framework/templates/singleDateReport/entry"
+			type="jsp">
+			<map key="updateUrl" value="financingDoubleCurrencyLGEntryUpdateClr" />
+			<map key="submitUrl" value="financingDoubleCurrencyLGEntrySubmitClr" />
+		</response>
+	</controller>
+	<controller id="financingDoubleCurrencyLGEntryUpdateClr">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<callservice id="financingDoubleCurrencyLGEntryUpdateServ" />
+		<callcontroller id="financingDoubleCurrencyLGEntryFmtClr" />
+		<formatterServer id="fmtServ" table="${result.matrix}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+		<response type="json">
+			<header type="array">
+				<item>
+					<name>单位名称</name>
+				</item>
+				<item>
+					<name>银行名称</name>
+				</item>
+				<item>
+					<name>币种</name>
+				</item>
+				<item>
+					<name>起始日</name>
+				</item>
+				<item>
+					<name>到期日</name>
+				</item>
+				<item>
+					<name>金额</name>
+				</item>
+				<item>
+					<name>保证金金额</name>
+				</item>
+				<item>
+					<name>保证金比例</name>
+				</item>
+				<item>
+					<name>保函种类</name>
+				</item>
+				<item>
+					<name>银行保函编号</name>
+				</item>
+				<item>
+					<name>备注</name>
+				</item>
+			</header>
+			<mergeRows type="array">
+				<item>
+					<col>0</col>
+					<rowStart>0</rowStart>
+					<step>2</step>
+					<count>${result.ids.size / 2}</count>
+				</item>
+				<item>
+					<col>1</col>
+					<rowStart>0</rowStart>
+					<step>2</step>
+					<count>${result.ids.size / 2}</count>
+				</item>
+				<item>
+					<col>3</col>
+					<rowStart>0</rowStart>
+					<step>2</step>
+					<count>${result.ids.size / 2}</count>
+				</item>
+				<item>
+					<col>4</col>
+					<rowStart>0</rowStart>
+					<step>2</step>
+					<count>${result.ids.size / 2}</count>
+				</item>
+				<item>
+					<col>8</col>
+					<rowStart>0</rowStart>
+					<step>2</step>
+					<count>${result.ids.size / 2}</count>
+				</item>
+				<item>
+					<col>9</col>
+					<rowStart>0</rowStart>
+					<step>2</step>
+					<count>${result.ids.size / 2}</count>
+				</item>
+			</mergeRows>
+			<data>${fmtServ.result}</data>
+		</response>
+	</controller>
+	<controller id="financingDoubleCurrencyLGEntryFmtClr">
+		<formatter export="true" id="fmtData">
+			<PercentFormatter reservedCount="1">
+				<DefaultMatcher cols="8" />
+			</PercentFormatter>
+			<NumberFormatter reservedCount="1">
+				<DefaultMatcher cols="6,7" />
+			</NumberFormatter>
+			<EmptyFormatter />
+		</formatter>
+	</controller>
+	<service id="financingDoubleCurrencyLGEntryUpdateServ"
+		transaction="transactionManager">
+		<sql id="bhbh">select distinct guaranteeNumber
+		from financing_double_currency_LG where dwid in ${dwid} and guaranteeNumber is not null
+		</sql>
+		<list type="string" id="orderNames"></list>
+		<list type="int" id="ids"></list>
+		<loop from="0" to="${bhbh.size - 1}" var="i">
+			<list type="int" id="ids">${i}</list>
+			<list id="orderNames">${bhbh[i]}rmb, ${bhbh[i]}other</list>
+		</loop>
+		<sql id="data" order="orderNames" by="0" colcount="12">select case when currency = 'RMB' then guaranteeNumber + 'rmb'
+																	 else guaranteeNumber + 'other' end orderName,
+			dwxx.name name2,
+			bankName,
+			currency,
+			CONVERT(varchar(20),beginningDate, 23) tmp1,
+			CONVERT(varchar(20),maturityDate, 23) tmp2,
+			amount,
+			guaranteeAmount,
+			guaranteeAmount / nullif(amount, 0) radio,
+			type,
+			guaranteeNumber,
+			remark
+			from financing_double_currency_LG fdcl, jygk_dwxx dwxx
+			where 
+				fdcl.dwid = dwxx.id and
+				dwid in ${dwid} and 
+				guaranteeNumber is not null
+		</sql>
+
+		<table export="true" id="result" rowIds="ids">
+			<list sql="data" type="string" value="1" />
+			<list sql="data" type="string" value="2" />
+			<list sql="data" type="string" value="3" />
+			<list sql="data" type="string" value="4" />
+			<list sql="data" type="string" value="5" />
+			<list sql="data" type="double" value="6" />
+			<list sql="data" type="double" value="7" />
+			<list sql="data" type="double" value="8" />
+			<list sql="data" type="string" value="9" />
+			<list sql="data" type="string" value="10" />
+			<list sql="data" type="string" value="11" />
+		</table>
+	</service>
+	<controller id="financingDoubleCurrencyLGEntrySubmitClr">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<context key="data" value="${request.data.asJsonArray}" />
+		<context key="src" value="${session.account.name} 录入" />
+		<context key="time" value="${calendar.current.secondFormat}" />
+		<callservice id="financingDoubleCurrencyLGEntrySubmitServ" />
+		<response type="json">
+			<errorCode>0</errorCode>
+			<message>OK</message>
+		</response>
+	</controller>
+	<service id="financingDoubleCurrencyLGEntrySubmitServ"
+		transaction="transactionManager">
+		<merge data="${data}" table="financing_double_currency_LG">
+			<where>
+				<id ref="0" type="int" />
+			</where>
+			<set>
+				<solved ref="11" type="string" />
+				<_src type="string" value="${src}" />
+				<_time type="date" value="${time}" />
+			</set>
+		</merge>
+	</service>
 </components>

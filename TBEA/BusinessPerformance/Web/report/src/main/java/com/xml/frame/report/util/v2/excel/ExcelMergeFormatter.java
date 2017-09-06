@@ -34,6 +34,14 @@ public class ExcelMergeFormatter extends AbstractFormatter {
 		for (int i = 0; i < this.mrs.size(); ++i){
 			this.merge(sheet, this.mrs.get(i));
 		}
+		
+		for (int i = 0; i < forceMrs.size(); ++i){
+			sheet.addMergedRegion(new CellRangeAddress(
+					forceMrs.get(i).getY(), 
+					forceMrs.get(i).getY() + forceMrs.get(i).getHeight() - 1, 
+					forceMrs.get(i).getX(),
+					forceMrs.get(i).getX() + forceMrs.get(i).getWidth() - 1));
+		}
 	}	
 	
 	private void merge(HSSFSheet sheet, MergeRegion mr) {
@@ -80,13 +88,7 @@ public class ExcelMergeFormatter extends AbstractFormatter {
 			}
 		}
 		
-		for (int i = 0; i < forceMrs.size(); ++i){
-			sheet.addMergedRegion(new CellRangeAddress(
-					forceMrs.get(i).getY(), 
-					forceMrs.get(i).getY() + forceMrs.get(i).getHeight() - 1, 
-					forceMrs.get(i).getX(),
-					forceMrs.get(i).getX() + forceMrs.get(i).getWidth() - 1));
-		}
+		
 		
 	}
 	

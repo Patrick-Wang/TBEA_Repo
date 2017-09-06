@@ -207,9 +207,9 @@ CREATE TABLE [dbo].[financing_double_currency_LG](
 	maturityDate date, --到期日
 	currency varchar(10), --币种
 	amount numeric(18, 4), --保函金额
-	marginRatio numeric(18, 4), --保证金比例
+	guaranteeAmount numeric(18, 4),--保证金金额
 	type varchar(100), --保函种类
-	guaranteeNumber text, --保函编号
+	guaranteeNumber varchar(100), --保函编号
 	remark varchar(100), --备注
 	reason varchar(100), --未注销原因
 	dwid int, --公司名称

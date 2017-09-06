@@ -52,21 +52,21 @@
     </controller>
     <controller id="financingDoubleCurrencyLGFmtClr">
         <formatter export="true" id="fmtData">
-            <PercentFormatter reservedCount="1">
-                <DefaultMatcher col="5"/>
-            </PercentFormatter>
-            <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="4"/>
-            </NumberFormatter>
-            <EmptyFormatter/>
-        </formatter>
+			<PercentFormatter reservedCount="1">
+				<DefaultMatcher cols="7" />
+			</PercentFormatter>
+			<NumberFormatter reservedCount="1">
+				<DefaultMatcher cols="6,5" />
+			</NumberFormatter>
+			<EmptyFormatter />
+		</formatter>
     </controller>
     <controller id="financingDoubleCurrencyLGExportClr">
         <context key="cal" value="${request.date.asCalendar}"/>
-        <callservice id="financingDoubleCurrencyLGShowServ"/>
+        <callservice id="financingDoubleCurrencyLGEntryUpdateServ"/>
         <callcontroller id="financingDoubleCurrencyLGFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="特变电工双币种保函办理情况统计表"/>
-        <list id="title" type="string">银行名称,起始日,到期日,币种,保函金额,保证金比例,保函种类,保函编号,备注,未注销原因</list>
+        <list id="title" type="string">单位名称,银行名称,币种,起始日,到期日,总金额,保函金额,保证金比例,保函种类,保函编号,备注</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -75,8 +75,17 @@
                     <title ref="title"/>
                 </titles>
             </ExcelTitleFilter>
+             <ExcelMergeFormatter>
+             	<ExcelTemplate ref="excelTemplate"/>
+			    <MergeRegion  x="0" y="1" width="1" height="2" yCount="${result.ids.size / 2}"/>
+			    <MergeRegion  x="1" y="1" width="1" height="2" yCount="${result.ids.size / 2}"/>
+			    <MergeRegion  x="3" y="1" width="1" height="2" yCount="${result.ids.size / 2}"/>
+			    <MergeRegion  x="4" y="1" width="1" height="2" yCount="${result.ids.size / 2}"/>
+			    <MergeRegion  x="8" y="1" width="1" height="2" yCount="${result.ids.size / 2}"/>
+			    <MergeRegion  x="9" y="1" width="1" height="2" yCount="${result.ids.size / 2}"/>
+		   </ExcelMergeFormatter>
             <ExcelHeaderCenterFormatter>
-                <DefaultMatcher cols="0"/>
+                <DefaultMatcher cols="0, 1"/>
                 <ExcelTemplate ref="excelTemplate"/>
                 <Offset col="0" row="1"/>
             </ExcelHeaderCenterFormatter>
@@ -89,7 +98,7 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="${request.date.asString}特变电工双币种保函办理情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="特变电工双币种保函办理情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="financingDoubleCurrencyLGShowServ" transaction="transactionManager">
         <sql id="data">select id,

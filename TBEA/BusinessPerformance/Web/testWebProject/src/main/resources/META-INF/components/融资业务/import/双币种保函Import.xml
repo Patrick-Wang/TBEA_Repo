@@ -18,15 +18,14 @@
         <merge data="${data}" table="financing_double_currency_LG">
             <set>
                 <bankName ref="0" type="string"/>
-                <beginningDate ref="1" type="date"/>
-                <maturityDate ref="2" type="date"/>
-                <currency ref="3" type="string"/>
+                <currency ref="1" type="string"/>
+                <beginningDate ref="2" type="date"/>
+                <maturityDate ref="3" type="date"/>
                 <amount ref="4" type="double"/>
-                <marginRatio ref="5" type="double"/>
+                <guaranteeAmount ref="5" type="double"/>
                 <type ref="6" type="string"/>
                 <guaranteeNumber ref="7" type="string"/>
-                <remark ref="8" type="string"/>
-                <reason ref="9" type="string"/>
+                <remark ref="7" type="string"/>
                 <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
