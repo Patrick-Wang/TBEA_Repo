@@ -17,7 +17,7 @@
     <service id="financingRMBLoanImportServ" transaction="transactionManager">
         <merge data="${data}" table="financing_RMB_loan">
             <set>
-                <bankName ref="0" type="string"/>
+                <bankName ref="0" type="string" test="${this != null}"/>
                 <beginningDate ref="1" type="date"/>
                 <maturityDate ref="2" type="date"/>
                 <loanDmount ref="3" type="double"/>

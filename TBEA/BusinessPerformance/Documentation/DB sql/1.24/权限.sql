@@ -39,6 +39,15 @@
 ((select id from jygk_account where name='上开融资'),	106	, 	 84),
 ((select id from jygk_account where name='928006'),	115	, 	 84),
 ((select id from jygk_account where name='928006'),	106	, 	 84),
+
+((select id from jygk_account where name='688020'),	115	, 	 84),
+((select id from jygk_account where name='688020'),	106	, 	 84),
+((select id from jygk_account where name='068903'),	115	, 	 84),
+((select id from jygk_account where name='068903'),	106	, 	 84),
+((select id from jygk_account where name='102589'),	115	, 	 84),
+((select id from jygk_account where name='102589'),	106	, 	 84),
+((select id from jygk_account where name='363560'),	115	, 	 84),
+((select id from jygk_account where name='363560'),	106	, 	 84),
                                                     
 ((select id from jygk_account where name='688020'),	3	, 	 84),
 ((select id from jygk_account where name='688020'),	5	, 	 84),
