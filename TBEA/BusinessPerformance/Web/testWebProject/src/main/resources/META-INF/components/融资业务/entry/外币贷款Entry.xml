@@ -14,35 +14,38 @@
         </formatterServer>
         <response type="json">
             <header type="array">
-                <item>
-                    <name>银行名称</name>
+            	 <item>
+                    <name>单位名称</name>
                 </item>
                 <item>
-                    <name>贷款起始日</name>
-                </item>
-                <item>
-                    <name>贷款到期日</name>
+                    <name>贷款银行</name>
                 </item>
                 <item>
                     <name>币种</name>
                 </item>
                 <item>
-                    <name>金额</name>
+                    <name>起始日</name>
                 </item>
                 <item>
-                    <name>利率</name>
+                    <name>到期日</name>
                 </item>
                 <item>
-                    <name>浮动幅度</name>
+                    <name>贷款金额</name>
                 </item>
                 <item>
-                    <name>贷款期限</name>
+                    <name>贷款利率</name>
                 </item>
                 <item>
-                    <name>贷款品种</name>
+                    <name>种类</name>
                 </item>
                 <item>
-                    <name>担保方式</name>
+                    <name>品种</name>
+                </item>
+                <item>
+                    <name>贷款方式</name>
+                </item>
+                <item>
+                    <name>本币金额</name>
                 </item>
             </header>
             <data>${fmtServ.result}</data>
@@ -51,28 +54,30 @@
     <controller id="financingForeignCurrencyLoanEntryFmtClr">
         <formatter export="true" id="fmtData">
             <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="6,7"/>
+                <DefaultMatcher cols="7"/>
             </PercentFormatter>
-            <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="5"/>
+            <NumberFormatter reservedCount="1" currency="true">
+                <DefaultMatcher cols="6, 11"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
     </controller>
     <service id="financingForeignCurrencyLoanEntryUpdateServ" transaction="transactionManager">
-        <sql id="data">select id,
+        <sql id="data">select ffcl.id,
         dwxx.name, 
 bankName,
+currency,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
-currency,
 loanAmount,
 loanRate,
-floatingRatio,
 loanTerm,
 loanType,
 guarantyStyle,
-solved from financing_foreign_currency_loan, jygk_dwxx dwxx where dwid  in  ${dwid} and dwid = dwxx.id</sql>
+selfAmount,
+solved 
+from financing_foreign_currency_loan ffcl, jygk_dwxx dwxx 
+where dwid  in  ${dwid} and dwid = dwxx.id</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

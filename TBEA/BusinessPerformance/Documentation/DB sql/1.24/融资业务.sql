@@ -69,16 +69,16 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE financing_foreign_currency_loan
 CREATE TABLE [dbo].[financing_foreign_currency_loan](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	bankName text, --银行名称
+	bankName varchar(100), --银行名称
 	beginningDate date, --贷款起始日
 	maturityDate date, --贷款到期日
 	currency varchar(10), --币种
-	loanAmount numeric(20, 2), --金额
+	loanAmount numeric(20, 2), --贷款金额
 	loanRate numeric(18, 4), --利率
-	floatingRatio numeric(18, 4), --浮动幅度
-	loanTerm text, --贷款期限
-	loanType text, --贷款品种
-	guarantyStyle text, --担保方式
+	loanTerm varchar(100), --贷款期限
+	loanType varchar(100), --贷款品种
+	guarantyStyle varchar(100), --担保方式
+	selfAmount numeric(20, 2), --本币金额
 	dwid int, --公司名称
 	solved varchar(100) DEFAULT 'N', --已处理
 	[_src] [varchar](50),
