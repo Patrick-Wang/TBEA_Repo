@@ -25,7 +25,7 @@
                 <guaranteeAmount ref="5" type="double"/>
                 <type ref="6" type="string"/>
                 <guaranteeNumber ref="7" type="string"/>
-                <remark ref="7" type="string"/>
+                <remark ref="8" type="string"/>
                 <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>

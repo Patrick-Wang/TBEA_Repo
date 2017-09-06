@@ -205,7 +205,7 @@ CREATE TABLE [dbo].[financing_double_currency_LG](
 	bankName varchar(100), --银行名称
 	beginningDate date, --起始日
 	maturityDate date, --到期日
-	currency varchar(10), --币种
+	currency varchar(50), --币种
 	amount numeric(18, 4), --保函金额
 	guaranteeAmount numeric(18, 4),--保证金金额
 	type varchar(100), --保函种类

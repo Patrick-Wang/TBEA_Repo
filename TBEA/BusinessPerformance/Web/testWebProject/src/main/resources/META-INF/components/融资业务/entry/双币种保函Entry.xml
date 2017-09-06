@@ -104,17 +104,21 @@
 	</controller>
 	<service id="financingDoubleCurrencyLGEntryUpdateServ"
 		transaction="transactionManager">
-		<sql id="bhbh">select distinct guaranteeNumber
-		from financing_double_currency_LG where dwid in ${dwid} and guaranteeNumber is not null
+		<sql id="bhbh">select 
+		guaranteeNumber,
+		(select max(currency) from financing_double_currency_LG where guaranteeNumber = fdcl.guaranteeNumber) cur
+		from financing_double_currency_LG fdcl where dwid in ${dwid} and guaranteeNumber is not null
 		</sql>
 		<list type="string" id="orderNames"></list>
 		<list type="int" id="ids"></list>
 		<loop from="0" to="${bhbh.size - 1}" var="i">
 			<list type="int" id="ids">${i}</list>
-			<list id="orderNames">${bhbh[i]}rmb, ${bhbh[i]}other</list>
+			<list id="orderNames">${bhbh[i][0]}${bhbh[i][1]}, ${bhbh[i][0]}other</list>
 		</loop>
-		<sql id="data" order="orderNames" by="0" colcount="12">select case when currency = 'RMB' then guaranteeNumber + 'rmb'
-																	 else guaranteeNumber + 'other' end orderName,
+		<sql id="data" order="orderNames" by="0" colcount="12">select
+		case when currency = (select max(currency) from financing_double_currency_LG where guaranteeNumber = fdcl.guaranteeNumber) then
+			guaranteeNumber + currency
+		else guaranteeNumber + 'other' end orderName,
 			dwxx.name name2,
 			bankName,
 			currency,
