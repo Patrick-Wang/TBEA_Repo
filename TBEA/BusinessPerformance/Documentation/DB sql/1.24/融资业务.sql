@@ -205,17 +205,17 @@ DROP TABLE financing_foreign_currency_LG
 CREATE TABLE [dbo].[financing_foreign_currency_LG](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	bankName varchar(100), --银行名称
+	currency varchar(10), --币种
 	beginningDate date, --起始日
 	maturityDate date, --到期日
-	currency varchar(10), --币种
 	amount numeric(18, 4), --保函金额
-	marginRatio numeric(18, 4), --保证金比例
-	type varchar(100), --保函种类
+	LCamount numeric(18, 4),--保证金金额
+	LCRatio numeric(18, 4), --保证金比例
+	type varchar(200), --保函种类
 	guaranteeNumber text, --保函编号
-	remark varchar(100), --备注
-	reason varchar(100), --未注销原因
+	isTransactByStock varchar(100), --是否以股份公司名义办理
+	reason varchar(500), --未注销原因
 	dwid int, --公司名称
-	solved varchar(100) DEFAULT 'N', --已处理
 	[_src] [varchar](50),
 	[_time] [datetime]
 	PRIMARY KEY CLUSTERED

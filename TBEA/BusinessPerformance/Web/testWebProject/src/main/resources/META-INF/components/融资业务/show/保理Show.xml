@@ -71,10 +71,10 @@
     <controller id="financingFactoringFmtClr">
         <formatter export="true" id="fmtData">
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="7,8,9,10,13,14"/>
+                <DefaultMatcher cols="6,7,8,9,12,13"/>
             </NumberFormatter>
             <PercentFormatter reservedCount="2">
-                <DefaultMatcher cols="11,12"/>
+                <DefaultMatcher cols="10,11"/>
             </PercentFormatter>
             <EmptyFormatter/>
         </formatter>

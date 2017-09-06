@@ -16,8 +16,14 @@
         </formatterServer>
         <response type="json">
             <header type="array">
+            	<item>
+                    <name>单位名称</name>
+                </item>
                 <item>
                     <name>银行名称</name>
+                </item>
+                 <item>
+                    <name>币种</name>
                 </item>
                 <item>
                     <name>起始日</name>
@@ -25,11 +31,12 @@
                 <item>
                     <name>到期日</name>
                 </item>
-                <item>
-                    <name>币种</name>
-                </item>
+               
                 <item>
                     <name>保函金额</name>
+                </item>
+                <item>
+                    <name>保证金金额</name>
                 </item>
                 <item>
                     <name>保证金比例</name>
@@ -41,7 +48,7 @@
                     <name>保函编号</name>
                 </item>
                 <item>
-                    <name>备注</name>
+                    <name>是否以股份公司名义办理</name>
                 </item>
                 <item>
                     <name>未注销原因</name>
@@ -52,11 +59,11 @@
     </controller>
     <controller id="financingForeignCurrencyLGFmtClr">
         <formatter export="true" id="fmtData">
-            <PercentFormatter reservedCount="1">
-                <DefaultMatcher col="5"/>
+            <PercentFormatter reservedCount="2">
+                <DefaultMatcher cols="7"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="4"/>
+                <DefaultMatcher cols="5,6"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -66,7 +73,7 @@
         <callservice id="financingForeignCurrencyLGShowServ"/>
         <callcontroller id="financingForeignCurrencyLGFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="特变电工外币保函办理情况统计表"/>
-        <list id="title" type="string">银行名称,起始日,到期日,币种,保函金额,保证金比例,保函种类,保函编号,备注,未注销原因</list>
+        <list id="title" type="string">单位名称,银行名称,币种,起始日,到期日,保函金额,保证金金额,保证金比例,保函种类,保函编号,是否以股份公司名义办理,未注销原因</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -92,18 +99,22 @@
         <response name="${request.date.asString}特变电工外币保函办理情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="financingForeignCurrencyLGShowServ" transaction="transactionManager">
-        <sql id="data">select id,
+        <sql id="data">select ffclg.id,
+        dwxx.name,
 bankName,
+currency,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
-currency,
 amount,
-marginRatio,
+LCamount, 
+LCRatio,
 type,
 guaranteeNumber,
-remark,
-reason,
-solved from financing_foreign_currency_LG where dwid in ${dwid}</sql>
+isTransactByStock,
+reason
+from 
+financing_foreign_currency_LG ffclg, jygk_dwxx dwxx 
+where dwid in ${dwid} and  dwxx.id = dwid</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
@@ -117,6 +128,7 @@ solved from financing_foreign_currency_LG where dwid in ${dwid}</sql>
             <list sql="data" type="string" value="9"/>
             <list sql="data" type="string" value="10"/>
             <list sql="data" type="string" value="11"/>
+            <list sql="data" type="string" value="12"/>
         </table>
     </service>
 </components>
