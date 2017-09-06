@@ -50,7 +50,7 @@
     <controller id="financingRMBLGFmtClr">
         <formatter export="true" id="fmtData">
             <PercentFormatter reservedCount="1">
-                <DefaultMatcher col="4"/>
+                <DefaultMatcher cols="4"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1">
                 <DefaultMatcher cols="3"/>

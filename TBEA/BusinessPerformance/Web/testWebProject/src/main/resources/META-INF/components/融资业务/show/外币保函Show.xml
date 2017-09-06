@@ -53,7 +53,7 @@
     <controller id="financingForeignCurrencyLGFmtClr">
         <formatter export="true" id="fmtData">
             <PercentFormatter reservedCount="1">
-                <DefaultMatcher col="5"/>
+                <DefaultMatcher cols="5"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1">
                 <DefaultMatcher cols="4"/>

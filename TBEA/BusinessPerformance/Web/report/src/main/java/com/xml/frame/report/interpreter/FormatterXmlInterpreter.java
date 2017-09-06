@@ -105,14 +105,18 @@ public class FormatterXmlInterpreter implements XmlInterpreter {
 			handler = new EmptyFormatter(parserMatcher(item));
 		}else if ("NumberFormatter".equals(item.getTagName())){
 			String reservedCount = item.getAttribute("reservedCount");
+			NumberFormatter nf = null;
 			if (!reservedCount.isEmpty()){
-				handler = new NumberFormatter(parserMatcher(item), Integer.valueOf(reservedCount));
+				nf = new NumberFormatter(parserMatcher(item), Integer.valueOf(reservedCount));
 			}else{
-				handler = new NumberFormatter(parserMatcher(item), 1);
+				nf = new NumberFormatter(parserMatcher(item), 1);
 			}
 			if ("true".equals(item.getAttribute("trimZero"))){
-				((NumberFormatter)handler).trimZero(true);
+				nf.trimZero(true);
+			}if ("true".equals(item.getAttribute("currency"))){
+				nf.setCurrency(true);
 			}
+			handler = nf;
 		}else if ("PercentFormatter".equals(item.getTagName())){
 			String reservedCount = item.getAttribute("reservedCount");
 			if (!reservedCount.isEmpty()){

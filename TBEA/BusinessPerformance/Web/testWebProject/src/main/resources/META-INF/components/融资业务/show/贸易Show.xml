@@ -47,7 +47,7 @@
     <controller id="financingTradeFmtClr">
         <formatter export="true" id="fmtData">
             <PercentFormatter reservedCount="1">
-                <DefaultMatcher col="4,5"/>
+                <DefaultMatcher cols="4,5"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1">
                 <DefaultMatcher cols="3"/>
