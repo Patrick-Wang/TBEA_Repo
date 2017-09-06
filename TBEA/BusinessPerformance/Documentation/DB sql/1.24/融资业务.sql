@@ -205,7 +205,7 @@ DROP TABLE financing_foreign_currency_LG
 CREATE TABLE [dbo].[financing_foreign_currency_LG](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	bankName varchar(100), --银行名称
-	currency varchar(10), --币种
+	currency varchar(50), --币种
 	beginningDate date, --起始日
 	maturityDate date, --到期日
 	amount numeric(18, 4), --保函金额

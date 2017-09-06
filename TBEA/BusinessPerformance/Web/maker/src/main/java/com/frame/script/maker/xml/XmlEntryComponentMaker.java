@@ -272,7 +272,7 @@ public class XmlEntryComponentMaker extends XmlComponentMaker {
 			fmtTmp.setAttribute("reservedCount", "0");
 			Element matcher = doc.createElement("DefaultMatcher");
 			fmtTmp.appendChild(matcher);
-			matcher.setAttribute("col", Util.join(intVals));
+			matcher.setAttribute("cols", Util.join(intVals));
 			formatter.appendChild(fmtTmp);
 		}
 		
@@ -281,7 +281,7 @@ public class XmlEntryComponentMaker extends XmlComponentMaker {
 			fmtTmp.setAttribute("reservedCount", "1");
 			Element matcher = doc.createElement("DefaultMatcher");
 			fmtTmp.appendChild(matcher);
-			matcher.setAttribute("col", Util.join(percentVals));
+			matcher.setAttribute("cols", Util.join(percentVals));
 			formatter.appendChild(fmtTmp);
 		}
 		

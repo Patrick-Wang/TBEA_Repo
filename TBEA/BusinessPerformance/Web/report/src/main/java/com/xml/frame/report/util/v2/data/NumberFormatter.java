@@ -11,7 +11,7 @@ public class NumberFormatter extends AbstractFormatter {
 
 	Integer reservedCount = 1;
 	boolean trimZero = false;
-
+	boolean currency = false;
 	public NumberFormatter(FormatterMatcher matcher,
 			Integer reservedCount) {
 		super(matcher);
@@ -35,14 +35,26 @@ public class NumberFormatter extends AbstractFormatter {
 		return val;
 	}
 	
+	protected String currency(String val){
+		if (currency){
+			val = MathUtil.currency(val);
+		}
+		return val;
+	}
+	
 	@Override
 	protected String onHandle(List<List<String>> table, int row, int col, String val) {
 		if (!isInvalid(val)){
 			BigDecimal b = new BigDecimal(Double.valueOf(val));
 			String ret = b.setScale(this.reservedCount, BigDecimal.ROUND_HALF_UP).toPlainString();
-			return trimZero(ret);
+			return currency(trimZero(ret));
 		}
 		return null;
+	}
+
+
+	public void setCurrency(boolean b) {
+		currency = b;
 	}
 
 }
