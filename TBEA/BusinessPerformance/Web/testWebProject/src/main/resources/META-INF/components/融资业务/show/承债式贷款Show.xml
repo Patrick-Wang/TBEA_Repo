@@ -1,71 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
-    <controller id="financingLCShow">
+    <controller id="financingDebtBearingLoanShow">
         <response name="framework/templates/singleDateReport/show" type="jsp">
             <map key="year" value="${calendar.current.year}"/>
             <map key="month" value="${calendar.current.month}"/>
-            <map key="updateUrl" value="financingLCUpdateClr"/>
-            <map key="exportUrl" value="financingLCExportClr"/>
+            <map key="updateUrl" value="financingDebtBearingLoanUpdateClr"/>
+            <map key="exportUrl" value="financingDebtBearingLoanExportClr"/>
         </response>
     </controller>
-    <controller id="financingLCUpdateClr">
+    <controller id="financingDebtBearingLoanUpdateClr">
         <context key="cal" value="${request.date.asCalendar}"/>
-        <callservice id="financingLCShowServ"/>
-        <callcontroller id="financingLCFmtClr"/>
+        <callservice id="financingDebtBearingLoanShowServ"/>
+        <callcontroller id="financingDebtBearingLoanFmtClr"/>
         <formatterServer id="fmtServ" table="${result.matrixNoIds}">
             <formatter ref="fmtData"/>
         </formatterServer>
         <response type="json">
             <header type="array">
-            	<item>
+                <item>
                     <name>单位名称</name>
                 </item>
                 <item>
-                    <name>业务银行</name>
+                    <name>贷款银行</name>
                 </item>
                 <item>
-                    <name>币种</name>
+                    <name>贷款起始日</name>
                 </item>
                 <item>
-                    <name>起始日</name>
+                    <name>金额</name>
                 </item>
                 <item>
-                    <name>到期日</name>
+                    <name>还款日</name>
                 </item>
                 <item>
-                    <name>信用证金额</name>
+                    <name>还款金额</name>
                 </item>
                 <item>
-                    <name>保证金金额 </name>
+                    <name>利率</name>
                 </item>
                 <item>
-                    <name>保证金比例</name>
+                    <name>浮动幅度</name>
+                </item>
+                <item>
+                    <name>贷款种类</name>
+                </item>
+                <item>
+                    <name>贷款品种</name>
+                </item>
+                <item>
+                    <name>贷款方式</name>
                 </item>
                 <item>
                     <name>备注</name>
                 </item>
                 <item>
-                    <name>信用证余额</name>
+                    <name>单位全名</name>
                 </item>
             </header>
             <data>${fmtServ.result}</data>
         </response>
     </controller>
-    <controller id="financingLCFmtClr">
+    <controller id="financingDebtBearingLoanFmtClr">
         <formatter export="true" id="fmtData">
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="6,7,10"/>
+                <DefaultMatcher cols="3,5,6,7"/>
             </NumberFormatter>
-            <PercentFormatter reservedCount="2">
-                <DefaultMatcher cols="8"/>
-            </PercentFormatter>
+            <EmptyFormatter/>
         </formatter>
     </controller>
-    <controller id="financingLCExportClr">
+    <controller id="financingDebtBearingLoanExportClr">
         <context key="cal" value="${request.date.asCalendar}"/>
-        <callservice id="financingLCShowServ"/>
-        <callcontroller id="financingLCFmtClr"/>
-        <ExcelTemplate id="excelTemplate" sheet="特变电工信用证"/>
-        <list id="title" type="string">单位名称,业务银行,币种,起始日,到期日,信用证金额,保证金金额 ,保证金比例,备注,信用证余额</list>
+        <callservice id="financingDebtBearingLoanShowServ"/>
+        <callcontroller id="financingDebtBearingLoanFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="特变电工承债式贷款明细统计表"/>
+        <list id="title" type="string">单位名称,贷款银行,贷款起始日,金额,还款日,还款金额,利率,浮动幅度,贷款种类,贷款品种,贷款方式,备注,单位全名</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -88,33 +95,38 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="${request.date.asString}特变电工信用证.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="${request.date.asString}特变电工承债式贷款明细统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
-    <service id="financingLCShowServ" transaction="transactionManager">
-        <sql id="data">select flc.id,
-        dwxx.name,
-bankName,
-currency,
+    <service id="financingDebtBearingLoanShowServ" transaction="transactionManager">
+        <sql id="data">select id,
+companySName,
+loanBank,
 CONVERT(varchar(20),beginningDate, 23) tmp2,
-CONVERT(varchar(20),maturityDate, 23) tmp3,
-LCamount,
-cashAmount,
-cashRate,
+loanAmount,
+CONVERT(varchar(20),repaymentDate, 23) tmp4,
+repaymentAmount,
+loanRate,
+floatingRatio,
+loanstyle,
+loanType,
+loadMode,
 remark,
-Lcbalance from financing_LC flc, jygk_dwxx dwxx 
-where dwid in ${dwid} and dwxx.id = dwid</sql>
+companyFName from financing_debt_bearing_loan order by companySName desc,loanBank desc</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
             <list sql="data" type="string" value="2"/>
             <list sql="data" type="date" value="3"/>
-            <list sql="data" type="date" value="4"/>
-            <list sql="data" type="double" value="5"/>
+            <list sql="data" type="double" value="4"/>
+            <list sql="data" type="date" value="5"/>
             <list sql="data" type="double" value="6"/>
             <list sql="data" type="double" value="7"/>
-            <list sql="data" type="string" value="8"/>
-            <list sql="data" type="double" value="9"/>
-            <list sql="data" type="double" value="10"/>
+            <list sql="data" type="double" value="8"/>
+            <list sql="data" type="string" value="9"/>
+            <list sql="data" type="string" value="10"/>
+            <list sql="data" type="string" value="11"/>
+            <list sql="data" type="string" value="12"/>
+            <list sql="data" type="string" value="13"/>
         </table>
     </service>
 </components>

@@ -3,12 +3,13 @@
 	<controller id="BAEA6B3D5073197672D2E28C858F9109ShowWrapperJsp">
 		<context key="dwid" value="${sysAuth.cids[84]}" />
 
-		<list id="ids" type="int">0,2,3,4,5,6,7,8,9,10,11,12</list>
+		<list id="ids" type="int">0,2,3,4,15,5,6,7,8,9,10,11,12</list>
 		<list id="vals" type="string">
 			授信总表,
 			特变电工人民币贷款明细统计表,
 			特变电工其他融资明细统计表,
 			特变电工外币贷款明细统计表,
+			特变电工银行承债式贷款明细表,
 			特变电工贸易业务明细统计表,
 			特变电工银票办理情况表,
 			特变电工商票办理情况表,
@@ -17,6 +18,7 @@
 			特变电工双币种保函办理情况统计表,
 			特变电工信用证明细统计表,
 			特变电工银行保理台账明细表
+			
 		</list>
 		<if test="${dwid.contains[0]}">
 			<list id="ids" type="int">13,14</list>
@@ -79,5 +81,8 @@
 		<elseif test="${item == 12}">
 			<callcontroller id="financingFactoringExportClr" />
 		</elseif>
+		 <elseif test="${item == 15}">
+            <callcontroller id="financingDebtBearingLoanExportClr"/>
+        </elseif>
 	</controller>
 </components>

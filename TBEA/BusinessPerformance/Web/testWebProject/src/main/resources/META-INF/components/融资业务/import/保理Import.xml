@@ -19,15 +19,19 @@
             <set>
                 <beginningDate ref="0" type="date"/>
                 <maturityDate ref="1" type="date"/>
-                <amount ref="2" type="double"/>
-                <beginningOfYearBalance ref="3" type="double"/>
-                <loanReturned ref="4" type="double"/>
-                <balance ref="5" type="double"/>
-                <rate ref="6" type="double"/>
-                <fee ref="7" type="double"/>
-                <costUndertaker ref="8" type="string"/>
-                <clientName ref="9" type="string"/>
-                <remark ref="10" type="string"/>
+                <bankName ref="2" type="string"/>
+                <customerName ref="3" type="string"/>
+                <contractType ref="4" type="string"/>
+                <amount ref="5" type="double"/>
+                <beginningOfYearBalance ref="6" type="double"/>
+                <loanReturned ref="7" type="double"/>
+                <balance ref="8" type="double"/>
+                <rate ref="9" type="double"/>
+                <feeRate ref="10" type="double"/>
+                <interest_expense ref="11" type="double"/>
+                <fee ref="12" type="double"/>
+                <costUndertaker ref="13" type="string"/>
+                <remark ref="14" type="string"/>
                 <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
