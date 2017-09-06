@@ -162,13 +162,12 @@ IF EXISTS ( SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 
 DROP TABLE financing_commercial_bill
 CREATE TABLE [dbo].[financing_commercial_bill](
 	[id] [int] IDENTITY(1,1) NOT NULL,
-	bankName text, --银行名称
+	bankName varchar(100), --银行名称
 	beginningDate date, --出票日
 	maturityDate date, --到期日
 	amount numeric(20, 2), --票面金额
-	reason text, --未解付原因
+	reason varchar(500), --备注
 	dwid int, --公司名称
-	solved varchar(100) DEFAULT 'N', --已处理
 	[_src] [varchar](50),
 	[_time] [datetime]
 	PRIMARY KEY CLUSTERED
