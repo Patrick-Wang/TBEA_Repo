@@ -20,13 +20,13 @@
                     <name>银行名称</name>
                 </item>
                 <item>
+                    <name>币种</name>
+                </item>
+                <item>
                     <name>贷款起始日</name>
                 </item>
                 <item>
                     <name>贷款到期日</name>
-                </item>
-                <item>
-                    <name>币种</name>
                 </item>
                 <item>
                     <name>金额</name>
@@ -53,10 +53,10 @@
     <controller id="financingForeignCurrencyLoanFmtClr">
         <formatter export="true" id="fmtData">
             <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="5,6"/>
+                <DefaultMatcher cols="6"/>
             </PercentFormatter>
-            <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="4"/>
+            <NumberFormatter reservedCount="1" currency="true">
+                <DefaultMatcher cols="5,10"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -66,7 +66,7 @@
         <callservice id="financingForeignCurrencyLoanShowServ"/>
         <callcontroller id="financingForeignCurrencyLoanFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="特变电工外币贷款明细统计表"/>
-        <list id="title" type="string">银行名称,贷款起始日,贷款到期日,币种,金额,利率,浮动幅度,贷款期限,贷款品种,担保方式</list>
+        <list id="title" type="string">单位名称,贷款银行,币种,起始日,到期日, 贷款金额 ,贷款利率,种类,品种,贷款方式,本币金额</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -89,21 +89,23 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="${request.date.asString}特变电工外币贷款明细统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="特变电工外币贷款明细统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="financingForeignCurrencyLoanShowServ" transaction="transactionManager">
-        <sql id="data">select id,
+         <sql id="data">select ffcl.id,
+        dwxx.name, 
 bankName,
+currency,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
-currency,
 loanAmount,
 loanRate,
-floatingRatio,
 loanTerm,
 loanType,
 guarantyStyle,
-solved from financing_foreign_currency_loan where dwid in ${dwid}</sql>
+selfAmount
+from financing_foreign_currency_loan ffcl, jygk_dwxx dwxx 
+where dwid  in  ${dwid} and dwid = dwxx.id</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

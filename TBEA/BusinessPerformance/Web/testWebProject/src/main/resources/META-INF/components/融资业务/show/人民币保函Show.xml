@@ -16,9 +16,6 @@
         </formatterServer>
         <response type="json">
             <header type="array">
-               <item>
-                    <name>单位名称</name>
-                </item>
                 <item>
                     <name>银行名称</name>
                 </item>
@@ -28,12 +25,8 @@
                 <item>
                     <name>到期日</name>
                 </item>
-               
                 <item>
                     <name>保函金额</name>
-                </item>
-                 <item>
-                    <name>保证金金额</name>
                 </item>
                 <item>
                     <name>保证金比例</name>
@@ -45,7 +38,7 @@
                     <name>保函编号</name>
                 </item>
                 <item>
-                    <name>是否以股份公司名义办理</name>
+                    <name>备注</name>
                 </item>
                 <item>
                     <name>未注销原因</name>
@@ -57,10 +50,10 @@
     <controller id="financingRMBLGFmtClr">
         <formatter export="true" id="fmtData">
             <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="6"/>
+                <DefaultMatcher cols="4"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="4,5"/>
+                <DefaultMatcher cols="3"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -70,7 +63,7 @@
         <callservice id="financingRMBLGShowServ"/>
         <callcontroller id="financingRMBLGFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="特变电工人民币保函办理情况统计表"/>
-        <list id="title" type="string">单位名称,银行名称,起始日,到期日,保函金额,保证金比例,保函种类,保函编号,备注,未注销原因</list>
+        <list id="title" type="string">银行名称,起始日,到期日,保函金额,保证金比例,保函种类,保函编号,备注,未注销原因</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -93,23 +86,20 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="特变电工人民币保函办理情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="${request.date.asString}特变电工人民币保函办理情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="financingRMBLGShowServ" transaction="transactionManager">
-        <sql id="data">select frl.id,
-        dwxx.name,
+        <sql id="data">select id,
 bankName,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
 amount,
-LCamount,
-LCRatio,
+marginRatio,
 type,
 guaranteeNumber,
-isTransactByStock,
-reason 
-from financing_RMB_LG frl, jygk_dwxx dwxx 
-where dwid in ${dwid} and dwxx.id = dwid</sql>
+remark,
+reason,
+solved from financing_RMB_LG where dwid in ${dwid}</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
@@ -122,7 +112,6 @@ where dwid in ${dwid} and dwxx.id = dwid</sql>
             <list sql="data" type="string" value="8"/>
             <list sql="data" type="string" value="9"/>
             <list sql="data" type="string" value="10"/>
-            <list sql="data" type="string" value="11"/>
         </table>
     </service>
 </components>

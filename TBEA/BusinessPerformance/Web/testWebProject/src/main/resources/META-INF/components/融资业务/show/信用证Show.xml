@@ -88,7 +88,7 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="特变电工信用证.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="${request.date.asString}特变电工信用证.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="financingLCShowServ" transaction="transactionManager">
         <sql id="data">select flc.id,
