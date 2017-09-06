@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="financingDebtBearingLoanEntryJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="financingDebtBearingLoanEntryUpdateClr"/>
+            <map key="submitUrl" value="financingDebtBearingLoanEntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="financingDebtBearingLoanEntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="financingDebtBearingLoanEntryUpdateServ"/>
+        <callcontroller id="financingDebtBearingLoanEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                </item>
+                <item>
+                    <name>贷款银行</name>
+                </item>
+                <item>
+                    <name>贷款起始日</name>
+                </item>
+                <item>
+                    <name>金额</name>
+                </item>
+                <item>
+                    <name>还款日</name>
+                </item>
+                <item>
+                    <name>还款金额</name>
+                </item>
+                <item>
+                    <name>利率</name>
+                </item>
+                <item>
+                    <name>浮动幅度</name>
+                </item>
+                <item>
+                    <name>贷款种类</name>
+                </item>
+                <item>
+                    <name>贷款品种</name>
+                </item>
+                <item>
+                    <name>贷款方式</name>
+                </item>
+                <item>
+                    <name>备注</name>
+                </item>
+                <item>
+                    <name>单位全名</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="financingDebtBearingLoanEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="4,6"/>
+            </NumberFormatter>
+            <PercentFormatter reservedCount="2">
+    			<DefaultMatcher cols="7,8"/>
+   		</PercentFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="financingDebtBearingLoanEntryUpdateServ" transaction="transactionManager">
+        <sql id="data">select id,
+companySName,
+loanBank,
+CONVERT(varchar(20),beginningDate, 23) tmp2,
+loanAmount,
+CONVERT(varchar(20),repaymentDate, 23) tmp4,
+repaymentAmount,
+loanRate,
+floatingRatio,
+loanstyle,
+loanType,
+loadMode,
+remark,
+companyFName from financing_debt_bearing_loan order by companySName desc,loanBank desc, tmp2 desc </sql>
+        <list id="ids" sql="data" value="0"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="1"/>
+            <list sql="data" type="string" value="2"/>
+            <list sql="data" type="date" value="3"/>
+            <list sql="data" type="double" value="4"/>
+            <list sql="data" type="date" value="5"/>
+            <list sql="data" type="double" value="6"/>
+            <list sql="data" type="double" value="7"/>
+            <list sql="data" type="double" value="8"/>
+            <list sql="data" type="string" value="9"/>
+            <list sql="data" type="string" value="10"/>
+            <list sql="data" type="string" value="11"/>
+            <list sql="data" type="string" value="12"/>
+            <list sql="data" type="string" value="13"/>
+        </table>
+    </service>
+    <controller id="financingDebtBearingLoanEntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="financingDebtBearingLoanEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="financingDebtBearingLoanEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="financing_debt_bearing_loan">
+            <where>
+                <id ref="0" type="int"/>
+            </where>
+            <set>
+                <companySName ref="1" type="string"/>
+                <loanBank ref="2" type="string"/>
+                <beginningDate ref="3" type="date"/>
+                <loanAmount ref="4" type="double"/>
+                <repaymentDate ref="5" type="date"/>
+                <repaymentAmount ref="6" type="double"/>
+                <loanRate ref="7" type="double"/>
+                <floatingRatio ref="8" type="double"/>
+                <loanstyle ref="9" type="string"/>
+                <loanType ref="10" type="string"/>
+                <loadMode ref="11" type="string"/>
+                <remark ref="12" type="string"/>
+                <companyFName ref="13" type="string"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

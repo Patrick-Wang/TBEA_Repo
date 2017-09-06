@@ -94,7 +94,7 @@
 	sum(authCreditAmount) aca
 from       
 financing_bank_currency_credit_v
- where dwid in (0, 7, 9, 10) 
+ where dwid in (0, 7, 9, 10) and nf=${cal.year} and yf=${cal.month}
 group by
 	bankNo</sql>
   <sql id="jwsx" order="yhs" by="0" colcount="2">select 
@@ -102,7 +102,7 @@ group by
 	sum(authCreditAmount) aca
 from       
 financing_bank_currency_credit_v
-where dwid not in (0, 7, 9, 10) 
+where dwid not in (0, 7, 9, 10) and nf=${cal.year} and yf=${cal.month}
 group by
 	bankNo</sql>
   <sql id="hjsx" order="yhs" by="0" colcount="2">select 
@@ -110,23 +110,24 @@ group by
 	sum(authCreditAmount) aca
 from       
 financing_bank_currency_credit_v
+where nf=${cal.year} and yf=${cal.month}
 group by
 	bankNo</sql>
   <sql id="sxTotal">select 
 	nullif(sum(authCreditAmount), 0) aca
 from 
-financing_bank_currency_credit_v</sql>
+financing_bank_currency_credit_v where nf=${cal.year} and yf=${cal.month}</sql>
   <sql id="sxzb" order="yhs" by="0" colcount="2">select 
 	bankNo,
 	sum(authCreditAmount)/${sxTotal[0]} aca
 from       
-financing_bank_currency_credit_v
+financing_bank_currency_credit_v where nf=${cal.year} and yf=${cal.month}
 group by
 	bankNo</sql>
   <sql id="ysyed" order="yhs" by="0" colcount="2">select 
 	bankNo,
 	sum(usedAmount) ua
-from  financing_bank_currency_credit_v
+from  financing_bank_currency_credit_v where nf=${cal.year} and yf=${cal.month}
 group by
 	bankNo</sql>
  

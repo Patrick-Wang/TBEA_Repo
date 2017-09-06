@@ -18,13 +18,14 @@
         <merge data="${data}" table="financing_LC">
             <set>
                 <bankName ref="0" type="string"/>
-                <beginningDate ref="1" type="date"/>
-                <maturityDate ref="2" type="date"/>
-                <currency ref="3" type="string"/>
-                <amount ref="4" type="double"/>
-                <marginRatio ref="5" type="double"/>
-                <remark ref="6" type="string"/>
-                <balance ref="7" type="double"/>
+                <currency ref="1" type="string"/>
+                <beginningDate ref="2" type="date"/>
+                <maturityDate ref="3" type="date"/>
+                <LCamount ref="4" type="double"/>
+                <cashAmount ref="5" type="double"/>
+                <cashRate ref="6" type="double"/>
+                <remark ref="7" type="string"/>
+                <Lcbalance ref="8" type="double"/>
                 <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>

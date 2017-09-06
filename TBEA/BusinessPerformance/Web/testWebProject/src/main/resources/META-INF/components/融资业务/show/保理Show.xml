@@ -16,11 +16,23 @@
         </formatterServer>
         <response type="json">
             <header type="array">
+            	 <item>
+                    <name>单位名称</name>
+                </item>
                 <item>
                     <name>起始日</name>
                 </item>
                 <item>
                     <name>到期日</name>
+                </item>
+                <item>
+                    <name>业务银行</name>
+                </item>
+                <item>
+                    <name>客户名称</name>
+                </item>
+                <item>
+                    <name>合同类型</name>
                 </item>
                 <item>
                     <name>保理金额</name>
@@ -35,16 +47,19 @@
                     <name>保理余额</name>
                 </item>
                 <item>
-                    <name>利率</name>
+                    <name>年利率</name>
                 </item>
                 <item>
                     <name>手续费率</name>
                 </item>
                 <item>
-                    <name>利息承担方</name>
+                    <name>利息支出</name>
                 </item>
                 <item>
-                    <name>客户名称</name>
+                    <name>手续费</name>
+                </item>
+                <item>
+                    <name>利息承担方</name>
                 </item>
                 <item>
                     <name>备注</name>
@@ -55,12 +70,12 @@
     </controller>
     <controller id="financingFactoringFmtClr">
         <formatter export="true" id="fmtData">
-            <PercentFormatter reservedCount="1">
-                <DefaultMatcher col="6,7"/>
-            </PercentFormatter>
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="2,3,4,5"/>
+                <DefaultMatcher cols="7,8,9,10,13,14"/>
             </NumberFormatter>
+            <PercentFormatter reservedCount="2">
+                <DefaultMatcher cols="11,12"/>
+            </PercentFormatter>
             <EmptyFormatter/>
         </formatter>
     </controller>
@@ -68,8 +83,8 @@
         <context key="cal" value="${request.date.asCalendar}"/>
         <callservice id="financingFactoringShowServ"/>
         <callcontroller id="financingFactoringFmtClr"/>
-        <ExcelTemplate id="excelTemplate" sheet="特变电工银行保理台账明细表"/>
-        <list id="title" type="string">起始日,到期日,保理金额,年初余额,本年已归还金额,保理余额,利率,手续费率,利息承担方,客户名称,备注</list>
+        <ExcelTemplate id="excelTemplate" sheet="特变电工保理"/>
+        <list id="title" type="string">单位名称,起始日,到期日,业务银行,客户名称,合同类型,保理金额,年初余额,本年已归还金额,保理余额,年利率,手续费率,利息支出,手续费,利息承担方,备注</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -92,36 +107,46 @@
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="${request.date.asString}特变电工银行保理台账明细表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="${request.date.asString}特变电工保理.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="financingFactoringShowServ" transaction="transactionManager">
-        <sql id="data">select id,
+        <sql id="data">select ff.id,
+        dwxx.name,
 CONVERT(varchar(20),beginningDate, 23) tmp0,
 CONVERT(varchar(20),maturityDate, 23) tmp1,
+bankName,
+customerName,
+contractType,
 amount,
 beginningOfYearBalance,
 loanReturned,
 balance,
 rate,
+feeRate,
+interest_expense,
 fee,
 costUndertaker,
-clientName,
-remark,
-solved from financing_factoring where dwid in ${dwid}</sql>
+remark 
+from financing_factoring ff, jygk_dwxx dwxx 
+where dwid in ${dwid} and dwxx.id = dwid</sql>
         <list id="ids" sql="data" value="0"/>
-        <table export="true" id="result" rowIds="ids">
+        <table export="true" id="result" rowIds="ids">        	
             <list sql="data" type="date" value="1"/>
             <list sql="data" type="date" value="2"/>
-            <list sql="data" type="double" value="3"/>
-            <list sql="data" type="double" value="4"/>
-            <list sql="data" type="double" value="5"/>
+            <list sql="data" type="string" value="3"/>
+            <list sql="data" type="string" value="4"/>
+            <list sql="data" type="string" value="5"/>
             <list sql="data" type="double" value="6"/>
             <list sql="data" type="double" value="7"/>
             <list sql="data" type="double" value="8"/>
-            <list sql="data" type="string" value="9"/>
-            <list sql="data" type="string" value="10"/>
-            <list sql="data" type="string" value="11"/>
-            <list sql="data" type="string" value="12"/>
+            <list sql="data" type="double" value="9"/>
+            <list sql="data" type="double" value="10"/>
+            <list sql="data" type="double" value="11"/>
+            <list sql="data" type="double" value="12"/>
+            <list sql="data" type="double" value="13"/>
+            <list sql="data" type="string" value="14"/>
+            <list sql="data" type="string" value="15"/>
+            <list sql="data" type="string" value="16"/>
         </table>
     </service>
 </components>

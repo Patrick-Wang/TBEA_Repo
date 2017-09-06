@@ -45,6 +45,9 @@
         <elseif test="${item == 12}">
             <callcontroller id="financingFactoringEntryUpdateClr"/>
         </elseif>
+        <elseif test="${item == 15}">
+            <callcontroller id="financingDebtBearingLoanEntryUpdateClr"/>
+        </elseif>
     </controller>
     <controller id="BAEA6B3D5073197672D2E28C858F9109EntrySubmitWrapperClr">
 		<context key="item" value="${request.item.asInt}"/>
@@ -83,6 +86,9 @@
         </elseif>
         <elseif test="${item == 12}">
             <callcontroller id="financingFactoringEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 15}">
+            <callcontroller id="financingDebtBearingLoanEntrySubmitClr"/>
         </elseif>
     </controller>
 </components>
