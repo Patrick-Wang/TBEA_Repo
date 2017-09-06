@@ -27,7 +27,7 @@
                 <type ref="7" type="string"/>
                 <guaranteeNumber ref="8" type="string"/>
                 <isTransactByStock ref="9" type="string"/>
-                <reason ref="`0" type="string"/>
+                <reason ref="10" type="string"/>
                 <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
