@@ -23,7 +23,7 @@
                 <dwid type="int" value="${dwid}" />
         	</where>
             <set>
-                <bankName ref="0" type="string"/>
+                <bankName ref="0" type="string" test="${this != null}"/>
                 <currency ref="1" type="string"/>
                 <authCreditAmount ref="2" type="double"/>
                 <usedAmount ref="3" type="double"/>
