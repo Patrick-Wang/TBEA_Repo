@@ -27,7 +27,6 @@
 ((select id from jygk_account where name='300022'),	9	, 	 84),
 ((select id from jygk_account where name='899628'),	10	, 	 84),
 ((select id from jygk_account where name='095961'),	7	, 	 84),
-((select id from jygk_account where name='928006'),	1	, 	 84),
 ((select id from jygk_account where name='601858'),	4	, 	 84),
 ((select id from jygk_account where name='232321'),	6	, 	 84),
 ((select id from jygk_account where name='008382'),	2	, 	 84),
@@ -37,115 +36,40 @@
 ((select id from jygk_account where name='636988'),	2000	, 	 84),
 ((select id from jygk_account where name='印能融资'),	115	, 	 84),
 ((select id from jygk_account where name='上开融资'),	106	, 	 84),
-((select id from jygk_account where name='928006'),	115	, 	 84),
-((select id from jygk_account where name='928006'),	106	, 	 84),
 
+EXEC	addAuth
+		@account = '928006',
+		@auth = 84,
+		@comps = '1,115,106';
 
+EXEC	addAuth
+		@account = '688020',
+		@auth = 84,
+		@comps = '3,5,8,11,9,10,7,1,4,6,2,301,2000,0,115,106';
+                                          
+EXEC	addAuth
+		@account = '068903',
+		@auth = 84,
+		@comps = '3,5,8,11,9,10,7,1,4,6,2,301,2000,0,115,106';		
 
+EXEC	addAuth
+		@account = '102589',
+		@auth = 84,
+		@comps = '3,5,8,11,9,10,7,1,4,6,2,301,2000,0,115,106';			
 
-                                                    
-((select id from jygk_account where name='688020'),	3	, 	 84),
-((select id from jygk_account where name='688020'),	5	, 	 84),
-((select id from jygk_account where name='688020'),	8	, 	 84),
-((select id from jygk_account where name='688020'),	11	, 	 84),
-((select id from jygk_account where name='688020'),	9	, 	 84),
-((select id from jygk_account where name='688020'),	10	, 	 84),
-((select id from jygk_account where name='688020'),	7	, 	 84),
-((select id from jygk_account where name='688020'),	1	, 	 84),
-((select id from jygk_account where name='688020'),	4	, 	 84),
-((select id from jygk_account where name='688020'),	6	, 	 84),
-((select id from jygk_account where name='688020'),	2	, 	 84),
-((select id from jygk_account where name='688020'),	301	, 	 84),
-((select id from jygk_account where name='688020'),	2000	, 	 84),
-((select id from jygk_account where name='688020'),	0	, 	 84),
-((select id from jygk_account where name='688020'),	115	, 	 84),
-((select id from jygk_account where name='688020'),	106	, 	 84),
+EXEC	addAuth
+		@account = '363560',
+		@auth = 84,
+		@comps = '3,5,8,11,9,10,7,1,4,6,2,301,2000,0,115,106';	
 
-				
-((select id from jygk_account where name='068903'),	3	, 	 84),
-((select id from jygk_account where name='068903'),	5	, 	 84),
-((select id from jygk_account where name='068903'),	8	, 	 84),
-((select id from jygk_account where name='068903'),	11	, 	 84),
-((select id from jygk_account where name='068903'),	9	, 	 84),
-((select id from jygk_account where name='068903'),	10	, 	 84),
-((select id from jygk_account where name='068903'),	7	, 	 84),
-((select id from jygk_account where name='068903'),	1	, 	 84),
-((select id from jygk_account where name='068903'),	4	, 	 84),
-((select id from jygk_account where name='068903'),	6	, 	 84),
-((select id from jygk_account where name='068903'),	2	, 	 84),
-((select id from jygk_account where name='068903'),	301	, 	 84),
-((select id from jygk_account where name='068903'),	2000	, 	 84),
-((select id from jygk_account where name='068903'),	0	, 	 84),
-((select id from jygk_account where name='068903'),	115	, 	 84),
-((select id from jygk_account where name='068903'),	106	, 	 84),
-					
-((select id from jygk_account where name='102589'),	3	, 	 84),
-((select id from jygk_account where name='102589'),	5	, 	 84),
-((select id from jygk_account where name='102589'),	8	, 	 84),
-((select id from jygk_account where name='102589'),	11	, 	 84),
-((select id from jygk_account where name='102589'),	9	, 	 84),
-((select id from jygk_account where name='102589'),	10	, 	 84),
-((select id from jygk_account where name='102589'),	7	, 	 84),
-((select id from jygk_account where name='102589'),	1	, 	 84),
-((select id from jygk_account where name='102589'),	4	, 	 84),
-((select id from jygk_account where name='102589'),	6	, 	 84),
-((select id from jygk_account where name='102589'),	2	, 	 84),
-((select id from jygk_account where name='102589'),	301	, 	 84),
-((select id from jygk_account where name='102589'),	2000	, 	 84),
-((select id from jygk_account where name='102589'),	0	, 	 84),
-((select id from jygk_account where name='102589'),	115	, 	 84),
-((select id from jygk_account where name='102589'),	106	, 	 84),
-	
-((select id from jygk_account where name='363560'),	3	, 	 84),
-((select id from jygk_account where name='363560'),	5	, 	 84),
-((select id from jygk_account where name='363560'),	8	, 	 84),
-((select id from jygk_account where name='363560'),	11	, 	 84),
-((select id from jygk_account where name='363560'),	9	, 	 84),
-((select id from jygk_account where name='363560'),	10	, 	 84),
-((select id from jygk_account where name='363560'),	7	, 	 84),
-((select id from jygk_account where name='363560'),	1	, 	 84),
-((select id from jygk_account where name='363560'),	4	, 	 84),
-((select id from jygk_account where name='363560'),	6	, 	 84),
-((select id from jygk_account where name='363560'),	2	, 	 84),
-((select id from jygk_account where name='363560'),	301	, 	 84),
-((select id from jygk_account where name='363560'),	2000	, 	 84),
-((select id from jygk_account where name='363560'),	0	, 	 84),
-((select id from jygk_account where name='363560'),	115	, 	 84),
-((select id from jygk_account where name='363560'),	106	, 	 84),
+EXEC	addAuth
+		@account = '130182',
+		@auth = 84,
+		@comps = '3,5,8,11,9,10,7,1,4,6,2,301,2000,0,115,106';	
 
-((select id from jygk_account where name='130182'),	3	, 	 84),
-((select id from jygk_account where name='130182'),	5	, 	 84),
-((select id from jygk_account where name='130182'),	8	, 	 84),
-((select id from jygk_account where name='130182'),	11	, 	 84),
-((select id from jygk_account where name='130182'),	9	, 	 84),
-((select id from jygk_account where name='130182'),	10	, 	 84),
-((select id from jygk_account where name='130182'),	7	, 	 84),
-((select id from jygk_account where name='130182'),	1	, 	 84),
-((select id from jygk_account where name='130182'),	4	, 	 84),
-((select id from jygk_account where name='130182'),	6	, 	 84),
-((select id from jygk_account where name='130182'),	2	, 	 84),
-((select id from jygk_account where name='130182'),	301	, 	 84),
-((select id from jygk_account where name='130182'),	2000	, 	 84),
-((select id from jygk_account where name='130182'),	0	, 	 84),
-((select id from jygk_account where name='130182'),	115	, 	 84),
-((select id from jygk_account where name='130182'),	106	, 	 84),
-
-((select id from jygk_account where name='155165'),	3	, 	 84),
-((select id from jygk_account where name='155165'),	5	, 	 84),
-((select id from jygk_account where name='155165'),	8	, 	 84),
-((select id from jygk_account where name='155165'),	11	, 	 84),
-((select id from jygk_account where name='155165'),	9	, 	 84),
-((select id from jygk_account where name='155165'),	10	, 	 84),
-((select id from jygk_account where name='155165'),	7	, 	 84),
-((select id from jygk_account where name='155165'),	1	, 	 84),
-((select id from jygk_account where name='155165'),	4	, 	 84),
-((select id from jygk_account where name='155165'),	6	, 	 84),
-((select id from jygk_account where name='155165'),	2	, 	 84),
-((select id from jygk_account where name='155165'),	301	, 	 84),
-((select id from jygk_account where name='155165'),	2000	, 	 84),
-((select id from jygk_account where name='155165'),	0	, 	 84),
-((select id from jygk_account where name='155165'),	115	, 	 84),
-((select id from jygk_account where name='155165'),	106	, 	 84),
-
+EXEC	addAuth
+		@account = '155165',
+		@auth = 84,
+		@comps = '3,5,8,11,9,10,7,1,4,6,2,301,2000,0,115,106';
 
 insert into jygk_dwxx (id, name, parent_ID) values (2000, '机关采购中心', 100000)

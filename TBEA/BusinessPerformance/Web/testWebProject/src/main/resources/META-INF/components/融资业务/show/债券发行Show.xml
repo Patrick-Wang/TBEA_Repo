@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="financingBondsShow">
+        <response name="framework/templates/singleDateReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map key="updateUrl" value="financingBondsUpdateClr"/>
+            <map key="exportUrl" value="financingBondsExportClr"/>
+        </response>
+    </controller>
+    <controller id="financingBondsUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="financingBondsShowServ"/>
+        <callcontroller id="financingBondsFmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>债券品种</name>
+                </item>
+                <item>
+                    <name>发行时间</name>
+                </item>
+                <item>
+                    <name>发行币种</name>
+                </item>
+                <item>
+                    <name>发行金额</name>
+                </item>
+                <item>
+                    <name>发行利率</name>
+                </item>
+                <item>
+                    <name>利率浮动</name>
+                </item>
+                <item>
+                    <name>债券期限</name>
+                </item>
+                <item>
+                    <name>到期日</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="financingBondsFmtClr">
+        <formatter export="true" id="fmtData">
+            <PercentFormatter reservedCount="1">
+                <DefaultMatcher cols="4,5"/>
+            </PercentFormatter>
+            <NumberFormatter reservedCount="1" currency="true">
+                <DefaultMatcher cols="3"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="financingBondsExportClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="financingBondsShowServ"/>
+        <callcontroller id="financingBondsFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="特变电工债券发行明细统计表"/>
+        <list id="title" type="string">债券品种,发行时间,发行币种,发行金额,发行利率,利率浮动,债券期限,到期日,是否兑付</list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="特变电工债券发行明细统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+    <service id="financingBondsShowServ" transaction="transactionManager">
+        <sql id="data">select id,
+bondType,
+CONVERT(varchar(20),beginningDate, 23) tmp1,
+currency,
+loanAmount,
+loanRate,
+floatingRatio,
+bondPersistentPeriod,
+CONVERT(varchar(20),maturityDate, 23) tmp7,
+isCashed from financing_bonds</sql>
+        <list id="ids" sql="data" value="0"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="1"/>
+            <list sql="data" type="date" value="2"/>
+            <list sql="data" type="string" value="3"/>
+            <list sql="data" type="double" value="4"/>
+            <list sql="data" type="double" value="5"/>
+            <list sql="data" type="double" value="6"/>
+            <list sql="data" type="double" value="7"/>
+            <list sql="data" type="date" value="8"/>
+            <list sql="data" type="date" value="9"/>
+        </table>
+    </service>
+</components>

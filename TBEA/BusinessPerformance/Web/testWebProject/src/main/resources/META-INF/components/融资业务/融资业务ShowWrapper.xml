@@ -18,11 +18,10 @@
 			特变电工双币种保函办理情况统计表,
 			特变电工信用证明细统计表,
 			特变电工银行保理台账明细表
-			
 		</list>
 		<if test="${dwid.contains[0]}">
-			<list id="ids" type="int">13,14</list>
-			<list id="vals" type="string"> 各家银行授信分布表, 各公司授信情况表</list>
+			<list id="ids" type="int">16,13,14</list>
+			<list id="vals" type="string">特变电工债券发行明细统计表, 各家银行授信分布表, 各公司授信情况表</list>
 		</if>
 		
 		<response name="rzywtj/rzywtj" type="jsp">
@@ -83,6 +82,9 @@
 		</elseif>
 		 <elseif test="${item == 15}">
             <callcontroller id="financingDebtBearingLoanExportClr"/>
+        </elseif>
+		 <elseif test="${item == 16}">
+            <callcontroller id="financingBondsExportClr"/>
         </elseif>
 	</controller>
 </components>

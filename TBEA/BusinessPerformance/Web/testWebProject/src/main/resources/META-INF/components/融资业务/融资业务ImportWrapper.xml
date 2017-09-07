@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="BAEA6B3D5073197672D2E28C858F9109ImportWrapperJsp">
-        <list id="ids" type="int">0,2,3,4,15,5,6,7,8,9,10,11,12</list>
+        <list id="ids" type="int">0,2,3,4,15,5,6,7,8,9,10,11,12,16</list>
         <list id="vals" type="string">
        各家银行授信情况统计表,
         特变电工人民币贷款明细统计表,
@@ -14,7 +14,8 @@
         特变电工外币保函办理情况统计表,
         特变电工双币种保函办理情况统计表,
         特变电工信用证明细统计表,
-        特变电工银行保理台账明细表</list>
+        特变电工银行保理台账明细表,
+        特变电工债券发行明细统计表</list>
         <response name="components/import_data" type="jsp">
             <map key="importUrl" value="BAEA6B3D5073197672D2E28C858F9109ImportWrapper"/>
             <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
@@ -62,6 +63,9 @@
         </elseif>
         <elseif test="${item == 15}">
             <callcontroller id="financingDebtBearingLoanImportClr"/>
+        </elseif>
+        <elseif test="${item == 16}">
+            <callcontroller id="financingBondsImportClr"/>
         </elseif>
     </controller>
 </components>
