@@ -156,7 +156,7 @@ group by
   </list>
   <table export="true" id="result" rowIds="ids">
    <col list="yhs"/>
-   <list sql="jnsz" type="double" value="1" />
+   <list sql="jnsx" type="double" value="1" />
    <list sql="jwsx" type="double" value="1"/>
    <list sql="hjsx" type="double" value="1"/>
    <list sql="sxzb" type="double" value="1"/>
