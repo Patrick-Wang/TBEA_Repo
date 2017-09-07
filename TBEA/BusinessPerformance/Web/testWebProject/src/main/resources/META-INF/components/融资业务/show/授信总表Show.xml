@@ -298,198 +298,210 @@
   <response name="${cal.year}年${cal.month}月授信总表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
  </controller>
  <service id="financingBankCurrencyTotalShowServ" transaction="transactionManager">
-  <list id="bankNames" type="string" export="true">国家开发银行,
-进出口银行,
-工商银行,
-农业银行,
-中国银行,
-建设银行,
-交通银行,
-浦发银行,
-兴业银行,
-招商银行,
-光大银行,
-广发银行,
-中信银行,
-华夏银行,
-花旗银行,
-民生银行,
-平安银行,
-青岛银行,
-邮储行,
-其他商业银行,
-汇丰（中国）,
-澳新银行（中国）,
+  <list id="bankNames" type="string" export="true">
+国家开发银行	,
+中国进出口银行	,
+中国工商银行	,
+中国农业银行	,
+中国银行	,
+中国建设银行	,
+交通银行	,
+浦发银行	,
+兴业银行	,
+招商银行	,
+中国光大银行	,
+广发银行	,
+中信银行	,
+华夏银行	,
+花旗银行	,
+民生银行	,
+平安银行	,
+青岛银行	,
+邮储银行	,
+北京银行	,
+昆仑银行	,
+乌鲁木齐银行	,
+新疆银行	,
+西安银行	,
+浙商银行	,
+辽阳银行	,
+中信租赁公司	,
+农银租赁公司	,
+兴业金融租赁公司	,
+汇丰（中国）	,
+澳新银行（中国）	,
 人民币合计,
-汇丰银行,
-HDFC银行,
-印度SBI银行,
-印度ICBC银行,
+
+汇丰银行	,
+HDFC银行	,
+印度SBI银行	,
+印度ICBC银行	,
 美元合计,
-Deuetsche德意志银行,
+
+德意志银行,
 第纳尔合计
 </list>
   <list id="bzs" type="string">
- RMB,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
- RMB ,
-$,
-$,
-$,
-$,
-$,
-QD,
-QD
+ 人民币,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+ 人民币 ,
+美元,
+美元,
+美元,
+美元,
+美元,
+第纳尔,
+第纳尔
 </list>
   <sql id="hj" order="bankNames" by="0" colcount="6" skip="${dwid.size == 1}">select
-			bankNo,
+			bankName,
 			sum(authCreditAmount) tmp1,
 			sum(usedAmount) tmp3,
 			sum(loanBalance) tmp4			
-			from financing_bank_currency_credit_total_v where dwid in ${dwid}
+			from financing_bank_currency_credit where dwid in ${dwid}
 			and 
 			nf=${cal.year} and yf=${cal.month}
-			group by bankNo
+			group by bankName
 		</sql>
   <sql id="gf" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[0]}">select
-			bankNo,
+			bankName,
 			currency,
 			authCreditAmount tmp1,
 			CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 			usedAmount tmp3,
 			loanBalance tmp4			
-			from financing_bank_currency_credit_total_v where dwid = 0
+			from financing_bank_currency_credit where dwid = 0
 			and 
 			nf=${cal.year} and yf=${cal.month}
 		</sql>
   <sql id="sb" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[1]}">select
-		bankNo,
+		bankName,
 		currency,
 		authCreditAmount tmp1,
 		CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 		usedAmount tmp3,
 		loanBalance tmp4			
-		from financing_bank_currency_credit_total_v where dwid = 1
+		from financing_bank_currency_credit where dwid = 1
 			and 
 			nf=${cal.year} and yf=${cal.month}
 	
 		</sql>
   <sql id="sk" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[106]}">select
-	bankNo,
+	bankName,
 	currency,
 	authCreditAmount tmp1,
 	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 	usedAmount tmp3,
 	loanBalance tmp4			
-	from financing_bank_currency_credit_total_v where dwid = 106
+	from financing_bank_currency_credit where dwid = 106
 			and 
 			nf=${cal.year} and yf=${cal.month}
 		</sql>
   <sql id="yn" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[115]}">select
-	bankNo,
+	bankName,
 	currency,
 	authCreditAmount tmp1,
 	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 	usedAmount tmp3,
 	loanBalance tmp4			
-	from financing_bank_currency_credit_total_v where dwid = 115
+	from financing_bank_currency_credit where dwid = 115
 			and 
 			nf=${cal.year} and yf=${cal.month}
 		</sql>
   <sql id="hb" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[2]}">select
-	bankNo,
+	bankName,
 	currency,
 	authCreditAmount tmp1,
 	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 	usedAmount tmp3,
 	loanBalance tmp4			
-	from financing_bank_currency_credit_total_v where dwid = 2
+	from financing_bank_currency_credit where dwid = 2
 			and 
 			nf=${cal.year} and yf=${cal.month}
 		</sql>
   <sql id="ll" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[4]}">select
-	bankNo,
+	bankName,
 	currency,
 	authCreditAmount tmp1,
 	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 	usedAmount tmp3,
 	loanBalance tmp4			
-	from financing_bank_currency_credit_total_v where dwid = 4
+	from financing_bank_currency_credit where dwid = 4
 			and 
 			nf=${cal.year} and yf=${cal.month}
 		</sql>
   <sql id="dl" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[6]}">select
-	bankNo,
+	bankName,
 	currency,
 	authCreditAmount tmp1,
 	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 	usedAmount tmp3,
 	loanBalance tmp4			
-	from financing_bank_currency_credit_total_v where dwid = 6
+	from financing_bank_currency_credit where dwid = 6
 			and 
 			nf=${cal.year} and yf=${cal.month}
 		</sql>
   <sql id="tb" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[301]}">select
-	bankNo,
+	bankName,
 	currency,
 	authCreditAmount tmp1,
 	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 	usedAmount tmp3,
 	loanBalance tmp4			
-	from financing_bank_currency_credit_total_v where dwid = 301
+	from financing_bank_currency_credit where dwid = 301
 			and 
 			nf=${cal.year} and yf=${cal.month}
 		</sql>
   <sql id="xtny" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[10]}">select
-	bankNo,
+	bankName,
 	currency,
 	authCreditAmount tmp1,
 	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 	usedAmount tmp3,
 	loanBalance tmp4			
-	from financing_bank_currency_credit_total_v where dwid = 10
+	from financing_bank_currency_credit where dwid = 10
 			and 
 			nf=${cal.year} and yf=${cal.month}
 		</sql>
   <sql id="xny" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[9]}">select
-	bankNo,
+	bankName,
 	currency,
 	authCreditAmount tmp1,
 	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 	usedAmount tmp3,
 	loanBalance tmp4			
-	from financing_bank_currency_credit_total_v where dwid = 9
+	from financing_bank_currency_credit where dwid = 9
 			and 
 			nf=${cal.year} and yf=${cal.month}
 		</sql>
   <sql id="tcny" order="bankNames" by="0" colcount="6" skip="${!dwid.contains[7]}">select
-	bankNo,
+	bankName,
 	currency,
 	authCreditAmount tmp1,
 	CONVERT(varchar(20),authCreditExpire, 23) tmp2,
 	usedAmount tmp3,
 	loanBalance tmp4			
-	from financing_bank_currency_credit_total_v where dwid = 7
+	from financing_bank_currency_credit where dwid = 7
 			and
 			nf=${cal.year} and yf=${cal.month}
 		</sql>

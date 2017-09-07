@@ -76,60 +76,80 @@
   <response name="${request.date.asString}各家银行授信分布表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
  </controller>
  <service id="financingBankDistributionShowServ" transaction="transactionManager">
-  <list id="yhs" type="string">国开行,
-进出口银行,
-工商银行,
-农业银行,
-中国银行,
-建设银行,
-交通银行,
-浦发银行,
-兴业银行,
-招商银行,
-其他中小银行,
+  <list id="yhs" type="string">国家开发银行	,
+中国进出口银行	,
+中国工商银行	,
+中国农业银行	,
+中国银行	,
+中国建设银行	,
+交通银行	,
+浦发银行	,
+兴业银行	,
+招商银行	,
+中国光大银行	,
+广发银行	,
+中信银行	,
+华夏银行	,
+花旗银行	,
+民生银行	,
+平安银行	,
+青岛银行	,
+邮储银行	,
+北京银行	,
+昆仑银行	,
+乌鲁木齐银行	,
+新疆银行	,
+西安银行	,
+浙商银行	,
+辽阳银行	,
+中信租赁公司	,
+农银租赁公司	,
+兴业金融租赁公司	,
+汇丰（中国）	,
+澳新银行（中国）	,
 合计
 </list>
   <sql id="jnsx" order="yhs" by="0" colcount="2">select 
-	bankNo,
+	bankName,
 	sum(authCreditAmount) aca
 from       
-financing_bank_currency_credit_v
+financing_bank_currency_credit
  where dwid in (0, 7, 9, 10) and nf=${cal.year} and yf=${cal.month}
 group by
-	bankNo</sql>
+	bankName</sql>
   <sql id="jwsx" order="yhs" by="0" colcount="2">select 
-	bankNo,
+	bankName,
 	sum(authCreditAmount) aca
 from       
-financing_bank_currency_credit_v
+financing_bank_currency_credit
 where dwid not in (0, 7, 9, 10) and nf=${cal.year} and yf=${cal.month}
 group by
-	bankNo</sql>
+	bankName</sql>
   <sql id="hjsx" order="yhs" by="0" colcount="2">select 
-	bankNo,
+	bankName,
 	sum(authCreditAmount) aca
 from       
-financing_bank_currency_credit_v
+financing_bank_currency_credit
 where nf=${cal.year} and yf=${cal.month}
 group by
-	bankNo</sql>
+	bankName</sql>
   <sql id="sxTotal">select 
 	nullif(sum(authCreditAmount), 0) aca
 from 
-financing_bank_currency_credit_v where nf=${cal.year} and yf=${cal.month}</sql>
+financing_bank_currency_credit where nf=${cal.year} and yf=${cal.month}</sql>
   <sql id="sxzb" order="yhs" by="0" colcount="2">select 
-	bankNo,
+	bankName,
 	sum(authCreditAmount)/${sxTotal[0]} aca
 from       
-financing_bank_currency_credit_v where nf=${cal.year} and yf=${cal.month}
+financing_bank_currency_credit where nf=${cal.year} and yf=${cal.month}
 group by
-	bankNo</sql>
+	bankName</sql>
   <sql id="ysyed" order="yhs" by="0" colcount="2">select 
-	bankNo,
+	bankName,
 	sum(usedAmount) ua
-from  financing_bank_currency_credit_v where nf=${cal.year} and yf=${cal.month}
+from  financing_bank_currency_credit where nf=${cal.year} and yf=${cal.month}
 group by
-	bankNo</sql>
+	bankName</sql>
  
   <list id="ids" type="int">
    <item from="1" to="${yhs.size}"/>
