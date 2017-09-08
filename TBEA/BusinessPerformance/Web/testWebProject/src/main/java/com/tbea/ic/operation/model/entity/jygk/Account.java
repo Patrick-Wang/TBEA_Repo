@@ -42,6 +42,16 @@ public class Account extends AbstractReadWriteEntity implements Serializable {
 	
 	private Integer deprecated;
 	
+	private String appId;
+	
+	public String getAppId() {
+		return appId;
+	}
+
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
+
 	public Integer getDeprecated() {
 		return deprecated;
 	}

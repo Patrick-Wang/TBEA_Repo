@@ -55,5 +55,14 @@
 		</jaxws:serviceBean>
 	</jaxws:server>
 
+	<bean id="planIndicatorsProvider"
+		class="com.tbea.ic.operation.controller.webservice.indicators.PlanIndicatorsProvider" />
+	<jaxws:server id="planIndicatorsProviderServer"
+		serviceClass="com.tbea.ic.operation.controller.webservice.indicators.PlanIndicatorsProvider"
+		address="/provider/indicators/plan">
+		<jaxws:serviceBean>
+			<ref bean="planIndicatorsProvider" />
+		</jaxws:serviceBean>
+	</jaxws:server>
 	<context:component-scan base-package="com.tbea.ic.operation.controller.webservice" />
 </beans>

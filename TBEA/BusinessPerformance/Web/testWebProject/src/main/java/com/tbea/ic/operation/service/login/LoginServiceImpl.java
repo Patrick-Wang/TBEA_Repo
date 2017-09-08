@@ -5,9 +5,6 @@ import java.util.Calendar;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +19,8 @@ import com.tbea.ic.operation.model.dao.userusage.UserUsageDao;
 import com.tbea.ic.operation.model.entity.UserUsage;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
+
+import net.sf.json.JSONArray;
 
 @Service
 @Transactional("transactionManager")
@@ -121,5 +120,10 @@ public class LoginServiceImpl implements LoginService {
 		userUsage.setReqs(reqs.toString());
 //		LoggerFactory.getLogger("ACCOUNT").info(JSONObject.fromObject(userUsage).toString());
 		userUsageDao.merge(userUsage);
+	}
+
+	@Override
+	public Account getAppAccount(String appId) {
+		return accountDao.getAppAccount(appId);
 	}
 }

@@ -8,4 +8,5 @@ public interface AccountDao extends AbstractReadWriteDao<Account> {
 
 	Account getAccount(String usrName);
 
+	Account getAppAccount(String appId);
 }
