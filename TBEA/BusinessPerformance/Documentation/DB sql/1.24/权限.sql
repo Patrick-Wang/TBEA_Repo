@@ -72,4 +72,3 @@ EXEC	addAuth
 		@auth = 84,
 		@comps = '3,5,8,11,9,10,7,1,4,6,2,301,2000,0,115,106';
 
-insert into jygk_dwxx (id, name, parent_ID) values (2000, '机关采购中心', 100000)
