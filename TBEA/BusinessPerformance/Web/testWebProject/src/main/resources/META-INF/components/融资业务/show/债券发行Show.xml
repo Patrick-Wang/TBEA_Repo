@@ -60,7 +60,7 @@
         <callservice id="financingBondsShowServ"/>
         <callcontroller id="financingBondsFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="特变电工债券发行明细统计表"/>
-        <list id="title" type="string">债券品种,发行时间,发行币种,发行金额,发行利率,利率浮动,债券期限,到期日,是否兑付</list>
+        <list id="title" type="string">债券品种,发行时间,发行币种,发行金额,发行利率,利率浮动,债券期限,到期日</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -106,7 +106,6 @@ isCashed from financing_bonds</sql>
             <list sql="data" type="double" value="6"/>
             <list sql="data" type="double" value="7"/>
             <list sql="data" type="date" value="8"/>
-            <list sql="data" type="date" value="9"/>
         </table>
     </service>
 </components>
