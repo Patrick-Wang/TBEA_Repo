@@ -97,8 +97,8 @@
       <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/jsp/entry_template.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.2360845">
-              <caret line="625" column="44" selection-start-line="625" selection-start-column="44" selection-end-line="625" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.24760076">
+              <caret line="311" column="11" selection-start-line="311" selection-start-column="11" selection-end-line="311" selection-end-column="57" />
               <folding>
                 <marker date="1493874772101" expanded="true" signature="22185:22199" placeholder="..." />
               </folding>
@@ -153,7 +153,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/jsp/ui2/home.js" />
-        <option value="$PROJECT_DIR$/jsp/entry_template.ts" />
         <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/cpclwcqk/cpclwcqk.ts" />
         <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/clylwcqk/clylwcqkEntry.ts" />
         <option value="$PROJECT_DIR$/jsp/sbdczclwcqk/cpczwcqk/cpczwcqkEntry.ts" />
@@ -203,6 +202,7 @@
         <option value="$PROJECT_DIR$/jsp/cwsf/cwsf.ts" />
         <option value="$PROJECT_DIR$/jsp/ui2/pages/unitedSelector.ts" />
         <option value="$PROJECT_DIR$/jsp/ui2/pages/rzywtj/rzywtj.ts" />
+        <option value="$PROJECT_DIR$/jsp/entry_template.ts" />
       </list>
     </option>
   </component>
@@ -820,8 +820,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/entry_template.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.2360845">
-          <caret line="625" column="44" selection-start-line="625" selection-start-column="44" selection-end-line="625" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.24760076">
+          <caret line="311" column="11" selection-start-line="311" selection-start-column="11" selection-end-line="311" selection-end-column="57" />
           <folding>
             <marker date="1493874772101" expanded="true" signature="22185:22199" placeholder="..." />
           </folding>
