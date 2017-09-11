@@ -65,6 +65,14 @@
 		<xny8 name="产量-硅片（万片）"/>
 		<xny9 name="销量-硅片（万片）"/>
 		
+		<sb_ydny1 id="355"/>
+		<sb_ydny2 id="356"/>
+		<sb_ydny3 id="357"/>
+		
+		<ydny1 name="合同签约额"/>
+		<ydny2 name="合同签约-制造业签约"/>
+		<ydny3 name="集成服务业务（含工程和检测修试）签约"/>
+		
 	</indicators>
 	<share indi="nltkxl,n1,n2,n3,n4" type="月实际,20预计,28预计,月计划,年计划">
 		<company id="7" />
@@ -102,20 +110,34 @@
 		<company id="9" />
 		<company id="905" />
 	</share>
-	
+	<share indi="xny7,xny8,xny9" type="月实际,20预计,28预计,月计划,年计划">
+		<company id="9" />
+		<company id="905" />
+	</share>
 	
 	<sum type="月实际,20预计,28预计,月计划,年计划">
-		<target indi="mtxlzh">
-			<company id="7" />
+		<target indi="sb_ydny1">
+			<company id="1" />
 		</target>
-		<src indi="nltkxl">
-			<company id="7" />
-		</src>
-		<src indi="jekxl">
-			<company id="7" />
-		</src>
-		<src indi="otherxl">
-			<company id="7" />
+		<src indi="ydny1">
+			<company id="115" />
 		</src>
 	</sum>
+	<sum type="月实际,20预计,28预计,月计划,年计划">
+		<target indi="sb_ydny2">
+			<company id="1" />
+		</target>
+		<src indi="ydny2">
+			<company id="115" />
+		</src>
+	</sum>
+	<sum type="月实际,20预计,28预计,月计划,年计划">
+		<target indi="sb_ydny3">
+			<company id="1" />
+		</target>
+		<src indi="ydny3">
+			<company id="115" />
+		</src>
+	</sum>
+	
 </relationships>
