@@ -13,10 +13,10 @@
 	sum(bid_ele_copper_process_cost) becpc8,
 	sum(bid_insulating_oil_price * bid_insulating_oil_amount) / nullif(sum(bid_insulating_oil_amount), 0) biop9,
 	sum(bid_insulating_oil_amount) bioa10,
-	sum(bid_rolled_steel_price * bid_rolled_steel_amount) / nullif(sum(bid_rolled_steel_amount), 0) brsp11,
-	sum(bid_rolled_steel_amount) brsa12,
 	sum(bid_cardboard_price * bid_cardboard_amount) / nullif(sum(bid_cardboard_amount), 0) bcp13,
 	sum(bid_cardboard_amount) bca14,
+	sum(bid_rolled_steel_price * bid_rolled_steel_amount) / nullif(sum(bid_rolled_steel_amount), 0) brsp11,
+	sum(bid_rolled_steel_amount) brsa12,
 	sum(other_material_cost) omc15,
 	sum(bid_material_total) bmt16
 from
@@ -39,10 +39,10 @@ group by
 	sum(bid_ele_copper_process_cost) becpc8,
 	sum(bid_insulating_oil_price * bid_insulating_oil_amount) / nullif(sum(bid_insulating_oil_amount), 0) biop9,
 	sum(bid_insulating_oil_amount) bioa10,
-	sum(bid_rolled_steel_price * bid_rolled_steel_amount) / nullif(sum(bid_rolled_steel_amount), 0) brsp11,
-	sum(bid_rolled_steel_amount) brsa12,
 	sum(bid_cardboard_price * bid_cardboard_amount) / nullif(sum(bid_cardboard_amount), 0) bcp13,
 	sum(bid_cardboard_amount) bca14,
+	sum(bid_rolled_steel_price * bid_rolled_steel_amount) / nullif(sum(bid_rolled_steel_amount), 0) brsp11,
+	sum(bid_rolled_steel_amount) brsa12,
 	sum(other_material_cost) omc15,
 	sum(bid_material_total) bmt16
 from
