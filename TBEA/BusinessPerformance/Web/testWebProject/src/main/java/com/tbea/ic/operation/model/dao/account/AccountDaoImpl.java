@@ -14,6 +14,7 @@ import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 import com.tbea.ic.operation.model.dao.blhtdqqkhz.BLHTDQQKHZDao;
 import com.tbea.ic.operation.model.entity.BLHTDQQKHZ;
 import com.tbea.ic.operation.model.entity.jygk.Account;
+import com.tbea.ic.operation.model.entity.jygk.WebApp;
 
 @Repository
 @Transactional("transactionManager")
@@ -39,11 +40,11 @@ public class AccountDaoImpl extends AbstractReadWriteDaoImpl<Account> implements
 	@Override
 	public Account getAppAccount(String appId) {
 		EntityManager entityManager = this.getEntityManager();
-		Query q = entityManager.createQuery("from Account where appId = :appId");
+		Query q = entityManager.createQuery("from WebApp where appId = :appId");
 		q.setParameter("appId", appId);
-		List<Account> account = q.getResultList();
-		if (!account.isEmpty()){
-			return account.get(0);
+		List<WebApp> webApp = q.getResultList();
+		if (!webApp.isEmpty()){
+			return webApp.get(0).getAccount();
 		}
 		return null;
 	}

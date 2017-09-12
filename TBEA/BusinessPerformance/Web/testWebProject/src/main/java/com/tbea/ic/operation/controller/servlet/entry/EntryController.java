@@ -116,7 +116,7 @@ public class EntryController {
 
 		List<String[]> ret =  entryService.getZb(date, account, comp, entryType);
 		for (int i = ret.size() - 1; i >= 0; --i) {
-			if ("355".equals(ret.get(i)[0]) || "356".equals(ret.get(i)[0]) || "357".equals(ret.get(i)[0])) {
+			if ("354".equals(ret.get(i)[0]) || "355".equals(ret.get(i)[0]) || "356".equals(ret.get(i)[0])) {
 				ret.remove(i);
 			}
 		}
