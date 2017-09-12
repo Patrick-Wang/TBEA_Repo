@@ -65,9 +65,9 @@
 		<xny8 name="产量-硅片（万片）"/>
 		<xny9 name="销量-硅片（万片）"/>
 		
-		<sb_ydny1 id="355"/>
-		<sb_ydny2 id="356"/>
-		<sb_ydny3 id="357"/>
+		<sb_ydny1 id="印度能源合同签约"/>
+		<sb_ydny2 id="其中：印度能源制造业合同签约"/>
+		<sb_ydny3 id="其中：印度能源集成服务业合同签约"/>
 		
 		<ydny1 name="合同签约额"/>
 		<ydny2 name="合同签约-制造业签约"/>
