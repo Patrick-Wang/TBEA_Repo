@@ -19,7 +19,7 @@ module cwyjsf {
                 for (let i = 1; i <= 12; ++i){
                     dyyjs.append( Node.create({name : i + ""}));
                 }
-                let dyyijs =  Node.create({name : year + "年当已交数"});
+                let dyyijs =  Node.create({name : year + "年当月已交数"});
                 for (let i = 1; i <= 12; ++i){
                     dyyijs.append( Node.create({name : i + ""}));
                 }

@@ -8,7 +8,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.ExtendAuthority;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 
-public interface ExtendAuthorityDao extends AbstractReadWriteDao<ExtendAuthority> {
+public interface ExtendAuthorityDao  {
 
 	List<ExtendAuthority> getAuthority(Account account, Company comp);
 			

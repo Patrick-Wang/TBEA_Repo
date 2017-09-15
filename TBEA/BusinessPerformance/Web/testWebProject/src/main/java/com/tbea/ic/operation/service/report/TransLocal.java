@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.xml.frame.report.component.service.ServiceRunnable;
-import com.xml.frame.report.component.service.Transaction;
+import com.xml.frame.report.component.service.JpaTransaction;
 
 @Service(TransLocal.NAME)
-public class TransLocal implements Transaction{
+public class TransLocal implements JpaTransaction{
 	
 	public static final String NAME = "TransLocal";
 	@PersistenceContext(unitName = "localDB")

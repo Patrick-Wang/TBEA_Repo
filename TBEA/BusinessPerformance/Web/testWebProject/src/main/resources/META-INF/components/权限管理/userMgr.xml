@@ -1,0 +1,81 @@
+<components>
+ <service id="servGetUserNames" transaction="transactionManager">
+  <sql id="userNames" export="true">
+			select id, name	from jygk_account
+		</sql>
+  <list id="all" type="string">-1, 全部用户</list>
+  <list id="userNames" type="object">
+   <item insert="0">${all}</item>
+  </list>
+ </service>
+ <service id="servGetRoleNames" transaction="transactionManager">
+  <sql id="roleNames" export="true">
+			select id, roleName	from roles
+		</sql>
+ </service>
+ <service id="servGetUserRoles" transaction="transactionManager">
+  <if test="${uids.size == 1 &amp;&amp;  uids[0] == -1}">
+   <sql id="userRoles" export="true">
+			select 
+				ja.id, 
+				name, 
+				roles = stuff((select ',' +  r.roleName from user_roles ur left join roles r on ur.roleId = r.id  where userId = ja.ID for XML path('')), 1 , 1 , '') 
+			from
+				user_roles ur full join jygk_account ja on ja.id = ur.userId 
+			group by ja.name, ja.ID
+			
+		</sql>
+  </if>
+  <else>
+   <sql id="userRoles" export="true">
+			select 
+				ja.id, 
+				name, 
+				roles = stuff((select ',' +  r.roleName from user_roles ur left join roles r on ur.roleId = r.id  where userId = ja.ID for XML path('')), 1 , 1 , '') 
+			from
+				user_roles ur left join jygk_account ja on ja.id = ur.userId 
+			where
+				ja.id in ${uids}
+			group 
+				by ja.name, ja.ID
+		</sql>
+  </else>
+ </service>
+ <service id="servSubmitUserRoles" transaction="transactionManager">
+ <sql>
+ 	delete from user_roles where userId in ${users}
+ 	</sql>
+ <loop from="0" to="${users.size - 1}" var="i">
+ 	<sql>
+ 		insert into user_roles (userId, roleId) values
+ 		(${users[i]}, (select id from roles where roleName = ${roles[i]}))
+ 	</sql>
+ </loop>
+ </service>
+ <controller id="userMgrSubmit">
+  <context key="users" value="${request.users.asList}"/>
+  <context key="roles" value="${request.roles.asJsonArray}"/>
+  <callservice id="servSubmitUserRoles"/>
+  <response type="json">
+   <errorCode>0</errorCode>
+   <message>OK</message>
+  </response>
+ </controller>
+ <controller id="userMgrUpdate">
+ <context key="uids" value="${request.uids.asList}"/>
+  <callservice id="servGetUserRoles"/>
+  <response type="json">
+   <data>${userRoles}</data>
+  </response>
+ </controller>
+ <controller id="userMgr">
+  <callservice id="servGetUserNames"/>
+  <callservice id="servGetRoleNames"/>
+  <response type="jsp" name="authorityMgr/userMgr">
+   <map key="users" value="${userNames.asJson}"/>
+   <map key="roles" value="${roleNames.asJson}"/>
+   <map key="updateUrl" value="userMgrUpdate"/>
+   <map key="submitUrl" value="userMgrSubmit"/>
+  </response>
+ </controller>
+</components>

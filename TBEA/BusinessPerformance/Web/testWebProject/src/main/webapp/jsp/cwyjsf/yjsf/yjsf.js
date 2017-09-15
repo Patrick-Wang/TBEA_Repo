@@ -27,7 +27,7 @@ var cwyjsf;
                 for (var i = 1; i <= 12; ++i) {
                     dyyjs.append(Node.create({ name: i + "" }));
                 }
-                var dyyijs = Node.create({ name: year + "年当已交数" });
+                var dyyijs = Node.create({ name: year + "年当月已交数" });
                 for (var i = 1; i <= 12; ++i) {
                     dyyijs.append(Node.create({ name: i + "" }));
                 }

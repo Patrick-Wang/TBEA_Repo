@@ -110,7 +110,8 @@ from
 	JYGK_SDDB_ORDER_EXECUTION_DETAILS
 where
 	company_name in ${dwmcs} and
- 	dateDiff(mm, dateadd(mm, convert(int, substring(serial_num, 7, 2)) - 1, dateadd(yy, convert(int, substring(serial_num, 3, 4)) -1900 ,'1900-1-1')), ${dEnd.date}) = 0 
+ 	dateDiff(mm, dateadd(mm, convert(int, substring(serial_num, 7, 2)) - 1, dateadd(yy, convert(int, substring(serial_num, 3, 4)) -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and
+ 	dateDiff(mm, dateadd(mm, convert(int, substring(serial_num, 7, 2)) - 1, dateadd(yy, convert(int, substring(serial_num, 3, 4)) -1900 ,'1900-1-1')), ${dEnd.date}) &gt;= 0 
 </sql>
   <list id="ids" type="int">
    <item from="0" to="${zbddhz.size - 1}"/>

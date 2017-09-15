@@ -1,5 +1,6 @@
 package com.xml.frame.report.component.service;
 
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.w3c.dom.Element;
 
 import com.xml.frame.report.ReportLogger;
@@ -50,17 +51,17 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 
 
 
-	protected Transaction getTransactionManager() {
-		return (Transaction) getVar(config.getAttribute("transaction"));
+	protected JpaTransaction getTransactionManager() {
+		return (JpaTransaction) getVar(config.getAttribute("transaction"));
 	}
 
 	@Override
 	protected void onRun() throws Exception {
-		Transaction tr = getTransactionManager();
+		JpaTransaction tr = getTransactionManager();
 		if (null != tr){
 			tr.run(this);
 		}else{
-			run();
+			run();		
 		}
 	}
 

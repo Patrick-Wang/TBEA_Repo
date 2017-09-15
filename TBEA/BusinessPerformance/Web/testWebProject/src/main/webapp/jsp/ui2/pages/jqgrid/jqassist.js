@@ -890,6 +890,9 @@ var JQTable;
             }
             return data;
         };
+        JQGridAssistant.prototype.resetChangedData = function () {
+            this.mEditedRows = [];
+        };
         JQGridAssistant.prototype.setRowBgColor = function (row, r, g, b) {
             var _this = this;
             var grid = $("#" + this.mGridName);

@@ -15,17 +15,17 @@ import com.tbea.ic.operation.model.entity.ExtendAuthority;
 
 @Repository
 @Transactional("transactionManager")
-public class SystemExtendAuthDaoImpl extends AbstractReadWriteDaoImpl<ExtendAuthority> implements SystemExtendAuthDao{
+public class SystemExtendAuthDaoImpl implements SystemExtendAuthDao{
 
-	@Override
+	EntityManager entityManager;
+	
 	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
-		super.setEntityManager(entityManager);
+		this.entityManager = entityManager;
 	}
-
 	@Override
 	public List<ExtendAuthority> getDataListByAccAuthType(int account_id, int authType) {
-		Query q = this.getEntityManager().createQuery("from ExtendAuthority where account.id = :id and authType=:type");
+		Query q = entityManager.createQuery("from ExtendAuthority where account.id = :id and authType=:type");
 		q.setParameter("id", account_id);
 		q.setParameter("type", authType);
 		return q.getResultList();

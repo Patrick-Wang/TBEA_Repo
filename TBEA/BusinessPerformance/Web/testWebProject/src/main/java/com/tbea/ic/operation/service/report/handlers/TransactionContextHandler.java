@@ -15,38 +15,38 @@ import com.tbea.ic.operation.service.report.TransTb;
 import com.tbea.ic.operation.service.report.TransXb;
 import com.tbea.ic.operation.service.report.TransXl;
 import com.xml.frame.report.component.entity.Context;
-import com.xml.frame.report.component.service.Transaction;
+import com.xml.frame.report.component.service.JpaTransaction;
 
 
 @Component
 public class TransactionContextHandler implements ContextHandler {
 
 	@Resource(name = TransLocal.NAME)
-	Transaction trLocal;
+	JpaTransaction trLocal;
 	
 	@Resource(name = TransDl.NAME)
-	Transaction trDl;
+	JpaTransaction trDl;
 	
 	@Resource(name = TransXl.NAME)
-	Transaction trXl;
+	JpaTransaction trXl;
 	
 	@Resource(name = TransLl.NAME)
-	Transaction trLl;
+	JpaTransaction trLl;
 	
 	@Resource(name = TransSb.NAME)
-	Transaction trSb;
+	JpaTransaction trSb;
 
 	@Resource(name = TransXb.NAME)
-	Transaction trXb;
+	JpaTransaction trXb;
 	
 	@Resource(name = TransTb.NAME)
-	Transaction trTb;
+	JpaTransaction trTb;
 	
 	@Resource(name = TransNC.NAME)
-	Transaction trNc;
+	JpaTransaction trNc;
 	
 	@Resource(name = Trans15.NAME)
-	Transaction tr15;
+	JpaTransaction tr15;
 
 	@Override
 	public void onHandle(Context context) {

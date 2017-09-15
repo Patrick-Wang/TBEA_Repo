@@ -1,6 +1,9 @@
 package cn.com.tbea.template.model.entity;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -25,6 +28,9 @@ public class AbstractEntity {
 		this.entityVersion = entityVersion;
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	public int getId() {
 		return id;
 	}

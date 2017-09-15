@@ -36,7 +36,7 @@ var rzywtj;
                 }
             });
             this.item = this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id;
-            if (this.item == 0 || _this.item == 14 || _this.item == 13) {
+            if (this.item == 0 || this.item == 14 || this.item == 13) {
                 $("#grid-date").parent().removeClass("hidden");
             }
             else {

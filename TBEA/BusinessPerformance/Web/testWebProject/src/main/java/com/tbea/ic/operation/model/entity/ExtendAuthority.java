@@ -14,11 +14,9 @@ import javax.persistence.Table;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 
-import cn.com.tbea.template.model.entity.AbstractReadWriteEntity;
-
 @Entity
-@Table(name = "system_extend_auth")
-public class ExtendAuthority extends AbstractReadWriteEntity implements Serializable {
+@Table(name="system_extend_auth_t")
+public class ExtendAuthority implements Serializable {
 	
 	
 	public enum AuthType{
@@ -50,6 +48,7 @@ public class ExtendAuthority extends AbstractReadWriteEntity implements Serializ
 	}
 	
 	private static final long serialVersionUID = 1L;
+	private int id = 0;
 	
 	Integer authType;
 	
@@ -58,30 +57,19 @@ public class ExtendAuthority extends AbstractReadWriteEntity implements Serializ
 	
 	
 	DWXX dwxx;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	public int getId() {
-		return super.getId();
+		return id;
 	}
 
 	public void setId(int id) {
-		super.setId(id);
-	}
-	
-	@ManyToOne
-	@JoinColumn(name = "[account_id]")
-	public Account getAccount() {
-		return account;
-	}
-
-	public void setAccount(Account account) {
-		this.account = account;
+		this.id = id;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "[company_id]")
+	@JoinColumn(name = "[companyId]")
 	public DWXX getDwxx() {
 		return dwxx;
 	}
@@ -90,7 +78,7 @@ public class ExtendAuthority extends AbstractReadWriteEntity implements Serializ
 		this.dwxx = dwxx;
 	}
 
-	@Column(name = "auth_type")
+	@Column(name = "authId")
 	public Integer getAuthType() {
 		return authType;
 	}

@@ -1,18 +1,24 @@
 package com.xml.frame.report.interpreter;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.w3c.dom.Element;
 
 import com.frame.script.el.ELExpression;
 import com.frame.script.el.ELParser;
 import com.frame.script.util.StringUtil;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.component.service.Transaction;
+import com.xml.frame.report.component.service.JndiDataSourceFactory;
+import com.xml.frame.report.component.service.JpaTransaction;
 import com.xml.frame.report.util.DBUtil;
 import com.xml.frame.report.util.LoggerProxy;
 import com.xml.frame.report.util.Pair;
@@ -32,9 +38,11 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 	}
 	
 	ELParser el;
-	Query parseElSql(String sql, EntityManager em){
+	
+	
+	Pair<String, List<Pair<Integer, Object>>> parseSqlParam(String sql){
 		List<ELExpression> elexps = el.parser(sql);
-		List<Pair<Integer, Object>> objs = new ArrayList<Pair<Integer, Object>>();
+		List<Pair<Integer, Object>> params = new ArrayList<Pair<Integer, Object>>();
 		for (int i = elexps.size() - 1; i >= 0 ; --i){
 			try {
 				lp.trace("exp : " + elexps.get(i).exp());
@@ -42,7 +50,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 				String preFix = sql.substring(0, elexps.get(i).start());
 				if (isInWhereClause(preFix)){
 					sql = preFix + "?" + i + sql.substring(elexps.get(i).end());
-					objs.add(new Pair(i, obj));
+					params.add(new Pair<Integer, Object>(i, obj));
 				}else{
 					sql = preFix + obj + sql.substring(elexps.get(i).end());
 				}
@@ -52,9 +60,12 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		}
 		
 		lp.info(sql);
-		
-		Query q = em.createNativeQuery(sql);
-		for (Pair<Integer, Object> pair : objs){
+		return new Pair<String, List<Pair<Integer, Object>>>(sql, params);
+	}
+	
+	Query jpaQuery(Pair<String, List<Pair<Integer, Object>>> sqlParam, EntityManager em){
+		Query q = em.createNativeQuery(sqlParam.getFirst());
+		for (Pair<Integer, Object> pair : sqlParam.getSecond()){
 			q.setParameter(pair.getFirst(), pair.getSecond());
 			lp.info("?" + pair.getFirst() + " : " + pair.getSecond() + "\t");
 		}
@@ -71,11 +82,13 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		return -1;
 	} 
 	
-	private List parseOrder(List sqlRet, AbstractXmlComponent component, Element e) throws Exception{
+	private List parseOrder(List sqlRet, AbstractXmlComponent component, Element e, Integer colcount) throws Exception{
 		List order = (List) component.getVar(e.getAttribute("order"));
 		if (null != order){
 			Integer by = XmlUtil.getIntAttr(e, "by", el, null);
-			Integer colcount = XmlUtil.getIntAttr(e, "colcount", el, null);
+			if (null == colcount) {
+				colcount = XmlUtil.getIntAttr(e, "colcount", el, null);
+			}
 			if (null != by && null != colcount){
 				List<Object[]> objs = new ArrayList<Object[]>(order.size());
 				int ret = 0;
@@ -107,11 +120,17 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		//ReportLogger.trace().debug(component.getConfig().getTagName() + " : " + XmlUtil.toStringFromDoc(e));
 		
 		String trans = component.getConfigAttribute("transaction");
-		Transaction tx = (Transaction) component.getVar(trans);
+		JpaTransaction tx = (JpaTransaction) component.getVar(trans);
+		DataSource ds = null;
 		if (null == tx){
-			throw new Exception("请指定 transaction " + e.toString());
+			if (null == tx){
+				ds = JndiDataSourceFactory.getDataSource(component.getConfigAttribute("ds"));
+				if (null == ds) {
+					throw new Exception("请指定 transaction " + e.toString());
+				}
+			}
 		}
-		
+
 		lp = new LoggerProxy();
 		if (e.hasAttribute("logger")){
 			lp.getLogger(e.getAttribute("logger"));
@@ -122,34 +141,60 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		lp.info("database : " + trans);
 		
 		el = new ELParser(component);
-		if (XmlUtil.hasText(e) && !StringUtil.trim(XmlUtil.getText(e)).isEmpty()){
-			Query q = parseElSql(
-					XmlUtil.getText(e),
-					tx.getEntityManager());
-			if (e.hasAttribute("id")){
-				List sqlRet = q.getResultList();
-//				QueryImpl sq = q.unwrap(QueryImpl.class);
-//				String[] alis = sq.getHibernateQuery().getReturnAliases();
-//				List<NativeSQLQueryReturn> sr = sq.getQueryReturns();
-//				sq.setResultTransformer()
-//				String[] alis = sq.getReturnAliases();
-//				Type[] tps = sq.getHibernateQuery().getReturnTypes();
-				int retType = DBUtil.trans2StandardType(sqlRet);
-				if (retType != DBUtil.SQL_RET_VALUE){
-					sqlRet = parseOrder(sqlRet, component, e);
+		String sqlText = XmlUtil.getText(e);
+		if (XmlUtil.hasText(e) && !StringUtil.trim(sqlText).isEmpty()){
+			Pair<String, List<Pair<Integer, Object>>> sqlParams = parseSqlParam(sqlText);
+			if (tx != null) {
+				Query q = jpaQuery(sqlParams, tx.getEntityManager());
+				if (e.hasAttribute("id")){
+					List sqlRet = q.getResultList();
+					int retType = DBUtil.trans2StandardType(sqlRet);
+					if (retType != DBUtil.SQL_RET_VALUE){
+						sqlRet = parseOrder(sqlRet, component, e, null);
+					}
+					lp.info(JSONArray.fromObject(sqlRet).toString());
+					component.put(e, sqlRet);
+				}else{
+					q.executeUpdate();
 				}
-				lp.info(JSONArray.fromObject(sqlRet).toString());
-				component.put(e, sqlRet);
-			}else{
-				q.executeUpdate();
+			}else {
+				PreparedStatement ps = jdbcQuery(sqlParams, ds);
+				if (e.hasAttribute("id")){
+					ResultSet rs = ps.executeQuery();
+					ResultSetMetaData rsmd = rs.getMetaData();
+					int count = rsmd.getColumnCount();
+					e.setAttribute("colcount", "" + count);
+					List<Object> result = new ArrayList<Object>();
+					while (rs.next()) {
+						List<Object> row = new ArrayList<Object>();
+						for (int i = 0; i < count; ++i) {
+							row.add(DBUtil.transform(rs.getObject(i)));
+						}
+						result.add(row);
+					}
+					if (result.size() == 1 && ((List)(result.get(0))).size() == 1) {
+						result = (List<Object>) result.get(0);
+					}
+				}else {
+					ps.executeUpdate(sqlParams.getFirst());
+				}
 			}
 		}else{
 			List sqlRet = (List) component.getVar(e.getAttribute("id"));
-			sqlRet = parseOrder(sqlRet, component, e);
+			sqlRet = parseOrder(sqlRet, component, e, null);
 			lp.info(JSONArray.fromObject(sqlRet).toString());
 			component.put(e, sqlRet);
 		}
 		
 		return true;
+	}
+
+	private PreparedStatement jdbcQuery(Pair<String, List<Pair<Integer, Object>>> sqlParams, DataSource ds) throws SQLException {
+		PreparedStatement ps = ds.getConnection().prepareStatement(sqlParams.getFirst());
+		for (Pair<Integer, Object> pair : sqlParams.getSecond()){
+			ps.setObject(pair.getFirst(), pair.getSecond());
+			lp.info("?" + pair.getFirst() + " : " + pair.getSecond() + "\t");
+		}
+		return ps;
 	}
 }

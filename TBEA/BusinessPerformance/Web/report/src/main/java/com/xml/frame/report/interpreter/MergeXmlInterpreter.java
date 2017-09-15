@@ -1,6 +1,9 @@
 package com.xml.frame.report.interpreter;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.hibernate.Session;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -23,7 +27,8 @@ import com.frame.script.el.ELParser;
 import com.frame.script.util.TypeUtil;
 import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.component.service.Transaction;
+import com.xml.frame.report.component.service.JndiDataSourceFactory;
+import com.xml.frame.report.component.service.JpaTransaction;
 import com.xml.frame.report.util.Util;
 import com.xml.frame.report.util.excel.ExcelUtil;
 import com.xml.frame.report.util.excel.ValidationException;
@@ -81,7 +86,9 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 	int updateCount;
 	int flushCount;
 	AbstractXmlComponent component;
-
+	EntityManager em = null;
+	Connection con = null;
+	
 	private int getTypes(Map<Integer, Integer> types) {
 		int max = 0;
 		for (FieldSql sql : where) {
@@ -185,8 +192,20 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		set = compile(e.getElementsByTagName("set"));
 		String trans = component.getConfigAttribute("transaction");
 		ReportLogger.trace().debug("database : {}", trans);
-		Transaction tx = (Transaction) component.getVar(trans);
-		EntityManager em = tx.getEntityManager();
+		JpaTransaction tx = (JpaTransaction) component.getVar(trans);
+		
+		if (null == tx){
+			DataSource ds = JndiDataSourceFactory.getDataSource(component.getConfigAttribute("ds"));
+			if (null == ds) {
+				throw new Exception("请指定 transaction " + e.toString());
+			}else {
+				con = ds.getConnection();
+				con.setAutoCommit(false);
+			}
+		}else {
+			em = tx.getEntityManager();
+		}
+		
 		if (dataObj instanceof JSONArray) {
 			mergeJson((JSONArray) dataObj, em, table, from, to);
 		} else if (dataObj instanceof XSSFWorkbook) {
@@ -197,35 +216,45 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			mergeIterator((Iterator) dataObj, em, table, from, to);
 		}
 
-		completeUpdate(em);
-		completeInsert(em);
+		completeUpdate();
+		completeInsert();
 
 		this.component.removeLocal("i");
 		return true;
 	}
 
 	
-	private void updateSql(EntityManager em, String sql){
+	private void updateSql(String sql) throws SQLException{
 		ReportLogger.trace().info(sql);
-		em.createNativeQuery(sql).executeUpdate();
-		if (flushCount % FLUSH_COUNT == 0){
-			em.flush();
-			Session session = (Session)em.getDelegate();
-			session.clear();
-			ReportLogger.trace().info("flush count " + flushCount);
+		if (null != em) {
+			em.createNativeQuery(sql).executeUpdate();
+			if (flushCount % FLUSH_COUNT == 0){
+				em.flush();
+				Session session = (Session)em.getDelegate();
+				session.clear();
+				ReportLogger.trace().info("flush count " + flushCount);
+			}
+		}else {
+			Statement st = con.createStatement();
+			st.executeUpdate(sql);
+			if (flushCount % FLUSH_COUNT == 0){
+				con.commit();
+				ReportLogger.trace().info("flush count " + flushCount);
+			}
 		}
+		
 	}
 	
-	private void completeInsert(EntityManager em) {
+	private void completeInsert() throws SQLException {
 		if (null != insertValues) {
 			String insertSql = insertValues.toString();
 			insertValues = null;
-			updateSql(em, insertSql);	
+			updateSql(insertSql);	
 			ReportLogger.trace().info("insert count " + insertCount);
 		}
 	}
 
-	private void mergeIterator(Iterator it, EntityManager em, String table, Integer from, Integer to) {
+	private void mergeIterator(Iterator it, EntityManager em, String table, Integer from, Integer to) throws SQLException {
 		int start = (from != null ? from : 0);
 		for (int i = 0; it.hasNext(); ++i) {
 			if (i >= start){
@@ -235,24 +264,24 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				
 				JSONArray row = list2Json(it.next());
 				this.component.local("i", i - start);
-				merge(em, table, row);
+				merge(table, row);
 			}
 			
 		}
 	}
 
-	private void mergeList(List dataList, EntityManager em, String table, Integer from, Integer to) {
+	private void mergeList(List dataList, EntityManager em, String table, Integer from, Integer to) throws SQLException {
 		int end = (to != null ? Math.min(dataList.size(), to + 1) : dataList.size());
 		int start = (from != null ? from : 0);
 		for (int i = start; i < end; ++i) {
 			JSONArray row = list2Json(dataList.get(i));
 			this.component.local("i", i);
-			merge(em, table, row);
+			merge(table, row);
 		}
 	}
 
 	private void mergeExcel(XSSFWorkbook dataExcel, EntityManager em,
-			String table, Integer from, Integer to) throws ValidationException {
+			String table, Integer from, Integer to) throws ValidationException, SQLException {
 		XSSFWorkbook workbook = (XSSFWorkbook) dataExcel;
 		XSSFSheet sheet = workbook.getSheetAt(0);
 		boolean isInsert = where.isEmpty();
@@ -268,18 +297,18 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 					jrow.add("add");
 				}
 				this.component.local("i", i - start);
-				merge(em, table, jrow);
+				merge(table, jrow);
 			}
 		}
 	}
 
-	private void mergeJson(JSONArray dataJson, EntityManager em, String table, Integer from, Integer to) {
+	private void mergeJson(JSONArray dataJson, EntityManager em, String table, Integer from, Integer to) throws SQLException {
 		int end = (to != null ? Math.min(dataJson.size(), to + 1) : dataJson.size());
 		int start = (from != null ? from : 0);
 		for (int i = start; i < end; ++i) {
 			JSONArray row = dataJson.getJSONArray(i);
 			this.component.local("i", i - start);
-			merge(em, table, row);
+			merge(table, row);
 		}
 	}
 
@@ -437,7 +466,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		return ret;
 	}
 
-	private void merge(EntityManager em, String table, JSONArray row) {
+	private void merge(String table, JSONArray row) throws SQLException {
 		boolean doInsert = false;
 		String firstWhere = null;
 		component.local("row", row);
@@ -457,16 +486,16 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 					break;
 				}
 
-				doInsert(em, table, row, set);
+				doInsert(table, row, set);
 				doInsert = true;
 			} while (false);
 
 			if (!doInsert) {
 				String whereSql = parseWhereSql(em, row);
 				if (null != whereSql){
-					doUpdate(em, table, whereSql, row);
+					doUpdate(table, whereSql, row);
 				}else{
-					doInsert(em, table, row, set);
+					doInsert(table, row, set);
 				}				
 			}
 		}
@@ -498,8 +527,8 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 	}
 
 	
-	private void doInsert(EntityManager em, String table, JSONArray row,
-			List<FieldSql> set) {
+	private void doInsert(String table, JSONArray row,
+			List<FieldSql> set) throws SQLException {
 		if (!set.isEmpty()) {
 			if (insertValues == null) {
 				insertValues = new StringBuilder();
@@ -528,7 +557,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			++insertCount;
 			++flushCount;
 			if (insertCount % INSERT_COUNT == 0) {
-				completeInsert(em);
+				completeInsert();
 			}
 		}
 	}
@@ -550,7 +579,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		return null;
 	}
 
-	private void doUpdate(EntityManager em, String table, String whereSql, JSONArray row) {
+	private void doUpdate(String table, String whereSql, JSONArray row) throws SQLException {
 		StringBuilder sbUpdate = new StringBuilder();
 		sbUpdate.append(" UPDATE ")
 		.append(table)
@@ -603,15 +632,15 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		++updateCount;
 
 		if (this.updateCount % UPDATE_COUNT == 0){
-			completeUpdate(em);
+			completeUpdate();
 		}
 	}
 
-	private void completeUpdate(EntityManager em) {
+	private void completeUpdate() throws SQLException {
 		if (null != updateValues) {
 			String sql = updateValues.toString();
 			updateValues = null;
-			updateSql(em, sql);	
+			updateSql(sql);	
 			ReportLogger.trace().info("update count " + updateCount);			
 		}
 	}

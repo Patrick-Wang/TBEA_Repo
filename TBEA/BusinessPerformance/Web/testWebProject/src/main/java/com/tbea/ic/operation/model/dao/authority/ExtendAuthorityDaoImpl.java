@@ -17,25 +17,26 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 
 @Repository
 @Transactional("transactionManager")
-public class ExtendAuthorityDaoImpl extends AbstractReadWriteDaoImpl<ExtendAuthority> implements ExtendAuthorityDao{
+public class ExtendAuthorityDaoImpl  implements ExtendAuthorityDao{
 
-	@Override
+	EntityManager entityManager;
+	
 	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
-		super.setEntityManager(entityManager);
+		this.entityManager = entityManager;
 	}
 
 	@Override
-	public List<ExtendAuthority> getAuthority(Account account, int authType) {
-		Query q = this.getEntityManager().createQuery("from ExtendAuthority where account.id = :id and authType=:type");
+	public List<ExtendAuthority> getAuthority(Account account, int authId) {
+		Query q = this.entityManager.createNativeQuery("select * from system_extend_auth_v where account_id = :id and authId=:type", ExtendAuthority.class);
 		q.setParameter("id", account.getId());
-		q.setParameter("type", authType);
+		q.setParameter("type", authId);
 		return q.getResultList();
 	}
 
 	@Override
 	public int getAuthorityCount(Account account, int auth) {
-		Query q = this.getEntityManager().createQuery("select count(*) from ExtendAuthority where account.id = :id and authType = :auth");
+		Query q = this.entityManager.createNativeQuery("select count(*) from system_extend_auth_v where account_id = :id and authId = :auth");
 		q.setParameter("id", account.getId());
 		q.setParameter("auth", auth);
 		return ((Long)q.getResultList().get(0)).intValue();
@@ -43,7 +44,7 @@ public class ExtendAuthorityDaoImpl extends AbstractReadWriteDaoImpl<ExtendAutho
 
 	@Override
 	public List<ExtendAuthority> getAuthority(Account account, Company comp) {
-		Query q = this.getEntityManager().createQuery("from ExtendAuthority where account.id = :id and dwxx.id = :compId");
+		Query q = this.entityManager.createNativeQuery("select * from system_extend_auth_v where account_id = :id and companyId = :compId", ExtendAuthority.class);
 		q.setParameter("id", account.getId());
 		q.setParameter("compId", comp.getId());
 		return q.getResultList();
@@ -51,7 +52,7 @@ public class ExtendAuthorityDaoImpl extends AbstractReadWriteDaoImpl<ExtendAutho
 
 	@Override
 	public List<Integer> getAuthority(Account account) {
-		Query q = this.getEntityManager().createQuery("select distinct authType from ExtendAuthority where account.id = :id");
+		Query q = this.entityManager.createNativeQuery("select distinct authId from system_extend_auth_v where account_id = :id");
 		q.setParameter("id", account.getId());
 		return q.getResultList();
 	}

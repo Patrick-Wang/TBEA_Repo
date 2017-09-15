@@ -139,8 +139,8 @@ module sddb{
                 //    Util.addDay(opt.date, -5 * 7)
                 //);
 
-
-                let startOpt = this.createInternalDate("dstart", opt.date, {
+                var dateWithOutDay = {year : opt.date.year, month : opt.date.month};
+                let startOpt = this.createInternalDate("dstart", dateWithOutDay, {
                     nowDate: Util.date2Str(Util.addDay(opt.date, -5 * 7)),
                     minDate: Util.date2Str(opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart),
                     maxDate: Util.date2Str(opt.date),
@@ -152,7 +152,7 @@ module sddb{
                     }
                 });
 
-                let endOpt = this.createInternalDate("dEnd", opt.date, {
+                let endOpt = this.createInternalDate("dEnd", dateWithOutDay, {
                     nowDate: Util.date2Str(opt.date),
                     minDate: startOpt.nowDate,
                     maxDate: Util.date2Str(opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd),

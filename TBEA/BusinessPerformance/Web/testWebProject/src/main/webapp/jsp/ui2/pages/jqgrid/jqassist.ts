@@ -991,6 +991,10 @@ module JQTable {
             return data;
         }
 
+        public resetChangedData() {
+            this.mEditedRows = [];
+        }
+
         public setRowBgColor(row:number, r:number, g:number, b:number):void {
             let grid = $("#" + this.mGridName);
             this.completeList.push(() => {
