@@ -223,7 +223,7 @@ module user_mgr {
                 var uid = parseInt(data[i][0]);
                 var role = data[i][2].split(",");
                 for (var j = 0; j < role.length; ++j){
-                    roles.push(role[i]);
+                    roles.push(role[j]);
                     users.push(uid);
                 }
             }
@@ -234,7 +234,7 @@ module user_mgr {
                     users: JSON.stringify(users),
                     roles: JSON.stringify(roles)})
                     .then((dataArray:any) => {
-                        this.updateUI();
+                       // this.updateUI();
                         this.tableAssist.resetChangedData();
                         Util.Toast.success('用户数据修改成功');
                     });

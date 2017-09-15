@@ -33,15 +33,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userMgr.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="userMgr.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="241" column="30" selection-start-line="241" selection-start-column="30" selection-end-line="241" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.54545456">
+              <caret line="236" column="42" selection-start-line="236" selection-start-column="42" selection-end-line="236" selection-end-column="42" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1505467045533" expanded="true" signature="5255:5287" placeholder="..." />
-                <marker date="1505467045533" expanded="true" signature="5255:5304" placeholder="..." />
+                <marker date="1505468205421" expanded="true" signature="5255:5287" placeholder="..." />
+                <marker date="1505468205421" expanded="true" signature="5255:5304" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -65,46 +65,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pdcpycssbhgxxfb.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/cpzlqk/pdcpycssbhgxxfb/pdcpycssbhgxxfb.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="xkacptjjgEntry.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/cpzlqk/xkacptjjg/xkacptjjgEntry.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-11.565217">
               <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cpzlqkEntry.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/cpzlqk/cpzlqkEntry.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.245283">
-              <caret line="133" column="1" selection-start-line="133" selection-start-column="1" selection-end-line="135" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="xlbhgcpmxEntry.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/cpzlqk/xlbhgcpmx/xlbhgcpmxEntry.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="207" column="34" selection-start-line="207" selection-start-column="20" selection-end-line="207" selection-end-column="34" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -119,10 +85,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="toastr.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="toastr.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/toastr/toastr.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5277778">
+            <state vertical-scroll-proportion="9.2">
               <caret line="263" column="41" selection-start-line="263" selection-start-column="41" selection-end-line="263" selection-end-column="41" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
@@ -202,9 +168,9 @@
         <option value="$PROJECT_DIR$/pages/authorityManager/userMgr.jsp" />
         <option value="$PROJECT_DIR$/pages/authorityManager/userMgr.ts" />
         <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
-        <option value="$PROJECT_DIR$/pages/authorityMgr/userMgr.ts" />
         <option value="$PROJECT_DIR$/pages/authorityMgr/userMgr.jsp" />
         <option value="$PROJECT_DIR$/assets/js/toastr/toastr.js" />
+        <option value="$PROJECT_DIR$/pages/authorityMgr/userMgr.ts" />
       </list>
     </option>
   </component>
@@ -377,6 +343,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="authorityMgr" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="bootstrap-select-1.12.4" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -526,7 +510,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1036" height="754" extended-state="1" />
+    <frame x="-8" y="-8" width="1036" height="754" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26152304" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -895,21 +879,21 @@
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1505467061145" expanded="true" signature="2390:2564" placeholder="//..." />
-            <marker date="1505467061145" expanded="true" signature="2990:2991" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="3055:3510" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="3400:3498" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="3568:3854" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="3567:4179" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="3716:3804" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="4081:4169" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="4241:4299" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="4355:4421" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="4481:4773" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="4830:5353" placeholder="{...}" />
-            <marker date="1505467061145" expanded="true" signature="4995:5167" placeholder="[...]" />
-            <marker date="1505467061145" expanded="true" signature="4903:5310" placeholder="{&quot;datatype&quot;: &quot;local&quot;...}" />
-            <marker date="1505467061145" expanded="true" signature="5435:5795" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="2390:2564" placeholder="//..." />
+            <marker date="1505468086413" expanded="true" signature="2990:2991" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="3055:3510" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="3400:3498" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="3568:3854" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="3567:4179" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="3716:3804" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="4081:4169" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="4241:4299" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="4355:4421" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="4481:4773" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="4830:5353" placeholder="{...}" />
+            <marker date="1505468086413" expanded="true" signature="4995:5167" placeholder="[...]" />
+            <marker date="1505468086413" expanded="true" signature="4903:5310" placeholder="{&quot;datatype&quot;: &quot;local&quot;...}" />
+            <marker date="1505468086413" expanded="true" signature="5435:5795" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -984,18 +968,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="241" column="30" selection-start-line="241" selection-start-column="30" selection-end-line="241" selection-end-column="30" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1505467045533" expanded="true" signature="5255:5287" placeholder="..." />
-            <marker date="1505467045533" expanded="true" signature="5255:5304" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.3921568">
@@ -1006,10 +978,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/toastr/toastr.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5277778">
+        <state vertical-scroll-proportion="9.2">
           <caret line="263" column="41" selection-start-line="263" selection-start-column="41" selection-end-line="263" selection-end-column="41" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.54545456">
+          <caret line="236" column="42" selection-start-line="236" selection-start-column="42" selection-end-line="236" selection-end-column="42" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1505468205421" expanded="true" signature="5255:5287" placeholder="..." />
+            <marker date="1505468205421" expanded="true" signature="5255:5304" placeholder="..." />
           </folding>
         </state>
       </provider>
