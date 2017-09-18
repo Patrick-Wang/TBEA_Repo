@@ -69,15 +69,10 @@ module user_mgr {
             this.mSubmitAjax = new Util.Ajax(opt.submitUrl);
 
             $("#user-sel").append(
-                '<select class="selectpicker" multiple data-live-search="true" ></select>');
+                '<select class="selectpicker" multiple data-live-search="true" title="公司名称"></select>');
             var sel = $("#user-sel select");
             for (var i = 0; i < opt.users.length; ++i){
-                if (i == 0){
-                    sel.append('<option value="' + opt.users[i][0] + '" selected="selected">' + opt.users[i][1] + '</option>');
-                }else{
-                    sel.append('<option value="' + opt.users[i][0] + '">' + opt.users[i][1] + '</option>');
-                }
-
+                sel.append('<option value="' + opt.users[i][0] + '">' + opt.users[i][1] + '</option>');
             }
             $('#user-sel .selectpicker').selectpicker({
                // style: 'btn-info'
@@ -98,13 +93,13 @@ module user_mgr {
         }
 
         private adjustHeader(){
-            //$("#headerHost").removeCss("width");
-            //if ($("#headerHost").height() > 40){
-            //    $(".page-header").addClass("page-header-double");
-            //    $("#headerHost").css("width", $("#comp-sel").width() + "px");
-            //}else{
-            //    $(".page-header").removeClass("page-header-double");
-            //}
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40){
+                $(".page-header").addClass("page-header-double");
+                $("#headerHost").css("width", $("#comp-sel").width() + "px");
+            }else{
+                $(".page-header").removeClass("page-header-double");
+            }
         }
 
 
@@ -112,9 +107,14 @@ module user_mgr {
         public updateUI() {
             var uids = $('#user-sel .selectpicker').selectpicker('val');
             var iUids = [];
-            for (var i = 0; i < uids.length; ++i){
-                iUids.push(parseInt(uids[i]));
+            if (!uids){
+                iUids.push(-1);
+            }else{
+                for (var i = 0; i < uids.length; ++i){
+                    iUids.push(parseInt(uids[i]));
+                }
             }
+
             this.mUpdateAjax.post({uids: JSON.stringify(iUids)})
                 .then((dataArray:any) => {
                     this.mData = dataArray.data;
@@ -175,7 +175,7 @@ module user_mgr {
                 //});
                 sel.on('changed.bs.select', () => {
                     roleNames = p.find('.selectpicker').selectpicker('val');
-                    $(e).val(roleNames);
+                    $(e).val(roleNames.join());
                 });
                 sel.selectpicker({
                     size: 10

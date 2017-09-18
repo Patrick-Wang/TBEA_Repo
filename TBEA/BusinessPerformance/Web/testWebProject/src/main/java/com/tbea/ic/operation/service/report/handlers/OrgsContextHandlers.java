@@ -55,6 +55,8 @@ public class OrgsContextHandlers implements ContextHandler {
 						names.add(org.getCompany(id).getName());
 					}
 					return names;
+				} else if ("allComps".equals(args.get(0))) {
+					return ((BMDepartmentDB)org).getAllComps();
 				} else {
 					return null;
 				}

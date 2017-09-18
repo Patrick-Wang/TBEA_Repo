@@ -148,24 +148,26 @@ public class BMDepartmentDB extends AbstractOrganization {
 	}
 
 	private int m_depth = 0;
+	private List<DWXX> root;
+	
 	
 	@Transactional("transactionManager")
 	@PersistenceContext(unitName = "localDB")
 	void setEntityManager(EntityManager entityManager) {
 		Query q = entityManager.createQuery("from DWXX where parent_ID = 100000");
-		List<DWXX> dwxxs = q.getResultList();
-		if (!dwxxs.isEmpty()) {
+		root = q.getResultList();
+		if (!root.isEmpty()) {
 			
 			CompanyType type;
 			Integer id;
 			Company comp;
-			for (int i = 0; i < dwxxs.size(); ++i) {
-				id = dwxxs.get(i).getId();
+			for (int i = 0; i < root.size(); ++i) {
+				id = root.get(i).getId();
 				if (id_typeMap.containsKey(id)) {
 					type = id_typeMap.get(id);
-					comp = getCompany(type.setValue(dwxxs.get(i).getName()), id);
+					comp = getCompany(type.setValue(root.get(i).getName()), id);
 					append(comp);
-					int tmpDepth = appendChildren(comp, dwxxs.get(i).getChildren());
+					int tmpDepth = appendChildren(comp, root.get(i).getChildren());
 					if (m_depth < tmpDepth){
 						m_depth += tmpDepth;
 					}
@@ -175,6 +177,24 @@ public class BMDepartmentDB extends AbstractOrganization {
 		}
 	}
 
+	private List<Object[]> getSubIds(DWXX dwxx){
+		List<Object[]> allIds = new ArrayList<Object[]>();
+		for (int i = 0; i < dwxx.getChildren().size(); ++i) {
+			allIds.add(new Object[] {dwxx.getChildren().get(i).getId(), dwxx.getChildren().get(i).getName()});
+			allIds.addAll(getSubIds(dwxx.getChildren().get(i)));
+		}
+		return allIds;
+	}
+	
+	public List<Object[]> getAllComps(){
+		List<Object[]> allIds = new ArrayList<Object[]>();
+		for (int i = 0; i < root.size(); ++i) {
+			allIds.add(new Object[] {root.get(i).getId(), root.get(i).getName()});
+			allIds.addAll(getSubIds(root.get(i)));
+		}
+		return allIds;
+	}
+	
 	private int appendChildren(Company comp, List<DWXX> dwxxs) {
 		int depth = 0;
 		if (!dwxxs.isEmpty()) {

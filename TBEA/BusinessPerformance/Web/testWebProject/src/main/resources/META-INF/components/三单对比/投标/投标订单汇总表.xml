@@ -22,7 +22,7 @@
 from
 	JYGK_SDDB_BIDDING_ORDER_DETAILS
 where
-	bidding_date between ${dStart.date} and ${dEnd.date} and
+	bidding_date between ${dStart.days[1].date} and ${dEnd.lastDays.date} and
 	company_name in ${dwmcs}
 group by
 	DATEPART(yy, bidding_date),
@@ -48,7 +48,7 @@ group by
 from
 	JYGK_SDDB_BIDDING_ORDER_DETAILS
 where
-	bidding_date between ${dStart.date} and ${dEnd.date} and
+	bidding_date between ${dStart.days[1].date} and ${dEnd.lastDays.date} and
 	company_name in ${dwmcs}</sql>
   <list id="weeks" type="int">
    <item from="0" to="${tbddhz.size}"/>

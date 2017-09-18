@@ -3,10 +3,6 @@
   <sql id="userNames" export="true">
 			select id, name	from jygk_account
 		</sql>
-  <list id="all" type="string">-1, 全部用户</list>
-  <list id="userNames" type="object">
-   <item insert="0">${all}</item>
-  </list>
  </service>
  <service id="servGetRoleNames" transaction="transactionManager">
   <sql id="roleNames" export="true">
@@ -14,32 +10,17 @@
 		</sql>
  </service>
  <service id="servGetUserRoles" transaction="transactionManager">
-  <if test="${uids.size == 1 &amp;&amp;  uids[0] == -1}">
-   <sql id="userRoles" export="true">
+  <sql id="userRoles" export="true">
 			select 
 				ja.id, 
 				name, 
 				roles = stuff((select ',' +  r.roleName from user_roles ur left join roles r on ur.roleId = r.id  where userId = ja.ID for XML path('')), 1 , 1 , '') 
 			from
 				user_roles ur full join jygk_account ja on ja.id = ur.userId 
-			group by ja.name, ja.ID
-			
-		</sql>
-  </if>
-  <else>
-   <sql id="userRoles" export="true">
-			select 
-				ja.id, 
-				name, 
-				roles = stuff((select ',' +  r.roleName from user_roles ur left join roles r on ur.roleId = r.id  where userId = ja.ID for XML path('')), 1 , 1 , '') 
-			from
-				user_roles ur left join jygk_account ja on ja.id = ur.userId 
 			where
-				ja.id in ${uids}
-			group 
-				by ja.name, ja.ID
+				1 = ${(uids.size == 1 &amp;&amp;  uids[0] == -1) ? 1 :0 } or ja.id in ${uids}
+			group by ja.name, ja.ID
 		</sql>
-  </else>
  </service>
  <service id="servSubmitUserRoles" transaction="transactionManager">
  <sql>

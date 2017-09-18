@@ -144,9 +144,16 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		String sqlText = XmlUtil.getText(e);
 		if (XmlUtil.hasText(e) && !StringUtil.trim(sqlText).isEmpty()){
 			Pair<String, List<Pair<Integer, Object>>> sqlParams = parseSqlParam(sqlText);
+			int pgSize = XmlUtil.getIntAttr(e, "pgSize", el, -1);
+			int pgNum = XmlUtil.getIntAttr(e, "pgNum", el, -1);
+			
 			if (tx != null) {
 				Query q = jpaQuery(sqlParams, tx.getEntityManager());
 				if (e.hasAttribute("id")){
+					if (pgSize > 0 && pgNum >= 0) {
+						q.setFirstResult(pgNum * pgSize);
+						q.setMaxResults(pgSize);
+					}
 					List sqlRet = q.getResultList();
 					int retType = DBUtil.trans2StandardType(sqlRet);
 					if (retType != DBUtil.SQL_RET_VALUE){
@@ -160,7 +167,13 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			}else {
 				PreparedStatement ps = jdbcQuery(sqlParams, ds);
 				if (e.hasAttribute("id")){
+					if (pgSize > 0 && pgNum >= 0) {
+						ps.setMaxRows(pgSize);
+					}
 					ResultSet rs = ps.executeQuery();
+					if (pgSize > 0 && pgNum >= 0) {
+						rs.relative(pgNum * pgSize);
+					}
 					ResultSetMetaData rsmd = rs.getMetaData();
 					int count = rsmd.getColumnCount();
 					e.setAttribute("colcount", "" + count);

@@ -21,7 +21,7 @@
 from
 	JYGK_SDDB_BIDDING_ORDER_DETAILS
 where
-	bidding_date &lt;= ${dEnd.date} and bidding_date &gt;= ${dStart.date} and
+	bidding_date &lt;= ${dEnd.lastDays.date} and bidding_date &gt;= ${dStart.days[1].date} and
 	company_name in ${dwmcs}
 group by
 	company_name</sql>
@@ -46,7 +46,7 @@ group by
 from
 	JYGK_SDDB_BIDDING_ORDER_DETAILS
 where
-	bidding_date &lt;= ${dEnd.date} and bidding_date &gt;= ${dStart.date} and
+	bidding_date &lt;= ${dEnd.lastDays.date} and bidding_date &gt;= ${dStart.days[1].date} and
 	company_name in ${dwmcs}</sql>
   <list id="tbddhz" type="object">
    <item concat="tbddhzhj"/>

@@ -21,28 +21,62 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="hzb_companys.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/hzb_companys.ts">
+      <file leaf-file-name="userMgr.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="40" selection-start-line="25" selection-start-column="37" selection-end-line="27" selection-end-column="40" />
+              <caret line="177" column="38" selection-start-line="177" selection-start-column="38" selection-end-line="177" selection-end-column="45" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1505723653359" expanded="true" signature="5152:5184" placeholder="..." />
+                <marker date="1505723653359" expanded="true" signature="5152:5201" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userMgr.ts" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.ts">
+      <file leaf-file-name="home.tsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/home.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.54545456">
-              <caret line="236" column="42" selection-start-line="236" selection-start-column="42" selection-end-line="236" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="411" column="35" selection-start-line="407" selection-start-column="27" selection-end-line="411" selection-end-column="35" />
+              <folding>
+                <marker date="1503985052243" expanded="true" signature="3263:3286" placeholder="..." />
+                <marker date="1503985052243" expanded="true" signature="10746:10768" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="roleMgr.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/authorityMgr/roleMgr.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.6296296">
+              <caret line="258" column="52" selection-start-line="258" selection-start-column="52" selection-end-line="258" selection-end-column="52" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="roleMgr.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/authorityMgr/roleMgr.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.5416667">
+              <caret line="259" column="52" selection-start-line="259" selection-start-column="52" selection-end-line="259" selection-end-column="52" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1505468205421" expanded="true" signature="5255:5287" placeholder="..." />
-                <marker date="1505468205421" expanded="true" signature="5255:5304" placeholder="..." />
+                <marker date="1505725229971" expanded="true" signature="6565:6614" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jqassist.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="980" column="36" selection-start-line="980" selection-start-column="36" selection-end-line="980" selection-end-column="36" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -65,11 +99,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="xkacptjjgEntry.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/cpzlqk/xkacptjjg/xkacptjjgEntry.jsp">
+      <file leaf-file-name="home.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/home.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.565217">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state vertical-scroll-proportion="-2.5660377">
+              <caret line="162" column="57" selection-start-line="162" selection-start-column="52" selection-end-line="162" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -78,7 +112,7 @@
       <file leaf-file-name="userMgr.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.3921568">
+            <state vertical-scroll-proportion="10.607843">
               <caret line="137" column="58" selection-start-line="137" selection-start-column="52" selection-end-line="137" selection-end-column="58" />
               <folding />
             </state>
@@ -97,16 +131,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="defaults-eu.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bootstrap-select-1.12.4/dist/js/i18n/defaults-eu.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -120,9 +144,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pages/nwbzlqk/xknwbzlztqk/byqnwbzlztqk.jsp" />
-        <option value="$PROJECT_DIR$/pages/nwbzlqk/xknwbzlztqk/byqnwbzlztqk.ts" />
-        <option value="$PROJECT_DIR$/pages/nwbzlqk/xksczzzlwt/byqsczzzlwt.ts" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/xksczzzlwt/byqsczzzlwt.jsp" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/xksczzzlwtxxxx/byqsczzzlwtxxxx.ts" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/xksczzzlwtxxxx/byqsczzzlwtxxxx.jsp" />
@@ -162,7 +183,6 @@
         <option value="$PROJECT_DIR$/pages/cpzlqk/cpzlqk.jsp" />
         <option value="$PROJECT_DIR$/pages/cpzlqk/cpzlqk.ts" />
         <option value="$PROJECT_DIR$/home.jsp" />
-        <option value="$PROJECT_DIR$/home.tsx" />
         <option value="$PROJECT_DIR$/pages/rzywtj/rzywtj.jsp" />
         <option value="$PROJECT_DIR$/pages/rzywtj/rzywtj.ts" />
         <option value="$PROJECT_DIR$/pages/authorityManager/userMgr.jsp" />
@@ -170,7 +190,11 @@
         <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
         <option value="$PROJECT_DIR$/pages/authorityMgr/userMgr.jsp" />
         <option value="$PROJECT_DIR$/assets/js/toastr/toastr.js" />
+        <option value="$PROJECT_DIR$/home.tsx" />
+        <option value="$PROJECT_DIR$/pages/authorityMgr/roleMgr.js" />
         <option value="$PROJECT_DIR$/pages/authorityMgr/userMgr.ts" />
+        <option value="$PROJECT_DIR$/pages/authorityMgr/roleMgr.jsp" />
+        <option value="$PROJECT_DIR$/pages/authorityMgr/roleMgr.ts" />
       </list>
     </option>
   </component>
@@ -182,7 +206,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1036" />
+    <option name="width" value="1382" />
     <option name="height" value="754" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -361,12 +385,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="bootstrap-select-1.12.4" />
+              <option name="myItemId" value="pages" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dist" />
+              <option name="myItemId" value="authorityMgr" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="roleMgr.ts" />
+              <option name="myItemType" value="com.intellij.lang.typescript.compiler.ui.projectView.TypeScriptNestingTreeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -439,11 +467,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\ui2\pages\authorityMgr" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\ui2\pages" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\ui2\bootstrap-select-1.12.4" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\ui2\pages\authorityManager" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\ui2\pages\nwbzlqk" />
-      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\ui2\pages\cpzlqk" />
     </key>
   </component>
   <component name="RunManager">
@@ -510,13 +538,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1036" height="754" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26152304" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19419643" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20933977" sideWeight="0.41883767" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20933977" sideWeight="0.58116233" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20933977" sideWeight="0.41964287" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20933977" sideWeight="0.58035713" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -556,27 +584,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/rzywtj/rzywtj.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03160271">
-          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/dateSelector.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/unitedSelector.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42663658">
-          <caret line="221" column="25" selection-start-line="221" selection-start-column="25" selection-end-line="221" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/components/import_data.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -793,26 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/home.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="106" column="41" selection-start-line="106" selection-start-column="41" selection-end-line="106" selection-end-column="41" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-            <marker date="1503985052243" expanded="true" signature="3263:3286" placeholder="..." />
-            <marker date="1503985052243" expanded="true" signature="10746:10768" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/home.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="227" column="14" selection-start-line="227" selection-start-column="14" selection-end-line="227" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/rzywtj/rzywtj.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -879,21 +866,21 @@
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1505468086413" expanded="true" signature="2390:2564" placeholder="//..." />
-            <marker date="1505468086413" expanded="true" signature="2990:2991" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="3055:3510" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="3400:3498" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="3568:3854" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="3567:4179" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="3716:3804" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="4081:4169" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="4241:4299" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="4355:4421" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="4481:4773" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="4830:5353" placeholder="{...}" />
-            <marker date="1505468086413" expanded="true" signature="4995:5167" placeholder="[...]" />
-            <marker date="1505468086413" expanded="true" signature="4903:5310" placeholder="{&quot;datatype&quot;: &quot;local&quot;...}" />
-            <marker date="1505468086413" expanded="true" signature="5435:5795" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="2390:2564" placeholder="//..." />
+            <marker date="1505723670559" expanded="true" signature="2990:2991" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="3055:3510" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="3400:3498" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="3568:3854" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="3567:4179" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="3716:3804" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="4081:4169" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="4241:4299" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="4355:4421" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="4481:4773" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="4830:5353" placeholder="{...}" />
+            <marker date="1505723670559" expanded="true" signature="4995:5167" placeholder="[...]" />
+            <marker date="1505723670559" expanded="true" signature="4903:5310" placeholder="{&quot;datatype&quot;: &quot;local&quot;...}" />
+            <marker date="1505723670559" expanded="true" signature="5435:5795" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -944,14 +931,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7546296">
-          <caret line="993" column="31" selection-start-line="993" selection-start-column="15" selection-end-line="993" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pages/messageBox.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -968,14 +947,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.3921568">
-          <caret line="137" column="58" selection-start-line="137" selection-start-column="52" selection-end-line="137" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/toastr/toastr.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="9.2">
@@ -986,14 +957,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/home.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.5660377">
+          <caret line="162" column="57" selection-start-line="162" selection-start-column="52" selection-end-line="162" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="10.607843">
+          <caret line="137" column="58" selection-start-line="137" selection-start-column="52" selection-end-line="137" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.54545456">
-          <caret line="236" column="42" selection-start-line="236" selection-start-column="42" selection-end-line="236" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="177" column="38" selection-start-line="177" selection-start-column="38" selection-end-line="177" selection-end-column="45" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1505468205421" expanded="true" signature="5255:5287" placeholder="..." />
-            <marker date="1505468205421" expanded="true" signature="5255:5304" placeholder="..." />
+            <marker date="1505723653359" expanded="true" signature="5152:5184" placeholder="..." />
+            <marker date="1505723653359" expanded="true" signature="5152:5201" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/home.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="411" column="35" selection-start-line="407" selection-start-column="27" selection-end-line="411" selection-end-column="35" />
+          <folding>
+            <marker date="1503985052243" expanded="true" signature="3263:3286" placeholder="..." />
+            <marker date="1503985052243" expanded="true" signature="10746:10768" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/authorityMgr/roleMgr.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6296296">
+          <caret line="258" column="52" selection-start-line="258" selection-start-column="52" selection-end-line="258" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/authorityMgr/roleMgr.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.121212">
+          <caret line="207" column="35" selection-start-line="207" selection-start-column="35" selection-end-line="207" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1505725238167" expanded="true" signature="6200:6249" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="980" column="36" selection-start-line="980" selection-start-column="36" selection-end-line="980" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/authorityMgr/roleMgr.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5416667">
+          <caret line="259" column="52" selection-start-line="259" selection-start-column="52" selection-end-line="259" selection-end-column="52" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1505725229971" expanded="true" signature="6565:6614" placeholder="..." />
           </folding>
         </state>
       </provider>
