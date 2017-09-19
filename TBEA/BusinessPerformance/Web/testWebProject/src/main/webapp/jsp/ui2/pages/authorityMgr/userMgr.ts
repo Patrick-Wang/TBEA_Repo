@@ -69,7 +69,7 @@ module user_mgr {
             this.mSubmitAjax = new Util.Ajax(opt.submitUrl);
 
             $("#user-sel").append(
-                '<select class="selectpicker" multiple data-live-search="true" title="公司名称"></select>');
+                '<select class="selectpicker" multiple data-live-search="true" title="用户"></select>');
             var sel = $("#user-sel select");
             for (var i = 0; i < opt.users.length; ++i){
                 sel.append('<option value="' + opt.users[i][0] + '">' + opt.users[i][1] + '</option>');
@@ -155,7 +155,7 @@ module user_mgr {
                 $(e).hide();
                 var p = $(e).parent();
 
-                p.append('<div style="position:absolute;z-index:30000;margin-top:-12px;"><select class="selectpicker" multiple data-live-search="true" ></select></div>');
+                p.append('<div style="position:absolute;z-index:30000;margin-top:-12px;"><select class="selectpicker" multiple data-live-search="true"  title="用户"></select></div>');
                 var sel =  p.find('select');
                 var oldRoles = $(e).val().split(",");
                 for (var i = 0; i < this.mOpt.roles.length; ++i) {

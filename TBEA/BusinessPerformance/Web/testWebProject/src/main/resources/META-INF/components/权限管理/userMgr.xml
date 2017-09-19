@@ -1,12 +1,12 @@
 <components>
  <service id="servGetUserNames" transaction="transactionManager">
   <sql id="userNames" export="true">
-			select id, name	from jygk_account
+			select id, name	from jygk_account order by id
 		</sql>
  </service>
  <service id="servGetRoleNames" transaction="transactionManager">
   <sql id="roleNames" export="true">
-			select id, roleName	from roles
+			select id, roleName	from roles order by id
 		</sql>
  </service>
  <service id="servGetUserRoles" transaction="transactionManager">
@@ -19,7 +19,10 @@
 				user_roles ur full join jygk_account ja on ja.id = ur.userId 
 			where
 				1 = ${(uids.size == 1 &amp;&amp;  uids[0] == -1) ? 1 :0 } or ja.id in ${uids}
-			group by ja.name, ja.ID
+			group by 
+				ja.name, ja.ID
+			order by
+				ja.id
 		</sql>
  </service>
  <service id="servSubmitUserRoles" transaction="transactionManager">

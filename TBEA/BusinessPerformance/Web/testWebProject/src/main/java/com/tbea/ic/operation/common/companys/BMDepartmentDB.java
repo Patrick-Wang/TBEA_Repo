@@ -154,7 +154,7 @@ public class BMDepartmentDB extends AbstractOrganization {
 	@Transactional("transactionManager")
 	@PersistenceContext(unitName = "localDB")
 	void setEntityManager(EntityManager entityManager) {
-		Query q = entityManager.createQuery("from DWXX where parent_ID = 100000");
+		Query q = entityManager.createQuery("from DWXX where parent_ID is null");
 		root = q.getResultList();
 		if (!root.isEmpty()) {
 			

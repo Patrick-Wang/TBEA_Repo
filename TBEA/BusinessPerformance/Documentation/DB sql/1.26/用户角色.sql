@@ -42,6 +42,8 @@ insert into user_roles (userId, roleId) select acc.id, rol.id from roles rol lef
 insert into system_extend_auth_t (roleId, companyId, authId) 
 select ur.roleId, company_id, auth_type from system_extend_auth sea left join user_roles ur on sea.account_id = ur.userId 
 
+delete from system_extend_auth_t where roleId is null;
+
 GO
 drop view system_extend_auth_v
 GO

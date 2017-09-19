@@ -299,7 +299,8 @@
 			updateUrl : '${updateUrl}.do',
 			submitUrl : '${submitUrl}.do',
 			addAuthUrl : '${addAuthUrl}.do',
-			createRoleUrl : '${createRoleUrl}.do'
+			createRoleUrl : '${createRoleUrl}.do',
+			roleNameUrl : '${roleNameUrl}.do'
 		});
 	</script>
 

@@ -1,42 +1,35 @@
 <components>
- <service id="servGetAuthNames" transaction="transactionManager">
-  <sql id="authNames" export="true">
-			select id, instruction	from auth_instruction
-	</sql>
- </service>
+	<service id="servGetAuthNames" transaction="transactionManager">
+		<sql id="authNames" export="true">
+			select id, instruction from auth_instruction order by id
+		</sql>
+	</service>
 
- <controller id="roleMgrUpdate">
-  <context key="users" value="${request.users.asList}"/>
-  <context key="auths" value="${request.roles.asJsonArray}"/>
-  <callservice id="servSubmitUserRoles"/>
-  <response type="json">
-   <errorCode>0</errorCode>
-   <message>OK</message>
-  </response>
- </controller>
- <service id="servGetRoleAuths" transaction="transactionManager">
-  <sql id="rolesAuths" export="true" pgNum="0" pgSize="30">
+	<service id="servGetRoleAuths" transaction="transactionManager">
+		<sql id="rolesAuths" export="true" pgNum="${pgNum}" pgSize="${pgSize}">
 			select
-				r.roleName, 
-				ai.instruction,
-				comps = stuff(
-				(select ',' +  case when 
-								dw.id is null then convert(varchar(50), st.companyId) 
-							else dw.name end 
-				from 
-					system_extend_auth_t st left join jygk_dwxx dw on st.companyId = dw.ID 
-				where 
-					st.roleId = seat.roleId and st.authId = seat.authId 
-				for XML path('')), 1 , 1 , '')
+			r.roleName,
+			ai.instruction,
+			comps = stuff(
+				(select ',' + case when
+					dw.id is null then convert(varchar(50), st.companyId)
+					else dw.name end
+				from
+					system_extend_auth_t st left join jygk_dwxx dw on st.companyId = dw.ID
+				where
+					st.roleId = seat.roleId and st.authId = seat.authId
+					for XML path('')), 1 , 1 , '')
 			from
 				system_extend_auth_t seat left join roles r on seat.roleId = r.id
 				left join auth_instruction ai on seat.authId = ai.id
 			where
-				(1 = ${(rids.size == 1 &amp;&amp;  rids[0] == -1) ? 1 : 0 } or r.id in (${rids})) and
-				(1 = ${(aids.size == 1 &amp;&amp;  aids[0] == -1) ? 1 : 0 } or ai.id in (${aids})) 
+				(1 = ${(rids.size == 1 &amp;&amp; rids[0] == -1) ? 1 : 0 } or r.id in
+				(${rids})) and
+				(1 = ${(aids.size == 1 &amp;&amp; aids[0] == -1) ? 1 : 0 } or ai.id in
+				(${aids}))
 			group by
 				seat.roleId,
-				r.roleName, 
+				r.roleName,
 				seat.authId,
 				ai.instruction
 			order by
@@ -44,110 +37,126 @@
 				ai.instruction
 		</sql>
 		<sql id="rolesAuthsCount" export="true">
-			select 
-				count(*)
-			from
-				system_extend_auth_t seat left join roles r on seat.roleId = r.id
-				left join auth_instruction ai on seat.authId = ai.id
-			where
-				(1 = ${(rids.size == 1 &amp;&amp;  rids[0] == -1) ? 1 : 0 } or r.id in (${rids})) and
-				(1 = ${(aids.size == 1 &amp;&amp;  aids[0] == -1) ? 1 : 0 } or ai.id in (${aids})) 
-			group by
-				seat.roleId,
-				r.roleName, 
-				seat.authId,
-				ai.instruction
+			select count(*) from (
+				select
+					seat.roleId
+				from
+					system_extend_auth_t seat left join roles r on seat.roleId = r.id
+					left join auth_instruction ai on seat.authId = ai.id
+				where
+					(1 = ${(rids.size == 1 &amp;&amp; rids[0] == -1) ? 1 : 0 } or r.id in
+					(${rids})) and
+					(1 = ${(aids.size == 1 &amp;&amp; aids[0] == -1) ? 1 : 0 } or ai.id in
+					(${aids}))
+				group by
+					seat.roleId,
+					r.roleName,
+					seat.authId,
+					ai.instruction
+			) size
 		</sql>
- </service>
- <service id="servSubmitRoleMgr" transaction="transactionManager">
-  <loop from="0" to="${rids.size - 1}" var="i">
-   <sql>
- 		delete from system_extend_auth_t where roleId = ${rids[i]} and authId = ${aids[i]}
- 	</sql>
-  </loop>
-  <loop from="0" to="${rids.size - 1}" var="i">
-     <sql>
- 		insert into system_extend_auth_t (roleId, authId, companyId) values
- 		(${rids[i]}, ${aids[i]}, ${cids[i]})
- 	</sql>
-  </loop>
- </service>
- <controller id="roleMgrSubmit">
-  <context key="rids" value="${request.rids.asJsonArray}"/>
-  <context key="aids" value="${request.aids.asJsonArray}"/>
-  <context key="cids" value="${request.cids.asJsonArray}"/>
-  <callservice id="servSubmitRoleMgr"/>
-  <response type="json">
-   <errorCode>0</errorCode>
-   <message>OK</message>
-  </response>
- </controller>
- <service id="servAddAuthRoleMgr" transaction="transactionManager">
-  <sql id="authCount" export="true">
- 		select count(*) from system_extend_auth_t where roleId = ${rid} and authId = ${aid}
- 	</sql>
-  <if test="${authCount[0] == 0}">
-   <loop from="0" to="${cids.size - 1}" var="i">
-    <sql>
-	 		insert into system_extend_auth_t (roleId, authId, companyId) values
-	 		(${rid}, ${aid}, ${cids[i]})
-	 	</sql>
-   </loop>
-   <if test="${cids.size == 0}">
-       <sql>
-	 		insert into system_extend_auth_t (roleId, authId) values
-	 		(${rid}, ${aid})
-	 	</sql>
-   </if>
-  </if>
- </service>
- <service id="servAddRoleMgr" transaction="transactionManager">
-  <sql id="authCount" export="true">
- 		select count(*) from roles where roleName = ${rName}
- 	</sql>
-  <if test="${authCount[0] == 0}">
-   <sql>insert into roles (roleName) values (${rName})</sql>
-  </if>
- </service>
- <controller id="roleMgrAddAuth">
-  <context key="rid" value="${request.rid.asInt}"/>
-  <context key="aid" value="${request.aid.asInt}"/>
-  <context key="cids" value="${request.cids.asJsonArray}"/>
-  <callservice id="servAddAuthRoleMgr"/>
-  <response type="json">
-   <errorCode>${authCount[0] &gt; 0 ? -1 : 0}</errorCode>
-   <message>${authCount[0] &gt; 0 ? 'ERROR' : 'OK'}</message>
-  </response>
- </controller>
- <controller id="roleMgrCreateRole">
-  <context key="rName" value="${request.rName.asString}"/>
-  <callservice id="servAddRoleMgr"/>
-  <response type="json">
-   <errorCode>${authCount[0] &gt; 0 ? -1 : 0}</errorCode>
-   <message>${authCount[0] &gt; 0 ? 'ERROR' : 'OK'}</message>
-  </response>
- </controller>
- <controller id="roleMgrUpdate">
-  <context key="rids" value="${request.rids.asList}"/>
-  <context key="aids" value="${request.aids.asList}"/>
-  <callservice id="servGetRoleAuths"/>
-  <response type="json">
-   <size>${rolesAuthsCount[0]}</size>
-   <data>${rolesAuths}</data>
-  </response>
- </controller>
- 
- <controller id="roleMgr">
-  <callservice id="servGetAuthNames"/>
-  <callservice id="servGetRoleNames"/>
-  <response type="jsp" name="authorityMgr/roleMgr">
-   <map key="auths" value="${authNames.asJson}"/>
-   <map key="roles" value="${roleNames.asJson}"/>
-   <map key="comps" value="${compMgr.BMDBOrganization.allComps.asJson}"/>
-   <map key="updateUrl" value="roleMgrUpdate"/>
-   <map key="submitUrl" value="roleMgrSubmit"/>
-   <map key="addAuthUrl" value="roleMgrAddAuth"/>
-   <map key="createRoleUrl" value="roleMgrCreateRole"/>
-  </response>
- </controller>
+	</service>
+	<service id="servSubmitRoleMgr" transaction="transactionManager">
+		<loop from="0" to="${rids.size - 1}" var="i">
+			<sql>
+				delete from system_extend_auth_t where roleId = ${rids[i]} and authId =
+				${aids[i]}
+			</sql>
+		</loop>
+		<loop from="0" to="${rids.size - 1}" var="i">
+			<sql>
+				insert into system_extend_auth_t (roleId, authId, companyId) values
+				(${rids[i]}, ${aids[i]}, ${cids[i]})
+			</sql>
+		</loop>
+	</service>
+	<controller id="roleMgrSubmit">
+		<context key="rids" value="${request.rids.asJsonArray}" />
+		<context key="aids" value="${request.aids.asJsonArray}" />
+		<context key="cids" value="${request.cids.asJsonArray}" />
+		<callservice id="servSubmitRoleMgr" />
+		<response type="json">
+			<errorCode>0</errorCode>
+			<message>OK</message>
+		</response>
+	</controller>
+	<service id="servAddAuthRoleMgr" transaction="transactionManager">
+		<sql id="authCount" export="true">
+			select count(*) from system_extend_auth_t where roleId = ${rid} and authId
+			= ${aid}
+		</sql>
+		<if test="${authCount[0] == 0}">
+			<loop from="0" to="${cids.size - 1}" var="i">
+				<sql>
+					insert into system_extend_auth_t (roleId, authId, companyId) values
+					(${rid}, ${aid}, ${cids[i]})
+				</sql>
+			</loop>
+			<if test="${cids.size == 0}">
+				<sql>
+					insert into system_extend_auth_t (roleId, authId) values
+					(${rid}, ${aid})
+				</sql>
+			</if>
+		</if>
+	</service>
+	<service id="servAddRoleMgr" transaction="transactionManager">
+		<sql id="authCount" export="true">
+			select count(*) from roles where roleName = ${rName}
+		</sql>
+		<if test="${authCount[0] == 0}">
+			<sql>insert into roles (roleName) values ('${rName}')</sql>
+		</if>
+	</service>
+	<controller id="roleMgrAddAuth">
+		<context key="rid" value="${request.rid.asInt}" />
+		<context key="aid" value="${request.aid.asInt}" />
+		<context key="cids" value="${request.cids.asJsonArray}" />
+		<callservice id="servAddAuthRoleMgr" />
+		<response type="json">
+			<errorCode>${authCount[0] &gt; 0 ? -1 : 0}</errorCode>
+			<message>${authCount[0] &gt; 0 ? 'ERROR' : 'OK'}</message>
+		</response>
+	</controller>
+	<controller id="roleMgrCreateRole">
+		<context key="rName" value="${request.rName.asString}" />
+		<callservice id="servAddRoleMgr" />
+		<response type="json">
+			<errorCode>${authCount[0] &gt; 0 ? -1 : 0}</errorCode>
+			<message>${authCount[0] &gt; 0 ? 'ERROR' : 'OK'}</message>
+		</response>
+	</controller>
+	<controller id="roleMgrUpdate">
+		<context key="rids" value="${request.rids.asList}" />
+		<context key="aids" value="${request.aids.asList}" />
+		<context key="pgNum" value="${request.pgNum.asInt}" />
+		<context key="pgSize" value="${request.pgSize.asInt}" />
+		<callservice id="servGetRoleAuths" />
+		<response type="json">
+			<count>${rolesAuthsCount[0]}</count>
+			<data>${rolesAuths}</data>
+		</response>
+	</controller>
+
+	<controller id="roleNamesUpdate">
+		<callservice id="servGetRoleNames" />
+		<response type="json">
+			<roles>${roleNames.asJson}</roles>
+		</response>
+	</controller>
+
+	<controller id="roleMgr">
+		<callservice id="servGetAuthNames" />
+		<callservice id="servGetRoleNames" />
+		<response type="jsp" name="authorityMgr/roleMgr">
+			<map key="auths" value="${authNames.asJson}" />
+			<map key="roles" value="${roleNames.asJson}" />
+			<map key="comps" value="${compMgr.BMDBOrganization.allComps.asJson}" />
+			<map key="updateUrl" value="roleMgrUpdate" />
+			<map key="submitUrl" value="roleMgrSubmit" />
+			<map key="addAuthUrl" value="roleMgrAddAuth" />
+			<map key="roleNameUrl" value="roleNamesUpdate" />
+			<map key="createRoleUrl" value="roleMgrCreateRole" />
+		</response>
+	</controller>
 </components>

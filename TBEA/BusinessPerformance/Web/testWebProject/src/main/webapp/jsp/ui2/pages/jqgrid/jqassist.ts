@@ -977,15 +977,19 @@ module JQTable {
         public getChangedData() {
             var grid = $("#" + this.mGridName + "");
             var data:Array<string[]> = [];
-            for (var i = 0; i < grid[0].p.data.length; ++i){
-                if (Util.indexOf(this.mEditedRows, grid[0].p.data[i].id) >= 0) {
-                    var row = [];
-                    row.push(grid[0].p.data[i].id);
-                    for (var j = 0; j < this.mColModel.length; ++j){
-                        let val = grid[0].p.data[i][this.mColModel[j].index];
-                        row.push(undefined == val ? "" : val + "");
+            for (var i = 0; i < this.mEditedRows.length; ++i){
+                var rdata = grid.getRowData(this.mEditedRows[i]);
+                var row = [this.mEditedRows[i]];
+                for (var j = 0; j < this.mColModel.length; ++j){
+                    let val = rdata[this.mColModel[j].index];
+                    row.push(undefined == val ? "" : val + "");
+                }
+
+                for (var j = 1; j < row.length; ++j) {
+                    if (row[j] != "") {
+                        data.push(row);
+                        break;
                     }
-                    data.push(row);
                 }
             }
             return data;
@@ -1277,10 +1281,10 @@ module JQTable {
         }
 
         public complete():void {
-            let remove = false;
+            let rm = false;
             for (var i = 0; i < this.completeList.length; i++) {
-                remove = this.completeList[i]();
-                if (remove){
+                rm = this.completeList[i]();
+                if (rm){
                     this.completeList.splice(i, 1);
                     --i;
                 }
@@ -1297,7 +1301,31 @@ module JQTable {
             });
         }
 
-        private enablePageEdit(rowNum:number, pagername:string):any {
+        public addData(total:number, page:number, records:number, dataWithoutId:string[][], dataWithId:string[][]) {
+            var data = dataWithId;
+            if (!dataWithId){
+                data = [];
+                for (var i = 0; i < dataWithoutId.length; ++i){
+                    data.push([i].concat(dataWithoutId[i]));
+                }
+            }
+
+            var rows = [];
+            for (var i = 0; i < data.length; ++i){
+                var cells = data[i].slice(1);
+                rows.push({id:data[i][0], cell:cells});
+            }
+
+             $("#" + this.mGridName)[0].addJSONData(
+                 {
+                     total:total,
+                     page:page,
+                     records:records,
+                     rows:rows
+                 });
+        }
+
+        private enablePageEdit(rowNum:number, pagername:string, nopagerbutton:any):any {
             var grid = $("#" + this.mGridName + "");
             let lastsel:any = "";
             let lastcell:any = "";
@@ -1391,7 +1419,7 @@ module JQTable {
                 }
             });
 
-            if (rowNum != undefined && pagername != undefined) {
+            if (!nopagerbutton && rowNum != undefined && pagername != undefined) {
                 setTimeout(() => {
                     let addId = 1;
                     grid.jqGrid('navGrid', pagername, {
@@ -1563,8 +1591,23 @@ module JQTable {
                 option.data = this.getData(option.data);
             }
 
+            if(option.assistPagedata){
+                var init = false;
+
+                option.datatype =(postdata) => {
+                    this.resetChangedData();
+                    if (!init){
+                        init = true;
+                        this.addData(option.assistTotal, 1, option.assistRecords, option.assistData, option.assistDataWithId);
+                    }else{
+                        option.assistPagedata(postdata);
+                    }
+                }
+
+            }
+
             if (option.assistEditable) {
-                $.extend(option, this.enablePageEdit(option.rowNum, option.pager));
+                $.extend(option, this.enablePageEdit(option.rowNum, option.pager, option.nopagerbutton));
             }
 
 

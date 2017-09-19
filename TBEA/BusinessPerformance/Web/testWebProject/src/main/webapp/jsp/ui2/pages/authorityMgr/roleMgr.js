@@ -11,7 +11,8 @@ var role_mgr;
                 JQTable.Node.create({
                     name: "角色",
                     align: JQTable.TextAlign.Left,
-                    width: 150 }),
+                    width: 150
+                }),
                 JQTable.Node.create({
                     name: "权限",
                     align: JQTable.TextAlign.Left
@@ -30,7 +31,6 @@ var role_mgr;
     })();
     var SimpleView = (function () {
         function SimpleView() {
-            this.mData = [];
             router.register(this);
         }
         SimpleView.prototype.getId = function () {
@@ -53,12 +53,8 @@ var role_mgr;
             this.mSubmitAjax = new Util.Ajax(opt.submitUrl);
             this.mCreateRoleAjax = new Util.Ajax(opt.createRoleUrl);
             this.mAddAuthAjax = new Util.Ajax(opt.addAuthUrl);
-            $("#role-sel").append('<select class="selectpicker" multiple data-live-search="true" title="角色" ></select>');
-            var sel = $("#role-sel select");
-            for (var i = 0; i < opt.roles.length; ++i) {
-                sel.append('<option value="' + opt.roles[i][0] + '">' + opt.roles[i][1] + '</option>');
-            }
-            $('#role-sel .selectpicker').selectpicker({});
+            this.mGetRoleName = new Util.Ajax(opt.roleNameUrl);
+            this.updateRoleSel();
             $("#auth-sel").append('<select class="selectpicker" multiple data-live-search="true"  title="权限" ></select>');
             sel = $("#auth-sel select");
             for (var i = 0; i < opt.auths.length; ++i) {
@@ -77,8 +73,19 @@ var role_mgr;
             $("#add-auth").on('click', function () {
                 _this.addAuth();
             });
+            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150 - 26;
+            this.rowNum = parseInt("" + (maxTableBodyHeight / 28)) - 1;
             this.adjustHeader();
             this.updateUI();
+        };
+        SimpleView.prototype.updateRoleSel = function () {
+            $("#role-sel").empty();
+            $("#role-sel").append('<select class="selectpicker" multiple data-live-search="true" title="角色" ></select>');
+            var sel = $("#role-sel select");
+            for (var i = 0; i < this.mOpt.roles.length; ++i) {
+                sel.append('<option value="' + this.mOpt.roles[i][0] + '">' + this.mOpt.roles[i][1] + '</option>');
+            }
+            $('#role-sel .selectpicker').selectpicker({});
         };
         SimpleView.prototype.adjustHeader = function () {
             //$("#headerHost").removeCss("width");
@@ -112,11 +119,16 @@ var role_mgr;
             else {
                 aids = this.toIntArray(aids);
             }
+            this.rids = rids;
+            this.aids = aids;
             this.mUpdateAjax.post({
                 rids: JSON.stringify(rids),
-                aids: JSON.stringify(aids) })
-                .then(function (dataArray) {
-                _this.mData = dataArray.data;
+                aids: JSON.stringify(aids),
+                pgNum: 0,
+                pgSize: this.rowNum
+            })
+                .then(function (data) {
+                _this.mData = data;
                 _this.updateTable();
             });
         };
@@ -126,11 +138,12 @@ var role_mgr;
             if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
                 jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
             }
-            var maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-            this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
-            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
-                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
-            }
+            //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            //this.tableAssist && this.tableAssist.resizeHeight(maxTableBodyHeight);
+            //
+            //if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+            //    jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            //}
         };
         SimpleView.prototype.jqgrid = function () {
             return $("#" + this.jqgridName());
@@ -142,13 +155,15 @@ var role_mgr;
             var _this = this;
             var parent = $("#" + this.mOpt.tableId);
             parent.empty();
-            parent.append("<table id='" + this.jqgridName() + "'></table>");
+            parent.append("<table id='" + this.jqgridName() + "'></table><div id='pager'></div>");
             this.tableAssist = JQGridAssistantFactory.createTable(this.jqgridName(), function (e, opt) {
                 // var text =
                 var width = $(e).width();
                 $(e).hide();
                 var p = $(e).parent();
-                p.append('<div style="position:absolute;z-index:30000;margin-top:-12px;"><select class="selectpicker" multiple data-live-search="true" title="请选择公司"></select></div>');
+                p.append('<div style="position:absolute;z-index:30000;margin-top:-12px;">' +
+                    '<select class="selectpicker" multiple data-live-search="true" title="请选择公司"></select>' +
+                    '</div>');
                 var sel = p.find('select');
                 var oldComps = $(e).val().split(",");
                 for (var i = 0; i < _this.mOpt.comps.length; ++i) {
@@ -170,11 +185,33 @@ var role_mgr;
             });
             return this.tableAssist;
         };
+        SimpleView.prototype.totalCount = function (count) {
+            var totalPage = count / this.rowNum;
+            if (0 != this.mData.count % this.rowNum) {
+                totalPage += 1;
+            }
+            totalPage = parseInt("" + totalPage);
+            return totalPage;
+        };
         SimpleView.prototype.updateTable = function () {
+            var _this = this;
             this.createJqassist();
             this.tableAssist.create({
-                data: this.mData,
-                datatype: "local",
+                assistData: this.mData.data,
+                assistTotal: this.totalCount(this.mData.count),
+                assistRecords: this.mData.count,
+                assistPagedata: function (postdata) {
+                    _this.mUpdateAjax.post({
+                        rids: JSON.stringify(_this.rids),
+                        aids: JSON.stringify(_this.aids),
+                        pgNum: postdata.page - 1,
+                        pgSize: _this.rowNum
+                    })
+                        .then(function (data) {
+                        _this.mData = data;
+                        _this.tableAssist.addData(_this.totalCount(_this.mData.count), postdata.page, _this.mData.count, _this.mData.data);
+                    });
+                },
                 cellEdit: true,
                 cellsubmit: 'clientArray',
                 multiselect: false,
@@ -183,9 +220,12 @@ var role_mgr;
                 height: '100%',
                 width: $("#" + this.mOpt.tableId).width(),
                 shrinkToFit: true,
-                rowNum: 2000,
                 assistEditable: true,
-                autoScroll: true
+                autoScroll: true,
+                rowNum: this.rowNum,
+                viewrecords: true,
+                nopagerbutton: true,
+                pager: "#pager"
             });
             this.adjustSize();
         };
@@ -210,7 +250,7 @@ var role_mgr;
                     var compNames = data[i][3].split(",");
                     for (var j = 0; j < compNames.length; ++j) {
                         var cid = this.findId(this.mOpt.comps, compNames[j]);
-                        if (cid) {
+                        if (cid != null) {
                             aids.push(aid);
                             rids.push(rid);
                             cids.push(cid);
@@ -227,7 +267,8 @@ var role_mgr;
                 this.mSubmitAjax.post({
                     rids: JSON.stringify(rids),
                     cids: JSON.stringify(cids),
-                    aids: JSON.stringify(aids), })
+                    aids: JSON.stringify(aids),
+                })
                     .then(function (dataArray) {
                     // this.updateUI();
                     _this.tableAssist.resetChangedData();
@@ -260,6 +301,10 @@ var role_mgr;
                                 if (ret.errorCode == 0) {
                                     dialog.modal("hide");
                                     Util.Toast.success("角色创建成功");
+                                    _this.mGetRoleName.post({}).then(function (roles) {
+                                        _this.mOpt.roles = roles.roles;
+                                        _this.updateRoleSel();
+                                    });
                                 }
                                 else {
                                     $("#warning").text("角色已经存在，不可重复添加").show();
@@ -307,6 +352,17 @@ var role_mgr;
                                 if (ret.errorCode == 0) {
                                     dialog.modal("hide");
                                     Util.Toast.success("角色权限添加成功");
+                                    var pgNum = _this.tableAssist.getCurrentPageNumber();
+                                    _this.mUpdateAjax.post({
+                                        rids: JSON.stringify(_this.rids),
+                                        aids: JSON.stringify(_this.aids),
+                                        pgNum: pgNum - 1,
+                                        pgSize: _this.rowNum
+                                    })
+                                        .then(function (data) {
+                                        _this.mData = data;
+                                        _this.tableAssist.addData(_this.totalCount(_this.mData.count), pgNum, _this.mData.count, _this.mData.data);
+                                    });
                                 }
                                 else {
                                     $("#warning").text("角色权限组合已经存在，不可重复添加").show();
