@@ -86,7 +86,7 @@ module role_mgr {
 
             $("#auth-sel").append(
                 '<select class="selectpicker" multiple data-live-search="true"  title="权限" ></select>');
-            sel = $("#auth-sel select");
+            var sel = $("#auth-sel select");
             for (var i = 0; i < opt.auths.length; ++i) {
                 sel.append('<option value="' + opt.auths[i][0] + '">' + opt.auths[i][1] + '</option>');
             }
@@ -267,9 +267,9 @@ module role_mgr {
                             this.tableAssist.addData(this.totalCount(this.mData.count), postdata.page, this.mData.count, this.mData.data);
                         });
                 },
-                cellEdit: true,
+                cellEdit: false,
                 cellsubmit: 'clientArray',
-                multiselect: false,
+                multiselect: true,
                 drag: false,
                 resize: false,
                 height: '100%',
@@ -298,46 +298,104 @@ module role_mgr {
         }
 
         private submitData():void {
-            var data = this.tableAssist.getChangedData();
-            var aids = [];
-            var rids = [];
-            var cids = [];
-            for (var i = 0; i < data.length; ++i) {
-                var rid = this.findId(this.mOpt.roles, data[i][1]);
-                var aid = this.findId(this.mOpt.auths, data[i][2]);
-                if (rid && aid) {
-                    var compNames = data[i][3].split(",");
-                    for (var j = 0; j < compNames.length; ++j) {
-                        var cid = this.findId(this.mOpt.comps, compNames[j]);
-                        if (cid != null) {
-                            aids.push(aid);
-                            rids.push(rid);
-                            cids.push(cid);
+            var selIds = this.tableAssist.getSelection();
+            var rData = this.tableAssist.getRowsData(selIds);
+            if (rData.length > 0){
+                let dialog = bootbox.dialog({
+                    message: $("#configAuthTemplate").html().replace(/__/g, ""),
+                    title: "编辑角色",
+                    className: "modal-darkorange",
+                    buttons: {
+                        success: {
+                            label: "确定",
+                            className: "btn-blue",
+                            callback: () => {
+
+                                var sel = $("#configAuth #compName").find('select');
+                                var compNames = sel.selectpicker('val');
+                                if (compNames == null){
+                                    compNames = [];
+                                }
+
+                                var rids = [];
+                                var cids = [];
+                                var aids = [];
+                                for (var i = 0; i < rData.length; ++i){
+                                    var rid = this.findId(this.mOpt.roles, rData[i][1]);
+                                    var aid = this.findId(this.mOpt.auths, rData[i][2]);
+                                    if (rid && aid) {
+                                        for (var j = 0; j < compNames.length; ++j) {
+                                            var cid = this.findId(this.mOpt.comps, compNames[j]);
+                                            if (cid != null) {
+                                                aids.push(aid);
+                                                rids.push(rid);
+                                                cids.push(cid);
+                                            }
+                                        }
+                                        if (compNames.length == 0) {
+                                            aids.push(aid);
+                                            rids.push(rid);
+                                            cids.push(null);
+                                        }
+                                    }
+                                }
+
+                                this.mSubmitAjax.post({
+                                        rids: JSON.stringify(rids),
+                                        cids: JSON.stringify(cids),
+                                        aids: JSON.stringify(aids),
+                                    })
+                                    .then((dataArray:any) => {
+                                        dialog.modal('hide');
+                                        for (var i = 0; i < rData.length; ++i){
+                                            this.tableAssist.setCellValue(rData[i][0], 3, compNames.length > 0 ?compNames.join() : "");
+                                        }
+                                        Util.Toast.success('用户数据修改成功');
+                                    });
+
+                                return false;
+                            }
+                        },
+                        "取消": {
+                            className: "btn-default",
+                            callback: function () {
+                            }
                         }
                     }
-                    if (compNames.length == 0) {
-                        aids.push(aid);
-                        rids.push(rid);
-                        cids.push(null);
-                    }
+                });
+
+                dialog.modal("show");
+
+                var rNames = [];
+                var aNames = [];
+                for (var i = 0; i < rData.length; ++i){
+                    rNames.push(rData[i][1]);
+                    aNames.push(rData[i][2]);
                 }
+
+                $("#configAuth #roleName").val(rNames.join());
+                $("#configAuth #authName").val(aNames.join());
+
+                $("#configAuth #compName").append('<select class="selectpicker" multiple data-live-search="true" title="公司"></select>');
+                var comps = [];
+                if (rData.length == 1){
+                    comps = rData[0][3].split(",");
+                }
+
+                var sel = $("#configAuth #compName").find('select');
+
+                for (var i = 0; i < this.mOpt.comps.length; ++i) {
+                    sel.append('<option value="' + this.mOpt.comps[i][1] + '">' + this.mOpt.comps[i][1] + '</option>');
+                }
+                sel.selectpicker({
+                    size: 10
+                });
+                sel.selectpicker('val', comps);
+                $(".role_drop>div").css("width", "100%");
+            }else{
+                Util.Toast.warning('没有选中的用户数据');
             }
 
-            if (rids.length > 0) {
-
-                this.mSubmitAjax.post({
-                        rids: JSON.stringify(rids),
-                        cids: JSON.stringify(cids),
-                        aids: JSON.stringify(aids),
-                    })
-                    .then((dataArray:any) => {
-                        // this.updateUI();
-                        this.tableAssist.resetChangedData();
-                        Util.Toast.success('用户数据修改成功');
-                    });
-            } else {
-                Util.Toast.warning('没有可修改的用户数据');
-            }
         }
 
         private createRole():void {

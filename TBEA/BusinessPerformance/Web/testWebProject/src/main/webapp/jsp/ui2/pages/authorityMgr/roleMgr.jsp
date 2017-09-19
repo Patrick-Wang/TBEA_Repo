@@ -20,9 +20,6 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 
-<link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/jsp/ui2/assets/img/favicon.png"
-	type="image/x-icon">
 
 <!--Basic Styles-->
 <link
@@ -201,8 +198,8 @@
 								查找 <i class="fa fa-search"></i>
 							</div>
 							<div id="grid-create" class="btn btn-default">新建角色</div>
+							<div id="grid-submit" class="btn btn-default">编辑角色</div>
 							<div id="add-auth" class="btn btn-default">添加权限</div>
-							<div id="grid-submit" class="btn btn-default">保存</div>
 						</div>
 					</div>
 				</div>
@@ -262,6 +259,33 @@
 							</div>
 							<div class="alert alert-danger fade in" id="__warning"
 								style="display:none"></div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="configAuthTemplate" class="hidden">
+			<div id="__configAuth">
+				<div class="row">
+					<div class="col-md-12">
+						<form role="form">
+							<div class="form-group">
+								<span class="input-icon icon-right"> <input type="text" readonly="readonly"
+									class="form-control" id="__roleName" placeholder="角色" /> <i
+									class="fa fa-user circular"></i>
+								</span>
+							</div>
+							<div class="form-group">
+								<span class="input-icon icon-right"> <input type="text" readonly="readonly"
+									class="form-control" id="__authName" placeholder="权限" /> <i
+									class="fa fa-user circular"></i>
+								</span>
+							</div>
+							<div class="form-group">
+								<div id="__compName" class="role_drop"></div>
+							</div>
+							<div class="alert alert-danger fade in" id="__warning"
+								style="display: none"></div>
 						</form>
 					</div>
 				</div>

@@ -942,7 +942,7 @@ var JQTable;
         };
         JQGridAssistant.prototype.setCellValue = function (rid, col, val) {
             var grid = $("#" + this.mGridName);
-            $("#" + this.mGridName).setCell(rid, col, val);
+            $("#" + this.mGridName).setCell(rid, col, val, undefined, undefined, true);
         };
         JQGridAssistant.prototype.getCellValue = function (rid, col) {
             return $("#" + this.mGridName).getCell(rid, col);

@@ -1050,7 +1050,7 @@ module JQTable {
 
         public setCellValue(rid:number, col:number, val:any){
             let grid = $("#" + this.mGridName);
-            $("#" + this.mGridName).setCell(rid, col, val);
+            $("#" + this.mGridName).setCell(rid, col, val, undefined, undefined, true);
         }
 
         public getCellValue(rid:number, col:number){
