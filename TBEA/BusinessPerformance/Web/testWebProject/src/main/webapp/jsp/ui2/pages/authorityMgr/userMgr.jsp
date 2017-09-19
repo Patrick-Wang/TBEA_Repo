@@ -15,7 +15,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<%@include file="../../ie8-t.jsp" %>
+<%@include file="../../ie8-t.jsp"%>
 
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
@@ -134,9 +134,9 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/companySelector.js"
 	type="text/javascript"></script>
-	<script
+<script
 	src="${pageContext.request.contextPath}/jsp/ui2/assets/js/toastr/toastr.js"></script>
-	<script
+<script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/messageBox.js"
 	type="text/javascript"></script>
 <script
@@ -151,25 +151,27 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/scroll/js/jquery.mCustomScrollbar.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/route/route.js"></script>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/ui2/bootstrap-select-1.12.4/dist/css/bootstrap-select.min.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/jsp/ui2/bootstrap-select-1.12.4/dist/css/bootstrap-select.min.css">
 
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="${pageContext.request.contextPath}/jsp/ui2/bootstrap-select-1.12.4/dist/js/bootstrap-select.min.js"></script>
-	<script src="${pageContext.request.contextPath}/jsp/ui2/bootstrap-select-1.12.4/dist/js/i18n/defaults-zh_CN.js"></script>
-	<script
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/bootstrap-select-1.12.4/dist/js/bootstrap-select.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/ui2/bootstrap-select-1.12.4/dist/js/i18n/defaults-zh_CN.js"></script>
+<script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/authorityMgr/userMgr.js"></script>
-	
-<%@include file="../../ie8-b.jsp" %>
+
+<%@include file="../../ie8-b.jsp"%>
 
 
-	<style>
-	.header-title .filter-option{
-		padding-left: 10px;
-		padding-bottom: 3px;
-	}
-
-	</style>
+<style>
+.header-title .filter-option {
+	padding-left: 10px;
+	padding-bottom: 3px;
+}
+</style>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -187,7 +189,7 @@
 					</ul>
 				</div>
 				<!-- /Page Breadcrumb -->
-				
+
 				<!-- Page Header -->
 				<div class="page-header position-relative">
 					<div class="header-title">
@@ -196,8 +198,9 @@
 							<div id="grid-update" class="btn btn-default">
 								查找 <i class="fa fa-search"></i>
 							</div>
+							<div id="grid-create" class="btn btn-default">新建用户</div>
 							<div id="grid-submit" class="btn btn-default">
-								更改 <i class="fa fa-file-excel-o"></i>
+								编辑用户
 							</div>
 						</div>
 					</div>
@@ -219,6 +222,52 @@
 		</div>
 		<!-- /Page Container -->
 		<!-- Main Container -->
+		<div id="createUserTemplate" class="hidden">
+			<div id="__createUser">
+				<div class="row">
+					<div class="col-md-12">
+						<form role="form">
+							<div class="form-group">
+								<span class="input-icon icon-right"> <input type="text"
+									class="form-control" id="__userName" placeholder="用户名" /> <i
+									class="fa fa-user circular"></i>
+								</span>
+							</div>
+							<div class="form-group">
+								<span class="input-icon icon-right"> <input type="text"  id="__userPsw"
+									class="form-control" placeholder="初始密码(默认为:1234)"/> 
+									<i class="fa fa-lock circular"></i>
+								</span>
+							</div>
+
+							<div class="alert alert-danger fade in" id="__warning"
+								style="display: none"></div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="configRoleTemplate" class="hidden">
+			<div id="__configRole">
+				<div class="row">
+					<div class="col-md-12">
+						<form role="form">
+							<div class="form-group">
+								<span class="input-icon icon-right"> <input type="text" readonly="readonly"
+									class="form-control" id="__userName" placeholder="用户名" /> <i
+									class="fa fa-user circular"></i>
+								</span>
+							</div>
+							<div class="form-group">
+								<div id="__roleNames" class="role_drop"></div>
+							</div>
+							<div class="alert alert-danger fade in" id="__warning"
+								style="display: none"></div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<!--Basic Scripts-->
 
@@ -237,21 +286,24 @@
 	<%@include file="../loading.jsp"%>
 	<script>
 		var breads = '${param.breads}';
-		if (Util.isIframe() && breads.length > 0){
+		if (Util.isIframe() && breads.length > 0) {
 			Util.Breadcrumb.render(JSON.parse(breads));
-			Util.Breadcrumb.setOnClickListener(function(breadNode){
-				window.parent['onClickBreadcrumb'] && window.parent['onClickBreadcrumb'](breadNode);
+			Util.Breadcrumb.setOnClickListener(function(breadNode) {
+				window.parent['onClickBreadcrumb']
+						&& window.parent['onClickBreadcrumb'](breadNode);
 			});
 		}
 		framework.router.to(Util.FAMOUS_VIEW).send(Util.MSG_INIT, {
-			tableId:"table",
+			tableId : "table",
 			users : JSON.parse('${users}'),
 			roles : JSON.parse('${roles}'),
-			updateUrl:'${updateUrl}.do',
-			submitUrl:'${submitUrl}.do'
+			updateUrl : '${updateUrl}.do',
+			submitUrl : '${submitUrl}.do',
+			getUserUrl : '${getUserUrl}.do',
+			createUserUrl : '${createUserUrl}.do'
 		});
-    </script>
-	
+	</script>
+
 </body>
 <!--  /Body -->
 </html>

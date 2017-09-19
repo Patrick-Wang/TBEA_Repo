@@ -874,6 +874,23 @@ var JQTable;
                 });
             }
         };
+        JQGridAssistant.prototype.getRowData = function (id) {
+            var grid = $("#" + this.mGridName + "");
+            var rdata = grid.getRowData(id);
+            var row = [id];
+            for (var j = 0; j < this.mColModel.length; ++j) {
+                var val = rdata[this.mColModel[j].index];
+                row.push(undefined == val ? "" : val + "");
+            }
+            return row;
+        };
+        JQGridAssistant.prototype.getRowsData = function (ids) {
+            var rows = [];
+            for (var i = 0; i < ids.length; ++i) {
+                rows.push(this.getRowData(ids[i]));
+            }
+            return rows;
+        };
         JQGridAssistant.prototype.getChangedData = function () {
             var grid = $("#" + this.mGridName + "");
             var data = [];

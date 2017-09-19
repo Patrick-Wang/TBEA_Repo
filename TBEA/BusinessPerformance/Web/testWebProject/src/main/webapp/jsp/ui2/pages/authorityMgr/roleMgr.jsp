@@ -200,9 +200,9 @@
 							<div id="grid-update" class="btn btn-default">
 								查找 <i class="fa fa-search"></i>
 							</div>
-							<div id="grid-create" class="btn btn-default">创建角色</div>
+							<div id="grid-create" class="btn btn-default">新建角色</div>
 							<div id="add-auth" class="btn btn-default">添加权限</div>
-							<div id="grid-submit" class="btn btn-default">更改</div>
+							<div id="grid-submit" class="btn btn-default">保存</div>
 						</div>
 					</div>
 				</div>

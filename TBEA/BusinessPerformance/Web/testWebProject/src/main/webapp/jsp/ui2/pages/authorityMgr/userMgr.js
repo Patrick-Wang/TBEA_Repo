@@ -11,7 +11,8 @@ var user_mgr;
                 JQTable.Node.create({
                     name: "用户名",
                     align: JQTable.TextAlign.Left,
-                    width: 150 }),
+                    width: 150
+                }),
                 JQTable.Node.create({
                     name: "角色",
                     align: JQTable.TextAlign.Left,
@@ -47,20 +48,29 @@ var user_mgr;
             this.mOpt = opt;
             this.mUpdateAjax = new Util.Ajax(opt.updateUrl);
             this.mSubmitAjax = new Util.Ajax(opt.submitUrl);
-            $("#user-sel").append('<select class="selectpicker" multiple data-live-search="true" title="用户"></select>');
-            var sel = $("#user-sel select");
-            for (var i = 0; i < opt.users.length; ++i) {
-                sel.append('<option value="' + opt.users[i][0] + '">' + opt.users[i][1] + '</option>');
-            }
-            $('#user-sel .selectpicker').selectpicker({});
+            this.mGetUserAjax = new Util.Ajax(opt.getUserUrl);
+            this.mCreateUserAjax = new Util.Ajax(opt.createUserUrl);
+            this.updateUserSel();
             $("#grid-update").on('click', function () {
                 _this.updateUI();
             });
             $("#grid-submit").on('click', function () {
                 _this.submitData();
             });
+            $("#grid-create").on('click', function () {
+                _this.createUser();
+            });
             this.adjustHeader();
             this.updateUI();
+        };
+        SimpleView.prototype.updateUserSel = function () {
+            $("#user-sel").empty();
+            $("#user-sel").append('<select class="selectpicker" multiple data-live-search="true" title="用户"></select>');
+            var sel = $("#user-sel select");
+            for (var i = 0; i < this.mOpt.users.length; ++i) {
+                sel.append('<option value="' + this.mOpt.users[i][0] + '">' + this.mOpt.users[i][1] + '</option>');
+            }
+            $('#user-sel .selectpicker').selectpicker({});
         };
         SimpleView.prototype.adjustHeader = function () {
             $("#headerHost").removeCss("width");
@@ -154,9 +164,15 @@ var user_mgr;
             this.tableAssist.create({
                 dataWithId: this.mData,
                 datatype: "local",
-                cellEdit: true,
+                cellEdit: false,
                 cellsubmit: 'clientArray',
-                multiselect: false,
+                multiselect: true,
+                //multiboxonly:true,
+                //beforeSelectRow:()=>
+                //{
+                //    $("#" + this.jqgridName()).jqGrid('resetSelection');
+                //    return(true);
+                //},
                 drag: false,
                 resize: false,
                 height: '100%',
@@ -170,30 +186,128 @@ var user_mgr;
         };
         SimpleView.prototype.submitData = function () {
             var _this = this;
-            var data = this.tableAssist.getChangedData();
-            var users = [];
-            var roles = [];
-            for (var i = 0; i < data.length; ++i) {
-                var uid = parseInt(data[i][0]);
-                var role = data[i][2].split(",");
-                for (var j = 0; j < role.length; ++j) {
-                    roles.push(role[j]);
-                    users.push(uid);
-                }
-            }
-            if (users.length > 0) {
-                this.mSubmitAjax.post({
-                    users: JSON.stringify(users),
-                    roles: JSON.stringify(roles) })
-                    .then(function (dataArray) {
-                    // this.updateUI();
-                    _this.tableAssist.resetChangedData();
-                    Util.Toast.success('用户数据修改成功');
+            var selIds = this.tableAssist.getSelection();
+            if (selIds.length > 0) {
+                var rData = this.tableAssist.getRowsData(selIds);
+                var dialog = bootbox.dialog({
+                    message: $("#configRoleTemplate").html().replace(/__/g, ""),
+                    title: "编辑用户角色",
+                    className: "modal-darkorange",
+                    buttons: {
+                        success: {
+                            label: "确定",
+                            className: "btn-blue",
+                            callback: function () {
+                                var sel = $("#configRole #roleNames").find('select');
+                                var roles = sel.selectpicker('val');
+                                if (roles == null) {
+                                    $("#warning").text("角色不能为空").show();
+                                    return false;
+                                }
+                                var users = [];
+                                var rNames = [];
+                                for (var j = 0; j < rData.length; ++j) {
+                                    var uid = parseInt(rData[j][0]);
+                                    rNames = rNames.concat(roles);
+                                    for (var i = 0; i < roles.length; ++i) {
+                                        users.push(uid);
+                                    }
+                                }
+                                _this.mSubmitAjax.post({
+                                    users: JSON.stringify(users),
+                                    roles: JSON.stringify(rNames)
+                                })
+                                    .then(function (dataArray) {
+                                    // this.updateUI();
+                                    //    this.tableAssist.resetChangedData();
+                                    Util.Toast.success('用户数据修改成功');
+                                    for (var j = 0; j < rData.length; ++j) {
+                                        _this.tableAssist.setCellValue(rData[j][0], 2, roles.join());
+                                    }
+                                    dialog.modal("hide");
+                                });
+                                return false;
+                            }
+                        },
+                        "取消": {
+                            className: "btn-default",
+                            callback: function () {
+                            }
+                        }
+                    }
                 });
+                dialog.modal("show");
+                var uNames = [];
+                for (var i = 0; i < rData.length; ++i) {
+                    uNames.push(rData[i][1]);
+                }
+                $("#configRole #userName").val(uNames.join());
+                $("#configRole #roleNames").append('<select class="selectpicker" multiple data-live-search="true" title="角色"></select>');
+                var roles = [];
+                if (rData.length == 1) {
+                    roles = rData[0][2].split(",");
+                }
+                var sel = $("#configRole #roleNames").find('select');
+                for (var i = 0; i < this.mOpt.roles.length; ++i) {
+                    sel.append('<option value="' + this.mOpt.roles[i][1] + '">' + this.mOpt.roles[i][1] + '</option>');
+                }
+                sel.selectpicker({
+                    size: 10
+                });
+                sel.selectpicker('val', roles);
+                $(".role_drop>div").css("width", "100%");
             }
             else {
-                Util.Toast.warning('没有可修改的用户数据');
+                Util.Toast.warning('请选择用户');
             }
+        };
+        SimpleView.prototype.createUser = function () {
+            var _this = this;
+            var dialog = bootbox.dialog({
+                message: $("#createUserTemplate").html().replace(/__/g, ""),
+                title: "新建用户",
+                className: "modal-darkorange",
+                buttons: {
+                    success: {
+                        label: "确定",
+                        className: "btn-blue",
+                        callback: function () {
+                            var uName = $("#userName").val();
+                            if (!uName) {
+                                $("#warning").text("用户名不能为空").show();
+                                return false;
+                            }
+                            var psw = $("#userPsw").val();
+                            if (!psw) {
+                                psw = "1234";
+                            }
+                            _this.mCreateUserAjax.post({
+                                userName: uName,
+                                userPsw: psw
+                            }).then(function (ret) {
+                                if (ret.errorCode == 0) {
+                                    dialog.modal("hide");
+                                    Util.Toast.success("新建用户成功");
+                                    _this.mGetUserAjax.post({}).then(function (ret) {
+                                        _this.mOpt.users = ret.users;
+                                        _this.updateUserSel();
+                                    });
+                                }
+                                else {
+                                    $("#warning").text("用户名已被占用").show();
+                                }
+                            });
+                            return false;
+                        }
+                    },
+                    "取消": {
+                        className: "btn-default",
+                        callback: function () {
+                        }
+                    }
+                }
+            });
+            dialog.modal("show");
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;

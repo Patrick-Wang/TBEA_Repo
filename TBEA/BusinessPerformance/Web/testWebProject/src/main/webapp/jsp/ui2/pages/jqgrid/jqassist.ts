@@ -974,6 +974,25 @@ module JQTable {
             }
         }
 
+        public getRowData(id){
+            var grid = $("#" + this.mGridName + "");
+            var rdata = grid.getRowData(id);
+            var row = [id];
+            for (var j = 0; j < this.mColModel.length; ++j){
+                let val = rdata[this.mColModel[j].index];
+                row.push(undefined == val ? "" : val + "");
+            }
+            return row;
+        }
+
+        public getRowsData(ids){
+            var rows = [];
+            for (var i = 0; i < ids.length; ++i){
+                rows.push(this.getRowData(ids[i]));
+            }
+            return rows;
+        }
+
         public getChangedData() {
             var grid = $("#" + this.mGridName + "");
             var data:Array<string[]> = [];

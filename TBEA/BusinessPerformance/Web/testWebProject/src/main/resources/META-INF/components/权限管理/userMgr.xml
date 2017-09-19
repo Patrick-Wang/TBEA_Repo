@@ -36,6 +36,17 @@
  	</sql>
  </loop>
  </service>
+ <service id="servUserMgrCreateUser" transaction="transactionManager">
+ 	<sql id="userCount" export="true">
+ 		select count(*) from jygk_account where name = ${userName}
+ 	</sql>
+ 	<if test="${userCount[0] == 0}">
+	 	<sql>
+	 		insert into jygk_account (name, password, role, deprecated) values
+	 		('${userName}', '${userPsw}', 0, 0)
+	 	</sql>
+ 	</if>
+ </service>
  <controller id="userMgrSubmit">
   <context key="users" value="${request.users.asList}"/>
   <context key="roles" value="${request.roles.asJsonArray}"/>
@@ -52,6 +63,21 @@
    <data>${userRoles}</data>
   </response>
  </controller>
+ <controller id="userMgrGetUser">
+  <callservice id="servGetUserNames"/>
+  <response type="json">
+   <users>${userNames}</users>
+  </response>
+ </controller>
+  <controller id="userMgrCreateUser">
+  <context key="userName" value="${request.userName.asString}"/>
+  <context key="userPsw" value="${request.userPsw.asString}"/>
+  <callservice id="servUserMgrCreateUser"/>
+  <response type="json">
+   <errorCode>${userCount[0] == 0 ? 0 : -1}</errorCode>
+   <message>${userCount[0] == 0 ? 'OK' : 'ERROR'}</message>
+  </response>
+ </controller>
  <controller id="userMgr">
   <callservice id="servGetUserNames"/>
   <callservice id="servGetRoleNames"/>
@@ -60,6 +86,8 @@
    <map key="roles" value="${roleNames.asJson}"/>
    <map key="updateUrl" value="userMgrUpdate"/>
    <map key="submitUrl" value="userMgrSubmit"/>
+   <map key="createUserUrl" value="userMgrCreateUser"/>
+   <map key="getUserUrl" value="userMgrGetUser"/>
   </response>
  </controller>
 </components>
