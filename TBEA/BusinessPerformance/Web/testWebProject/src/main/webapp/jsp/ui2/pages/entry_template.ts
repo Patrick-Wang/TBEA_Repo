@@ -382,14 +382,14 @@ module entry_template {
             }
 
             var jqgrid = this.jqgrid();
-            if ($("#" + this.mOpt.tableId).width() <= $("#" + this.mOpt.tableId).children().eq(0).width()) {
-                jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
-            }
+            //if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
+            //    jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
+            //}
 
             let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
             this.mTableAssist && this.mTableAssist.resizeHeight(maxTableBodyHeight);
 
-            if ($("#" + this.mOpt.tableId).width() < $("#" + this.mOpt.tableId).children().eq(0).width()) {
+            if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
                 jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
             }
         }

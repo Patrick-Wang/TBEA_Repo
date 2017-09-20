@@ -243,7 +243,7 @@ module user_mgr {
                 var rData = this.tableAssist.getRowsData(selIds);
                 let dialog = bootbox.dialog({
                     message: $("#configRoleTemplate").html().replace(/__/g, ""),
-                    title: "编辑权限",
+                    title: "角色分配",
                     className: "modal-darkorange",
                     buttons: {
                         success: {
