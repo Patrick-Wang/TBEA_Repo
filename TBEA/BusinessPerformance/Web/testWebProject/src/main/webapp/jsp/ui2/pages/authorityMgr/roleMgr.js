@@ -77,6 +77,10 @@ var role_mgr;
             this.rowNum = parseInt("" + (maxTableBodyHeight / 28)) - 1;
             this.adjustHeader();
             this.updateUI();
+            $(window).resize(function () {
+                _this.adjustHeader();
+                _this.adjustSize();
+            });
         };
         SimpleView.prototype.updateRoleSel = function () {
             $("#role-sel").empty();
@@ -88,13 +92,13 @@ var role_mgr;
             $('#role-sel .selectpicker').selectpicker({});
         };
         SimpleView.prototype.adjustHeader = function () {
-            //$("#headerHost").removeCss("width");
-            //if ($("#headerHost").height() > 40){
-            //    $(".page-header").addClass("page-header-double");
-            //    $("#headerHost").css("width", $("#comp-sel").width() + "px");
-            //}else{
-            //    $(".page-header").removeClass("page-header-double");
-            //}
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40) {
+                $(".page-header").addClass("page-header-double");
+            }
+            else {
+                $(".page-header").removeClass("page-header-double");
+            }
         };
         SimpleView.prototype.toIntArray = function (strArr) {
             var iarr = [];
@@ -281,7 +285,7 @@ var role_mgr;
                                 _this.mSubmitAjax.post({
                                     rids: JSON.stringify(rids),
                                     cids: JSON.stringify(cids),
-                                    aids: JSON.stringify(aids),
+                                    aids: JSON.stringify(aids)
                                 })
                                     .then(function (dataArray) {
                                     dialog.modal('hide');
@@ -332,7 +336,7 @@ var role_mgr;
             var _this = this;
             var dialog = bootbox.dialog({
                 message: $("#createRoleTemplate").html().replace(/__/g, ""),
-                title: "创建角色",
+                title: "新建角色",
                 className: "modal-darkorange",
                 buttons: {
                     success: {
@@ -370,7 +374,7 @@ var role_mgr;
                 }
             });
             dialog.modal("show");
-            $(".role_drop>div").addClass("col-md-12");
+            $(".role_drop>div").css("width", "100%");
         };
         SimpleView.prototype.addAuth = function () {
             var _this = this;
@@ -446,7 +450,7 @@ var role_mgr;
                 sel.append('<option value="' + this.mOpt.comps[i][0] + '">' + this.mOpt.comps[i][1] + '</option>');
             }
             $('#compName .selectpicker').selectpicker({});
-            $(".role_drop>div").addClass("col-md-12");
+            $(".role_drop>div").css("width", "100%");
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;

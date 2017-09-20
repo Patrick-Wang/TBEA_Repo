@@ -44,6 +44,10 @@ select ur.roleId, company_id, auth_type from system_extend_auth sea left join us
 
 delete from system_extend_auth_t where roleId is null;
 
+insert into roles (roleName) values ('系统管理员')
+insert into system_extend_auth_t (roleId, companyId, authId) values ((select id from roles where roleName = '系统管理员'), null, 88)
+insert into user_roles (userId, roleId) values ((select id from jygk_account where name = 'admin'), (select id from roles where roleName = '系统管理员'))
+
 GO
 drop view system_extend_auth_v
 GO

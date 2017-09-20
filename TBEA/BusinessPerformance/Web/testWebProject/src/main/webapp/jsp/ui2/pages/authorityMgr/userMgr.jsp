@@ -197,7 +197,7 @@
 							</div>
 							<div id="grid-create" class="btn btn-default">新建用户</div>
 							<div id="grid-submit" class="btn btn-default">
-								编辑用户
+								角色分配
 							</div>
 						</div>
 					</div>

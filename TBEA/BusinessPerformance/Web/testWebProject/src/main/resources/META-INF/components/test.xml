@@ -129,4 +129,19 @@
 		
 		<response type="word" name="test.docx" ref="word"/> 
 	</controller> 
+	
+	<service id="testDsServ" ds="mytest">
+		<sql id="ret" export="true">
+			select count(*) from jygk_account where name=${name} or id=${id}
+		</sql>
+	</service>
+	<controller id="testDs">
+
+		<context key="name" value="沈变公司"></context>
+		<context key="id" value="${2}"></context>
+		<callservice id="testDsServ"/>
+		<response type="json">
+			<ds>${ret.asJson}</ds>
+		</response> 
+	</controller> 
 </components>

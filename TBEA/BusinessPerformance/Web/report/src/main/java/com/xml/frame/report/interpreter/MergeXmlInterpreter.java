@@ -13,12 +13,12 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.sql.DataSource;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.tomcat.jdbc.pool.DataSource;
 import org.hibernate.Session;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -27,7 +27,7 @@ import com.frame.script.el.ELParser;
 import com.frame.script.util.TypeUtil;
 import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.component.service.JndiDataSourceFactory;
+import com.xml.frame.report.component.datasource.HikariCPDataSourceFactory;
 import com.xml.frame.report.component.service.JpaTransaction;
 import com.xml.frame.report.util.Util;
 import com.xml.frame.report.util.excel.ExcelUtil;
@@ -195,7 +195,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		JpaTransaction tx = (JpaTransaction) component.getVar(trans);
 		
 		if (null == tx){
-			DataSource ds = JndiDataSourceFactory.getDataSource(component.getConfigAttribute("ds"));
+			DataSource ds = HikariCPDataSourceFactory.getInstance().getDataSource(component.getConfigAttribute("ds"));
 			if (null == ds) {
 				throw new Exception("请指定 transaction " + e.toString());
 			}else {
@@ -218,7 +218,11 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 
 		completeUpdate();
 		completeInsert();
-
+		if (null != con) {
+			con.setAutoCommit(true);
+			con.close();
+			con = null;
+		}
 		this.component.removeLocal("i");
 		return true;
 	}

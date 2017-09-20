@@ -31,8 +31,8 @@ var userStatus;
             this.updateTable("table");
         };
         View.prototype.updateTitle = function () {
-            $('h1').text("用户在线状态 ");
-            document.title = "用户在线状态";
+            //  $('h1').text("用户在线状态 ");
+            // document.title = "用户在线状态"; 
         };
         View.prototype.updateTable = function (tableId) {
             var name = tableId + "_jqgrid";

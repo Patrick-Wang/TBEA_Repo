@@ -62,6 +62,10 @@ var user_mgr;
             });
             this.adjustHeader();
             this.updateUI();
+            $(window).resize(function () {
+                _this.adjustHeader();
+                _this.adjustSize();
+            });
         };
         SimpleView.prototype.updateUserSel = function () {
             $("#user-sel").empty();
@@ -191,7 +195,7 @@ var user_mgr;
                 var rData = this.tableAssist.getRowsData(selIds);
                 var dialog = bootbox.dialog({
                     message: $("#configRoleTemplate").html().replace(/__/g, ""),
-                    title: "编辑用户角色",
+                    title: "角色分配",
                     className: "modal-darkorange",
                     buttons: {
                         success: {

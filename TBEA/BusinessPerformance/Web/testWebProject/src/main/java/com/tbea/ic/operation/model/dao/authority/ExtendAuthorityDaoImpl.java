@@ -39,7 +39,7 @@ public class ExtendAuthorityDaoImpl  implements ExtendAuthorityDao{
 		Query q = this.entityManager.createNativeQuery("select count(*) from system_extend_auth_v where account_id = :id and authId = :auth");
 		q.setParameter("id", account.getId());
 		q.setParameter("auth", auth);
-		return ((Long)q.getResultList().get(0)).intValue();
+		return (Integer)q.getResultList().get(0);
 	}
 
 	@Override

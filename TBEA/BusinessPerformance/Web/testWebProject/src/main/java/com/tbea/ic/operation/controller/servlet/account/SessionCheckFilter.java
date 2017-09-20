@@ -76,13 +76,13 @@ public class SessionCheckFilter implements Filter {
 				
 				HttpSession session = httpRequest.getSession(false);
 				if (!SessionManager.isOnline(session)) {
-					Url uri = Url.parse(httpRequest.getServletPath());
-					String redirUrl = "";
-					if (uri.segCount() >= 2 && "v2".equals(uri.segment(1))){
-						redirUrl =  "/" + Url.parse(url).segment(0) + "/" + DEFAULT_URL_V2;
-					}else{
-						redirUrl =  "/" + Url.parse(url).segment(0) + "/" + DEFAULT_URL;
-					}
+//					Url uri = Url.parse(httpRequest.getServletPath());
+					String redirUrl = "/" + Url.parse(url).segment(0) + "/" + DEFAULT_URL_V2;
+//					if (uri.segCount() >= 2 && "v2".equals(uri.segment(1))){
+//						redirUrl =  "/" + Url.parse(url).segment(0) + "/" + DEFAULT_URL_V2;
+//					}else{
+//						redirUrl =  "/" + Url.parse(url).segment(0) + "/" + DEFAULT_URL;
+//					}
 					
 					if (isAjaxRequest(httpRequest)) {
 						PrintWriter pw = httpResp.getWriter();

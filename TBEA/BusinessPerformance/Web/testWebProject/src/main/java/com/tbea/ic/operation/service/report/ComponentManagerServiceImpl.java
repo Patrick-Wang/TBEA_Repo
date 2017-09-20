@@ -20,6 +20,7 @@ import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.ComponentManager;
 import com.xml.frame.report.component.controller.Controller;
 import com.xml.frame.report.component.controller.Scheduler;
+import com.xml.frame.report.component.datasource.HikariCPDataSourceFactory;
 import com.xml.frame.report.component.entity.Context;
 import com.xml.frame.report.component.service.Service;
 import com.xml.frame.report.util.DataNode;
@@ -27,6 +28,8 @@ import com.xml.frame.report.util.DataNode;
 public class ComponentManagerServiceImpl implements ComponentManagerService,  Scheduler{
 
 	protected static String resPath;
+	protected static String dsConfigPath;
+	
 	static {
 		try {
 			resPath = new URI(ComponentManagerServiceImpl.class.getClassLoader().getResource("")
@@ -35,6 +38,15 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
+		try {
+			dsConfigPath = new URI(ComponentManagerServiceImpl.class.getClassLoader().getResource("")
+					.getPath()).getPath().substring(1)
+					+ "META-INF/datasource.xml";
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		
+		HikariCPDataSourceFactory.start(dsConfigPath);
 	}
 	
 	ComponentManager compMgr = new ComponentManager(this, resPath);

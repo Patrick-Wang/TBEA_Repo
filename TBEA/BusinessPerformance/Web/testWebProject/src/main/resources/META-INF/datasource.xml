@@ -1,0 +1,15 @@
+<Resource>
+	<datasource 
+		name="mytest"
+		username="sa" 
+		password="yszk_test_SERVER" 
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		jdbcUrl="jdbc:sqlserver://localhost:1433;DatabaseName=operating_management"
+		minimumIdle="10" 
+		maximumPoolSize="70" 
+		idleTimeout="10000" 
+		connectionTestQuery="select 1"
+		connectionTimeout="60000" 
+		maxLifetime="1800000"/>
+		
+</Resource>
