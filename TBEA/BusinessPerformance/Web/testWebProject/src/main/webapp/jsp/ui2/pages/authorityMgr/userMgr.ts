@@ -90,7 +90,10 @@ module user_mgr {
             this.adjustHeader();
             this.updateUI();
 
-
+            $(window).resize(()=>{
+                this.adjustHeader();
+                this.adjustSize();
+            })
         }
 
         private updateUserSel() {

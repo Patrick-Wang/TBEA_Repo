@@ -116,6 +116,10 @@ module role_mgr {
             this.adjustHeader();
             this.updateUI();
 
+            $(window).resize(()=>{
+                this.adjustHeader();
+                this.adjustSize();
+            })
 
         }
 
@@ -133,13 +137,12 @@ module role_mgr {
         }
 
         private adjustHeader() {
-            //$("#headerHost").removeCss("width");
-            //if ($("#headerHost").height() > 40){
-            //    $(".page-header").addClass("page-header-double");
-            //    $("#headerHost").css("width", $("#comp-sel").width() + "px");
-            //}else{
-            //    $(".page-header").removeClass("page-header-double");
-            //}
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40){
+                $(".page-header").addClass("page-header-double");
+            }else{
+                $(".page-header").removeClass("page-header-double");
+            }
         }
 
         toIntArray(strArr) {

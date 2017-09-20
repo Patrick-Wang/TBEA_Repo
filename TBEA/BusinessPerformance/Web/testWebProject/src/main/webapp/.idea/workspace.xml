@@ -86,11 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="roleMgr.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="roleMgr.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/roleMgr.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.14545454">
-              <caret line="255" column="86" selection-start-line="255" selection-start-column="86" selection-end-line="255" selection-end-column="86" />
+            <state vertical-scroll-proportion="-1.1111112">
+              <caret line="266" column="30" selection-start-line="266" selection-start-column="30" selection-end-line="266" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -109,24 +109,24 @@
       <file leaf-file-name="roleMgr.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/roleMgr.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-52.766666">
-              <caret line="534" column="53" selection-start-line="534" selection-start-column="53" selection-end-line="534" selection-end-column="53" />
+            <state vertical-scroll-proportion="-7.3">
+              <caret line="121" column="14" selection-start-line="118" selection-start-column="11" selection-end-line="121" selection-end-column="14" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1505873832130" expanded="true" signature="7204:7253" placeholder="..." />
+                <marker date="1505874902847" expanded="true" signature="7234:7283" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userMgr.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="userMgr.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/userMgr.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.4333334">
-              <caret line="242" column="32" selection-start-line="242" selection-start-column="28" selection-end-line="242" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.67413443">
+              <caret line="95" column="14" selection-start-line="95" selection-start-column="14" selection-end-line="95" selection-end-column="14" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1505873506816" expanded="true" signature="5611:5660" placeholder="..." />
+                <marker date="1505874902855" expanded="true" signature="5732:5781" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -206,9 +206,9 @@
         <option value="$PROJECT_DIR$/jsp/entry_template.ts" />
         <option value="$PROJECT_DIR$/jsp/ui2/pages/sddb/sddb.jsp" />
         <option value="$PROJECT_DIR$/jsp/ui2/pages/sddb/sddb.ts" />
-        <option value="$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/userMgr.ts" />
-        <option value="$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/roleMgr.ts" />
         <option value="$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/roleMgr.jsp" />
+        <option value="$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/roleMgr.ts" />
+        <option value="$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/userMgr.ts" />
       </list>
     </option>
   </component>
@@ -343,58 +343,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sddb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="authorityMgr" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -905,17 +853,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/userMgr.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.4333334">
-          <caret line="242" column="32" selection-start-line="242" selection-start-column="28" selection-end-line="242" selection-end-column="32" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <marker date="1505873506816" expanded="true" signature="5611:5660" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/userMgr.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="116.86957">
@@ -924,22 +861,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/roleMgr.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1111112">
+          <caret line="266" column="30" selection-start-line="266" selection-start-column="30" selection-end-line="266" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/roleMgr.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-52.766666">
-          <caret line="534" column="53" selection-start-line="534" selection-start-column="53" selection-end-line="534" selection-end-column="53" />
+        <state vertical-scroll-proportion="-7.3">
+          <caret line="121" column="14" selection-start-line="118" selection-start-column="11" selection-end-line="121" selection-end-column="14" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1505873832130" expanded="true" signature="7204:7253" placeholder="..." />
+            <marker date="1505874902847" expanded="true" signature="7234:7283" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/roleMgr.jsp">
+    <entry file="file://$PROJECT_DIR$/jsp/ui2/pages/authorityMgr/userMgr.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.14545454">
-          <caret line="255" column="86" selection-start-line="255" selection-start-column="86" selection-end-line="255" selection-end-column="86" />
-          <folding />
+        <state vertical-scroll-proportion="0.67413443">
+          <caret line="95" column="14" selection-start-line="95" selection-start-column="14" selection-end-line="95" selection-end-column="14" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1505874902855" expanded="true" signature="5732:5781" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

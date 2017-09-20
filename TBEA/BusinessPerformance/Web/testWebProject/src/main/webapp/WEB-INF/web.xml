@@ -3,7 +3,7 @@
 	version="2.3">
 	<display-name>Business Management</display-name>
 	<welcome-file-list>
-		<welcome-file>/Login/login.do</welcome-file>
+		<welcome-file>/Login/v2/login.do</welcome-file>
 	</welcome-file-list>
 	<listener>
 		<listener-class>org.springframework.web.util.WebAppRootListener

@@ -77,6 +77,10 @@ var role_mgr;
             this.rowNum = parseInt("" + (maxTableBodyHeight / 28)) - 1;
             this.adjustHeader();
             this.updateUI();
+            $(window).resize(function () {
+                _this.adjustHeader();
+                _this.adjustSize();
+            });
         };
         SimpleView.prototype.updateRoleSel = function () {
             $("#role-sel").empty();
@@ -88,13 +92,13 @@ var role_mgr;
             $('#role-sel .selectpicker').selectpicker({});
         };
         SimpleView.prototype.adjustHeader = function () {
-            //$("#headerHost").removeCss("width");
-            //if ($("#headerHost").height() > 40){
-            //    $(".page-header").addClass("page-header-double");
-            //    $("#headerHost").css("width", $("#comp-sel").width() + "px");
-            //}else{
-            //    $(".page-header").removeClass("page-header-double");
-            //}
+            $("#headerHost").removeCss("width");
+            if ($("#headerHost").height() > 40) {
+                $(".page-header").addClass("page-header-double");
+            }
+            else {
+                $(".page-header").removeClass("page-header-double");
+            }
         };
         SimpleView.prototype.toIntArray = function (strArr) {
             var iarr = [];

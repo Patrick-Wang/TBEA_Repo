@@ -62,6 +62,10 @@ var user_mgr;
             });
             this.adjustHeader();
             this.updateUI();
+            $(window).resize(function () {
+                _this.adjustHeader();
+                _this.adjustSize();
+            });
         };
         SimpleView.prototype.updateUserSel = function () {
             $("#user-sel").empty();
