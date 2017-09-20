@@ -401,7 +401,7 @@ module role_mgr {
         private createRole():void {
             let dialog = bootbox.dialog({
                 message: $("#createRoleTemplate").html().replace(/__/g, ""),
-                title: "创建角色",
+                title: "新建角色",
                 className: "modal-darkorange",
                 buttons: {
                     success: {
@@ -441,7 +441,7 @@ module role_mgr {
             dialog.modal("show");
 
 
-            $(".role_drop>div").addClass("col-md-12");
+            $(".role_drop>div").css("width", "100%");
         }
 
         private addAuth():void {
@@ -532,7 +532,7 @@ module role_mgr {
                 // style: 'btn-info'
             });
 
-            $(".role_drop>div").addClass("col-md-12");
+            $(".role_drop>div").css("width", "100%");
         }
     }
 }

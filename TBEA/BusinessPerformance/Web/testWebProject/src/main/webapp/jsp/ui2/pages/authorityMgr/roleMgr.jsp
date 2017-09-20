@@ -198,8 +198,8 @@
 								查找 <i class="fa fa-search"></i>
 							</div>
 							<div id="grid-create" class="btn btn-default">新建角色</div>
-							<div id="grid-submit" class="btn btn-default">编辑角色</div>
 							<div id="add-auth" class="btn btn-default">添加权限</div>
+							<div id="grid-submit" class="btn btn-default">编辑权限</div>
 						</div>
 					</div>
 				</div>
@@ -253,7 +253,7 @@
 							<div class="form-group">
 								<span class="input-icon icon-right">
 								<input type="text"
-								class="form-control" id="__roleName" placeholder="角色"/>
+								class="form-control" id="__roleName" placeholder="角色名称"/>
 								<i class="fa fa-user circular"></i>
 								</span>
 							</div>
@@ -278,7 +278,7 @@
 							<div class="form-group">
 								<span class="input-icon icon-right"> <input type="text" readonly="readonly"
 									class="form-control" id="__authName" placeholder="权限" /> <i
-									class="fa fa-user circular"></i>
+									class="fa fa-shield circular"></i>
 								</span>
 							</div>
 							<div class="form-group">
