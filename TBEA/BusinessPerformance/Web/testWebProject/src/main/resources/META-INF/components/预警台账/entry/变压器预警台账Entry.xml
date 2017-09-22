@@ -29,7 +29,10 @@
                 </item>
                 <item>
                     <name>业务类型</name>
-                    <type>text</type> 
+                    <type>select</type>
+                    <options type="array">
+                    	制造业,工程,检修,物流,贸易,国际成套,其他
+                    </options> 
                 </item>
                 <item>
                     <name>合同号</name>

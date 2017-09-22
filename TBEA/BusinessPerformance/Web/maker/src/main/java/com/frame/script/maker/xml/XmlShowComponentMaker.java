@@ -345,6 +345,18 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 				Element name = doc.createElement("name");
 				item.appendChild(name);
 				name.setTextContent(src.getColTitles().get(i));
+				
+				if(src.getColTypes().get(i).getType() == ColType.TEXT ||
+						src.getColTypes().get(i).getType() == ColType.STRING ||	
+						src.getColTypes().get(i).getType() == ColType.DATETIME ) {
+					Element type = doc.createElement("type");
+					item.appendChild(type);
+					type.setTextContent("text");
+				}else if(src.getColTypes().get(i).getType() == ColType.DATE) {
+					Element type = doc.createElement("type");
+					item.appendChild(type);
+					type.setTextContent("date");
+				}
 			}
 		}
 		
