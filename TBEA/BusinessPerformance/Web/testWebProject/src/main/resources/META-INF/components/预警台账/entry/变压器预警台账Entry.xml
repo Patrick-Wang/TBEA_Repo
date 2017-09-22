@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="arWarningBookTEntryJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="arWarningBookTEntryUpdateClr"/>
+            <map key="submitUrl" value="arWarningBookTEntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="arWarningBookTEntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="arWarningBookTEntryUpdateServ"/>
+        <callcontroller id="arWarningBookTEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>序号</name>
+                    <readOnly>true</readOnly>
+                    
+                </item>
+                <item>
+                    <name>本部/项目公司</name>
+                </item>
+                <item>
+                    <name>部门/办事处</name>
+                </item>
+                <item>
+                    <name>业务类型</name>
+                </item>
+                <item>
+                    <name>合同号</name>
+                </item>
+                <item>
+                    <name>生产号</name>
+                </item>
+                <item>
+                    <name>单位名称</name>
+                </item>
+                <item>
+                    <name>项目名称</name>
+                </item>
+                <item>
+                    <name>客户所属行业</name>
+                </item>
+                <item>
+                    <name>产品型号</name>
+                </item>
+                <item>
+                    <name>数量</name>
+                </item>
+                <item>
+                    <name>付款方式</name>
+                </item>
+                <item>
+                    <name>合同金额</name>
+                </item>
+                <item>
+                    <name>发货时间/开工时间</name>
+                </item>
+                <item>
+                    <name>到货时间</name>
+                </item>
+                <item>
+                    <name>发货台数</name>
+                </item>
+                <item>
+                    <name>发货金额</name>
+                </item>
+                <item>
+                    <name>发货账龄</name>
+                </item>
+                <item>
+                    <name>无票金额</name>
+                </item>
+                <item>
+                    <name>开票金额</name>
+                </item>
+                <item>
+                    <name>预开票税金金额</name>
+                </item>
+                <item>
+                    <name>已收回款</name>
+                </item>
+                <item>
+                    <name>发货应收余额</name>
+                </item>
+                <item>
+                    <name>保理款</name>
+                </item>
+                <item>
+                    <name>账面应收余额</name>
+                </item>
+                <item>
+                    <name>应收预付款</name>
+                </item>
+                <item>
+                    <name>到货款到期时间</name>
+                </item>
+                <item>
+                    <name>应收到货款</name>
+                </item>
+                <item>
+                    <name>验收款到期时间</name>
+                </item>
+                <item>
+                    <name>应收验收款</name>
+                </item>
+                <item>
+                    <name>投运款到期时间</name>
+                </item>
+                <item>
+                    <name>应收投运款</name>
+                </item>
+                <item>
+                    <name>质保金到期时间</name>
+                </item>
+                <item>
+                    <name>应收质保金</name>
+                </item>
+                <item>
+                    <name>未到期款（不含质保金）</name>
+                </item>
+                <item>
+                    <name>未到期质保金</name>
+                </item>
+                <item>
+                    <name>逾期款</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="arWarningBookTEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="13,17,19,20,21,22,23,24,25,26,28,30,32,34,35,36,37"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="arWarningBookTEntryUpdateServ" transaction="transactionManager">
+        <sql id="data">select id,
+num,
+company,
+department,
+businessType,
+contractNum,
+productNum,
+customerName,
+projectName,
+cusIndustry,
+productModel,
+productQuantity,
+payment,
+contractAmount,
+CONVERT(varchar(20),deliverDate, 23) tmp13,
+arriDate,
+deliverNum,
+deliverAmount,
+deliverAging,
+noninvoiceAmount,
+invoicedAmount,
+preInvoiceAmount,
+RPAmount,
+ActualAR,
+factoringAmount,
+bookBalanceAR,
+preOfAR,
+CONVERT(varchar(20),expireOfArriDate, 23) tmp26,
+arriOfAR,
+CONVERT(varchar(20),expireOfcheckaccept, 23) tmp28,
+checkacceptOfAR,
+CONVERT(varchar(20),expireOfOperation, 23) tmp30,
+operationOfAR,
+CONVERT(varchar(20),expireOfGuar, 23) tmp32,
+GuarOfAR,
+NotDuePayment,
+NotDueGuar,
+overdueAmount from ar_warning_book_t</sql>
+        <list id="ids" sql="data" value="0"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="1"/>
+            <list sql="data" type="string" value="2"/>
+            <list sql="data" type="string" value="3"/>
+            <list sql="data" type="string" value="4"/>
+            <list sql="data" type="string" value="5"/>
+            <list sql="data" type="string" value="6"/>
+            <list sql="data" type="string" value="7"/>
+            <list sql="data" type="string" value="8"/>
+            <list sql="data" type="string" value="9"/>
+            <list sql="data" type="string" value="10"/>
+            <list sql="data" type="string" value="11"/>
+            <list sql="data" type="string" value="12"/>
+            <list sql="data" type="double" value="13"/>
+            <list sql="data" type="date" value="14"/>
+            <list sql="data" type="string" value="15"/>
+            <list sql="data" type="string" value="16"/>
+            <list sql="data" type="double" value="17"/>
+            <list sql="data" type="string" value="18"/>
+            <list sql="data" type="double" value="19"/>
+            <list sql="data" type="double" value="20"/>
+            <list sql="data" type="double" value="21"/>
+            <list sql="data" type="double" value="22"/>
+            <list sql="data" type="double" value="23"/>
+            <list sql="data" type="double" value="24"/>
+            <list sql="data" type="double" value="25"/>
+            <list sql="data" type="double" value="26"/>
+            <list sql="data" type="date" value="27"/>
+            <list sql="data" type="double" value="28"/>
+            <list sql="data" type="date" value="29"/>
+            <list sql="data" type="double" value="30"/>
+            <list sql="data" type="date" value="31"/>
+            <list sql="data" type="double" value="32"/>
+            <list sql="data" type="date" value="33"/>
+            <list sql="data" type="double" value="34"/>
+            <list sql="data" type="double" value="35"/>
+            <list sql="data" type="double" value="36"/>
+            <list sql="data" type="double" value="37"/>
+        </table>
+    </service>
+    <controller id="arWarningBookTEntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="arWarningBookTEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="arWarningBookTEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="ar_warning_book_t">
+            <where>
+                <id ref="0" type="int"/>
+                <num ref="1" type="string"/>
+            </where>
+            <set>
+                <num ref="1" type="string"/>
+                <company ref="2" type="string"/>
+                <department ref="3" type="string"/>
+                <businessType ref="4" type="string"/>
+                <contractNum ref="5" type="string"/>
+                <productNum ref="6" type="string"/>
+                <customerName ref="7" type="string"/>
+                <projectName ref="8" type="string"/>
+                <cusIndustry ref="9" type="string"/>
+                <productModel ref="10" type="string"/>
+                <productQuantity ref="11" type="string"/>
+                <payment ref="12" type="string"/>
+                <contractAmount ref="13" type="double"/>
+                <deliverDate ref="14" type="date"/>
+                <arriDate ref="15" type="string"/>
+                <deliverNum ref="16" type="string"/>
+                <deliverAmount ref="17" type="double"/>
+                <deliverAging ref="18" type="string"/>
+                <noninvoiceAmount ref="19" type="double"/>
+                <invoicedAmount ref="20" type="double"/>
+                <preInvoiceAmount ref="21" type="double"/>
+                <RPAmount ref="22" type="double"/>
+                <ActualAR ref="23" type="double"/>
+                <factoringAmount ref="24" type="double"/>
+                <bookBalanceAR ref="25" type="double"/>
+                <preOfAR ref="26" type="double"/>
+                <expireOfArriDate ref="27" type="date"/>
+                <arriOfAR ref="28" type="double"/>
+                <expireOfcheckaccept ref="29" type="date"/>
+                <checkacceptOfAR ref="30" type="double"/>
+                <expireOfOperation ref="31" type="date"/>
+                <operationOfAR ref="32" type="double"/>
+                <expireOfGuar ref="33" type="date"/>
+                <GuarOfAR ref="34" type="double"/>
+                <NotDuePayment ref="35" type="double"/>
+                <NotDueGuar ref="36" type="double"/>
+                <overdueAmount ref="37" type="double"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

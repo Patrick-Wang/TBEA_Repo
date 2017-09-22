@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="arWarningBookCEntryJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="arWarningBookCEntryUpdateClr"/>
+            <map key="submitUrl" value="arWarningBookCEntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="arWarningBookCEntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="arWarningBookCEntryUpdateServ"/>
+        <callcontroller id="arWarningBookCEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+    <item>
+        <name>序号</name>
+        <readOnly>true</readOnly>
+    </item>
+    <item>
+        <name>本部/项目公司</name>
+    </item>
+    <item>
+        <name>部门/办事处</name>
+    </item>
+    <item>
+        <name>经办人</name>
+    </item>
+    <item>
+        <name>客户名称</name>
+    </item>
+    <item>
+        <name>合同编号</name>
+    </item>
+    <item>
+        <name>客户所属行业</name>
+    </item>
+    <item>
+        <name>产品大类</name>
+    </item>
+    <item>
+        <name>合同日期</name>
+    </item>
+    <item>
+        <name>项目名称</name>
+    </item>
+    <item>
+        <name>交易条款/付款方式</name>
+    </item>
+    <item>
+        <name>是否兜底（是/否）</name>
+    </item>
+    <item>
+        <name>合同总额</name>
+    </item>
+    <item>
+        <name>发货总额</name>
+    </item>
+    <item>
+        <name>末次发货时间</name>
+    </item>
+    <item>
+        <name>已开发票金额</name>
+    </item>
+    <item>
+        <name>未开票金额</name>
+    </item>
+    <item>
+        <name>回款总额</name>
+    </item>
+    <item>
+        <name>回款比例</name>
+    </item>
+    <item>
+        <name>末次回款日期</name>
+    </item>
+    <item>
+        <name>本期账面余额</name>
+    </item>
+    <item>
+        <name>实际应收余额（发货口径）</name>
+    </item>
+    <item>
+        <name>到期款总额</name>
+    </item>
+    <item>
+        <name>预收款到期款</name>
+        <sub type="array">
+            <item>
+                <name>预收款到期款</name>
+            </item>
+            <item>
+                <name>预收款到期日期</name>
+            </item>
+            <item>
+                <name>预收款逾期天数</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>发货款到期款</name>
+        <sub type="array">
+            <item>
+                <name>发货款到期款</name>
+            </item>
+            <item>
+                <name>发货款到期日期</name>
+            </item>
+            <item>
+                <name>发货款逾期天数</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>到货款到期款</name>
+        <sub type="array">
+            <item>
+                <name>到货款到期款</name>
+            </item>
+            <item>
+                <name>到货款到期日期</name>
+            </item>
+            <item>
+                <name>到货款逾期天数</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>安装款到期款</name>
+        <sub type="array">
+            <item>
+                <name>安装款到期款</name>
+            </item>
+            <item>
+                <name>安装款到期日期</name>
+            </item>
+            <item>
+                <name>安装款逾期天数</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>运行款到期款</name>
+        <sub type="array">
+            <item>
+                <name>运行款到期款</name>
+            </item>
+            <item>
+                <name>运行款到期日期</name>
+            </item>
+            <item>
+                <name>运行款逾期天数</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>质保金到期款</name>
+        <sub type="array">
+            <item>
+                <name>质保金到期款</name>
+            </item>
+            <item>
+                <name>质保金到期日期</name>
+            </item>
+            <item>
+                <name>质保金逾期天数</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>未到期款总额</name>
+    </item>
+    <item>
+        <name>未到期预收款</name>
+        <sub type="array">
+            <item>
+                <name>未到期预收款</name>
+            </item>
+            <item>
+                <name>预收款到期日期</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>未到期发货款</name>
+        <sub type="array">
+            <item>
+                <name>未到期发货款</name>
+            </item>
+            <item>
+                <name>发货款到期日期</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>未到期到货款</name>
+        <sub type="array">
+            <item>
+                <name>未到期到货款</name>
+            </item>
+            <item>
+                <name>到货款到期日期</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>未到期安装款</name>
+        <sub type="array">
+            <item>
+                <name>安装款到期日期</name>
+            </item>
+            <item>
+                <name>未到期安装款</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>未到期运行款</name>
+        <sub type="array">
+            <item>
+                <name>未到期运行款</name>
+            </item>
+            <item>
+                <name>运行款到期日期</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>未到期质保金</name>
+        <sub type="array">
+            <item>
+                <name>未到期质保金</name>
+            </item>
+            <item>
+                <name>质保金到期日期</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>未回因素</name>
+    </item>
+    <item>
+        <name>预开发票金额</name>
+    </item>
+    <item>
+        <name>当前清收进度</name>
+    </item>
+    <item>
+        <name>后期清收措施</name>
+    </item>
+    <item>
+        <name>本月预计回款</name>
+        <sub type="array">
+            <item>
+                <name>确保</name>
+            </item>
+            <item>
+                <name>争取</name>
+            </item>
+            <item>
+                <name>小计</name>
+            </item>
+        </sub>
+    </item>
+    <item>
+        <name>督导厂领导</name>
+    </item>
+</header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="arWarningBookCEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="13,14,16,17,18,19,21,22,23,24,27,30,33,36,39,42,43,45,47,49,51,53,56,59,60,61"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="arWarningBookCEntryUpdateServ" transaction="transactionManager">
+        <sql id="data">select id,
+num,
+company,
+department,
+operator,
+customer,
+contractNum,
+cusIndustry,
+productType,
+CONVERT(varchar(20),contractDate, 23) tmp8,
+projectName,
+payment,
+isDD,
+contractAmount,
+deliverAmount,
+CONVERT(varchar(20),lastDeliveryDate, 23) tmp14,
+invoicedAmount,
+unbilledAmount,
+RPAmount,
+RPRation,
+CONVERT(varchar(20),lastRPDate, 23) tmp19,
+beginBookBalance,
+ActualAR,
+expireAmount,
+expireOfPrePAmount,
+expireOfPrePDate,
+expireOfPrePDays,
+expireOfDeliAmount,
+expireOfDeliDate,
+expireOfDeliDays,
+expireOfArriAmount,
+expireOfArriDate,
+expireOfArriDays,
+expireOfFixAmount,
+expireOfFixDate,
+expireOfFixDays,
+expireOfWorkAmount,
+expireOfWorkDate,
+expireOfWorkDays,
+expireOfGuarAmount,
+expireOfGuarDate,
+expireOfGuarDays,
+NotDuePayment,
+NotDuePrePAmount,
+NotDuePrePDate,
+NotDueDeliAmount,
+NotDueDeliDate,
+NotDueArriAmount,
+NotDueArriDate,
+NotDueFixAmount,
+NotDueFixDate,
+NotDueWorkAmount,
+NotDueWorkDate,
+NotDueGuarAmount,
+NotDueGuarDate,
+NoPaymentFactor,
+preReceiptAmount,
+liquidateProgress,
+liquidateMeasure,
+ensure,
+strive,
+summary,
+leader from ar_warning_book_c</sql>
+        <list id="ids" sql="data" value="0"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="1"/>
+            <list sql="data" type="string" value="2"/>
+            <list sql="data" type="string" value="3"/>
+            <list sql="data" type="string" value="4"/>
+            <list sql="data" type="string" value="5"/>
+            <list sql="data" type="string" value="6"/>
+            <list sql="data" type="string" value="7"/>
+            <list sql="data" type="string" value="8"/>
+            <list sql="data" type="date" value="9"/>
+            <list sql="data" type="string" value="10"/>
+            <list sql="data" type="string" value="11"/>
+            <list sql="data" type="string" value="12"/>
+            <list sql="data" type="double" value="13"/>
+            <list sql="data" type="double" value="14"/>
+            <list sql="data" type="date" value="15"/>
+            <list sql="data" type="double" value="16"/>
+            <list sql="data" type="double" value="17"/>
+            <list sql="data" type="double" value="18"/>
+            <list sql="data" type="double" value="19"/>
+            <list sql="data" type="date" value="20"/>
+            <list sql="data" type="double" value="21"/>
+            <list sql="data" type="double" value="22"/>
+            <list sql="data" type="double" value="23"/>
+            <list sql="data" type="double" value="24"/>
+            <list sql="data" type="string" value="25"/>
+            <list sql="data" type="string" value="26"/>
+            <list sql="data" type="double" value="27"/>
+            <list sql="data" type="string" value="28"/>
+            <list sql="data" type="string" value="29"/>
+            <list sql="data" type="double" value="30"/>
+            <list sql="data" type="string" value="31"/>
+            <list sql="data" type="string" value="32"/>
+            <list sql="data" type="double" value="33"/>
+            <list sql="data" type="string" value="34"/>
+            <list sql="data" type="string" value="35"/>
+            <list sql="data" type="double" value="36"/>
+            <list sql="data" type="string" value="37"/>
+            <list sql="data" type="string" value="38"/>
+            <list sql="data" type="double" value="39"/>
+            <list sql="data" type="string" value="40"/>
+            <list sql="data" type="string" value="41"/>
+            <list sql="data" type="double" value="42"/>
+            <list sql="data" type="double" value="43"/>
+            <list sql="data" type="string" value="44"/>
+            <list sql="data" type="double" value="45"/>
+            <list sql="data" type="string" value="46"/>
+            <list sql="data" type="double" value="47"/>
+            <list sql="data" type="string" value="48"/>
+            <list sql="data" type="double" value="49"/>
+            <list sql="data" type="string" value="50"/>
+            <list sql="data" type="double" value="51"/>
+            <list sql="data" type="string" value="52"/>
+            <list sql="data" type="double" value="53"/>
+            <list sql="data" type="string" value="54"/>
+            <list sql="data" type="string" value="55"/>
+            <list sql="data" type="double" value="56"/>
+            <list sql="data" type="string" value="57"/>
+            <list sql="data" type="string" value="58"/>
+            <list sql="data" type="double" value="59"/>
+            <list sql="data" type="double" value="60"/>
+            <list sql="data" type="double" value="61"/>
+            <list sql="data" type="string" value="62"/>
+        </table>
+    </service>
+    <controller id="arWarningBookCEntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="arWarningBookCEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="arWarningBookCEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="ar_warning_book_c">
+            <where>
+                <id ref="0" type="int"/>
+                <num ref="1" type="string"/>
+            </where>
+            <set>
+                <num ref="1" type="string"/>
+                <company ref="2" type="string"/>
+                <department ref="3" type="string"/>
+                <operator ref="4" type="string"/>
+                <customer ref="5" type="string"/>
+                <contractNum ref="6" type="string"/>
+                <cusIndustry ref="7" type="string"/>
+                <productType ref="8" type="string"/>
+                <contractDate ref="9" type="date"/>
+                <projectName ref="10" type="string"/>
+                <payment ref="11" type="string"/>
+                <isDD ref="12" type="string"/>
+                <contractAmount ref="13" type="double"/>
+                <deliverAmount ref="14" type="double"/>
+                <lastDeliveryDate ref="15" type="date"/>
+                <invoicedAmount ref="16" type="double"/>
+                <unbilledAmount ref="17" type="double"/>
+                <RPAmount ref="18" type="double"/>
+                <RPRation ref="19" type="double"/>
+                <lastRPDate ref="20" type="date"/>
+                <beginBookBalance ref="21" type="double"/>
+                <ActualAR ref="22" type="double"/>
+                <expireAmount ref="23" type="double"/>
+                <expireOfPrePAmount ref="24" type="double"/>
+                <expireOfPrePDate ref="25" type="string"/>
+                <expireOfPrePDays ref="26" type="string"/>
+                <expireOfDeliAmount ref="27" type="double"/>
+                <expireOfDeliDate ref="28" type="string"/>
+                <expireOfDeliDays ref="29" type="string"/>
+                <expireOfArriAmount ref="30" type="double"/>
+                <expireOfArriDate ref="31" type="string"/>
+                <expireOfArriDays ref="32" type="string"/>
+                <expireOfFixAmount ref="33" type="double"/>
+                <expireOfFixDate ref="34" type="string"/>
+                <expireOfFixDays ref="35" type="string"/>
+                <expireOfWorkAmount ref="36" type="double"/>
+                <expireOfWorkDate ref="37" type="string"/>
+                <expireOfWorkDays ref="38" type="string"/>
+                <expireOfGuarAmount ref="39" type="double"/>
+                <expireOfGuarDate ref="40" type="string"/>
+                <expireOfGuarDays ref="41" type="string"/>
+                <NotDuePayment ref="42" type="double"/>
+                <NotDuePrePAmount ref="43" type="double"/>
+                <NotDuePrePDate ref="44" type="string"/>
+                <NotDueDeliAmount ref="45" type="double"/>
+                <NotDueDeliDate ref="46" type="string"/>
+                <NotDueArriAmount ref="47" type="double"/>
+                <NotDueArriDate ref="48" type="string"/>
+                <NotDueFixAmount ref="49" type="double"/>
+                <NotDueFixDate ref="50" type="string"/>
+                <NotDueWorkAmount ref="51" type="double"/>
+                <NotDueWorkDate ref="52" type="string"/>
+                <NotDueGuarAmount ref="53" type="double"/>
+                <NotDueGuarDate ref="54" type="string"/>
+                <NoPaymentFactor ref="55" type="string"/>
+                <preReceiptAmount ref="56" type="double"/>
+                <liquidateProgress ref="57" type="string"/>
+                <liquidateMeasure ref="58" type="string"/>
+                <ensure ref="59" type="double"/>
+                <strive ref="60" type="double"/>
+                <summary ref="61" type="double"/>
+                <leader ref="62" type="string"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>
