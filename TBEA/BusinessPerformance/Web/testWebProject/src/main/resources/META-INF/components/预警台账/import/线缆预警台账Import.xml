@@ -15,7 +15,7 @@
         </response>
     </controller>
     <service id="arWarningBookCImportServ" transaction="transactionManager">
-        <merge data="${data}" table="ar_warning_book_c">
+        <merge data="${data}" table="ar_warning_book_c" from="2">
             <where>
                 <num ref="0" type="string"/>
             </where>
