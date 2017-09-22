@@ -285,7 +285,7 @@ var role_mgr;
                                 _this.mSubmitAjax.post({
                                     rids: JSON.stringify(rids),
                                     cids: JSON.stringify(cids),
-                                    aids: JSON.stringify(aids)
+                                    aids: JSON.stringify(aids),
                                 })
                                     .then(function (dataArray) {
                                     dialog.modal('hide');

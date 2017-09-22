@@ -34,6 +34,15 @@ public class SystemAuthority {
 		return compIds;
 	}
 	
+	public List<String> cnames(Integer authType){
+		List<Company> comps = extendAuthService.getAuthedCompanies(account, authType);
+		List<String> compIds = new ArrayList<String>();
+		for (Company comp : comps){
+			compIds.add(comp.getName());
+		}
+		return compIds;
+	}
+	
 	public List<CompanyType> ctypes(Integer authType){
 		List<Company> comps = extendAuthService.getAuthedCompanies(account, authType);
 		List<CompanyType> compIds = new ArrayList<CompanyType>();

@@ -128,6 +128,7 @@
                     <name>逾期款</name>
                 </item>
             </header>
+            <shrinkToFit>false</shrinkToFit>
             <data>${fmtServ.result}</data>
         </response>
     </controller>
@@ -207,7 +208,9 @@ CONVERT(varchar(20),expireOfGuar, 23) tmp32,
 GuarOfAR,
 NotDuePayment,
 NotDueGuar,
-overdueAmount from ar_warning_book_t</sql>
+overdueAmount 
+from ar_warning_book_t
+where company = (select name from jygk_dwxx where id = ${item})</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

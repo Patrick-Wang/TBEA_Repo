@@ -143,12 +143,12 @@ module framework.templates.singleDateReport {
                 jqgrid.setGridWidth($("#" + this.opt.host).width());
             }
 
-            let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
-            this.mTableAssist && this.mTableAssist.resizeHeight(maxTableBodyHeight);
-
-            if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
-                jqgrid.setGridWidth($("#" + this.opt.host).width());
-            }
+            //let maxTableBodyHeight = document.documentElement.clientHeight - 4 - 150;
+            //this.mTableAssist && this.mTableAssist.resizeHeight(maxTableBodyHeight);
+            //
+            //if ($("#" + this.opt.host).width() != $("#" + this.opt.host + " .ui-jqgrid").width()) {
+            //    jqgrid.setGridWidth($("#" + this.opt.host).width());
+            //}
         }
 
         jqgrid(){
@@ -187,7 +187,7 @@ module framework.templates.singleDateReport {
                 rowNum: 15,
                 height: '100%',
                 width: $("#" + this.opt.host).width(),
-                shrinkToFit: true,
+                shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
                 autoScroll: true,
                 pager: '#' + this.jqgridName() + "pager",
                 viewrecords: true

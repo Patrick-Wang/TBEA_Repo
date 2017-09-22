@@ -271,6 +271,7 @@
     </item>
    </header>
    <data>${fmtServ.result}</data>
+   <shrinkToFit>false</shrinkToFit>
   </response>
  </controller>
  <controller id="arWarningBookCFmtClr">
@@ -376,7 +377,9 @@ liquidateMeasure,
 ensure,
 strive,
 summary,
-leader from ar_warning_book_c</sql>
+leader 
+from ar_warning_book_c
+where company = (select name from jygk_dwxx where id = ${item})</sql>
   <list id="ids" sql="data" value="0"/>
   <table export="true" id="result" rowIds="ids">
    <list sql="data" type="string" value="1"/>

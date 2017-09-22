@@ -173,7 +173,7 @@
 				<!-- Page Header -->
 				<div class="page-header position-relative">
 					<div class="header-title">
-						<div class="workinput pull-left">
+						<div class="workinput pull-left ${nodate != 'true' ? '' : 'hidden'}">
 							<input id="grid-date" type="text" readonly="readonly"><i
 								class="fa fa-calendar"></i>
 						</div>

@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="3AADA80D5B18E419386688AD36592212ShowWrapperJsp">
-        <list id="ids" type="int">0,1</list>
-        <list id="vals" type="string">变压器预警台账,线缆预警台账</list>
+        <list id="ids" type="int">
+        	<item concat="${sysAuth.cids[90]}"></item>
+        	<item concat="${sysAuth.cids[92]}"></item>
+        </list>
+        <list id="vals" type="string">
+			<item concat="${sysAuth.cnames[90]}"></item>
+        	<item concat="${sysAuth.cnames[92]}"></item>
+        </list>
+        
         <response name="framework/templates/dateReport/show" type="jsp">
+        	<map key="nodate" value="true"/>
             <map key="updateUrl" value="3AADA80D5B18E419386688AD36592212UpdateWrapperClr"/>
             <map key="exportUrl" value="3AADA80D5B18E419386688AD36592212ExportWrapperClr"/>
             <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
@@ -12,19 +20,19 @@
     </controller>
     <controller id="3AADA80D5B18E419386688AD36592212UpdateWrapperClr">
         <context key="item" value="${request.item.asInt}"/>
-        <if test="${item == 0}">
+        <if test="${sysAuth.cids[90].contains[item]}">
             <callcontroller id="arWarningBookTUpdateClr"/>
         </if>
-        <elseif test="${item == 1}">
+        <elseif test="${sysAuth.cids[92].contains[item]}">
             <callcontroller id="arWarningBookCUpdateClr"/>
-        </elseif>
+        </elseif> 
     </controller>
     <controller id="3AADA80D5B18E419386688AD36592212ExportWrapperClr">
         <context key="item" value="${request.item.asInt}"/>
-        <if test="${item == 0}">
+        <if test="${sysAuth.cids[90].contains[item]}">
             <callcontroller id="arWarningBookTExportClr"/>
         </if>
-        <elseif test="${item == 1}">
+        <elseif test="${sysAuth.cids[92].contains[item]}">
             <callcontroller id="arWarningBookCExportClr"/>
         </elseif>
     </controller>

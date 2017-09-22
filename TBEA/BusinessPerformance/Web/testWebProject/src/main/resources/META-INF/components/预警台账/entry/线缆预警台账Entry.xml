@@ -16,40 +16,53 @@
             <header type="array">
     <item>
         <name>序号</name>
-        <readOnly>true</readOnly>
+        <type>text</type>
     </item>
     <item>
         <name>本部/项目公司</name>
+         <type>select</type>
+       <options>${sysAuth.cnames[91]}</options>
     </item>
     <item>
         <name>部门/办事处</name>
+        
+        <type>text</type>
     </item>
     <item>
         <name>经办人</name>
+        <type>text</type>
     </item>
     <item>
         <name>客户名称</name>
+        <type>text</type>
     </item>
     <item>
         <name>合同编号</name>
+        <type>text</type>
     </item>
     <item>
         <name>客户所属行业</name>
+        <type>text</type>
     </item>
     <item>
         <name>产品大类</name>
+        <type>text</type>
     </item>
     <item>
         <name>合同日期</name>
+        <type>date</type>
     </item>
     <item>
         <name>项目名称</name>
+        <type>text</type>
     </item>
     <item>
         <name>交易条款/付款方式</name>
+        <type>text</type>
     </item>
     <item>
         <name>是否兜底（是/否）</name>
+        <type>text</type>
     </item>
     <item>
         <name>合同总额</name>
@@ -59,6 +72,7 @@
     </item>
     <item>
         <name>末次发货时间</name>
+        <type>date</type>
     </item>
     <item>
         <name>已开发票金额</name>
@@ -74,6 +88,7 @@
     </item>
     <item>
         <name>末次回款日期</name>
+        <type>date</type>
     </item>
     <item>
         <name>本期账面余额</name>
@@ -92,9 +107,11 @@
             </item>
             <item>
                 <name>预收款到期日期</name>
+        <type>text</type>
             </item>
             <item>
                 <name>预收款逾期天数</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -106,9 +123,11 @@
             </item>
             <item>
                 <name>发货款到期日期</name>
+        <type>text</type>
             </item>
             <item>
                 <name>发货款逾期天数</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -120,9 +139,11 @@
             </item>
             <item>
                 <name>到货款到期日期</name>
+        <type>text</type>
             </item>
             <item>
                 <name>到货款逾期天数</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -134,9 +155,11 @@
             </item>
             <item>
                 <name>安装款到期日期</name>
+        <type>text</type>
             </item>
             <item>
                 <name>安装款逾期天数</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -148,9 +171,11 @@
             </item>
             <item>
                 <name>运行款到期日期</name>
+        <type>text</type>
             </item>
             <item>
                 <name>运行款逾期天数</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -162,9 +187,11 @@
             </item>
             <item>
                 <name>质保金到期日期</name>
+        <type>text</type>
             </item>
             <item>
                 <name>质保金逾期天数</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -179,6 +206,7 @@
             </item>
             <item>
                 <name>预收款到期日期</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -190,6 +218,7 @@
             </item>
             <item>
                 <name>发货款到期日期</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -201,6 +230,7 @@
             </item>
             <item>
                 <name>到货款到期日期</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -208,10 +238,11 @@
         <name>未到期安装款</name>
         <sub type="array">
             <item>
-                <name>安装款到期日期</name>
+                <name>未到期安装款</name>
             </item>
             <item>
-                <name>未到期安装款</name>
+                <name>安装款到期日期</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -223,6 +254,7 @@
             </item>
             <item>
                 <name>运行款到期日期</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
@@ -234,20 +266,24 @@
             </item>
             <item>
                 <name>质保金到期日期</name>
+        <type>text</type>
             </item>
         </sub>
     </item>
     <item>
         <name>未回因素</name>
+        <type>text</type>
     </item>
     <item>
         <name>预开发票金额</name>
     </item>
     <item>
         <name>当前清收进度</name>
+        <type>text</type>
     </item>
     <item>
         <name>后期清收措施</name>
+        <type>text</type>
     </item>
     <item>
         <name>本月预计回款</name>
@@ -265,9 +301,12 @@
     </item>
     <item>
         <name>督导厂领导</name>
+        <type>text</type>
     </item>
 </header>
             <data>${fmtServ.result}</data>
+            
+            <shrinkToFit>false</shrinkToFit>
         </response>
     </controller>
     <controller id="arWarningBookCEntryFmtClr">
@@ -341,7 +380,9 @@ liquidateMeasure,
 ensure,
 strive,
 summary,
-leader from ar_warning_book_c</sql>
+leader 
+from ar_warning_book_c
+where company = (select name from jygk_dwxx where id = ${item})</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
@@ -423,7 +464,6 @@ leader from ar_warning_book_c</sql>
         <merge data="${data}" table="ar_warning_book_c">
             <where>
                 <id ref="0" type="int"/>
-                <num ref="1" type="string"/>
             </where>
             <set>
                 <num ref="1" type="string"/>

@@ -15,60 +15,75 @@
         <response type="json">
             <header type="array">
                 <item>
-                    <name>序号</name>
-                    <readOnly>true</readOnly>
-                    
+                    <name>序号</name> 
+                    <type>text</type>                   
                 </item>
                 <item>
                     <name>本部/项目公司</name>
+                    <type>select</type>
+                    <options>${sysAuth.cnames[89]}</options>
                 </item>
                 <item>
                     <name>部门/办事处</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>业务类型</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>合同号</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>生产号</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>单位名称</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>项目名称</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>客户所属行业</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>产品型号</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>数量</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>付款方式</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>合同金额</name>
                 </item>
                 <item>
                     <name>发货时间/开工时间</name>
+                    <type>date</type> 
                 </item>
                 <item>
                     <name>到货时间</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>发货台数</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>发货金额</name>
                 </item>
                 <item>
                     <name>发货账龄</name>
+                    <type>text</type> 
                 </item>
                 <item>
                     <name>无票金额</name>
@@ -96,24 +111,28 @@
                 </item>
                 <item>
                     <name>到货款到期时间</name>
+                    <type>date</type> 
                 </item>
                 <item>
                     <name>应收到货款</name>
                 </item>
                 <item>
                     <name>验收款到期时间</name>
+                    <type>date</type> 
                 </item>
                 <item>
                     <name>应收验收款</name>
                 </item>
                 <item>
                     <name>投运款到期时间</name>
+                    <type>date</type> 
                 </item>
                 <item>
                     <name>应收投运款</name>
                 </item>
                 <item>
                     <name>质保金到期时间</name>
+                    <type>date</type> 
                 </item>
                 <item>
                     <name>应收质保金</name>
@@ -128,6 +147,7 @@
                     <name>逾期款</name>
                 </item>
             </header>
+            <shrinkToFit>false</shrinkToFit>
             <data>${fmtServ.result}</data>
         </response>
     </controller>
@@ -177,7 +197,9 @@ CONVERT(varchar(20),expireOfGuar, 23) tmp32,
 GuarOfAR,
 NotDuePayment,
 NotDueGuar,
-overdueAmount from ar_warning_book_t</sql>
+overdueAmount 
+from ar_warning_book_t
+where company = (select name from jygk_dwxx where id = ${item})</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
@@ -234,7 +256,6 @@ overdueAmount from ar_warning_book_t</sql>
         <merge data="${data}" table="ar_warning_book_t">
             <where>
                 <id ref="0" type="int"/>
-                <num ref="1" type="string"/>
             </where>
             <set>
                 <num ref="1" type="string"/>

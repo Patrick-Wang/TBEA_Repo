@@ -274,10 +274,16 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	}
 
 	private boolean concat(AbstractXmlComponent component, Element item,
-			List<Object> objs, int repeat, int insert) {
+			List<Object> objs, int repeat, int insert) throws Exception {
 		String concat = XmlUtil.getAttr(item, "concat");
 		if (null != concat){
 			List list = (List) component.getVar(concat);
+			if (list == null) {
+				Object tmpList = XmlUtil.parseELText(concat, elp);
+				if (tmpList instanceof List) {
+					list = (List)tmpList;
+				}
+			}
 			if (null != list) {
 				repeatAddList(objs, list, repeat, insert);
 				return true;
