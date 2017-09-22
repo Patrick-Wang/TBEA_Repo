@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="arWarningBookTImportJSP">
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="arWarningBookTImportClr"/>
+        </response>
+    </controller>
+    <controller id="arWarningBookTImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="arWarningBookTImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="arWarningBookTImportServ" transaction="transactionManager">
+        <merge data="${data}" table="ar_warning_book_t">
+            <where>
+                <num ref="0" type="string"/>
+            </where>
+            <set>
+                <num ref="0" type="string"/>
+                <company ref="1" type="string"/>
+                <department ref="2" type="string"/>
+                <businessType ref="3" type="string"/>
+                <contractNum ref="4" type="string"/>
+                <productNum ref="5" type="string"/>
+                <customerName ref="6" type="string"/>
+                <projectName ref="7" type="string"/>
+                <cusIndustry ref="8" type="string"/>
+                <productModel ref="9" type="string"/>
+                <productQuantity ref="10" type="string"/>
+                <payment ref="11" type="string"/>
+                <contractAmount ref="12" type="double"/>
+                <deliverDate ref="13" type="date"/>
+                <arriDate ref="14" type="string"/>
+                <deliverNum ref="15" type="string"/>
+                <deliverAmount ref="16" type="double"/>
+                <deliverAging ref="17" type="string"/>
+                <noninvoiceAmount ref="18" type="double"/>
+                <invoicedAmount ref="19" type="double"/>
+                <preInvoiceAmount ref="20" type="double"/>
+                <RPAmount ref="21" type="double"/>
+                <ActualAR ref="22" type="double"/>
+                <factoringAmount ref="23" type="double"/>
+                <bookBalanceAR ref="24" type="double"/>
+                <preOfAR ref="25" type="double"/>
+                <expireOfArriDate ref="26" type="date"/>
+                <arriOfAR ref="27" type="double"/>
+                <expireOfcheckaccept ref="28" type="date"/>
+                <checkacceptOfAR ref="29" type="double"/>
+                <expireOfOperation ref="30" type="date"/>
+                <operationOfAR ref="31" type="double"/>
+                <expireOfGuar ref="32" type="date"/>
+                <GuarOfAR ref="33" type="double"/>
+                <NotDuePayment ref="34" type="double"/>
+                <NotDueGuar ref="35" type="double"/>
+                <overdueAmount ref="36" type="double"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

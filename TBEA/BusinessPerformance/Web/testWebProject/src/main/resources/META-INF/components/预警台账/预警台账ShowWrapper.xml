@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="3AADA80D5B18E419386688AD36592212ShowWrapperJsp">
+        <list id="ids" type="int">0,1</list>
+        <list id="vals" type="string">变压器预警台账,线缆预警台账</list>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="3AADA80D5B18E419386688AD36592212UpdateWrapperClr"/>
+            <map key="exportUrl" value="3AADA80D5B18E419386688AD36592212ExportWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="3AADA80D5B18E419386688AD36592212UpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="arWarningBookTUpdateClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="arWarningBookCUpdateClr"/>
+        </elseif>
+    </controller>
+    <controller id="3AADA80D5B18E419386688AD36592212ExportWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="arWarningBookTExportClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="arWarningBookCExportClr"/>
+        </elseif>
+    </controller>
+</components>

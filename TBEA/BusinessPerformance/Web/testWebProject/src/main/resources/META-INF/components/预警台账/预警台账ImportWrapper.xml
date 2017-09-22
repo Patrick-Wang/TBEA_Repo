@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="3AADA80D5B18E419386688AD36592212ImportWrapperJsp">
+        <list id="ids" type="int">0,1</list>
+        <list id="vals" type="string">变压器预警台账,线缆预警台账</list>
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="3AADA80D5B18E419386688AD36592212ImportWrapper"/>
+            <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+        </response>
+    </controller>
+    <controller id="3AADA80D5B18E419386688AD36592212ImportWrapper">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="arWarningBookTImportClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="arWarningBookCImportClr"/>
+        </elseif>
+    </controller>
+</components>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="arWarningBookCImportJSP">
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="arWarningBookCImportClr"/>
+        </response>
+    </controller>
+    <controller id="arWarningBookCImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="arWarningBookCImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="arWarningBookCImportServ" transaction="transactionManager">
+        <merge data="${data}" table="ar_warning_book_c">
+            <where>
+                <num ref="0" type="string"/>
+            </where>
+            <set>
+                <num ref="0" type="string"/>
+                <company ref="1" type="string"/>
+                <department ref="2" type="string"/>
+                <operator ref="3" type="string"/>
+                <customer ref="4" type="string"/>
+                <contractNum ref="5" type="string"/>
+                <cusIndustry ref="6" type="string"/>
+                <productType ref="7" type="string"/>
+                <contractDate ref="8" type="date"/>
+                <projectName ref="9" type="string"/>
+                <payment ref="10" type="string"/>
+                <isDD ref="11" type="string"/>
+                <contractAmount ref="12" type="double"/>
+                <deliverAmount ref="13" type="double"/>
+                <lastDeliveryDate ref="14" type="date"/>
+                <invoicedAmount ref="15" type="double"/>
+                <unbilledAmount ref="16" type="double"/>
+                <RPAmount ref="17" type="double"/>
+                <RPRation ref="18" type="double"/>
+                <lastRPDate ref="19" type="date"/>
+                <beginBookBalance ref="20" type="double"/>
+                <ActualAR ref="21" type="double"/>
+                <expireAmount ref="22" type="double"/>
+                <expireOfPrePAmount ref="23" type="double"/>
+                <expireOfPrePDate ref="24" type="string"/>
+                <expireOfPrePDays ref="25" type="string"/>
+                <expireOfDeliAmount ref="26" type="double"/>
+                <expireOfDeliDate ref="27" type="string"/>
+                <expireOfDeliDays ref="28" type="string"/>
+                <expireOfArriAmount ref="29" type="double"/>
+                <expireOfArriDate ref="30" type="string"/>
+                <expireOfArriDays ref="31" type="string"/>
+                <expireOfFixAmount ref="32" type="double"/>
+                <expireOfFixDate ref="33" type="string"/>
+                <expireOfFixDays ref="34" type="string"/>
+                <expireOfWorkAmount ref="35" type="double"/>
+                <expireOfWorkDate ref="36" type="string"/>
+                <expireOfWorkDays ref="37" type="string"/>
+                <expireOfGuarAmount ref="38" type="double"/>
+                <expireOfGuarDate ref="39" type="string"/>
+                <expireOfGuarDays ref="40" type="string"/>
+                <NotDuePayment ref="41" type="double"/>
+                <NotDuePrePAmount ref="42" type="double"/>
+                <NotDuePrePDate ref="43" type="string"/>
+                <NotDueDeliAmount ref="44" type="double"/>
+                <NotDueDeliDate ref="45" type="string"/>
+                <NotDueArriAmount ref="46" type="double"/>
+                <NotDueArriDate ref="47" type="string"/>
+                <NotDueFixAmount ref="48" type="double"/>
+                <NotDueFixDate ref="49" type="string"/>
+                <NotDueWorkAmount ref="50" type="double"/>
+                <NotDueWorkDate ref="51" type="string"/>
+                <NotDueGuarAmount ref="52" type="double"/>
+                <NotDueGuarDate ref="53" type="string"/>
+                <NoPaymentFactor ref="54" type="string"/>
+                <preReceiptAmount ref="55" type="double"/>
+                <liquidateProgress ref="56" type="string"/>
+                <liquidateMeasure ref="57" type="string"/>
+                <ensure ref="58" type="double"/>
+                <strive ref="59" type="double"/>
+                <summary ref="60" type="double"/>
+                <leader ref="61" type="string"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

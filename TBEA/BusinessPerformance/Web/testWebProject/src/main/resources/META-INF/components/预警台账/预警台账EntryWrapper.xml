@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="3AADA80D5B18E419386688AD36592212EntryWrapperJsp">
+        <list id="ids" type="int">0,1</list>
+        <list id="vals" type="string">变压器预警台账,线缆预警台账</list>
+        <response name="framework/templates/dateReport/entry" type="jsp">
+            <map key="updateUrl" value="3AADA80D5B18E419386688AD36592212EntryUpdateWrapperClr"/>
+            <map key="submitUrl" value="3AADA80D5B18E419386688AD36592212EntrySubmitWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="3AADA80D5B18E419386688AD36592212EntryUpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="arWarningBookTEntryUpdateClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="arWarningBookCEntryUpdateClr"/>
+        </elseif>
+    </controller>
+    <controller id="3AADA80D5B18E419386688AD36592212EntrySubmitWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="arWarningBookTEntrySubmitClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="arWarningBookCEntrySubmitClr"/>
+        </elseif>
+    </controller>
+</components>

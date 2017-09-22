@@ -9,8 +9,6 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.ExtendAuthority;
 import com.tbea.ic.operation.model.entity.jygk.Account;
