@@ -52,7 +52,10 @@
                 </item>
                 <item>
                     <name>客户所属行业</name>
-                    <type>text</type> 
+                     <type>select</type>
+                    <options type="array">
+                    	国网,南网,火电,水电,风电,核电,光伏,轨道交通,石油石化,煤炭及煤化工,钢铁冶金,航天军工,连锁经营,内贸,其他
+                    </options> 
                 </item>
                 <item>
                     <name>产品型号</name>

@@ -42,11 +42,17 @@
     </item>
     <item>
         <name>客户所属行业</name>
-        <type>text</type>
+        <type>select</type>
+        <options type="array">
+        	国网,南网,火电,水电,风电,核电,光伏,轨道交通,石油石化,煤炭及煤化工,钢铁冶金,航天军工,连锁经营,内贸,国际工程,其他
+        </options> 
     </item>
     <item>
         <name>产品大类</name>
-        <type>text</type>
+        <type>select</type>
+        <options type="array">
+        	电力电缆 ,电磁线,特种电缆,电缆附件,铜杆,铝杆,PVC料,工装轮,变压器,其他
+        </options> 
     </item>
     <item>
         <name>合同日期</name>
@@ -62,7 +68,10 @@
     </item>
     <item>
         <name>是否兜底（是/否）</name>
-        <type>text</type>
+        <type>select</type>
+        <options type="array">
+        	是 ,否
+        </options> 
     </item>
     <item>
         <name>合同总额</name>
