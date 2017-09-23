@@ -20,3 +20,9 @@ INSERT INTO [dbo].[auth_instruction] (id, [instruction]) VALUES (92, '线缆预警台
 SET IDENTITY_INSERT [dbo].[auth_instruction] OFF
 
 
+--添加权限 示例
+--EXEC	addAuth
+--		@role = '928006',
+--		@auth = 89,
+--		@comps = '1,115,106,111,113';
+
