@@ -396,9 +396,14 @@ th.ui-th-ltr {
 	margin-left: 4px;
 }
 
-/* ÆÁ±Î bootstrap Ó°Ïì*/
+/* ï¿½ï¿½ï¿½ï¿½ bootstrap Ó°ï¿½ï¿½*/
 .ui-jqgrid th {
 	text-align: center;
+}
+
+.ui-jqgrid select {
+	padding-top:0px;
+	padding-bottom:0px;
 }
 
 .ui-jqgrid input[type=checkbox]{
@@ -451,7 +456,7 @@ th.ui-th-ltr {
 	background: rgb(79, 173, 194);
     border: 1px solid rgb(79, 173, 194);
 }
-/* ÆÁ±Î bootstrap Ó°Ïì end*/
+/* ï¿½ï¿½ï¿½ï¿½ bootstrap Ó°ï¿½ï¿½ end*/
 
 .well {
 	margin-bottom: 0px;

@@ -26,6 +26,10 @@ module framework.templates.dateReport {
             this.unitedSelector = new Util.UnitedSelector(opt.itemNodes,opt.itemId);
             if (opt.itemNodes.length == 1){
                 this.unitedSelector.hide();
+                if($("#" + opt.dtId).parent().hasClass("hidden")){
+                    $("#grid-update").hide();
+                    $("#" + opt.dtId).hide();
+                }
             }
             super.onInitialize(opt);
         }

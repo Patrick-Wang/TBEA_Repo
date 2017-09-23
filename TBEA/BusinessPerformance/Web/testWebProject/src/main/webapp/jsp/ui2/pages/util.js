@@ -208,7 +208,7 @@ var Util;
                     value: header.options,
                     dataInit: function (element) {
                         $(element).select2({
-                            language: "cn"
+                            language: "zh-CN"
                         });
                     }
                 }

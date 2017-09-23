@@ -14,6 +14,7 @@
             <map key="updateUrl" value="3AADA80D5B18E419386688AD36592212UpdateWrapperClr"/>
             <map key="exportUrl" value="3AADA80D5B18E419386688AD36592212ExportWrapperClr"/>
             <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="searchlist" value="true"></map>
             <map key="year" value="${calendar.current.year}"/>
             <map key="month" value="${calendar.current.month}"/>
         </response>

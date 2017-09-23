@@ -19,9 +19,6 @@
 
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
-<link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/jsp/ui2/assets/img/favicon.png"
-	type="image/x-icon">
 
 <!--Basic Styles-->
 <link
@@ -112,6 +109,15 @@
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/js/jquery.jqGrid.js"
 	type="text/javascript"></script>
 
+	<link
+	href="${pageContext.request.contextPath}/jsp/ui2/pages/components/select2/css/select2.css"
+	rel="stylesheet">
+	<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/components/select2/js/select2.js"
+	type="text/javascript"></script>
+	<script
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/components/select2/js/i18n/zh-CN.js"
+	type="text/javascript"></script>
 <!-- jqgrid assist -->
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/jqgrid/jqassist.js"
@@ -265,6 +271,7 @@
 	            exportUrl:"${exportUrl}.do",
 	            itemId:"item-sel1",
 	            itemNodes: ind,
+				searchlist: '${searchlist}',
 	            itemId2:"item-sel2",
 	            itemNodes2: ind2
 	        });

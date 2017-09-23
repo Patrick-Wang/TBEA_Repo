@@ -47,6 +47,11 @@ var framework;
                             item2Hidden = true;
                         }
                     }
+                    if (opt.searchlist == 'true') {
+                        $("#" + opt.itemId + " select").select2({
+                            language: "zh-CN"
+                        });
+                    }
                     if (item2Hidden && itemHidden && $("#" + opt.dtId).hasClass("hidden")) {
                         $("#sels").hide();
                         $("#" + opt.dtId).hide();
