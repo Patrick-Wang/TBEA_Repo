@@ -38,15 +38,15 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		try {
-			dsConfigPath = new URI(ComponentManagerServiceImpl.class.getClassLoader().getResource("")
-					.getPath()).getPath().substring(1)
-					+ "META-INF/datasource.xml";
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		
-		HikariCPDataSourceFactory.start(dsConfigPath);
+//		try {
+//			dsConfigPath = new URI(ComponentManagerServiceImpl.class.getClassLoader().getResource("")
+//					.getPath()).getPath().substring(1)
+//					+ "META-INF/datasource.xml";
+//		} catch (URISyntaxException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		HikariCPDataSourceFactory.start(dsConfigPath);
 	}
 	
 	ComponentManager compMgr = new ComponentManager(this, resPath);

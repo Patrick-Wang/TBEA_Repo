@@ -51,7 +51,7 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 		Company compTmp = null;
 		for (int i = 0; i < auths.size(); ++i){
 			compTmp = companyManager.getBMDBOrganization().getCompany(auths.get(i).getDwxx().getId());
-			if (!comps.contains(compTmp)){
+			if (!comps.contains(compTmp) && null != compTmp){
 				comps.add(compTmp);
 			}
 		}
