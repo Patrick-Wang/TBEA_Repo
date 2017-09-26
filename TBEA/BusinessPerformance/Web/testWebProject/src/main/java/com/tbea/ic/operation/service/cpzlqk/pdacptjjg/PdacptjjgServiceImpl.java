@@ -32,8 +32,8 @@ import com.tbea.ic.operation.model.entity.cpzlqk.PdAcptjEntryEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.PdJdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.PdYdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
+import com.util.tools.Pair;
 import com.xml.frame.report.util.EasyCalendar;
-import com.xml.frame.report.util.Pair;
 
 import net.sf.json.JSONArray;
 

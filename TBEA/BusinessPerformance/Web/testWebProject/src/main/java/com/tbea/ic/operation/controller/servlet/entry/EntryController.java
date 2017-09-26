@@ -125,8 +125,8 @@ public class EntryController {
 		List<ZBStatus> approved = entryService.getZbStatus(date, comp, entryType);
 		List<ZBXX> zbxx = entryService.getZbNodes();
 		Organization org = companyManager.getBMDBOrganization();
-		Company company = org.getCompany(comp);
-		Company zhgs = org.getCompany(CompanyType.ZHGS);
+		Company company = org.getCompanyByType(comp);
+		Company zhgs = org.getCompanyByType(CompanyType.ZHGS);
 		List<ZBXX> zbxx2 = new ArrayList<ZBXX>();
 		for(ZBXX z : zbxx){
 			zbxx2.add(z.clone());

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="arReceivedPlanImportJSP">
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="arReceivedPlanImportClr"/>
+        </response>
+    </controller>
+    <controller id="arReceivedPlanImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="arReceivedPlanImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="arReceivedPlanImportServ" transaction="transactionManager">
+        <merge data="${data}" table="ar_received_plan">
+            <where>
+                <planNum ref="0" type="string"/>
+            </where>
+            <set>
+                <planNum ref="0" test="${this != null}" type="string"/>
+                <nf ref="1" type="int"/>
+                <yf ref="2" type="int"/>
+                <company ref="3" type="string"/>
+                <department ref="4" type="string"/>
+                <contractNum ref="5" type="string"/>
+                <customerName ref="6" type="string"/>
+                <projectName ref="7" type="string"/>
+                <businessType ref="8" type="string"/>
+                <prePayment ref="9" type="double"/>
+                <proPayment ref="10" type="double"/>
+                <deliPayment ref="11" type="double"/>
+                <arriPayment ref="12" type="double"/>
+                <workPayment ref="13" type="double"/>
+                <accePayment ref="14" type="double"/>
+                <guarPayment ref="15" type="double"/>
+                <planSum ref="16" type="double"/>
+                <isReduceAR ref="17" type="string"/>
+                <ARStatus ref="18" type="string"/>
+                <ARProperty ref="19" type="string"/>
+                <receProperty ref="20" type="string"/>
+                <operator ref="21" type="string"/>
+                <personIncharge ref="22" type="string"/>
+                <leader ref="23" type="string"/>
+                <progress ref="24" type="string"/>
+                <measure ref="25" type="string"/>
+                <remark ref="26" type="string"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

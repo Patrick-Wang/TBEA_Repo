@@ -45,7 +45,7 @@ public class QualityHandler extends ControllerContextHandler {
 			@Override
 			protected Object onGetProp(List<Object> args) throws Exception {
 				CompanyType comp = CompanyType.valueOf((Integer) args.get(0));
-				Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+				Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 				List<Integer> zts = new ArrayList<Integer>();
 				List<Integer> auths = null;
 				if (company.getType() == CompanyType.BYQCY || company.getType() == CompanyType.XLCY || company.getType() == CompanyType.PDCY) {

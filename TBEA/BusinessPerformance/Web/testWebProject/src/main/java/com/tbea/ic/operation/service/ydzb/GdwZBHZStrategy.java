@@ -22,7 +22,7 @@ public class GdwZBHZStrategy extends ZbfdwhzZBHZStrategy {
 			Organization org = companyManager.getOperationOrganization();
 			for (int i = 0, j = 0; i < CY_TYPES.length; ++i){
 				if (CY_TYPES[i] != null){
-					cy = org.getCompany(CY_TYPES[i]);				
+					cy = org.getCompanyByType(CY_TYPES[i]);				
 					if (!cy.getSubCompanies().isEmpty() && cy.getType() != CompanyType.JT){
 						cys = cy.getSubCompanies();
 						for (int k = 0; k < cys.size(); ++k){

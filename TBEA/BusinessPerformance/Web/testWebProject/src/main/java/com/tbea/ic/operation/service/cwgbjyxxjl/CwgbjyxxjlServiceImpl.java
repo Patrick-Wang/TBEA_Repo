@@ -202,7 +202,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 
 				String unitCode = String.valueOf(rs.getObject(1));
 				CompanyType companyType = CompanyNCCode.getType(unitCode);
-				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+				Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 				
 				
 				for (int i = 0; i < kms.size(); ++i){

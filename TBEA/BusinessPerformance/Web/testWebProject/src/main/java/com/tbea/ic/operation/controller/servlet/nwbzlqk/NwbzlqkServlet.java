@@ -56,9 +56,9 @@ public class NwbzlqkServlet {
 	
 	private CompanySelection selectCompany(List<Company> comps){
 		Organization org = companyManager.getVirtualCYOrg();
-		List<Company> byqs = new EasyList<Company>(org.getCompany(CompanyType.BYQCY).getSubCompanies()).clone();
-		List<Company> xls = new EasyList<Company>(org.getCompany(CompanyType.XLCY).getSubCompanies()).clone();
-		List<Company> pds = new EasyList<Company>(org.getCompany(CompanyType.PDCY).getSubCompanies()).clone();
+		List<Company> byqs = new EasyList<Company>(org.getCompanyByType(CompanyType.BYQCY).getSubCompanies()).clone();
+		List<Company> xls = new EasyList<Company>(org.getCompanyByType(CompanyType.XLCY).getSubCompanies()).clone();
+		List<Company> pds = new EasyList<Company>(org.getCompanyByType(CompanyType.PDCY).getSubCompanies()).clone();
 
 		CompanySelection compSel = new CompanySelection(false, org.getTopCompany(), new Filter(){
 
@@ -191,7 +191,7 @@ public class NwbzlqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		ZBStatus status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
 		ErrorCode er = cpzlqkService.approveNwbzlqk(d, company, status);
 		return Util.response(er);
@@ -201,7 +201,7 @@ public class NwbzlqkServlet {
 	public @ResponseBody byte[] getAytg(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		Account account = SessionManager.getAccount(request.getSession());
 		List<Integer> auths = extendAuthService.getAuths(account, company);
 		return JSONArray.fromObject(auths).toString().getBytes("utf-8");

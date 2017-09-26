@@ -75,7 +75,7 @@ public class XLCBServiceImpl implements XLCBService{
 			CBXLTBDD xltbcb, Double zccb, Double tbcbzj) {
 		Organization org = companyManager.getBMOrganization();
 		List<String> ret = new ArrayList<String>();
-		ret.add(org.getCompany(xltbcb.getQybh()).getName());
+		ret.add(org.getCompanyById(xltbcb.getQybh()).getName());
 		//ret.add(null != xmxx ? org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName() : null);//订单所在单位及项目公司//订单所在单位及项目公司
 		ret.add(xltbcb.getTbbjsj() + "");//投标报价时间//投标报价时间
 		ret.add(null != xmxx ? xmxx.getYhdwmc() : "");//用户单位名称
@@ -150,7 +150,7 @@ public class XLCBServiceImpl implements XLCBService{
 			Double zccb = Util.valueOf(xltbcb.getLyl()) * Util.valueOf(xltbcb.getLdj())
 					+ Util.valueOf(xltbcb.getDjtyl()) * Util.valueOf(xltbcb.getDjtdj());// 投标五大主材成本
 			Double tbcbzj = (zccb - Util.valueOf(xltbcb.getQtcbhj())) / 1.17;
-			Company compTmp = org.getCompany(xltbcb.getQybh());
+			Company compTmp = org.getCompanyById(xltbcb.getQybh());
 
 			if (null != xltbcb.getTbbjsj()) {
 				tmpCal.setTime(xltbcb.getTbbjsj());
@@ -162,7 +162,7 @@ public class XLCBServiceImpl implements XLCBService{
 
 					} else if (xmxx != null && xmxx.getDdszdw() != null
 							&& !xmxx.getDdszdw().isEmpty()) {
-						compTmp = org.getCompany(Integer.valueOf(xmxx
+						compTmp = org.getCompanyById(Integer.valueOf(xmxx
 								.getDdszdw()));
 						if (null != compTmp
 								&& compTmp.getType() == comp.getType()) {
@@ -271,7 +271,7 @@ public class XLCBServiceImpl implements XLCBService{
 					Double wg_zccb = xlcbwgdd.getLyl() * xlcbwgdd.getSjlvdj()
 							+ xlcbwgdd.getDjtyl() * xlcbwgdd.getDjtdj();// 投标五大主材成本
 					Double sjzcb = wg_zccb + xlcbwgdd.getQtcbhj() + 0.0;
-					compTmp = org.getCompany(xlcbwgdd.getQybh());
+					compTmp = org.getCompanyById(xlcbwgdd.getQybh());
 					if (tmpCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH) &&
 							comp.getType() == compTmp.getType()) {
 						fillWgmx(wgmx, i, xlcbwgdd, wg_zccb, sjzcb, comp);

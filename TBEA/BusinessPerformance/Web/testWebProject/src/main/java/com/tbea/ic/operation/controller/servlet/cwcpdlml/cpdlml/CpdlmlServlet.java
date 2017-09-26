@@ -63,7 +63,7 @@ public class CpdlmlServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		if (comp != CompanyType.GFGS){
 			comps = new ArrayList<Company>();
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 			comps.add(company);
 		}else{
 			comps = extAuthServ.getAuthedCompanies(
@@ -93,7 +93,7 @@ public class CpdlmlServlet {
 		CompanyType comp = CompanySelection.getCompany(request);
 		if (comp != CompanyType.GFGS){
 			comps = new ArrayList<Company>();
-			Company company = companyManager.getBMDBOrganization().getCompany(comp);
+			Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 			comps.add(company);
 		}else{
 			comps = extAuthServ.getAuthedCompanies(

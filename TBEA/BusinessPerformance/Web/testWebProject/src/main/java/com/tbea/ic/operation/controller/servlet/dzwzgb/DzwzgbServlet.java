@@ -97,7 +97,7 @@ public class DzwzgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = dzwzgbService.getDzclcb(d, companyManager.getBMDBOrganization().getCompany(comp));
+		List<List<String>> result = dzwzgbService.getDzclcb(d, companyManager.getBMDBOrganization().getCompanyByType(comp));
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
 		serv.acceptNullAs("--").format(result);
@@ -108,7 +108,7 @@ public class DzwzgbServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType type = CompanySelection.getCompany(request);
-		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(type);
 		List<List<String>> result = dzwzgbService.getDzclcbEntry(d, comp);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
@@ -119,7 +119,7 @@ public class DzwzgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = dzwzgbService.saveDzclcb(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = dzwzgbService.saveDzclcb(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -129,7 +129,7 @@ public class DzwzgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = dzwzgbService.submitDzclcb(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = dzwzgbService.submitDzclcb(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -138,7 +138,7 @@ public class DzwzgbServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		List<List<String>> ret = dzwzgbService.getDzclcb(d, company);
 		ExcelHelper template = null;
 		if (company.getType() == CompanyType.SBGS ||

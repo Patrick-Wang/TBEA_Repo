@@ -69,7 +69,7 @@ public class NCServiceImpl implements NCService {
 			Object data) {
 		Logger logger = Logger.getLogger("LOG-NC");
 		logger.debug("mergeNCZB " + nf + yf + " GSZB " + zb);
-		Company company = companyManager.getBMDBOrganization().getCompany(
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(
 				companyType);
 		NCZB nczb = null;
 		int zbid = zb.value();

@@ -41,7 +41,7 @@ public class YSZKPZJHController {
 
 		Date d = DateSelection.getDate(request);
 		Organization org = companyManager.getPzghOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		Company comp = org.getCompanyByType(CompanySelection.getCompany(request));
 		List<Company> comps = comp.getSubCompanies();
 		
 		YSZKPZJHBean[] yszkpzjhBeans = new YSZKPZJHBean[comps.size() + 1];

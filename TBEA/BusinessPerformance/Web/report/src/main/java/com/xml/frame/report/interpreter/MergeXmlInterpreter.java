@@ -25,16 +25,16 @@ import org.w3c.dom.NodeList;
 
 import com.frame.script.el.ELParser;
 import com.frame.script.util.TypeUtil;
+import com.util.tools.xml.Loop;
 import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.component.datasource.HikariCPDataSourceFactory;
+import com.xml.frame.report.component.manager.ComponentManager;
 import com.xml.frame.report.component.service.JpaTransaction;
 import com.xml.frame.report.util.Util;
 import com.xml.frame.report.util.excel.ExcelUtil;
 import com.xml.frame.report.util.excel.ValidationException;
-import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlElWalker;
 import com.xml.frame.report.util.xml.XmlUtil;
-import com.xml.frame.report.util.xml.XmlWalker;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONNull;
@@ -195,7 +195,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		JpaTransaction tx = (JpaTransaction) component.getVar(trans);
 		
 		if (null == tx){
-			DataSource ds = HikariCPDataSourceFactory.getInstance().getDataSource(component.getConfigAttribute("ds"));
+			DataSource ds = ComponentManager.getInstance().getDataSourceFactory().getDataSource(component.getConfigAttribute("ds"));
 			if (null == ds) {
 				throw new Exception("请指定 transaction " + e.toString());
 			}else {
@@ -687,11 +687,11 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 
 	private List<FieldSql> compile(NodeList list) throws Exception {
 		List<FieldSql> result = new ArrayList<FieldSql>();
-		XmlWalker.each(list, elp, new Loop() {
+		XmlElWalker.each(list, elp, new Loop() {
 
 			@Override
 			public void on(Element e) throws Exception {
-				XmlWalker.eachChildren(e, elp, new Loop() {
+				XmlElWalker.eachChildren(e, elp, new Loop() {
 
 					@Override
 					public void on(Element elem) throws Exception {

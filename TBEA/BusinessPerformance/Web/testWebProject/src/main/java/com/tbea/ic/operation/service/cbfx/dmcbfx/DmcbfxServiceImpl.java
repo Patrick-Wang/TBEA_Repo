@@ -276,7 +276,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 	while (rs.next()) {
 			String unitCode = String.valueOf(rs.getObject(1));
 			CompanyType companyType = CompanyNCCode.getType(unitCode);
-			Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+			Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;
 			for (int i = 0; i < Cbfl.END.ordinal(); ++i){

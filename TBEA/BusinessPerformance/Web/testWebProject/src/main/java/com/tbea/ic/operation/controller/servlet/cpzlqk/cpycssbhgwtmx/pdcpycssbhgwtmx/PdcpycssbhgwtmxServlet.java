@@ -70,9 +70,9 @@ public class PdcpycssbhgwtmxServlet {
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
@@ -120,9 +120,9 @@ public class PdcpycssbhgwtmxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		List<List<String>> result = pdcpycssbhgwtmxService.getPdcpycssbhgwtmxEntry(d, company);
 		List<String> zrlb = pdcpycssbhgwtmxService.getZrlb();
@@ -141,9 +141,9 @@ public class PdcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = pdcpycssbhgwtmxService.savePdcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
@@ -155,9 +155,9 @@ public class PdcpycssbhgwtmxServlet {
 		ZBStatus zt = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = pdcpycssbhgwtmxService.updateStatus(d, company, zt);
 		return Util.response(err);
@@ -169,9 +169,9 @@ public class PdcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = pdcpycssbhgwtmxService.submitPdcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
@@ -183,9 +183,9 @@ public class PdcpycssbhgwtmxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		List<List<String>> result = null;
 		ZBStatus status = pdcpycssbhgwtmxService.getStatus(d, company);
@@ -208,9 +208,9 @@ public class PdcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = pdcpycssbhgwtmxService.approvePdcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
@@ -222,9 +222,9 @@ public class PdcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = pdcpycssbhgwtmxService.unapprovePdcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
@@ -240,9 +240,9 @@ public class PdcpycssbhgwtmxServlet {
 		List<Integer> zts = new ArrayList<Integer>();
 		zts.add(ZBStatus.APPROVED.ordinal());
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		if (comp == CompanyType.BYQCY){
 			result = pdcpycssbhgwtmxService.getPdcpycssbhgwtmx(d, yjType, zts);

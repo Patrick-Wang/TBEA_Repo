@@ -1,12 +1,12 @@
 package com.xml.frame.report.component.service;
 
-import org.apache.tomcat.jdbc.pool.DataSource;
 import org.w3c.dom.Element;
 
+import com.util.tools.xml.Loop;
 import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.component.ComponentManager;
 import com.xml.frame.report.component.entity.Context;
+import com.xml.frame.report.component.manager.ComponentManager;
 import com.xml.frame.report.interpreter.CallServiceXmlInterpreter;
 import com.xml.frame.report.interpreter.CallXmlInterpreter;
 import com.xml.frame.report.interpreter.ContextXmlInterpreter;
@@ -19,9 +19,8 @@ import com.xml.frame.report.interpreter.SqlXmlInterpreter;
 import com.xml.frame.report.interpreter.TableXmlInterpreter;
 import com.xml.frame.report.interpreter.WordTemplateXmlInterpreter;
 import com.xml.frame.report.interpreter.XmlInterpreter;
-import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlElWalker;
 import com.xml.frame.report.util.xml.XmlUtil;
-import com.xml.frame.report.util.xml.XmlWalker;
 
 public class Service extends AbstractXmlComponent implements ServiceRunnable {
 	
@@ -67,7 +66,7 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 
 	@Override
 	public void run() throws Exception{
-		XmlWalker.eachChildren(config, elp, new Loop() {
+		XmlElWalker.eachChildren(config, elp, new Loop() {
 			@Override
 			public void on(Element elem) throws Exception {
 				for (XmlInterpreter interpreter : interpreters) {	

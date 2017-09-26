@@ -76,9 +76,9 @@ public class CpzlqkServlet {
 	
 	private CompanySelection selectCompany(List<Company> comps){
 		Organization org = companyManager.getVirtualCYOrg();
-		List<Company> byqs = new EasyList<Company>(org.getCompany(CompanyType.BYQCY).getSubCompanies()).clone();
-		List<Company> xls = new EasyList<Company>(org.getCompany(CompanyType.XLCY).getSubCompanies()).clone();
-		List<Company> pds = new EasyList<Company>(org.getCompany(CompanyType.PDCY).getSubCompanies()).clone();
+		List<Company> byqs = new EasyList<Company>(org.getCompanyByType(CompanyType.BYQCY).getSubCompanies()).clone();
+		List<Company> xls = new EasyList<Company>(org.getCompanyByType(CompanyType.XLCY).getSubCompanies()).clone();
+		List<Company> pds = new EasyList<Company>(org.getCompanyByType(CompanyType.PDCY).getSubCompanies()).clone();
 		List<Company> tops = new EasyList<Company>(org.getTopCompany()).clone();
 		CompanySelection compSel = new CompanySelection(false, tops, new Filter(){
 
@@ -160,7 +160,7 @@ public class CpzlqkServlet {
 			
 			CompanyType compType = CompanyType.valueOf(Integer.valueOf(jo.getString("companyId")));
 			comps = new ArrayList<Company>();
-			comps.add(companyManager.getBMDBOrganization().getCompany(compType));
+			comps.add(companyManager.getBMDBOrganization().getCompanyByType(compType));
 		}else{
 			if(comps.isEmpty()){
 				comps = extendAuthService.getAuthedCompanies(
@@ -239,9 +239,9 @@ public class CpzlqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ZBStatus status = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
 		ErrorCode er = cpzlqkService.approve(d, company, status);
@@ -252,9 +252,9 @@ public class CpzlqkServlet {
 	public @ResponseBody byte[] getAytg(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		Account account = SessionManager.getAccount(request.getSession());
 		List<Integer> auths = extendAuthService.getAuths(account, company);
@@ -318,7 +318,7 @@ public class CpzlqkServlet {
 			HttpServletResponse response)  {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		Context context = new Context();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
@@ -352,7 +352,7 @@ public class CpzlqkServlet {
 		
 		
 		if (company.getType() == CompanyType.BYQCY ||
-				contains(companyManager.getVirtualCYOrg().getCompany(CompanyType.BYQCY).getSubCompanies(), company)){
+				contains(companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.BYQCY).getSubCompanies(), company)){
 			context.put("isByq", true);
 
 			List<List<String>> result = byqacptjjgService.getByqacptjjg(d, company, YDJDType.YD, zts);
@@ -494,7 +494,7 @@ public class CpzlqkServlet {
 				e.printStackTrace();
 			}
 		}else if(company.getType() == CompanyType.XLCY ||
-				contains(companyManager.getVirtualCYOrg().getCompany(CompanyType.XLCY).getSubCompanies(), company)){
+				contains(companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XLCY).getSubCompanies(), company)){
 			context.put("isXl", true);
 			List<List<String>> result = xlacptjjgService.getXlacptjjg(d, company, YDJDType.YD, zts);
 			removeColumns(result, 0, 2);

@@ -67,30 +67,30 @@ public class ChgbServlet {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	public void setCompanyManager(CompanyManager companyManager){
 		this.companyManager = companyManager;
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
-		NCCOMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.SBGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.HBGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XBC));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.TBGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.LLGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XLC));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DLGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XTNYGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XNYGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.TCNY));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.NDGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.GJGCGS_GFGS));
+		NCCOMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.JCKGS_JYDW));
 		
 		//NYCH List
-		NCCOMPS4NYCH.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
+		NCCOMPS4NYCH.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.TCNY));
 	}
 	
 	@Autowired
 	ExtendAuthorityService extendAuthService;
 
 	Company getCompany(CompanyType comp){
-		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
-		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		Company bmCompany = companyManager.getBMDBOrganization().getCompanyByType(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompanyByType(comp);
 		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
 			return vYszkCompany;
 		}
@@ -223,7 +223,7 @@ public class ChgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = chgbService.saveChjykcb(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = chgbService.saveChjykcb(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -233,7 +233,7 @@ public class ChgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = chgbService.submitChjykcb(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = chgbService.submitChjykcb(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -243,7 +243,7 @@ public class ChgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType type = CompanySelection.getCompany(request);
-		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(type);
 		List<List<String>> result = chgbService.getChzlbhqkEntry(d, comp);
 		ZBStatus status = chgbService.getChjykcbStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
@@ -256,7 +256,7 @@ public class ChgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = chgbService.saveChzlbhqk(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = chgbService.saveChzlbhqk(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -266,7 +266,7 @@ public class ChgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = chgbService.submitChxzqk(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = chgbService.submitChxzqk(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -276,7 +276,7 @@ public class ChgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType type = CompanySelection.getCompany(request);
-		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(type);
 		List<List<String>> result = chgbService.getChxzqkEntry(d, comp);
 		ZBStatus status = chgbService.getChxzqkStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
@@ -289,7 +289,7 @@ public class ChgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = chgbService.saveChxzqk(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = chgbService.saveChxzqk(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -299,7 +299,7 @@ public class ChgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = chgbService.submitChzlbhqk(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = chgbService.submitChzlbhqk(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	

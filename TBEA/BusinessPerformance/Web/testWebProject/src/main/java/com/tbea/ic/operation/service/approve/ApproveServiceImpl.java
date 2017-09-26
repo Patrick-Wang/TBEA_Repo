@@ -690,7 +690,7 @@ public class ApproveServiceImpl implements ApproveService {
 		List<Company> comps = new ArrayList<Company>();
 		Organization org = companyManager.getBMDBOrganization();
 		for (int i = 0; i < compIds.size(); ++i) {
-			comps.add(org.getCompany(compIds.get(i).getDwxx().getId()));
+			comps.add(org.getCompanyById(compIds.get(i).getDwxx().getId()));
 		}
 		return comps;
 	}
@@ -701,7 +701,7 @@ public class ApproveServiceImpl implements ApproveService {
 		List<Company> comps = new ArrayList<Company>();
 		Organization org = companyManager.getBMDBOrganization();
 		for (int i = 0; i < compIds.size(); ++i) {
-			comps.add(org.getCompany(compIds.get(i).getDwxx().getId()));
+			comps.add(org.getCompanyById(compIds.get(i).getDwxx().getId()));
 		}
 		return comps;
 	}

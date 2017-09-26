@@ -50,7 +50,7 @@ public class NyzbscjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		List<List<String>> result = nyzbscjgService.getNyzbscjg(d, company);
 		
 		RawFormatterHandler handler = new RawEmptyHandler(null, new Integer[]{0, 1});
@@ -66,7 +66,7 @@ public class NyzbscjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = nyzbscjgService.getNyzbscjgEntry(d, company);
 		
@@ -83,7 +83,7 @@ public class NyzbscjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = nyzbscjgService.saveNyzbscjg(d, data, company);
 		return Util.response(err);
@@ -97,7 +97,7 @@ public class NyzbscjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = nyzbscjgService.submitNyzbscjg(d, data, company);
 		return Util.response(err);
@@ -108,7 +108,7 @@ public class NyzbscjgServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = nyzbscjgService.getNyzbscjg(d, company);
 		ExcelHelper template = ExcelTemplate.createNyzbscqkTemplate(NyzbscqkSheetType.NYZBSCJG);

@@ -5,6 +5,7 @@ import org.w3c.dom.Element;
 import com.frame.script.el.ELParser;
 import com.frame.script.el.ELParser.ObjectLoader;
 import com.xml.frame.report.component.entity.Context;
+import com.xml.frame.report.component.manager.ComponentManager;
 
 public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	

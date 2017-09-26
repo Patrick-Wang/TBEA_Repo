@@ -123,8 +123,8 @@ public class AuthContextHandler extends ControllerContextHandler {
 							SessionManager.getAccount(request.getSession()), authType);
 					if (authType == 43){
 						Organization org = companyManager.getVirtualCYOrg();
-						List<Company> byqs = new EasyList<Company>(org.getCompany(CompanyType.BYQCY).getSubCompanies()).clone();
-						List<Company> xls = new EasyList<Company>(org.getCompany(CompanyType.XLCY).getSubCompanies()).clone();
+						List<Company> byqs = new EasyList<Company>(org.getCompanyByType(CompanyType.BYQCY).getSubCompanies()).clone();
+						List<Company> xls = new EasyList<Company>(org.getCompanyByType(CompanyType.XLCY).getSubCompanies()).clone();
 						CompanySelection compSel = new CompanySelection(false, org.getTopCompany(), new Filter(){
 
 							@Override

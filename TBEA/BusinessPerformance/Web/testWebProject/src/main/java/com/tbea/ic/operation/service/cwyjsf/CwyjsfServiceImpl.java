@@ -457,7 +457,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 
 				String unitCode = String.valueOf(rs.getObject(1));
 				CompanyType companyType = CompanyNCCode.getType(unitCode);
-				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+				Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 				int nf = cal.get(Calendar.YEAR);
 				int yf = cal.get(Calendar.MONTH) + 1;
 				
@@ -496,7 +496,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 
 				String unitCode = String.valueOf(rs.getObject(1));
 				CompanyType companyType = CompanyNCCode.getType(unitCode);
-				Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+				Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 				int nf = cal.get(Calendar.YEAR);
 				Double sum = null;
 				int szCount = szDao.getSzCount();

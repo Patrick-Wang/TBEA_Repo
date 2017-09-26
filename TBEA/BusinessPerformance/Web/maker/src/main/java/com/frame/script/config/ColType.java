@@ -9,6 +9,7 @@ public class ColType {
 	public final static int DATETIME = 5;
 	public final static int CURRENCY_SYMBOL = 6;
 	public final static int INTEGER = 7;
+	public final static int OPTION = 8;
 	
 	public final static Integer PRIMARY = 8;
 	public final static Integer UNIQUE = 9;
@@ -47,7 +48,28 @@ public class ColType {
 
 
 	public String getDefaultVal() {
+		if (this.type == OPTION) {
+			if (defaultVal != null) {
+				int index = defaultVal.indexOf("(");
+				if (index > 0) {
+					return defaultVal.substring(0, index);
+				}
+			}
+		}
 		return defaultVal;
+	}
+	
+	public String getOptions() {
+		if (this.type == OPTION) {
+			if (defaultVal != null) {
+				int start = defaultVal.indexOf("(");
+				int end = defaultVal.lastIndexOf(")");
+				if (start >= 0 && end > start) {
+					return defaultVal.substring(start, end);
+				}
+			}
+		}
+		return "";
 	}
 
 
@@ -117,7 +139,7 @@ public class ColType {
 			return new ColType("date", ColType.DATE, cons, defaultVal);
 		}else if ("时间".equals(type)) {
 			return new ColType("datetime", ColType.DATETIME, cons, defaultVal);
-		}else if ("十进制数值".equals(type) || "数值".equals(type)) {
+		}else if ("数值".equals(type)) {
 			Integer[] numSize = toNumberSize(size);
 			return new ColType("numeric(" + numSize[0] + ", " + numSize[1] + ")", ColType.NUMBER, cons, defaultVal);
 		}else if ("整数".equals(type)) {
@@ -131,6 +153,12 @@ public class ColType {
 				sz = 10;
 			}
 			return new ColType("varchar(" + sz + ")", ColType.CURRENCY_SYMBOL, cons, defaultVal);
+		}else if ("值集".equals(type)) {
+			Integer sz = toInt(size);
+			if (sz == null) {
+				sz = 100;
+			}
+			return new ColType("varchar(" + sz + ")", ColType.OPTION, cons, defaultVal);
 		}
 		return null;
 	}

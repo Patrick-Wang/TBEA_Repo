@@ -7,7 +7,7 @@ import org.w3c.dom.Element;
 import com.frame.script.el.ELParser;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.util.xml.XmlUtil;
-import com.xml.frame.report.util.xml.XmlWalker;
+import com.xml.frame.report.util.xml.XmlElWalker;
 
 /***********************************
  * tagName : if/elseif
@@ -41,7 +41,7 @@ public class IFXmlInterpreter implements XmlInterpreter {
 	private Boolean hasNextCase(Element e){
 		Element eNext;
 		try {
-			eNext = XmlWalker.nextElement(e, elp);
+			eNext = XmlElWalker.nextElement(e, elp);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

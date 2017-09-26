@@ -112,7 +112,7 @@ public class YDZBServiceImpl implements YDZBService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		Organization org = companyManager.getOperationOrganization();
-		List<YDZBBean> ydzbs = ydzbDao.getYDZB_V2(cal, org.getCompany(CompanyType.JT));
+		List<YDZBBean> ydzbs = ydzbDao.getYDZB_V2(cal, org.getCompanyByType(CompanyType.JT));
 		int index = 0;
 		for (YDZBBean ydzb : ydzbs) {
 			if (ydzb != null && zbbh_hzMap.get(ydzb.getZblx()) != null) {
@@ -140,7 +140,7 @@ public class YDZBServiceImpl implements YDZBService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		Organization org = companyManager.getOperationOrganization();
-		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, org.getCompany(CompanyType.JT));
+		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, org.getCompanyByType(CompanyType.JT));
 		String[][] result = ZBHZStrategyFactory.createGcyZBHZStrategy(companyManager).getZBHZData(ydzbs);
 		return result;
 	}
@@ -150,7 +150,7 @@ public class YDZBServiceImpl implements YDZBService {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		Organization org = companyManager.getOperationOrganization();
-		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, org.getCompany(CompanyType.JT));
+		List<YDZBBean> ydzbs = ydzbDao.getYDZB(cal, org.getCompanyByType(CompanyType.JT));
 		String[][] result = ZBHZStrategyFactory.createGdwZBHZStrategy(companyManager).getZBHZData(ydzbs);
 		return result;
 	}

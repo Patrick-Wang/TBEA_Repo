@@ -381,7 +381,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 
 		LoggerFactory.getLogger("WEBSERVICE").info("importDLCpqy");
 		List<Object[]> result = dlqyDao.getCpqy(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DLGS);
 		importCpqy(d, result, comp, SbdscqyqkType.YLFX_WGCPYLNL_XL);
 	}
 
@@ -394,7 +394,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 		cols.add("product_type");
 		cols.add("contract_volume");
 		List<Object[]> result = hbws.getHBCpqy(cols, d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.HBGS);
 		importCpqy(d, result, comp, SbdscqyqkType.YLFX_WGCPYLNL_BYQ);
 	}
 	
@@ -420,7 +420,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 
 		LoggerFactory.getLogger("WEBSERVICE").info("importXLCpqy");
 		List<Object[]> result = xlqyDao.getCpqy(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XLC);
 		importCpqy(d, result, comp, SbdscqyqkType.YLFX_WGCPYLNL_XL);
 	}
 
@@ -428,7 +428,7 @@ public class XfcpqyServiceImpl implements XfcpqyService {
 	public void importLLCpqy(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("importLLCpqy");
 		List<Object[]> result = llqyDao.getCpqy(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.LLGS);
 		importCpqy(d, result, comp, SbdscqyqkType.YLFX_WGCPYLNL_XL);
 	}
 	

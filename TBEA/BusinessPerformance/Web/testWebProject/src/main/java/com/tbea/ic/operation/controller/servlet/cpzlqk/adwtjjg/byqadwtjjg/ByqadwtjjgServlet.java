@@ -71,7 +71,7 @@ public class ByqadwtjjgServlet {
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
@@ -124,7 +124,7 @@ public class ByqadwtjjgServlet {
 		List<Integer> zts = new ArrayList<Integer>();
 		zts.add(ZBStatus.APPROVED.ordinal());
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (comp == CompanyType.BYQCY){
 			result = byqadwtjjgService.getByqadwtjjg(d, yjType, zts);
 		}else{

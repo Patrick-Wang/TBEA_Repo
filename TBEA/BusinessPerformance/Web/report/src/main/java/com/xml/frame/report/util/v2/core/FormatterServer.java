@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.util.tools.Pair;
 import com.xml.frame.report.util.EasyList;
-import com.xml.frame.report.util.Pair;
 
 public class FormatterServer {
 	

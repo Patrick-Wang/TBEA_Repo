@@ -20,7 +20,7 @@ public class GcyZBHZStrategy extends ZbfdwhzZBHZStrategy {
 			Organization org = companyManager.getOperationOrganization();
 			for (int i = 0, j = 0; i < CY_TYPES.length; ++i){
 				if (CY_TYPES[i] != null){
-					qybh_gcyMap.put(org.getCompany(CY_TYPES[i]).getId(), i);
+					qybh_gcyMap.put(org.getCompanyByType(CY_TYPES[i]).getId(), i);
 				}
 				else{
 					qybh_gcyMap.put(GFHJ, i);

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="DB508EDBC9A8A56FFBDF6604877A374AShowWrapperJsp">
+        <list id="ids" type="int">
+        	<item concat="${sysAuth.cids[94]}"></item>
+        </list>
+        <list id="vals" type="string">
+			<item concat="${sysAuth.cnames[94]}"></item>
+        </list>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="DB508EDBC9A8A56FFBDF6604877A374AUpdateWrapperClr"/>
+            <map key="exportUrl" value="DB508EDBC9A8A56FFBDF6604877A374AExportWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="searchlist" value="true"></map>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="DB508EDBC9A8A56FFBDF6604877A374AUpdateWrapperClr">
+        <context key="dwid" value="${request.item.asInt}"/>
+        <context key="dwmc" value="${compMgr.BMDBOrganization.companyById[dwid].name}"/>
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callcontroller id="arReceivedPlanUpdateClr"/>
+    </controller>
+    <controller id="DB508EDBC9A8A56FFBDF6604877A374AExportWrapperClr">
+        <context key="dwid" value="${request.item.asInt}"/>
+        <context key="dwmc" value="${compMgr.BMDBOrganization.companyById[dwid].name}"/>
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callcontroller id="arReceivedPlanExportClr"/>
+    </controller>
+</components>

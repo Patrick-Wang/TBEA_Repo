@@ -92,9 +92,9 @@ public class ELExpression{
 			String getMdName = makeGetMethodName(propName);
 			md = getMethod(obj, getMdName);
 			if (null == md){
-				result = new PackingMap2(obj).get(propName);
+				result = new PackingMap(obj).get(propName);
 				if (null == result){
-					result = new PackingMap2(obj).get(getMdName);
+					result = new PackingMap(obj).get(getMdName);
 				}
 			}else{
 				result = md.invoke(obj);

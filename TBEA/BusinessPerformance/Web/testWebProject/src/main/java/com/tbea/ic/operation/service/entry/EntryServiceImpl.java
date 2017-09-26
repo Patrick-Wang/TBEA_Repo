@@ -197,7 +197,7 @@ public class EntryServiceImpl implements EntryService{
 	public boolean submitZb(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data, Calendar time) {
 		
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		boolean bRet = false;
 		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
 				sjzbDao, yj20zbDao,
@@ -238,12 +238,12 @@ public class EntryServiceImpl implements EntryService{
 		Organization org = companyManager.getBMDBOrganization();
 		Map<String, IndiValues> indis = lsnAggr.getShareIndis();
 		for (Entry<String, IndiValues> entry : indis.entrySet()){
-			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+			this.updateForce(entryType, entry.getValue().date, org.getCompanyByType(entry.getValue().compType), entry.getValue().data, time);
 		}
 		
 		indis = lsnAggr.getSumIndis();
 		for (Entry<String, IndiValues> entry : indis.entrySet()){
-			this.updateForce(entryType, entry.getValue().date, org.getCompany(entry.getValue().compType), entry.getValue().data, time);
+			this.updateForce(entryType, entry.getValue().date, org.getCompanyByType(entry.getValue().compType), entry.getValue().data, time);
 		}
 		
 //		switch (entryType){
@@ -557,7 +557,7 @@ public class EntryServiceImpl implements EntryService{
 		List<Company> comps = new ArrayList<Company>();
 		Organization org = companyManager.getBMDBOrganization();
 		for (QXGL qxgl : qxgls){
-			comps.add(org.getCompany(qxgl.getDwxx().getId()));
+			comps.add(org.getCompanyById(qxgl.getDwxx().getId()));
 		}
 		return comps;
 	}
@@ -568,7 +568,7 @@ public class EntryServiceImpl implements EntryService{
 		List<Company> comps = new ArrayList<Company>();
 		Organization org = companyManager.getBMDBOrganization();
 		for (QXGL qxgl : qxgls){
-			comps.add(org.getCompany(qxgl.getDwxx().getId()));
+			comps.add(org.getCompanyById(qxgl.getDwxx().getId()));
 		}
 		return comps;
 	}
@@ -576,7 +576,7 @@ public class EntryServiceImpl implements EntryService{
 	@Override
 	public List<String[]> getZb(Date date, Account account, CompanyType comp,
 			ZBType entryType) {
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		List<String[]> ret = null;
 		switch (entryType){
 		case BY20YJ:
@@ -856,7 +856,7 @@ public class EntryServiceImpl implements EntryService{
 	@Override
 	public List<ZBStatus> getZbStatus(Date date, CompanyType comp, ZBType entryType) {
 		List<ZBStatus> result = new ArrayList<ZBStatus>();
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
@@ -959,7 +959,7 @@ public class EntryServiceImpl implements EntryService{
 	@Override
 	public boolean saveZb(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data, Calendar time) {
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		boolean bRet = false;
 //		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
 //				sjzbDao, yj20zbDao,
@@ -1014,7 +1014,7 @@ public class EntryServiceImpl implements EntryService{
 	@Override
 	public boolean submitToDeputy(Date date, Account account, CompanyType comp,
 			ZBType entryType, JSONArray data, Calendar time) {
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		boolean bRet = false;
 //		ZBListenerAggregator lsnAggr = new ZBListenerAggregator(
 //				sjzbDao, yj20zbDao,

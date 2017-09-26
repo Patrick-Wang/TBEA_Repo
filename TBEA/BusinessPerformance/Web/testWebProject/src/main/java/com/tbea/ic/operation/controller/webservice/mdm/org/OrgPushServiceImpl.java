@@ -17,7 +17,7 @@ import com.tbea.ic.operation.model.entity.hr.Org;
 import com.tbea.ic.operation.service.hr.org.OrgService;
 import com.tbea.mdm.ws.MDMResponse;
 import com.tbea.mdm.ws.RecordStatus;
-import com.xml.frame.report.component.AbstractConfigLoader;
+import com.xml.frame.report.component.manager.loader.AbstractConfigLoader;
 
 @Controller
 @WebService

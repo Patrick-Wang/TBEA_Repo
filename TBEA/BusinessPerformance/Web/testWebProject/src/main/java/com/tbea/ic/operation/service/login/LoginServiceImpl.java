@@ -68,7 +68,7 @@ public class LoginServiceImpl implements LoginService {
 		if (account.getDwxxs().isEmpty()){
 			account = accountDao.getAccount(account.getName());
 		}
-		Company gfgs = companyManager.getBMDBOrganization().getCompany(CompanyType.GFGS);
+		Company gfgs = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.GFGS);
 		for (DWXX dwxx : account.getDwxxs()){
 			if (dwxx.getId() == gfgs.getId()){
 				return true;
@@ -85,7 +85,7 @@ public class LoginServiceImpl implements LoginService {
 			account = accountDao.getAccount(account.getName());
 		}
 		
-		Company sbd = companyManager.getBMDBOrganization().getCompany(CompanyType.SBDCYJT);
+		Company sbd = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.SBDCYJT);
 		for (DWXX dwxx : account.getDwxxs()){
 //			if (dwxx.getId() == gfgs.getId() || dwxx.getId() == sbd.getId()){
 			if (dwxx.getId() == sbd.getId()){

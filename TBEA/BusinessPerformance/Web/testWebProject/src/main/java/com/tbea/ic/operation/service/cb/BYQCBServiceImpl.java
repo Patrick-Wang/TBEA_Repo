@@ -106,8 +106,8 @@ public class BYQCBServiceImpl implements BYQCBService {
 	private void fillTbmx(String[][] tbmx, int row, XMXX xmxx,
 			CBBYQTBDD byqtbcb, Double zccb, Double tbclzcb, Double tbzccb) {
 		List<String> tbmxTmp = new ArrayList<String>();
-		tbmxTmp.add(org.getCompany(byqtbcb.getQybh()).getName());
-		tbmxTmp.add(xmxx != null ? org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName() : "");// 订单所在单位及项目公司//订单所在单位及项目公司
+		tbmxTmp.add(org.getCompanyById(byqtbcb.getQybh()).getName());
+		tbmxTmp.add(xmxx != null ? org.getCompanyById(Integer.valueOf(xmxx.getDdszdw())).getName() : "");// 订单所在单位及项目公司//订单所在单位及项目公司
 		tbmxTmp.add(byqtbcb.getTbbjsj() + "");// 投标报价时间//投标报价时间
 		tbmxTmp.add(xmxx != null ? xmxx.getYhdwmc(): "");// 用户单位名称//用户单位名称
 		tbmxTmp.add(xmxx != null ? xmxx.getXmmc(): "");// 项目名称//项目名称
@@ -216,14 +216,14 @@ public class BYQCBServiceImpl implements BYQCBService {
 			
 			fillTbmx(tbmx, i, xmxx, byqtbcb, zccb, tbclzcb, tbzccb);
 
-			Company comp = org.getCompany(Integer.valueOf(byqtbcb.getQybh()));
+			Company comp = org.getCompanyById(Integer.valueOf(byqtbcb.getQybh()));
 			if (comp != null) {
 
 				if (comp.getParentCompany() != null) {
 					comp = comp.getParentCompany();
 				}
 			
-				filltbqk(jttb, gsMap.get(org.getCompany(byqtbcb.getQybh()).getType()), byqtbcb, tbzccb, true);
+				filltbqk(jttb, gsMap.get(org.getCompanyById(byqtbcb.getQybh()).getType()), byqtbcb, tbzccb, true);
 			}
 			
 			filltbqk(jttb, jttb.length - 1, byqtbcb, tbzccb, true);
@@ -246,8 +246,8 @@ public class BYQCBServiceImpl implements BYQCBService {
 			CBBYQZXDD byqcbzxdd, CBBYQTBDD tbdd, Double zccb, Double clzcb,
 			Double sczcb) {
 		List<String> tbmxTmp = new ArrayList<String>();
-		tbmxTmp.add(org.getCompany(byqcbzxdd.getQybh()).getName());
-		tbmxTmp.add(xmxx != null ? org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName() : "");// 订单所在单位及项目公司订单所在单位及项目公司
+		tbmxTmp.add(org.getCompanyById(byqcbzxdd.getQybh()).getName());
+		tbmxTmp.add(xmxx != null ? org.getCompanyById(Integer.valueOf(xmxx.getDdszdw())).getName() : "");// 订单所在单位及项目公司订单所在单位及项目公司
 		tbmxTmp.add(byqzxjdMap.get(Integer.valueOf(byqcbzxdd.getDdzxjd())));// 订单执行阶段订单执行阶段
 		tbmxTmp.add(byqcbzxdd.getGzh());// 工作号工作号
 		tbmxTmp.add(xmxx != null ? xmxx.getGb() == 0 ? "国内订单" : "国际订单" + "" : "");// 国别国别
@@ -377,7 +377,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 
 			fillZxmx(zxmx, i, xmxx, byqcbzxdd, tbdd, zccb, clzcb, sczcb);
 
-			Company comp = org.getCompany(Integer.valueOf(byqcbzxdd.getQybh()));
+			Company comp = org.getCompanyById(Integer.valueOf(byqcbzxdd.getQybh()));
 			if (comp != null) {
 
 				if (comp.getParentCompany() != null) {
@@ -421,8 +421,8 @@ public class BYQCBServiceImpl implements BYQCBService {
 			CBBYQZXDD byqcbzxdd, XMXX xmxx, CBBYQTBDD tbdd, Double wdzccb,
 			Double clzcb, Double sjzcb) {
 		List<String> ret = new ArrayList<String>();
-		ret.add(org.getCompany(wgdd.getQybh()).getName());
-		ret.add(xmxx != null ? org.getCompany(Integer.valueOf(xmxx.getDdszdw())).getName() : "");// 订单所在单位及项目公司
+		ret.add(org.getCompanyById(wgdd.getQybh()).getName());
+		ret.add(xmxx != null ? org.getCompanyById(Integer.valueOf(xmxx.getDdszdw())).getName() : "");// 订单所在单位及项目公司
 		ret.add(byqcbzxdd != null ? byqcbzxdd != null ? byqcbzxdd.getGzh() : "" : "");// 工作号
 		ret.add(wgdd.getWgsj());// 完工时间//完工时间
 		ret.add(xmxx != null ? xmxx.getYhdwmc() : "");// 订货单位
@@ -558,7 +558,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 					Double tbzccb = getTbzzcb(tbdd);
 
 					Double zx_sczcb = getZxsczcb(byqcbzxdd);
-					comp = org.getCompany(Integer.valueOf(byqcbwgdd.getQybh()));
+					comp = org.getCompanyById(Integer.valueOf(byqcbwgdd.getQybh()));
 					if (comp != null) {
 
 						if (comp.getParentCompany() != null) {
@@ -640,7 +640,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 			Double tbclzcb = (zccb + byqtbcb.getQtclcb()) / 1.17;// 投标材料成本总计
 			Double tbzccb = tbclzcb + byqtbcb.getRgjzzfy();// 投标制造成本
 			if (null != xmxx) {
-				tmpComp = org.getCompany(Integer.valueOf(xmxx.getDdszdw()));
+				tmpComp = org.getCompanyById(Integer.valueOf(xmxx.getDdszdw()));
 				if (comp.getId() == tmpComp.getId()) {
 					fillTbmx(tbmx, i, xmxx, byqtbcb, zccb, tbclzcb, tbzccb);
 					tbmxs.add(tbmx[i]);

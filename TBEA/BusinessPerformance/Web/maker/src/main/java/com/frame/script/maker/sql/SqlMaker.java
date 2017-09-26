@@ -41,7 +41,7 @@ public class SqlMaker implements Maker {
 				if (ColType.NUMBER == ct.getType().intValue() || ColType.PERCENT == ct.getType().intValue()
 						 || ColType.INTEGER == ct.getType().intValue()) {
 					sql += " DEFAULT " + ct.getDefaultVal();
-				}else {
+				}else{
 					sql += " DEFAULT '" + ct.getDefaultVal() + "'";
 				}
 			}

@@ -244,10 +244,10 @@ public class DzwzgbServiceImpl implements DzwzgbService {
 	private void importToDzclcb(TqbzYjjEntity entity, Date d) {
 		if (tqbzCllxMcMap.containsKey(entity.getCLLB().intValue())){
 			Organization org15 = companyManager.get15Org();
-			Company comp = org15.getCompany(entity.getQYBH().intValue());
+			Company comp = org15.getCompanyById(entity.getQYBH().intValue());
 			if (null != comp){
 				Organization bmdb = companyManager.getBMDBOrganization();
-				comp = bmdb.getCompany(comp.getType());
+				comp = bmdb.getCompanyByType(comp.getType());
 				DzclkcbEntity dzclkcb = dzclkcbDao.getByNy(d, comp, tqbzCllxMcMap.get(entity.getCLLB().intValue()).ordinal());
 				if (null == dzclkcb){
 					EasyCalendar ec = new EasyCalendar(d);

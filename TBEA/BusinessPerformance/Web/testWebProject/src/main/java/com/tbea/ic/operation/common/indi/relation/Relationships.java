@@ -23,14 +23,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.tbea.ic.operation.common.WatchDirectory;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
-import com.xml.frame.report.util.Pair;
-import com.xml.frame.report.util.xml.Loop;
-import com.xml.frame.report.util.xml.XmlWalker;
+import com.util.tools.Pair;
+import com.util.tools.WatchDirectory;
+import com.util.tools.xml.Loop;
+import com.util.tools.xml.XmlWalker;
 
 @Repository
 public class Relationships {
@@ -110,7 +110,7 @@ public class Relationships {
 	}
 	
 	private void parseShare(Document doc) throws Exception{
-		XmlWalker.each(doc.getElementsByTagName("share"), null, new Loop(){
+		XmlWalker.each(doc.getElementsByTagName("share"), new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {
@@ -151,7 +151,7 @@ public class Relationships {
 
 	private void parseIndis(Document doc) throws Exception {
 		NodeList indicators = doc.getElementsByTagName("indicators");
-		XmlWalker.eachChildren(XmlWalker.element(indicators, null, 0), null, new Loop(){
+		XmlWalker.eachChildren(XmlWalker.element(indicators, 0), new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {
@@ -165,7 +165,7 @@ public class Relationships {
 	}
 
 	private void parseSum(Document doc) throws Exception {
-		XmlWalker.each(doc.getElementsByTagName("sum"), null, new Loop(){
+		XmlWalker.each(doc.getElementsByTagName("sum"), new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {

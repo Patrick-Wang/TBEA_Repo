@@ -81,6 +81,6 @@ public class SJZBImporter {
 		ZBStatus zbStatus = entryService.getZbStatus(d, type,
 				ZBType.BYSJ).get(0);
 		Organization org = companyManager.getBMDBOrganization();
-		importData(zbStatus, jd, d, org.getCompany(type));		
+		importData(zbStatus, jd, d, org.getCompanyByType(type));		
 	}
 }

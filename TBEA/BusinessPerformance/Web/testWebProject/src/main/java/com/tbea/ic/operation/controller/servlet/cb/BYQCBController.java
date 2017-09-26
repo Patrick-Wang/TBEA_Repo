@@ -41,7 +41,7 @@ public class BYQCBController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Organization org = companyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		Company comp = org.getCompanyByType(CompanySelection.getCompany(request));
 
 		String[][] aTbmx = service.getTbmx(comp);
 		String tbmx = JSONArray.fromObject(aTbmx).toString()
@@ -102,7 +102,7 @@ public class BYQCBController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Organization org = companyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		Company comp = org.getCompanyByType(CompanySelection.getCompany(request));
 
 		String[][] aZxmx = service.getZxmx(comp);
 		String zxmx = JSONArray.fromObject(aZxmx).toString()
@@ -163,7 +163,7 @@ public class BYQCBController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Organization org = companyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		Company comp = org.getCompanyByType(CompanySelection.getCompany(request));
 
 		String[][] aWgmx = service.getWgmx(comp);
 		String wgmx = JSONArray.fromObject(aWgmx).toString()

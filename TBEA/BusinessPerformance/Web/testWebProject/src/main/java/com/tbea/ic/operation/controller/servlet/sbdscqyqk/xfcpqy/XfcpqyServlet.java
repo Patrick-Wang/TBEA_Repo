@@ -47,8 +47,8 @@ public class XfcpqyServlet {
 	CompanyManager companyManager;
 
 	Company getCompany(CompanyType comp){
-		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
-		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		Company bmCompany = companyManager.getBMDBOrganization().getCompanyByType(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompanyByType(comp);
 		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
 			return vYszkCompany;
 		}
@@ -89,7 +89,7 @@ public class XfcpqyServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		
-		List<List<String>> result = xfcpqyService.getXfcpqyEntry(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		List<List<String>> result = xfcpqyService.getXfcpqyEntry(d, companyManager.getBMDBOrganization().getCompanyByType(comp), getType(request));
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
 			.add(new EmptyFormatter(DefaultMatcher.LEFT1_MATCHER))
@@ -108,7 +108,7 @@ public class XfcpqyServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		
-		ErrorCode err = xfcpqyService.saveXfcpqy(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request), data);
+		ErrorCode err = xfcpqyService.saveXfcpqy(d, companyManager.getBMDBOrganization().getCompanyByType(comp), getType(request), data);
 		return Util.response(err);
 	}
 	
@@ -121,7 +121,7 @@ public class XfcpqyServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
 		
-		ErrorCode err = xfcpqyService.submitXfcpqy(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request), data);
+		ErrorCode err = xfcpqyService.submitXfcpqy(d, companyManager.getBMDBOrganization().getCompanyByType(comp), getType(request), data);
 		return Util.response(err);
 	}
 	
@@ -159,7 +159,7 @@ public class XfcpqyServlet {
 			.server()
 			.format(ret);
 		HSSFWorkbook workbook = template.getWorkbook();
-		String name = companyManager.getBMDBOrganization().getCompany(comp).getName() + workbook.getSheetName(0);
+		String name = companyManager.getBMDBOrganization().getCompanyByType(comp).getName() + workbook.getSheetName(0);
 		workbook.setSheetName(0, name);
 		template.write(response, name + "月.xls");
 	}

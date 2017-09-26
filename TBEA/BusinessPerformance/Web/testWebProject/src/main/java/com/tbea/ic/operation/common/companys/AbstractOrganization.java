@@ -12,7 +12,7 @@ public abstract class AbstractOrganization implements Organization {
 	protected Map<Integer, Company> idCompMap = new HashMap<Integer, Company>();
 	
 	protected Company clone(Organization org, CompanyType ty){
-		Company otherComp = org.getCompany(ty);
+		Company otherComp = org.getCompanyByType(ty);
 		Company comp = null;
 		if (null != otherComp)
 		{
@@ -59,17 +59,17 @@ public abstract class AbstractOrganization implements Organization {
 
 	
 	@Override
-	public Company getCompany(String name){
+	public Company getCompanyByName(String name){
 		return queryCompany(this.topComps, name);
 	}
 	
 	@Override
-	public Company getCompany(CompanyType type) {
+	public Company getCompanyByType(CompanyType type) {
 		return typeCompMap.get(type);
 	}
 
 	@Override
-	public Company getCompany(Integer id) {
+	public Company getCompanyById(Integer id) {
 		return idCompMap.get(id);//queryCompany(topComps, id);
 	}
 
@@ -89,7 +89,7 @@ public abstract class AbstractOrganization implements Organization {
 	}
 	@Override
 	public boolean owns(Company comp) {
-		return null != comp && this.getCompany(comp.getType()) == comp;
+		return null != comp && this.getCompanyByType(comp.getType()) == comp;
 	}
 	
 }

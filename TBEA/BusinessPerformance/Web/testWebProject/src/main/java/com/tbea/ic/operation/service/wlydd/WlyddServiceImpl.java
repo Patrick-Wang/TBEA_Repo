@@ -151,7 +151,7 @@ public class WlyddServiceImpl implements WlyddService {
 	@Override
 	public void importDlKglydd(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("DL 可供履约订单");
-		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DLGS);
 		List<Object[]> rows = dlKglyddDao.getKglydd(d);
 		importXlKglydd(d, rows, company);
 	}
@@ -159,14 +159,14 @@ public class WlyddServiceImpl implements WlyddService {
 	@Override
 	public void importLlKglydd(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("LL 可供履约订单");
-		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.LLGS);
 		List<Object[]> rows = llKglyddDao.getKglydd(d);
 		importXlKglydd(d, rows, company);
 	}
 	
 	@Override
 	public void importDlMlspcs(Date d) {
-		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DLGS);
 		List<Object[]> rows = dlmlspcsDao.getZxyw(d);
 		LoggerFactory.getLogger("WEBSERVICE").info("DL 盈利分析转型业务");
 		importMlspcs(d, rows, WlyddType.YLFX_WLYMLSP_XL_ZXYW, company);
@@ -223,14 +223,14 @@ public class WlyddServiceImpl implements WlyddService {
 	@Override
 	public void importXlKglydd(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("XL 可供履约订单");
-		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XLC);
 		List<Object[]> rows = xlKglyddDao.getKglydd(d);
 		importXlKglydd(d, rows, company);
 	}
 
 	@Override
 	public void importXlMlspcs(Date d) {
-		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XLC);
 		List<Object[]> rows = xlmlspcsDao.getZxyw(d);
 		LoggerFactory.getLogger("WEBSERVICE").info("XL 盈利分析转型业务");
 		importMlspcs(d, rows, WlyddType.YLFX_WLYMLSP_XL_ZXYW, company);

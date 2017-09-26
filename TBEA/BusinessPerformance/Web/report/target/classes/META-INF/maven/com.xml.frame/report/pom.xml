@@ -73,11 +73,10 @@
 		    <artifactId>docx4j</artifactId>
 		    <version>3.3.5</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
-		<dependency>
-		    <groupId>com.zaxxer</groupId>
-		    <artifactId>HikariCP</artifactId>
-		    <version>2.7.1</version>
+			<dependency>
+		    <groupId>com.datasoruce</groupId>
+		    <artifactId>dynamicDS</artifactId>
+		    <version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		
 	</dependencies>

@@ -92,7 +92,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 		cols.add("statistical_item");
 		cols.add("value");
 		List<Object[]> result = hbws.getHBClwcqk(cols, d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.HBGS);
 		importByqCzCl(d, result, comp);
 	}
 	
@@ -100,7 +100,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 	public void importDlCzCl(java.sql.Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("importDlCzCl");
 		List<Object[]> result = dlCzclDao.getCzCl(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DLGS);
 		importXlCzCl(d, result, comp);
 	}
 	
@@ -280,7 +280,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 	public void importXlCzCl(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("importXlCzCl");
 		List<Object[]> result = xlCzclDao.getCzCl(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XLC);
 		importXlCzCl(d, result, comp);
 	}
 
@@ -288,7 +288,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 	public void importLlCzCl(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("importLlCzCl");
 		List<Object[]> result = llCzclDao.getCzCl(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.LLGS);
 		importXlCzCl(d, result, comp);
 	}
 }

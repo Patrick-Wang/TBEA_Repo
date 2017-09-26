@@ -39,7 +39,7 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 		List<Company> comps = new ArrayList<Company>();
 		List<ExtendAuthority> auths = extendAuthDao.getAuthority(account, authType.ordinal());
 		for (int i = 0; i < auths.size(); ++i){
-			comps.add(companyManager.getBMDBOrganization().getCompany(auths.get(i).getDwxx().getId()));
+			comps.add(companyManager.getBMDBOrganization().getCompanyById(auths.get(i).getDwxx().getId()));
 		}
 		return comps;
 	}
@@ -50,7 +50,7 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 		List<ExtendAuthority> auths = extendAuthDao.getAuthority(account, authType);
 		Company compTmp = null;
 		for (int i = 0; i < auths.size(); ++i){
-			compTmp = companyManager.getBMDBOrganization().getCompany(auths.get(i).getDwxx().getId());
+			compTmp = companyManager.getBMDBOrganization().getCompanyById(auths.get(i).getDwxx().getId());
 			if (!comps.contains(compTmp) && null != compTmp){
 				comps.add(compTmp);
 			}
@@ -65,18 +65,18 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 		List<Company> compsTmp = new ArrayList<Company>();
 		compsTmp.addAll(comps);
 		Organization org = companyManager.getVirtualGBOrg();
-		Company byqcy = org.getCompany(CompanyType.BYQCY);
+		Company byqcy = org.getCompanyByType(CompanyType.BYQCY);
 		boolean containsAllByq = true;
 		for (Company byq : byqcy.getSubCompanies()){
-			if (comps.indexOf(companyManager.getBMDBOrganization().getCompany(byq.getId())) < 0){
+			if (comps.indexOf(companyManager.getBMDBOrganization().getCompanyById(byq.getId())) < 0){
 				containsAllByq = false;
 				break;
 			}
 		}
 		boolean containsAllXl = true;
-		Company xlcy = org.getCompany(CompanyType.XLCY);
+		Company xlcy = org.getCompanyByType(CompanyType.XLCY);
 		for (Company xl : xlcy.getSubCompanies()){
-			if (comps.indexOf(companyManager.getBMDBOrganization().getCompany(xl.getId())) < 0){
+			if (comps.indexOf(companyManager.getBMDBOrganization().getCompanyById(xl.getId())) < 0){
 				containsAllXl = false;
 				break;
 			}
@@ -99,18 +99,18 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 		List<Company> compsTmp = new ArrayList<Company>();
 		compsTmp.addAll(comps);
 		Organization org = companyManager.getVirtualGBOrg();
-		Company byqcy = org.getCompany(CompanyType.BYQCY);
+		Company byqcy = org.getCompanyByType(CompanyType.BYQCY);
 		boolean containsAllByq = true;
 		for (Company byq : byqcy.getSubCompanies()){
-			if (comps.indexOf(companyManager.getBMDBOrganization().getCompany(byq.getId())) < 0){
+			if (comps.indexOf(companyManager.getBMDBOrganization().getCompanyById(byq.getId())) < 0){
 				containsAllByq = false;
 				break;
 			}
 		}
 		boolean containsAllXl = true;
-		Company xlcy = org.getCompany(CompanyType.XLCY);
+		Company xlcy = org.getCompanyByType(CompanyType.XLCY);
 		for (Company xl : xlcy.getSubCompanies()){
-			if (comps.indexOf(companyManager.getBMDBOrganization().getCompany(xl.getId())) < 0){
+			if (comps.indexOf(companyManager.getBMDBOrganization().getCompanyById(xl.getId())) < 0){
 				containsAllXl = false;
 				break;
 			}
@@ -124,7 +124,7 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 		}
 		
 		if (containsAllXl && containsAllByq){
-			Company sbdcy = org.getCompany(CompanyType.SBDCYJT);
+			Company sbdcy = org.getCompanyByType(CompanyType.SBDCYJT);
 			compsTmp.add(sbdcy);
 		}
 		

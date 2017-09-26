@@ -60,7 +60,7 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		List<List<String>> result = sbdddcbjpcqkService.getByqkglydd(d, getType(request), company);
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
@@ -81,7 +81,7 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		List<List<String>> result = sbdddcbjpcqkService.getXlkglydd(d, getType(request), company);
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
@@ -102,7 +102,7 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		List<List<String>> result = sbdddcbjpcqkService.getByqkglyddEntry(d, getType(request), company);	
 		StatusData sd = new StatusData(false, result);
 		List<String> cplb = sbdddcbjpcqkService.getByqCplb();
@@ -118,7 +118,7 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = sbdddcbjpcqkService.getXlkglyddEntry(d, getType(request), company);
 		StatusData sd = new StatusData(false, result);
@@ -135,7 +135,7 @@ public class SbdddcbjpcqkServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = sbdddcbjpcqkService.saveXlkglydd(d, getType(request), data, company);
 		return Util.response(err);
@@ -148,7 +148,7 @@ public class SbdddcbjpcqkServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = sbdddcbjpcqkService.saveByqkglydd(d, getType(request), data, company);
 		return Util.response(err);
@@ -160,7 +160,7 @@ public class SbdddcbjpcqkServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = sbdddcbjpcqkService.submitByqkglydd(d, getType(request), data, company);
 		return Util.response(err);
@@ -173,7 +173,7 @@ public class SbdddcbjpcqkServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = sbdddcbjpcqkService.submitXlkglydd(d, getType(request), data, company);
 		return Util.response(err);
@@ -184,7 +184,7 @@ public class SbdddcbjpcqkServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		WlyddType type = getType(request);
 		List<List<String>> ret = sbdddcbjpcqkService.getXlkglydd(d, type, company);
@@ -229,7 +229,7 @@ public class SbdddcbjpcqkServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		WlyddType type = getType(request);
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> ret = sbdddcbjpcqkService.getByqkglydd(d, type, company);
 		ExcelHelper template = null;

@@ -64,9 +64,9 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 			clmcs = dwrefclDao.getByCompany(company);
 		}else{
 			if (company.getType() == CompanyType.BYQCY){
-				clmcs = dwrefclDao.getByCompany(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
+				clmcs = dwrefclDao.getByCompany(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.SBGS));
 			}else{
-				clmcs = dwrefclDao.getByCompany(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
+				clmcs = dwrefclDao.getByCompany(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.LLGS));
 			}			
 		}
 
@@ -177,7 +177,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 	@Override
 	public void importDlYclbfqk(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("DL 原材料报废导入");
-		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DLGS);
 		List<Object[]> rows = dlyclbfqkDao.getYclbfqk(d);
 		importYclbfqk(d, rows, company);
 	}
@@ -230,7 +230,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 	@Override
 	public void importXlYclbfqk(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("XL 原材料报废导入");
-		Company company = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XLC);
 		List<Object[]> rows = xlyclbfqkDao.getYclbfqk(d);
 		importYclbfqk(d, rows, company);
 	}

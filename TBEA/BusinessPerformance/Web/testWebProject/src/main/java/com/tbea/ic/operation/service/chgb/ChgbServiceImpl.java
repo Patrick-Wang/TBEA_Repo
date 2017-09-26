@@ -693,7 +693,7 @@ public class ChgbServiceImpl implements ChgbService {
 
 					String unitCode = String.valueOf(rs.getObject(1));
 					CompanyType companyType = CompanyNCCode.getType(unitCode);
-					Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+					Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 					
 					List<ChZmEntity> entities = chzmDao.getByDate(d, comp);
 					ChZmEntity entity = null;
@@ -748,7 +748,7 @@ public class ChgbServiceImpl implements ChgbService {
 
 					String unitCode = String.valueOf(rs.getObject(1));
 					CompanyType companyType = CompanyNCCode.getType(unitCode);
-					Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+					Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 					
 					List<NychEntity> entities = nychDao.getByDate(d, d, comp);
 					NychEntity entity = null;

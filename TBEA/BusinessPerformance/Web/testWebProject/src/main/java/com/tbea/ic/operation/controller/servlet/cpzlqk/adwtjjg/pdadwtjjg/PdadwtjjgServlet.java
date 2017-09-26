@@ -67,7 +67,7 @@ public class PdadwtjjgServlet {
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		
 		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
@@ -122,7 +122,7 @@ public class PdadwtjjgServlet {
 		List<Integer> zts = new ArrayList<Integer>();
 		zts.add(ZBStatus.APPROVED.ordinal());
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (comp == CompanyType.PDCY){
 			result = pdadwtjjgService.getPdadwtjjg(d, yjType, zts);
 		}else{

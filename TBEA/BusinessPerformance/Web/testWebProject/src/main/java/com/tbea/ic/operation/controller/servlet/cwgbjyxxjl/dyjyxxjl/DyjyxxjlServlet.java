@@ -53,7 +53,7 @@ public class DyjyxxjlServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = jyxxjlService.getJyxxjlYD(d, company);
 		
@@ -71,7 +71,7 @@ public class DyjyxxjlServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = jyxxjlService.getJyxxjlEntry(d, company);
 		
@@ -88,7 +88,7 @@ public class DyjyxxjlServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = jyxxjlService.saveJyxxjl(d, company, data);
 		return Util.response(err);
@@ -100,7 +100,7 @@ public class DyjyxxjlServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = jyxxjlService.submitJyxxjl(d, company, data);
 		return Util.response(err);
@@ -111,7 +111,7 @@ public class DyjyxxjlServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = jyxxjlService.getJyxxjlYD(d, company);
 		ExcelHelper template = ExcelTemplate.createCwgbjyxxjlTemplate(CwgbjyxxjlSheetType.YD);

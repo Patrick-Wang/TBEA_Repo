@@ -44,10 +44,10 @@ public class YSZKJGQKController {
 		
 		Date d = DateSelection.getDate(request);
 		CompanyType compType = CompanySelection.getCompany(request);
-		Company comp = companyManager.getBMOrganization().getCompany(compType);
+		Company comp = companyManager.getBMOrganization().getCompanyByType(compType);
 		List<String[][]> result = new ArrayList<String[][]>();
 		if (null == comp) {
-			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+			comp = companyManager.getVirtualYSZKOrganization().getCompanyByType(compType);
 			if (null != comp) {
 				List<Company> comps = comp.getSubCompanies();
 				result.add(service.getYszkjg(d, comps));

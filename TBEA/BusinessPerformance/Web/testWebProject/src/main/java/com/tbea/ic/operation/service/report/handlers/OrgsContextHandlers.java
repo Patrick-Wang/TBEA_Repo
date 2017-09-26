@@ -36,23 +36,23 @@ public class OrgsContextHandlers implements ContextHandler {
 			protected Object onGetProp(Organization org, List<Object> args)
 					throws Exception {
 				if ("ids".equals(args.get(0))) {
-					return org.getCompany(
+					return org.getCompanyByType(
 							CompanyType.valueOf((Integer) args.get(1))).getId();
 				} else if ("types".equals(args.get(0))) {
-					return org.getCompany((Integer) args.get(1)).getType()
+					return org.getCompanyById((Integer) args.get(1)).getType()
 							.ordinal();
 				} else if ("companiesByIds".equals(args.get(0))) {
 					List<Integer> ids = (List) args.get(1);
 					List<Company> comps = new ArrayList<Company>();
 					for (Integer id : ids) {
-						comps.add(org.getCompany(id));
+						comps.add(org.getCompanyById(id));
 					}
 					return comps;
 				} else if ("namesByIds".equals(args.get(0))) {
 					List<Integer> ids = (List) args.get(1);
 					List<String> names = new ArrayList<String>();
 					for (Integer id : ids) {
-						names.add(org.getCompany(id).getName());
+						names.add(org.getCompanyById(id).getName());
 					}
 					return names;
 				} else if ("allComps".equals(args.get(0))) {

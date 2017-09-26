@@ -40,19 +40,19 @@ public class CwcpdlmlServlet {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	public void setCompanyManager(CompanyManager companyManager){
 		this.companyManager = companyManager;	
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.SBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.HBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XBC));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.TBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.LLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XLC));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XTNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.TCNY));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.NDGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.JCKGS_JYDW));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.GJGCGS_GFGS));
 	}
 
 	@Autowired
@@ -74,7 +74,7 @@ public class CwcpdlmlServlet {
 				AuthType.FinanceLookup));
 		
 		if (comps.size() > 1){
-			comps.add(0, companyManager.getBMDBOrganization().getCompany(CompanyType.GFGS));
+			comps.add(0, companyManager.getBMDBOrganization().getCompanyByType(CompanyType.GFGS));
 		}
 		
 		CompanySelection compSel = new CompanySelection(true, comps);

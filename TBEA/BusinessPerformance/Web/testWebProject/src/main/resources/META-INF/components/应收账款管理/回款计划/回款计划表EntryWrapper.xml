@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="DB508EDBC9A8A56FFBDF6604877A374AEntryWrapperJsp">
+        <list id="ids" type="int">0</list>
+        <list id="vals" type="string">回款计划表</list>
+        <response name="framework/templates/dateReport/entry" type="jsp">
+            <map key="updateUrl" value="DB508EDBC9A8A56FFBDF6604877A374AEntryUpdateWrapperClr"/>
+            <map key="submitUrl" value="DB508EDBC9A8A56FFBDF6604877A374AEntrySubmitWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="DB508EDBC9A8A56FFBDF6604877A374AEntryUpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="arReceivedPlanEntryUpdateClr"/>
+        </if>
+    </controller>
+    <controller id="DB508EDBC9A8A56FFBDF6604877A374AEntrySubmitWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="arReceivedPlanEntrySubmitClr"/>
+        </if>
+    </controller>
+</components>

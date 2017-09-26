@@ -480,7 +480,7 @@ public class YDZBController {
 		Organization org = companyManager.getVirtualJYZBOrganization();
 		CompanySelection compSel = new CompanySelection(
 				false,
-				org.getCompany(CompanyType.GFGS).getSubCompanies(), 
+				org.getCompanyByType(CompanyType.GFGS).getSubCompanies(), 
 				new CompanyTypeFilter(
 						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));
@@ -713,7 +713,7 @@ public class YDZBController {
 	private String getZbhz_overviewData(Date d, int companyId, String zbid) {
 
 		Organization org = companyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanyType.valueOf(companyId));
+		Company comp = org.getCompanyByType(CompanyType.valueOf(companyId));
 
 		String zbhz_overview_yd = JSONArray
 				.fromObject(service.getYdZbhz_overviewData(d, comp, zbid))
@@ -889,7 +889,7 @@ public class YDZBController {
 		Organization org = companyManager.getVirtualJYZBOrganization();
 		CompanySelection compSel = new CompanySelection(
 				false,
-				org.getCompany(CompanyType.GFGS).getSubCompanies(), 
+				org.getCompanyByType(CompanyType.GFGS).getSubCompanies(), 
 				new CompanyTypeFilter(
 						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));

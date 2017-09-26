@@ -53,7 +53,7 @@ public class NyzbscxlServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = nyzbscxlService.getNyzbscxl(d, company);
 		
@@ -70,7 +70,7 @@ public class NyzbscxlServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = nyzbscxlService.getNyzbscxlEntry(d, company);
 		
@@ -87,7 +87,7 @@ public class NyzbscxlServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = nyzbscxlService.saveNyzbscxl(d, data, company);
 		return Util.response(err);
@@ -101,7 +101,7 @@ public class NyzbscxlServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = nyzbscxlService.submitNyzbscxl(d, data, company);
 		return Util.response(err);
@@ -112,7 +112,7 @@ public class NyzbscxlServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		List<List<String>> ret = nyzbscxlService.getNyzbscxl(d, company);
 		ExcelHelper template = ExcelTemplate.createNyzbscqkTemplate(NyzbscqkSheetType.NYZBSCXL);
 

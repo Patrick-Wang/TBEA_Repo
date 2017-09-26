@@ -67,36 +67,36 @@ public class YSZKRBServiceImpl implements YSZKRBService{
 //	公司合计	
 
 		List<Company> companies = new ArrayList<Company>();
-		companies.add(org.getCompany(CompanyType.SBGS));
-		companies.add(org.getCompany(CompanyType.HBGS));
-		companies.add(org.getCompany(CompanyType.XBC));
-		companies.add(org.getCompany(CompanyType.LLGS));
-		companies.add(org.getCompany(CompanyType.XLC));
-		companies.add(org.getCompany(CompanyType.DLGS));
-		computeMap.put(org.getCompany(CompanyType.SBDCYJT), companies);
+		companies.add(org.getCompanyByType(CompanyType.SBGS));
+		companies.add(org.getCompanyByType(CompanyType.HBGS));
+		companies.add(org.getCompanyByType(CompanyType.XBC));
+		companies.add(org.getCompanyByType(CompanyType.LLGS));
+		companies.add(org.getCompanyByType(CompanyType.XLC));
+		companies.add(org.getCompanyByType(CompanyType.DLGS));
+		computeMap.put(org.getCompanyByType(CompanyType.SBDCYJT), companies);
 		
 		companies = new ArrayList<Company>();
-		companies.add(org.getCompany(CompanyType.XNYGS));
-		companies.add(org.getCompany(CompanyType.XTNYGS));
-		computeMap.put(org.getCompany(CompanyType.XNYSYB), companies);
+		companies.add(org.getCompanyByType(CompanyType.XNYGS));
+		companies.add(org.getCompanyByType(CompanyType.XTNYGS));
+		computeMap.put(org.getCompanyByType(CompanyType.XNYSYB), companies);
 
 		companies = new ArrayList<Company>();
-		companies.add(org.getCompany(CompanyType.TCNY));
-		companies.add(org.getCompany(CompanyType.NDGS));
-		computeMap.put(org.getCompany(CompanyType.NYSYB), companies);
+		companies.add(org.getCompanyByType(CompanyType.TCNY));
+		companies.add(org.getCompanyByType(CompanyType.NDGS));
+		computeMap.put(org.getCompanyByType(CompanyType.NYSYB), companies);
 	
 		companies = new ArrayList<Company>();
-		companies.add(org.getCompany(CompanyType.JCKGS_JYDW));
-		companies.add(org.getCompany(CompanyType.GJGCGS_GFGS));
-		computeMap.put(org.getCompany(CompanyType.GJGCGS_SYB), companies);
+		companies.add(org.getCompanyByType(CompanyType.JCKGS_JYDW));
+		companies.add(org.getCompanyByType(CompanyType.GJGCGS_GFGS));
+		computeMap.put(org.getCompanyByType(CompanyType.GJGCGS_SYB), companies);
 		
 		companies = new ArrayList<Company>();
-		companies.add(org.getCompany(CompanyType.SBDCYJT));
-		companies.add(org.getCompany(CompanyType.XNYSYB));
-		companies.add(org.getCompany(CompanyType.NYSYB));
-		companies.add(org.getCompany(CompanyType.GJGCGS_SYB));
-		companies.add(org.getCompany(CompanyType.ZHGS));
-		computeMap.put(org.getCompany(CompanyType.GFGS), companies);
+		companies.add(org.getCompanyByType(CompanyType.SBDCYJT));
+		companies.add(org.getCompanyByType(CompanyType.XNYSYB));
+		companies.add(org.getCompanyByType(CompanyType.NYSYB));
+		companies.add(org.getCompanyByType(CompanyType.GJGCGS_SYB));
+		companies.add(org.getCompanyByType(CompanyType.ZHGS));
+		computeMap.put(org.getCompanyByType(CompanyType.GFGS), companies);
 	}
 	
 	@Autowired
@@ -125,25 +125,25 @@ public class YSZKRBServiceImpl implements YSZKRBService{
 			Organization org = companyManager.getBMDBOrganization();
 			
 			List<Company> companies = new ArrayList<Company>();
-			companies.add(org.getCompany(CompanyType.SBGS));
-			companies.add(org.getCompany(CompanyType.HBGS));
-			companies.add(org.getCompany(CompanyType.XBC));
-			companies.add(org.getCompany(CompanyType.TBGS));
-			companies.add(org.getCompany(CompanyType.LLGS));
-			companies.add(org.getCompany(CompanyType.XLC));
-			companies.add(org.getCompany(CompanyType.DLGS));
+			companies.add(org.getCompanyByType(CompanyType.SBGS));
+			companies.add(org.getCompanyByType(CompanyType.HBGS));
+			companies.add(org.getCompanyByType(CompanyType.XBC));
+			companies.add(org.getCompanyByType(CompanyType.TBGS));
+			companies.add(org.getCompanyByType(CompanyType.LLGS));
+			companies.add(org.getCompanyByType(CompanyType.XLC));
+			companies.add(org.getCompanyByType(CompanyType.DLGS));
 			
 			
 			pipe.addCompany(companies, configFactory.getYszkrbConfigurator())
-				.addCompany(org.getCompany(CompanyType.SBDCYJT), null)
-				.addCompany(computeMap.get(org.getCompany(CompanyType.XNYSYB)), configFactory.getYszkrbConfigurator())
-				.addCompany(org.getCompany(CompanyType.XNYSYB), null)
-				.addCompany(computeMap.get(org.getCompany(CompanyType.NYSYB)), configFactory.getYszkrbConfigurator())
-				.addCompany(org.getCompany(CompanyType.NYSYB), null)
-				.addCompany(computeMap.get(org.getCompany(CompanyType.GJGCGS_SYB)), configFactory.getYszkrbConfigurator())
-				.addCompany(org.getCompany(CompanyType.GJGCGS_SYB), null)			
-				.addCompany(org.getCompany(CompanyType.ZHGS), configFactory.getYszkrbConfigurator())
-				.addCompany(org.getCompany(CompanyType.GFGS), null);			
+				.addCompany(org.getCompanyByType(CompanyType.SBDCYJT), null)
+				.addCompany(computeMap.get(org.getCompanyByType(CompanyType.XNYSYB)), configFactory.getYszkrbConfigurator())
+				.addCompany(org.getCompanyByType(CompanyType.XNYSYB), null)
+				.addCompany(computeMap.get(org.getCompanyByType(CompanyType.NYSYB)), configFactory.getYszkrbConfigurator())
+				.addCompany(org.getCompanyByType(CompanyType.NYSYB), null)
+				.addCompany(computeMap.get(org.getCompanyByType(CompanyType.GJGCGS_SYB)), configFactory.getYszkrbConfigurator())
+				.addCompany(org.getCompanyByType(CompanyType.GJGCGS_SYB), null)			
+				.addCompany(org.getCompanyByType(CompanyType.ZHGS), configFactory.getYszkrbConfigurator())
+				.addCompany(org.getCompanyByType(CompanyType.GFGS), null);			
 			return makeResult(pipe.getData());
 		}else{			
 			if (extAuthServ.hasAuthority(account, 28)){

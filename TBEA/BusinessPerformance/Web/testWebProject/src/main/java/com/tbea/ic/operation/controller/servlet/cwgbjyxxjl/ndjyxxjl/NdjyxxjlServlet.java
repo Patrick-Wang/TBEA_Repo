@@ -51,7 +51,7 @@ public class NdjyxxjlServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = jyxxjlService.getJyxxjlND(d, company);
 		
@@ -97,7 +97,7 @@ public class NdjyxxjlServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = jyxxjlService.getJyxxjlND(d, company);
 		ExcelHelper template = ExcelTemplate.createCwgbjyxxjlTemplate(getCwgbjyxxjlSheetType(d));

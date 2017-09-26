@@ -16,7 +16,7 @@ import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.entity.cpzlqk.XkJdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
-import com.xml.frame.report.util.Pair;
+import com.util.tools.Pair;
 
 class FormulaClientJd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>{
 

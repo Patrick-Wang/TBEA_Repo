@@ -22,8 +22,8 @@ import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoImpl;
 import com.tbea.ic.operation.model.entity.cpzlqk.XlAdwtjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
+import com.util.tools.Pair;
 import com.xml.frame.report.util.EasyCalendar;
-import com.xml.frame.report.util.Pair;
 
 @Service(XladydjtjjgServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -47,7 +47,7 @@ public class XladydjtjjgServiceImpl implements XladydjtjjgService {
 			Formula formula = new Formula(entity.getFormul());
 			Company comp = null;
 			if (entity.getDwid() != null){
-				comp = companyManager.getVirtualCYOrg().getCompany(entity.getDwid());
+				comp = companyManager.getVirtualCYOrg().getCompanyById(entity.getDwid());
 				comps.add(comp.getId());
 			}
 			client.add(formula, entity, comp);

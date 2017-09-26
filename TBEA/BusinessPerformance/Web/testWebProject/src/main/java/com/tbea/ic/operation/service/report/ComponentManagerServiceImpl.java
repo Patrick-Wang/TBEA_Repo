@@ -17,11 +17,10 @@ import com.tbea.ic.operation.service.report.handlers.RequestContextHandler;
 import com.tbea.ic.operation.service.report.handlers.TransactionContextHandler;
 import com.tbea.ic.operation.service.report.handlers.UtilContextHandler;
 import com.xml.frame.report.ReportLogger;
-import com.xml.frame.report.component.ComponentManager;
 import com.xml.frame.report.component.controller.Controller;
 import com.xml.frame.report.component.controller.Scheduler;
-import com.xml.frame.report.component.datasource.HikariCPDataSourceFactory;
 import com.xml.frame.report.component.entity.Context;
+import com.xml.frame.report.component.manager.ComponentManager;
 import com.xml.frame.report.component.service.Service;
 import com.xml.frame.report.util.DataNode;
 @org.springframework.stereotype.Service
@@ -49,7 +48,7 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 //		HikariCPDataSourceFactory.start(dsConfigPath);
 	}
 	
-	ComponentManager compMgr = new ComponentManager(this, resPath);
+	ComponentManager compMgr = ComponentManager.create(this, resPath, null);
 	
 	@Resource(type = TransactionContextHandler.class)
 	ContextHandler tranContext;

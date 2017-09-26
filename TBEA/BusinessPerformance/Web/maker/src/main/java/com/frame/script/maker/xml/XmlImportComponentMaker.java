@@ -52,6 +52,7 @@ public class XmlImportComponentMaker extends XmlComponentMaker {
 		case ColType.CURRENCY_SYMBOL:
 		case ColType.STRING:
 		case ColType.TEXT:
+		case ColType.OPTION:
 			e.setAttribute("type", "string");
 			break;
 		case ColType.DATE:

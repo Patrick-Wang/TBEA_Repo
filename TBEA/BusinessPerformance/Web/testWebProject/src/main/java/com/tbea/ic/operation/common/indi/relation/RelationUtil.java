@@ -15,13 +15,13 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
-import com.xml.frame.report.util.xml.Loop;
-import com.xml.frame.report.util.xml.XmlWalker;
+import com.util.tools.xml.Loop;
+import com.util.tools.xml.XmlWalker;
 
 public class RelationUtil {
 	public static Set<CompanyType> parseCompanySet(Element elem, CompanyManager compMgr, DWXXDao dwxxDao) throws Exception {
 		Set<CompanyType> comps = new HashSet<CompanyType>();
-		XmlWalker.eachChildren(elem, null, new Loop(){
+		XmlWalker.eachChildren(elem, new Loop(){
 
 			@Override
 			public void on(Element elem) throws Exception {
@@ -38,7 +38,7 @@ public class RelationUtil {
 	public static CompanyType parseCompany(Element elem, CompanyManager compMgr, DWXXDao dwxxDao) {
 		if (elem.hasAttribute("id")){
 			Organization org = compMgr.getBMDBOrganization();
-			Company comp = org.getCompany(Integer.valueOf(elem.getAttribute("id")));
+			Company comp = org.getCompanyById(Integer.valueOf(elem.getAttribute("id")));
 			if (null != comp){
 				return comp.getType();
 			}
@@ -52,7 +52,7 @@ public class RelationUtil {
 			DWXX dwxx = dwxxDao.getByName(elem.getAttribute("name"));
 			if (null != dwxx){
 				Organization org = compMgr.getBMDBOrganization();
-				Company comp = org.getCompany(dwxx.getId());
+				Company comp = org.getCompanyById(dwxx.getId());
 				return comp.getType();
 			}
 		}

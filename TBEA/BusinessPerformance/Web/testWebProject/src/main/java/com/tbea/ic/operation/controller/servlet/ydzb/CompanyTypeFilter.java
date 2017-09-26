@@ -19,8 +19,8 @@ public class CompanyTypeFilter implements CompanySelection.Filter{
 	public CompanyTypeFilter(List<Company> companies, Organization org){
 		this.org = org;
 		this.companies = companies;
-		dbsbd = org.getCompany(CompanyType.DBSBDCYJT);
-		nfsbd = org.getCompany(CompanyType.NFSBDCYJT);
+		dbsbd = org.getCompanyByType(CompanyType.DBSBDCYJT);
+		nfsbd = org.getCompanyByType(CompanyType.NFSBDCYJT);
 
 		updateCompanies();
 	}
@@ -28,7 +28,7 @@ public class CompanyTypeFilter implements CompanySelection.Filter{
 	private void addCategory(List<Company> comps, Company category){
 		int count = 0;
 		for (Company comp : category.getSubCompanies()){
-			if(keep(org.getCompany(comp.getType()))){
+			if(keep(org.getCompanyByType(comp.getType()))){
 				++count;
 			}
 		}
@@ -40,7 +40,7 @@ public class CompanyTypeFilter implements CompanySelection.Filter{
 	private void updateCompanies(){
 		List<Company> ret = new ArrayList<Company>();
 		for (int i = 0; i < this.companies.size(); ++i){
-			ret.add(org.getCompany(this.companies.get(i).getType()));
+			ret.add(org.getCompanyByType(this.companies.get(i).getType()));
 			companies.set(i, ret.get(i));
 		}
 		addCategory(ret, dbsbd);

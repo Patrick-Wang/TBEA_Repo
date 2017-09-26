@@ -183,7 +183,7 @@ public class ZBListenerAggregator implements ZBInjectListener {
 		List<Integer> compIds = new ArrayList<Integer>();
 		Organization org = companyManager.getBMDBOrganization();
 		for (CompanyType ct : comps){
-			compIds.add(org.getCompany(ct).getId());
+			compIds.add(org.getCompanyByType(ct).getId());
 		}
 		return compIds;
 	}

@@ -72,7 +72,7 @@ public class PdacptjjgServlet {
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
 		if (pageType == PageType.SHOW){
@@ -116,7 +116,7 @@ public class PdacptjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		
 		List<List<String>> result = pdacptjjgService.getPdacptjjgEntry(d, company);
 		ZBStatus status = pdacptjjgService.getStatus(d, company);
@@ -133,7 +133,7 @@ public class PdacptjjgServlet {
 		ZBStatus zt = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		
 		ErrorCode err = pdacptjjgService.updateStatus(d, company, zt);
 		return Util.response(err);
@@ -145,7 +145,7 @@ public class PdacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		
 		ErrorCode err = pdacptjjgService.savePdacptjjg(d, data, company);
 		return Util.response(err);
@@ -157,7 +157,7 @@ public class PdacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		
 		ErrorCode err = pdacptjjgService.submitPdacptjjg(d, data, company);
 		return Util.response(err);
@@ -169,7 +169,7 @@ public class PdacptjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		
 		List<List<String>> result = null;
 		ZBStatus status = pdacptjjgService.getStatus(d, company);
@@ -192,7 +192,7 @@ public class PdacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		
 		ErrorCode err = pdacptjjgService.approvePdacptjjg(d, data, company);
 		return Util.response(err);
@@ -204,7 +204,7 @@ public class PdacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		
 		ErrorCode err = pdacptjjgService.unapprovePdacptjjg(d, data, company);
 		return Util.response(err);
@@ -215,7 +215,7 @@ public class PdacptjjgServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		List<Integer> zts = new ArrayList<Integer>();
 		zts.add(ZBStatus.APPROVED.ordinal());

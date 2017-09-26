@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="DB508EDBC9A8A56FFBDF6604877A374AImportWrapperJsp">
+        <list id="ids" type="int">0</list>
+        <list id="vals" type="string">回款计划表</list>
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="DB508EDBC9A8A56FFBDF6604877A374AImportWrapper"/>
+            <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+        </response>
+    </controller>
+    <controller id="DB508EDBC9A8A56FFBDF6604877A374AImportWrapper">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="arReceivedPlanImportClr"/>
+        </if>
+    </controller>
+</components>

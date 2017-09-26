@@ -1,147 +1,138 @@
 package com.frame.script.el;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.frame.script.el.em.EM2Fixed;
+import com.frame.script.el.em.EM2Int;
+import com.frame.script.el.em.EMArrayJudge;
+import com.frame.script.el.em.EMAsJson;
+import com.frame.script.el.em.EMAsTimestamp;
+import com.frame.script.el.em.EMDistinct;
+import com.frame.script.el.em.EMJsonString2Json;
+import com.frame.script.el.em.EMListJudge;
+import com.frame.script.el.em.EMListPack;
+import com.frame.script.el.em.EMTest;
+import com.frame.script.el.em.EMTranspose;
+import com.frame.script.el.em.ExtendMethod;
 import com.frame.script.util.ClosureMap;
 import com.frame.script.util.TypeUtil;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 public class PackingMap extends ClosureMap {
-
-	private final static String METHOD_ETEND_ISARRAY = "isArray";
-	private final static String METHOD_ETEND_ISLIST = "isList";
-	private final static String METHOD_ETEND_TOJSON = "asJson";
-	private final static String METHOD_ETEND_DISTINCT = "distinct";
-	private final static String METHOD_ETEND_TRANSPOSE = "transpose";
 
 	Object packageObj;
 	int nextSize = 0;
 	Method md;
-
-	public Object unpack() {
+	ExtendMethod emd;
+	
+	static List<ExtendMethod> extendMethods = new ArrayList<ExtendMethod>();
+	static{
+		extendMethods.add(new EMAsJson());
+		extendMethods.add(new EMArrayJudge());
+		extendMethods.add(new EMListJudge());
+		extendMethods.add(new EMDistinct());
+		extendMethods.add(new EMTranspose());
+		extendMethods.add(new EMListPack());
+		extendMethods.add(new EMAsTimestamp());
+		extendMethods.add(new EMJsonString2Json());
+		extendMethods.add(new EM2Int());
+		extendMethods.add(new EM2Fixed());
+		extendMethods.add(new EMTest());
+	}
+	
+	public Object unpack(){
 		return packageObj;
 	}
-
+	
 	public PackingMap(Object packageObj) {
 		super();
 		this.packageObj = packageObj;
 	}
 
+	private boolean findObjectMethod(String methodName){
+		this.md = null;
+		Method[] mds = packageObj.getClass().getMethods();
+		for (Method md : mds){
+			if (md.getName().equals(methodName)){
+				this.md = md;
+				nextSize = md.getParameterCount() + 1;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean findExtendMethod(String paramName){
+		for (ExtendMethod em : extendMethods){
+			if (em.check(paramName)){
+				emd = em;
+				nextSize = emd.paramCount() + 1;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean isMethodNameArgs(List<Object> args){
+		return 1 == args.size();
+	}
+	
 	@Override
 	protected boolean validate(List<Object> args) {
-		if (1 == args.size()) {
-			this.md = null;
-			Method[] mds = packageObj.getClass().getMethods();
-			for (Method md : mds) {
-				if (md.getName().equals((String) args.get(0))) {
-					this.md = md;
-					break;
-				}
-			}
-			if (this.md != null) {
-				nextSize = md.getParameterCount() + 1;
-			} else {
+		if (isMethodNameArgs(args)){
+			String mdName = (String)args.get(0);
+			if (!findObjectMethod(mdName) && 
+				!findExtendMethod(mdName)){
 				return true;
 			}
 		}
 		return args.size() == nextSize;
 	}
-
-	@Override
-	protected Object onGetProp(List<Object> args) throws Exception {
-		if (null == this.md) {
-			return invokeExtendMethod(args);
-		}
-		nextSize = 0;
+	
+	private boolean objectMethodIsFound(){
+		return null != this.md;
+	}
+	
+	private boolean extendMethodIsFound(){
+		return null != this.emd;
+	}
+	
+	private Object invokeObjectMethod(List<Object> args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Object ret = this;
-		if (!args.isEmpty()) {
-			args.remove(0);
-			if (TypeUtil.typeOf(md.getReturnType(), void.class)) {
+		if (!args.isEmpty()){
+			if (TypeUtil.typeOf(md.getReturnType(), void.class)){
 				this.md.invoke(packageObj, args.toArray());
-			} else {
+			}else{
 				ret = this.md.invoke(packageObj, args.toArray());
 			}
-		} else {
-			if (TypeUtil.typeOf(md.getReturnType(), void.class)) {
+		}else{
+			if (TypeUtil.typeOf(md.getReturnType(), void.class)){
 				this.md.invoke(packageObj);
-			} else {
+			}else{
 				ret = this.md.invoke(packageObj);
 			}
 		}
-
+		return ret;
+	}
+	
+	@Override
+	protected Object onGetProp(List<Object> args) throws Exception {
+		nextSize = 0;
+		args.remove(0);
+		Object ret = null;
+		if (objectMethodIsFound()){
+			ret = invokeObjectMethod(args);
+		}else if (extendMethodIsFound()){
+			ret = invokeExtendMethod(args);
+		}
 		args.clear();
 		return ret;
 	}
 
 	private Object invokeExtendMethod(List<Object> args) {
-		if (METHOD_ETEND_ISARRAY.equals((String) args.get(0))) {
-			return packageObj.getClass().isArray();
-		} else if (METHOD_ETEND_ISLIST.equals((String) args.get(0))) {
-			return TypeUtil.instanceOf(packageObj, List.class);
-		} else if (METHOD_ETEND_TRANSPOSE.equals((String) args.get(0))) {
-			if (TypeUtil.instanceOf(packageObj, List.class)) {
-				return transpose((List) packageObj);
-			}
-		} else if (METHOD_ETEND_TOJSON.equals((String) args.get(0))) {
-			if (TypeUtil.instanceOf(packageObj, List.class)
-					|| packageObj.getClass().isArray()) {
-				return JSONArray.fromObject(packageObj).toString();
-			} else {
-				return JSONObject.fromObject(packageObj).toString();
-			}
-		} else if (METHOD_ETEND_DISTINCT.equals((String) args.get(0))) {
-			if (TypeUtil.instanceOf(packageObj, List.class)) {
-				List pkg = (List) packageObj;
-				for (int i = 0; i < pkg.size(); ++i) {
-					for (int j = pkg.size() - 1; j > i; --j) {
-						if ((pkg.get(i) == null && pkg.get(j) == null)
-								|| pkg.get(i).equals(pkg.get(j))) {
-							pkg.remove(j);
-						}
-					}
-				}
-				return pkg;
-			}
-		}
-		return null;
+		return this.emd.invoke(packageObj, args);
 	}
-
-	private Object transposeArray(List<Object[]> matrix) {
-		Object retMatrix[][] = new Object[matrix.get(0).length][matrix.size()];
-		for (int i = 0; i < matrix.size(); ++i) {
-			for (int j = 0; j < matrix.get(i).length; ++j) {
-				retMatrix[j][i] = matrix.get(i)[j];
-			}
-		}
-		return retMatrix;
-	}
-
-	private Object transpose(List matrix) {
-		if (matrix.isEmpty()) {
-			return matrix;
-		}
-
-		if (matrix.get(0).getClass().isArray()) {
-			return transposeArray(matrix);
-		}
-		if (matrix.get(0) instanceof List) {
-			return transposeList(matrix);
-		}
-
-		return null;
-	}
-
-	private Object transposeList(List<List> matrix) {
-		Object retMatrix[][] = new Object[matrix.get(0).size()][matrix.size()];
-		for (int i = 0; i < matrix.size(); ++i) {
-			for (int j = 0; j < matrix.get(i).size(); ++j) {
-				retMatrix[j][i] = matrix.get(i).get(j);
-			}
-		}
-		return retMatrix;
-	}
-
 }

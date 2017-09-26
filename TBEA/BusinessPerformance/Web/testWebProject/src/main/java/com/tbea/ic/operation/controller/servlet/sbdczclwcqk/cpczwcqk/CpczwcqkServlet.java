@@ -47,8 +47,8 @@ public class CpczwcqkServlet {
 	CompanyManager companyManager;
 
 	Company getCompany(CompanyType comp){
-		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
-		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		Company bmCompany = companyManager.getBMDBOrganization().getCompanyByType(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompanyByType(comp);
 		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
 			return vYszkCompany;
 		}

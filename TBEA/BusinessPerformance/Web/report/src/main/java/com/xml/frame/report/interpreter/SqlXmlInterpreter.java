@@ -17,12 +17,12 @@ import org.w3c.dom.Element;
 import com.frame.script.el.ELExpression;
 import com.frame.script.el.ELParser;
 import com.frame.script.util.StringUtil;
+import com.util.tools.Pair;
 import com.xml.frame.report.component.AbstractXmlComponent;
-import com.xml.frame.report.component.datasource.HikariCPDataSourceFactory;
+import com.xml.frame.report.component.manager.ComponentManager;
 import com.xml.frame.report.component.service.JpaTransaction;
 import com.xml.frame.report.util.DBUtil;
 import com.xml.frame.report.util.LoggerProxy;
-import com.xml.frame.report.util.Pair;
 import com.xml.frame.report.util.xml.XmlUtil;
 
 import net.sf.json.JSONArray;
@@ -209,7 +209,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			DataSource ds = null;
 			if (null == tx){
 				dsName = component.getConfigAttribute("ds");
-				ds = HikariCPDataSourceFactory.getInstance().getDataSource(dsName);
+				ds = ComponentManager.getInstance().getDataSourceFactory().getDataSource(dsName);
 				if (null == ds) {
 					throw new Exception("请指定 transaction " + e.toString());
 				}

@@ -46,7 +46,7 @@ public class XLFKFSTJController {
 		Date d = DateSelection.getDate(request);
 		
 		CompanyType compType = CompanySelection.getCompany(request);
-		Company comp = companyManager.getBMOrganization().getCompany(compType);
+		Company comp = companyManager.getBMOrganization().getCompanyByType(compType);
 		List<String[][]> result = new ArrayList<String[][]>();
 		if (null == comp) {
 //			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);

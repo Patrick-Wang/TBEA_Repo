@@ -39,10 +39,10 @@ public abstract class ZbfdwhzZBHZStrategy implements ZBHZStrategy {
 	
 	public ZbfdwhzZBHZStrategy(CompanyManager companyManager) {
 		Organization org = companyManager.getOperationOrganization();
-		sbdcy = org.getCompany(CompanyType.SBDCY);
-		xnycy = org.getCompany(CompanyType.XNYCY);
-		nycy = org.getCompany(CompanyType.NYCY);
-		gcl = org.getCompany(CompanyType.GCL);
+		sbdcy = org.getCompanyByType(CompanyType.SBDCY);
+		xnycy = org.getCompanyByType(CompanyType.XNYCY);
+		nycy = org.getCompanyByType(CompanyType.NYCY);
+		gcl = org.getCompanyByType(CompanyType.GCL);
 	}
 
 

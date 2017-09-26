@@ -100,8 +100,8 @@ public class YszkgbServlet {
 	}
 	
 	Company getCompany(CompanyType comp){
-		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
-		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		Company bmCompany = companyManager.getBMDBOrganization().getCompanyByType(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompanyByType(comp);
 		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
 			return vYszkCompany;
 		}
@@ -178,7 +178,7 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType type = CompanySelection.getCompany(request);
-		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(type);
 		List<List<String>> result = yszkgbService.getYszkkxxzEntry(d, comp);
 		RawFormatterHandler handler = new RawNumberFormatterHandler(1);
 		RawFormatterServer serv = new RawFormatterServer(handler);
@@ -194,7 +194,7 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType type = CompanySelection.getCompany(request);
-		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(type);
 		List<List<String>> result = yszkgbService.getYqyszcsysEntry(d, comp);
 		ZBStatus status = yszkgbService.getYqyszcsysStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
@@ -207,7 +207,7 @@ public class YszkgbServlet {
 
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType type = CompanySelection.getCompany(request);
-		Company comp = companyManager.getBMDBOrganization().getCompany(type);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(type);
 		List<List<String>> result = yszkgbService.getYszkyjtztjqsEntry(d, comp);
 		ZBStatus status = yszkgbService.getYszkyjtztjqsStatus(d, comp);
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
@@ -220,7 +220,7 @@ public class YszkgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = yszkgbService.saveYszkkxxz(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = yszkgbService.saveYszkkxxz(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -231,7 +231,7 @@ public class YszkgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = yszkgbService.saveYqyszcsys(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = yszkgbService.saveYqyszcsys(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -242,7 +242,7 @@ public class YszkgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = yszkgbService.saveYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = yszkgbService.saveYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -252,7 +252,7 @@ public class YszkgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = yszkgbService.submitYszkkxxz(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = yszkgbService.submitYszkkxxz(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -263,7 +263,7 @@ public class YszkgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = yszkgbService.submitYqyszcsys(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = yszkgbService.submitYqyszcsys(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -274,7 +274,7 @@ public class YszkgbServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = yszkgbService.submitYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompany(comp), data);
+		ErrorCode err = yszkgbService.submitYszkyjtztjqs(d, companyManager.getBMDBOrganization().getCompanyByType(comp), data);
 		return Util.response(err);
 	}
 	
@@ -493,19 +493,19 @@ public class YszkgbServlet {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	public void setCompanyManager(CompanyManager companyManager){
 		this.companyManager = companyManager;
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.SBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XBC));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TBGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XLC));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XTNYGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.TCNY));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NDGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.GJGCGS_GFGS));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.JCKGS_JYDW));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.SBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.HBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XBC));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.TBGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.LLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XLC));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DLGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XTNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XNYGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.TCNY));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.NDGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.GJGCGS_GFGS));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.JCKGS_JYDW));
 	}
 	
 	//每月3到五号零点触发

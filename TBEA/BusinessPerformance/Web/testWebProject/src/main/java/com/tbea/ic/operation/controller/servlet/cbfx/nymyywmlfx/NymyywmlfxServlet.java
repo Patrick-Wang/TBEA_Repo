@@ -52,7 +52,7 @@ public class NymyywmlfxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		List<List<String>> result = nymyywmlfxService.getNymyywmlfx(d, company);
 		FormatterServer serv = new FormatterServer();
 		serv.handlerBuilder()
@@ -68,7 +68,7 @@ public class NymyywmlfxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = nymyywmlfxService.getNymyywmlfxEntry(d, company);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
@@ -80,7 +80,7 @@ public class NymyywmlfxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = nymyywmlfxService.saveNymyywmlfx(d, data, company);
 		return Util.response(err);
@@ -94,7 +94,7 @@ public class NymyywmlfxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = nymyywmlfxService.submitNymyywmlfx(d, data, company);
 		return Util.response(err);
@@ -105,7 +105,7 @@ public class NymyywmlfxServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> ret = nymyywmlfxService.getNymyywmlfx(d, company);
 		ExcelHelper template = ExcelTemplate.createCbfxTemplate(CbfxSheetType.NYYWMLFX);

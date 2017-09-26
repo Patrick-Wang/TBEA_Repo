@@ -149,47 +149,47 @@ public class GszbServiceImpl implements GszbService {
 		companyManager = mgr;
 		Organization org = mgr.getBMDBOrganization();
 		List<Company> companies = new ArrayList<Company>();
-		gcyTop5ComputeMap.put(org.getCompany(CompanyType.GFGS), companies);
-		companies.add(org.getCompany(CompanyType.SBDCYJT));
-		companies.add(org.getCompany(CompanyType.XNYSYB));
-		companies.add(org.getCompany(CompanyType.NYSYB));
-		companies.add(org.getCompany(CompanyType.JCKGS_SYB));
-		companies.add(org.getCompany(CompanyType.GJGCGS_SYB));
+		gcyTop5ComputeMap.put(org.getCompanyByType(CompanyType.GFGS), companies);
+		companies.add(org.getCompanyByType(CompanyType.SBDCYJT));
+		companies.add(org.getCompanyByType(CompanyType.XNYSYB));
+		companies.add(org.getCompanyByType(CompanyType.NYSYB));
+		companies.add(org.getCompanyByType(CompanyType.JCKGS_SYB));
+		companies.add(org.getCompanyByType(CompanyType.GJGCGS_SYB));
 		companies = new ArrayList<Company>();
-		gcyTop5ComputeMap.put(org.getCompany(CompanyType.GJB), companies);
-		companies.add(org.getCompany(CompanyType.GFGS));
-		companies.add(org.getCompany(CompanyType.ZHGS_SYB));
+		gcyTop5ComputeMap.put(org.getCompanyByType(CompanyType.GJB), companies);
+		companies.add(org.getCompanyByType(CompanyType.GFGS));
+		companies.add(org.getCompanyByType(CompanyType.ZHGS_SYB));
 
 		companies = new ArrayList<Company>();
-		gdwTop5ComputeMap.put(org.getCompany(CompanyType.SBDCYJT), companies);
-		companies.add(org.getCompany(CompanyType.SBGS));
-		companies.add(org.getCompany(CompanyType.HBGS));
-		companies.add(org.getCompany(CompanyType.XBC));
-		companies.add(org.getCompany(CompanyType.LLGS));
-		companies.add(org.getCompany(CompanyType.XLC));
-		companies.add(org.getCompany(CompanyType.DLGS));
+		gdwTop5ComputeMap.put(org.getCompanyByType(CompanyType.SBDCYJT), companies);
+		companies.add(org.getCompanyByType(CompanyType.SBGS));
+		companies.add(org.getCompanyByType(CompanyType.HBGS));
+		companies.add(org.getCompanyByType(CompanyType.XBC));
+		companies.add(org.getCompanyByType(CompanyType.LLGS));
+		companies.add(org.getCompanyByType(CompanyType.XLC));
+		companies.add(org.getCompanyByType(CompanyType.DLGS));
 		companies = new ArrayList<Company>();
-		gdwTop5ComputeMap.put(org.getCompany(CompanyType.XNYSYB), companies);
-		companies.add(org.getCompany(CompanyType.XTNYGS));
-		companies.add(org.getCompany(CompanyType.XNYGS));
+		gdwTop5ComputeMap.put(org.getCompanyByType(CompanyType.XNYSYB), companies);
+		companies.add(org.getCompanyByType(CompanyType.XTNYGS));
+		companies.add(org.getCompanyByType(CompanyType.XNYGS));
 		companies = new ArrayList<Company>();
-		gdwTop5ComputeMap.put(org.getCompany(CompanyType.NYSYB), companies);
-		companies.add(org.getCompany(CompanyType.TCNY));
-		companies.add(org.getCompany(CompanyType.NDGS));
+		gdwTop5ComputeMap.put(org.getCompanyByType(CompanyType.NYSYB), companies);
+		companies.add(org.getCompanyByType(CompanyType.TCNY));
+		companies.add(org.getCompanyByType(CompanyType.NDGS));
 		companies = new ArrayList<Company>();
-		gdwTop5ComputeMap.put(org.getCompany(CompanyType.GJGCGS_SYB), companies);
-		companies.add(org.getCompany(CompanyType.JCKGS_JYDW));
-		companies.add(org.getCompany(CompanyType.GJGCGS_GFGS));
+		gdwTop5ComputeMap.put(org.getCompanyByType(CompanyType.GJGCGS_SYB), companies);
+		companies.add(org.getCompanyByType(CompanyType.JCKGS_JYDW));
+		companies.add(org.getCompanyByType(CompanyType.GJGCGS_GFGS));
 		companies = new ArrayList<Company>();
-		gdwTop5ComputeMap.put(org.getCompany(CompanyType.GFGS), companies);
-		companies.add(org.getCompany(CompanyType.SBDCYJT));
-		companies.add(org.getCompany(CompanyType.XNYSYB));
-		companies.add(org.getCompany(CompanyType.NYSYB));
-		companies.add(org.getCompany(CompanyType.GJGCGS_SYB));
+		gdwTop5ComputeMap.put(org.getCompanyByType(CompanyType.GFGS), companies);
+		companies.add(org.getCompanyByType(CompanyType.SBDCYJT));
+		companies.add(org.getCompanyByType(CompanyType.XNYSYB));
+		companies.add(org.getCompanyByType(CompanyType.NYSYB));
+		companies.add(org.getCompanyByType(CompanyType.GJGCGS_SYB));
 		companies = new ArrayList<Company>();
-		gdwTop5ComputeMap.put(org.getCompany(CompanyType.GJB), companies);
-		companies.add(org.getCompany(CompanyType.ZHGS));
-		companies.add(org.getCompany(CompanyType.GFGS));
+		gdwTop5ComputeMap.put(org.getCompanyByType(CompanyType.GJB), companies);
+		companies.add(org.getCompanyByType(CompanyType.ZHGS));
+		companies.add(org.getCompanyByType(CompanyType.GFGS));
 	}
 	
 	
@@ -337,7 +337,7 @@ public class GszbServiceImpl implements GszbService {
 	@Override
 	public List<String[]> getDashboardGdwzb(Date date, CompanyType cpType) {
 		Organization org = companyManager.getBMDBOrganization();
-		Company comp = org.getCompany(cpType);
+		Company comp = org.getCompanyByType(cpType);
 		List zbs = new EasyList<Integer>(new Integer[]{
 				GSZB.LRZE1.value(),
 				GSZB.XSSR6.value(),
@@ -363,14 +363,14 @@ public class GszbServiceImpl implements GszbService {
 
 		CompositePipe pipe = new CompositePipe(topfivezbs, date, getConfiguratorFactory()
 				.getZtzbCompositeConfigurator( gcyTop5ComputeMap));
-		pipe.addCompany(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.JCKGS_SYB), option, org.getCompany(CompanyType.JCKGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GJGCGS_SYB), option, org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GFGS), null)
-			.addCompany(org.getCompany(CompanyType.ZHGS_SYB), option, org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GJB), null);
+		pipe.addCompany(org.getCompanyByType(CompanyType.SBDCYJT), option, org.getCompanyByType(CompanyType.SBDCYJT).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.XNYSYB), option, org.getCompanyByType(CompanyType.XNYSYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.NYSYB), option, org.getCompanyByType(CompanyType.NYSYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.JCKGS_SYB), option, org.getCompanyByType(CompanyType.JCKGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GJGCGS_SYB), option, org.getCompanyByType(CompanyType.GJGCGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GFGS), null)
+			.addCompany(org.getCompanyByType(CompanyType.ZHGS_SYB), option, org.getCompanyByType(CompanyType.ZHGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GJB), null);
 
 		return makeResult(pipe.getData());
 	}
@@ -396,15 +396,15 @@ public class GszbServiceImpl implements GszbService {
 				getConfiguratorFactory().getSrqyConfigurator());
 		List<String[]> allCompResult = makeZbResult(srqyzbs, pipe.getData());
 		
-		pipe = new BasicPipe(GSZB.HTQYE48.value(), companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB).getSubCompanies(), date,
+		pipe = new BasicPipe(GSZB.HTQYE48.value(), companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XNYSYB).getSubCompanies(), date,
 				getConfiguratorFactory().getSrqyConfigurator());
 		List<Integer> zbTmp = new ArrayList<Integer>();
 		zbTmp.addAll(SrqyConfigurator.getSpecialZbs());
 		List<String[]> xnysybResult = makeZbResult(zbTmp, pipe.getData());
 		
 		List<Company> comps = new ArrayList<Company>();
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DJGYFGS));
-		comps.add(companyManager.getBMDBOrganization().getCompany(CompanyType.DJGEGS));
+		comps.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DJGYFGS));
+		comps.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DJGEGS));
 		pipe = new BasicPipe(GSZB.CL_DJG_D_71.value(), comps, date, getConfiguratorFactory().getSrqyConfigurator());
 		
 		zbTmp.clear();
@@ -431,25 +431,25 @@ public class GszbServiceImpl implements GszbService {
 		
 		Organization org = companyManager.getBMDBOrganization();
 		CompositePipe pipe = new CompositePipe(gsTop5zb.value(), date, compositeConfig);
-		pipe.addCompany(org.getCompany(CompanyType.SBGS), standardConfig)
-			.addCompany(org.getCompany(CompanyType.HBGS), standardConfig)
-			.addCompany(org.getCompany(CompanyType.XBC), standardConfig)
-			.addCompany(org.getCompany(CompanyType.LLGS), standardConfig)
-			.addCompany(org.getCompany(CompanyType.XLC), standardConfig)
-			.addCompany(org.getCompany(CompanyType.DLGS), standardConfig)
-			.addCompany(org.getCompany(CompanyType.SBDCYJT), null)
-			.addCompany(org.getCompany(CompanyType.XTNYGS), standardConfig)
-			.addCompany(org.getCompany(CompanyType.XNYGS), standardConfig)
-			.addCompany(org.getCompany(CompanyType.XNYSYB), null)
-			.addCompany(org.getCompany(CompanyType.TCNY), standardConfig)
-			.addCompany(org.getCompany(CompanyType.NDGS), standardConfig)
-			.addCompany(org.getCompany(CompanyType.NYSYB), null)
-			.addCompany(org.getCompany(CompanyType.JCKGS_JYDW), standardConfig)
-			.addCompany(org.getCompany(CompanyType.GJGCGS_GFGS), standardConfig)
-			.addCompany(org.getCompany(CompanyType.GJGCGS_SYB), null)
-			.addCompany(org.getCompany(CompanyType.GFGS), null)
-			.addCompany(org.getCompany(CompanyType.ZHGS), standardConfig)
-			.addCompany(org.getCompany(CompanyType.GJB), null);
+		pipe.addCompany(org.getCompanyByType(CompanyType.SBGS), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.HBGS), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.XBC), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.LLGS), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.XLC), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.DLGS), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.SBDCYJT), null)
+			.addCompany(org.getCompanyByType(CompanyType.XTNYGS), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.XNYGS), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.XNYSYB), null)
+			.addCompany(org.getCompanyByType(CompanyType.TCNY), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.NDGS), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.NYSYB), null)
+			.addCompany(org.getCompanyByType(CompanyType.JCKGS_JYDW), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.GJGCGS_GFGS), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.GJGCGS_SYB), null)
+			.addCompany(org.getCompanyByType(CompanyType.GFGS), null)
+			.addCompany(org.getCompanyByType(CompanyType.ZHGS), standardConfig)
+			.addCompany(org.getCompanyByType(CompanyType.GJB), null);
 
 		return makeResult(pipe.getData());
 		
@@ -490,14 +490,14 @@ public class GszbServiceImpl implements GszbService {
 
 		CompositePipe pipe = new CompositePipe(topfivezbs, date, getConfiguratorFactory()
 				.getThirdSeasonPredictionCompositeConfigurator(gcyTop5ComputeMap));
-		pipe.addCompany(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.JCKGS_SYB), option, org.getCompany(CompanyType.JCKGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GJGCGS_SYB), option, org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GFGS), null)
-			.addCompany(org.getCompany(CompanyType.ZHGS_SYB), option, org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GJB), null);
+		pipe.addCompany(org.getCompanyByType(CompanyType.SBDCYJT), option, org.getCompanyByType(CompanyType.SBDCYJT).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.XNYSYB), option, org.getCompanyByType(CompanyType.XNYSYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.NYSYB), option, org.getCompanyByType(CompanyType.NYSYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.JCKGS_SYB), option, org.getCompanyByType(CompanyType.JCKGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GJGCGS_SYB), option, org.getCompanyByType(CompanyType.GJGCGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GFGS), null)
+			.addCompany(org.getCompanyByType(CompanyType.ZHGS_SYB), option, org.getCompanyByType(CompanyType.ZHGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GJB), null);
 		values = pipe.getData();
 		
 		Double[] tempValues = null;
@@ -540,14 +540,14 @@ public class GszbServiceImpl implements GszbService {
 
 		CompositePipe pipe = new CompositePipe(topfivezbs, date, getConfiguratorFactory()
 				.getSecondSeasonPredictionCompositeConfigurator(gcyTop5ComputeMap));
-		pipe.addCompany(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.JCKGS_SYB), option, org.getCompany(CompanyType.JCKGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GJGCGS_SYB), option, org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GFGS), null)
-			.addCompany(org.getCompany(CompanyType.ZHGS_SYB), option, org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GJB), null);
+		pipe.addCompany(org.getCompanyByType(CompanyType.SBDCYJT), option, org.getCompanyByType(CompanyType.SBDCYJT).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.XNYSYB), option, org.getCompanyByType(CompanyType.XNYSYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.NYSYB), option, org.getCompanyByType(CompanyType.NYSYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.JCKGS_SYB), option, org.getCompanyByType(CompanyType.JCKGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GJGCGS_SYB), option, org.getCompanyByType(CompanyType.GJGCGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GFGS), null)
+			.addCompany(org.getCompanyByType(CompanyType.ZHGS_SYB), option, org.getCompanyByType(CompanyType.ZHGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GJB), null);
 
 		return makeResult(pipe.getData());
 	}
@@ -560,14 +560,14 @@ public class GszbServiceImpl implements GszbService {
 
 		CompositePipe pipe = new CompositePipe(topfivezbs, date, getConfiguratorFactory()
 				.getFirstSeasonPredictionCompositeConfigurator(gcyTop5ComputeMap));
-		pipe.addCompany(org.getCompany(CompanyType.SBDCYJT), option, org.getCompany(CompanyType.SBDCYJT).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.XNYSYB), option, org.getCompany(CompanyType.XNYSYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.NYSYB), option, org.getCompany(CompanyType.NYSYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.JCKGS_SYB), option, org.getCompany(CompanyType.JCKGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GJGCGS_SYB), option, org.getCompany(CompanyType.GJGCGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GFGS), null)
-			.addCompany(org.getCompany(CompanyType.ZHGS_SYB), option, org.getCompany(CompanyType.ZHGS_SYB).getSubCompanies())
-			.addCompany(org.getCompany(CompanyType.GJB), null);
+		pipe.addCompany(org.getCompanyByType(CompanyType.SBDCYJT), option, org.getCompanyByType(CompanyType.SBDCYJT).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.XNYSYB), option, org.getCompanyByType(CompanyType.XNYSYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.NYSYB), option, org.getCompanyByType(CompanyType.NYSYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.JCKGS_SYB), option, org.getCompanyByType(CompanyType.JCKGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GJGCGS_SYB), option, org.getCompanyByType(CompanyType.GJGCGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GFGS), null)
+			.addCompany(org.getCompanyByType(CompanyType.ZHGS_SYB), option, org.getCompanyByType(CompanyType.ZHGS_SYB).getSubCompanies())
+			.addCompany(org.getCompanyByType(CompanyType.GJB), null);
 
 		return makeResult(pipe.getData());
 	}
@@ -608,7 +608,7 @@ public class GszbServiceImpl implements GszbService {
 		List<Company> ret = new ArrayList<Company>();
 		Organization org = companyManager.getBMDBOrganization();
 		for(DWXX dwxx : dwxxs){
-			ret.add(org.getCompany(dwxx.getId()));
+			ret.add(org.getCompanyById(dwxx.getId()));
 		}
 		return ret;
 	}

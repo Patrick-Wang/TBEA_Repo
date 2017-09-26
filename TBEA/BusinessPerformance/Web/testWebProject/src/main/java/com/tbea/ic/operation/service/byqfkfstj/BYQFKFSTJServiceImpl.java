@@ -33,9 +33,9 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 	public void setCompanyManager(CompanyManager companyManager) {
 		this.companyManager = companyManager;
 		Organization org = companyManager.getBMOrganization();
-		qymap.put(org.getCompany(CompanyType.SBGS), 0);
-		qymap.put(org.getCompany(CompanyType.HBGS), 1);
-		qymap.put(org.getCompany(CompanyType.XBC), 2);
+		qymap.put(org.getCompanyByType(CompanyType.SBGS), 0);
+		qymap.put(org.getCompanyByType(CompanyType.HBGS), 1);
+		qymap.put(org.getCompanyByType(CompanyType.XBC), 2);
 	}
 
 	@Autowired
@@ -62,7 +62,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 		for (BYQFDWFKFS byqfdw : byqfdwfkfss) {
 			if (null != byqfdw) {
 				Company comp = org
-						.getCompany(Integer.valueOf(byqfdw.getQybh()));
+						.getCompanyById(Integer.valueOf(byqfdw.getQybh()));
 				col = getIndex(comp);
 				if (null != col) {
 					result[col][0] = byqfdw.getFdwhtddzlbs() + "";
@@ -98,7 +98,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 		Integer col;
 		for (BYQGWFKFS byqgw : byqgwfkfss) {
 			if (null != byqgw) {
-				Company comp = org.getCompany(Integer.valueOf(byqgw.getQybh()));
+				Company comp = org.getCompanyById(Integer.valueOf(byqgw.getQybh()));
 				col = getIndex(comp);
 				if (null != col) {
 					result[col][0] = byqgw.getGwhtddzlbs() + "";
@@ -136,7 +136,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 		Integer col;
 		for (BYQNWFKFS byqnw : byqgwfkfss) {
 			if (null != byqnw) {
-				Company comp = org.getCompany(Integer.valueOf(byqnw.getQybh()));
+				Company comp = org.getCompanyById(Integer.valueOf(byqnw.getQybh()));
 				col = getIndex(comp);
 				if (null != col) {
 					result[col][0] = byqnw.getNwhtddzlbs() + "";

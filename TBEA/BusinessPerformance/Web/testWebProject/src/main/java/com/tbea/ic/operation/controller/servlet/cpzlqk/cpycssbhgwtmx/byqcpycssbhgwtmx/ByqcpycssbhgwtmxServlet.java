@@ -70,9 +70,9 @@ public class ByqcpycssbhgwtmxServlet {
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
@@ -135,9 +135,9 @@ public class ByqcpycssbhgwtmxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		List<List<String>> result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmxEntry(d, company);
 		List<String> zrlb = byqcpycssbhgwtmxService.getZrlb();
@@ -156,9 +156,9 @@ public class ByqcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = byqcpycssbhgwtmxService.saveByqcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
@@ -170,9 +170,9 @@ public class ByqcpycssbhgwtmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = byqcpycssbhgwtmxService.submitByqcpycssbhgwtmx(d, data, company);
 		return Util.response(err);
@@ -184,9 +184,9 @@ public class ByqcpycssbhgwtmxServlet {
 		ZBStatus zt = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = byqcpycssbhgwtmxService.updateStatus(d, company, zt);
 		return Util.response(err);
@@ -245,9 +245,9 @@ public class ByqcpycssbhgwtmxServlet {
 		List<Integer> zts = new ArrayList<Integer>();
 		zts.add(ZBStatus.APPROVED.ordinal());
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		if (comp == CompanyType.PDCY){
 			result = byqcpycssbhgwtmxService.getByqcpycssbhgwtmx(d, yjType, zts);

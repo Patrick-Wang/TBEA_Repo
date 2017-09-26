@@ -72,9 +72,9 @@ public class XkacptjjgServlet {
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		CpzlqkResp resp = new CpzlqkResp(false);
 		List<Integer> zts = new ArrayList<Integer>();
@@ -138,9 +138,9 @@ public class XkacptjjgServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		List<List<String>> result = xkacptjjgService.getXkacptjjgEntry(d, company);
 		ZBStatus status = cpzlqkService.getCpzlqkStatus(d, company);
@@ -157,9 +157,9 @@ public class XkacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = xkacptjjgService.saveXkacptjjg(d, data, company);
 		return Util.response(err);
@@ -171,9 +171,9 @@ public class XkacptjjgServlet {
 		ZBStatus zt = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = xkacptjjgService.updateStatus(d, company, zt);
 		return Util.response(err);
@@ -185,9 +185,9 @@ public class XkacptjjgServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = xkacptjjgService.submitXkacptjjg(d, data, company);
 		return Util.response(err);
@@ -245,9 +245,9 @@ public class XkacptjjgServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		YDJDType yjType = YDJDType.valueOf(Integer.valueOf(request.getParameter("ydjd")));
 		List<Integer> zts = new ArrayList<Integer>();

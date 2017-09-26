@@ -42,7 +42,7 @@ public class XLCBController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 
 		Organization org = companyManager.getBMOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		Company comp = org.getCompanyByType(CompanySelection.getCompany(request));
 
 		List<String[][]> aZxmx = service.getTbmx(
 				DateSelection.getDate(request), comp);
@@ -92,7 +92,7 @@ public class XLCBController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Organization org = companyManager.getBMOrganization();
 		List<String[][]> wgs = service.getWgmx(DateSelection.getDate(request),
-				org.getCompany(CompanySelection.getCompany(request)));
+				org.getCompanyByType(CompanySelection.getCompany(request)));
 
 		return JSONArray.fromObject(wgs).toString().replace("null", "0.00")
 				.getBytes("utf-8");

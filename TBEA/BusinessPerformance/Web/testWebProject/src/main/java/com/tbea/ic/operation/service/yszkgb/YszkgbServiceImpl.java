@@ -628,7 +628,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			
 			String unitCode = String.valueOf(rs.getObject(1));
 			CompanyType companyType = CompanyNCCode.getType(unitCode);
-			Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+			Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;
 			YszkzmEntity entity = yszkzmDao.getByDate(Util.toDate(cal), comp);
@@ -686,7 +686,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			
 			String unitCode = String.valueOf(rs.getObject(1));
 			CompanyType companyType = CompanyNCCode.getType(unitCode);
-			Company comp = companyManager.getBMDBOrganization().getCompany(companyType);
+			Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;
 			YszkZlEntity entity = yszkZlDao.getByDate(Util.toDate(cal), comp);

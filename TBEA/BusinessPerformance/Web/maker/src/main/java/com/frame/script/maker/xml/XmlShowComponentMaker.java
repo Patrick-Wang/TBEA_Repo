@@ -235,6 +235,7 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		case ColType.CURRENCY_SYMBOL:
 		case ColType.STRING:
 		case ColType.TEXT:
+		case ColType.OPTION:
 			e.setAttribute("type", "string");
 			break;
 		case ColType.DATE:
@@ -260,20 +261,20 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		Element sql = doc.createElement(Schema.TAG_SQL);
 		sql.setAttribute("id", "data");
 		
-		String sqlTmp = "select id";
+		String sqlTmp = "select \n\tid";
 		for (int i = 0; i < src.getColNames().size(); ++i) {
 			if ("Y".equals(src.getVisiablity().get(i))){
 				sqlTmp += ",";
 				if (src.getColTypes().get(i).getType() == ColType.DATE ||
 					src.getColTypes().get(i).getType() == ColType.DATETIME) {
-					sqlTmp += "\nCONVERT(varchar(20)," +  src.getColNames().get(i) + ", 23) tmp" + i;
+					sqlTmp += "\n\tCONVERT(varchar(20)," +  src.getColNames().get(i) + ", 23) tmp" + i;
 				}else {
-					sqlTmp += "\n" + src.getColNames().get(i);
+					sqlTmp += "\n\t" + src.getColNames().get(i);
 				}
 			}
 		}
 		
-		sqlTmp += " from " + src.getTableName();
+		sqlTmp += "\nfrom " + src.getTableName();
 		
 		sql.setTextContent(sqlTmp);
 		service.appendChild(sql);

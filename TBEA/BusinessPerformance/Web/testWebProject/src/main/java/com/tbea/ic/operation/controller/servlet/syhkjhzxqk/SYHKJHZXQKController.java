@@ -51,10 +51,10 @@ public class SYHKJHZXQKController {
 		List<String[][]> hkjhs = new ArrayList<String[][]>();
 		
 		CompanyType compType = CompanySelection.getCompany(request);
-		Company comp = companyManager.getOperationOrganization().getCompany(compType);
+		Company comp = companyManager.getOperationOrganization().getCompanyByType(compType);
 		List<String[][]> result = new ArrayList<String[][]>();
 		if (null == comp) {
-			comp = companyManager.getVirtualYSZKOrganization().getCompany(compType);
+			comp = companyManager.getVirtualYSZKOrganization().getCompanyByType(compType);
 			if (null != comp) {
 				List<Company> comps = comp.getSubCompanies();
 				hkjhs.add(service.getSyhkjhzxqkData(d, comps));
@@ -90,7 +90,7 @@ public class SYHKJHZXQKController {
 //		compSel.select(map);
 		
 		List<Company> comps = new ArrayList<Company>();
-		comps.addAll(companyManager.getOperationOrganization().getCompany(CompanyType.SBDCY).getSubCompanies());
+		comps.addAll(companyManager.getOperationOrganization().getCompanyByType(CompanyType.SBDCY).getSubCompanies());
 		comps.addAll(companyManager.getVirtualYSZKOrganization().getTopCompany());
 		CompanySelection compSel = new CompanySelection(true, comps);
 		compSel.select(map);

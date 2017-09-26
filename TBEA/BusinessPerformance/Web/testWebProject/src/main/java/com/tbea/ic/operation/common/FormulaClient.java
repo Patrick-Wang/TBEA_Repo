@@ -1,6 +1,6 @@
 package com.tbea.ic.operation.common;
 
-import com.xml.frame.report.util.Pair;
+import com.util.tools.Pair;
 
 public interface FormulaClient<T>{
 

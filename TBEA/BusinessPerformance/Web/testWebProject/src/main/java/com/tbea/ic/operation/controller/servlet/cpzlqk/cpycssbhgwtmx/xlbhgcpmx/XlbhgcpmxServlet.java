@@ -69,9 +69,9 @@ public class XlbhgcpmxServlet {
 		Date d = Date.valueOf(request.getParameter("date"));
 		PageType pageType = PageType.valueOf(Integer.valueOf(request.getParameter("pageType")));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		CpzlqkResp resp = new CpzlqkResp(true);
 		List<Integer> zts = new ArrayList<Integer>();
@@ -118,9 +118,9 @@ public class XlbhgcpmxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		List<List<String>> result = xlbhgcpmxService.getXlbhgcpmxEntry(d, company);
 		List<String> zrlb = xlbhgcpmxService.getZrlb();
@@ -139,9 +139,9 @@ public class XlbhgcpmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = xlbhgcpmxService.saveXlbhgcpmx(d, data, company);
 		return Util.response(err);
@@ -153,9 +153,9 @@ public class XlbhgcpmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = xlbhgcpmxService.submitXlbhgcpmx(d, data, company);
 		return Util.response(err);
@@ -167,9 +167,9 @@ public class XlbhgcpmxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		List<List<String>> result = null;
 		ZBStatus status = xlbhgcpmxService.getStatus(d, company);
@@ -192,9 +192,9 @@ public class XlbhgcpmxServlet {
 		ZBStatus zt = ZBStatus.valueOf(Integer.valueOf(request.getParameter("zt")));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = xlbhgcpmxService.updateStatus(d, company, zt);
 		return Util.response(err);
@@ -206,9 +206,9 @@ public class XlbhgcpmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = xlbhgcpmxService.approveXlbhgcpmx(d, data, company);
 		return Util.response(err);
@@ -220,9 +220,9 @@ public class XlbhgcpmxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		ErrorCode err = xlbhgcpmxService.unapproveXlbhgcpmx(d, data, company);
 		return Util.response(err);
@@ -237,9 +237,9 @@ public class XlbhgcpmxServlet {
 		List<Integer> zts = new ArrayList<Integer>();
 		zts.add(ZBStatus.APPROVED.ordinal());
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getVirtualCYOrg().getCompany(comp);
+		Company company = companyManager.getVirtualCYOrg().getCompanyByType(comp);
 		if (null == company) {
-			company = companyManager.getBMDBOrganization().getCompany(comp);
+			company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		}
 		if (comp == CompanyType.XLCY){
 			result = xlbhgcpmxService.getXlbhgcpmx(d, zts);

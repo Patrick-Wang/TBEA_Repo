@@ -42,7 +42,7 @@ public class TBBZJQKController {
 		
 		Date d = DateSelection.getDate(request);
 		Organization org = companyManager.getOperationOrganization();
-		Company comp = org.getCompany(CompanySelection.getCompany(request));
+		Company comp = org.getCompanyByType(CompanySelection.getCompany(request));
 		
 		String syhkjhzxqk = JSONArray.fromObject(service.getTbbzjqkData(d, comp)).toString().replace("null", "0.00");
 		return syhkjhzxqk;
@@ -57,7 +57,7 @@ public class TBBZJQKController {
 		DateSelection dateSel = new DateSelection(service.getLatestDate(), true, false);
 		dateSel.select(map);
 		Organization org = companyManager.getOperationOrganization();
-		CompanySelection compSel = new CompanySelection(true, org.getCompany(CompanyType.SBDCY).getSubCompanies());
+		CompanySelection compSel = new CompanySelection(true, org.getCompanyByType(CompanyType.SBDCY).getSubCompanies());
 		compSel.select(map);
 		return new ModelAndView("tbbzjqk", map);
 	}

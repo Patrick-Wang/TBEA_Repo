@@ -148,7 +148,7 @@ public class XfscqyServiceImpl implements XfscqyService {
 		cols.add("industry");
 		cols.add("contract_volume");
 		List<Object[]> result = hbws.getHBScqy(cols, d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.HBGS);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.HBGS);
 		importScqy(d, result, comp);
 	}
 	
@@ -156,7 +156,7 @@ public class XfscqyServiceImpl implements XfscqyService {
 	public void importDLScqy(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("importDLScqy");
 		List<Object[]> result = dlqyDao.getScqy(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.DLGS);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.DLGS);
 		importScqy(d, result, comp);
 	}
 
@@ -196,7 +196,7 @@ public class XfscqyServiceImpl implements XfscqyService {
 	public void importXLScqy(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("importXLScqy");
 		List<Object[]> result = xlqyDao.getScqy(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.XLC);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XLC);
 		importScqy(d, result, comp);
 	}
 
@@ -204,7 +204,7 @@ public class XfscqyServiceImpl implements XfscqyService {
 	public void importLLScqy(Date d) {
 		LoggerFactory.getLogger("WEBSERVICE").info("importLLScqy");
 		List<Object[]> result = llqyDao.getScqy(d);
-		Company comp = companyManager.getBMDBOrganization().getCompany(CompanyType.LLGS);
+		Company comp = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.LLGS);
 		importScqy(d, result, comp);
 	}
 

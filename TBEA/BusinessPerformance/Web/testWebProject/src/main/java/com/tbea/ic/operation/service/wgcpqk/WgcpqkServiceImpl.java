@@ -29,8 +29,8 @@ import com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs.WgcpylnlspcsEntity
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 import com.tbea.ic.operation.service.util.nc.NCLoggerFactory;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsService;
+import com.util.tools.Pair;
 import com.xml.frame.report.util.EasyCalendar;
-import com.xml.frame.report.util.Pair;
 
 @Service(WgcpqkServiceImpl.NAME)
 @Transactional("transactionManager")

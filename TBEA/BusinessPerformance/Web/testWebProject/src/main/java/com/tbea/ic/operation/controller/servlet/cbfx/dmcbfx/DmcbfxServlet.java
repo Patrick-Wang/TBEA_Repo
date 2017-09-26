@@ -60,7 +60,7 @@ public class DmcbfxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		List<List<String>> result = null;
 		if (this.getType(request) == CbfxType.dmcbfx){
 			result = dmcbfxService.getDmcbfx(d, company);
@@ -81,7 +81,7 @@ public class DmcbfxServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = dmcbfxService.getDmcbfxEntry(d, company);
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
@@ -93,7 +93,7 @@ public class DmcbfxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = dmcbfxService.saveDmcbfx(d, data, company);
 		return Util.response(err);
@@ -106,7 +106,7 @@ public class DmcbfxServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = dmcbfxService.submitDmcbfx(d, data, company);
 		return Util.response(err);
@@ -117,7 +117,7 @@ public class DmcbfxServlet {
 			HttpServletResponse response) throws IOException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		ExcelHelper template = null;
 		List<List<String>> ret = null;
 		int base = 0;

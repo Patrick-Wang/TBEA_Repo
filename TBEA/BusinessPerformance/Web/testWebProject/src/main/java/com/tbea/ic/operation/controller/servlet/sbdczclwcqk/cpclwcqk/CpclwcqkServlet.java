@@ -56,8 +56,8 @@ public class CpclwcqkServlet {
 //		return SbdczclwcqkType.SBDCZCLWCQK_CL_XL;
 	}
 	Company getCompany(CompanyType comp){
-		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
-		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		Company bmCompany = companyManager.getBMDBOrganization().getCompanyByType(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompanyByType(comp);
 		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
 			return vYszkCompany;
 		}
@@ -85,7 +85,7 @@ public class CpclwcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		List<List<String>> result = cpclwcqkService.getCpclwcqkEntry(d, company, getType(request));
 		return JSONArray.fromObject(result).toString().replaceAll("null", "\"\"").getBytes("utf-8");
@@ -98,7 +98,7 @@ public class CpclwcqkServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = cpclwcqkService.saveCpclwcqk(d, company, getType(request), data);
 		return Util.response(err);
@@ -112,7 +112,7 @@ public class CpclwcqkServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		Company company = companyManager.getBMDBOrganization().getCompany(comp);
+		Company company = companyManager.getBMDBOrganization().getCompanyByType(comp);
 		
 		ErrorCode err = cpclwcqkService.submitCpclwcqk(d, company, getType(request), data);
 		return Util.response(err);

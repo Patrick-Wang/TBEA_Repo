@@ -116,7 +116,7 @@ public class ApproveController {
 		List<CompanyType> types = CompanySelection.getCompanys(request);
 		List<Company> comps = new ArrayList<Company>();
 		for (CompanyType type : types) {
-			comps.add(org.getCompany(type));
+			comps.add(org.getCompanyByType(type));
 		}
 		Account account = SessionManager.getAccount(request.getSession(false));
 		List<List<String[]>> ret = service.getZb(account, comps, date,
@@ -141,7 +141,7 @@ public class ApproveController {
 		List<CompanyType> types = CompanySelection.getCompanys(data.getJSONArray(0));
 		List<Company> comps = new ArrayList<Company>();
 		for (CompanyType type : types){
-			comps.add(org.getCompany(type));			
+			comps.add(org.getCompanyByType(type));			
 		}
 		Account account = SessionManager.getAccount(request.getSession(false));
 		boolean ret = false;
@@ -187,7 +187,7 @@ public class ApproveController {
 		List<CompanyType> types = CompanySelection.getCompanys(data.getJSONArray(0));
 		List<Company> comps = new ArrayList<Company>();
 		for (CompanyType type : types){
-			comps.add(org.getCompany(type));			
+			comps.add(org.getCompanyByType(type));			
 		}
 		
 		boolean ret = false;

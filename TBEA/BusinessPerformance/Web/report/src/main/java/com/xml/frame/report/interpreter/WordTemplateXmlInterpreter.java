@@ -20,14 +20,14 @@ import org.jvnet.jaxb2_commons.ppp.Child;
 import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
+import com.util.tools.xml.Loop;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.util.DocxQuery;
 import com.xml.frame.report.util.DocxQuery.OnEach;
 import com.xml.frame.report.util.DocxUtil;
 import com.xml.frame.report.util.v2.core.MergeRegion;
-import com.xml.frame.report.util.xml.Loop;
+import com.xml.frame.report.util.xml.XmlElWalker;
 import com.xml.frame.report.util.xml.XmlUtil;
-import com.xml.frame.report.util.xml.XmlWalker;
 
 
 public class WordTemplateXmlInterpreter implements XmlInterpreter {
@@ -69,7 +69,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 
 	private Map<String, List<MergeRegion>> parseMRs(Element e) throws Exception {
 		Map<String, List<MergeRegion>> mrs = new HashMap<String, List<MergeRegion>>();
-		XmlWalker.each(e.getElementsByTagName("merge"), elp, new Loop() {
+		XmlElWalker.each(e.getElementsByTagName("merge"), elp, new Loop() {
 
 			@Override
 			public void on(Element elem) throws Exception {

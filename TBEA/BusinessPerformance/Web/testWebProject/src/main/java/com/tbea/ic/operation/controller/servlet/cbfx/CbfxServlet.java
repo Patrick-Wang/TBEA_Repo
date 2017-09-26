@@ -51,8 +51,8 @@ public class CbfxServlet {
 	@Resource(type=com.tbea.ic.operation.common.companys.CompanyManager.class)
 	public void setCompanyManager(CompanyManager companyManager){
 		this.companyManager = companyManager;
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.NLTK));
-		COMPS.add(companyManager.getBMDBOrganization().getCompany(CompanyType.XJNY));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.NLTK));
+		COMPS.add(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XJNY));
 	}
 	
 	@RequestMapping(value = {"show.do", "v2/show.do"})

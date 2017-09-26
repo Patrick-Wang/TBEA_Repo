@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="arReceivedPlanEntryJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="arReceivedPlanEntryUpdateClr"/>
+            <map key="submitUrl" value="arReceivedPlanEntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="arReceivedPlanEntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="arReceivedPlanEntryUpdateServ"/>
+        <callcontroller id="arReceivedPlanEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>计划序号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>年份</name>
+                </item>
+                <item>
+                    <name>月份</name>
+                </item>
+                <item>
+                    <name>本部/项目公司</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>办事处</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>合同号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>项目名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>业务类型</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>预付款</name>
+                </item>
+                <item>
+                    <name>进度款</name>
+                </item>
+                <item>
+                    <name>发货款</name>
+                </item>
+                <item>
+                    <name>到货款</name>
+                </item>
+                <item>
+                    <name>投运/安装款</name>
+                </item>
+                <item>
+                    <name>验收款</name>
+                </item>
+                <item>
+                    <name>质保金</name>
+                </item>
+                <item>
+                    <name>计划总额</name>
+                </item>
+                <item>
+                    <name>款项回款是否可降应收</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>款项状态</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>款项性质</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>回款性质</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>经办人</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>负责人</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>督导领导</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>目前款项的清收进度（填写款项目前已办理到何种程度）</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>清收措施
+（须细化到以时间节点为主线的各个手续办理环节）</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>困难款项说明</name>
+                    <type>text</type>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="arReceivedPlanEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="0">
+                <DefaultMatcher cols="2,3"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="10,11,12,13,14,15,16,17"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="arReceivedPlanEntryUpdateServ" transaction="transactionManager">
+        <sql id="data">select 
+	id,
+	planNum,
+	nf,
+	yf,
+	company,
+	department,
+	contractNum,
+	customerName,
+	projectName,
+	businessType,
+	prePayment,
+	proPayment,
+	deliPayment,
+	arriPayment,
+	workPayment,
+	accePayment,
+	guarPayment,
+	planSum,
+	isReduceAR,
+	ARStatus,
+	ARProperty,
+	receProperty,
+	operator,
+	personIncharge,
+	leader,
+	progress,
+	measure,
+	remark
+from ar_received_plan</sql>
+        <list id="ids" sql="data" value="0"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="1"/>
+            <list sql="data" type="int" value="2"/>
+            <list sql="data" type="int" value="3"/>
+            <list sql="data" type="string" value="4"/>
+            <list sql="data" type="string" value="5"/>
+            <list sql="data" type="string" value="6"/>
+            <list sql="data" type="string" value="7"/>
+            <list sql="data" type="string" value="8"/>
+            <list sql="data" type="string" value="9"/>
+            <list sql="data" type="double" value="10"/>
+            <list sql="data" type="double" value="11"/>
+            <list sql="data" type="double" value="12"/>
+            <list sql="data" type="double" value="13"/>
+            <list sql="data" type="double" value="14"/>
+            <list sql="data" type="double" value="15"/>
+            <list sql="data" type="double" value="16"/>
+            <list sql="data" type="double" value="17"/>
+            <list sql="data" type="string" value="18"/>
+            <list sql="data" type="string" value="19"/>
+            <list sql="data" type="string" value="20"/>
+            <list sql="data" type="string" value="21"/>
+            <list sql="data" type="string" value="22"/>
+            <list sql="data" type="string" value="23"/>
+            <list sql="data" type="string" value="24"/>
+            <list sql="data" type="string" value="25"/>
+            <list sql="data" type="string" value="26"/>
+            <list sql="data" type="string" value="27"/>
+        </table>
+    </service>
+    <controller id="arReceivedPlanEntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="arReceivedPlanEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="arReceivedPlanEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="ar_received_plan">
+            <where>
+                <id ref="0" type="int"/>
+                <planNum ref="1" type="string"/>
+            </where>
+            <set>
+                <planNum ref="1" test="${this != null}" type="string"/>
+                <nf ref="2" type="int"/>
+                <yf ref="3" type="int"/>
+                <company ref="4" type="string"/>
+                <department ref="5" type="string"/>
+                <contractNum ref="6" type="string"/>
+                <customerName ref="7" type="string"/>
+                <projectName ref="8" type="string"/>
+                <businessType ref="9" type="string"/>
+                <prePayment ref="10" type="double"/>
+                <proPayment ref="11" type="double"/>
+                <deliPayment ref="12" type="double"/>
+                <arriPayment ref="13" type="double"/>
+                <workPayment ref="14" type="double"/>
+                <accePayment ref="15" type="double"/>
+                <guarPayment ref="16" type="double"/>
+                <planSum ref="17" type="double"/>
+                <isReduceAR ref="18" type="string"/>
+                <ARStatus ref="19" type="string"/>
+                <ARProperty ref="20" type="string"/>
+                <receProperty ref="21" type="string"/>
+                <operator ref="22" type="string"/>
+                <personIncharge ref="23" type="string"/>
+                <leader ref="24" type="string"/>
+                <progress ref="25" type="string"/>
+                <measure ref="26" type="string"/>
+                <remark ref="27" type="string"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

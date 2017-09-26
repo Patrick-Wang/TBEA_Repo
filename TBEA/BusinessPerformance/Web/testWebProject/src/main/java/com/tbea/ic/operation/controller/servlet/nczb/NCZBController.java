@@ -91,7 +91,7 @@ public class NCZBController {
 		Organization org = companyManager.getVirtualJYZBOrganization();
 		CompanySelection compSel = new CompanySelection(
 				false,
-				org.getCompany(CompanyType.GFGS).getSubCompanies(), 
+				org.getCompanyByType(CompanyType.GFGS).getSubCompanies(), 
 				new CompanyTypeFilter(
 						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));
@@ -176,7 +176,7 @@ public class NCZBController {
 		Organization org = companyManager.getVirtualJYZBOrganization();
 		CompanySelection compSel = new CompanySelection(
 				false,
-				org.getCompany(CompanyType.GFGS).getSubCompanies(), 
+				org.getCompanyByType(CompanyType.GFGS).getSubCompanies(), 
 				new CompanyTypeFilter(
 						gszbService.getCompanies(SessionManager.getAccount(request.getSession(false))), 
 						org));

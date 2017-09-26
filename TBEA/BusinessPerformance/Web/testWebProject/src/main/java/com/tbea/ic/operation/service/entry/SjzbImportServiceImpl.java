@@ -83,7 +83,7 @@ public class SjzbImportServiceImpl implements SjzbImportService{
 			LoggerFactory.getLogger("WEBSERVICE").info("Sjzb import zbxx 不存在 : " + row[1]);
 			return;
 		}	
-		Company comp = companyManager.getBMDBOrganization().getCompany(dwxx.getId());
+		Company comp = companyManager.getBMDBOrganization().getCompanyById(dwxx.getId());
 		JSONArray ja = new JSONArray();
 			ja.add("" + zbxx.getId());
 			ja.add(row[2] != null ? row[2].toString().replaceAll(",", "") : null);

@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface Organization {
 	boolean owns(Company comp);
-	Company getCompany(CompanyType type);
-	Company getCompany(Integer id);
-	Company getCompany(String name);
+	Company getCompanyByType(CompanyType type);
+	Company getCompanyById(Integer id);
+	Company getCompanyByName(String name);
 	List<Company> getTopCompany();
 	int getDepth();
 	List<Company> getBottomCompany();

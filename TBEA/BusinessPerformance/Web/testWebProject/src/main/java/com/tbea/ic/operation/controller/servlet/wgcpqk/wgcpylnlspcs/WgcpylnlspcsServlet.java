@@ -47,8 +47,8 @@ public class WgcpylnlspcsServlet {
 	@Resource(name = WgcpylnlspcsServiceImpl.NAME)
 	WgcpylnlspcsService wgcpylnlspcsService;
 	Company getCompany(CompanyType comp){
-		Company bmCompany = companyManager.getBMDBOrganization().getCompany(comp);
-		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompany(comp);
+		Company bmCompany = companyManager.getBMDBOrganization().getCompanyByType(comp);
+		Company vYszkCompany = companyManager.getVirtualGBOrg().getCompanyByType(comp);
 		if (bmCompany == null || vYszkCompany != null && vYszkCompany.getId() != bmCompany.getId()){
 			return vYszkCompany;
 		}
@@ -92,9 +92,9 @@ public class WgcpylnlspcsServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		List<List<String>> result = wgcpylnlspcsService.getWgcpylnlspcsEntry(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		List<List<String>> result = wgcpylnlspcsService.getWgcpylnlspcsEntry(d, companyManager.getBMDBOrganization().getCompanyByType(comp), getType(request));
 		
-		ZBStatus status = wgcpylnlspcsService.getWgcpylnlspcsStatus(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request));
+		ZBStatus status = wgcpylnlspcsService.getWgcpylnlspcsStatus(d, companyManager.getBMDBOrganization().getCompanyByType(comp), getType(request));
 		StatusData sd = new StatusData(ZBStatus.APPROVED == status, result);
 		return JSONObject.fromObject(sd).toString().replaceAll("null", "\"\"").getBytes("utf-8");
 	}
@@ -105,7 +105,7 @@ public class WgcpylnlspcsServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = wgcpylnlspcsService.saveWgcpylnlspcs(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request), data);
+		ErrorCode err = wgcpylnlspcsService.saveWgcpylnlspcs(d, companyManager.getBMDBOrganization().getCompanyByType(comp), getType(request), data);
 		return Util.response(err);
 	}
 	
@@ -115,7 +115,7 @@ public class WgcpylnlspcsServlet {
 		JSONArray data = JSONArray.fromObject(request.getParameter("data"));
 		Date d = Date.valueOf(request.getParameter("date"));
 		CompanyType comp = CompanySelection.getCompany(request);
-		ErrorCode err = wgcpylnlspcsService.submitWgcpylnlspcs(d, companyManager.getBMDBOrganization().getCompany(comp), getType(request), data);
+		ErrorCode err = wgcpylnlspcsService.submitWgcpylnlspcs(d, companyManager.getBMDBOrganization().getCompanyByType(comp), getType(request), data);
 		return Util.response(err);
 	}
 	

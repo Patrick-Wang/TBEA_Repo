@@ -21,7 +21,7 @@ public class NdjhZbCalculator extends GeneralZbCalculator {
 			SbdNdjhZbDao sbdNdjhzbDao, RequestHandler<Request> handler) {
 		super(injector, handler);
 		this.sbdNdjhzbDao = sbdNdjhzbDao;
-		sbdCy = compMgr.getBMDBOrganization().getCompany(CompanyType.SBDCYJT);
+		sbdCy = compMgr.getBMDBOrganization().getCompanyByType(CompanyType.SBDCYJT);
 	}
 
 	@Override

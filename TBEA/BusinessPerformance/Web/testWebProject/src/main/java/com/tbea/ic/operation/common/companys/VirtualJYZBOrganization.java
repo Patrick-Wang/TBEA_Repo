@@ -7,7 +7,7 @@ public class VirtualJYZBOrganization extends AbstractOrganization {
 
 	public VirtualJYZBOrganization(VirtualYSZKOrganization yszk, Organization BM) {
 		append(this.getCompany(CompanyType.GFGS, 0)
-			.append(getCompany(CompanyType.SBDCYJT, BM.getCompany(CompanyType.SBDCYJT).getId())
+			.append(getCompany(CompanyType.SBDCYJT, BM.getCompanyByType(CompanyType.SBDCYJT).getId())
 		    		.append(clone(yszk, CompanyType.BYQCY))
 		    		.append(clone(yszk, CompanyType.XLCY))
 		    		.append(clone(yszk, CompanyType.DBSBDCYJT))
@@ -60,21 +60,21 @@ public class VirtualJYZBOrganization extends AbstractOrganization {
 						.getVirtualJYZBOrganization();
 				Organization org = companyManager.getBMDBOrganization();
 				comps = new ArrayList<Company>();
-				for (Company comp : orgJyzb.getCompany(sybOrJydw)
+				for (Company comp : orgJyzb.getCompanyByType(sybOrJydw)
 						.getSubCompanies()) {
-					comps.add(org.getCompany(comp.getType()));
+					comps.add(org.getCompanyByType(comp.getType()));
 				}
 			} else {
 				Organization org = companyManager.getBMDBOrganization();
-				comps = org.getCompany(sybOrJydw).getSubCompanies();
+				comps = org.getCompanyByType(sybOrJydw).getSubCompanies();
 			}
 		} else if (isSbdcy(sybOrJydw)) {
 			Organization orgJyzb = companyManager.getVirtualJYZBOrganization();
-			comps = orgJyzb.getCompany(sybOrJydw).getSubCompanies();
+			comps = orgJyzb.getCompanyByType(sybOrJydw).getSubCompanies();
 		} else {
 			Organization org = companyManager.getBMDBOrganization();
 			comps = new ArrayList<Company>();
-			comps.add(org.getCompany(sybOrJydw));
+			comps.add(org.getCompanyByType(sybOrJydw));
 		}
 		return comps;
 	}

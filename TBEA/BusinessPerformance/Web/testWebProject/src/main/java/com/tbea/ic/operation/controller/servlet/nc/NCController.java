@@ -266,7 +266,7 @@ public class NCController {
 		for (NCZB nczb : NCZBList) {
 			zbid = nczb.getZbxx().getId();
 			if (zbList.contains(zbid)) {
-				comp = companyManager.getBMDBOrganization().getCompany(
+				comp = companyManager.getBMDBOrganization().getCompanyById(
 						nczb.getDwxx().getId());
 				if (comp.getType() != CompanyType.DLGS && 
 						comp.getType() != CompanyType.HBGS){
@@ -324,7 +324,7 @@ public class NCController {
 		for (NCZB nczb : NCZBList) {
 			zbid = nczb.getZbxx().getId();
 			if (zbList.contains(zbid)) {
-				comp = companyManager.getBMDBOrganization().getCompany(
+				comp = companyManager.getBMDBOrganization().getCompanyById(
 						nczb.getDwxx().getId());
 				if (cp == comp.getType()){
 					comps.add(comp);
@@ -522,7 +522,7 @@ public class NCController {
 			for (Object[] objs : rs) {
 				type = hrCompMap.get(objs[6]);
 				comp = companyManager
-						.getBMDBOrganization().getCompany(type);
+						.getBMDBOrganization().getCompanyByType(type);
 				if (null != type && comp != null) {
 					ZBStatus zbStatus = entryService.getZbStatus(targetDate, type,
 							ZBType.BYSJ).get(0);

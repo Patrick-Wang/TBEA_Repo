@@ -37,7 +37,7 @@ public class PlanIndicatorsProvider {
 			List<CompanyIndicator> result = new ArrayList<CompanyIndicator>();
 			if (!companyIds.isEmpty()){
 				for (Integer compId : companyIds) {
-					Company comp =  companyManager.getBMDBOrganization().getCompany(compId);
+					Company comp =  companyManager.getBMDBOrganization().getCompanyById(compId);
 					if (null != comp) {
 						CompanyIndicator ci = new CompanyIndicator();
 						ci.setCompanyId(compId);
@@ -63,7 +63,7 @@ public class PlanIndicatorsProvider {
 			List<CompanyIndicator> result = new ArrayList<CompanyIndicator>();
 			if (!companyIds.isEmpty()){
 				for (Integer compId : companyIds) {
-					Company comp =  companyManager.getBMDBOrganization().getCompany(compId);
+					Company comp =  companyManager.getBMDBOrganization().getCompanyById(compId);
 					if (null != comp) {
 						CompanyIndicator ci = new CompanyIndicator();
 						ci.setCompanyId(compId);

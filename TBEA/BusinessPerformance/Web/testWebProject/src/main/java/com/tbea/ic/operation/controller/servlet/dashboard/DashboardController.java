@@ -99,15 +99,15 @@ public class DashboardController {
 			companyType = Integer.valueOf((String)request.getParameter("companyType"));
 		}
 		if (this.extAuthServ.hasAuthority(account, 81)) {
-			dws = companyManager.getBMDBOrganization().getCompany(CompanyType.ZHGS).getSubCompanies();
+			dws = companyManager.getBMDBOrganization().getCompanyByType(CompanyType.ZHGS).getSubCompanies();
 		} else if (companyType == 1){
 			dws = BMDepartmentDB.getMainlyJydw(companyManager);
 		} else if (companyType == 2){
-			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.SBDCYJT));
+			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.SBDCYJT));
 		} else if (companyType == 3){
-			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.NYSYB));
+			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.NYSYB));
 		} else if (companyType == 4){
-			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompany(CompanyType.XNYSYB));
+			dws = BMDepartmentDB.getXmgs(companyManager.getBMDBOrganization().getCompanyByType(CompanyType.XNYSYB));
 		}
 
 

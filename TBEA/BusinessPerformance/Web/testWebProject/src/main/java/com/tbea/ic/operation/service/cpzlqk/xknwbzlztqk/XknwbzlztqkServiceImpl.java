@@ -48,7 +48,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getJdnwbzlqk(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -85,7 +85,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getJdSczzzlqk(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (int i = 0; i < comps.size(); ++i){
@@ -121,7 +121,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getJdSczzzlqkxxxx(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		List<List<String>> result = new ArrayList<List<String>>();
 		Set<String> xmgs = new HashSet<String>();
@@ -170,7 +170,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getJdsjzlqk(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -207,7 +207,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getJdYclzlwt(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -254,7 +254,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getJdYsazzlwt(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -298,7 +298,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		if (yjType == YDJDType.YD){
 			List<Company> comps = new ArrayList<Company>();
-			Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+			Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 			comps.add(xkgs);
 			WaveItem nb = new WaveItem(xkgs.getName() + "内部质量问题", new ArrayList<String>());
 			WaveItem wb = new WaveItem(xkgs.getName() + "外部质量问题", new ArrayList<String>());
@@ -344,7 +344,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		if (yjType == YDJDType.YD){
 			List<Company> comps = new ArrayList<Company>();
-			Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+			Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 			comps.add(xkgs);
 			WaveItem nb = new WaveItem(xkgs.getName() + "内部质量问题", new ArrayList<String>());
 			WaveItem wb = new WaveItem(xkgs.getName() + "外部质量问题", new ArrayList<String>());
@@ -389,7 +389,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		if (yjType == YDJDType.YD){
 			List<Company> comps = new ArrayList<Company>();
-			Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+			Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 			comps.add(xkgs);
 			WaveItem nb = new WaveItem(xkgs.getName() + "内部质量问题", new ArrayList<String>());
 			WaveItem wb = new WaveItem(xkgs.getName() + "外部质量问题", new ArrayList<String>());
@@ -435,7 +435,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		if (yjType == YDJDType.YD){
 			List<Company> comps = new ArrayList<Company>();
-			Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+			Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 			comps.add(xkgs);
 			WaveItem wirc = new WaveItem(xkgs.getName() + "入场检测反馈", new ArrayList<String>());
 			WaveItem wicn = new WaveItem(xkgs.getName() + "厂内制造反馈", new ArrayList<String>());
@@ -489,7 +489,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 		List<WaveItem> wis = new ArrayList<WaveItem>();
 		if (yjType == YDJDType.YD){
 			List<Company> comps = new ArrayList<Company>();
-			Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+			Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 			comps.add(xkgs);
 			WaveItem hj = new WaveItem(xkgs.getName() + "运输安装质量问题情况", new ArrayList<String>());
 			wis.add(hj);
@@ -529,7 +529,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getYdnwbzlqk(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -566,7 +566,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getYdSczzzlqk(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -603,7 +603,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getYdSczzzlqkxxxx(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		List<List<String>> result = new ArrayList<List<String>>();
 		Set<String> xmgs = new HashSet<String>();
@@ -654,7 +654,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getYdsjzlqk(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -691,7 +691,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getYdYclzlwt(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -734,7 +734,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getYdYsazzlwt(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		EasyCalendar cal = new EasyCalendar(d);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -840,7 +840,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getJdNbzlwtfl(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		List<String> subIssues = nbyclzlwtDao.getIssues(comps, zts);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -871,7 +871,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getYdNbzlwtfl(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		List<String> subIssues = nbyclzlwtDao.getIssues(comps, zts);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -948,7 +948,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getJdWbzlwtfl(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		List<String> subIssues = wbyclzlwtDao.getIssues(comps, zts);
 		List<List<String>> result = new ArrayList<List<String>>();
@@ -979,7 +979,7 @@ public class XknwbzlztqkServiceImpl implements XknwbzlztqkService {
 	@Override
 	public List<List<String>> getYdWbzlwtfl(Date d, List<Integer> zts) {
 		List<Company> comps = new ArrayList<Company>();
-		Company xkgs = companyManager.getVirtualCYOrg().getCompany(CompanyType.XKGS);
+		Company xkgs = companyManager.getVirtualCYOrg().getCompanyByType(CompanyType.XKGS);
 		comps.add(xkgs);
 		List<String> subIssues = wbyclzlwtDao.getIssues(comps, zts);
 		List<List<String>> result = new ArrayList<List<String>>();
