@@ -68,8 +68,8 @@
       <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/entry_template.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4848485">
-              <caret line="653" column="55" selection-start-line="653" selection-start-column="55" selection-end-line="653" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.36363637">
+              <caret line="641" column="45" selection-start-line="641" selection-start-column="45" selection-end-line="641" selection-end-column="45" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -861,8 +861,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/entry_template.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4848485">
-          <caret line="653" column="55" selection-start-line="653" selection-start-column="55" selection-end-line="653" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.36363637">
+          <caret line="641" column="45" selection-start-line="641" selection-start-column="45" selection-end-line="641" selection-end-column="45" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

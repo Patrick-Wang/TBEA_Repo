@@ -613,11 +613,47 @@ module entry_template {
             if (Util.ZBType.BYSJ == this.mOpt.entryType){
                 for (let i = 0; i < this.mZbxxs.length; ++i){
                     let zbxx : Zbxx = this.mZbxxs[i];
-                    if (find(this.mTableData, zbxx.id) >= 0){
+                    let row = find(this.mTableData, zbxx.id);
+                    if (row >= 0){
+                        let sums = [];
                         for (let j = 0; j < zbxx.children.length; ++j){
                             let cells = this.parseZbxx(zbxx.children[j]);
                             if (cells.length > 0){
                                 disabledCell = disabledCell.concat(cells);
+                                sums = sums.concat(cells);
+                            }
+                        }
+
+                        if (sums.length > 0 && zbxx.id == 48){
+                            for (let j = 1; j < this.mTableData[0].length - 1; ++j) {
+
+                                let srs = [];
+                                for (let k = 0; k < sums.length; ++k){
+                                    if (j == sums[k].col()){
+                                        srs.push(sums[k]);
+                                    }
+                                }
+
+                                let dst = new Cell(row, j);
+                                disabledCell.push(dst);
+                                let form : Formula  = new Formula(dst, srs, (dest:Cell, srcs:Cell[])=>{
+                                    let sum : any;
+                                    for (let i = 0; i < srcs.length; ++i){
+                                        let val = srcs[i].getVal();
+                                        if ("" != val){
+                                            if (sum == undefined){
+                                                sum = parseFloat(val);
+                                            }else{
+                                                sum += parseFloat(val);
+                                            }
+                                        }
+                                    }
+                                    if (sum != undefined){
+                                        sum = sum.toFixed(4);
+                                    }
+                                    return sum;
+                                });
+                                this.mTableAssist.addFormula(form);
                             }
                         }
                     }

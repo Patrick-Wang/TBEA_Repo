@@ -552,11 +552,45 @@ var entry_template;
             if (Util.ZBType.BYSJ == this.mOpt.entryType) {
                 for (var i_5 = 0; i_5 < this.mZbxxs.length; ++i_5) {
                     var zbxx = this.mZbxxs[i_5];
-                    if (find(this.mTableData, zbxx.id) >= 0) {
+                    var row = find(this.mTableData, zbxx.id);
+                    if (row >= 0) {
+                        var sums = [];
                         for (var j_1 = 0; j_1 < zbxx.children.length; ++j_1) {
                             var cells_1 = this.parseZbxx(zbxx.children[j_1]);
                             if (cells_1.length > 0) {
                                 disabledCell = disabledCell.concat(cells_1);
+                                sums = sums.concat(cells_1);
+                            }
+                        }
+                        if (sums.length > 0 && zbxx.id == 48) {
+                            for (var j_2 = 1; j_2 < this.mTableData[0].length - 1; ++j_2) {
+                                var srs = [];
+                                for (var k = 0; k < sums.length; ++k) {
+                                    if (j_2 == sums[k].col()) {
+                                        srs.push(sums[k]);
+                                    }
+                                }
+                                var dst = new Cell(row, j_2);
+                                disabledCell.push(dst);
+                                var form = new Formula(dst, srs, function (dest, srcs) {
+                                    var sum;
+                                    for (var i_6 = 0; i_6 < srcs.length; ++i_6) {
+                                        var val = srcs[i_6].getVal();
+                                        if ("" != val) {
+                                            if (sum == undefined) {
+                                                sum = parseFloat(val);
+                                            }
+                                            else {
+                                                sum += parseFloat(val);
+                                            }
+                                        }
+                                    }
+                                    if (sum != undefined) {
+                                        sum = sum.toFixed(4);
+                                    }
+                                    return sum;
+                                });
+                                this.mTableAssist.addFormula(form);
                             }
                         }
                     }
@@ -567,32 +601,32 @@ var entry_template;
                 }
             }
             else {
-                for (var i_6 = 0; i_6 < this.mZbxxs.length; ++i_6) {
-                    var zbxx = this.mZbxxs[i_6];
+                for (var i_7 = 0; i_7 < this.mZbxxs.length; ++i_7) {
+                    var zbxx = this.mZbxxs[i_7];
                     var row = find(this.mTableData, zbxx.id);
                     if (row >= 0) {
                         var sums = [];
-                        for (var j_2 = 0; j_2 < zbxx.children.length; ++j_2) {
-                            var cells = this.parseZbxxNotSj(zbxx.children[j_2]);
+                        for (var j_3 = 0; j_3 < zbxx.children.length; ++j_3) {
+                            var cells = this.parseZbxxNotSj(zbxx.children[j_3]);
                             if (cells.length > 0) {
                                 disabledCell = disabledCell.concat(cells);
                                 sums = sums.concat(cells);
                             }
                         }
                         if (sums.length > 0) {
-                            for (var j_3 = 1; j_3 < this.mTableData[0].length - 1; ++j_3) {
+                            for (var j_4 = 1; j_4 < this.mTableData[0].length - 1; ++j_4) {
                                 var srs = [];
                                 for (var k = 0; k < sums.length; ++k) {
-                                    if (j_3 == sums[k].col()) {
+                                    if (j_4 == sums[k].col()) {
                                         srs.push(sums[k]);
                                     }
                                 }
-                                var dst = new Cell(row, j_3);
+                                var dst = new Cell(row, j_4);
                                 disabledCell.push(dst);
                                 var form = new Formula(dst, srs, function (dest, srcs) {
                                     var sum;
-                                    for (var i_7 = 0; i_7 < srcs.length; ++i_7) {
-                                        var val = srcs[i_7].getVal();
+                                    for (var i_8 = 0; i_8 < srcs.length; ++i_8) {
+                                        var val = srcs[i_8].getVal();
                                         if ("" != val) {
                                             if (sum == undefined) {
                                                 sum = parseFloat(val);
@@ -662,14 +696,14 @@ var entry_template;
                 dsts.push(dst);
                 var form = new Formula(dst, cells, function (dest, srcs) {
                     var sum;
-                    for (var i_8 = 0; i_8 < srcs.length; ++i_8) {
-                        var val = srcs[i_8].getVal();
+                    for (var i_9 = 0; i_9 < srcs.length; ++i_9) {
+                        var val = srcs[i_9].getVal();
                         if ("" != val) {
                             if (sum == undefined) {
-                                sum = parseFloat(val) * srcs[i_8].rate;
+                                sum = parseFloat(val) * srcs[i_9].rate;
                             }
                             else {
-                                sum += parseFloat(val) * srcs[i_8].rate;
+                                sum += parseFloat(val) * srcs[i_9].rate;
                             }
                         }
                     }
@@ -712,14 +746,14 @@ var entry_template;
                 dsts.push(dst);
                 var form = new Formula(dst, cells, function (dest, srcs) {
                     var sum;
-                    for (var i_9 = 0; i_9 < srcs.length; ++i_9) {
-                        var val = srcs[i_9].getVal();
+                    for (var i_10 = 0; i_10 < srcs.length; ++i_10) {
+                        var val = srcs[i_10].getVal();
                         if ("" != val) {
                             if (sum == undefined) {
-                                sum = parseFloat(val) * srcs[i_9].rate;
+                                sum = parseFloat(val) * srcs[i_10].rate;
                             }
                             else {
-                                sum += parseFloat(val) * srcs[i_9].rate;
+                                sum += parseFloat(val) * srcs[i_10].rate;
                             }
                         }
                     }
@@ -759,8 +793,8 @@ var entry_template;
                 dsts.push(dst);
                 var form = new Formula(dst, cells, function (dest, srcs) {
                     var sum;
-                    for (var i_10 = 0; i_10 < srcs.length; ++i_10) {
-                        var val = srcs[i_10].getVal();
+                    for (var i_11 = 0; i_11 < srcs.length; ++i_11) {
+                        var val = srcs[i_11].getVal();
                         if ("" != val) {
                             if (sum == undefined) {
                                 sum = parseFloat(val);
