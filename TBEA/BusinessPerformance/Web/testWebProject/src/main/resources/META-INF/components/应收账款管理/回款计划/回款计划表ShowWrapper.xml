@@ -9,7 +9,7 @@
 		</list>
 		<list id="ids2" type="int">1,2,3
 		</list>
-		<list id="vals2" type="string">回款计划明细,款项状态结构,款性质结构
+		<list id="vals2" type="string">回款计划明细,款项状态结构,款项性质结构
 		</list>
 		<response name="framework/templates/dateReport/show" type="jsp">
 			<map key="updateUrl" value="DB508EDBC9A8A56FFBDF6604877A374AUpdateWrapperClr" />
@@ -27,11 +27,11 @@
 		<context key="dwmc"
 			value="${compMgr.BMDBOrganization.companyById[dwid].name}" />
 		<context key="cal" value="${request.date.asCalendar}" />
-		<if teest="${item2==1}">
+		<if test="${item2==1}">
 			<callcontroller id="arReceivedPlanUpdateClr" />
 		</if>
-		<elseif teest="${item2==2}">
-			<callcontroller id="arReceivedPlanUpdateClr" />
+		<elseif test="${item2==2}">
+			<callcontroller id="arReceivedPlanStatusUpdateClr" />
 		</elseif>
 		<else>
 			<callcontroller id="arReceivedPlanUpdateClr" />
@@ -43,14 +43,14 @@
 		<context key="dwmc"
 			value="${compMgr.BMDBOrganization.companyById[dwid].name}" />
 		<context key="cal" value="${request.date.asCalendar}" />
-		<if teest="${item2==1}">
+		<if test="${item2==1}">
 			<callcontroller id="arReceivedPlanExportClr" />
 		</if>
-		<elseif teest="${item2==2}">
-			<callcontroller id="arReceivedPlanUpdateClr" />
+		<elseif test="${item2==2}">
+			<callcontroller id="arReceivedPlanStatusExportClr" />
 		</elseif>
 		<else>
-			<callcontroller id="arReceivedPlanUpdateClr" />
+			<callcontroller id="arReceivedPlanExportClr" />
 		</else>
 	</controller>
 </components>

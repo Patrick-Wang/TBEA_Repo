@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+	<controller id="arReceivedPlanStatusUpdateClr">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<callservice id="arReceivedPlanStatusShowServ" />
+		<callcontroller id="arReceivedPlanStatusFmtClr" />
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" /> 
+		</formatterServer>
+		<response type="json">
+			<header type="array">
+				<item>
+					<name>到期款</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>未到期款</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>未到期应收账款</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>逾期应收账款</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>合计</name>
+					<type>text</type>
+				</item>
+			</header>
+			<data>${fmtServ.result}</data>
+		</response>
+	</controller>
+	<controller id="arReceivedPlanStatusFmtClr">
+		<formatter export="true" id="fmtData">
+			<NumberFormatter reservedCount="1">
+			</NumberFormatter>
+		</formatter>
+	</controller>
+	<controller id="arReceivedPlanStatusExportClr">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<callservice id="arReceivedPlanStatusShowServ" />
+		<callcontroller id="arReceivedPlanStatusFmtClr" />
+		<ExcelTemplate id="excelTemplate" sheet="回款计划表" />
+		<list id="title" type="string">到期款,未到期款,未到期应收账款,逾期应收账款,合计
+		</list>
+		<formatter id="excel">
+			<ExcelTitleFilter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset col="0" row="0" />
+				<titles>
+					<title ref="title" />
+				</titles>
+			</ExcelTitleFilter>
+			
+			<ExcelHeaderCenterFormatter>
+				<DefaultMatcher cols="0" />
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset col="0" row="1" />
+			</ExcelHeaderCenterFormatter>
+			<ExcelOffsetFormatter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset col="0" row="1" />
+			</ExcelOffsetFormatter>
+		</formatter>
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+			<formatter ref="excel" />
+		</formatterServer>
+		<response name="${dwmc}${cal.year}年${cal.month}月款项状态结构.xls" ref="excelTemplate"
+			serv="fmtServ" type="excel" />
+	</controller>
+	<service id="arReceivedPlanStatusShowServ" transaction="transactionManager">
+		<list id="status" type="string">到期款,未到期款,未到期应收账款,逾期应收账款</list>
+		<sql id="data" order="status" by="0" colcount="2">select
+				ARStatus,
+				sum(planSum) as t1
+			from ar_received_plan
+			where
+				company = ${dwmc} and
+				nf = ${cal.year} and
+				yf = ${cal.month}
+			group by
+				ARStatus
+		</sql>
+		
+		<sql id="dataAll" order="status" by="0">select
+				sum(planSum) as t1
+			from ar_received_plan
+			where
+				company = ${dwmc} and
+				nf = ${cal.year} and
+				yf = ${cal.month} and
+				ARStatus in ${status}
+		</sql>
+		<list id="ids" type="int">
+			<item from="0" to="3"></item>
+		</list>
+		<table export="true" id="result" rowIds="ids">
+			<list type="double" >${data[0][1]}
+			</list>
+			<list type="double" >${data[1][1]}
+			</list>
+			<list type="double" >${data[2][1]}
+			</list>
+			<list type="double" >${data[3][1]}
+			</list>
+			<list type="double" >${dataAll[0]}
+			</list>
+		</table>
+	</service>
+</components>

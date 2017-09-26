@@ -607,8 +607,10 @@ module entry_template {
                 }
             }
 
+
+            let disabledCell = [];
+
             if (Util.ZBType.BYSJ == this.mOpt.entryType){
-                let disabledCell = [];
                 for (let i = 0; i < this.mZbxxs.length; ++i){
                     let zbxx : Zbxx = this.mZbxxs[i];
                     if (find(this.mTableData, zbxx.id) >= 0){
@@ -625,10 +627,22 @@ module entry_template {
                 if (cells.length > 0){
                     disabledCell = disabledCell.concat(cells);
                 }
-
-                if (disabledCell.length != 0){
-                    this.mTableAssist.disableCellEdit(disabledCell);
+            }else{
+                for (let i = 0; i < this.mZbxxs.length; ++i){
+                    let zbxx : Zbxx = this.mZbxxs[i];
+                    if (find(this.mTableData, zbxx.id) >= 0){
+                        for (let j = 0; j < zbxx.children.length; ++j){
+                            let cells = this.parseZbxxNotSj(zbxx.children[j]);
+                            if (cells.length > 0){
+                                disabledCell = disabledCell.concat(cells);
+                            }
+                        }
+                    }
                 }
+            }
+
+            if (disabledCell.length != 0){
+                this.mTableAssist.disableCellEdit(disabledCell);
             }
 
             this.mTableAssist.create({
@@ -672,6 +686,58 @@ module entry_template {
                     }
                 }
                 if (cells.length == 0) {
+                    return [];
+                }
+
+                let dst = new Cell(row, i);
+                dsts.push(dst);
+                let form : Formula  = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=>{
+                    let sum : any;
+                    for (let i = 0; i < srcs.length; ++i){
+                        let val = srcs[i].getVal();
+                        if ("" != val){
+                            if (sum == undefined){
+                                sum = parseFloat(val) * srcs[i].rate;
+                            }else{
+                                sum += parseFloat(val) * srcs[i].rate;
+                            }
+                        }
+                    }
+                    if (sum != undefined){
+                        sum = sum.toFixed(4);
+                    }
+                    return sum;
+                });
+                this.mTableAssist.addFormula(form);
+            }
+            return dsts;
+        }
+
+        private parseZbxxNotSj(zbxx:Zbxx):Cell[] {
+            let row = find(this.mTableData, zbxx.id);
+            if (row < 0) {
+                return [];
+            }
+
+            let dsts:Cell[] = [];
+            var isRate = false;
+            for (let i = 1; i < this.mTableData[0].length - 1; ++i){
+                let cells = [];
+                for (let j = 0; j < zbxx.children.length; ++j){
+                    let row2 = find(this.mTableData, zbxx.children[j].id);
+
+                    if (row2 >= 0){
+                        let cel = new Cell(row2, i);
+                        if (Util.indexOf(this.mExRateZbs, zbxx.children[j].id) >= 0){
+                            cel.rate = this.mRate;
+                            isRate = true;
+                        }else{
+                            cel.rate = 1;
+                        }
+                        cells.push(cel);
+                    }
+                }
+                if (!isRate || cells.length == 0) {
                     return [];
                 }
 
