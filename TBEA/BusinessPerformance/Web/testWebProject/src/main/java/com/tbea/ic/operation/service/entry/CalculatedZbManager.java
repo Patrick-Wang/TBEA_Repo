@@ -34,6 +34,9 @@ public class CalculatedZbManager {
 		jh2016Zbs.add(GSZB.GC_XSYWSXFYL232.value());
 		jh2016Zbs.add(GSZB.WLMYSXFYL233.value());
 		jh2016Zbs.add(GSZB.MTXLZH346.value());
+		
+		//add 2017-9-27
+		jh2016Zbs.add(GSZB.XSLRL_28.value());
 	};
 	
 	
@@ -55,10 +58,8 @@ public class CalculatedZbManager {
 			.add(new RatioRequestHandler(GSZB.SXFYL_65,GSZB.SXFY64, GSZB.XSSR6))
 			.add(new RatioRequestHandler(GSZB.GC_XSYWSXFYL232,GSZB.GC_XSYW229, GSZB.XSSR_GCXMSR12))
 			.add(new RatioRequestHandler(GSZB.WLMYSXFYL233,GSZB.WLMY230, GSZB.XSSR_WLMYSR16))
-			.add(new RatioRequestHandler(GSZB.ZZYSXFYL231,GSZB.ZZY_YWKJ_228, GSZB.XSSR_ZZYSR7));
-		if (cal.get(Calendar.YEAR) < 2016){
-			handler.add(new RatioRequestHandler(GSZB.XSLRL_28,GSZB.LRZE1, GSZB.XSSR6));
-		}
+			.add(new RatioRequestHandler(GSZB.ZZYSXFYL231,GSZB.ZZY_YWKJ_228, GSZB.XSSR_ZZYSR7))
+			.add(new RatioRequestHandler(GSZB.XSLRL_28,GSZB.LRZE1, GSZB.XSSR6));
 		return handler;
 	}
 	
