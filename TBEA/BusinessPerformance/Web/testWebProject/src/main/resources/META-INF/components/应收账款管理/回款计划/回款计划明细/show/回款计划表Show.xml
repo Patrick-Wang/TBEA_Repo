@@ -127,7 +127,7 @@
   <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="arReceivedPlanShowServ"/>
   <callcontroller id="arReceivedPlanFmtClr"/>
-  <ExcelTemplate id="excelTemplate" sheet="回款计划表"/>
+  <ExcelTemplate id="excelTemplate" sheet="回款计划"/>
   <list id="title" type="string">本部/项目公司,办事处,合同号,单位名称,项目名称,业务类型,回款计划,回款计划,回款计划,回款计划,回款计划,回款计划,回款计划,回款计划,款项回款是否可降应收,款项状态,款项性质,回款性质,经办人,负责人,督导领导,目前款项的清收进度,清收措施,困难款项说明
 		</list>
   <list id="title1" type="string">本部/项目公司,办事处,合同号,单位名称,项目名称,业务类型,预付款,进度款,发货款,到货款,投运/安装款,验收款,质保金,计划总额,款项回款是否可降应收,款项状态,款项性质,回款性质,经办人,负责人,督导领导,目前款项的清收进度,清收措施,困难款项说明

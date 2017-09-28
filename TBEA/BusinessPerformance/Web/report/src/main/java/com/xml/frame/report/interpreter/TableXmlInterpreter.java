@@ -127,18 +127,36 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	
 	protected void parseSumCol(AbstractXmlComponent component, Table tb,
 			Element elem) throws Exception {
-		Integer first = XmlUtil.getIntAttr(elem, "first", elp, null);
-		Integer second = XmlUtil.getIntAttr(elem, "second", elp, null);
 		Integer target = XmlUtil.getIntAttr(elem, "toCol", elp, null);
-
 		List<Object> targetCol = tb.getValues().get(target);
-		List<Object> firstCol = tb.getValues().get(first);
-		List<Object> secondCol = tb.getValues().get(second);
-		for (int j = 0; j < targetCol.size(); ++j){
-			targetCol.set(j, MathUtil.sum(
-					MathUtil.o2d(firstCol.get(j)), 
-					MathUtil.o2d(secondCol.get(j))));
+		if (elem.hasAttribute("from")) {
+			List<Integer> from = XmlUtil.toIntList(elem.getAttribute("from"), elp);
+			List<List<Object>> cols = new ArrayList<List<Object>>();
+			for (Integer col : from) {
+				cols.add(tb.getValues().get(col));
+			}
+			List<Double> tmpRow = new ArrayList<Double>();
+			for (int j = 0; j < targetCol.size(); ++j){
+				tmpRow.clear();
+				for (List<Object> col : cols) {
+					tmpRow.add(MathUtil.o2d(col.get(j)));
+				}
+				targetCol.set(j, MathUtil.sum(tmpRow));
+			}
+		}else {
+			Integer first = XmlUtil.getIntAttr(elem, "first", elp, null);
+			Integer second = XmlUtil.getIntAttr(elem, "second", elp, null);
+			
+			List<Object> firstCol = tb.getValues().get(first);
+			List<Object> secondCol = tb.getValues().get(second);
+			for (int j = 0; j < targetCol.size(); ++j){
+				targetCol.set(j, MathUtil.sum(
+						MathUtil.o2d(firstCol.get(j)), 
+						MathUtil.o2d(secondCol.get(j))));
+			}
 		}
+		
+		
 
 	}
 

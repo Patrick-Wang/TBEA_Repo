@@ -43,7 +43,7 @@
 		<context key="cal" value="${request.date.asCalendar}" />
 		<callservice id="arReceivedPlanStatusShowServ" />
 		<callcontroller id="arReceivedPlanStatusFmtClr" />
-		<ExcelTemplate id="excelTemplate" sheet="回款计划表" />
+		<ExcelTemplate id="excelTemplate" sheet="款项状态结构" />
 		<list id="title" type="string">到期款,未到期款,未到期应收账款,逾期应收账款,合计
 		</list>
 		<formatter id="excel">
@@ -88,16 +88,6 @@
 			group by
 				ARStatus
 		</sql>
-		
-		<sql id="dataAll" order="status" by="0">select
-				sum(planSum) as t1
-			from ar_received_plan
-			where
-				company in ${dwmc} and
-				nf = ${cal.year} and
-				yf = ${cal.month} and
-				ARStatus in ${status}
-		</sql>
 		<list id="ids" type="int">0
 		</list>
 		<table export="true" id="result" rowIds="ids">
@@ -109,8 +99,8 @@
 			</list>
 			<list type="double" >${data[3][1]}
 			</list>
-			<list type="double" >${dataAll[0]}
-			</list>
+			<col instruction="合计"/>			
+			<sumCol from="0,1,2,3" toCol="4"/>
 		</table>
 	</service>
 </components>

@@ -1,138 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <components>
-	<controller id="arReceivedPlanShow">
-		<response name="framework/templates/singleDateReport/show"
-			type="jsp">
-			<map key="year" value="${calendar.current.year}" />
-			<map key="month" value="${calendar.current.month}" />
-			<map key="updateUrl" value="arReceivedPlanUpdateClr" />
-			<map key="exportUrl" value="arReceivedPlanExportClr" />
-		</response>
-	</controller>
-	<controller id="arReceivedPlanUpdateClr">
+	<controller id="arReceivedPlanNatureUpdateClr">
 		<context key="cal" value="${request.date.asCalendar}" />
-		<callservice id="arReceivedPlanShowServ" />
-		<callcontroller id="arReceivedPlanFmtClr" />
+		<callservice id="arReceivedPlanNatureShowServ" />
+		<callcontroller id="arReceivedPlanNatureFmtClr" />
 		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
-			<formatter ref="fmtData" />
+			<formatter ref="fmtData" /> 
 		</formatterServer>
-		<response type="json">
+		<response type="json">		
 			<header type="array">
 				<item>
-					<name>本部/项目公司</name>
-					<type>text</type>
+					<name>确保可回款</name>
 				</item>
 				<item>
-					<name>办事处</name>
-					<type>text</type>
+					<name>争取可回款</name>
 				</item>
 				<item>
-					<name>合同号</name>
-					<type>text</type>
+					<name>合计</name>
 				</item>
 				<item>
-					<name>单位名称</name>
-					<type>text</type>
+					<name>下月清收款</name>
 				</item>
 				<item>
-					<name>项目名称</name>
-					<type>text</type>
+					<name>隔月清收款</name>
 				</item>
 				<item>
-					<name>业务类型</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>回款计划</name>
-					<sub type="array">
-						<item>
-							<name>预付款</name>
-						</item>
-						<item>
-							<name>进度款</name>
-						</item>
-						<item>
-							<name>发货款</name>
-						</item>
-						<item>
-							<name>到货款</name>
-						</item>
-						<item>
-							<name>投运/安装款</name>
-						</item>
-						<item>
-							<name>验收款</name>
-						</item>
-						<item>
-							<name>质保金</name>
-						</item>
-						<item>
-							<name>计划总额</name>
-						</item>
-					</sub>
-				</item>
-
-				<item>
-					<name>款项回款是否可降应收</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>款项状态</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>款项性质</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>回款性质</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>经办人</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>负责人</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>督导领导</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>目前款项的清收进度</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>清收措施</name>
-					<type>text</type>
-				</item>
-				<item>
-					<name>困难款项说明</name>
-					<type>text</type>
+					<name>合计</name>
 				</item>
 			</header>
 			<data>${fmtServ.result}</data>
-			<shrinkToFit>false</shrinkToFit>
 		</response>
 	</controller>
-	<controller id="arReceivedPlanFmtClr">
+	<controller id="arReceivedPlanNatureFmtClr">
 		<formatter export="true" id="fmtData">
 			<NumberFormatter reservedCount="1">
-				<DefaultMatcher cols="6,7,8,9,10,11,12,13" />
 			</NumberFormatter>
-			<EmptyFormatter />
 		</formatter>
 	</controller>
-	<controller id="arReceivedPlanExportClr">
+	<controller id="arReceivedPlanNatureExportClr">
 		<context key="cal" value="${request.date.asCalendar}" />
-		<callservice id="arReceivedPlanShowServ" />
-		<callcontroller id="arReceivedPlanFmtClr" />
-		<ExcelTemplate id="excelTemplate" sheet="回款计划表" />
-		<list id="title" type="string">本部/项目公司,办事处,合同号,单位名称,项目名称,业务类型,回款计划,回款计划,回款计划,回款计划,回款计划,回款计划,回款计划,回款计划,款项回款是否可降应收,款项状态,款项性质,回款性质,经办人,负责人,督导领导,目前款项的清收进度,清收措施,困难款项说明
-		</list>
-		<list id="title1" type="string">本部/项目公司,办事处,合同号,单位名称,项目名称,业务类型,预付款,进度款,发货款,到货款,投运/安装款,验收款,质保金,计划总额,款项回款是否可降应收,款项状态,款项性质,回款性质,经办人,负责人,督导领导,目前款项的清收进度,清收措施,困难款项说明
+		<callservice id="arReceivedPlanNatureShowServ" />
+		<callcontroller id="arReceivedPlanNatureFmtClr" />
+		<ExcelTemplate id="excelTemplate" sheet="回款性质结构" />
+		<list id="title" type="string">确保可回款,争取可回款,合计,下月清收款,隔月清收款,合计
 		</list>
 		<formatter id="excel">
 			<ExcelTitleFilter>
@@ -140,143 +50,57 @@
 				<Offset col="0" row="0" />
 				<titles>
 					<title ref="title" />
-					<title ref="title1" />
 				</titles>
 			</ExcelTitleFilter>
-			 <ExcelMergeFormatter>
-		    <ExcelTemplate ref="excelTemplate"/>
-		    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
-		   </ExcelMergeFormatter>
+			
 			<ExcelHeaderCenterFormatter>
 				<DefaultMatcher cols="0" />
 				<ExcelTemplate ref="excelTemplate" />
-				<Offset col="0" row="2" />
+				<Offset col="0" row="1" />
 			</ExcelHeaderCenterFormatter>
 			<ExcelOffsetFormatter>
 				<ExcelTemplate ref="excelTemplate" />
-				<Offset col="0" row="2" />
+				<Offset col="0" row="1" />
 			</ExcelOffsetFormatter>
 		</formatter>
 		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
 			<formatter ref="fmtData" />
 			<formatter ref="excel" />
 		</formatterServer>
-		<response name="${dwmc}${cal.year}年${cal.month}月回款计划.xls" ref="excelTemplate"
+		<response name="${exportDwmc}${cal.year}年${cal.month}月款项状态结构.xls" ref="excelTemplate"
 			serv="fmtServ" type="excel" />
 	</controller>
-	<service id="arReceivedPlanShowServ" transaction="transactionManager">
-		<sql id="data">select
-				id,
-				company,
-				department,
-				contractNum,
-				customerName,
-				projectName,
-				businessType,
-				prePayment,
-				proPayment,
-				deliPayment,
-				arriPayment,
-				workPayment,
-				accePayment,
-				guarPayment,
-				planSum,
-				isReduceAR,
-				ARStatus,
-				ARProperty,
+	<service id="arReceivedPlanNatureShowServ" transaction="transactionManager">
+		<list id="nature" type="string">确保可回款,争取可回款,下月清收款,隔月清收款</list>
+		<if test="${!dwmc.isList}">
+			<context key="dwmc" value="${dwmc.packAsList}"></context>
+		</if>
+		<sql id="data" order="nature" by="0" colcount="2">select
 				receProperty,
-				operator,
-				personIncharge,
-				leader,
-				progress,
-				measure,
-				remark
+				sum(planSum) as t1
 			from ar_received_plan
 			where
-			company = ${dwmc} and
-			nf = ${cal.year} and
-			yf = ${cal.month}
+				company in ${dwmc} and
+				nf = ${cal.year} and
+				yf = ${cal.month}
+			group by
+				receProperty
 		</sql>
-		<list id="ids" sql="data" value="0" type="int">
-			<item>100</item>
+		<list id="ids" type="int">0
 		</list>
 		<table export="true" id="result" rowIds="ids">
-			<list sql="data" type="string" value="1" >
-				<item isNull="true"></item>
+			<list type="double" >${data[0][1]}
 			</list>
-			<list sql="data" type="string" value="2" >
-				<item isNull="true"></item>
+			<list type="double" >${data[1][1]}
 			</list>
-			<list sql="data" type="string" value="3" >
-				<item isNull="true"></item>
+			<col instruction="合计"></col>
+			<list type="double" >${data[2][1]}
 			</list>
-			<list sql="data" type="string" value="4" >
-				<item isNull="true"></item>
+			<list type="double" >${data[3][1]}
 			</list>
-			<list sql="data" type="string" value="5" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="6" >
-				<item>合计</item>
-			</list>
-			<list sql="data" type="double" value="7" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="double" value="8">
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="double" value="9" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="double" value="10" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="double" value="11" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="double" value="12" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="double" value="13" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="double" value="14" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="15" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="16" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="17" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="18" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="19" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="20" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="21">
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="22" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="23" >
-				<item isNull="true"></item>
-			</list>
-			<list sql="data" type="string" value="24" >
-				<item isNull="true"></item>
-			</list>
-			<sumRow toRow="${ids.size - 1}">
-		    	 <excludeCol>0,1,2,3,4,5,14,15,16,17,18,18,20,21,22,23</excludeCol>
-		    	 <rangeRows>0, ${ids.size - 2}</rangeRows>
-		   </sumRow>
+			<col instruction="合计2"></col>
+			<sumCol first="0" second="1" toCol="2"/>
+			<sumCol first="3" second="4" toCol="5"/>
 		</table>
 	</service>
 </components>

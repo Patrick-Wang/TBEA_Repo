@@ -85,7 +85,7 @@
   </if>
   <list id="ids2" type="int">1,2,3
 		</list>
-  <list id="vals2" type="string">回款计划明细,款项状态结构,款项性质结构
+  <list id="vals2" type="string">回款计划明细,款项状态结构,回款性质结构
 		</list>
   <response name="framework/templates/dateReport/show" type="jsp">
    <map key="updateUrl" value="DB508EDBC9A8A56FFBDF6604877A374AUpdateWrapperClr"/>
@@ -122,7 +122,7 @@
    <callcontroller id="arReceivedPlanStatusUpdateClr"/>
   </elseif>
   <else>
-   <callcontroller id="arReceivedPlanUpdateClr"/>
+   <callcontroller id="arReceivedPlanNatureUpdateClr"/>
   </else>
  </controller>
  <controller id="DB508EDBC9A8A56FFBDF6604877A374AExportWrapperClr">
@@ -147,7 +147,7 @@
    <callcontroller id="arReceivedPlanStatusExportClr"/>
   </elseif>
   <else>
-   <callcontroller id="arReceivedPlanExportClr"/>
+   <callcontroller id="arReceivedPlanNatureExportClr"/>
   </else>
  </controller>
 </components>
