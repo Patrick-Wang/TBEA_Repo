@@ -7,7 +7,7 @@
    <map key="updateUrl" value="arReceivedPlanUpdateClr"/>
    <map key="exportUrl" value="arReceivedPlanExportClr"/>
   </response>
- </controller>
+ </controller> 
  <controller id="arReceivedPlanUpdateClr">
   <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="arReceivedPlanShowServ"/>
