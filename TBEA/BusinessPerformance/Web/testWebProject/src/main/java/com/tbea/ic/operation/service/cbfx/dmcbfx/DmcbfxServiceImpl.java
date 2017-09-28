@@ -9,16 +9,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.CompanyNCCode;
+import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -30,6 +28,10 @@ import com.tbea.ic.operation.model.dao.identifier.cbfx.cbfl.Cbfl;
 import com.tbea.ic.operation.model.dao.identifier.cbfx.cbfl.CbflDao;
 import com.tbea.ic.operation.model.entity.cbfx.DmcbfxEntity;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
+import com.util.tools.DateUtil;
+import com.util.tools.ListUtil;
+
+import net.sf.json.JSONArray;
 
 @Service(DmcbfxServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -49,7 +51,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 	public List<List<String>> getDmcbfx(Date d, Company company) {
 		List<DmcbfxEntity> entities = dmcbfxDao.getByDate(d, company);
 		List<List<String>> result  = new ArrayList<List<String>>();
-		Util.resize(result, Cbfl.END.ordinal());
+		ListUtil.resize(result, Cbfl.END.ordinal());
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
@@ -68,7 +70,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 					dmcbfxDao.getByCpfl(entityTmp.getCbflid(), new Date(cal.getTimeInMillis()), company)));
 			}else{
 				List<String> list = new ArrayList<String>();
-				Util.resize(list, 7);
+				ListUtil.resize(list, 7);
 				list.set(0, cbflDao.getById(i).getName());
 				result.set(i, list);
 			}
@@ -93,7 +95,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 	public List<List<String>> getDmcbfxEntry(Date d, Company company) {
 		List<DmcbfxEntity> entities = dmcbfxDao.getByDate(d, company);
 		List<List<String>> result  = new ArrayList<List<String>>();
-		Util.resize(result, Cbfl.END.ordinal());
+		ListUtil.resize(result, Cbfl.END.ordinal());
 		
 		for (int i = 0; i < Cbfl.END.ordinal(); ++i){
 			DmcbfxEntity entityTmp = null;
@@ -108,7 +110,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 				result.set(entityTmp.getCbflid(), toList(entityTmp));
 			}else{
 				List<String> list = new ArrayList<String>();
-				Util.resize(list, 3);
+				ListUtil.resize(list, 3);
 				list.set(0, "" + i);
 				list.set(1, cbflDao.getById(i).getName());
 				result.set(i, list);
@@ -166,7 +168,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 		cal.add(Calendar.YEAR, -1);
 		for (int i = 0; i < Cbfl.END.ordinal(); ++i){
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 17);
+			ListUtil.resize(list, 17);
 			result.add(list);
 			list.set(0, cbflDao.getById(i).getName());
 		}
@@ -280,7 +282,7 @@ public class DmcbfxServiceImpl implements DmcbfxService {
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;
 			for (int i = 0; i < Cbfl.END.ordinal(); ++i){
-				DmcbfxEntity entity = dmcbfxDao.getByCpfl(i, Util.toDate(cal), comp);
+				DmcbfxEntity entity = dmcbfxDao.getByCpfl(i, DateUtil.toDate(cal), comp);
 				if (entity == null){
 					entity = new DmcbfxEntity();
 					entity.setNf(nf);

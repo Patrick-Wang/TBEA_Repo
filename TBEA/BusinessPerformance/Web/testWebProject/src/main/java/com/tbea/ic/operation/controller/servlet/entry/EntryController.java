@@ -13,8 +13,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
-
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.Url;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
@@ -41,6 +38,9 @@ import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.entry.SjzbImportService;
+import com.util.tools.DateUtil;
+
+import net.sf.json.JSONArray;
 
 
 @Controller
@@ -224,7 +224,7 @@ public class EntryController {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		if (request.getParameter("date") != null){
 			d = Date.valueOf(request.getParameter("date"));
 		}
@@ -244,7 +244,7 @@ public class EntryController {
 	public void scheduleImport(){
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		
 		transport(d, null);
 		

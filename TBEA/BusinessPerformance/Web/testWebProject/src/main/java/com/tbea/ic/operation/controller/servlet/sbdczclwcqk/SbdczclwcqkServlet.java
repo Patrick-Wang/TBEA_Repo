@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.Url;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
@@ -31,6 +30,7 @@ import com.tbea.ic.operation.service.sbdczclwcqk.SbdczclwcqkService;
 import com.tbea.ic.operation.service.sbdczclwcqk.SbdczclwcqkServiceImpl;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.CpclwcqkService;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.CpclwcqkServiceImpl;
+import com.util.tools.DateUtil;
 
 @Controller
 @RequestMapping(value = "sbdczclwcqk")
@@ -82,7 +82,7 @@ public class SbdczclwcqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		if (request.getParameter("date") != null){
 			d = Date.valueOf(request.getParameter("date"));
 		}
@@ -100,7 +100,7 @@ public class SbdczclwcqkServlet {
 	public void scheduleImport(){
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		sbdczclwcqkService.importLlCzCl(d);
 		sbdczclwcqkService.importHBCzCl(d);
 		sbdczclwcqkService.importDlCzCl(d);

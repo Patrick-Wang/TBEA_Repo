@@ -15,6 +15,7 @@ import com.tbea.ic.operation.model.dao.xlfkfstj.XLFKFSDao;
 import com.tbea.ic.operation.model.entity.XLFDWFKFS;
 import com.tbea.ic.operation.model.entity.XLGWFKFS;
 import com.tbea.ic.operation.model.entity.XLNWFKFS;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -305,12 +306,12 @@ public class XLFKFSTJServiceImpl implements XLFKFSTJService {
 
 		XLFDWFKFS fdwfkfs = xlfkfsDao.getLatestFdwfkfs();
 		if (fdwfkfs != null && fdwfkfs.getNy() != null){
-			dLatest = (Date) Util.valueOf(fdwfkfs.getNy());
+			dLatest = (Date) DateUtil.fromMonth1(fdwfkfs.getNy());
 		}
 		
 		XLGWFKFS gwfkfs = xlfkfsDao.getLatestGwfkfs();
 		if (gwfkfs != null && gwfkfs.getNy() != null){
-			Date gw = (Date) Util.valueOf(gwfkfs.getNy());
+			Date gw = (Date) DateUtil.fromMonth1(gwfkfs.getNy());
 			if (dLatest == null || dLatest.before(gw)){
 				dLatest = gw;
 			}
@@ -318,7 +319,7 @@ public class XLFKFSTJServiceImpl implements XLFKFSTJService {
 		
 		XLNWFKFS nwfkfs = xlfkfsDao.getLatestNwfkfs();
 		if (nwfkfs != null && nwfkfs.getNy() != null){
-			Date nw = (Date) Util.valueOf(nwfkfs.getNy());
+			Date nw = (Date) DateUtil.fromMonth1(nwfkfs.getNy());
 			if (dLatest == null || dLatest.before(nw)){
 				dLatest = nw;
 			}

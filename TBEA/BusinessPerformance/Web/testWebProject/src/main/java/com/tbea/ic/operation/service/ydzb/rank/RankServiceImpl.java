@@ -33,6 +33,7 @@ import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurat
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.configurator.ConfiguratorFactory;
 import com.tbea.ic.operation.service.ydzb.pipe.filter.composite.DoubleArrayComparator;
+import com.util.tools.MathUtil;
 
 
 @Service
@@ -272,8 +273,8 @@ public class RankServiceImpl implements RankService {
 			resultTemp.add(results.get(i));
 			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end) / (cal.get(Calendar.MONTH) + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.YSZK32.value(), end, end);
-			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
-				results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
+			if (results.get(i)[0] != null && MathUtil.isPositive(results.get(i)[0]) &&
+				results.get(i)[1] != null && MathUtil.isPositive(results.get(i)[1])){
 				results.get(i)[2] = results.get(i)[1] / results.get(i)[0];
 			}
 		}
@@ -303,7 +304,7 @@ public class RankServiceImpl implements RankService {
 			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.BL34.value(), end, end);
 			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){
 				Double tmpVal = Util.valueOf(results.get(i)[1]) + Util.valueOf(results.get(i)[2]);
-				if (Util.isPositive(tmpVal) && results.get(i)[0] != null && Util.isPositive(results.get(i)[0])){
+				if (MathUtil.isPositive(tmpVal) && results.get(i)[0] != null && MathUtil.isPositive(results.get(i)[0])){
 					results.get(i)[3] = tmpVal / results.get(i)[0];
 				}
 			}
@@ -334,8 +335,8 @@ public class RankServiceImpl implements RankService {
 			results.add(new Double[4]);
 			results.get(i)[0] = (getZbValues(jydws.get(i), GSZB.XSSR6.value(), start, end) / (cal.get(Calendar.MONTH) + 1)) * 12;
 			results.get(i)[1] = getZbValues(jydws.get(i), GSZB.CH35.value(), end, end);
-			if (results.get(i)[0] != null && Util.isPositive(results.get(i)[0]) &&
-					results.get(i)[1] != null && Util.isPositive(results.get(i)[1])){
+			if (results.get(i)[0] != null && MathUtil.isPositive(results.get(i)[0]) &&
+					results.get(i)[1] != null && MathUtil.isPositive(results.get(i)[1])){
 					results.get(i)[2] = results.get(i)[1] / results.get(i)[0];
 				}
 			resultTemp.add(results.get(i));
@@ -368,7 +369,7 @@ public class RankServiceImpl implements RankService {
 			results.get(i)[2] = getZbValues(jydws.get(i), GSZB.CH35.value(), end, end);
 			if (!(results.get(i)[1] == null && results.get(i)[2] == null)){
 				Double tmpVal = Util.valueOf(results.get(i)[1]) + Util.valueOf(results.get(i)[2]);
-				if (Util.isPositive(tmpVal) && results.get(i)[0] != null && Util.isPositive(results.get(i)[0])){
+				if (MathUtil.isPositive(tmpVal) && results.get(i)[0] != null && MathUtil.isPositive(results.get(i)[0])){
 					results.get(i)[3] = tmpVal / results.get(i)[0];
 				}
 			}

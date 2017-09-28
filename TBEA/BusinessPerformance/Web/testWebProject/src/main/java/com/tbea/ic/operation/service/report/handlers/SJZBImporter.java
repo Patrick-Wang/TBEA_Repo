@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
@@ -15,6 +14,7 @@ import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
+import com.util.tools.DateUtil;
 import com.xml.frame.report.ReportLogger;
 
 import net.sf.json.JSONArray;
@@ -77,7 +77,7 @@ public class SJZBImporter {
 	public void impData(Date d, CompanyType type, List<Object> dataArray) {
 		
 		JSONArray jd = JSONArray.fromObject(dataArray);
-		ReportLogger.logger().debug("{} {} {}", new Object[]{Util.formatToMonth(d), type.getValue(), jd.toString()});
+		ReportLogger.logger().debug("{} {} {}", new Object[]{DateUtil.month(d), type.getValue(), jd.toString()});
 		ZBStatus zbStatus = entryService.getZbStatus(d, type,
 				ZBType.BYSJ).get(0);
 		Organization org = companyManager.getBMDBOrganization();

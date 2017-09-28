@@ -8,10 +8,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ggp.GgpDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GgpEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 @Component
 public class GgpDataStorage implements DataStorage<GgpEntity>,
@@ -54,7 +54,7 @@ public class GgpDataStorage implements DataStorage<GgpEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (GgpEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToMonth(entity.getDate()));
+			list.add(DateUtil.month(entity.getDate()));
 			list.add("" + entity.getWg30q120());
 			list.add("" + entity.getWg30pk100());
 			list.add("" + entity.getWg27pk095());

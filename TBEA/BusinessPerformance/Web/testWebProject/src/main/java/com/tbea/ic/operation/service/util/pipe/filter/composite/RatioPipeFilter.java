@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.util.tools.MathUtil;
 
 //计算的比例为引用指标的 当前公司 除以 合计公司，合计公司必须位于引用指标的所有公司最后一个
 public class RatioPipeFilter extends AbstractPipeFilter {
@@ -52,10 +52,10 @@ public class RatioPipeFilter extends AbstractPipeFilter {
 			if (!excludeCols.contains(i)){
 				if (null == baseRow[i] || 
 						null == refRow[i] || 
-						Util.isNegative(baseRow[i]) || 
-						Util.isNegative(refRow[i]) || 
-						Util.isZero(baseRow[i]) || 
-						Util.isZero(refRow[i])) {
+						MathUtil.isNegative(baseRow[i]) || 
+						MathUtil.isNegative(refRow[i]) || 
+						MathUtil.isZero(baseRow[i]) || 
+						MathUtil.isZero(refRow[i])) {
 						zbRow[i] = null;
 					} else {
 						zbRow[i] = refRow[i] / baseRow[i];

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -26,6 +25,8 @@ import com.tbea.ic.operation.model.dao.xl.yclbfqk.XlYclbfqkDao;
 import com.tbea.ic.operation.model.entity.identifier.common.ClmcEntity;
 import com.tbea.ic.operation.model.entity.wgcpqk.YclbfqkEntity;
 import com.tbea.ic.operation.model.entity.wgcpqk.yclbfqk.DwxxRefClmcEntity;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 import com.xml.frame.report.util.DBUtil;
 import com.xml.frame.report.util.EasyCalendar;
 
@@ -72,7 +73,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 
 		for (int i = 0; i < clmcs.size(); ++i) {
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 17);
+			ListUtil.resize(list, 17);
 			list.set(0, clmcs.get(i).getClmc().getName());
 			result.add(list);
 		}
@@ -153,7 +154,7 @@ public class YclbfqkServiceImpl implements YclbfqkService {
 		List<DwxxRefClmcEntity> clmcs = dwrefclDao.getByCompany(company);
 		for (int i = 0; i < clmcs.size(); ++i) {
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 4);
+			ListUtil.resize(list, 4);
 			list.set(0, "" + clmcs.get(i).getClmc().getId());
 			list.set(1, clmcs.get(i).getClmc().getName());
 			result.add(list);

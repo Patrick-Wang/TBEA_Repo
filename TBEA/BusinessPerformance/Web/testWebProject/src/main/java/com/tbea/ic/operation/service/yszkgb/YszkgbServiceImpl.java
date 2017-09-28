@@ -9,17 +9,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.CompanyNCCode;
+import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.BMDepartmentDB;
@@ -43,6 +40,11 @@ import com.tbea.ic.operation.model.entity.yszkgb.YszkYjtzTjqsEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkZlEntity;
 import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
+import com.util.tools.DateUtil;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
+
+import net.sf.json.JSONArray;
 
 @Service(YszkgbServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -88,7 +90,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			list.add("" + entity.getZmje());
 			
 		}else{
-			Util.resize(list, 3);
+			ListUtil.resize(list, 3);
 		}
 		result.add(list);
 		return result;
@@ -131,7 +133,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 7);
+				ListUtil.resize(result.get(result.size() - 1), 7);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -141,7 +143,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 
 	@Override
 	public List<String> getDashboardYszkzlbh(Date d) {
-		List<String> result = Util.resize(new ArrayList<String>(), 7);
+		List<String> result = ListUtil.resize(new ArrayList<String>(), 7);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
@@ -189,7 +191,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 9);
+				ListUtil.resize(result.get(result.size() - 1), 9);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -199,7 +201,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 
 	@Override
 	public List<String> getDashboardYszkkxxz(Date d) {
-		List<String> result = Util.resize(new ArrayList<String>(), 9);
+		List<String> result = ListUtil.resize(new ArrayList<String>(), 9);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		cal.add(Calendar.YEAR, -1);
@@ -280,7 +282,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 8);
+				ListUtil.resize(result.get(result.size() - 1), 8);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -309,7 +311,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 8);
+				ListUtil.resize(result.get(result.size() - 1), 8);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -351,7 +353,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 8);
+				ListUtil.resize(result.get(result.size() - 1), 8);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -382,7 +384,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 8);
+				ListUtil.resize(result.get(result.size() - 1), 8);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -631,7 +633,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;
-			YszkzmEntity entity = yszkzmDao.getByDate(Util.toDate(cal), comp);
+			YszkzmEntity entity = yszkzmDao.getByDate(DateUtil.toDate(cal), comp);
 			if (null == entity){
 				entity = new YszkzmEntity();
 				entity.setDwxx(dwxxDao.getById(comp.getId()));
@@ -689,7 +691,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			Company comp = companyManager.getBMDBOrganization().getCompanyByType(companyType);
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;
-			YszkZlEntity entity = yszkZlDao.getByDate(Util.toDate(cal), comp);
+			YszkZlEntity entity = yszkZlDao.getByDate(DateUtil.toDate(cal), comp);
 			if (null == entity){
 				entity = new YszkZlEntity();
 				entity.setDwxx(dwxxDao.getById(comp.getId()));

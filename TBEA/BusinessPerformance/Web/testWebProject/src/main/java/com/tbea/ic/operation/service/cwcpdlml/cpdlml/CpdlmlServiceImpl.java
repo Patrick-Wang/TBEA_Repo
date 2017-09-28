@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpdlml.CpdlmlDao;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpfl.CpflDao;
@@ -20,6 +18,8 @@ import com.tbea.ic.operation.model.dao.identifier.cwgb.cy.CyDao;
 import com.tbea.ic.operation.model.dao.identifier.cwgb.cy.CyDaoImpl;
 import com.tbea.ic.operation.model.entity.cwcpdlml.CpdlmlEntity;
 import com.tbea.ic.operation.model.entity.cwcpdlml.CpflEntity;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 import com.xml.frame.report.util.EasyCalendar;
 
 @Service(CpdlmlServiceImpl.NAME)
@@ -64,7 +64,7 @@ public class CpdlmlServiceImpl implements CpdlmlService {
 			CpflEntity cpflEntity = cpfls.get(i);
 			List<String> line = new ArrayList<String>();
 			result.add(line);
-			Util.resize(line, 12);
+			ListUtil.resize(line, 12);
 			line.set(0, cpflEntity.getCy().getName());
 			line.set(1, cpflEntity.getName());		
 //			if (cpflEntity.getLx() > 1){

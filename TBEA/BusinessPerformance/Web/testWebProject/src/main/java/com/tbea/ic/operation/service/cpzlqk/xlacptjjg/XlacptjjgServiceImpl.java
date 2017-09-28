@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -26,6 +25,8 @@ import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoImpl;
 import com.tbea.ic.operation.model.entity.cpzlqk.XlAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 import com.xml.frame.report.util.EasyCalendar;
 
 import net.sf.json.JSONArray;
@@ -91,7 +92,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 	}
 	private List<String> toList(XlAcptjjgEntity entity, ZltjjgEntity tjjg, ZltjjgEntity tjjg1) {
 		List<String> row = new ArrayList<String>();
-		Util.resize(row, 8);
+		ListUtil.resize(row, 8);
 		int start = 0;
 		row.set(start++, entity.getCpdl().getName());
 		row.set(start++, entity.getCpxl().getName());	
@@ -114,7 +115,7 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 
 	private List<String> toEntryList(XlAcptjjgEntity entity, ZltjjgEntity tjjg) {
 		List<String> row = new ArrayList<String>();
-		Util.resize(row, 5);
+		ListUtil.resize(row, 5);
 		int start = 0;
 		row.set(start++, "" + entity.getCpxl().getId());
 		row.set(start++, entity.getCpdl().getName());
@@ -174,10 +175,10 @@ public class XlacptjjgServiceImpl implements XlacptjjgService {
 		EasyCalendar ec = new EasyCalendar(d);
 		List<XlAcptjjgEntity> entities = xlacptjjgDao.getAll();
 		ZltjjgDao tjjgDao = new ZltjjgDaoCacheProxy(zltjjgDao, company.getId());
-		List<Integer> cpIds = Util.resize(new ArrayList<Integer>(), 1);
+		List<Integer> cpIds = ListUtil.resize(new ArrayList<Integer>(), 1);
 		for (XlAcptjjgEntity entity : entities){
 
-			row = Util.resize(new ArrayList<String>(), 12);
+			row = ListUtil.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				cpIds.set(0, entity.getCpxl().getId());

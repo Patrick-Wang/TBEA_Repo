@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.dmdjyx.DmdjyxDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.DmdjyxEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 @Component
 public class DmdjyxDataStorage implements DataStorage<DmdjyxEntity>,
@@ -41,7 +41,7 @@ public class DmdjyxDataStorage implements DataStorage<DmdjyxEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (DmdjyxEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToDay(entity.getDate()));
+			list.add(DateUtil.day(entity.getDate()));
 			list.add("" + entity.getShsh());
 			list.add("" + entity.getYssh());
 			result.add(list);

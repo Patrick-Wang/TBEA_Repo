@@ -1,9 +1,9 @@
 package com.tbea.ic.operation.service.entry.zbCalculator.requesthandler;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.RequestHandler;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.service.entry.zbCalculator.Request;
+import com.util.tools.RequestHandler;
 
 public class NdjhzbStatusUpdaterFilter extends RequestHandler<Request>{
 	Integer destZb;

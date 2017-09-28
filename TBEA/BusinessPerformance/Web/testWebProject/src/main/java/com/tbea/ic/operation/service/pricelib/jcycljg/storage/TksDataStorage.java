@@ -7,14 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.pvcsz.PVCSzDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.tks.TksDao;
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDao;
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.PVCSzEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.TksEntity;
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 @Component
 public class TksDataStorage implements DataStorage<TksEntity>,
@@ -49,7 +45,7 @@ public class TksDataStorage implements DataStorage<TksEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (TksEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToDay(entity.getDate()));
+			list.add(DateUtil.day(entity.getDate()));
 			list.add("" + entity.getSxdx());
 			list.add("" + entity.getLnly());
 			list.add("" + entity.getSdzb());

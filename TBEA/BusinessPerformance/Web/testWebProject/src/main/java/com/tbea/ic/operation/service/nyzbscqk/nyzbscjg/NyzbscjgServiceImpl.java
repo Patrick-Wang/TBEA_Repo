@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.identifier.nyzbscqk.nycompminingareamatch.NyCompMiningAreaMatchDao;
@@ -20,6 +18,8 @@ import com.tbea.ic.operation.model.dao.nyzbscqk.nyzbscjg.NyzbscjgDao;
 import com.tbea.ic.operation.model.dao.nyzbscqk.nyzbscjg.NyzbscjgDaoImpl;
 import com.tbea.ic.operation.model.entity.nyzbscqk.NyCompMiningAreaMatchEntity;
 import com.tbea.ic.operation.model.entity.nyzbscqk.NyzbscjgEntity;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 import com.xml.frame.report.util.EasyCalendar;
 
 import net.sf.json.JSONArray;
@@ -44,7 +44,7 @@ public class NyzbscjgServiceImpl implements NyzbscjgService {
 		for (int i = 0; i < miningAreaMatch.size(); ++i) {
 			NyCompMiningAreaMatchEntity entity = miningAreaMatch.get(i);
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 14);
+			ListUtil.resize(list, 14);
 			list.set(0, entity.getKq().getName());
 			list.set(1, entity.getMz().getName());
 			List<NyzbscjgEntity> entities = nyzbscjgDao.getByYear(d, company, entity.getKq().getId(), entity.getMz().getId());
@@ -54,7 +54,7 @@ public class NyzbscjgServiceImpl implements NyzbscjgService {
 			result.add(list);
 			if (i % 3 == 2){
 				list = new ArrayList<String>();
-				Util.resize(list, 14);
+				ListUtil.resize(list, 14);
 				list.set(0, entity.getKq().getName());
 				list.set(1, "加权平均价");
 				for (int j = 0; j < 12; ++j){
@@ -78,7 +78,7 @@ public class NyzbscjgServiceImpl implements NyzbscjgService {
 				.getMiningArea(company);
 		for (NyCompMiningAreaMatchEntity entity : miningAreaMatch) {
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 4);
+			ListUtil.resize(list, 4);
 			list.set(0, "" + entity.getId());
 			list.set(1, entity.getKq().getName());
 			list.set(2, entity.getMz().getName());

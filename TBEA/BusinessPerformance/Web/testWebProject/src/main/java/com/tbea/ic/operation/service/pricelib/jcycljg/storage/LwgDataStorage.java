@@ -7,13 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.jt.JtDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.lwg.LwgDao;
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.JtEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.LwgEntity;
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.ZhbEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 @Component
 public class LwgDataStorage implements DataStorage<LwgEntity>,
@@ -50,7 +47,7 @@ public class LwgDataStorage implements DataStorage<LwgEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (LwgEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToDay(entity.getDate()));
+			list.add(DateUtil.day(entity.getDate()));
 			list.add("" + entity.getSh1214mm());
 			list.add("" + entity.getHz1214mm());
 			list.add("" + entity.getNj1214mm());

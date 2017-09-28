@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONArray;
-
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -33,6 +31,9 @@ import com.tbea.ic.operation.service.market.pipe.MarketUnit.Type;
 import com.tbea.ic.operation.service.market.pipe.configurator.ConfiguratorFactory;
 import com.tbea.ic.operation.service.util.pipe.core.CompositePipe;
 import com.tbea.ic.operation.service.util.pipe.core.configurator.IPipeConfigurator;
+import com.util.tools.DateUtil;
+
+import net.sf.json.JSONArray;
 
 @Service
 @Transactional("transactionManager")
@@ -165,7 +166,7 @@ public class MarketServiceImpl implements MarketService {
 						method.invoke(obj, val);
 					} else if (field.getType().getName()
 							.equals(Date.class.getName())) {
-						method.invoke(obj, Util.toDate(val));
+						method.invoke(obj, DateUtil.toDate(val));
 					}
 
 				} catch (Exception e) {
@@ -200,7 +201,7 @@ public class MarketServiceImpl implements MarketService {
 						method.invoke(obj, val);
 					}else if (field.getType().getName()
 							.equals(Date.class.getName())){
-						method.invoke(obj, Util.toDate(val));
+						method.invoke(obj, DateUtil.toDate(val));
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -257,7 +258,7 @@ public class MarketServiceImpl implements MarketService {
 				result[col][3] = bid.getAuthorizationNo() + "";
 				result[col][4] = bid.getOfficeName() + "";
 				if(null != bid.getBidDate()){
-					result[col][5] = Util.formatToDay(bid.getBidDate());
+					result[col][5] = DateUtil.day(bid.getBidDate());
 				}else{
 					result[col][5] = "";
 				}
@@ -337,7 +338,7 @@ public class MarketServiceImpl implements MarketService {
 				result[col][1] = obj.getContractNo() + "";
 				result[col][2] = obj.getOfficeName() + "";
 				if(null != obj.getSignDate()){
-					result[col][3] = Util.formatToDay(obj.getSignDate());
+					result[col][3] = DateUtil.day(obj.getSignDate());
 				}else{
 					result[col][3] = "";
 				}

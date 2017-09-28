@@ -7,12 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gjyy.GjyyDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gx.GxDao;
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GjyyEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GxEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 @Component
 public class GxDataStorage implements DataStorage<GxEntity>,
@@ -47,7 +45,7 @@ public class GxDataStorage implements DataStorage<GxEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (GxEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToDay(entity.getDate()));
+			list.add(DateUtil.day(entity.getDate()));
 			list.add("" + entity.getShsg());
 			list.add("" + entity.getNjjy());
 			list.add("" + entity.getZzjy());

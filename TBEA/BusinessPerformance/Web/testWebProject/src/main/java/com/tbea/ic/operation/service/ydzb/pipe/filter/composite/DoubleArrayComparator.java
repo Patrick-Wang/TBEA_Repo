@@ -2,8 +2,7 @@ package com.tbea.ic.operation.service.ydzb.pipe.filter.composite;
 
 import java.util.Comparator;
 
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Util;
+import com.util.tools.MathUtil;
 
 public class DoubleArrayComparator implements Comparator<Double[]>{
 
@@ -52,10 +51,10 @@ public class DoubleArrayComparator implements Comparator<Double[]>{
 			
 			
 		Integer ret = 0;
-		if (Util.isPositive(val)){
+		if (MathUtil.isPositive(val)){
 			ret = 1;
 		}
-		else if (Util.isNegative(val)){
+		else if (MathUtil.isNegative(val)){
 			ret = -1;
 		}
 		return ret; 

@@ -4,9 +4,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
+import com.util.tools.MathUtil;
 
 public class MixedAcc{
 

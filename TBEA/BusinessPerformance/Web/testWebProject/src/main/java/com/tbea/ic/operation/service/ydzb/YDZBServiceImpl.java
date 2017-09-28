@@ -27,6 +27,7 @@ import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.model.entity.local.XJLRB;
 import com.tbea.ic.operation.model.entity.local.YDZBFDW;
 import com.tbea.ic.operation.model.entity.local.ZBHZ;
+import com.util.tools.DateUtil;
 
 
 
@@ -377,7 +378,7 @@ public class YDZBServiceImpl implements YDZBService {
 	public Date getLatestHzbDate() {
 		ZBHZ zbhj = ydzbDao.getLatestZbhj();
 		if (zbhj != null){
-			return (Date) Util.valueOf(zbhj.getNy());
+			return (Date) DateUtil.fromMonth1(zbhj.getNy());
 		}
 		return null;
 	}
@@ -386,7 +387,7 @@ public class YDZBServiceImpl implements YDZBService {
 	public Date getLatestGcyDate() {
 		YDZBFDW ydzb = ydzbDao.getLatestYdzbfdw();
 		if (ydzb != null){
-			return (Date) Util.valueOf(ydzb.getNy());
+			return (Date) DateUtil.fromMonth1(ydzb.getNy());
 		}
 		return null;
 	}

@@ -15,6 +15,7 @@ import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.XLFDWFKFS;
 import com.tbea.ic.operation.model.entity.XLGWFKFS;
 import com.tbea.ic.operation.model.entity.XLNWFKFS;
+import com.util.tools.DateUtil;
 
 @Repository
 @Transactional("transactionManager")
@@ -27,7 +28,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 		Query q = entityManager.createQuery(
 				"from XLFDWFKFS where qybh = :compId and ny= :date");
 		q.setParameter("compId", comp.getId());
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return q.getResultList();
 	}
 
@@ -36,7 +37,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 		Query q = entityManager.createQuery(
 				"from XLGWFKFS where qybh = :compId and ny= :date");
 		q.setParameter("compId", comp.getId());
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return q.getResultList();
 	}
 
@@ -45,7 +46,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 		Query q = entityManager.createQuery(
 				"from XLNWFKFS where qybh = :compId and ny= :date");
 		q.setParameter("compId", comp.getId());
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return q.getResultList();
 	}
 
@@ -117,7 +118,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 		Query q = entityManager.createQuery(
 				"from XLFDWFKFS where qybh in (" + Util.toBMString(comps) + ") and ny= :date");
 		//q.setParameter("compId", "0" + comp.getId());
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return q.getResultList();
 	}
 
@@ -126,7 +127,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 		Query q = entityManager.createQuery(
 				"from XLGWFKFS where qybh in (" + Util.toBMString(comps) + ") and ny= :date");
 		//q.setParameter("compId", "0" + comp.getId());
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return q.getResultList();
 	}
 
@@ -135,7 +136,7 @@ public class XLFKFSDaoImpl implements XLFKFSDao {
 		Query q = entityManager.createQuery(
 				"from XLNWFKFS where qybh in (" + Util.toBMString(comps) + ") and ny= :date");
 		//q.setParameter("compId", "0" + comp.getId());
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return q.getResultList();
 	}
 

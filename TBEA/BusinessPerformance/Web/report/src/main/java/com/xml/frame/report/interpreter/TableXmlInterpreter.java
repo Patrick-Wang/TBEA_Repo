@@ -13,12 +13,13 @@ import org.w3c.dom.NodeList;
 
 import com.frame.script.el.ELParser;
 import com.frame.script.util.StringUtil;
+import com.util.tools.DateUtil;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 import com.util.tools.Pair;
 import com.util.tools.xml.Loop;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.component.entity.Table;
-import com.xml.frame.report.util.MathUtil;
-import com.xml.frame.report.util.Util;
 import com.xml.frame.report.util.xml.XmlElWalker;
 import com.xml.frame.report.util.xml.XmlUtil;
 
@@ -159,7 +160,7 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		}
 		String colVal = orderList[0].replaceAll("asc", "").replaceAll("desc",
 				"");
-		Integer col = Util.toIntNull(StringUtil.trim(colVal));
+		Integer col = MathUtil.toInteger(StringUtil.trim(colVal));
 		if (null != col) {
 			List<Comparable> copies = new ArrayList<Comparable>();
 			copies.addAll((Collection<? extends Comparable>) tb.getValues()
@@ -253,9 +254,9 @@ public class TableXmlInterpreter implements XmlInterpreter {
 		String s = null;
 		if (null != o) {
 			if (o instanceof Date) {
-				s = Util.formatToDay((Date) o);
+				s = DateUtil.day((Date) o);
 			} else if (o instanceof Timestamp) {
-				s = Util.formatToSecond((Timestamp) o);
+				s = DateUtil.second((Timestamp) o);
 			} else {
 				s = o.toString();
 			}
@@ -372,9 +373,9 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			list = (List) component.removeLocal("_tb_col_");
 		}
 		if (null == list) {
-			list = Util.resize(new ArrayList<Object>(), tb.getIds().size());
+			list = ListUtil.resize(new ArrayList<Object>(), tb.getIds().size());
 		} else if (list.size() != tb.getIds().size()) {
-			list = Util.resize(list, tb.getIds().size());
+			list = ListUtil.resize(list, tb.getIds().size());
 		}
 		tb.getValues().add(list);
 		if ("true".equals(elem.getAttribute("temp"))) {
@@ -400,10 +401,10 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			Element elem) throws Exception {
 		List ret = null;
 		if ("false".equals(elem.getAttribute("delay"))) {
-			ret = Util.resize(new ArrayList(), tb.getIds().size());
+			ret = ListUtil.resize(new ArrayList(), tb.getIds().size());
 			this.invokeFormul(ret, component, tb, elem);
 		} else {
-			ret = Util.resize(new ArrayList(), tb.getIds().size());
+			ret = ListUtil.resize(new ArrayList(), tb.getIds().size());
 			this.delayCols.add(new Pair(tb.getValues().size(), elem));
 		}
 		return ret;
@@ -631,8 +632,8 @@ public class TableXmlInterpreter implements XmlInterpreter {
 	private Double div(Double sub, Double base) {
 		if (sub != null
 				&& base != null
-				&& (Util.isNegative(sub) || Util.isNegative(base)
-						|| Util.isZero(base) || Util.isZero(sub))) {
+				&& (MathUtil.isNegative(sub) || MathUtil.isNegative(base)
+						|| MathUtil.isZero(base) || MathUtil.isZero(sub))) {
 			return null;
 		}
 		return MathUtil.division(sub, base);

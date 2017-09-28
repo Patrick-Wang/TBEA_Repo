@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.util.tools.MathUtil;
 
 public class RatioPipeFilter extends RowPipeFilter {
 
@@ -34,8 +34,8 @@ public class RatioPipeFilter extends RowPipeFilter {
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (null != subs[i] && null != bases[i]
 							&& !excludeCols.contains(i)
-							&& Util.isPositive(subs[i])
-							&& Util.isPositive(bases[i])
+							&& MathUtil.isPositive(subs[i])
+							&& MathUtil.isPositive(bases[i])
 							&& !isExcluded(destZb, i)) {
 						zbRow[i] = subs[i] / bases[i];
 					}

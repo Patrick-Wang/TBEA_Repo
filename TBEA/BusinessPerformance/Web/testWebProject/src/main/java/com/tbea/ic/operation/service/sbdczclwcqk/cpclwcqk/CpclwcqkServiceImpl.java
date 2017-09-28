@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -29,6 +28,7 @@ import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpclwcqkEntity;
 import com.tbea.ic.operation.model.entity.sbdczclwcqk.CpczwcqkEntity;
 import com.tbea.ic.operation.service.sbdczclwcqk.SBDCZCLWCQK_CZCL_BYQ_CPMC;
 import com.tbea.ic.operation.service.sbdczclwcqk.SBDCZCLWCQK_CZCL_XL_CPMC;
+import com.util.tools.MathUtil;
 
 import net.sf.json.JSONArray;
 

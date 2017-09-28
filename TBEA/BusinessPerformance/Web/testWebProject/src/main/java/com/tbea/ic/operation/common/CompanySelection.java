@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
-import com.xml.frame.report.util.Data;
-import com.xml.frame.report.util.DataNode;
+import com.util.tools.Data;
+import com.util.tools.DataNode;
 
 import net.sf.json.JSONArray;
 

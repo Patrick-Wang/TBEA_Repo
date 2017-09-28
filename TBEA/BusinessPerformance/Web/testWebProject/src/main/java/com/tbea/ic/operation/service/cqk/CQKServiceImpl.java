@@ -14,6 +14,7 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.cqk.CQKDao;
 import com.tbea.ic.operation.model.entity.local.CQK;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -69,7 +70,7 @@ public class CQKServiceImpl implements CQKService {
 		int month = 0;
 		for (CQK cqk : listPreYear) {
 			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
-				time.setTime(Util.valueOf(cqk.getNy()));
+				time.setTime(DateUtil.fromMonth1(cqk.getNy()));
 				month = time.get(Calendar.MONTH);
 				result[0 + hyMap.get(cqk.getHy()).intValue() * 5][month] = Util
 						.toDouble(result[0 + hyMap.get(cqk.getHy()).intValue() * 5][month])
@@ -79,7 +80,7 @@ public class CQKServiceImpl implements CQKService {
 
 		for (CQK cqk : listCurYear) {
 			if (cqk != null && hyMap.get(cqk.getHy()) != null) {
-				time.setTime(Util.valueOf(cqk.getNy()));
+				time.setTime(DateUtil.fromMonth1(cqk.getNy()));
 				month = time.get(Calendar.MONTH);
 				result[1 + hyMap.get(cqk.getHy()).intValue() * 5][month] = Util
 						.toDouble(result[1 + hyMap.get(cqk.getHy()).intValue() * 5][month])
@@ -148,7 +149,7 @@ public class CQKServiceImpl implements CQKService {
 	public Date getLatestDate() {
 		CQK cqk = cqkDao.getLatestCQK();
 		if (null != cqk) {
-			return (Date) Util.valueOf(cqk.getNy());
+			return (Date) DateUtil.fromMonth1(cqk.getNy());
 		}
 		return null;
 	}

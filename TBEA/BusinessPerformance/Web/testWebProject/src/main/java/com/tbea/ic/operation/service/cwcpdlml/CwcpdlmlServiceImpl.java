@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.CompanyNCCode;
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpdlml.CpdlmlDao;
 import com.tbea.ic.operation.model.dao.cwcpdlml.cpfl.CpflDao;
@@ -23,6 +22,7 @@ import com.tbea.ic.operation.model.entity.cwcpdlml.CpdlmlEntity;
 import com.tbea.ic.operation.model.entity.cwcpdlml.CpflEntity;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 import com.tbea.ic.operation.service.util.nc.NCLoggerFactory;
+import com.util.tools.MathUtil;
 import com.xml.frame.report.util.EasyCalendar;
 
 @Service(CwcpdlmlServiceImpl.NAME)

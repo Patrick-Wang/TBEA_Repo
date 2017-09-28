@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.service.util.pipe.configurator.ConfiguratorUtil;
 import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 
 public class AdvanceAccByGroup{
 
@@ -120,7 +120,7 @@ public class AdvanceAccByGroup{
 					result.addAll(proxy.compute(col, start, end, zbs.get(i), (List<Company>) companies.get(i)));
 				}
 			}else{
-				result.addAll(Util.resize(new ArrayList<Double>(), zbs.get(i).size()));
+				result.addAll(ListUtil.resize(new ArrayList<Double>(), zbs.get(i).size()));
 			}
 		}
 		return result;

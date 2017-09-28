@@ -4,25 +4,24 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.dao.cwyjsf.yjsfndqcs.YjsfNdqcsDaoImpl;
-import com.tbea.ic.operation.model.dao.cwyjsf.yjsfndqcs.YjsfNdqcsDao;
-
 import javax.annotation.Resource;
 
-import com.tbea.ic.operation.model.dao.cwyjsf.yjsf.YjsfDaoImpl;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.cwyjsf.yjsf.YjsfDao;
+import com.tbea.ic.operation.model.dao.cwyjsf.yjsf.YjsfDaoImpl;
+import com.tbea.ic.operation.model.dao.cwyjsf.yjsfndqcs.YjsfNdqcsDao;
+import com.tbea.ic.operation.model.dao.cwyjsf.yjsfndqcs.YjsfNdqcsDaoImpl;
 import com.tbea.ic.operation.model.dao.identifier.cwyjsf.sz.SzDao;
 import com.tbea.ic.operation.model.dao.identifier.cwyjsf.sz.SzDaoImpl;
 import com.tbea.ic.operation.model.entity.cwyjsf.YjsfEntity;
 import com.tbea.ic.operation.model.entity.cwyjsf.YjsfNdqcsEntity;
 import com.tbea.ic.operation.model.entity.identifier.cwyjsf.SzEntity;
-import com.tbea.ic.operation.service.cwyjsf.yjsfljs.YjsfljsService;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 
 @Service(YjsfljsServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -43,7 +42,7 @@ public class YjsfljsServiceImpl implements YjsfljsService {
 		List<SzEntity> szs = szDao.getAll();
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Double> hj = new ArrayList<Double>();
-		Util.resize(hj, 9);
+		ListUtil.resize(hj, 9);
 		List<String> list = null;
 		
 		
@@ -77,7 +76,7 @@ public class YjsfljsServiceImpl implements YjsfljsService {
 				list.add("" + yjsf.getLjwj());
 				hj.set(list.size() - 1, MathUtil.sum(hj.get(list.size() - 1), yjsf.getLjwj()));
 			}else{
-				Util.resize(list, 8);
+				ListUtil.resize(list, 8);
 			}
 			Double smVal = MathUtil.minus(MathUtil.sum(ndqcs == null ? null
 					: ndqcs.getQcs(), yjsf == null ? null : yjsf.getLjyj()),

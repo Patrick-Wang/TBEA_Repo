@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.service.util.pipe.filter.acc.IAccumulator;
+import com.util.tools.ListUtil;
 
 public class AccByComps implements IAccumulator {
 
@@ -60,7 +60,7 @@ public class AccByComps implements IAccumulator {
 					}
 				}
 			}else{
-				result.addAll(Util.resize(new ArrayList<Double>(), zbs.size()));
+				result.addAll(ListUtil.resize(new ArrayList<Double>(), zbs.size()));
 			}
 		}
 		return result;

@@ -30,8 +30,8 @@ import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgService;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgServiceImpl;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
 import com.tbea.ic.operation.service.pricelib.jcycljg.storage.validation.ValidationException;
-import com.xml.frame.report.util.Data;
-import com.xml.frame.report.util.DataNode;
+import com.util.tools.Data;
+import com.util.tools.DataNode;
 
 import net.sf.json.JSONArray;
 

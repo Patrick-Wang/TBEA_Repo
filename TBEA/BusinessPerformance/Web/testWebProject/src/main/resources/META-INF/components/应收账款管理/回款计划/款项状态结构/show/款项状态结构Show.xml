@@ -69,17 +69,20 @@
 			<formatter ref="fmtData" />
 			<formatter ref="excel" />
 		</formatterServer>
-		<response name="${dwmc}${cal.year}年${cal.month}月款项状态结构.xls" ref="excelTemplate"
+		<response name="${exportDwmc}${cal.year}年${cal.month}月款项状态结构.xls" ref="excelTemplate"
 			serv="fmtServ" type="excel" />
 	</controller>
 	<service id="arReceivedPlanStatusShowServ" transaction="transactionManager">
 		<list id="status" type="string">到期款,未到期款,未到期应收账款,逾期应收账款</list>
+		<if test="${!dwmc.isList}">
+			<context key="dwmc" value="${dwmc.packAsList}"></context>
+		</if>
 		<sql id="data" order="status" by="0" colcount="2">select
 				ARStatus,
 				sum(planSum) as t1
 			from ar_received_plan
 			where
-				company = ${dwmc} and
+				company in ${dwmc} and
 				nf = ${cal.year} and
 				yf = ${cal.month}
 			group by
@@ -90,13 +93,12 @@
 				sum(planSum) as t1
 			from ar_received_plan
 			where
-				company = ${dwmc} and
+				company in ${dwmc} and
 				nf = ${cal.year} and
 				yf = ${cal.month} and
 				ARStatus in ${status}
 		</sql>
-		<list id="ids" type="int">
-			<item from="0" to="3"></item>
+		<list id="ids" type="int">0
 		</list>
 		<table export="true" id="result" rowIds="ids">
 			<list type="double" >${data[0][1]}

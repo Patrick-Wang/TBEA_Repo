@@ -15,9 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.CompanyNCCode;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -29,6 +27,8 @@ import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.entity.cwgbjyxxjl.JyxxjlEntity;
 import com.tbea.ic.operation.model.entity.identifier.cwgb.KmEntity;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
+import com.util.tools.DateUtil;
+import com.util.tools.MathUtil;
 
 @Service(CwgbjyxxjlServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -197,7 +197,7 @@ public class CwgbjyxxjlServiceImpl implements CwgbjyxxjlService {
 			List<KmEntity> kms = kmDao.getAll();
 			int nf = cal.get(Calendar.YEAR);
 			int yf = cal.get(Calendar.MONTH) + 1;
-			Date d = Util.toDate(cal);
+			Date d = DateUtil.toDate(cal);
 			while (rs.next()) {
 
 				String unitCode = String.valueOf(rs.getObject(1));

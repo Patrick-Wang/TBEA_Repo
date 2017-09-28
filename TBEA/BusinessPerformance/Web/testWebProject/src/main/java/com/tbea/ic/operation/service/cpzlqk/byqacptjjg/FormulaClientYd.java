@@ -9,13 +9,13 @@ import java.util.Map;
 import com.tbea.ic.operation.common.Formula;
 import com.tbea.ic.operation.common.FormulaClient;
 import com.tbea.ic.operation.common.FormulaServer;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDao;
 import com.tbea.ic.operation.model.dao.cpzlqk.zltjjg.ZltjjgDaoCacheProxy;
 import com.tbea.ic.operation.model.entity.cpzlqk.ByqYdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
+import com.util.tools.ListUtil;
 import com.util.tools.Pair;
 
 class FormulaClientYd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>{
@@ -77,7 +77,7 @@ class FormulaClientYd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 			FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
 			Formula formula) {
 		Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> pair = this.getDjTq(formula);
-		List<String> r = Util.resize(new ArrayList<String>(), 8);
+		List<String> r = ListUtil.resize(new ArrayList<String>(), 8);
 		this.byqacptjjgServiceImpl.setRow(r, forMap.get(formula), pair.getSecond().getFirst(), pair.getSecond().getSecond());
 		forRowMap.put(formula, r);
 		return pair;
@@ -95,7 +95,7 @@ class FormulaClientYd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	public Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> onFormula(
 			FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
 			Formula formula) {
-		List<String> r = Util.resize(new ArrayList<String>(), 8);
+		List<String> r = ListUtil.resize(new ArrayList<String>(), 8);
 		forRowMap.put(formula, r);
 		Pair<ZltjjgEntity, ZltjjgEntity> pair;
 		for (Integer id : formula.getParameters()){
@@ -129,7 +129,7 @@ class FormulaClientYd implements FormulaClient<Pair<ZltjjgEntity, ZltjjgEntity>>
 	public Pair<Integer, Pair<ZltjjgEntity, ZltjjgEntity>> onFormulaNoCache(
 			FormulaServer<Pair<ZltjjgEntity, ZltjjgEntity>> server,
 			Formula formula) {
-		List<String> r = Util.resize(new ArrayList<String>(), 8);
+		List<String> r = ListUtil.resize(new ArrayList<String>(), 8);
 		forRowMap.put(formula, r);
 		return null;
 	}

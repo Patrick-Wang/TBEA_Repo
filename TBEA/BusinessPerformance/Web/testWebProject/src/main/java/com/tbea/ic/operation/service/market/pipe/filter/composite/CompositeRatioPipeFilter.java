@@ -3,10 +3,10 @@ package com.tbea.ic.operation.service.market.pipe.filter.composite;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.market.Indicator;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.filter.composite.AbstractPipeFilter;
+import com.util.tools.MathUtil;
 
 public class CompositeRatioPipeFilter extends AbstractPipeFilter {
 
@@ -57,8 +57,8 @@ public class CompositeRatioPipeFilter extends AbstractPipeFilter {
 				for (int i = 0; i < zbRow.length; ++i) {
 					if (null != tb[i] && null != qy[i]
 							&& !excludeCols.contains(i)
-							&& Util.isPositive(qy[i])
-							&& Util.isPositive(tb[i])) {
+							&& MathUtil.isPositive(qy[i])
+							&& MathUtil.isPositive(tb[i])) {
 						zbRow[i] = qy[i] / tb[i];
 					}
 				}

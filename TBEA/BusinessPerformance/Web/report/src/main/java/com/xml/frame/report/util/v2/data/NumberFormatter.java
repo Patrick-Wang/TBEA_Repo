@@ -3,7 +3,7 @@ package com.xml.frame.report.util.v2.data;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.xml.frame.report.util.MathUtil;
+import com.util.tools.MathUtil;
 import com.xml.frame.report.util.v2.core.AbstractFormatter;
 import com.xml.frame.report.util.v2.core.FormatterMatcher;
 

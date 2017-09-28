@@ -3,8 +3,8 @@ package com.tbea.ic.operation.service.report;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.util.tools.DataNode;
 import com.xml.frame.report.component.entity.Context;
-import com.xml.frame.report.util.DataNode;
 
 public interface ComponentManagerService {
 

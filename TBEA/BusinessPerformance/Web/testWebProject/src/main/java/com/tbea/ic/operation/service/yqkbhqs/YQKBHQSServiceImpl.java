@@ -1,13 +1,10 @@
 package com.tbea.ic.operation.service.yqkbhqs;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.Organization;
-import com.tbea.ic.operation.model.dao.cqk.CQKDao;
 import com.tbea.ic.operation.model.dao.yqkbhqs.YQKBHQSDao;
 import com.tbea.ic.operation.model.entity.YQKBHQS;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -36,7 +32,7 @@ public class YQKBHQSServiceImpl implements YQKBHQSService {
 		Calendar time = Calendar.getInstance();
 		int month = 0;
 		for (YQKBHQS yqk : list){
-			time.setTime(Util.valueOf(yqk.getNy()));
+			time.setTime(DateUtil.fromMonth1(yqk.getNy()));
 			month = time.get(Calendar.MONTH);
 			result[month][0] = Util.toDouble(result[month][0]) + yqk.getYyn() + "";
 			result[month][1] = Util.toDouble(result[month][1]) + yqk.getYdsy() + "";
@@ -76,7 +72,7 @@ public class YQKBHQSServiceImpl implements YQKBHQSService {
 	public Date getLatestDate() {
 		YQKBHQS yqkbhqs = yqkbhqsDao.getLatestDate();
 		if (null != yqkbhqs){
-			return (Date) Util.valueOf(yqkbhqs.getNy());
+			return (Date) DateUtil.fromMonth1(yqkbhqs.getNy());
 		}
 		return null;
 	}

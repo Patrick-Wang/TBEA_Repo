@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -25,6 +23,8 @@ import com.tbea.ic.operation.model.dao.cpzlqk.wbzlztqk.WbyclzlwtDao;
 import com.tbea.ic.operation.model.entity.cpzlqk.NbyclzlwtEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.WbyclzlwtEntity;
 import com.tbea.ic.operation.service.cpzlqk.SeasonUtil;
+import com.util.tools.DateUtil;
+import com.util.tools.MathUtil;
 import com.xml.frame.report.util.EasyCalendar;
 
 @Service(ByqnwbzlztqkServiceImpl.NAME)
@@ -1025,7 +1025,7 @@ public class ByqnwbzlztqkServiceImpl implements ByqnwbzlztqkService {
 	private List<String> toList(NbyclzlwtEntity entity) {
 		List<String> list = new ArrayList<String>();
 		list.add(entity.getCompany_name());
-		list.add(Util.formatToDay(entity.getIssue_happen_date()));
+		list.add(DateUtil.day(entity.getIssue_happen_date()));
 		list.add(entity.getProduct_type());
 		list.add(entity.getProduction_num());
 		list.add(entity.getProduction_model());
@@ -1062,7 +1062,7 @@ public class ByqnwbzlztqkServiceImpl implements ByqnwbzlztqkService {
 	private List<String> toList(WbyclzlwtEntity entity) {
 		List<String> list = new ArrayList<String>();
 		list.add(entity.getCompany_name());
-		list.add(Util.formatToDay(entity.getIssue_happen_date()));
+		list.add(DateUtil.day(entity.getIssue_happen_date()));
 		list.add(entity.getProduct_type());
 		list.add(entity.getProduction_num());
 		list.add(entity.getProduction_model());
@@ -1076,7 +1076,7 @@ public class ByqnwbzlztqkServiceImpl implements ByqnwbzlztqkService {
 		list.add(entity.getSuppier());
 		list.add(entity.getResponsibility_department());
 		list.add(entity.getFilling_personnel());
-		list.add(Util.formatToDay(entity.getProduct_delivery_date()));
+		list.add(DateUtil.day(entity.getProduct_delivery_date()));
 		list.add(entity.getFailure_subject());
 		list.add(entity.getMaterial_treatment_measure());
 		list.add(entity.getOnsite_treatment_measure());

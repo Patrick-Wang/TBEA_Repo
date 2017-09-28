@@ -1,6 +1,5 @@
 package com.tbea.ic.operation.model.dao.yqkbhqs;
 
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
@@ -11,12 +10,12 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.entity.XLNWFKFS;
 import com.tbea.ic.operation.model.entity.YQKBHQS;
+import com.util.tools.DateUtil;
+
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 @Repository
 @Transactional("transactionManager2")
@@ -37,8 +36,8 @@ public class YQKBHQSDaoImpl extends AbstractReadWriteDaoImpl<YQKBHQS> implements
 		yearBegin.set(cur.get(Calendar.YEAR), 0, 1);
 		Calendar yearEnd = Calendar.getInstance();
 		yearEnd.set(cur.get(Calendar.YEAR), 11, 1);
-		String timeBegin = Util.format(yearBegin.getTime());
-		String timeEnd = Util.format(yearEnd.getTime());
+		String timeBegin = DateUtil.month1(yearBegin.getTime());
+		String timeEnd = DateUtil.month1(yearEnd.getTime());
 		q.setParameter(1, timeBegin);
 		q.setParameter(2, timeEnd);
 		q.setParameter(3, comp.getId());
@@ -69,8 +68,8 @@ public class YQKBHQSDaoImpl extends AbstractReadWriteDaoImpl<YQKBHQS> implements
 		yearBegin.set(cur.get(Calendar.YEAR), 0, 1);
 		Calendar yearEnd = Calendar.getInstance();
 		yearEnd.set(cur.get(Calendar.YEAR), 11, 1);
-		String timeBegin = Util.format(yearBegin.getTime());
-		String timeEnd = Util.format(yearEnd.getTime());
+		String timeBegin = DateUtil.month1(yearBegin.getTime());
+		String timeEnd = DateUtil.month1(yearEnd.getTime());
 		q.setParameter(1, timeBegin);
 		q.setParameter(2, timeEnd);
 		return q.getResultList();

@@ -159,7 +159,7 @@
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response name="${dwmc}${cal.year}年${cal.month}月回款计划.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+  <response name="${exportDwmc}${cal.year}年${cal.month}月回款计划.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
  </controller>
  <service id="arReceivedPlanShowServ" transaction="transactionManager">
   <if test="${!dwmc.isList}">

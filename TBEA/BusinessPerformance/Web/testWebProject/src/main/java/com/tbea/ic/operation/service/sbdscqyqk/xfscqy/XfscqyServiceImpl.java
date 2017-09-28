@@ -28,6 +28,7 @@ import com.tbea.ic.operation.model.dao.xl.sbdqy.XlQyDao;
 import com.tbea.ic.operation.model.entity.identifier.scfxgb.HyEntity;
 import com.tbea.ic.operation.model.entity.sbdscqyqk.XfscqyEntity;
 import com.tbea.ic.operation.service.report.HBWebService;
+import com.util.tools.ListUtil;
 import com.xml.frame.report.util.EasyCalendar;
 
 import net.sf.json.JSONArray;
@@ -66,12 +67,12 @@ public class XfscqyServiceImpl implements XfscqyService {
 		List<HyEntity> hys = hyDao.getAll();
 		for (HyEntity entity: hys){
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 14);
+			ListUtil.resize(list, 14);
 			list.set(0, entity.getName());
 			result.add(list);
 		}
 		List<String> listHj = new ArrayList<String>();
-		Util.resize(listHj, 14);
+		ListUtil.resize(listHj, 14);
 		listHj.set(0, "合计");
 		result.add(listHj);
 		for (int i = 0; i < 13; ++i){
@@ -99,7 +100,7 @@ public class XfscqyServiceImpl implements XfscqyService {
 		List<HyEntity> hys = hyDao.getAll();
 		for (HyEntity entity: hys){
 			List<String> list = new ArrayList<String>();
-			Util.resize(list, 2);
+			ListUtil.resize(list, 2);
 			list.set(0, entity.getName());
 			result.add(list);
 		}

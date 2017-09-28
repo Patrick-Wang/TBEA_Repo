@@ -3,12 +3,12 @@ package com.tbea.ic.operation.service.entry.zbCalculator.requesthandler;
 import java.util.Calendar;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.RequestHandler;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.service.entry.zbCalculator.Request;
 import com.tbea.ic.operation.service.entry.zbInjector.ZbInjector;
+import com.util.tools.MathUtil;
+import com.util.tools.RequestHandler;
 
 public class RatioRequestHandler extends RequestHandler<Request>{
 	Double sub;
@@ -25,7 +25,7 @@ public class RatioRequestHandler extends RequestHandler<Request>{
 	}
 
 	void setRatio(ZbInjector injector, Calendar cal, Company comp, ZBStatus status, Calendar time){
-		if (null != sub  && null != base && Util.isPositive(base) && Util.isPositive(sub)){
+		if (null != sub  && null != base && MathUtil.isPositive(base) && MathUtil.isPositive(sub)){
 			injector.inject(destZb, sub / base, cal, comp, status, time);
 		} else{
 			injector.remove(destZb, cal, comp);

@@ -11,15 +11,14 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.model.entity.XJL;
-import com.tbea.ic.operation.model.entity.XLNWFKFS;
 import com.tbea.ic.operation.model.entity.YDZBBean;
 import com.tbea.ic.operation.model.entity.local.XJLRB;
 import com.tbea.ic.operation.model.entity.local.YDZBFDW;
 import com.tbea.ic.operation.model.entity.local.ZBHZ;
+import com.util.tools.DateUtil;
 
 @Repository
 public class YDZBDAOJPAImpl implements YDZBDao {
@@ -67,7 +66,7 @@ public class YDZBDAOJPAImpl implements YDZBDao {
 		Date d = Date.valueOf(cal.get(Calendar.YEAR) + "-"
 				+ (cal.get(Calendar.MONTH) + 1) + "-"
 				+ cal.get(Calendar.DAY_OF_MONTH));
-		q.setParameter(1, Util.format(d));
+		q.setParameter(1, DateUtil.month1(d));
 		List<YDZBFDW> ydzbfdws = q.getResultList();
 		List<YDZBBean> ydzbs = new ArrayList<YDZBBean>();
 
@@ -101,7 +100,7 @@ public class YDZBDAOJPAImpl implements YDZBDao {
 		Date d = Date.valueOf(cal.get(Calendar.YEAR) + "-"
 				+ (cal.get(Calendar.MONTH) + 1) + "-"
 				+ cal.get(Calendar.DAY_OF_MONTH));
-		q.setParameter(1, Util.format(d));
+		q.setParameter(1, DateUtil.month1(d));
 		List<ZBHZ> zbhzs = q.getResultList();
 		List<YDZBBean> ydzbs = new ArrayList<YDZBBean>();
 		for (ZBHZ zbhz : zbhzs) {

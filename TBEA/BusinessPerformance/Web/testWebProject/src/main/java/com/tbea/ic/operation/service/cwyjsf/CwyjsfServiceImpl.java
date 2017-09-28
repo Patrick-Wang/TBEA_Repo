@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
@@ -30,6 +29,8 @@ import com.tbea.ic.operation.model.dao.identifier.cwyjsf.sz.SzDaoImpl;
 import com.tbea.ic.operation.model.entity.cwyjsf.YjsfEntity;
 import com.tbea.ic.operation.model.entity.cwyjsf.YjsfNdqcsEntity;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
+import com.util.tools.DateUtil;
+import com.util.tools.MathUtil;
 
 @Service(CwyjsfServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -466,7 +467,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 					String key = "dwid" + comp.getId() + "sz" + i;
 					YjsfEntity entity = cacheMap.get(key);
 					if (null == entity){
-						entity = yjsfDao.getByDate(Util.toDate(cal), comp, i);
+						entity = yjsfDao.getByDate(DateUtil.toDate(cal), comp, i);
 					}
 					
 					if (null == entity) {
@@ -501,7 +502,7 @@ public class CwyjsfServiceImpl implements CwyjsfService {
 				Double sum = null;
 				int szCount = szDao.getSzCount();
 				for (int i = 0; i < szCount; ++i){
-					YjsfNdqcsEntity entity = yjsfNdqcsDao.getByDate(Util.toDate(cal), comp, i);
+					YjsfNdqcsEntity entity = yjsfNdqcsDao.getByDate(DateUtil.toDate(cal), comp, i);
 					if (null == entity) {
 						entity = new YjsfNdqcsEntity();
 						entity.setDwid(comp.getId());

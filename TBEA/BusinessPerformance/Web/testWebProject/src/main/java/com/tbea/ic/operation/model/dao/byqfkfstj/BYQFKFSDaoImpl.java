@@ -10,11 +10,10 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.entity.BYQFDWFKFS;
 import com.tbea.ic.operation.model.entity.BYQGWFKFS;
 import com.tbea.ic.operation.model.entity.BYQNWFKFS;
-import com.tbea.ic.operation.model.entity.XLNWFKFS;
+import com.util.tools.DateUtil;
 @Repository
 @Transactional("transactionManager")
 public class BYQFKFSDaoImpl implements BYQFKFSDao {
@@ -25,7 +24,7 @@ public class BYQFKFSDaoImpl implements BYQFKFSDao {
 	public List<BYQFDWFKFS> getFdwfs(Date d) {
 		Query q = entityManager.createQuery(
 				"from BYQFDWFKFS where ny = :date");
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return q.getResultList();
 	}
 
@@ -33,7 +32,7 @@ public class BYQFKFSDaoImpl implements BYQFKFSDao {
 	public List<BYQGWFKFS> getGwfs(Date d) {
 		Query q = entityManager.createQuery(
 				"from BYQGWFKFS where ny = :date");
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return q.getResultList();
 	}
 
@@ -41,7 +40,7 @@ public class BYQFKFSDaoImpl implements BYQFKFSDao {
 	public List<BYQNWFKFS> getNwfs(Date d) {
 		Query q = entityManager.createQuery(
 				"from BYQNWFKFS where ny = :date");
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return q.getResultList();
 	}
 

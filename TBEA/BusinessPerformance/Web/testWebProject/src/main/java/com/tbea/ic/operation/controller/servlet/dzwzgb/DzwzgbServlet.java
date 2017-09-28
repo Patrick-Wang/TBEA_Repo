@@ -36,6 +36,7 @@ import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbService;
 import com.tbea.ic.operation.service.dzwzgb.DzwzgbServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.util.tools.DateUtil;
 import com.xml.frame.report.util.ExcelHelper;
 import com.xml.frame.report.util.excel.FormatterHandler;
 import com.xml.frame.report.util.excel.NumberFormatterHandler;
@@ -169,7 +170,7 @@ public class DzwzgbServlet {
 		Calendar cal = Calendar.getInstance();
 		System.out.println(cal.getTime().toLocaleString() + "dzwzgb import data from 15db");
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		dzwzgbService.importDzclcb(d);
 	}
 	
@@ -178,7 +179,7 @@ public class DzwzgbServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		if (!(request.getParameter("date") == null)){
 			d = Date.valueOf(request.getParameter("date"));
 		}

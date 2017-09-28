@@ -40,6 +40,7 @@ import com.tbea.ic.operation.service.report.HBWebService;
 import com.tbea.ic.operation.service.sbdczclwcqk.clylwcqk.ClylwcqkServiceImpl;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpclwcqk.CpclwcqkServiceImpl;
 import com.tbea.ic.operation.service.sbdczclwcqk.cpczwcqk.CpczwcqkServiceImpl;
+import com.util.tools.DateUtil;
 import com.xml.frame.report.util.EasyCalendar;
 
 import net.sf.json.JSONArray;
@@ -107,7 +108,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 	
 	private void importXlCzCl(Date d, List<Object[]> result, Company comp) {
 		EasyCalendar ec = new EasyCalendar(d);
-		LoggerFactory.getLogger("WEBSERVICE").info("importXlCzCl {} {}", comp.getName(), Util.formatToMonth(d));
+		LoggerFactory.getLogger("WEBSERVICE").info("importXlCzCl {} {}", comp.getName(), DateUtil.month(d));
 		List<CpczwcqkEntity> entitiesCz = cpczwcqkDao.getByDate(d, comp, SbdczclwcqkType.SBDCZCLWCQK_CZ_XL);
 		ZBStatus czStatus = ZBStatus.SUBMITTED;
 		if (null != entitiesCz && !entitiesCz.isEmpty()){
@@ -189,7 +190,7 @@ public class SbdczclwcqkServiceImpl implements SbdczclwcqkService {
 
 	private void importByqCzCl(java.sql.Date d, List<Object[]> result, Company comp){
 		
-		LoggerFactory.getLogger("WEBSERVICE").info("importByqCzCl {} {}", comp.getName(), Util.formatToMonth(d));
+		LoggerFactory.getLogger("WEBSERVICE").info("importByqCzCl {} {}", comp.getName(), DateUtil.month(d));
 		
 		EasyCalendar ec = new EasyCalendar(d);
 		List<CpclwcqkEntity> entitiesCl = cpclwcqkDao.getByDate(d, comp, SbdczclwcqkType.SBDCZCLWCQK_CL_BYQ);

@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.CompanyNCCode;
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
@@ -29,6 +28,7 @@ import com.tbea.ic.operation.model.entity.wgcpqk.wgcpylnlspcs.WgcpylnlspcsEntity
 import com.tbea.ic.operation.service.util.nc.NCConnection;
 import com.tbea.ic.operation.service.util.nc.NCLoggerFactory;
 import com.tbea.ic.operation.service.wgcpqk.wgcpylnlspcs.WgcpylnlspcsService;
+import com.util.tools.MathUtil;
 import com.util.tools.Pair;
 import com.xml.frame.report.util.EasyCalendar;
 

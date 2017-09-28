@@ -1,12 +1,10 @@
 package com.tbea.ic.operation.service.yszkjgqk;
 
-import java.util.ArrayList;
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -17,9 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
-import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.dao.yszkjgqk.YSZKJGQKDao;
 import com.tbea.ic.operation.model.entity.YSZKJGQK;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager2")
@@ -56,7 +54,7 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 	public Date getLatestDate() {
 		YSZKJGQK yszjjg = yszkjgqkDao.getLatestYszkjg();
 		if (yszjjg != null && yszjjg.getNy() != null) {
-			return (Date) Util.valueOf(yszjjg.getNy());
+			return (Date) DateUtil.fromMonth1(yszjjg.getNy());
 		}
 		return null;
 	}
@@ -68,7 +66,7 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 		int month = 0;
 		for (YSZKJGQK ysk : list) {
 			if (hyMap.containsKey(ysk.getHy())) {
-				time.setTime(Util.valueOf(ysk.getNy()));
+				time.setTime(DateUtil.fromMonth1(ysk.getNy()));
 				month = time.get(Calendar.MONTH);
 				if (time.get(Calendar.YEAR) < cal.get(Calendar.YEAR)) {
 					// previous year
@@ -151,7 +149,7 @@ public class YSZKJGQKServiceImpl implements YSZKJGQKService {
 		int yearBase = 0;
 		Calendar time = Calendar.getInstance();
 		for (YSZKJGQK ysk : list) {
-			time.setTime(Util.valueOf(ysk.getNy()));
+			time.setTime(DateUtil.fromMonth1(ysk.getNy()));
 			if (time.get(Calendar.YEAR) < cal.get(Calendar.YEAR)) {
 				// previous year
 				yearBase = 0;

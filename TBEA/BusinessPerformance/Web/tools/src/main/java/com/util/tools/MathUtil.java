@@ -1,9 +1,11 @@
-package com.tbea.ic.operation.common;
+package com.util.tools;
 
 import java.util.List;
 import java.util.Set;
 
 public class MathUtil {
+
+	
 	public static Double sum(Double[] vals){
 		Double ret = null;
 		for (int i = 0; i < vals.length; ++i){
@@ -16,7 +18,7 @@ public class MathUtil {
 			}
 		}
 		return ret;
-	}
+	} 
 	
 	public static Double sum(List<Double> vals){
 		Double ret = null;
@@ -244,4 +246,26 @@ public class MathUtil {
 		return -1;
 	}
 
+	public static String currency(String val){
+		int iDot = val.lastIndexOf('.');
+		StringBuilder sbRet = new StringBuilder();
+		if (iDot < 0){
+			iDot = val.length();
+		}
+		int start = iDot % 3;
+		if (start > 0) {
+			sbRet.append(val.substring(0, start));
+		}
+		while (start  < iDot) {
+			if (start > 0) {
+				sbRet.append(",");
+			}
+			sbRet.append(val.substring(start, start + 3));
+			start += 3;
+		}
+		if (iDot < val.length()) {
+			sbRet.append(val.substring(iDot));
+		}
+		return sbRet.toString();
+	}
 }

@@ -42,6 +42,7 @@ import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbService;
 import com.tbea.ic.operation.service.yszkgb.YszkgbServiceImpl;
+import com.util.tools.DateUtil;
 import com.xml.frame.report.util.ExcelHelper;
 import com.xml.frame.report.util.excel.FormatterHandler;
 import com.xml.frame.report.util.excel.NumberFormatterHandler;
@@ -514,7 +515,7 @@ public class YszkgbServlet {
 		Calendar cal = Calendar.getInstance();
 		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 
 		yszkgbService.importZbmFromNC(d, COMPS);
 		yszkgbService.importYszkzlbhFromNC(d, COMPS);
@@ -525,7 +526,7 @@ public class YszkgbServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		if (!(request.getParameter("date") == null)){
 			d = Date.valueOf(request.getParameter("date"));
 		}

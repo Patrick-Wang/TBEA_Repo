@@ -12,9 +12,8 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.hkjhjgb.HKJHJGDao;
 import com.tbea.ic.operation.model.dao.hkjhzxqk.HKJHZXQKDao;
-import com.tbea.ic.operation.model.entity.HKJHJG;
-import com.tbea.ic.operation.model.entity.YDHKJHJG;
 import com.tbea.ic.operation.model.entity.YDSJHKQK;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -154,7 +153,7 @@ public class SYHKJHZXQKServiceImpl implements SYHKJHZXQKService {
 	public Date getLatestDate() {
 		YDSJHKQK ydsjhk = hkjhzxqkDao.getLatestYdsjhk();
 		if (null != ydsjhk){
-			return (Date) Util.valueOf(ydsjhk.getNy());
+			return (Date) DateUtil.fromMonth1(ydsjhk.getNy());
 		}
 		return null;
 	}
@@ -164,7 +163,7 @@ public class SYHKJHZXQKServiceImpl implements SYHKJHZXQKService {
 
 		int month = 0;
 		for (YDSJHKQK ydsjhkqk : ydsjhkqks){
-			cal.setTime(Util.valueOf(ydsjhkqk.getNy()));
+			cal.setTime(DateUtil.fromMonth1(ydsjhkqk.getNy()));
 			month = cal.get(Calendar.MONTH);
 			ret[month][0] = Util.plus(ret[month][0], ydsjhkqk.getJhhj() + "");
 			ret[month][1] = Util.plus(ret[month][1], ydsjhkqk.getSjhj() + "");

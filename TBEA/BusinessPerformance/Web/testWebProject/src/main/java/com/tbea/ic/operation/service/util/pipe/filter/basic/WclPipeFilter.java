@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
 import com.tbea.ic.operation.service.util.pipe.core.filter.IPipeFilter;
+import com.util.tools.MathUtil;
 
 
 public class WclPipeFilter implements IPipeFilter {
@@ -38,10 +38,10 @@ public class WclPipeFilter implements IPipeFilter {
 			wcl = wcls.get(i);
 			if (null == zbRow[wcl[1]] || 
 				null == zbRow[wcl[2]] || 
-				Util.isNegative(zbRow[wcl[1]]) || 
-				Util.isNegative(zbRow[wcl[2]]) || 
-				Util.isZero(zbRow[wcl[1]]) || 
-				Util.isZero(zbRow[wcl[2]])) {
+				MathUtil.isNegative(zbRow[wcl[1]]) || 
+				MathUtil.isNegative(zbRow[wcl[2]]) || 
+				MathUtil.isZero(zbRow[wcl[1]]) || 
+				MathUtil.isZero(zbRow[wcl[2]])) {
 				zbRow[wcl[0]] = null;
 			} else {
 				zbRow[wcl[0]] = zbRow[wcl[1]] / zbRow[wcl[2]];

@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Formula;
 import com.tbea.ic.operation.common.FormulaServer;
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -32,6 +31,8 @@ import com.tbea.ic.operation.model.entity.cpzlqk.PdAcptjEntryEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.PdJdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.PdYdAcptjjgEntity;
 import com.tbea.ic.operation.model.entity.cpzlqk.ZltjjgEntity;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 import com.util.tools.Pair;
 import com.xml.frame.report.util.EasyCalendar;
 
@@ -77,7 +78,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 
 //	private List<String> toList(ZltjjgDao tjjgDao, PdYdAcptjjgEntity entity, Date d, Company company, List<Integer> zts) {
 //		List<String> row = new ArrayList<String>();
-//		Util.resize(row, 8);
+//		ListUtil.resize(row, 8);
 //		int start = 0;
 //		row.set(start++, entity.getCpdl().getName());
 //		row.set(start++, entity.getCpxl().getName());
@@ -163,7 +164,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 
 	private List<String> toEntryList(ZltjjgDao tjjgDao, PdYdAcptjjgEntity entity, Date d, Company company) {
 		List<String> row = new ArrayList<String>();
-		Util.resize(row, 5);
+		ListUtil.resize(row, 5);
 		int start = 0;
 		row.set(start++, "" + entity.getCpxl().getId());
 		row.set(start++, entity.getCpdl().getName());
@@ -227,7 +228,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 				cpName = entity.getCpdl().getName();
 				continue;
 			}
-			row = Util.resize(new ArrayList<String>(), 12);
+			row = ListUtil.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				
@@ -248,7 +249,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 		}
 		
 		if (cpName != null){
-			row = Util.resize(new ArrayList<String>(), 12);
+			row = ListUtil.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				ZltjjgEntity zltjjg = tjjgDao.getByDateTotal(ec.getDate(), cpids, company, zts);
@@ -288,7 +289,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 				cpName = entity.getCpdl().getName();
 				continue;
 			}
-			row = Util.resize(new ArrayList<String>(), 12);
+			row = ListUtil.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				ZltjjgEntity zltjjg = null;
@@ -314,7 +315,7 @@ public class PdacptjjgServiceImpl implements PdacptjjgService {
 		}
 		
 		if (cpName != null){
-			row = Util.resize(new ArrayList<String>(), 12);
+			row = ListUtil.resize(new ArrayList<String>(), 12);
 			ec.setMonth(1);
 			for (int i = 0; i < 12; ++i){
 				ZltjjgEntity zltjjg = null;

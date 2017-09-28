@@ -9,17 +9,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.ErrorCode;
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.CompanyNCCode;
+import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
@@ -45,8 +42,12 @@ import com.tbea.ic.operation.model.entity.chgb.ChzlbhqkEntity;
 import com.tbea.ic.operation.model.entity.chgb.NychEntity;
 import com.tbea.ic.operation.model.entity.identifier.chgb.JykcxmEntity;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
-import com.tbea.ic.operation.model.entity.yszkgb.YszkzmEntity;
 import com.tbea.ic.operation.service.util.nc.NCConnection;
+import com.util.tools.DateUtil;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
+
+import net.sf.json.JSONArray;
 
 @Service(ChgbServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -247,7 +248,7 @@ public class ChgbServiceImpl implements ChgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 7);
+				ListUtil.resize(result.get(result.size() - 1), 7);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -302,7 +303,7 @@ public class ChgbServiceImpl implements ChgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 9);
+				ListUtil.resize(result.get(result.size() - 1), 9);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -349,7 +350,7 @@ public class ChgbServiceImpl implements ChgbService {
 				}
 			}
 			if (result.get(result.size() - 1).isEmpty()){
-				Util.resize(result.get(result.size() - 1), 6);
+				ListUtil.resize(result.get(result.size() - 1), 6);
 			}
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -688,7 +689,7 @@ public class ChgbServiceImpl implements ChgbService {
 				
 				int nf = cal.get(Calendar.YEAR);
 				int yf = cal.get(Calendar.MONTH) + 1;
-				Date d = Util.toDate(cal);
+				Date d = DateUtil.toDate(cal);
 				while (rs.next()) {
 
 					String unitCode = String.valueOf(rs.getObject(1));
@@ -743,7 +744,7 @@ public class ChgbServiceImpl implements ChgbService {
 			try {
 				int nf = cal.get(Calendar.YEAR);
 				int yf = cal.get(Calendar.MONTH) + 1;
-				Date d = Util.toDate(cal);
+				Date d = DateUtil.toDate(cal);
 				while (rs.next()) {
 
 					String unitCode = String.valueOf(rs.getObject(1));

@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.WaveItem;
 import com.tbea.ic.operation.controller.servlet.cpzlqk.YDJDType;
@@ -23,6 +21,8 @@ import com.tbea.ic.operation.model.dao.cpzlqk.dwmc.DwmcDao;
 import com.tbea.ic.operation.model.dao.identifier.cpzlqk.byqbhglb.ByqBhglbDao;
 import com.tbea.ic.operation.model.dao.identifier.cpzlqk.byqbhglb.ByqBhglbDaoImpl;
 import com.tbea.ic.operation.model.entity.identifier.cpzlqk.ByqBhglbEntity;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 import com.xml.frame.report.util.EasyCalendar;
 
 @Service(ByqcpycssbhgxxfbServiceImpl.NAME)
@@ -49,14 +49,14 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 				bhglbsIds.put(bhglbs.get(i).getId(), i + 1);
 			}
 
-			List<Integer> hj = Util.resize(new ArrayList<Integer>(),
+			List<Integer> hj = ListUtil.resize(new ArrayList<Integer>(),
 					bhglbs.size() + 1);
 
 			Map<Integer, Integer> dwCpMap = new HashMap<Integer, Integer>();
 
 			for (Object[] entity : entities) {
 				if (!dwCpMap.containsKey((Integer) entity[0])) {
-					List<String> list = Util.resize(new ArrayList<String>(),
+					List<String> list = ListUtil.resize(new ArrayList<String>(),
 							2 + bhglbs.size());
 					result.add(list);
 					list.set(0, dwmcDao.getByDwid((Integer) entity[0])
@@ -148,7 +148,7 @@ public class ByqcpycssbhgxxfbServiceImpl implements ByqcpycssbhgxxfbService {
 				return wis.get(i);
 			}
 		}
-		WaveItem item = new WaveItem(name, Util.resize(new ArrayList<String>(), 12, "0"));
+		WaveItem item = new WaveItem(name, ListUtil.resize(new ArrayList<String>(), 12, "0"));
 		wis.add(item);
 		return item;
 	}

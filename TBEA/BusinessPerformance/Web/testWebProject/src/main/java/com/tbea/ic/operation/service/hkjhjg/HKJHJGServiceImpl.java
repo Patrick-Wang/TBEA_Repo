@@ -11,7 +11,7 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.hkjhjgb.HKJHJGDao;
 import com.tbea.ic.operation.model.entity.HKJHJG;
-import com.tbea.ic.operation.service.hkjhjg.HKJHJGService;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -146,7 +146,7 @@ public class HKJHJGServiceImpl implements HKJHJGService {
 	public Date getLatestDate() {
 		HKJHJG hkjg = hkjhjgDao.getLatestHkjg();
 		if (null != hkjg){
-			return (Date) Util.valueOf(hkjg.getNy());
+			return (Date) DateUtil.fromMonth1(hkjg.getNy());
 		}
 		return null;
 	}

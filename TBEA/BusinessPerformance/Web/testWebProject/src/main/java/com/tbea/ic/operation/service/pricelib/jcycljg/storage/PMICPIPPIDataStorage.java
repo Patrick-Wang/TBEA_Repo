@@ -8,12 +8,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.myzs.MyzsDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.pmicpippi.PmiCpiPpiDao;
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.MyzsEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.PmiCpiPpiEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 @Component
 public class PMICPIPPIDataStorage implements DataStorage<PmiCpiPpiEntity>,
@@ -50,7 +48,7 @@ public class PMICPIPPIDataStorage implements DataStorage<PmiCpiPpiEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (PmiCpiPpiEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToMonth(entity.getDate()));
+			list.add(DateUtil.month(entity.getDate()));
 			list.add("" + entity.getPmi());
 			list.add("" + entity.getCpi());
 			list.add("" + entity.getPpi());

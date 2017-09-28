@@ -2,8 +2,9 @@ package com.tbea.ic.operation.service.util.pipe.filter.composite;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.tbea.ic.operation.common.Util;
+
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.util.tools.MathUtil;
 
 
 public class WclPipeFilter extends AbstractPipeFilter {
@@ -27,10 +28,10 @@ public class WclPipeFilter extends AbstractPipeFilter {
 			wcl = wcls.get(i);
 			if (null == zbRow[wcl[1]] || 
 				null == zbRow[wcl[2]] || 
-				Util.isNegative(zbRow[wcl[1]]) || 
-				Util.isNegative(zbRow[wcl[2]]) || 
-				Util.isZero(zbRow[wcl[1]]) || 
-				Util.isZero(zbRow[wcl[2]])) {
+				MathUtil.isNegative(zbRow[wcl[1]]) || 
+				MathUtil.isNegative(zbRow[wcl[2]]) || 
+				MathUtil.isZero(zbRow[wcl[1]]) || 
+				MathUtil.isZero(zbRow[wcl[2]])) {
 				zbRow[wcl[0]] = null;
 			} else {
 				zbRow[wcl[0]] = zbRow[wcl[1]] / zbRow[wcl[2]];

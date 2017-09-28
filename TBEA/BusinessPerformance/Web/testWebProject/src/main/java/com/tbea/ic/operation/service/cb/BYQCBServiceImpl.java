@@ -24,6 +24,7 @@ import com.tbea.ic.operation.model.entity.CBBYQTBDD;
 import com.tbea.ic.operation.model.entity.CBBYQWGDD;
 import com.tbea.ic.operation.model.entity.CBBYQZXDD;
 import com.tbea.ic.operation.model.entity.XMXX;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -551,7 +552,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 				continue;
 			}
 			try {
-				tmpCal.setTime(Util.toDate(byqcbwgdd.getWgsj()));
+				tmpCal.setTime(DateUtil.toDate(byqcbwgdd.getWgsj()));
 				if (tmpCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)
 						&& tmpCal.get(Calendar.MONTH) == cal
 								.get(Calendar.MONTH)) {
@@ -739,7 +740,7 @@ public class BYQCBServiceImpl implements BYQCBService {
 	public Date getLatestWgDate() {
 		CBBYQWGDD wgdd = byqcbDao.getLatestWgdd();
 		if (null != wgdd){
-			return Util.toDate(wgdd.getWgsj());
+			return DateUtil.toDate(wgdd.getWgsj());
 		}
 		return null;
 	}

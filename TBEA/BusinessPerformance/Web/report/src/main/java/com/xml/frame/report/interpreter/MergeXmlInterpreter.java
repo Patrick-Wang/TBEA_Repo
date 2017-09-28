@@ -25,12 +25,13 @@ import org.w3c.dom.NodeList;
 
 import com.frame.script.el.ELParser;
 import com.frame.script.util.TypeUtil;
+import com.util.tools.DateUtil;
+import com.util.tools.MathUtil;
 import com.util.tools.xml.Loop;
 import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.component.manager.ComponentManager;
 import com.xml.frame.report.component.service.JpaTransaction;
-import com.xml.frame.report.util.Util;
 import com.xml.frame.report.util.excel.ExcelUtil;
 import com.xml.frame.report.util.excel.ValidationException;
 import com.xml.frame.report.util.xml.XmlElWalker;
@@ -142,7 +143,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				case TypeUtil.SQLDATE:
 					Date d = ExcelUtil.parseDate(cell);
 					if (null != d) {
-						jrow.add(Util.formatToDay(d));
+						jrow.add(DateUtil.day(d));
 					} else {
 						jrow.add(null);
 					}
@@ -323,11 +324,11 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			for (int i = 0; i < arr.length; ++i) {
 				if (null != arr[i]) {
 					if (arr[i] instanceof Date) {
-						arr[i] = Util.formatToMill((Date) arr[i]);
+						arr[i] = DateUtil.millsecond((Date) arr[i]);
 					} else if (arr[i] instanceof java.util.Date) {
-						arr[i] = Util.formatToMill((java.util.Date) arr[i]);
+						arr[i] = DateUtil.millsecond((java.util.Date) arr[i]);
 					} else if (arr[i] instanceof Timestamp) {
-						arr[i] = Util.formatToMill(new Date(
+						arr[i] = DateUtil.millsecond(new Date(
 								((Timestamp) arr[i]).getTime()));
 					}
 				}
@@ -338,11 +339,11 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			for (Object obj : list) {
 				if (null != obj) {
 					if (obj instanceof Date) {
-						obj = Util.formatToMill((Date) obj);
+						obj = DateUtil.millsecond((Date) obj);
 					} else if (obj instanceof java.util.Date) {
-						obj = Util.formatToMill((java.util.Date) obj);
+						obj = DateUtil.millsecond((java.util.Date) obj);
 					} else if (obj instanceof Timestamp) {
-						obj = Util.formatToMill(new Date(((Timestamp) obj)
+						obj = DateUtil.millsecond(new Date(((Timestamp) obj)
 								.getTime()));
 					}
 				}
@@ -380,14 +381,14 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		List<Object> result = null;
 		switch (fs.getJoinType()) {
 		case TypeUtil.INT:
-			Integer val = Util.toIntNull(row.getString(fs.getRef()));
+			Integer val = MathUtil.toInteger(row.getString(fs.getRef()));
 			if (null != val) {
 				q.setParameter(0, val);
 				result = q.getResultList();
 			}
 			break;
 		case TypeUtil.DOUBLE:
-			Double d = Util.toDoubleNull(row.getString(fs.getRef()));
+			Double d = MathUtil.toDouble(row.getString(fs.getRef()));
 			if (null != d) {
 				q.setParameter(0, d);
 				result = q.getResultList();
@@ -433,13 +434,13 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		String ret = null;
 		switch (fs.getType()) {
 		case TypeUtil.INT:
-			Integer val = Util.toIntNull(row.getString(fs.getRef()));
+			Integer val = MathUtil.toInteger(row.getString(fs.getRef()));
 			if (null != val) {
 				ret = val + "";
 			}
 			break;
 		case TypeUtil.DOUBLE:
-			Double d = Util.toDoubleNull(row.getString(fs.getRef()));
+			Double d = MathUtil.toDouble(row.getString(fs.getRef()));
 			if (null != d) {
 				ret = d + "";
 			}

@@ -20,6 +20,7 @@ import com.tbea.ic.operation.model.dao.byqfkfstj.BYQFKFSDao;
 import com.tbea.ic.operation.model.entity.BYQFDWFKFS;
 import com.tbea.ic.operation.model.entity.BYQGWFKFS;
 import com.tbea.ic.operation.model.entity.BYQNWFKFS;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -170,12 +171,12 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 		Date dLatest = null;
 		BYQFDWFKFS fdwfkfs = byqfkfsDao.getLatestFdwfkfs();
 		if (fdwfkfs != null && fdwfkfs.getNy() != null){
-			dLatest = (Date) Util.valueOf(fdwfkfs.getNy());
+			dLatest = (Date) DateUtil.fromMonth1(fdwfkfs.getNy());
 		}
 		
 		BYQGWFKFS gwfkfs = byqfkfsDao.getLatestGwfkfs();
 		if (gwfkfs != null && gwfkfs.getNy() != null){
-			Date gw = (Date) Util.valueOf(gwfkfs.getNy());
+			Date gw = (Date) DateUtil.fromMonth1(gwfkfs.getNy());
 			if (dLatest == null || dLatest.before(gw)){
 				dLatest = gw;
 			}
@@ -183,7 +184,7 @@ public class BYQFKFSTJServiceImpl implements BYQFKFSTJService {
 		
 		BYQNWFKFS nwfkfs = byqfkfsDao.getLatestNwfkfs();
 		if (nwfkfs != null && nwfkfs.getNy() != null){
-			Date nw = (Date) Util.valueOf(nwfkfs.getNy());
+			Date nw = (Date) DateUtil.fromMonth1(nwfkfs.getNy());
 			if (dLatest == null || dLatest.before(nw)){
 				dLatest = nw;
 			}

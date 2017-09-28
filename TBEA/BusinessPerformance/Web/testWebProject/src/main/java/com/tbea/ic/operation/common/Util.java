@@ -2,8 +2,6 @@ package com.tbea.ic.operation.common;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,118 +9,119 @@ import java.util.List;
 
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyType;
+import com.util.tools.MathUtil;
 
 public class Util {
 	
-	public static String format(Date d) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMM");
-		return formatter.format(d);
-	}
-	
-	public static String formatToDay(Date d) {
-		if (null != d){
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			return formatter.format(d);
-		}
-		return null;
-	}
-	
-	public static String formatToMill(Date d) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-		return formatter.format(d);
-	}
-	
-	public static String formatToSecond(Timestamp d) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return formatter.format(new Date(d.getTime()));
-	}
-	
-	
-	public static String formatToMonth(Date d) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
-		return formatter.format(d);
-	}
-
-	
-	public static List resize(List list, int size){
-		if (list.size() < size){
-			for (int i = list.size(); i < size; ++i){
-				list.add(null);
-			}
-		}
-		return list;
-	}
-	
-	public static List resize(List list, int size, Object val){
-		if (list.size() < size){
-			for (int i = list.size(); i < size; ++i){
-				list.add(val);
-			}
-		}
-		return list;
-	}
-	
-	// d => yyyyMM
-	public static Date valueOf(String d) {
-		return java.sql.Date.valueOf(d.substring(0, 4) + "-" + d.substring(4)
-				+ "-1");
-	}
-
-	public static boolean isZero(Double val){
-		return Math.abs(val) < 0.0000001;
-	}
-	
-	public static boolean isPositive(Double val){
-		return val > 0;
-	}
-	
-	public static boolean isNegative(Double val){
-		return val < 0;
-	}
-	
-	public static java.sql.Date toDate(Calendar d){
-		java.sql.Date ret = null;
-		if (d != null){
-				return java.sql.Date.valueOf(
-							d.get(Calendar.YEAR) + "-" + 
-							(d.get(Calendar.MONTH) + 1) + "-" + 
-							d.get(Calendar.DAY_OF_MONTH));
-		}
-		return  ret;
-	}
-	
-	public static java.sql.Date toDate(String date){
-		java.sql.Date ret = null;
-		if (date != null){
-			try{//"yyyy-MM-dd"
-				return java.sql.Date.valueOf(date);
-			}catch(Exception e){
-				
-			}
-			try{//"yyyy-MM"
-				return java.sql.Date.valueOf(date + "-1");
-			}catch(Exception e){
-				
-			}
-			try{//"yyyy.MM.dd"
-				return java.sql.Date.valueOf(date.replace('.', '-'));
-			}catch(Exception e){
-				
-			}
-			try{//"yyyy-MM-dd hh:mm:ss"
-				if (date.length() >= "yyyy-MM-dd".length())
-				return java.sql.Date.valueOf(date.substring(0, "yyyy-MM-dd".length()));
-			}catch(Exception e){
-				
-			}
-			try{//"yyyy/MM/dd"
-				return java.sql.Date.valueOf(date.replace('/', '-'));
-			}catch(Exception e){
-				
-			}
-		}
-		return  ret;
-	}
+//	public static String month1(Date d) {
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMM");
+//		return formatter.format(d);
+//	}
+//	
+//	public static String day(Date d) {
+//		if (null != d){
+//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//			return formatter.format(d);
+//		}
+//		return null;
+//	}
+//	
+//	public static String millsecond(Date d) {
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+//		return formatter.format(d);
+//	}
+//	
+//	public static String second(Timestamp d) {
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		return formatter.format(new Date(d.getTime()));
+//	}
+//	
+//	
+//	public static String month(Date d) {
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+//		return formatter.format(d);
+//	}
+//
+//	
+//	public static List resize(List list, int size){
+//		if (list.size() < size){
+//			for (int i = list.size(); i < size; ++i){
+//				list.add(null);
+//			}
+//		}
+//		return list;
+//	}
+//	
+//	public static List resize(List list, int size, Object val){
+//		if (list.size() < size){
+//			for (int i = list.size(); i < size; ++i){
+//				list.add(val);
+//			}
+//		}
+//		return list;
+//	}
+//	
+//	// d => yyyyMM
+//	public static Date fromMonth1(String d) {
+//		return java.sql.Date.valueOf(d.substring(0, 4) + "-" + d.substring(4)
+//				+ "-1");
+//	}
+//
+//	public static boolean isZero(Double val){
+//		return Math.abs(val) < 0.0000001;
+//	}
+//	
+//	public static boolean isPositive(Double val){
+//		return val > 0;
+//	}
+//	
+//	public static boolean isNegative(Double val){
+//		return val < 0;
+//	}
+//	
+//	public static java.sql.Date toDate(Calendar d){
+//		java.sql.Date ret = null;
+//		if (d != null){
+//				return java.sql.Date.valueOf(
+//							d.get(Calendar.YEAR) + "-" + 
+//							(d.get(Calendar.MONTH) + 1) + "-" + 
+//							d.get(Calendar.DAY_OF_MONTH));
+//		}
+//		return  ret;
+//	}
+//	
+//	public static java.sql.Date toDate(String date){
+//		java.sql.Date ret = null;
+//		if (date != null){
+//			try{//"yyyy-MM-dd"
+//				return java.sql.Date.valueOf(date);
+//			}catch(Exception e){
+//				
+//			}
+//			try{//"yyyy-MM"
+//				return java.sql.Date.valueOf(date + "-1");
+//			}catch(Exception e){
+//				
+//			}
+//			try{//"yyyy.MM.dd"
+//				return java.sql.Date.valueOf(date.replace('.', '-'));
+//			}catch(Exception e){
+//				
+//			}
+//			try{//"yyyy-MM-dd hh:mm:ss"
+//				if (date.length() >= "yyyy-MM-dd".length())
+//				return java.sql.Date.valueOf(date.substring(0, "yyyy-MM-dd".length()));
+//			}catch(Exception e){
+//				
+//			}
+//			try{//"yyyy/MM/dd"
+//				return java.sql.Date.valueOf(date.replace('/', '-'));
+//			}catch(Exception e){
+//				
+//			}
+//		}
+//		return  ret;
+//	}
 	
 	public static String toString(Double val){
 		return val == null ? null : "" + val;
@@ -408,7 +407,7 @@ public class Util {
 			return null;
 		}
 		
-		if (isZero(base)){
+		if (MathUtil.isZero(base)){
 			return null;
 		}
 		

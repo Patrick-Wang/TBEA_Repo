@@ -8,12 +8,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.model.dao.pricelib.jcycljg.gx.GxDao;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.jkzj.JkzjDao;
-import com.tbea.ic.operation.model.entity.pricelib.jcycljg.GxEntity;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.JkzjEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 @Component
 public class JkzjDataStorage implements DataStorage<JkzjEntity>,
@@ -50,7 +48,7 @@ public class JkzjDataStorage implements DataStorage<JkzjEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (JkzjEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToMonth(entity.getDate()));
+			list.add(DateUtil.month(entity.getDate()));
 			list.add("" + entity.getJndqzwz());
 			list.add("" + entity.getJndgy());
 			list.add("" + entity.getZljx());

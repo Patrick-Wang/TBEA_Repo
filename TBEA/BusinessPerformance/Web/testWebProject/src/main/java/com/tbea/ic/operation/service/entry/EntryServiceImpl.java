@@ -14,13 +14,10 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.RequestHandler;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
@@ -59,6 +56,10 @@ import com.tbea.ic.operation.service.entry.zbCalculator.Request;
 import com.tbea.ic.operation.service.entry.zbCalculator.ZbCalculator;
 import com.tbea.ic.operation.service.entry.zbInjector.SimpleZbInjectorFactory;
 import com.tbea.ic.operation.service.entry.zbInjector.ZbInjector;
+import com.util.tools.DateUtil;
+import com.util.tools.RequestHandler;
+
+import net.sf.json.JSONArray;
 
 
 
@@ -613,7 +614,7 @@ public class EntryServiceImpl implements EntryService{
 		
 		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 5, CalculatedZbManager.getJHCalculatedZbs(cal));
 		for (int i = 0; i < 3; ++i){
-			List<YDJHZB> zbs = ydjhzbDao.getZbs(Util.toDate(cal), company);
+			List<YDJHZB> zbs = ydjhzbDao.getZbs(DateUtil.toDate(cal), company);
 			unifyYdjhZbs(zbxxs, zbs);
 			
 			cal.add(Calendar.MONTH, 1);
@@ -656,7 +657,7 @@ public class EntryServiceImpl implements EntryService{
 		DWXX dwxx = dwxxDao.getById(company.getId());
 		
 		Set<ZBXX> zbxxs = dwxx.getJhzbxxs();
-		List<NDJHZB> zbs =  ndjhzbDao.getZbs(Util.toDate(cal), company);
+		List<NDJHZB> zbs =  ndjhzbDao.getZbs(DateUtil.toDate(cal), company);
 		unifyNdjhZbs(zbxxs, zbs);
 
 		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 3, CalculatedZbManager.getJHCalculatedZbs(cal));
@@ -694,7 +695,7 @@ public class EntryServiceImpl implements EntryService{
 		DWXX dwxx = dwxxDao.getById(company.getId());
 		
 		Set<ZBXX> zbxxs = dwxx.getSjzbxxs();
-		List<SJZB> sjzbs =  sjzbDao.getZbs(Util.toDate(cal), company);
+		List<SJZB> sjzbs =  sjzbDao.getZbs(DateUtil.toDate(cal), company);
 		unifySjZbs(zbxxs, sjzbs);
 		
 		Map<Integer, String[]> map = creatZBXXMap(zbxxs, 3, CalculatedZbManager.getSJCalculatedZbs());
@@ -732,7 +733,7 @@ public class EntryServiceImpl implements EntryService{
 		
 		int leftMonth = 3 - (cal.get(Calendar.MONTH) + 1) % 3;
 		Set<ZBXX> zbxxs = dwxx.getSjzbxxs();
-		List<YJ28ZB> yj28zbs =  yj28zbDao.getZbs(Util.toDate(cal), company);
+		List<YJ28ZB> yj28zbs =  yj28zbDao.getZbs(DateUtil.toDate(cal), company);
 		unify28Zbs(zbxxs, yj28zbs);
 		
 		Map<Integer, String[]> map = creatZBXXMap(zbxxs, leftMonth + 3, CalculatedZbManager.getSJCalculatedZbs());
@@ -740,7 +741,7 @@ public class EntryServiceImpl implements EntryService{
 		cal.add(Calendar.MONTH, 1);
 		
 		for (int i = 1; i <= leftMonth; ++i){
-			List<YJ20ZB> yj20zbs =  yj20zbDao.getZbs(Util.toDate(cal), company);
+			List<YJ20ZB> yj20zbs =  yj20zbDao.getZbs(DateUtil.toDate(cal), company);
 			unify20Zbs(zbxxs, yj20zbs);
 			updateYJ20Map(map, yj20zbs, i);
 			cal.add(Calendar.MONTH, 1);
@@ -833,7 +834,7 @@ public class EntryServiceImpl implements EntryService{
 		
 		Map<Integer, String[]> map = creatZBXXMap(zbxxs, leftMonth + 3, CalculatedZbManager.getSJCalculatedZbs());
 		for (int i = 0; i <= leftMonth; ++i){
-			List<YJ20ZB> zbs = yj20zbDao.getZbs(Util.toDate(cal), company);
+			List<YJ20ZB> zbs = yj20zbDao.getZbs(DateUtil.toDate(cal), company);
 			unify20Zbs(zbxxs, zbs);
 			
 			updateYJ20Map(map, zbs, i);
@@ -863,15 +864,15 @@ public class EntryServiceImpl implements EntryService{
 		switch (entryType){
 		case BY20YJ:
 			for (int i = 0; i <= leftMonth; ++i){
-				result.add(yj20zbDao.getZbStatus(Util.toDate(cal), company));
+				result.add(yj20zbDao.getZbStatus(DateUtil.toDate(cal), company));
 				cal.add(Calendar.MONTH, 1);
 			}
 			break;
 		case BY28YJ:
-			result.add(yj28zbDao.getZbStatus(Util.toDate(cal), company));
+			result.add(yj28zbDao.getZbStatus(DateUtil.toDate(cal), company));
 			cal.add(Calendar.MONTH, 1);
 			for (int i = 1; i <= leftMonth; ++i){
-				result.add(yj20zbDao.getZbStatus(Util.toDate(cal), company));
+				result.add(yj20zbDao.getZbStatus(DateUtil.toDate(cal), company));
 				cal.add(Calendar.MONTH, 1);
 			}
 			break;
@@ -883,7 +884,7 @@ public class EntryServiceImpl implements EntryService{
 			break;
 		case YDJDMJH:
 			for (int i = 0; i < 3; ++i){
-				result.add(ydjhzbDao.getZbStatus(Util.toDate(cal), company));
+				result.add(ydjhzbDao.getZbStatus(DateUtil.toDate(cal), company));
 				cal.add(Calendar.MONTH, 1);
 			}
 			break;
@@ -947,7 +948,7 @@ public class EntryServiceImpl implements EntryService{
 				}
 				
 				result.add(new String[]{comp.getName(), entryCompletedCompanies.get(comp.getId()), 
-						null != time ? Util.formatToSecond(time) : null});
+						null != time ? DateUtil.second(time) : null});
 			} else{
 				result.add(new String[]{comp.getName(), null, null});
 			}

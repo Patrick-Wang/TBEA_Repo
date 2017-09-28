@@ -29,7 +29,6 @@ import com.tbea.ic.operation.common.CompanyNCCode;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
@@ -40,6 +39,7 @@ import com.tbea.ic.operation.model.entity.jygk.NCZB;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.nc.NCService;
+import com.util.tools.DateUtil;
 
 import net.sf.json.JSONArray;
 
@@ -93,7 +93,7 @@ public class NCController {
 		logger.debug("scheduleImportNC");
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		importNC2LocalNC(d);
 		importLocalNC2Local(d);
 	}
@@ -190,7 +190,7 @@ public class NCController {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		Logger logger = Logger.getLogger("LOG-NC");
-		logger.debug("importNC2LocalNC " + Util.formatToMonth(d));
+		logger.debug("importNC2LocalNC " + DateUtil.month(d));
 		// 存储NC对应指标
 		// 合并
 		List<String> unitList = new ArrayList<String>();
@@ -204,7 +204,7 @@ public class NCController {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		Logger logger = Logger.getLogger("LOG-NC");
-		logger.debug("importNC2LocalNC " + Util.formatToMonth(d));
+		logger.debug("importNC2LocalNC " + DateUtil.month(d));
 		// 存储NC对应指标
 		// 合并
 		List<String> unitList = new ArrayList<String>();
@@ -508,12 +508,12 @@ public class NCController {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
 		cal.add(Calendar.MONTH, -1);
-		d = Util.toDate(cal);
+		d = DateUtil.toDate(cal);
 		Date targetDate = d;
 		List<Object[]> rs = ncService.get15DBRs(d);
 		if (rs.isEmpty()) {
 			cal.add(Calendar.MONTH, -1);
-			d = Util.toDate(cal);
+			d = DateUtil.toDate(cal);
 			rs = ncService.get15DBRs(d);
 		}
 		if (!rs.isEmpty()) {
@@ -547,7 +547,7 @@ public class NCController {
 	@Scheduled(cron = "0 0 10 1-2 * ?")
 	public void scheduleImport15DB() {
 		Calendar cal = Calendar.getInstance();
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		this.import15DB(d);
 	}
 }

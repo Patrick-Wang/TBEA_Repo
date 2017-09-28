@@ -26,6 +26,7 @@ import com.tbea.ic.operation.common.excel.ExcelTemplate;
 import com.tbea.ic.operation.common.excel.WgcpqkSheetType;
 import com.tbea.ic.operation.service.wgcpqk.yclbfqk.YclbfqkService;
 import com.tbea.ic.operation.service.wgcpqk.yclbfqk.YclbfqkServiceImpl;
+import com.util.tools.DateUtil;
 import com.xml.frame.report.util.ExcelHelper;
 import com.xml.frame.report.util.v2.core.DefaultMatcher;
 import com.xml.frame.report.util.v2.core.EmptyFormatter;
@@ -146,7 +147,7 @@ public class YclbfqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		if (request.getParameter("date") != null){
 			d = Date.valueOf(request.getParameter("date"));
 		}
@@ -162,7 +163,7 @@ public class YclbfqkServlet {
 	public void scheduleImport(){
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		yclbfqkService.importDlYclbfqk(d);
 		yclbfqkService.importXlYclbfqk(d);
 	}

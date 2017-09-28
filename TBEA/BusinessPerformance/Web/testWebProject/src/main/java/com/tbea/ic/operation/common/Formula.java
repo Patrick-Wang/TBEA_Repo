@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import com.util.tools.ListUtil;
 import com.util.tools.Pair;
 
 public class Formula {
@@ -140,7 +141,7 @@ public class Formula {
 		if (null != val) {
 			
 			if (!values.containsKey(group)){
-				values.put(group, Util.resize(new ArrayList<Double>(), params.size()));
+				values.put(group, ListUtil.resize(new ArrayList<Double>(), params.size()));
 			}
 
 			int index = params.indexOf(param);

@@ -10,12 +10,13 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.entity.HKJHJG;
 import com.tbea.ic.operation.model.entity.QYZJK;
+import com.util.tools.DateUtil;
+
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 
 @Repository
@@ -33,7 +34,7 @@ public class HKJHJGDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements H
 	public List<HKJHJG> getHkjhjg(Date d, Company comp) {
 		Query q = getEntityManager().createQuery("select h from HKJHJG h where h.qybh = :compId and h.ny = :ny");
 		q.setParameter("compId", comp.getId());
-		q.setParameter("ny", Util.format(d));
+		q.setParameter("ny", DateUtil.month1(d));
 		return q.getResultList();
 	}
 
@@ -53,7 +54,7 @@ public class HKJHJGDaoImpl  extends AbstractReadWriteDaoImpl<QYZJK> implements H
 	@Override
 	public List<HKJHJG> getHkjhjg(Date d, List<Company> comps) {
 		Query q = getEntityManager().createQuery("select h from HKJHJG h where h.qybh in (" + Util.toString(comps) + ") and h.ny = :ny");
-		q.setParameter("ny", Util.format(d));
+		q.setParameter("ny", DateUtil.month1(d));
 		return q.getResultList();
 	}
 

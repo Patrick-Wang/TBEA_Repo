@@ -1,9 +1,9 @@
 package com.tbea.ic.operation.service.entry.zbCalculator.requesthandler;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.MathUtil;
-import com.tbea.ic.operation.common.RequestHandler;
 import com.tbea.ic.operation.service.entry.zbCalculator.Request;
+import com.util.tools.MathUtil;
+import com.util.tools.RequestHandler;
 
 public class SumRequestHandler extends RequestHandler<Request>{
 

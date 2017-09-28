@@ -1,7 +1,7 @@
 package com.tbea.ic.operation.service.blhtdqqkhz;
 
-import java.util.Calendar;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.blhtdqqkhz.BLHTDQQKHZDao;
 import com.tbea.ic.operation.model.entity.BLHTDQQKHZ;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -36,7 +37,7 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 		BLHTDQQKHZ fourMonthLaterbl = null;
 		int monthDelta;
 		for (BLHTDQQKHZ bl : list){
-			monthDelta = compareDateMonth((Date)Util.valueOf(bl.getNy()), date);
+			monthDelta = compareDateMonth((Date)DateUtil.fromMonth1(bl.getNy()), date);
 			if (monthDelta == -1){//n-1 month
 				
 				result[0][0] = 
@@ -147,7 +148,7 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 		int month = 0;
 		Calendar time = Calendar.getInstance();
 		for (BLHTDQQKHZ bl : list) {
-			time.setTime(Util.valueOf(bl.getNy()));
+			time.setTime(DateUtil.fromMonth1(bl.getNy()));
 			if (time.get(Calendar.YEAR) < cal.get(Calendar.YEAR)) {
 				curYear = 0;
 			} else {
@@ -190,7 +191,7 @@ public class BLHTDQQKHZServiceImpl implements BLHTDQQKHZService {
 		Date d = Date.valueOf(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-1");
 		BLHTDQQKHZ blht = blDao.getLatestBl(d);
 		if (null != blht){
-			cal.setTime((Date) Util.valueOf(blht.getNy()));
+			cal.setTime((Date) DateUtil.fromMonth1(blht.getNy()));
 			cal.add(Calendar.MONTH, 1);
 			return Date.valueOf(cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-1");
 		}

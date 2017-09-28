@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.eva.EVADao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.EVAEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 
 @Component
@@ -43,7 +43,7 @@ public class EVADataStorage implements DataStorage<EVAEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (EVAEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToDay(entity.getDate()));
+			list.add(DateUtil.day(entity.getDate()));
 			list.add("" + entity.getBjyj142());
 			list.add("" + entity.getBjyj183());
 			list.add("" + entity.getYbV5110J());

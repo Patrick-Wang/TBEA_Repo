@@ -2,7 +2,6 @@ package com.tbea.ic.operation.service.entry.zbInjector;
 
 import java.util.Calendar;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
@@ -10,6 +9,7 @@ import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.sjzb.SJZBDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
 import com.tbea.ic.operation.model.entity.jygk.SJZB;
+import com.util.tools.DateUtil;
 
 class SjZbInjector extends ZbInjector {
 	
@@ -25,7 +25,7 @@ class SjZbInjector extends ZbInjector {
 	public void inject(Integer zbId, Double val, Calendar cal, Company comp, 
 			ZBStatus status, Calendar time) {
 		boolean newEntity = false;;
-		SJZB zb = sjzbDao.getZb(zbId, Util.toDate(cal), comp);
+		SJZB zb = sjzbDao.getZb(zbId, DateUtil.toDate(cal), comp);
 		if (null == zb){
 			newEntity = true;
 			zb = new SJZB();
@@ -58,7 +58,7 @@ class SjZbInjector extends ZbInjector {
 	@Override
 	public Double remove(Integer zbId, Calendar cal, Company comp) {
 		Double ret = null;
-		SJZB zb = sjzbDao.getZb(zbId, Util.toDate(cal), comp);
+		SJZB zb = sjzbDao.getZb(zbId, DateUtil.toDate(cal), comp);
 		if (null != zb){
 			ret = zb.getSjz();
 			sjzbDao.delete(zb);

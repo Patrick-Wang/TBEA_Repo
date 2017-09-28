@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.util.tools.DateUtil;
+
 public class EasyCalendar {
 	
 	Calendar cal;
@@ -141,28 +143,28 @@ public class EasyCalendar {
 		if (cache.containsKey(KEY_Format_Month)){
 			return (String) cache.get(KEY_Format_Month);
 		}
-		return (String) cache(KEY_Format_Month, Util.formatToMonth(this.getDate()));
+		return (String) cache(KEY_Format_Month, DateUtil.month(this.getDate()));
 	}
 	
 	public String getFormat(){
 		if (cache.containsKey(KEY_Format)){
 			return (String) cache.get(KEY_Format);
 		}
-		return (String) cache(KEY_Format, Util.formatToDay(this.getDate()));
+		return (String) cache(KEY_Format, DateUtil.day(this.getDate()));
 	}
 	
 	public String getSecondFormat(){
 		if (cache.containsKey(KEY_Format_Second)){
 			return (String) cache.get(KEY_Format_Second);
 		}
-		return (String) cache(KEY_Format_Second, Util.formatToSecond(this.getTimestamp()));
+		return (String) cache(KEY_Format_Second, DateUtil.second(this.getTimestamp()));
 	}
 	
 	public String getMsFormat(){
 		if (cache.containsKey(KEY_Format_MS)){
 			return (String) cache.get(KEY_Format_MS);
 		}
-		return (String) cache(KEY_Format_MS, Util.formatToMill(this.getTimestamp()));
+		return (String) cache(KEY_Format_MS, DateUtil.millsecond(this.getTimestamp()));
 	}
 	
 	public EasyCalendar getSunday(){

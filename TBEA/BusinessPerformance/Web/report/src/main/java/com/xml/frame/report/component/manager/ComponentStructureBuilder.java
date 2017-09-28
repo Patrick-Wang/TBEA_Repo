@@ -5,9 +5,9 @@ import java.util.Stack;
 
 import org.w3c.dom.Element;
 
+import com.util.tools.Data;
+import com.util.tools.DataNode;
 import com.xml.frame.report.component.manager.loader.ConfigLoadedListener;
-import com.xml.frame.report.util.Data;
-import com.xml.frame.report.util.DataNode;
 
 public class ComponentStructureBuilder implements ConfigLoadedListener {
 

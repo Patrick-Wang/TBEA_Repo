@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.tbea.ic.operation.common.GSZB;
-import com.tbea.ic.operation.common.RequestHandler;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.service.entry.zbCalculator.Request;
 import com.tbea.ic.operation.service.entry.zbCalculator.requesthandler.NdjhzbStatusUpdaterFilter;
 import com.tbea.ic.operation.service.entry.zbCalculator.requesthandler.RatioRequestHandler;
+import com.util.tools.RequestHandler;
 
 public class CalculatedZbManager {
 	final static Set<Integer> defaultZbs = new HashSet<Integer>();

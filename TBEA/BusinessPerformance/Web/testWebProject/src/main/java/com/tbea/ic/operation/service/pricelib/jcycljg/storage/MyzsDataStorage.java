@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.myzs.MyzsDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.MyzsEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 @Component
 public class MyzsDataStorage implements DataStorage<MyzsEntity>,
@@ -40,7 +40,7 @@ public class MyzsDataStorage implements DataStorage<MyzsEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (MyzsEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToDay(entity.getDate()));
+			list.add(DateUtil.day(entity.getDate()));
 			list.add("" + entity.getMyzs());
 			result.add(list);
 		}

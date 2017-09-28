@@ -16,9 +16,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.util.tools.DateUtil;
 import com.util.tools.xml.Loop;
 import com.util.tools.xml.XmlWalker;
-import com.xml.frame.report.util.Util;
 
 public abstract class AbstractConfigLoader implements ConfigLoader{
 
@@ -79,7 +79,7 @@ public abstract class AbstractConfigLoader implements ConfigLoader{
 			try {
 				
 				notifyOnEnterFile(file.getAbsolutePath());
-				System.out.println(Util.formatToSecond(new Timestamp(Calendar.getInstance().getTimeInMillis())) + " : load config file " + pathFromComponent(file.getAbsolutePath()));
+				System.out.println(DateUtil.second(new Timestamp(Calendar.getInstance().getTimeInMillis())) + " : load config file " + pathFromComponent(file.getAbsolutePath()));
 				String path = file.getAbsolutePath();
 				DocumentBuilder builder = getBuilder();
 				Document doc = builder.parse(file);

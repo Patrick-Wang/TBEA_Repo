@@ -10,12 +10,12 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
-
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.entity.XLNWFKFS;
 import com.tbea.ic.operation.model.entity.YSZKJGQK;
+import com.util.tools.DateUtil;
+
+import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
 @Repository
 @Transactional("transactionManager")
@@ -32,7 +32,7 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 	public List<YSZKJGQK> getYszkjg(Calendar cal, Company comp) {
 		Query q = getEntityManager().createQuery(
 				"select y from YSZKJGQK y where y.ny = ?1 and y.qybh = ?2");
-		q.setParameter(1, Util.format(cal.getTime()));
+		q.setParameter(1, DateUtil.month1(cal.getTime()));
 		q.setParameter(2, comp.getId());
 		return q.getResultList();
 	}
@@ -51,10 +51,10 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		Calendar curYear = Calendar.getInstance();
 		curYear.set(cal.get(Calendar.YEAR), 0, 1);
 
-		q.setParameter(1, Util.format(preYear.getTime()));
-		q.setParameter(2, Util.format(preYearMonth.getTime()));
-		q.setParameter(3, Util.format(curYear.getTime()));
-		q.setParameter(4, Util.format(cal.getTime()));
+		q.setParameter(1, DateUtil.month1(preYear.getTime()));
+		q.setParameter(2, DateUtil.month1(preYearMonth.getTime()));
+		q.setParameter(3, DateUtil.month1(curYear.getTime()));
+		q.setParameter(4, DateUtil.month1(cal.getTime()));
 		q.setParameter(5, comp.getId());
 		return q.getResultList();
 
@@ -73,10 +73,10 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		Calendar curYear = Calendar.getInstance();
 		curYear.set(cal.get(Calendar.YEAR), 0, 1);
 
-		q.setParameter(1, Util.format(preYear.getTime()));
-		q.setParameter(2, Util.format(preYearMonth.getTime()));
-		q.setParameter(3, Util.format(curYear.getTime()));
-		q.setParameter(4, Util.format(cal.getTime()));
+		q.setParameter(1, DateUtil.month1(preYear.getTime()));
+		q.setParameter(2, DateUtil.month1(preYearMonth.getTime()));
+		q.setParameter(3, DateUtil.month1(curYear.getTime()));
+		q.setParameter(4, DateUtil.month1(cal.getTime()));
 		q.setParameter(5, comp.getId());
 		return q.getResultList();
 	}
@@ -108,7 +108,7 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 	public List<YSZKJGQK> getYszkjg(Calendar cal, List<Company> comps) {
 		Query q = getEntityManager().createQuery(
 				"select y from YSZKJGQK y where y.ny = :date and y.qybh in (" + Util.toString(comps) + ")");
-		q.setParameter("date", Util.format(cal.getTime()));
+		q.setParameter("date", DateUtil.month1(cal.getTime()));
 		return q.getResultList();
 	}
 
@@ -124,10 +124,10 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		Calendar curYear = Calendar.getInstance();
 		curYear.set(cal.get(Calendar.YEAR), 0, 1);
 
-		q.setParameter("preYear", Util.format(preYear.getTime()));
-		q.setParameter("preYearMonth", Util.format(preYearMonth.getTime()));
-		q.setParameter("curYear", Util.format(curYear.getTime()));
-		q.setParameter("curYearMonth", Util.format(cal.getTime()));
+		q.setParameter("preYear", DateUtil.month1(preYear.getTime()));
+		q.setParameter("preYearMonth", DateUtil.month1(preYearMonth.getTime()));
+		q.setParameter("curYear", DateUtil.month1(curYear.getTime()));
+		q.setParameter("curYearMonth", DateUtil.month1(cal.getTime()));
 
 		return q.getResultList();
 
@@ -146,10 +146,10 @@ public class YSZKJGQKDaoImpl extends AbstractReadWriteDaoImpl<YSZKJGQK>
 		Calendar curYear = Calendar.getInstance();
 		curYear.set(cal.get(Calendar.YEAR), 0, 1);
 
-		q.setParameter(1, Util.format(preYear.getTime()));
-		q.setParameter(2, Util.format(preYearMonth.getTime()));
-		q.setParameter(3, Util.format(curYear.getTime()));
-		q.setParameter(4, Util.format(cal.getTime()));
+		q.setParameter(1, DateUtil.month1(preYear.getTime()));
+		q.setParameter(2, DateUtil.month1(preYearMonth.getTime()));
+		q.setParameter(3, DateUtil.month1(curYear.getTime()));
+		q.setParameter(4, DateUtil.month1(cal.getTime()));
 		return q.getResultList();
 	}
 

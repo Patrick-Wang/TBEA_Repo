@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tbea.ic.operation.common.CompanySelection;
 import com.tbea.ic.operation.common.DateSelection;
 import com.tbea.ic.operation.common.Url;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
@@ -29,6 +28,7 @@ import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
 import com.tbea.ic.operation.service.wgcpqk.WgcpqkService;
+import com.util.tools.DateUtil;
 
 @Controller
 @RequestMapping(value = "wgcpqk")
@@ -78,7 +78,7 @@ public class WgcpqkServlet {
 		Calendar cal = Calendar.getInstance();
 		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 
 		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompanyByType(CompanyType.SBGS));
 		wgcpqkService.importByqFromNC(d, companyManager.getBMDBOrganization().getCompanyByType(CompanyType.HBGS));
@@ -96,7 +96,7 @@ public class WgcpqkServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		if (!(request.getParameter("date") == null)){
 			d = Date.valueOf(request.getParameter("date"));
 		}

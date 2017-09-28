@@ -3,6 +3,8 @@ package com.tbea.ic.operation.common;
 import java.sql.Date;
 import java.util.Calendar;
 
+import com.util.tools.DateUtil;
+
 public class DateHelper {
 	private Date cur;
 	private Date qntq;
@@ -32,63 +34,63 @@ public class DateHelper {
 		
 		cal.setTime(jdStart);
 		cal.add(Calendar.YEAR, -1);
-		qntqJdStart = Util.toDate(cal);
+		qntqJdStart = DateUtil.toDate(cal);
 
 		cal.setTime(qntqJdStart);
 		cal.add(Calendar.MONTH, 2);
-		qntqJdEnd = Util.toDate(cal);
+		qntqJdEnd = DateUtil.toDate(cal);
 
 		cal.setTime(date);
 		cal.add(Calendar.YEAR, -1);
-		qntq = Util.toDate(cal);
+		qntq = DateUtil.toDate(cal);
 
 		cal.setTime(date);
 		cal.set(Calendar.MONTH, 0);
-		firstMonth = Util.toDate(cal);
+		firstMonth = DateUtil.toDate(cal);
 
 		cal.setTime(qntq);
 		cal.set(Calendar.MONTH, 0);
-		qnfirstMonth = Util.toDate(cal);
+		qnfirstMonth = DateUtil.toDate(cal);
 
 		cal.setTime(jdStart);
 		cal.add(Calendar.MONTH, 1);
-		secondMonthinSeason = Util.toDate(cal);
+		secondMonthinSeason = DateUtil.toDate(cal);
 
 		cal.setTime(jdStart);
 		cal.add(Calendar.MONTH, 2);
-		lastMonthinSeason = Util.toDate(cal);
+		lastMonthinSeason = DateUtil.toDate(cal);
 
 		cal.setTime(lastMonthinSeason);
 		cal.add(Calendar.MONTH, 1);
-		xjdFirstMonth = Util.toDate(cal);
+		xjdFirstMonth = DateUtil.toDate(cal);
 
 		cal.setTime(lastMonthinSeason);
 		cal.add(Calendar.MONTH, 2);
-		xjdSecondMonth = Util.toDate(cal);
+		xjdSecondMonth = DateUtil.toDate(cal);
 
 		cal.setTime(lastMonthinSeason);
 		cal.add(Calendar.MONTH, 3);
-		xjdLastMonth = Util.toDate(cal);
+		xjdLastMonth = DateUtil.toDate(cal);
 
 		cal.setTime(qntqJdStart);
 		cal.add(Calendar.MONTH, 3);
-		qntqXjdFirstMonth = Util.toDate(cal);
+		qntqXjdFirstMonth = DateUtil.toDate(cal);
 
 		cal.setTime(qntqXjdFirstMonth);
 		cal.add(Calendar.MONTH, 1);
-		qntqXjdSecondMonth = Util.toDate(cal);
+		qntqXjdSecondMonth = DateUtil.toDate(cal);
 
 		cal.setTime(qntqXjdSecondMonth);
 		cal.add(Calendar.MONTH, 1);
-		qntqXjdLastMonth = Util.toDate(cal);
+		qntqXjdLastMonth = DateUtil.toDate(cal);
 
 		cal.setTime(xjdLastMonth);
 		cal.set(Calendar.MONTH, 0);
-		xjdDnFirstMonth = Util.toDate(cal);
+		xjdDnFirstMonth = DateUtil.toDate(cal);
 
 		cal.setTime(qntqXjdLastMonth);
 		cal.set(Calendar.MONTH, 0);
-		qntqXjdDnFirstMonth = Util.toDate(cal);
+		qntqXjdDnFirstMonth = DateUtil.toDate(cal);
 	}
 
 	public Date getSecondMonthinSeason() {
@@ -186,7 +188,7 @@ public class DateHelper {
 		cal.setTime(d);
 		int month = cal.get(Calendar.MONTH) + 1;
 		cal.set(Calendar.MONTH, (getJdCount(month) - 1) * 3);
-		return Util.toDate(cal);
+		return DateUtil.toDate(cal);
 	}
 	
 	public static Date getJdMiddle(Date d){
@@ -194,7 +196,7 @@ public class DateHelper {
 		cal.setTime(d);
 		int month = cal.get(Calendar.MONTH) + 1;
 		cal.set(Calendar.MONTH, (getJdCount(month) - 1) * 3 + 1);
-		return Util.toDate(cal);
+		return DateUtil.toDate(cal);
 	}
 	
 	public static Date getJdEnd(Date d){
@@ -202,20 +204,20 @@ public class DateHelper {
 		cal.setTime(d);
 		int month = cal.get(Calendar.MONTH) + 1;
 		cal.set(Calendar.MONTH, (getJdCount(month) - 1) * 3 + 2);
-		return Util.toDate(cal);
+		return DateUtil.toDate(cal);
 	}
 	
 	public Date getPreMonth(){
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(this.cur);
 		cal.add(Calendar.MONTH, -1);
-		return Util.toDate(cal);
+		return DateUtil.toDate(cal);
 	}
 	
 	public static Date getFirstDayOfMonth(Date date){
 		Calendar calTmp = Calendar.getInstance();
 		calTmp.setTime(date);
 		calTmp.set(Calendar.DAY_OF_MONTH, 1);
-		return Util.toDate(calTmp);
+		return DateUtil.toDate(calTmp);
 	}
 }

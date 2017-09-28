@@ -43,6 +43,7 @@ import com.tbea.ic.operation.model.entity.ExtendAuthority.AuthType;
 import com.tbea.ic.operation.service.chgb.ChgbService;
 import com.tbea.ic.operation.service.chgb.ChgbServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
+import com.util.tools.DateUtil;
 import com.xml.frame.report.util.ExcelHelper;
 import com.xml.frame.report.util.excel.FormatterHandler;
 import com.xml.frame.report.util.excel.HeaderFormatterHandler;
@@ -497,7 +498,7 @@ public class ChgbServlet {
 		Calendar cal = Calendar.getInstance();
 		System.out.println(cal.getTime().toLocaleString() + "yszkgb import data from NC");
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 
 		chgbService.importZbmFromNC(d, NCCOMPS);
 		chgbService.importNychFromNC(d, NCCOMPS4NYCH);
@@ -508,7 +509,7 @@ public class ChgbServlet {
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.MONTH, -1);
-		Date d = Util.toDate(cal);
+		Date d = DateUtil.toDate(cal);
 		if (!(request.getParameter("date") == null)){
 			d = Date.valueOf(request.getParameter("date"));
 		}

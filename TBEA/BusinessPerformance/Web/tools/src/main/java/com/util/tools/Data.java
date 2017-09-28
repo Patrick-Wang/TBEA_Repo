@@ -1,4 +1,4 @@
-package com.xml.frame.report.util;
+package com.util.tools;
 
 public class Data {
 	Integer id;

@@ -134,9 +134,10 @@ EXEC	addAuth '155165' , 92, '4,404,5,501,502,503,511,6,601,602,603,604'
 
 delete from system_extend_auth_t where authId in (89,90,91,92) and companyId in (select id from jygk_dwxx where parent_ID = 12345)
 
+
+
+
 EXEC	addAuth '130182' , 94, '1,101,102,103,104,105,107,108,112,115,116,2,106,201,202,203,204,205,206,207,3,301,302,303,304,305,306,310,4,404,5,501,502,503,511,6,601,602,603,604'
-
-
 EXEC	addAuth '155165' , 94, '1,101,102,103,104,105,107,108,112,115,116,2,106,201,202,203,204,205,206,207,3,301,302,303,304,305,306,310,4,404,5,501,502,503,511,6,601,602,603,604'
 delete from system_extend_auth_t where authId in (94, 93) and companyId in (select id from jygk_dwxx where parent_ID = 12345)
 

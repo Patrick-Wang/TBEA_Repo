@@ -20,12 +20,10 @@ import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.common.companys.Organization;
 import com.tbea.ic.operation.model.dao.cb.XLCBDao;
 import com.tbea.ic.operation.model.dao.cb.XMXXDao;
-import com.tbea.ic.operation.model.entity.CBBYQTBDD;
-import com.tbea.ic.operation.model.entity.CBBYQWGDD;
-import com.tbea.ic.operation.model.entity.CBBYQZXDD;
 import com.tbea.ic.operation.model.entity.CBXLTBDD;
 import com.tbea.ic.operation.model.entity.CBXLWGDD;
 import com.tbea.ic.operation.model.entity.XMXX;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -267,7 +265,7 @@ public class XLCBServiceImpl implements XLCBService{
 			xlcbwgdd = xlcbwgdds.get(i);
 			if (xlcbwgdd.getWgsj() != null) {
 				try {
-					tmpCal.setTime(Util.toDate(xlcbwgdd.getWgsj()));
+					tmpCal.setTime(DateUtil.toDate(xlcbwgdd.getWgsj()));
 					Double wg_zccb = xlcbwgdd.getLyl() * xlcbwgdd.getSjlvdj()
 							+ xlcbwgdd.getDjtyl() * xlcbwgdd.getDjtdj();// 投标五大主材成本
 					Double sjzcb = wg_zccb + xlcbwgdd.getQtcbhj() + 0.0;
@@ -359,7 +357,7 @@ public class XLCBServiceImpl implements XLCBService{
 	public Date getLatestWgDate() {
 		CBXLWGDD wgdd = xlDao.getLatestWgdd();
 		if (null != wgdd){
-			return Util.toDate(wgdd.getWgsj());
+			return DateUtil.toDate(wgdd.getWgsj());
 		}
 		return null;
 	}

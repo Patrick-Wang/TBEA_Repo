@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.DateHelper;
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.ZBType;
 import com.tbea.ic.operation.common.companys.Company;
@@ -40,6 +39,7 @@ import com.tbea.ic.operation.model.entity.jygk.YJ20ZB;
 import com.tbea.ic.operation.model.entity.jygk.YJ28ZB;
 import com.tbea.ic.operation.model.entity.jygk.ZBXX;
 import com.tbea.ic.operation.service.entry.EntryServiceImpl;
+import com.util.tools.DateUtil;
 
 @Service
 @Transactional("transactionManager")
@@ -187,7 +187,7 @@ public class ApproveServiceImpl implements ApproveService {
 		cal.setTime(DateHelper.getJdStart(date));
 		ZBDispatcher dispatcher = new ZBDispatcher(6);
 		for (int m = 0; m < 3; ++m) {
-			Date d = Util.toDate(cal);
+			Date d = DateUtil.toDate(cal);
 			for (Company comp : comps) {
 				ZBStatus status = ydjhzbDao.getZbStatus(d, comp);
 
@@ -746,6 +746,7 @@ public class ApproveServiceImpl implements ApproveService {
 					time = yj28zbDao.getApprovedTime(date, comp);
 					break;
 				case BYSJ:
+					
 					time = sjzbDao.getApprovedTime(date, comp);
 					break;
 				case NDJH:
@@ -757,7 +758,7 @@ public class ApproveServiceImpl implements ApproveService {
 				}
 
 				result.add(new String[] { comp.getName(), "true",
-						null != time ? Util.formatToSecond(time) : null });
+						null != time ? DateUtil.second(time) : null });
 			} else {
 				result.add(new String[] { comp.getName(), "false", null });
 			}

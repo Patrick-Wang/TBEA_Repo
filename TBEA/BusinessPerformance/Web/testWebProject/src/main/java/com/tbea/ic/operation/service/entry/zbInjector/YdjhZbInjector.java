@@ -2,15 +2,14 @@ package com.tbea.ic.operation.service.entry.zbInjector;
 
 import java.util.Calendar;
 
-import com.tbea.ic.operation.common.Util;
+import com.tbea.ic.operation.common.ZBStatus;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.jygk.dwxx.DWXXDao;
 import com.tbea.ic.operation.model.dao.jygk.shzt.SHZTDao;
 import com.tbea.ic.operation.model.dao.jygk.ydjhzb.YDJHZBDao;
 import com.tbea.ic.operation.model.dao.jygk.zbxx.ZBXXDao;
-import com.tbea.ic.operation.model.entity.jygk.NDJHZB;
 import com.tbea.ic.operation.model.entity.jygk.YDJHZB;
-import com.tbea.ic.operation.common.ZBStatus;
+import com.util.tools.DateUtil;
 
 class YdjhZbInjector extends ZbInjector {
 
@@ -26,7 +25,7 @@ class YdjhZbInjector extends ZbInjector {
 	public void inject(Integer zbId, Double val, Calendar cal, Company comp, ZBStatus status
 			, Calendar time) {
 		boolean newEntity = false;
-		YDJHZB zb = ydjhzbDao.getZb(zbId, Util.toDate(cal), comp);
+		YDJHZB zb = ydjhzbDao.getZb(zbId, DateUtil.toDate(cal), comp);
 		if (null == zb){
 			newEntity = true;
 			zb = new YDJHZB();
@@ -59,7 +58,7 @@ class YdjhZbInjector extends ZbInjector {
 
 	@Override
 	public Double remove(Integer zbId, Calendar cal, Company comp) {
-		YDJHZB zb = ydjhzbDao.getZb(zbId, Util.toDate(cal), comp);
+		YDJHZB zb = ydjhzbDao.getZb(zbId, DateUtil.toDate(cal), comp);
 		Double ret = null;
 		if (null != zb){
 			ret = zb.getYdjhz();

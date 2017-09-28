@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.util.pipe.core.IPipe;
+import com.util.tools.MathUtil;
 
 public class ZzlPipeFilter extends AbstractPipeFilter {
 	List<Integer[]> zzls = new ArrayList<Integer[]>();
@@ -34,10 +34,10 @@ public class ZzlPipeFilter extends AbstractPipeFilter {
 			zzl = zzls.get(i);
 			if (null == zbRow[zzl[1]] || 
 				null == zbRow[zzl[2]] || 
-				Util.isNegative(zbRow[zzl[2]]) ||
-				Util.isNegative(zbRow[zzl[1]]) ||
-				Util.isZero(zbRow[zzl[1]]) ||
-				Util.isZero(zbRow[zzl[2]])) {
+				MathUtil.isNegative(zbRow[zzl[2]]) ||
+				MathUtil.isNegative(zbRow[zzl[1]]) ||
+				MathUtil.isZero(zbRow[zzl[1]]) ||
+				MathUtil.isZero(zbRow[zzl[2]])) {
 				zbRow[zzl[0]] = null;
 			} else {
 				zbRow[zzl[0]] = zbRow[zzl[1]] / zbRow[zzl[2]] - 1;

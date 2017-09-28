@@ -7,10 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.model.dao.pricelib.jcycljg.ysjs.YsjsDao;
 import com.tbea.ic.operation.model.entity.pricelib.jcycljg.YsjsEntity;
 import com.tbea.ic.operation.service.pricelib.jcycljg.JcycljgType;
+import com.util.tools.DateUtil;
 
 @Component
 public class YsjsDataStorage implements DataStorage<YsjsEntity>,
@@ -45,7 +45,7 @@ public class YsjsDataStorage implements DataStorage<YsjsEntity>,
 		List<List<String>> result = new ArrayList<List<String>>();
 		for (YsjsEntity entity : entitys) {
 			List<String> list = new ArrayList<String>();
-			list.add(Util.formatToDay(entity.getDate()));
+			list.add(DateUtil.day(entity.getDate()));
 			list.add("" + entity.getCjxhCu());
 			list.add("" + entity.getCjxhAl());
 			list.add("" + entity.getCjxhZn());

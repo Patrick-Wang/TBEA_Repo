@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tbea.ic.operation.common.MathUtil;
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
 import com.tbea.ic.operation.model.dao.cwyjsf.yjsf.YjsfDao;
@@ -21,6 +20,8 @@ import com.tbea.ic.operation.model.dao.identifier.cwyjsf.sz.SzDaoImpl;
 import com.tbea.ic.operation.model.entity.cwyjsf.YjsfEntity;
 import com.tbea.ic.operation.model.entity.cwyjsf.YjsfNdqcsEntity;
 import com.tbea.ic.operation.model.entity.identifier.cwyjsf.SzEntity;
+import com.util.tools.ListUtil;
+import com.util.tools.MathUtil;
 
 @Service(YjsfServiceImpl.NAME)
 @Transactional("transactionManager")
@@ -41,12 +42,12 @@ public class YjsfServiceImpl implements YjsfService {
 		List<SzEntity> szs = szDao.getAll();
 		List<List<String>> result = new ArrayList<List<String>>();
 		List<Double> hj = new ArrayList<Double>();
-		Util.resize(hj, 2 + 12 * 2);
+		ListUtil.resize(hj, 2 + 12 * 2);
 		List<String> list = null;
 		for (SzEntity sz : szs){
 			list = new ArrayList<String>();
 			result.add(list);
-			Util.resize(list, 2 + 12 * 2);
+			ListUtil.resize(list, 2 + 12 * 2);
 			list.set(0, sz.getName());
 			
 			YjsfNdqcsEntity ndqcs = yjsfNdqcsDao.getByDate(d, company, sz.getId());

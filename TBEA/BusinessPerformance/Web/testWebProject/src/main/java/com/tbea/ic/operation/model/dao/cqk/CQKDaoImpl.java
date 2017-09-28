@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.common.companys.Company;
-import com.tbea.ic.operation.model.entity.XLNWFKFS;
 import com.tbea.ic.operation.model.entity.local.CQK;
+import com.util.tools.DateUtil;
 
 import cn.com.tbea.template.model.dao.AbstractReadWriteDaoImpl;
 
@@ -44,8 +44,8 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
         preYearMonth.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
         
         Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh = ?3");
-		q.setParameter(1, Util.format(preYear.getTime()));
-		q.setParameter(2, Util.format(preYearMonth.getTime()));
+		q.setParameter(1, DateUtil.month1(preYear.getTime()));
+		q.setParameter(2, DateUtil.month1(preYearMonth.getTime()));
 		q.setParameter(3, comp.getId());
 		
 		return q.getResultList();
@@ -62,8 +62,8 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
         
    
         Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh = ?3");
-		q.setParameter(1, Util.format(curYear.getTime()));
-		q.setParameter(2, Util.format(d));
+		q.setParameter(1, DateUtil.month1(curYear.getTime()));
+		q.setParameter(2, DateUtil.month1(d));
 		q.setParameter(3, comp.getId());
 		
 		return q.getResultList();
@@ -75,7 +75,7 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
 		Query q = getEntityManager().createQuery("select c from CQK c where c.ny = ?1 and c.qybh = ?2");
 		Calendar cal = Calendar.getInstance();
         cal.setTime(d);
-		q.setParameter(1, Util.format(d));
+		q.setParameter(1, DateUtil.month1(d));
 		q.setParameter(2, comp.getId());
 		return  q.getResultList();
 	}
@@ -100,7 +100,7 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
 		Query q = getEntityManager().createQuery("select c from CQK c where c.ny = :date and c.qybh in (" + Util.toString(comps) + ")");
 		Calendar cal = Calendar.getInstance();
         cal.setTime(d);
-		q.setParameter("date", Util.format(d));
+		q.setParameter("date", DateUtil.month1(d));
 		return  q.getResultList();
 	}
 
@@ -113,8 +113,8 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
         curYear.set(cal.get(Calendar.YEAR), 0, 1);
         cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), 1);
         Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh in (" + Util.toString(comps) + ")");
-		q.setParameter(1, Util.format(curYear.getTime()));
-		q.setParameter(2, Util.format(d));
+		q.setParameter(1, DateUtil.month1(curYear.getTime()));
+		q.setParameter(2, DateUtil.month1(d));
 
 		return q.getResultList();
 	}
@@ -129,8 +129,8 @@ public class CQKDaoImpl extends AbstractReadWriteDaoImpl<CQK> implements
         Calendar preYearMonth = Calendar.getInstance();
         preYearMonth.set(cal.get(Calendar.YEAR) - 1, cal.get(Calendar.MONTH), 1);
         Query q = getEntityManager().createQuery("select c from CQK c where c.ny >= ?1 and c.ny <= ?2 and c.qybh in (" + Util.toString(comps) + ")");
-		q.setParameter(1, Util.format(preYear.getTime()));
-		q.setParameter(2, Util.format(preYearMonth.getTime()));
+		q.setParameter(1, DateUtil.month1(preYear.getTime()));
+		q.setParameter(2, DateUtil.month1(preYearMonth.getTime()));
 		return q.getResultList();
 	}
 

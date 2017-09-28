@@ -130,12 +130,14 @@
   <context key="item2" value="${request.item2.asInt}"/>
   <if test="${dwid &lt; 11111110}">
    <context key="dwmc" value="${compMgr.BMDBOrganization.companyById[dwid].name}"/>
+   <context key="exportDwmc" value="${dwmc}"/>
   </if>
   <else>
    <context key="dwid" value="${dwid - 11111110}"/>
    <list export="true" id="dwmc" type="string">${compMgr.BMDBOrganization.companyById[dwid].name}
 	  	<item concat="${companyHelper.names[compMgr.BMDBOrganization.companyById[dwid].subCompanies]}"/>
    </list>
+   <context key="exportDwmc" value="${dwmc[0]}（整体）"/>
   </else>
   <context key="cal" value="${request.date.asCalendar}"/>
   <if test="${item2==1}">

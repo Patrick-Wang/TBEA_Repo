@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import net.sf.json.JSONArray;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +18,9 @@ import com.tbea.ic.operation.model.entity.jygk.Account;
 import com.tbea.ic.operation.model.entity.jygk.DWXX;
 import com.tbea.ic.operation.model.entity.jygk.YSDAILY;
 import com.tbea.ic.operation.model.entity.jygk.YSDAILYPK;
+import com.util.tools.DateUtil;
+
+import net.sf.json.JSONArray;
 
 
 
@@ -68,7 +69,7 @@ public class DailyReportServiceImpl implements DailyReportService{
 			cal.set(Calendar.DAY_OF_MONTH, 1);
 			int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 			while (maxDay > 0){
-				Date tmpDate = Util.toDate(cal);
+				Date tmpDate = DateUtil.toDate(cal);
 				daily = ysdailyDao.getYsdaily(tmpDate, dwxx);
 				if (daily == null){
 					daily = new YSDAILY();
