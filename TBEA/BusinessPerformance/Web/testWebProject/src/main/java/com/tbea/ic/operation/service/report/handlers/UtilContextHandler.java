@@ -17,7 +17,6 @@ import com.tbea.ic.operation.common.companys.BMDepartmentDB;
 import com.tbea.ic.operation.common.companys.CompanyManager;
 import com.tbea.ic.operation.common.companys.CompanyType;
 import com.tbea.ic.operation.controller.servlet.report.Arrays;
-import com.tbea.ic.operation.controller.servlet.report.CompanyTypeHelper;
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
 import com.tbea.ic.operation.controller.servlet.report.Counter;
 import com.tbea.ic.operation.controller.servlet.report.GroupSum;
@@ -31,6 +30,8 @@ import com.tbea.ic.operation.model.dao.jygk.yj28zb.YJ28ZBDao;
 import com.tbea.ic.operation.model.dao.jygk.yjzbzt.YDZBZTDao;
 import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
+import com.tbea.ic.operation.service.report.CompanyHelper;
+import com.tbea.ic.operation.service.report.CompanyTypeHelper;
 import com.tbea.ic.operation.service.report.ComponentManagerServiceImpl;
 import com.tbea.ic.operation.service.report.HBWebService;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
@@ -126,7 +127,7 @@ public class UtilContextHandler implements ContextHandler {
 		context.put("sjImporter", sjImporter);
 		
 		context.put("companyTypeHelper", new CompanyTypeHelper());
-		
+		context.put("companyHelper", new CompanyHelper());
 		
 		context.put("NCCode", new CompanyNCCode());
 		context.put("Code15", new Company15Code());

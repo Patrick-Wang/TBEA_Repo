@@ -181,6 +181,23 @@ public class ListXmlInterpreter implements XmlInterpreter {
 					int repeat = XmlUtil.getIntAttr(elem, "repeat", elp, 1);
 					int insert = XmlUtil.getIntAttr(elem, "insert", elp, objs.size());
 					int index = XmlUtil.getIntAttr(elem, "index", elp, -1);
+					if (index < 0 && elem.hasAttribute("indexValue")) {
+						Object val = XmlUtil.getObjectAttr(elem, "indexValue", elp);
+						if (null != val) {
+							index = objs.indexOf(val);
+						}
+					}
+					
+					if (insert == objs.size() && elem.hasAttribute("insertValue")) {
+						Object val = XmlUtil.getObjectAttr(elem, "insertValue", elp);
+						if (null != val) {
+							insert = objs.indexOf(val);
+							if (insert < 0) {
+								insert = objs.size();
+							}
+						}
+					}
+					
 					if (concat(component, elem, objs, repeat, insert)) {
 						return;
 					}

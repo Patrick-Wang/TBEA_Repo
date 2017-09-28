@@ -572,8 +572,17 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			sb.append(" WHERE ");
 			for (FieldSql whereSql : where) {
 				sb.append(whereSql.getProp());
-				sb.append(whereSql.getOper());
-				sb.append(getQueryValue(row, whereSql, em));
+				String oper = whereSql.getOper();
+				String queryValue = getQueryValue(row, whereSql, em);
+				if ("=".equals(oper) && queryValue == null) {
+					oper = " is ";
+					queryValue = "null";
+				} else if ("!=".equals(oper) && queryValue == null) {
+					oper = " is not ";
+					queryValue = "null";
+				}
+				sb.append(oper);
+				sb.append(queryValue);
 				if (whereSql != where.get(where.size() - 1)) {
 					sb.append(" and ");
 				}

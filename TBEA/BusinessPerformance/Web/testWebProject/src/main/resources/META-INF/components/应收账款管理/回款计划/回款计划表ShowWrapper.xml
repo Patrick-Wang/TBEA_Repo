@@ -1,56 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <components>
-	<controller id="DB508EDBC9A8A56FFBDF6604877A374AShowWrapperJsp">
-		<list id="ids" type="int">
-			<item concat="${sysAuth.cids[94]}"></item>
+ <controller id="DB508EDBC9A8A56FFBDF6604877A374AShowWrapperJsp">
+  <list id="ids" type="int">
+   <item concat="${sysAuth.cids[94]}"/>
+  </list>
+  <list id="vals" type="string">
+   <item concat="${sysAuth.cnames[94]}"/>
+  </list>
+  <list id="dwids" type="int" clear="true">1
+  	<item concat="${companyHelper.ids[compMgr.BMDBOrganization.companyById[1].subCompanies]}"/>
+  </list>
+  <if test="${ids.containsAll[dwids]}">
+   <list id="vals" type="string">
+    <item insert="${ids.indexOf[1]}">${compMgr.BMDBOrganization.companyById[1].name}（整体）</item>
+   </list>
+   <list id="ids" type="int">
+    <item insertValue="${1}">11111111</item>
+   </list>
+  </if>
+  <list id="dwids" type="int" clear="true">2
+  	<item concat="${companyHelper.ids[compMgr.BMDBOrganization.companyById[2].subCompanies]}"/>
+  </list>
+  <if test="${ids.containsAll[dwids]}">
+   <list id="vals" type="string">
+    <item insert="${ids.indexOf[2]}">${compMgr.BMDBOrganization.companyById[2].name}（整体）</item>
+   </list>
+   <list id="ids" type="int">
+    <item insertValue="${2}">11111112</item>
+   </list>
+  </if>
+  <list id="dwids" type="int" clear="true">3
+  	<item concat="${companyHelper.ids[compMgr.BMDBOrganization.companyById[3].subCompanies]}"/>
+  </list>
+  <if test="${ids.containsAll[dwids]}">
+   <list id="vals" type="string">
+    <item insert="${ids.indexOf[3]}">${compMgr.BMDBOrganization.companyById[3].name}（整体）</item>
+   </list>
+   <list id="ids" type="int">
+    <item insertValue="${3}">11111113</item>
+   </list>
+  </if>
+  <list id="dwids" type="int" clear="true">4
+  	<item concat="${companyHelper.ids[compMgr.BMDBOrganization.companyById[4].subCompanies]}"/>
+  </list>
+  <if test="${ids.containsAll[dwids]}">
+   <list id="vals" type="string">
+    <item insert="${ids.indexOf[4]}">${compMgr.BMDBOrganization.companyById[4].name}（整体）</item>
+   </list>
+   <list id="ids" type="int">
+    <item insertValue="${4}">11111114</item>
+   </list>
+  </if>
+  <list id="dwids" type="int" clear="true">5
+  	<item concat="${companyHelper.ids[compMgr.BMDBOrganization.companyById[5].subCompanies]}"/>
+  </list>
+  <if test="${ids.containsAll[dwids]}">
+   <list id="vals" type="string">
+    <item insert="${ids.indexOf[5]}">${compMgr.BMDBOrganization.companyById[5].name}（整体）</item>
+   </list>
+   <list id="ids" type="int">
+    <item insertValue="${5}">11111115</item>
+   </list>
+  </if>
+  <list id="dwids" type="int" clear="true">6
+  	<item concat="${companyHelper.ids[compMgr.BMDBOrganization.companyById[6].subCompanies]}"/>
+  </list>
+  <if test="${ids.containsAll[dwids]}">
+   <list id="vals" type="string">
+    <item insert="${ids.indexOf[6]}">${compMgr.BMDBOrganization.companyById[6].name}（整体）</item>
+   </list>
+   <list id="ids" type="int">
+    <item insertValue="${6}">11111116</item>
+   </list>
+  </if>
+  <list id="dwids" type="int" clear="true">11111111,11111112,11111113,11111114,11111115,11111116
+  </list>
+  <if test="${ids.containsAll[dwids]}">
+   <list id="vals" type="string">
+    <item insert="${ids.indexOf[11111111]}">${compMgr.BMDBOrganization.companyById[0].name}（整体）</item>
+   </list>
+   <list id="ids" type="int">
+    <item insertValue="${11111111}">11111110</item>
+   </list>
+  </if>
+  <list id="ids2" type="int">1,2,3
 		</list>
-		<list id="vals" type="string">
-			<item concat="${sysAuth.cnames[94]}"></item>
+  <list id="vals2" type="string">回款计划明细,款项状态结构,款项性质结构
 		</list>
-		<list id="ids2" type="int">1,2,3
-		</list>
-		<list id="vals2" type="string">回款计划明细,款项状态结构,款项性质结构
-		</list>
-		<response name="framework/templates/dateReport/show" type="jsp">
-			<map key="updateUrl" value="DB508EDBC9A8A56FFBDF6604877A374AUpdateWrapperClr" />
-			<map key="exportUrl" value="DB508EDBC9A8A56FFBDF6604877A374AExportWrapperClr" />
-			<map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}" />
-			<map key="searchlist" value="true"></map>
-			<map key="nodeData2" value="${dataNodeFactory[ids2][vals2].asJson}" />
-			<map key="year" value="${calendar.current.year}" />
-			<map key="month" value="${calendar.current.month}" />
-		</response>
-	</controller>
-	<controller id="DB508EDBC9A8A56FFBDF6604877A374AUpdateWrapperClr">
-		<context key="dwid" value="${request.item.asInt}" />
-		<context key="item2" value="${request.item2.asInt}" />
-		<context key="dwmc"
-			value="${compMgr.BMDBOrganization.companyById[dwid].name}" />
-		<context key="cal" value="${request.date.asCalendar}" />
-		<if test="${item2==1}">
-			<callcontroller id="arReceivedPlanUpdateClr" />
-		</if>
-		<elseif test="${item2==2}">
-			<callcontroller id="arReceivedPlanStatusUpdateClr" />
-		</elseif>
-		<else>
-			<callcontroller id="arReceivedPlanUpdateClr" />
-		</else>
-	</controller>
-	<controller id="DB508EDBC9A8A56FFBDF6604877A374AExportWrapperClr">
-		<context key="dwid" value="${request.item.asInt}" />
-		<context key="item2" value="${request.item2.asInt}" />
-		<context key="dwmc"
-			value="${compMgr.BMDBOrganization.companyById[dwid].name}" />
-		<context key="cal" value="${request.date.asCalendar}" />
-		<if test="${item2==1}">
-			<callcontroller id="arReceivedPlanExportClr" />
-		</if>
-		<elseif test="${item2==2}">
-			<callcontroller id="arReceivedPlanStatusExportClr" />
-		</elseif>
-		<else>
-			<callcontroller id="arReceivedPlanExportClr" />
-		</else>
-	</controller>
+  <response name="framework/templates/dateReport/show" type="jsp">
+   <map key="updateUrl" value="DB508EDBC9A8A56FFBDF6604877A374AUpdateWrapperClr"/>
+   <map key="exportUrl" value="DB508EDBC9A8A56FFBDF6604877A374AExportWrapperClr"/>
+   <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+   <map key="searchlist" value="true"/>
+   <map key="nodeData2" value="${dataNodeFactory[ids2][vals2].asJson}"/>
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+  </response>
+ </controller>
+ <controller id="DB508EDBC9A8A56FFBDF6604877A374AUpdateWrapperClr">
+  <context key="dwid" value="${request.item.asInt}"/>
+  <context key="item2" value="${request.item2.asInt}"/>
+  <if test="${dwid &lt; 11111110}">
+   <context key="dwmc" value="${compMgr.BMDBOrganization.companyById[dwid].name}"/>
+  </if>
+  <else>
+   <context key="dwid" value="${dwid - 11111110}"/>
+   <if test="${dwid == 0}">
+    <context key="dwmc" value="${sysAuth.cnames[94]}"/>
+   </if>
+   <else>
+    <list export="true" id="dwmc" type="string">${compMgr.BMDBOrganization.companyById[dwid].name}
+	  	<item concat="${companyHelper.names[compMgr.BMDBOrganization.companyById[dwid].subCompanies]}"/>
+    </list>
+   </else>
+  </else>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <if test="${item2==1}">
+   <callcontroller id="arReceivedPlanUpdateClr"/>
+  </if>
+  <elseif test="${item2==2}">
+   <callcontroller id="arReceivedPlanStatusUpdateClr"/>
+  </elseif>
+  <else>
+   <callcontroller id="arReceivedPlanUpdateClr"/>
+  </else>
+ </controller>
+ <controller id="DB508EDBC9A8A56FFBDF6604877A374AExportWrapperClr">
+  <context key="dwid" value="${request.item.asInt}"/>
+  <context key="item2" value="${request.item2.asInt}"/>
+  <if test="${dwid &lt; 11111110}">
+   <context key="dwmc" value="${compMgr.BMDBOrganization.companyById[dwid].name}"/>
+  </if>
+  <else>
+   <context key="dwid" value="${dwid - 11111110}"/>
+   <list export="true" id="dwmc" type="string">${compMgr.BMDBOrganization.companyById[dwid].name}
+	  	<item concat="${companyHelper.names[compMgr.BMDBOrganization.companyById[dwid].subCompanies]}"/>
+   </list>
+  </else>
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <if test="${item2==1}">
+   <callcontroller id="arReceivedPlanExportClr"/>
+  </if>
+  <elseif test="${item2==2}">
+   <callcontroller id="arReceivedPlanStatusExportClr"/>
+  </elseif>
+  <else>
+   <callcontroller id="arReceivedPlanExportClr"/>
+  </else>
+ </controller>
 </components>
