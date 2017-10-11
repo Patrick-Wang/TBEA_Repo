@@ -6,20 +6,21 @@
 	sum(win_bid_gross_profit_amount) wbgpa2,
 	sum(win_bid_gross_profit_amount) / nullif(sum(jsoed.not_tax_inclusive_price),0) mll3,
 	sum(win_bid_silicon_steel_price * win_bid_silicon_steel_amount) / nullif(sum(win_bid_silicon_steel_amount), 0) wbssp4,
-	sum(win_bid_silicon_steel_amount) wbssa5,
+	sum(win_bid_silicon_steel_amount * jswbod.number) wbssa5,
 	sum(win_bid_ele_copper_price * win_bid_ele_copper_amount) / nullif(sum(win_bid_ele_copper_amount), 0) wbiop8,
-	sum(win_bid_ele_copper_amount) wbioa9,
+	sum(win_bid_ele_copper_amount * jswbod.number) wbioa9,
 	sum(win_bid_insulating_oil_price * win_bid_insulating_oil_amount) / nullif(sum(win_bid_insulating_oil_amount), 0) wwbrsp10,
-	sum(win_bid_insulating_oil_amount) wbrsa11,
+	sum(win_bid_insulating_oil_amount * jswbod.number) wbrsa11,
 	sum(win_bid_cardboard_price * win_bid_cardboard_amount) / nullif(sum(win_bid_cardboard_amount), 0) wbcp12,
-	sum(win_bid_cardboard_amount) wbca13,
+	sum(win_bid_cardboard_amount * jswbod.number) wbca13,
 	sum(win_bid_rolled_steel_price * win_bid_rolled_steel_amount) / nullif(sum(win_bid_rolled_steel_amount), 0) wbcp14,
-	sum(win_bid_rolled_steel_amount) wbca15,
+	sum(win_bid_rolled_steel_amount * jswbod.number) wbca15,
 	sum(win_bid_other_material_cost) womc16,
 	sum(win_bid_material_total) wbmt17
 
 from
-	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod,JYGK_SDDB_ORDER_EXECUTION_VIEW jsoed 
+	JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS jswbod,
+	JYGK_SDDB_ORDER_EXECUTION_VIEW jsoed 
 where
 	 jswbod.company_name in ${dwmcs} and jsoed.company_name in ${dwmcs} and jsoed.code = jswbod.code and
 	dateDiff(mm, dateadd(mm, execution_month - 1, dateadd(yy, execution_year -1900 ,'1900-1-1')), ${dStart.date}) &lt;= 0 and 
@@ -32,15 +33,15 @@ group by
 	sum(win_bid_gross_profit_amount) wbgpa2,
 	sum(win_bid_gross_profit_amount) / nullif(sum(jsoed.not_tax_inclusive_price),0) mll3,
 	sum(win_bid_silicon_steel_price * win_bid_silicon_steel_amount) / nullif(sum(win_bid_silicon_steel_amount), 0) wbssp4,
-	sum(win_bid_silicon_steel_amount) wbssa5,
+	sum(win_bid_silicon_steel_amount * jswbod.number) wbssa5,
 	sum(win_bid_ele_copper_price * win_bid_ele_copper_amount) / nullif(sum(win_bid_ele_copper_amount), 0) wbiop8,
-	sum(win_bid_ele_copper_amount) wbioa9,
+	sum(win_bid_ele_copper_amount * jswbod.number) wbioa9,
 	sum(win_bid_insulating_oil_price * win_bid_insulating_oil_amount) / nullif(sum(win_bid_insulating_oil_amount), 0) wwbrsp10,
-	sum(win_bid_insulating_oil_amount) wbrsa11,
+	sum(win_bid_insulating_oil_amount * jswbod.number) wbrsa11,
 	sum(win_bid_cardboard_price * win_bid_cardboard_amount) / nullif(sum(win_bid_cardboard_amount), 0) wbcp12,
-	sum(win_bid_cardboard_amount) wbca13,
+	sum(win_bid_cardboard_amount * jswbod.number) wbca13,
 	sum(win_bid_rolled_steel_price * win_bid_rolled_steel_amount) / nullif(sum(win_bid_rolled_steel_amount), 0) wbcp14,
-	sum(win_bid_rolled_steel_amount) wbca15,
+	sum(win_bid_rolled_steel_amount * jswbod.number) wbca15,
 	sum(win_bid_other_material_cost) womc16,
 	sum(win_bid_material_total) wbmt17
 from
@@ -58,15 +59,15 @@ where
 	sum(op_gross_profit_amount) ogpa2,
 	sum(op_gross_profit_amount) / nullif(sum(jsoed.not_tax_inclusive_price),0) mll3,
 	sum(op_unit_price_of_silicon_steel * op_quantity_of_silicon_steel) / nullif(sum(op_quantity_of_silicon_steel), 0) wbssp4,
-	sum(op_quantity_of_silicon_steel) wbssa5,
+	sum(op_quantity_of_silicon_steel * jsoed.number) wbssa5,
 	sum(op_copper_price * op_amount_of_copper) / nullif(sum(op_amount_of_copper), 0) wbiop8,
-	sum(op_amount_of_copper) wbioa9,
+	sum(op_amount_of_copper * jsoed.number) wbioa9,
 	sum(op_unit_price_of_transformer_oil * op_transformer_oil_consumption) / nullif(sum(op_transformer_oil_consumption), 0) wwbrsp10,
-	sum(op_transformer_oil_consumption) wbrsa11,
+	sum(op_transformer_oil_consumption * jsoed.number) wbrsa11,
 	sum(op_cardboard_unit_price * op_amount_of_cardboard) / nullif(sum(op_amount_of_cardboard), 0) wbcp12,
-	sum(op_amount_of_cardboard) wbca13,
+	sum(op_amount_of_cardboard * jsoed.number) wbca13,
 	sum(op_steel_price * op_steel_dosage) / nullif(sum(op_steel_dosage), 0) wbcp14,
-	sum(op_steel_dosage) wbca15,
+	sum(op_steel_dosage * jsoed.number) wbca15,
 	sum(op_other_materials) womc16,
 	sum(op_total_tax_material) wbmt17
 from
@@ -83,15 +84,15 @@ group by
 	sum(op_gross_profit_amount) ogpa2,
 	sum(op_gross_profit_amount) / nullif(sum(jsoed.not_tax_inclusive_price),0) mll3,
 	sum(op_unit_price_of_silicon_steel * op_quantity_of_silicon_steel) / nullif(sum(op_quantity_of_silicon_steel), 0) wbssp4,
-	sum(op_quantity_of_silicon_steel) wbssa5,
+	sum(op_quantity_of_silicon_steel * jsoed.number) wbssa5,
 	sum(op_copper_price * op_amount_of_copper) / nullif(sum(op_amount_of_copper), 0) wbiop8,
-	sum(op_amount_of_copper) wbioa9,
+	sum(op_amount_of_copper * jsoed.number) wbioa9,
 	sum(op_unit_price_of_transformer_oil * op_transformer_oil_consumption) / nullif(sum(op_transformer_oil_consumption), 0) wwbrsp10,
-	sum(op_transformer_oil_consumption) wbrsa11,
+	sum(op_transformer_oil_consumption * jsoed.number) wbrsa11,
 	sum(op_cardboard_unit_price * op_amount_of_cardboard) / nullif(sum(op_amount_of_cardboard), 0) wbcp12,
-	sum(op_amount_of_cardboard) wbca13,
+	sum(op_amount_of_cardboard * jsoed.number) wbca13,
 	sum(op_steel_price * op_steel_dosage) / nullif(sum(op_steel_dosage), 0) wbcp14,
-	sum(op_steel_dosage) wbca15,
+	sum(op_steel_dosage * jsoed.number) wbca15,
 	sum(op_other_materials) womc16,
 	sum(op_total_tax_material) wbmt17
 from
