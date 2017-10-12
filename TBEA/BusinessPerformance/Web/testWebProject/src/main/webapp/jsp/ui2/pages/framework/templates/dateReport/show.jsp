@@ -206,6 +206,7 @@
 					<div class="col-lg-12 col-sm-12 col-xs-12">
 							<div class="well">
 								<div id="table"></div>
+								<div id="warning" class="hidden">暂时没有数据</div>
 							</div>
 					</div>
 				</div>

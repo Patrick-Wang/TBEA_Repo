@@ -106,7 +106,15 @@ module framework.templates.dateReport {
             this.mAjaxUpdate.get(this.getParams(date))
                 .then((jsonData:any) => {
                     this.resp = jsonData;
-                    this.updateTable();
+                    if (this.resp.data.length == 0){
+                        $("#" + this.opt.host).addClass("hidden");
+                        $("#warning").removeClass("hidden");
+                    }else{
+
+                        $("#" + this.opt.host).removeClass("hidden");
+                        $("#warning").addClass("hidden");
+                        this.updateTable();
+                    }
                 });
         }
 

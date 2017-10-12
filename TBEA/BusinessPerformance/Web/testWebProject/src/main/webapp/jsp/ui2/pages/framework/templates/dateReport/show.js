@@ -92,7 +92,15 @@ var framework;
                     this.mAjaxUpdate.get(this.getParams(date))
                         .then(function (jsonData) {
                         _this.resp = jsonData;
-                        _this.updateTable();
+                        if (_this.resp.data.length == 0) {
+                            $("#" + _this.opt.host).addClass("hidden");
+                            $("#warning").removeClass("hidden");
+                        }
+                        else {
+                            $("#" + _this.opt.host).removeClass("hidden");
+                            $("#warning").addClass("hidden");
+                            _this.updateTable();
+                        }
                     });
                 };
                 return ItemShowView;
