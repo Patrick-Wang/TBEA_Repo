@@ -9,46 +9,42 @@
         <context key="cal" value="${request.date.asCalendar}"/>
         <callservice id="financingForeignCurrencyLoanEntryUpdateServ"/>
         <callcontroller id="financingForeignCurrencyLoanEntryFmtClr"/>
-        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+        <formatterServer id="fmtServ" table="${result.matrix}">
             <formatter ref="fmtData"/>
         </formatterServer>
         <response type="json">
             <header type="array">
             	 <item>
-                    <name>单位名称</name>
+                    <name>银行名称</name>
+                </item>
+               
+                <item>
+                    <name>贷款起始日</name>
                 </item>
                 <item>
-                    <name>贷款银行</name>
+                    <name>贷款到期日</name>
                 </item>
-                
-                <item>
-                    <name>起始日</name>
-                </item>
-                <item>
-                    <name>到期日</name>
-                </item>
-                <item>
+                 <item>
                     <name>币种</name>
                 </item>
                 <item>
-                    <name>贷款金额</name>
+                    <name>金额</name>
                 </item>
                 <item>
-                    <name>贷款利率</name>
+                    <name>利率</name>
                 </item>
                 <item>
                     <name>浮动幅度</name>
                 </item>
                 <item>
-                    <name>种类</name>
+                    <name>贷款期限</name>
                 </item>
                 <item>
-                    <name>品种</name>
+                    <name>贷款品种</name>
                 </item>
                 <item>
-                    <name>贷款方式</name>
+                    <name>担保方式</name>
                 </item>
-               
             </header>
             <data>${fmtServ.result}</data>
         </response>
@@ -59,28 +55,26 @@
                 <DefaultMatcher cols="7"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1" currency="true">
-                <DefaultMatcher cols="6, 11"/>
+                <DefaultMatcher cols="6, 8"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
     </controller>
     <service id="financingForeignCurrencyLoanEntryUpdateServ" transaction="transactionManager">
         <sql id="data">select ffcl.id,
-        dwxx.name, 
-bankName,
-
-CONVERT(varchar(20),beginningDate, 23) tmp1,
-CONVERT(varchar(20),maturityDate, 23) tmp2,
-currency,
-loanAmount,
-loanRate,
-floatingRatio,
-loanTerm,
-loanType,
-guarantyStyle,
-solved 
-from financing_foreign_currency_loan ffcl, jygk_dwxx dwxx 
-where dwid  in  ${dwid} and dwid = dwxx.id</sql>
+        dwxx.name,
+		bankName,
+		CONVERT(varchar(20),beginningDate, 23) tmp1,
+		CONVERT(varchar(20),maturityDate, 23) tmp2,
+		currency,
+		loanAmount,
+		loanRate,
+		floatingRatio,
+		loanTerm,
+		loanType,
+		guarantyStyle
+		from financing_foreign_currency_loan ffcl, jygk_dwxx dwxx 
+		where dwid  in  ${dwid} and dwid = dwxx.id</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>
@@ -94,7 +88,6 @@ where dwid  in  ${dwid} and dwid = dwxx.id</sql>
             <list sql="data" type="string" value="9"/>
             <list sql="data" type="string" value="10"/>
             <list sql="data" type="string" value="11"/>
-            <list sql="data" type="string" value="12"/>
         </table>
     </service>
     <controller id="financingForeignCurrencyLoanEntrySubmitClr">

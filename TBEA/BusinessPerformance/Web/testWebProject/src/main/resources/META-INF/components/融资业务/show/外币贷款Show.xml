@@ -94,19 +94,19 @@
     </controller>
     <service id="financingForeignCurrencyLoanShowServ" transaction="transactionManager">
          <sql id="data">select ffcl.id,
-        dwxx.name, 
-bankName,
-CONVERT(varchar(20),beginningDate, 23) tmp1,
-CONVERT(varchar(20),maturityDate, 23) tmp2,
-currency,
-loanAmount,
-loanRate,
-floatingRatio,
-loanTerm,
-loanType,
-guarantyStyle
-from financing_foreign_currency_loan ffcl, jygk_dwxx dwxx 
-where dwid  in  ${dwid} and dwid = dwxx.id</sql>
+        dwxx.name,
+		bankName,
+		CONVERT(varchar(20),beginningDate, 23) tmp1,
+		CONVERT(varchar(20),maturityDate, 23) tmp2,
+		currency,
+		loanAmount,
+		loanRate,
+		floatingRatio,
+		loanTerm,
+		loanType,
+		guarantyStyle
+		from financing_foreign_currency_loan ffcl, jygk_dwxx dwxx 
+		where dwid  in  ${dwid} and dwid = dwxx.id</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
             <list sql="data" type="string" value="1"/>

@@ -9,7 +9,7 @@
         <context key="cal" value="${request.date.asCalendar}"/>
         <callservice id="financingCommercialBillEntryUpdateServ"/>
         <callcontroller id="financingCommercialBillEntryFmtClr"/>
-        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+        <formatterServer id="fmtServ" table="${result.matrix}">
             <formatter ref="fmtData"/>
         </formatterServer>
         <response type="json">
