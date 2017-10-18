@@ -18,15 +18,15 @@
         <merge data="${data}" table="financing_foreign_currency_loan">
             <set>
                 <bankName ref="0" type="string"/>
-                <currency ref="1" type="string"/>
-                <beginningDate ref="2" type="date"/>
-                <maturityDate ref="3" type="date"/>
+                <beginningDate ref="1" type="date"/>
+                <maturityDate ref="2" type="date"/>
+                <currency ref="3" type="string"/>
                 <loanAmount ref="4" type="double"/>
                 <loanRate ref="5" type="double"/>
-                <loanTerm ref="6" type="string"/>
-                <loanType ref="7" type="string"/>
-                <guarantyStyle ref="8" type="string"/>
-                <selfAmount ref="9" type="double"/>
+                <floatingRatio ref="6" type="double"/>
+                <loanTerm ref="7" type="string"/>
+                <loanType ref="8" type="string"/>
+                <guarantyStyle ref="9" type="string"/>
                 <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>

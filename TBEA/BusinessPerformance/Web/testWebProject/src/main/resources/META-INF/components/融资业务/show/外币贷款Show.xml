@@ -19,14 +19,15 @@
                 <item>
                     <name>银行名称</name>
                 </item>
-                <item>
-                    <name>币种</name>
-                </item>
+               
                 <item>
                     <name>贷款起始日</name>
                 </item>
                 <item>
                     <name>贷款到期日</name>
+                </item>
+                 <item>
+                    <name>币种</name>
                 </item>
                 <item>
                     <name>金额</name>
@@ -56,7 +57,7 @@
                 <DefaultMatcher cols="6"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1" currency="true">
-                <DefaultMatcher cols="5,10"/>
+                <DefaultMatcher cols="5,7"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -66,7 +67,7 @@
         <callservice id="financingForeignCurrencyLoanShowServ"/>
         <callcontroller id="financingForeignCurrencyLoanFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="特变电工外币贷款明细统计表"/>
-        <list id="title" type="string">单位名称,贷款银行,币种,起始日,到期日, 贷款金额 ,贷款利率,种类,品种,贷款方式,本币金额</list>
+        <list id="title" type="string">单位名称,贷款银行,起始日,到期日,币种, 贷款金额 ,贷款利率,浮动幅度,种类,品种,贷款方式</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -95,15 +96,15 @@
          <sql id="data">select ffcl.id,
         dwxx.name, 
 bankName,
-currency,
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
+currency,
 loanAmount,
 loanRate,
+floatingRatio,
 loanTerm,
 loanType,
-guarantyStyle,
-selfAmount
+guarantyStyle
 from financing_foreign_currency_loan ffcl, jygk_dwxx dwxx 
 where dwid  in  ${dwid} and dwid = dwxx.id</sql>
         <list id="ids" sql="data" value="0"/>

@@ -20,9 +20,7 @@
                 <item>
                     <name>贷款银行</name>
                 </item>
-                <item>
-                    <name>币种</name>
-                </item>
+                
                 <item>
                     <name>起始日</name>
                 </item>
@@ -30,10 +28,16 @@
                     <name>到期日</name>
                 </item>
                 <item>
+                    <name>币种</name>
+                </item>
+                <item>
                     <name>贷款金额</name>
                 </item>
                 <item>
                     <name>贷款利率</name>
+                </item>
+                <item>
+                    <name>浮动幅度</name>
                 </item>
                 <item>
                     <name>种类</name>
@@ -44,9 +48,7 @@
                 <item>
                     <name>贷款方式</name>
                 </item>
-                <item>
-                    <name>本币金额</name>
-                </item>
+               
             </header>
             <data>${fmtServ.result}</data>
         </response>
@@ -66,15 +68,16 @@
         <sql id="data">select ffcl.id,
         dwxx.name, 
 bankName,
-currency,
+
 CONVERT(varchar(20),beginningDate, 23) tmp1,
 CONVERT(varchar(20),maturityDate, 23) tmp2,
+currency,
 loanAmount,
 loanRate,
+floatingRatio,
 loanTerm,
 loanType,
 guarantyStyle,
-selfAmount,
 solved 
 from financing_foreign_currency_loan ffcl, jygk_dwxx dwxx 
 where dwid  in  ${dwid} and dwid = dwxx.id</sql>
