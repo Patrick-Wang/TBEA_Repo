@@ -184,11 +184,10 @@ CREATE TABLE [dbo].[financing_RMB_LG](
 	beginningDate date, --起始日
 	maturityDate date, --到期日
 	amount numeric(18, 4), --保函金额
-	LCamount numeric(18, 4),--保证金金额
 	LCRatio numeric(18, 4), --保证金比例
 	type varchar(200), --保函种类
 	guaranteeNumber varchar(200), --保函编号
-	isTransactByStock varchar(100), --是否以股份公司名义办理
+	remark varchar(100), --是否以股份公司名义办理
 	reason varchar(500), --未注销原因
 	dwid int, --公司名称
 	[_src] [varchar](50),
@@ -208,7 +207,6 @@ CREATE TABLE [dbo].[financing_foreign_currency_LG](
 	beginningDate date, --起始日
 	maturityDate date, --到期日
 	amount numeric(18, 4), --保函金额
-	LCamount numeric(18, 4),--保证金金额
 	LCRatio numeric(18, 4), --保证金比例
 	type varchar(200), --保函种类
 	guaranteeNumber varchar(200), --保函编号
@@ -256,7 +254,6 @@ CREATE TABLE [dbo].[financing_LC](
 	beginningDate date, --起始日
 	maturityDate date, --到期日
 	LCamount numeric(18, 4), --信用证金额
-	cashAmount numeric(18, 4), --保证金金额 
 	cashRate numeric(18, 4), --保证金比例
 	remark varchar(500), --备注
 	Lcbalance numeric(18, 4), --信用证余额
@@ -288,6 +285,7 @@ CREATE TABLE [dbo].[financing_factoring](
 	fee numeric(18, 4), --手续费
 	costUndertaker varchar(100), --利息承担方
 	remark varchar(500), --备注
+	dwid int, --单位ID
 	[_src] [varchar](50),
 	[_time] [datetime]
 	PRIMARY KEY CLUSTERED
@@ -310,6 +308,7 @@ CREATE TABLE [dbo].[financing_bonds](
 	bondPersistentPeriod varchar(100), --债券期限
 	maturityDate date, --到期日
 	isCashed varchar(50), --是否兑付
+	dwid int, --单位ID
 	[_src] [varchar](50),
 	[_time] [datetime]
 	PRIMARY KEY CLUSTERED
