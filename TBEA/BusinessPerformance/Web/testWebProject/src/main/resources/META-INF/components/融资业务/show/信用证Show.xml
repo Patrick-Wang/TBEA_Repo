@@ -98,7 +98,7 @@ currency,
 CONVERT(varchar(20),beginningDate, 23) tmp2,
 CONVERT(varchar(20),maturityDate, 23) tmp3,
 LCamount,
-cashAmount,
+LCamount * cashRate as tmp4,
 cashRate,
 remark,
 Lcbalance 
