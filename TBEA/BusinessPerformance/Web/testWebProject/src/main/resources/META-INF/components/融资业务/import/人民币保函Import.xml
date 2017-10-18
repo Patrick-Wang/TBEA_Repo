@@ -21,7 +21,7 @@
                 <beginningDate ref="1" type="date"/>
                 <maturityDate ref="2" type="date"/>
                 <amount ref="3" type="double"/>
-                <marginRatio ref="4" type="double"/>
+                <LCRatio ref="4" type="double"/>
                 <type ref="5" type="string"/>
                 <guaranteeNumber ref="6" type="string"/>
                 <remark ref="7" type="string"/>
