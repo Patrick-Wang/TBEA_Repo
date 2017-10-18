@@ -45,11 +45,13 @@ public abstract class AbstractConfigLoader implements ConfigLoader{
 	protected void scan(File dir) {
 		notifyOnEnterFolder(dir.getAbsolutePath());
 		File[] fs = dir.listFiles();
-		for (int i = 0; i < fs.length; i++) {
-			if (fs[i].isFile()) {
-				loadComponent(fs[i]);
-			}else if(fs[i].isDirectory()){
-				scan(fs[i]);
+		if (null != fs) {
+			for (int i = 0; i < fs.length; i++) {
+				if (fs[i].isFile()) {
+					loadComponent(fs[i]);
+				} else if (fs[i].isDirectory()) {
+					scan(fs[i]);
+				}
 			}
 		}
 		notifyOnExitFolder(dir.getAbsolutePath());

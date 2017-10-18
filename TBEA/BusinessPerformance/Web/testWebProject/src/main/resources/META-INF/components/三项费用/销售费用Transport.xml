@@ -147,7 +147,7 @@ where
   extract(year from to_date(INPUTDATE,'yyyy-mm-dd')) = ${cal.year} and
   extract(month from to_date(INPUTDATE,'yyyy-mm-dd')) =  ${cal.month}</sql>
  </service>
- <controller id="xsfyTransport">
+ <controller id="xsfyTransport" cron="0 0 1 4-5 * ?">
   <if test="${isSchedule || (!isSchedule &amp;&amp; request.date.toString == null)}">
    <context key="cal" value="${calendar.current.lastMonth}"/>
   </if>

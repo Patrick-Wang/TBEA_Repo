@@ -156,7 +156,7 @@
     <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/basic/basic.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/basic/basicShow.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/singleDateReport/show.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/dateReport/show.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/dateReport/show.js?ver=1.0"></script>
 <%@include file="../../../../ie8-b.jsp"%>
 </head>
 <!-- /Head -->

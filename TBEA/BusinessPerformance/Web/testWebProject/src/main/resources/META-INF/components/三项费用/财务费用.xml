@@ -77,7 +77,7 @@ dwid = ${compId}</sql>
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}财务费用.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="${cal.year}年${cal.month}月财务费用.xls" serv="fmtServ"/>
  </controller>
  <controller id="cwfy">
   <response type="jsp" name="framework/templates/dateReport/show">

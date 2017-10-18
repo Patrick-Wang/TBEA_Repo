@@ -18,6 +18,15 @@ public class ExcelUtil{
 				short df = cell.getCellStyle().getDataFormat();
 				throw new ValidationException("日期解析失败，数据格式编码" + df);
 			}
+		} else if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
+			try{
+				String sDate = cell.getStringCellValue();
+				return Date.valueOf(sDate.replace('/', '-'));
+			}catch(Exception e){
+				e.printStackTrace();
+				short df = cell.getCellStyle().getDataFormat();
+				throw new ValidationException("日期解析失败，数据格式编码" + df + " " + e.getMessage());
+			}
 		} else if (cell.getCellType() == XSSFCell.CELL_TYPE_BLANK) {
 			return null;
 		} 

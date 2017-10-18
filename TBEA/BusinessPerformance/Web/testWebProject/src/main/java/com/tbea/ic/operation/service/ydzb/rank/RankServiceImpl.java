@@ -209,21 +209,21 @@ public class RankServiceImpl implements RankService {
 		return result;
 	}
 
-	static private Set<String> excludedComps = new HashSet<String>();
-	static
-	{
-		excludedComps.add("新疆众和动力保障公司");
-		excludedComps.add("特变电工股份有限公司能源动力分公司动力厂");
-		excludedComps.add("特变电工新疆变压器厂国际公司");
-		excludedComps.add("新疆天池能源销售有限公司");
-		excludedComps.add("西北电线电缆检测中心有限公司");
-		excludedComps.add("服务公司");
-		excludedComps.add("特变电工股份有限公司能源动力分公司总配电车间");
-		excludedComps.add("新疆中特国际物流有限公司");
-		excludedComps.add("新疆新特国际物流贸易公司");
-		excludedComps.add("特变电工新疆新能源股份有限公司国际部");
-		excludedComps.add("特变电工沈阳变压器集团有限公司国际贸易成套分公司");
-	};
+//	static private Set<String> excludedComps = new HashSet<String>();
+//	static
+//	{
+//		excludedComps.add("新疆众和动力保障公司");
+//		excludedComps.add("特变电工股份有限公司能源动力分公司动力厂");
+//		excludedComps.add("特变电工新疆变压器厂国际公司");
+//		excludedComps.add("新疆天池能源销售有限公司");
+//		excludedComps.add("西北电线电缆检测中心有限公司");
+//		excludedComps.add("服务公司");
+//		excludedComps.add("特变电工股份有限公司能源动力分公司总配电车间");
+//		excludedComps.add("新疆中特国际物流有限公司");
+//		excludedComps.add("新疆新特国际物流贸易公司");
+//		excludedComps.add("特变电工新疆新能源股份有限公司国际部");
+//		excludedComps.add("特变电工沈阳变压器集团有限公司国际贸易成套分公司");
+//	};
 	
 	@Override
 	public List<String[]> getXmgsJhlrRank(Date date) {
@@ -232,10 +232,10 @@ public class RankServiceImpl implements RankService {
 		List<String> compsName = new ArrayList<String>();
 		for (Company comp : jydws){
 			for (Company xmgs : comp.getSubCompanies()){
-				if (!excludedComps.contains(xmgs.getName())){
+//				if (!excludedComps.contains(xmgs.getName())){
 					pipe.addCompany(xmgs, configFac.getJhlrDataConfigurator());
 					compsName.add(xmgs.getName());
-				}
+//				}
 			}
 		}
 		return makeResult(compsName, pipe.getData());

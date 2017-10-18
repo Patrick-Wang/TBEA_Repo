@@ -36,22 +36,24 @@ public class WatchConfigLoader extends AbstractConfigLoader {
 	}
 	
 	public void load() {
-		Path dir = Paths.get(resPath);
-		scan(dir.toFile());
-		new Thread(new Runnable(){
-			@Override
-			public void run() {
-				while(true){
-					try {
-						watch(dir);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}).start();
-	}
-	
+        Path dir = Paths.get(resPath);
+        File f = dir.toFile();
+        if (f.exists()) {
+            scan(dir.toFile());
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (true) {
+                        try {
+                            watch(dir);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+        }
+    }
 	public void pause(){
 		
 	}

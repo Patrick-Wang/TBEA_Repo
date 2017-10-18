@@ -110,7 +110,6 @@ module framework.templates.dateReport {
                         $("#" + this.opt.host).addClass("hidden");
                         $("#warning").removeClass("hidden");
                     }else{
-
                         $("#" + this.opt.host).removeClass("hidden");
                         $("#warning").addClass("hidden");
                         this.updateTable();
