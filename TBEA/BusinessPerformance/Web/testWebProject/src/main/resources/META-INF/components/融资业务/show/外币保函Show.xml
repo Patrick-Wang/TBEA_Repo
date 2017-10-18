@@ -1,20 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?><components>
-    <controller id="financingForeignCurrencyLGEntryJSP">
-        <response name="framework/templates/singleDateReport/entry" type="jsp">
-            <map key="updateUrl" value="financingForeignCurrencyLGEntryUpdateClr"/>
-            <map key="submitUrl" value="financingForeignCurrencyLGEntrySubmitClr"/>
+﻿<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="financingForeignCurrencyLGShow">
+        <response name="framework/templates/singleDateReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map key="updateUrl" value="financingForeignCurrencyLGUpdateClr"/>
+            <map key="exportUrl" value="financingForeignCurrencyLGExportClr"/>
         </response>
     </controller>
-    <controller id="financingForeignCurrencyLGEntryUpdateClr">
+    <controller id="financingForeignCurrencyLGUpdateClr">
         <context key="cal" value="${request.date.asCalendar}"/>
-        <callservice id="financingForeignCurrencyLGEntryUpdateServ"/>
-        <callcontroller id="financingForeignCurrencyLGEntryFmtClr"/>
-        <formatterServer id="fmtServ" table="${result.matrix}">
+        <callservice id="financingForeignCurrencyLGShowServ"/>
+        <callcontroller id="financingForeignCurrencyLGFmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
             <formatter ref="fmtData"/>
         </formatterServer>
         <response type="json">
             <header type="array">
-               <item>
+            	<item>
                     <name>单位名称</name>
                 </item>
                 <item>
@@ -55,18 +57,48 @@
             <data>${fmtServ.result}</data>
         </response>
     </controller>
-    <controller id="financingForeignCurrencyLGEntryFmtClr">
+    <controller id="financingForeignCurrencyLGFmtClr">
         <formatter export="true" id="fmtData">
             <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="8"/>
+                <DefaultMatcher cols="7"/>
             </PercentFormatter>
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="6,7"/>
+                <DefaultMatcher cols="5,6"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
     </controller>
-    <service id="financingForeignCurrencyLGEntryUpdateServ" transaction="transactionManager">
+    <controller id="financingForeignCurrencyLGExportClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="financingForeignCurrencyLGShowServ"/>
+        <callcontroller id="financingForeignCurrencyLGFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="特变电工外币保函办理情况统计表"/>
+        <list id="title" type="string">单位名称,银行名称,起始日,到期日,币种,保函金额,保证金比例,保函种类,保函编号,备注,未注销原因</list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="${request.date.asString}特变电工外币保函办理情况统计表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+    <service id="financingForeignCurrencyLGShowServ" transaction="transactionManager">
         <sql id="data">select ffclg.id,
         dwxx.name,
 bankName,
@@ -97,28 +129,5 @@ where dwid in ${dwid} and dwxx.id = dwid</sql>
             <list sql="data" type="string" value="11"/>
             <list sql="data" type="string" value="12"/>
         </table>
-    </service>
-    <controller id="financingForeignCurrencyLGEntrySubmitClr">
-        <context key="cal" value="${request.date.asCalendar}"/>
-        <context key="data" value="${request.data.asJsonArray}"/>
-        <context key="src" value="${session.account.name} 录入"/>
-        <context key="time" value="${calendar.current.secondFormat}"/>
-        <callservice id="financingForeignCurrencyLGEntrySubmitServ"/>
-        <response type="json">
-            <errorCode>0</errorCode>
-            <message>OK</message>
-        </response>
-    </controller>
-    <service id="financingForeignCurrencyLGEntrySubmitServ" transaction="transactionManager">
-        <merge data="${data}" table="financing_foreign_currency_LG">
-            <where>
-                <id ref="0" type="int"/>
-            </where>
-            <set>
-                <solved ref="11" type="string"/>
-                <_src type="string" value="${src}"/>
-                <_time type="date" value="${time}"/>
-            </set>
-        </merge>
     </service>
 </components>
