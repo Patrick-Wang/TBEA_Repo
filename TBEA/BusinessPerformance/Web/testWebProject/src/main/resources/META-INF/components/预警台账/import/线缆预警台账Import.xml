@@ -20,7 +20,7 @@
                 <num ref="0" type="string"/>
             </where>
             <set>
-                <num ref="0" type="string"/>
+                <num ref="0" type="string" test="${this != null}"/>
                 <company ref="1" type="string"/>
                 <department ref="2" type="string"/>
                 <operator ref="3" type="string"/>
@@ -44,30 +44,30 @@
                 <ActualAR ref="21" type="double"/>
                 <expireAmount ref="22" type="double"/>
                 <expireOfPrePAmount ref="23" type="double"/>
-                <expireOfPrePDate ref="24" type="string"/>
+                <expireOfPrePDate ref="24" type="date"/>
                 <expireOfDeliAmount ref="25" type="double"/>
-                <expireOfDeliDate ref="26" type="string"/>
+                <expireOfDeliDate ref="26" type="date"/>
                 <expireOfArriAmount ref="27" type="double"/>
-                <expireOfArriDate ref="28" type="string"/>
+                <expireOfArriDate ref="28" type="date"/>
                 <expireOfFixAmount ref="29" type="double"/>
-                <expireOfFixDate ref="30" type="string"/>
+                <expireOfFixDate ref="30" type="date"/>
                 <expireOfWorkAmount ref="31" type="double"/>
-                <expireOfWorkDate ref="32" type="string"/>
+                <expireOfWorkDate ref="32" type="date"/>
                 <expireOfGuarAmount ref="33" type="double"/>
-                <expireOfGuarDate ref="34" type="string"/>
+                <expireOfGuarDate ref="34" type="date"/>
                 <NotDuePayment ref="35" type="double"/>
                 <NotDuePrePAmount ref="36" type="double"/>
-                <NotDuePrePDate ref="37" type="string"/>
+                <NotDuePrePDate ref="37" type="date"/>
                 <NotDueDeliAmount ref="38" type="double"/>
-                <NotDueDeliDate ref="39" type="string"/>
+                <NotDueDeliDate ref="39" type="date"/>
                 <NotDueArriAmount ref="40" type="double"/>
-                <NotDueArriDate ref="41" type="string"/>
+                <NotDueArriDate ref="41" type="date"/>
                 <NotDueFixAmount ref="42" type="double"/>
-                <NotDueFixDate ref="43" type="string"/>
+                <NotDueFixDate ref="43" type="date"/>
                 <NotDueWorkAmount ref="44" type="double"/>
-                <NotDueWorkDate ref="45" type="string"/>
+                <NotDueWorkDate ref="45" type="date"/>
                 <NotDueGuarAmount ref="46" type="double"/>
-                <NotDueGuarDate ref="47" type="string"/>
+                <NotDueGuarDate ref="47" type="date"/>
                 <NoPaymentFactor ref="48" type="string"/>
                 <preReceiptAmount ref="49" type="double"/>
                 <liquidateProgress ref="50" type="string"/>
