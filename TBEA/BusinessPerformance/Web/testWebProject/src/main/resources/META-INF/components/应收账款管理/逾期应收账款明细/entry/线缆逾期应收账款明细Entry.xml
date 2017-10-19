@@ -187,7 +187,7 @@
 		<list id="dataEmptyRow" type="object" />
 		<context key="temp" value="${dataEmptyRow.resize[16]}" />
 		<loop from="0" to="${yjtz.size - 1}" var="i">
-			<if test="${yjtz[i][8] != 'false'}">
+			<if test="${yjtz[i][8] != false}">
 				<sql id="dataTmp">select
 					businessType,
 					reason,
@@ -228,7 +228,7 @@
 					<item>${rowTmp}</item>
 				</list>
 			</if>
-			<if test="${yjtz[i][11] != 'false'}">
+			<if test="${yjtz[i][11] != false}">
 				<sql id="dataTmp">select
 					businessType,
 					reason,
@@ -256,7 +256,7 @@
 						<item>${dataEmptyRow}</item>
 					</list>
 				</if>
-				<list id="rowTmp" type="object">
+				<list id="rowTmp" type="object" clear="true">
 					<item>${yjtz[i][0] * 10 + 1}</item>
 					<item concat="${yjtz[i]}" />
 					<item>投运款</item>
@@ -269,7 +269,7 @@
 					<item>${rowTmp}</item>
 				</list>
 			</if>
-			<if test="${yjtz[i][14] != 'false'}">
+			<if test="${yjtz[i][14] != false}">
 				<sql id="dataTmp">select
 					businessType,
 					reason,
@@ -297,7 +297,7 @@
 						<item>${dataEmptyRow}</item>
 					</list>
 				</if>
-				<list id="rowTmp" type="object">
+				<list id="rowTmp" type="object" clear="true">
 					<item>${yjtz[i][0] * 10 + 2}</item>
 					<item concat="${yjtz[i]}" />
 					<item>质保金</item>

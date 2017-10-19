@@ -60,34 +60,66 @@ public class ListXmlInterpreter implements XmlInterpreter {
 		}
 	}
 	
-	private void injectFromSql(List<Object> objs, List<Object[]> sqlRet, int index,
+	private void injectFromSql(List<Object> objs, List sqlRet, int index,
 			List order, int by) {
-		for (int i = 0; i < order.size(); ++i){
-			objs.add(null);
-			for (int j = 0; j < sqlRet.size(); ++j){
-				if (sqlRet.get(j).length > by && sqlRet.get(j).length > index){
-					if (order.get(i).equals(sqlRet.get(j)[by])){
-						objs.set(objs.size() - 1, sqlRet.get(j)[index]);
-						break;
+		if (sqlRet.get(0) instanceof List) {
+			List row = null;
+			for (int i = 0; i < order.size(); ++i){
+				objs.add(null);
+				for (int j = 0; j < sqlRet.size(); ++j){
+					row = (List) sqlRet.get(j);
+					if (row.size() > by && row.size() > index){
+						if (order.get(i).equals(row.get(by))){
+							objs.set(objs.size() - 1, row.get(index));
+							break;
+						}
+					}
+				}
+			}
+		}else {
+			Object[] row = null;
+			for (int i = 0; i < order.size(); ++i){
+				objs.add(null);
+				for (int j = 0; j < sqlRet.size(); ++j){
+					row = (Object[]) sqlRet.get(j);
+					if (row.length > by && row.length > index){
+						if (order.get(i).equals(row[by])){
+							objs.set(objs.size() - 1, row[index]);
+							break;
+						}
 					}
 				}
 			}
 		}
+		
 	}
 
-	private void injectFromSql(List<Object> objs, List<Object[]> sqlRet, int index) {
-		for (int i = 0; i < sqlRet.size(); ++i){
-			if (sqlRet.get(i).length > index){
-				objs.add(sqlRet.get(i)[index]);
+	private void injectFromSql(List<Object> objs, List sqlRet, int index) {
+		if (sqlRet.get(0) instanceof List) {
+			List row = null;
+			for (int i = 0; i < sqlRet.size(); ++i){
+				row = (List) sqlRet.get(i);
+				if (row.size() > index){
+					objs.add(row.get(index));
+				}
+			}
+		}else {
+			Object[] row = null;
+			for (int i = 0; i < sqlRet.size(); ++i){
+				row = (Object[]) sqlRet.get(i);
+				if (row.length > index){
+					objs.add(row[index]);
+				}
 			}
 		}
+		
 	}
 	
 	private void parseSql(AbstractXmlComponent component, Element e, List<Object> objs) throws Exception{
 		List sqlRet = (List) component.getVar(e.getAttribute("sql"));
 		if (null != sqlRet){
 			if (!sqlRet.isEmpty()){
-				if (sqlRet.get(0).getClass().isArray()){
+				if (sqlRet.get(0).getClass().isArray() || sqlRet.get(0) instanceof List){
 					int index = XmlUtil.getIntAttr(e, "value", elp, 0);
 					List order = (List) component.getVar(e.getAttribute("order"));
 					if (null != order){
@@ -96,7 +128,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 					}else{
 						injectFromSql(objs, sqlRet, index);
 					}
-				}	
+				}
 			}else{
 				List order = (List) component.getVar(e.getAttribute("order"));
 				if (null != order){
