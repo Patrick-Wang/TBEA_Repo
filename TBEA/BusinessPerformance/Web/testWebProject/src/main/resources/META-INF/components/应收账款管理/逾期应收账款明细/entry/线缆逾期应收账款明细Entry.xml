@@ -182,6 +182,7 @@
 			CONVERT(varchar(20), lastDeliveryDate, 23) tmp13
 			from
 			ar_warning_book_c
+			where company in ${sysAuth.cnames[91]}
 		</sql>
 		<list id="data" type="object" />
 		<list id="dataEmptyRow" type="object" />

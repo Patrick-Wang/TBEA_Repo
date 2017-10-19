@@ -5,9 +5,9 @@ CREATE TABLE [dbo].[overdue_accounts_receivable_detail](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	ledgerNum int NOT NULL, --台账num
 	fundType varchar(100) NOT NULL, --款项性质
-	businessType varchar(100) DEFAULT '制造业' NOT NULL, --业务类型
+	businessType varchar(100) , --业务类型
 	reason varchar(100), --到期未回原因
-	reasonType varchar(100) DEFAULT '内部因素' NOT NULL, --原因分类
+	reasonType varchar(100) , --原因分类
 	measure varchar(100), --清收计划及措施
 	precentMonthPlan varchar(100), --本月安排
 	personLiable varchar(100), --责任人及联系方式
