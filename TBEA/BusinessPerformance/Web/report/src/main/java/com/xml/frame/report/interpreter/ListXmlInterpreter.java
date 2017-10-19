@@ -294,11 +294,18 @@ public class ListXmlInterpreter implements XmlInterpreter {
 			List<Object> objs, int repeat, int insert) throws Exception {
 		String concat = XmlUtil.getAttr(item, "concat");
 		if (null != concat){
-			List list = (List) component.getVar(concat);
-			if (list == null) {
-				Object tmpList = XmlUtil.parseELText(concat, elp);
-				if (tmpList instanceof List) {
-					list = (List)tmpList;
+			Object conList =  component.getVar(concat);
+			List list = null;
+			if (conList == null) {
+				conList = XmlUtil.parseELText(concat, elp);
+				if (conList instanceof List) {
+					list = (List)conList;
+				}else if (conList.getClass().isArray()) {
+					list = new ArrayList();
+					Object[] conArr = (Object[])conList;
+					for (int i = 0; i <conArr.length; ++i) {
+						list.add(conArr[i]);
+					}
 				}
 			}
 			if (null != list) {

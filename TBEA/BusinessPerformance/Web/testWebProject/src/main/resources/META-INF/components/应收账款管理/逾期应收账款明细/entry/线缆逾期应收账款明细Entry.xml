@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+	<controller id="overdueAccountsReceivableDetailEntryJSP">
+		<response name="framework/templates/singleDateReport/entry"
+			type="jsp">
+			<map key="updateUrl" value="overdueAccountsReceivableDetailEntryUpdateClr" />
+			<map key="submitUrl" value="overdueAccountsReceivableDetailEntrySubmitClr" />
+		</response>
+	</controller>
+	<controller id="overdueAccountsReceivableDetailEntryUpdateClr">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<callservice id="overdueAccountsReceivableDetailEntryUpdateServ" />
+		<callcontroller id="overdueAccountsReceivableDetailEntryFmtClr" />
+		<formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+		<response type="json">
+			<header type="array">
+				<item>
+					<name>项目公司</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>办事处</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>客户单位名称</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>项目名称</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>客户所属行业</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>合同编号</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>合同金额（万元）</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>业务类型</name>
+					<type>select</type>
+					<options type="array">制造业,工程,修试,物流贸易,其他</options>
+				</item>
+				<item>
+					<name>逾期款到期时间</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>逾期时间</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>逾期金额</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>款项性质</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>发货时间</name>
+					<type>text</type>
+					<readOnly>true</readOnly>
+				</item>
+				<item>
+					<name>到期未回原因</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>原因分类</name>
+					<type>select</type>
+					<options type="array">内部因素,客户资信,滚动付款,项目变化,合同因素,手续办理,其他</options>
+				</item>
+				<item>
+					<name>清收计划及措施</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>本月安排</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>责任人及联系方式</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>督导领导</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>协商函</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>催款函</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>律师函</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>诉前通知书</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>是否承诺回款</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>回款情况</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>现阶段清收措施及成效说明</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>判定是否存在风险</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>内部责任认定及考核情况</name>
+					<type>text</type>
+				</item>
+			</header>
+			<data>${fmtServ.result}</data>
+			<shrinkToFit>false</shrinkToFit>
+			<pager>none</pager>
+		</response>
+	</controller>
+	<controller id="overdueAccountsReceivableDetailEntryFmtClr">
+		<formatter export="true" id="fmtData">
+			<EmptyFormatter />
+		</formatter>
+	</controller>
+	<service id="overdueAccountsReceivableDetailEntryUpdateServ"
+		transaction="transactionManager">
+		<sql id="yjtz">select
+			id,
+			company,
+			department,
+			customer,
+			projectName,
+			cusIndustry,
+			contractNum,
+			contractAmount,
+			case
+			when expireOfArriDate
+			&lt;= ${calendar.current.date}
+			then CONVERT(varchar(20),
+			expireOfArriDate, 23)
+			else 'false' end as tmp1,
+			DATEDIFF('dd',expireOfArriDate,${calendar.current.date}),
+			expireOfArriAmount,
+			case
+			when expireOfWorkDate &lt;=
+			${calendar.current.date}
+			then CONVERT(varchar(20), expireOfWorkDate,
+			23)
+			else 'false' end as tmp2,
+			DATEDIFF('dd',expireOfWorkDate,${calendar.current.date}),
+			expireOfWorkAmount,
+			case
+			when expireOfGuarDate &lt;= ${calendar.current.date}
+			then
+			CONVERT(varchar(20), expireOfGuarDate, 23)
+			else 'false' end as tmp3,
+			DATEDIFF('dd',expireOfGuarDate,${calendar.current.date}),
+			expireOfGuarAmount,
+			lastDeliveryDate
+			from
+			ar_warning_book_c
+		</sql>
+		<list id="data" type="object" />
+		<list id="dataEmptyRow" type="object" />
+		<context key="temp" value="${dataEmptyRow.resize[16]}" />
+		<loop from="0" to="${yjtz.size - 1}" var="i">
+			<if test="${yjtz[i][8] != 'false'}">
+				<sql id="dataTmp">select
+					businessType,
+					reason,
+					reasonType,
+					measure,
+					precentMonthPlan,
+					personLiable,
+					supervisor,
+					negotiationLetter,
+					paymentRemendLetter,
+					lowyerLetter,
+					notificationBeforeLawsuit,
+					isPaymentPromised,
+					paymentStatus,
+					measureInstruction,
+					hasRisk,
+					responsibility
+					from overdue_accounts_receivable_detail
+					where
+					ledgerNum = ${yjtz[i][0]} and
+					fundType = '到货款'
+				</sql>
+				<if test="${dataTmp.isEmpty}">
+					<list id="dataTmp" type="object">
+						<item>${dataEmptyRow}</item>
+					</list>
+				</if>
+				<list id="rowTmp" type="object">
+					<item>${yjtz[i][0] * 10}</item>
+					<item concat="${yjtz[i]}" />
+					<item>到货款</item>
+					<item>${yjtz[i][8]}</item>
+					<item>${yjtz[i][9]}</item>
+					<item>${yjtz[i][10]}</item>
+					<item concat="${dataTmp[0]}" />
+				</list>
+				<list id="data" type="object">
+					<item>${rowTmp}</item>
+				</list>
+			</if>
+			<if test="${yjtz[i][11] != 'false'}">
+				<sql id="dataTmp">select
+					businessType,
+					reason,
+					reasonType,
+					measure,
+					precentMonthPlan,
+					personLiable,
+					supervisor,
+					negotiationLetter,
+					paymentRemendLetter,
+					lowyerLetter,
+					notificationBeforeLawsuit,
+					isPaymentPromised,
+					paymentStatus,
+					measureInstruction,
+					hasRisk,
+					responsibility
+					from overdue_accounts_receivable_detail
+					where
+					ledgerNum = ${yjtz[i][0]} and
+					fundType = 投运款'
+				</sql>
+				<if test="${dataTmp.isEmpty}">
+					<list id="dataTmp" type="object">
+						<item>${dataRow.resize[17]}</item>
+					</list>
+				</if>
+				<list id="rowTmp" type="object">
+					<item>${yjtz[i][0] * 10 + 1}</item>
+					<item concat="${yjtz[i]}" />
+					<item>投运款</item>
+					<item>${yjtz[i][11]}</item>
+					<item>${yjtz[i][12]}</item>
+					<item>${yjtz[i][13]}</item>
+					<item concat="${dataTmp[0]}" />
+				</list>
+				<list id="data" type="object">
+					<item>${rowTmp}</item>
+				</list>
+			</if>
+			<if test="${yjtz[i][14] != 'false'}">
+				<sql id="dataTmp">select
+					businessType,
+					reason,
+					reasonType,
+					measure,
+					precentMonthPlan,
+					personLiable,
+					supervisor,
+					negotiationLetter,
+					paymentRemendLetter,
+					lowyerLetter,
+					notificationBeforeLawsuit,
+					isPaymentPromised,
+					paymentStatus,
+					measureInstruction,
+					hasRisk,
+					responsibility
+					from overdue_accounts_receivable_detail
+					where
+					ledgerNum = ${yjtz[i][0]} and
+					fundType = '质保金'
+				</sql>
+				<if test="${dataTmp.isEmpty}">
+					<list id="dataTmp" type="object">
+						<item>${dataRow.resize[17]}</item>
+					</list>
+				</if>
+				<list id="rowTmp" type="object">
+					<item>${yjtz[i][0] * 10 + 2}</item>
+					<item concat="${yjtz[i]}" />
+					<item>质保金</item>
+					<item>${yjtz[i][14]}</item>
+					<item>${yjtz[i][15]}</item>
+					<item>${yjtz[i][16]}</item>
+					<item concat="${dataTmp[0]}" />
+				</list>
+				<list id="data" type="object">
+					<item>${rowTmp}</item>
+				</list>
+			</if>
+		</loop>
+
+		<list id="ids" sql="data" value="0" />
+		<table export="true" id="result" rowIds="ids">
+			<list sql="data" value="2" />
+			<list sql="data" value="3" />
+			<list sql="data" value="4" />
+			<list sql="data" value="5" />
+			<list sql="data" value="6" />
+			<list sql="data" value="7" />
+			<list sql="data" value="8" />
+			<list sql="data" value="23" />
+			<list sql="data" value="20" />
+			<list sql="data" value="21" />
+			<list sql="data" value="22" />
+			<list sql="data" value="19" />
+			<list sql="data" value="18" />
+			<list sql="data" value="24" />
+			<list sql="data" value="25" />
+			<list sql="data" value="26" />
+			<list sql="data" value="27" />
+			<list sql="data" value="28" />
+			<list sql="data" value="29" />
+			<list sql="data" value="30" />
+			<list sql="data" value="31" />
+			<list sql="data" value="32" />
+			<list sql="data" value="33" />
+			<list sql="data" value="34" />
+			<list sql="data" value="35" />
+			<list sql="data" value="36" />
+			<list sql="data" value="37" />
+			<list sql="data" value="38" />
+		</table>
+	</service>
+	<controller id="overdueAccountsReceivableDetailEntrySubmitClr">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<context key="data" value="${request.data.asJsonArray}" />
+		<context key="src" value="${session.account.name} 录入" />
+		<context key="time" value="${calendar.current.secondFormat}" />
+		<callservice id="overdueAccountsReceivableDetailEntrySubmitServ" />
+		<response type="json">
+			<errorCode>0</errorCode>
+			<message>OK</message>
+		</response>
+	</controller>
+	<service id="overdueAccountsReceivableDetailEntrySubmitServ"
+		transaction="transactionManager">
+		<merge data="${data}" table="overdue_accounts_receivable_detail">
+			<where>
+				<ledgerNum value="${(row[0] - row[0] % 10) / 10}" type="int" />
+				<fundType ref="12" type="string" />
+			</where>
+			<set>
+				<ledgerNum value="${(row[0] - row[0] % 10) / 10}" type="int" />
+				<fundType ref="12" type="string" />
+				<businessType	ref="8"  type="string" />	
+				<reason	ref="14"  type="string" />	
+				<reasonType	ref="15"  type="string" />	
+				<measure	ref="16"  type="string" />	
+				<precentMonthPlan	ref="17"  type="string" />	
+				<personLiable	ref="18"  type="string" />	
+				<supervisor	ref="19"  type="string" />	
+				<negotiationLetter	ref="20"  type="string" />	
+				<paymentRemendLetter	ref="21"  type="string" />	
+				<lowyerLetter	ref="22"  type="string" />	
+				<notificationBeforeLawsuit	ref="23"  type="string" />	
+				<isPaymentPromised	ref="24"  type="string" />	
+				<paymentStatus	ref="25"  type="string" />	
+				<measureInstruction	ref="26"  type="string" />	
+				<hasRisk	ref="27"  type="string" />	
+				<responsibility	ref="28"  type="string" />	
+				<_src type="string" value="${src}" />
+				<_time type="date" value="${time}" />
+			</set>
+		</merge>
+	</service>
+</components>

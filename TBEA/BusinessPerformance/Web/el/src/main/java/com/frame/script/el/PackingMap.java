@@ -14,6 +14,7 @@ import com.frame.script.el.em.EMDistinct;
 import com.frame.script.el.em.EMJsonString2Json;
 import com.frame.script.el.em.EMListJudge;
 import com.frame.script.el.em.EMListPack;
+import com.frame.script.el.em.EMListResize;
 import com.frame.script.el.em.EMTest;
 import com.frame.script.el.em.EMTranspose;
 import com.frame.script.el.em.ExtendMethod;
@@ -40,6 +41,7 @@ public class PackingMap extends ClosureMap {
 		extendMethods.add(new EMJsonString2Json());
 		extendMethods.add(new EM2Int());
 		extendMethods.add(new EM2Fixed());
+		extendMethods.add(new EMListResize());
 		extendMethods.add(new EMTest());
 	}
 	

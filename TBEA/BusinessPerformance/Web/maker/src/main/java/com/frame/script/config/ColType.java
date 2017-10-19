@@ -65,7 +65,7 @@ public class ColType {
 				int start = defaultVal.indexOf("(");
 				int end = defaultVal.lastIndexOf(")");
 				if (start >= 0 && end > start) {
-					return defaultVal.substring(start, end);
+					return defaultVal.substring(start + 1, end);
 				}
 			}
 		}

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+	<controller id="overdueAccountsReceivableDetailShow">
+		<response name="framework/templates/singleDateReport/show"
+			type="jsp">
+			<map key="year" value="${calendar.current.year}" />
+			<map key="month" value="${calendar.current.month}" />
+			<map key="updateUrl" value="overdueAccountsReceivableDetailUpdateClr" />
+			<map key="exportUrl" value="overdueAccountsReceivableDetailExportClr" />
+		</response>
+	</controller>
+	<controller id="overdueAccountsReceivableDetailUpdateClr">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<callservice id="overdueAccountsReceivableDetailShowServ" />
+		<callcontroller id="overdueAccountsReceivableDetailFmtClr" />
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+		<response type="json">
+			<header type="array">
+				<item>
+					<name>项目公司</name>
+				</item>
+				<item>
+					<name>办事处</name>
+				</item>
+				<item>
+					<name>客户单位名称</name>
+				</item>
+				<item>
+					<name>项目名称</name>
+				</item>
+				<item>
+					<name>客户所属行业</name>
+				</item>
+				<item>
+					<name>合同编号</name>
+				</item>
+				<item>
+					<name>合同金额（万元）</name>
+				</item>
+				<item>
+					<name>业务类型</name>
+				</item>
+				<item>
+					<name>逾期款到期时间</name>
+				</item>
+				<item>
+					<name>逾期时间</name>
+				</item>
+				<item>
+					<name>逾期金额</name>
+				</item>
+				<item>
+					<name>款项性质</name>
+				</item>
+				<item>
+					<name>发货时间</name>
+				</item>
+				<item>
+					<name>到期未回原因</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>原因分类</name>
+				</item>
+				<item>
+					<name>清收计划及措施</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>本月安排</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>责任人及联系方式</name>
+					<type>text</type>
+				</item>
+
+				<item>
+					<name>督导领导</name>
+					<type>text</type>
+				</item>
+				<item>
+					<name>现阶段发函情况</name>
+					<sub type="array">
+						<item>
+							<name>协商函</name>
+							<type>text</type>
+						</item>
+						<item>
+							<name>催款函</name>
+							<type>text</type>
+						</item>
+						<item>
+							<name>律师函</name>
+							<type>text</type>
+						</item>
+						<item>
+							<name>诉前通知书</name>
+							<type>text</type>
+						</item>
+					</sub>
+				</item>
+				<item>
+					<name>风险排查情况</name>
+					<sub type="array">
+						<item>
+							<name>是否承诺回款</name>
+							<type>text</type>
+						</item>
+						<item>
+							<name>回款情况</name>
+							<type>text</type>
+						</item>
+						<item>
+							<name>现阶段清收措施及成效说明</name>
+							<type>text</type>
+						</item>
+						<item>
+							<name>判定是否存在风险</name>
+							<type>text</type>
+						</item>
+					</sub>
+				</item>
+				<item>
+					<name>内部责任认定及考核情况</name>
+					<type>text</type>
+				</item>
+			</header>
+			<data>${fmtServ.result}</data>
+		</response>
+	</controller>
+	<controller id="overdueAccountsReceivableDetailFmtClr">
+		<formatter export="true" id="fmtData">
+			<EmptyFormatter />
+		</formatter>
+	</controller>
+	<controller id="overdueAccountsReceivableDetailExportClr">
+		<context key="cal" value="${request.date.asCalendar}" />
+		<callservice id="overdueAccountsReceivableDetailShowServ" />
+		<callcontroller id="overdueAccountsReceivableDetailFmtClr" />
+		<ExcelTemplate id="excelTemplate" sheet="逾期应收账款明细" />
+		<list id="title" type="string">项目公司,办事处,客户单位名称,项目名称,客户所属行业,合同编号,合同金额（万元）,业务类型,逾期款到期时间,逾期时间（按月计算）,逾期金额（万元）,款项性质,发货时间,到期未回原因,原因分类
+			,清收计划及措施,本月安排,责任人及联系方式,督导领导,现阶段发函情况,现阶段发函情况,现阶段发函情况,现阶段发函情况,风险排查情况,风险排查情况,风险排查情况,风险排查情况,内部责任认定及考核情况
+		</list>
+		<list id="title1" type="string">项目公司,办事处,客户单位名称,项目名称,客户所属行业,合同编号,合同金额（万元）,业务类型,逾期款到期时间,逾期时间（按月计算）,逾期金额（万元）,款项性质,发货时间,到期未回原因,原因分类
+			,清收计划及措施,本月安排,责任人及联系方式,督导领导,协商函,催款函,律师函,诉前通知书,是否承诺回款,回款情况,现阶段清收措施及成效说明,判定是否存在风险,内部责任认定及考核情况
+		</list>
+		<formatter id="excel">
+			<ExcelTitleFilter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset col="0" row="0" />
+				<titles>
+					<title ref="title" />
+					<title ref="title1" />
+				</titles>
+			</ExcelTitleFilter>
+			<ExcelMergeFormatter>
+		    <ExcelTemplate ref="excelTemplate"/>
+		    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+		   </ExcelMergeFormatter>
+			<ExcelHeaderCenterFormatter>
+				<DefaultMatcher cols="0" />
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset col="0" row="2" />
+			</ExcelHeaderCenterFormatter>
+			<ExcelOffsetFormatter>
+				<ExcelTemplate ref="excelTemplate" />
+				<Offset col="0" row="2" />
+			</ExcelOffsetFormatter>
+		</formatter>
+		<formatterServer id="fmtServ" table="${result.matrixNoIds}">
+			<formatter ref="fmtData" />
+			<formatter ref="excel" />
+		</formatterServer>
+		<response name="逾期应收账款明细.xls" ref="excelTemplate" serv="fmtServ"
+			type="excel" />
+	</controller>
+	<service id="overdueAccountsReceivableDetailShowServ"
+		transaction="transactionManager">
+		<sql id="data">select
+			id,
+			businessType,
+			reason,
+			reasonType,
+			measure,
+			precentMonthPlan,
+			personLiable,
+			supervisor,
+			negotiationLetter,
+			paymentRemendLetter,
+			lowyerLetter,
+			notificationBeforeLawsuit,
+			isPaymentPromised,
+			paymentStatus,
+			measureInstruction,
+			hasRisk,
+			responsibility,
+			ledgerNum,
+			fundType
+			from overdue_accounts_receivable_detail
+		</sql>
+		<list id="ids" sql="data" value="0" />
+		<list id="sqlYjtz" type="object"></list>
+		<loop from="0" to="${data.size - 1}" var="i">
+			<sql id="tmpYjtz">
+				select 
+					company,
+					department,
+					customer,
+					projectName,
+					cusIndustry,
+					contractNum,
+					contractAmount,
+					--expireOfArriAmount	expireOfArriDate	expireOfArriDays
+					--expireOfWorkAmount	expireOfWorkDate	expireOfWorkDays
+					--expireOfGuarAmount	expireOfGuarDate	expireOfGuarDays
+					case ${data[i][18]}
+						when '到货款' then expireOfArriDate
+						when '投运款' then expireOfWorkAmount
+						when '质保金' then expireOfGuarDate
+					end as tmp1,
+					case ${data[i][18]}
+						when '到货款' then expireOfArriDays
+						when '投运款' then expireOfWorkDays
+						when '质保金' then expireOfWorkDays
+					end as tmp2,
+					case ${data[i][18]}
+						when '到货款' then expireOfArriAmount
+						when '投运款' then expireOfWorkAmount
+						when '质保金' then expireOfGuarAmount
+					end as tmp3,
+					lastDeliveryDate
+				from ar_warning_book_c 
+				where id = ${data[i][17]}
+			</sql>
+			<list id="sqlYjtz" type="object">
+				<item>${tmpYjtz[0]}</item>
+			</list>
+		</loop>
+		
+		
+		<table export="true" id="result" rowIds="ids">
+		
+			<list sql="sqlYjtz"  value="0" />
+			<list sql="sqlYjtz"  value="1" />
+			<list sql="sqlYjtz"  value="2" />
+			<list sql="sqlYjtz"  value="3" />
+			<list sql="sqlYjtz"  value="4" />
+			<list sql="sqlYjtz"  value="5" />
+			<list sql="sqlYjtz"  value="6" />
+			
+			<list sql="data"  value="1" />
+			
+			<list sql="sqlYjtz"  value="7" />
+			<list sql="sqlYjtz"  value="8" />
+			<list sql="sqlYjtz"  value="9" />
+			
+			<list sql="data"  value="18" />
+			
+			<list sql="sqlYjtz"  value="10" />
+			
+			<list sql="data"  value="2" />
+			<list sql="data"  value="3" />
+			<list sql="data"  value="4" />
+			<list sql="data"  value="5" />
+			<list sql="data"  value="6" />
+			<list sql="data"  value="7" />
+			<list sql="data"  value="8" />
+			<list sql="data"  value="9" />
+			<list sql="data"  value="10" />
+			<list sql="data"  value="11" />
+			<list sql="data"  value="12" />
+			<list sql="data"  value="13" />
+			<list sql="data"  value="14" />
+			<list sql="data"  value="15" />
+			<list sql="data"  value="16" />
+		</table>
+	</service>
+</components>
