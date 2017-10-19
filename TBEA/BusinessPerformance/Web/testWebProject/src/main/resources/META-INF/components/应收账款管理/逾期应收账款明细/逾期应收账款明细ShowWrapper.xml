@@ -10,6 +10,7 @@
         	<item concat="${sysAuth.cnames[92]}"></item>
         </list>
 		<response name="framework/templates/dateReport/show" type="jsp">
+			<map key="nodate" value="true"/>
 			<map key="updateUrl" value="1560C88098A32BB156FE0967D1FB6EE0UpdateWrapperClr" />
 			<map key="exportUrl" value="1560C88098A32BB156FE0967D1FB6EE0ExportWrapperClr" />
 			<map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}" />

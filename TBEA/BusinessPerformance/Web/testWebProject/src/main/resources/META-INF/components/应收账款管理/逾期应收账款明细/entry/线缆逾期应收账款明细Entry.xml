@@ -249,7 +249,7 @@
 					from overdue_accounts_receivable_detail
 					where
 					ledgerNum = ${yjtz[i][0]} and
-					fundType = 投运款'
+					fundType = '投运款'
 				</sql>
 				<if test="${dataTmp.isEmpty}">
 					<list id="dataTmp" type="object">
