@@ -332,22 +332,16 @@ ActualAR,
 expireAmount,
 expireOfPrePAmount,
 expireOfPrePDate,
-expireOfPrePDays,
 expireOfDeliAmount,
 expireOfDeliDate,
-expireOfDeliDays,
 expireOfArriAmount,
 expireOfArriDate,
-expireOfArriDays,
 expireOfFixAmount,
 expireOfFixDate,
-expireOfFixDays,
 expireOfWorkAmount,
 expireOfWorkDate,
-expireOfWorkDays,
 expireOfGuarAmount,
 expireOfGuarDate,
-expireOfGuarDays,
 NotDuePayment,
 NotDuePrePAmount,
 NotDuePrePDate,
@@ -373,68 +367,62 @@ from ar_warning_book_c
 where company = (select name from jygk_dwxx where id = ${item})</sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids">
-            <list sql="data" type="string" value="1"/>
-            <list sql="data" type="string" value="2"/>
-            <list sql="data" type="string" value="3"/>
-            <list sql="data" type="string" value="4"/>
-            <list sql="data" type="string" value="5"/>
-            <list sql="data" type="string" value="6"/>
-            <list sql="data" type="string" value="7"/>
-            <list sql="data" type="string" value="8"/>
-            <list sql="data" type="date" value="9"/>
-            <list sql="data" type="string" value="10"/>
-            <list sql="data" type="string" value="11"/>
-            <list sql="data" type="string" value="12"/>
-            <list sql="data" type="double" value="13"/>
-            <list sql="data" type="double" value="14"/>
-            <list sql="data" type="date" value="15"/>
-            <list sql="data" type="double" value="16"/>
-            <list sql="data" type="double" value="17"/>
-            <list sql="data" type="double" value="18"/>
-            <list sql="data" type="double" value="19"/>
-            <list sql="data" type="date" value="20"/>
-            <list sql="data" type="double" value="21"/>
-            <list sql="data" type="double" value="22"/>
-            <list sql="data" type="double" value="23"/>
-            <list sql="data" type="double" value="24"/>
-            <list sql="data" type="string" value="25"/>
-            <list sql="data" type="string" value="26"/>
-            <list sql="data" type="double" value="27"/>
-            <list sql="data" type="string" value="28"/>
-            <list sql="data" type="string" value="29"/>
-            <list sql="data" type="double" value="30"/>
-            <list sql="data" type="string" value="31"/>
-            <list sql="data" type="string" value="32"/>
-            <list sql="data" type="double" value="33"/>
-            <list sql="data" type="string" value="34"/>
-            <list sql="data" type="string" value="35"/>
-            <list sql="data" type="double" value="36"/>
-            <list sql="data" type="string" value="37"/>
-            <list sql="data" type="string" value="38"/>
-            <list sql="data" type="double" value="39"/>
-            <list sql="data" type="string" value="40"/>
-            <list sql="data" type="string" value="41"/>
-            <list sql="data" type="double" value="42"/>
-            <list sql="data" type="double" value="43"/>
-            <list sql="data" type="string" value="44"/>
-            <list sql="data" type="double" value="45"/>
-            <list sql="data" type="string" value="46"/>
-            <list sql="data" type="double" value="47"/>
-            <list sql="data" type="string" value="48"/>
-            <list sql="data" type="double" value="49"/>
-            <list sql="data" type="string" value="50"/>
-            <list sql="data" type="double" value="51"/>
-            <list sql="data" type="string" value="52"/>
-            <list sql="data" type="double" value="53"/>
-            <list sql="data" type="string" value="54"/>
-            <list sql="data" type="string" value="55"/>
-            <list sql="data" type="double" value="56"/>
-            <list sql="data" type="string" value="57"/>
-            <list sql="data" type="string" value="58"/>
-            <list sql="data" type="double" value="59"/>
-            <list sql="data" type="double" value="60"/>
-            <list sql="data" type="double" value="61"/>
-            <list sql="data" type="string" value="62"/>
+            <list sql="data"  value="1"/>
+            <list sql="data"  value="2"/>
+            <list sql="data"  value="3"/>
+            <list sql="data"  value="4"/>
+            <list sql="data"  value="5"/>
+            <list sql="data"  value="6"/>
+            <list sql="data"  value="7"/>
+            <list sql="data"  value="8"/>
+            <list sql="data"  value="9"/>
+            <list sql="data"  value="10"/>
+            <list sql="data"  value="11"/>
+            <list sql="data"  value="12"/>
+            <list sql="data"  value="13"/>
+            <list sql="data"  value="14"/>
+            <list sql="data"  value="15"/>
+            <list sql="data"  value="16"/>
+            <list sql="data"  value="17"/>
+            <list sql="data"  value="18"/>
+            <list sql="data"  value="19"/>
+            <list sql="data"  value="20"/>
+            <list sql="data"  value="21"/>
+            <list sql="data"  value="22"/>
+            <list sql="data"  value="23"/>
+            <list sql="data"  value="24"/>
+            <list sql="data"  value="25"/>
+            <list sql="data"  value="26"/>
+            <list sql="data"  value="27"/>
+            <list sql="data"  value="28"/>
+            <list sql="data"  value="29"/>
+            <list sql="data"  value="30"/>
+            <list sql="data"  value="31"/>
+            <list sql="data"  value="32"/>
+            <list sql="data"  value="33"/>
+            <list sql="data"  value="34"/>
+            <list sql="data"  value="35"/>
+            <list sql="data"  value="36"/>
+            <list sql="data"  value="37"/>
+            <list sql="data"  value="38"/>
+            <list sql="data"  value="39"/>
+            <list sql="data"  value="40"/>
+            <list sql="data"  value="41"/>
+            <list sql="data"  value="42"/>
+            <list sql="data"  value="43"/>
+            <list sql="data"  value="44"/>
+            <list sql="data"  value="45"/>
+            <list sql="data"  value="46"/>
+            <list sql="data"  value="47"/>
+            <list sql="data"  value="48"/>
+            <list sql="data"  value="49"/>
+            <list sql="data"  value="50"/>
+            <list sql="data"  value="51"/>
+            <list sql="data"  value="52"/>
+            <list sql="data"  value="53"/>
+            <list sql="data"  value="54"/>
+            <list sql="data"  value="55"/>
+            <list sql="data"  value="56"/>
         </table>
     </service>
     <controller id="arWarningBookCEntrySubmitClr">
@@ -473,49 +461,43 @@ where company = (select name from jygk_dwxx where id = ${item})</sql>
                 <unbilledAmount ref="17" type="double"/>
                 <RPAmount ref="18" type="double"/>
                 <RPRation ref="19" type="double"/>
-                <lastRPDate ref="20" type="date"/>
+     			<lastRPDate ref="20" type="date"/>
                 <beginBookBalance ref="21" type="double"/>
                 <ActualAR ref="22" type="double"/>
                 <expireAmount ref="23" type="double"/>
                 <expireOfPrePAmount ref="24" type="double"/>
                 <expireOfPrePDate ref="25" type="string"/>
-                <expireOfPrePDays ref="26" type="string"/>
-                <expireOfDeliAmount ref="27" type="double"/>
-                <expireOfDeliDate ref="28" type="string"/>
-                <expireOfDeliDays ref="29" type="string"/>
-                <expireOfArriAmount ref="30" type="double"/>
-                <expireOfArriDate ref="31" type="string"/>
-                <expireOfArriDays ref="32" type="string"/>
-                <expireOfFixAmount ref="33" type="double"/>
-                <expireOfFixDate ref="34" type="string"/>
-                <expireOfFixDays ref="35" type="string"/>
-                <expireOfWorkAmount ref="36" type="double"/>
-                <expireOfWorkDate ref="37" type="string"/>
-                <expireOfWorkDays ref="38" type="string"/>
-                <expireOfGuarAmount ref="39" type="double"/>
-                <expireOfGuarDate ref="40" type="string"/>
-                <expireOfGuarDays ref="41" type="string"/>
-                <NotDuePayment ref="42" type="double"/>
-                <NotDuePrePAmount ref="43" type="double"/>
-                <NotDuePrePDate ref="44" type="string"/>
-                <NotDueDeliAmount ref="45" type="double"/>
-                <NotDueDeliDate ref="46" type="string"/>
-                <NotDueArriAmount ref="47" type="double"/>
-                <NotDueArriDate ref="48" type="string"/>
-                <NotDueFixAmount ref="49" type="double"/>
-                <NotDueFixDate ref="50" type="string"/>
-                <NotDueWorkAmount ref="51" type="double"/>
-                <NotDueWorkDate ref="52" type="string"/>
-                <NotDueGuarAmount ref="53" type="double"/>
-                <NotDueGuarDate ref="54" type="string"/>
-                <NoPaymentFactor ref="55" type="string"/>
-                <preReceiptAmount ref="56" type="double"/>
-                <liquidateProgress ref="57" type="string"/>
-                <liquidateMeasure ref="58" type="string"/>
-                <ensure ref="59" type="double"/>
-                <strive ref="60" type="double"/>
-                <summary ref="61" type="double"/>
-                <leader ref="62" type="string"/>
+                <expireOfDeliAmount ref="26" type="double"/>
+                <expireOfDeliDate ref="27" type="string"/>
+                <expireOfArriAmount ref="28" type="double"/>
+                <expireOfArriDate ref="29" type="string"/>
+                <expireOfFixAmount ref="30" type="double"/>
+                <expireOfFixDate ref="31" type="string"/>
+                <expireOfWorkAmount ref="32" type="double"/>
+                <expireOfWorkDate ref="33" type="string"/>
+                <expireOfGuarAmount ref="34" type="double"/>
+                <expireOfGuarDate ref="35" type="string"/>
+                <NotDuePayment ref="36" type="double"/>
+                <NotDuePrePAmount ref="37" type="double"/>
+                <NotDuePrePDate ref="38" type="string"/>
+                <NotDueDeliAmount ref="39" type="double"/>
+                <NotDueDeliDate ref="40" type="string"/>
+                <NotDueArriAmount ref="41" type="double"/>
+                <NotDueArriDate ref="42" type="string"/>
+                <NotDueFixAmount ref="43" type="double"/>
+                <NotDueFixDate ref="44" type="string"/>
+                <NotDueWorkAmount ref="45" type="double"/>
+                <NotDueWorkDate ref="46" type="string"/>
+                <NotDueGuarAmount ref="47" type="double"/>
+                <NotDueGuarDate ref="48" type="string"/>
+                <NoPaymentFactor ref="49" type="string"/>
+                <preReceiptAmount ref="50" type="double"/>
+                <liquidateProgress ref="51" type="string"/>
+                <liquidateMeasure ref="52" type="string"/>
+                <ensure ref="53" type="double"/>
+                <strive ref="54" type="double"/>
+                <summary ref="55" type="double"/>
+                <leader ref="56" type="string"/>
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>
