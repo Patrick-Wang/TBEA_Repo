@@ -166,26 +166,26 @@
 			contractAmount,
 			case
 			when expireOfArriDate
-			&lt;= ${calendar.current.date}
+			&lt;= '${calendar.current.date}'
 			then CONVERT(varchar(20),
 			expireOfArriDate, 23)
 			else 'false' end as tmp1,
-			DATEDIFF(dd,expireOfArriDate,${calendar.current.date}),
+			DATEDIFF(dd,expireOfArriDate,'${calendar.current.date}'),
 			expireOfArriAmount,
 			case
 			when expireOfWorkDate &lt;=
-			${calendar.current.date}
+			'${calendar.current.date}'
 			then CONVERT(varchar(20), expireOfWorkDate,
 			23)
 			else 'false' end as tmp2,
-			DATEDIFF(dd,expireOfWorkDate,${calendar.current.date}),
+			DATEDIFF(dd,expireOfWorkDate,'${calendar.current.date}'),
 			expireOfWorkAmount,
 			case
-			when expireOfGuarDate &lt;= ${calendar.current.date}
+			when expireOfGuarDate &lt;= '${calendar.current.date}'
 			then
 			CONVERT(varchar(20), expireOfGuarDate, 23)
 			else 'false' end as tmp3,
-			DATEDIFF(dd,expireOfGuarDate,${calendar.current.date}),
+			DATEDIFF(dd,expireOfGuarDate,'${calendar.current.date}'),
 			expireOfGuarAmount,
 			lastDeliveryDate
 			from
