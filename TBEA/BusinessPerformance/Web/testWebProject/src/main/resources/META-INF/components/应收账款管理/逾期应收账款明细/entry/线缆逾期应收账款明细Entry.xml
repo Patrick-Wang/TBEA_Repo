@@ -253,7 +253,7 @@
 				</sql>
 				<if test="${dataTmp.isEmpty}">
 					<list id="dataTmp" type="object">
-						<item>${dataRow.resize[17]}</item>
+						<item>${dataEmptyRow}</item>
 					</list>
 				</if>
 				<list id="rowTmp" type="object">
@@ -294,7 +294,7 @@
 				</sql>
 				<if test="${dataTmp.isEmpty}">
 					<list id="dataTmp" type="object">
-						<item>${dataRow.resize[17]}</item>
+						<item>${dataEmptyRow}</item>
 					</list>
 				</if>
 				<list id="rowTmp" type="object">
