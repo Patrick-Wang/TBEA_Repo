@@ -285,20 +285,35 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		list.setAttribute("value", "0");
 		service.appendChild(list);
 
+		//<context value="${counterFactory.newCounter}" key="counter" />
+		
+		Element counter = doc.createElement(Schema.TAG_CONTEXT);
+		counter.setAttribute("key", "counter");
+		counter.setAttribute("value", "${counterFactory.newCounter}");
+		service.appendChild(counter);
+		
 		Element table = doc.createElement(Schema.TAG_TABLE);
 		table.setAttribute("id", "result");
 		table.setAttribute("rowIds", "ids");
 		table.setAttribute("export", "true");
 		service.appendChild(table);
 		
+		boolean reset = true;
 		for (int i = 0, j = 1; i < src.getColNames().size(); ++i) {
 			if ("Y".equals(src.getVisiablity().get(i))){
 				list = doc.createElement(Schema.TAG_LIST);
 				setType(src.getColTypes().get(i), list);			
 				list.setAttribute("sql", "data");
-				list.setAttribute("value", "" + j);
+				if (reset) {
+					list.setAttribute("value", "${counter.reset[" + j + "].val}");
+				}else {
+					list.setAttribute("value", "${counter.next.val}");
+				}
 				table.appendChild(list);
 				++j;
+				reset = false;
+			}else {
+				reset = true;
 			}
 		}		
 	}
@@ -349,7 +364,8 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 				
 				if(src.getColTypes().get(i).getType() == ColType.TEXT ||
 						src.getColTypes().get(i).getType() == ColType.STRING ||	
-						src.getColTypes().get(i).getType() == ColType.DATETIME ) {
+						src.getColTypes().get(i).getType() == ColType.DATETIME ||
+						src.getColTypes().get(i).getType() == ColType.OPTION) {
 					Element type = doc.createElement("type");
 					item.appendChild(type);
 					type.setTextContent("text");

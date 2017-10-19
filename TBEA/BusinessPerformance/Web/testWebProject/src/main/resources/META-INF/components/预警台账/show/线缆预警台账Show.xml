@@ -211,10 +211,10 @@
      <name>未到期安装款</name>
      <sub type="array">
       <item>
-       <name>安装款到期日期</name>
+       <name>未到期安装款</name>
       </item>
       <item>
-       <name>未到期安装款</name>
+       <name>安装款到期日期</name>
       </item>
      </sub>
     </item>
@@ -359,17 +359,17 @@ expireOfGuarDate,
 DATEDIFF(dd,expireOfGuarDate,${calendar.current.date}) as tmp6,
 NotDuePayment,
 NotDuePrePAmount,
-NotDuePrePDate,
+CONVERT(varchar(20),NotDuePrePDate, 23) tmp20,
 NotDueDeliAmount,
-NotDueDeliDate,
+CONVERT(varchar(20),NotDueDeliDate, 23) tmp21,
 NotDueArriAmount,
-NotDueArriDate,
+CONVERT(varchar(20),NotDueArriDate, 23) tmp22,
 NotDueFixAmount,
-NotDueFixDate,
+CONVERT(varchar(20),NotDueFixDate, 23) tmp23,
 NotDueWorkAmount,
-NotDueWorkDate,
+CONVERT(varchar(20),NotDueWorkDate, 23) tmp23,
 NotDueGuarAmount,
-NotDueGuarDate,
+CONVERT(varchar(20),NotDueGuarDate, 23) tmp24,
 NoPaymentFactor,
 preReceiptAmount,
 liquidateProgress,
@@ -382,68 +382,68 @@ from ar_warning_book_c
 where company = (select name from jygk_dwxx where id = ${item})</sql>
   <list id="ids" sql="data" value="0"/>
   <table export="true" id="result" rowIds="ids">
-   <list sql="data" type="string" value="1"/>
-   <list sql="data" type="string" value="2"/>
-   <list sql="data" type="string" value="3"/>
-   <list sql="data" type="string" value="4"/>
-   <list sql="data" type="string" value="5"/>
-   <list sql="data" type="string" value="6"/>
-   <list sql="data" type="string" value="7"/>
-   <list sql="data" type="string" value="8"/>
-   <list sql="data" type="date" value="9"/>
-   <list sql="data" type="string" value="10"/>
-   <list sql="data" type="string" value="11"/>
-   <list sql="data" type="string" value="12"/>
-   <list sql="data" type="double" value="13"/>
-   <list sql="data" type="double" value="14"/>
-   <list sql="data" type="date" value="15"/>
-   <list sql="data" type="double" value="16"/>
-   <list sql="data" type="double" value="17"/>
-   <list sql="data" type="double" value="18"/>
-   <list sql="data" type="double" value="19"/>
-   <list sql="data" type="date" value="20"/>
-   <list sql="data" type="double" value="21"/>
-   <list sql="data" type="double" value="22"/>
-   <list sql="data" type="double" value="23"/>
-   <list sql="data" type="double" value="24"/>
-   <list sql="data" type="string" value="25"/>
-   <list sql="data" type="string" value="26"/>
-   <list sql="data" type="double" value="27"/>
-   <list sql="data" type="string" value="28"/>
-   <list sql="data" type="string" value="29"/>
-   <list sql="data" type="double" value="30"/>
-   <list sql="data" type="string" value="31"/>
-   <list sql="data" type="string" value="32"/>
-   <list sql="data" type="double" value="33"/>
-   <list sql="data" type="string" value="34"/>
-   <list sql="data" type="string" value="35"/>
-   <list sql="data" type="double" value="36"/>
-   <list sql="data" type="string" value="37"/>
-   <list sql="data" type="string" value="38"/>
-   <list sql="data" type="double" value="39"/>
-   <list sql="data" type="string" value="40"/>
-   <list sql="data" type="string" value="41"/>
-   <list sql="data" type="double" value="42"/>
-   <list sql="data" type="double" value="43"/>
-   <list sql="data" type="string" value="44"/>
-   <list sql="data" type="double" value="45"/>
-   <list sql="data" type="string" value="46"/>
-   <list sql="data" type="double" value="47"/>
-   <list sql="data" type="string" value="48"/>
-   <list sql="data" type="double" value="49"/>
-   <list sql="data" type="string" value="50"/>
-   <list sql="data" type="double" value="51"/>
-   <list sql="data" type="string" value="52"/>
-   <list sql="data" type="double" value="53"/>
-   <list sql="data" type="string" value="54"/>
-   <list sql="data" type="string" value="55"/>
-   <list sql="data" type="double" value="56"/>
-   <list sql="data" type="string" value="57"/>
-   <list sql="data" type="string" value="58"/>
-   <list sql="data" type="double" value="59"/>
-   <list sql="data" type="double" value="60"/>
-   <list sql="data" type="double" value="61"/>
-   <list sql="data" type="string" value="62"/>
+   <list sql="data"  value="1"/>
+   <list sql="data"  value="2"/>
+   <list sql="data"  value="3"/>
+   <list sql="data"  value="4"/>
+   <list sql="data"  value="5"/>
+   <list sql="data"  value="6"/>
+   <list sql="data"  value="7"/>
+   <list sql="data"  value="8"/>
+   <list sql="data"  value="9"/>
+   <list sql="data"  value="10"/>
+   <list sql="data"  value="11"/>
+   <list sql="data"  value="12"/>
+   <list sql="data"  value="13"/>
+   <list sql="data"  value="14"/>
+   <list sql="data"  value="15"/>
+   <list sql="data"  value="16"/>
+   <list sql="data"  value="17"/>
+   <list sql="data"  value="18"/>
+   <list sql="data"  value="19"/>
+   <list sql="data"  value="20"/>
+   <list sql="data"  value="21"/>
+   <list sql="data"  value="22"/>
+   <list sql="data"  value="23"/>
+   <list sql="data"  value="24"/>
+   <list sql="data"  value="25"/>
+   <list sql="data"  value="26"/>
+   <list sql="data"  value="27"/>
+   <list sql="data"  value="28"/>
+   <list sql="data"  value="29"/>
+   <list sql="data"  value="30"/>
+   <list sql="data"  value="31"/>
+   <list sql="data"  value="32"/>
+   <list sql="data"  value="33"/>
+   <list sql="data"  value="34"/>
+   <list sql="data"  value="35"/>
+   <list sql="data"  value="36"/>
+   <list sql="data"  value="37"/>
+   <list sql="data"  value="38"/>
+   <list sql="data"  value="39"/>
+   <list sql="data"  value="40"/>
+   <list sql="data"  value="41"/>
+   <list sql="data"  value="42"/>
+   <list sql="data"  value="43"/>
+   <list sql="data"  value="44"/>
+   <list sql="data"  value="45"/>
+   <list sql="data"  value="46"/>
+   <list sql="data"  value="47"/>
+   <list sql="data"  value="48"/>
+   <list sql="data"  value="49"/>
+   <list sql="data"  value="50"/>
+   <list sql="data"  value="51"/>
+   <list sql="data"  value="52"/>
+   <list sql="data"  value="53"/>
+   <list sql="data"  value="54"/>
+   <list sql="data"  value="55"/>
+   <list sql="data"  value="56"/>
+   <list sql="data"  value="57"/>
+   <list sql="data"  value="58"/>
+   <list sql="data"  value="59"/>
+   <list sql="data"  value="60"/>
+   <list sql="data"  value="61"/>
+   <list sql="data"  value="62"/>
   </table>
  </service>
 </components>
