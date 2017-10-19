@@ -25,6 +25,7 @@
                 <floatingRatio ref="5" type="double"/>
                 <bondPersistentPeriod ref="6" type="string"/>
                 <maturityDate ref="7" type="date"/>
+                <dwid type="int" value="${dwid}" />
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>
