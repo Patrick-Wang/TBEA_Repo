@@ -116,11 +116,7 @@
             </item>
             <item>
                 <name>预收款到期日期</name>
-        <type>text</type>
-            </item>
-            <item>
-                <name>预收款逾期天数</name>
-        <type>text</type>
+        		<type>text</type>
             </item>
         </sub>
     </item>
@@ -134,10 +130,7 @@
                 <name>发货款到期日期</name>
         <type>text</type>
             </item>
-            <item>
-                <name>发货款逾期天数</name>
-        <type>text</type>
-            </item>
+
         </sub>
     </item>
     <item>
@@ -150,10 +143,7 @@
                 <name>到货款到期日期</name>
         <type>text</type>
             </item>
-            <item>
-                <name>到货款逾期天数</name>
-        <type>text</type>
-            </item>
+
         </sub>
     </item>
     <item>
@@ -166,10 +156,7 @@
                 <name>安装款到期日期</name>
         <type>text</type>
             </item>
-            <item>
-                <name>安装款逾期天数</name>
-        <type>text</type>
-            </item>
+
         </sub>
     </item>
     <item>
@@ -182,10 +169,6 @@
                 <name>运行款到期日期</name>
         <type>text</type>
             </item>
-            <item>
-                <name>运行款逾期天数</name>
-        <type>text</type>
-            </item>
         </sub>
     </item>
     <item>
@@ -196,10 +179,6 @@
             </item>
             <item>
                 <name>质保金到期日期</name>
-        <type>text</type>
-            </item>
-            <item>
-                <name>质保金逾期天数</name>
         <type>text</type>
             </item>
         </sub>
