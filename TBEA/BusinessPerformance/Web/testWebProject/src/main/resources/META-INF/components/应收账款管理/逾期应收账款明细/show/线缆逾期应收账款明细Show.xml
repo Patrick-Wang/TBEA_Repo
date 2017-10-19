@@ -217,21 +217,21 @@
 					--expireOfWorkAmount	expireOfWorkDate	expireOfWorkDays
 					--expireOfGuarAmount	expireOfGuarDate	expireOfGuarDays
 					case ${data[i][18]}
-						when '到货款' then expireOfArriDate
-						when '投运款' then expireOfWorkAmount
-						when '质保金' then expireOfGuarDate
+						when '到货款' then CONVERT(varchar(20),expireOfArriDate, 23)
+						when '投运款' then CONVERT(varchar(20),expireOfWorkDate, 23)
+						when '质保金' then CONVERT(varchar(20),expireOfGuarDate, 23)
 					end as tmp1,
 					case ${data[i][18]}
-						when '到货款' then expireOfArriDays
-						when '投运款' then expireOfWorkDays
-						when '质保金' then expireOfWorkDays
+						when '到货款' then DATEDIFF(DD,expireOfArriDays,'${calendar.current.date}')
+						when '投运款' then DATEDIFF(DD,expireOfWorkDays,'${calendar.current.date}')
+						when '质保金' then DATEDIFF(DD,expireOfWorkDays,'${calendar.current.date}')
 					end as tmp2,
 					case ${data[i][18]}
 						when '到货款' then expireOfArriAmount
 						when '投运款' then expireOfWorkAmount
 						when '质保金' then expireOfGuarAmount
 					end as tmp3,
-					lastDeliveryDate
+					CONVERT(varchar(20), lastDeliveryDate, 23) tmp130
 				from ar_warning_book_c 
 				where id = ${data[i][17]}
 			</sql>

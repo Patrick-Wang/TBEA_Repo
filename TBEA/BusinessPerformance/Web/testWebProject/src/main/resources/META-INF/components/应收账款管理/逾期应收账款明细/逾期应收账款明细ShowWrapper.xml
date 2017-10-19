@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <components>
 	<controller id="1560C88098A32BB156FE0967D1FB6EE0ShowWrapperJsp">
-		<list id="ids" type="int">0</list>
-		<list id="vals" type="string">逾期应收账款明细</list>
+		<list id="ids" type="int">
+        	<!-- <item concat="${sysAuth.cids[90]}"></item> -->
+        	<item concat="${sysAuth.cids[92]}"></item>
+        </list>
+        <list id="vals" type="string">
+			<!-- <item concat="${sysAuth.cnames[90]}"></item> -->
+        	<item concat="${sysAuth.cnames[92]}"></item>
+        </list>
 		<response name="framework/templates/dateReport/show" type="jsp">
 			<map key="updateUrl" value="1560C88098A32BB156FE0967D1FB6EE0UpdateWrapperClr" />
 			<map key="exportUrl" value="1560C88098A32BB156FE0967D1FB6EE0ExportWrapperClr" />
 			<map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}" />
+			<map key="searchlist" value="true"></map>
 			<map key="year" value="${calendar.current.year}" />
 			<map key="month" value="${calendar.current.month}" />
 		</response>
 	</controller>
 	<controller id="1560C88098A32BB156FE0967D1FB6EE0UpdateWrapperClr">
 		<context key="item" value="${request.item.asInt}" />
-		<if test="${item == 0}">
-			<callcontroller id="overdueAccountsReceivableDetailUpdateClr" />
-		</if>
+		<if test="${sysAuth.cids[90].contains[item]}">
+            <callcontroller id="arWarningBookTUpdateClr"/>
+        </if>
+        <elseif test="${sysAuth.cids[92].contains[item]}">
+            <callcontroller id="overdueAccountsReceivableDetailUpdateClr"/>
+        </elseif> 
 	</controller>
 	<controller id="1560C88098A32BB156FE0967D1FB6EE0ExportWrapperClr">
 		<context key="item" value="${request.item.asInt}" />
-		<if test="${item == 0}">
-			<callcontroller id="overdueAccountsReceivableDetailExportClr" />
-		</if>
+		<if test="${sysAuth.cids[90].contains[item]}">
+            <callcontroller id="arWarningBookTUpdateClr"/>
+        </if>
+        <elseif test="${sysAuth.cids[92].contains[item]}">
+            <callcontroller id="overdueAccountsReceivableDetailExportClr"/>
+        </elseif> 
 	</controller>
 </components>

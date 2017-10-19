@@ -341,16 +341,12 @@ ActualAR,
 expireAmount,
 expireOfPrePAmount,
 CONVERT(varchar(20),expireOfPrePDate, 23) tmp34,
-
 DATEDIFF(DD,expireOfPrePDate,'${calendar.current.date}') as tmp1,
 expireOfDeliAmount,
 CONVERT(varchar(20),expireOfDeliDate, 23) tmp33,
-
 DATEDIFF(DD,expireOfDeliDate,'${calendar.current.date}') as tmp2,
-
 expireOfArriAmount,
 CONVERT(varchar(20),expireOfArriDate, 23) tmp32,
-
 DATEDIFF(dd,expireOfArriDate,'${calendar.current.date}') as tmp3,
 expireOfFixAmount,
 CONVERT(varchar(20),expireOfFixDate, 23) tmp31,
