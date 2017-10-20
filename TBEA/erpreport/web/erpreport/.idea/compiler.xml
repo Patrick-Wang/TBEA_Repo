@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dynamicDS" />
+        <module name="el" />
+        <module name="erpreport" />
+        <module name="frame" />
+        <module name="maker" />
+        <module name="report" />
+        <module name="tools" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dynamicDS" target="1.8" />
+      <module name="el" target="1.8" />
+      <module name="erpreport" target="1.8" />
+      <module name="frame" target="1.8" />
+      <module name="maker" target="1.8" />
+      <module name="report" target="1.8" />
+      <module name="tools" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

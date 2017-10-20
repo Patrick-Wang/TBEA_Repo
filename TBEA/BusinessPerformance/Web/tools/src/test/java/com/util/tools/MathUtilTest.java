@@ -2,10 +2,12 @@ package com.util.tools;
 
 import junit.framework.TestCase;
 
+import java.net.URISyntaxException;
+
 public class MathUtilTest extends TestCase {
 
-	public void testSumDoubleArray() {
-		fail("Not yet implemented");
+	public void testSumDoubleArray() throws URISyntaxException {
+		System.out.println(PathUtil.getClassRoot());
 	}
 
 	public void testSumListOfDouble() {

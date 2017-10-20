@@ -251,10 +251,12 @@ module framework.templates.singleDateReport {
                 }))
             .then((resp:Util.IResponse) => {
                 if (Util.ErrorCode.OK == resp.errorCode) {
-                    Util.Toast.success("保存 成功");
+                    Util.Toast.success("提交 成功");
                 } else {
                     Util.Toast.failed(resp.message);
                 }
+            }, (text)=>{
+                Util.Toast.failed('提交 失败');
             });
         }
     }

@@ -33,7 +33,7 @@ import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.component.manager.ComponentManager;
 import com.xml.frame.report.component.service.JpaTransaction;
 import com.xml.frame.report.util.excel.ExcelUtil;
-import com.xml.frame.report.util.excel.ValidationException;
+import com.xml.frame.report.util.excel.exception.ValidationException;
 import com.xml.frame.report.util.xml.XmlElWalker;
 import com.xml.frame.report.util.xml.XmlUtil;
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/dynamicDS/dynamicDS.iml" filepath="$PROJECT_DIR$/../../../BusinessPerformance/Web/dynamicDS/dynamicDS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/el/el.iml" filepath="$PROJECT_DIR$/../../../BusinessPerformance/Web/el/el.iml" />
+      <module fileurl="file://$PROJECT_DIR$/erpreport/erpreport.iml" filepath="$PROJECT_DIR$/erpreport/erpreport.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frame/frame.iml" filepath="$PROJECT_DIR$/frame/frame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/maker.iml" filepath="$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/maker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/report.iml" filepath="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/report.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/tools.iml" filepath="$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/tools.iml" />
+    </modules>
+  </component>
+</project>

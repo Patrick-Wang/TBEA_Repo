@@ -1,5 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.report;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,11 +12,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tbea.ic.operation.common.BMResponse;
+import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Url;
+import com.tbea.ic.operation.common.Util;
 import com.tbea.ic.operation.service.report.ComponentManagerService;
 import com.util.tools.DataNode;
 import com.xml.frame.report.component.controller.Controller;
 import com.xml.frame.report.component.entity.Context;
+import com.xml.frame.report.util.excel.exception.ValidationException;
 
 import net.sf.json.JSONObject;
 
@@ -39,16 +44,21 @@ public class ReportServlet{
 	public ModelAndView onController(HttpServletRequest request,
 			HttpServletResponse response,
 			@PathVariable("controller") String controllor) throws Exception {
-		
-		Context context = cms.doController(request, response, controllor);
-		if (null != context){
-			ModelAndView mv = (ModelAndView) context.get(Controller.MODEL_AND_VIEW);
-			if (mv != null){
-				if (Url.isV2(request) && !mv.getViewName().startsWith("ui2")){
-					mv.setViewName("ui2/pages/" + mv.getViewName());
+		try {
+			Context context = cms.doController(request, response, controllor);
+			if (null != context){
+				ModelAndView mv = (ModelAndView) context.get(Controller.MODEL_AND_VIEW);
+				if (mv != null){
+					if (Url.isV2(request) && !mv.getViewName().startsWith("ui2")){
+						mv.setViewName("ui2/pages/" + mv.getViewName());
+					}
 				}
+				return mv; 
 			}
-			return mv; 
+		}catch(ValidationException ve) {
+			PrintWriter pw = response.getWriter();
+			pw.print(new BMResponse(ErrorCode.UPLOAD_ERROP, ve.getMessage()).toJson());
+			pw.close();
 		}
 		return null;
 	}

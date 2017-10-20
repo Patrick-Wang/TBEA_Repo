@@ -5,6 +5,10 @@ import java.sql.Date;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 
 import com.frame.script.util.TypeUtil;
+import com.xml.frame.report.util.excel.exception.DateCellException;
+import com.xml.frame.report.util.excel.exception.NumberCellException;
+import com.xml.frame.report.util.excel.exception.StringCellException;
+import com.xml.frame.report.util.excel.exception.ValidationException;
 
 public class ExcelUtil{
 
@@ -15,8 +19,8 @@ public class ExcelUtil{
 				return new Date(date.getTime());
 			}catch(Exception e){
 				e.printStackTrace();
-				short df = cell.getCellStyle().getDataFormat();
-				throw new ValidationException("日期解析失败，数据格式编码" + df);
+				throw DateCellException.raiseException(cell);
+				//throw new ValidationException(cell.getRowIndex() + "行" + cell.getColumnIndex() + "列 日期解析失败，数据格式编码 :" + df + " 值 :" + cell.getNumericCellValue());
 			}
 		} else if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
 			try{
@@ -24,13 +28,15 @@ public class ExcelUtil{
 				return Date.valueOf(sDate.replace('/', '-'));
 			}catch(Exception e){
 				e.printStackTrace();
-				short df = cell.getCellStyle().getDataFormat();
-				throw new ValidationException("日期解析失败，数据格式编码" + df + " " + e.getMessage());
+				throw DateCellException.raiseException(cell);
+				//short df = cell.getCellStyle().getDataFormat();
+				//throw new ValidationException(cell.getRowIndex() + "行" + cell.getColumnIndex() + "列 日期解析失败，数据格式编码 :" + df + " 值 :" + cell.getStringCellValue());
 			}
 		} else if (cell.getCellType() == XSSFCell.CELL_TYPE_BLANK) {
 			return null;
 		} 
-		throw new ValidationException("日期解析失败，类型编码 " + cell.getCellType());
+		throw DateCellException.raiseException(cell);
+		//throw new ValidationException(cell.getRowIndex() + "行" + cell.getColumnIndex() + "列 日期解析失败，类型编码 " + cell.getCellType() + " 值 :" + cell.toString());
 	}
 	
 	public static Double parseNumber(XSSFCell cell) throws ValidationException{
@@ -43,7 +49,7 @@ public class ExcelUtil{
 		case XSSFCell.CELL_TYPE_STRING:
 			return TypeUtil.toDoubleNull(cell.getStringCellValue());
 		}
-		throw new ValidationException("数值类型解析失败 ，类型编码  " + cell.getCellType());
+		throw NumberCellException.raiseException(cell);
 	}
 	
 	public static String parseString(XSSFCell cell) throws ValidationException{
@@ -56,6 +62,7 @@ public class ExcelUtil{
 		case XSSFCell.CELL_TYPE_STRING:
 			return cell.getStringCellValue();
 		}
-		throw new ValidationException("数值类型解析失败 ，类型编码  " + cell.getCellType());
+		throw StringCellException.raiseException(cell);
+		//new ValidationException(cell.getRowIndex() + "行" + cell.getColumnIndex() + "列 数值类型解析失败 ，类型编码  " + cell.getCellType() + " 值 :" + cell.toString());
 	}
 }

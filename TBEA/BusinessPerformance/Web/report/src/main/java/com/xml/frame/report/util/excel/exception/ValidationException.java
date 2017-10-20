@@ -1,4 +1,4 @@
-package com.xml.frame.report.util.excel;
+package com.xml.frame.report.util.excel.exception;
 
 public class ValidationException extends Exception {
 
@@ -32,5 +32,5 @@ public class ValidationException extends Exception {
 		super(cause);
 		// TODO Auto-generated constructor stub
 	}
-
+	
 }

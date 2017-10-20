@@ -1,0 +1,48 @@
+<Context>
+	<!--<Resource -->
+		<!--name="jdbc/speed_db_mysql" -->
+		<!--auth="Container" -->
+		<!--type="javax.sql.DataSource"-->
+		<!--username="root" -->
+		<!--password="root" -->
+		<!--driverClassName="com.mysql.jdbc.Driver"-->
+		<!--url="jdbc:mysql://localhost:3306/test" -->
+		<!--initialSize="35" -->
+		<!--maxActive="70"-->
+		<!--maxIdle="10" -->
+		<!--validationQuery="select 1" -->
+		<!--removeAbandoned="true"-->
+		<!--removeAbandonedTimeout="60000" -->
+		<!--logAbandoned="true" />  -->
+
+		 <Resource
+            name="jdbc/erp"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="repo"
+            password="erpreport"
+            driverClassName="oracle.jdbc.driver.OracleDriver"
+            url="jdbc:oracle:thin:@172.20.8.104:1523/ERPDEV"
+            initialSize="35"
+            maxActive="70"
+            maxIdle="10"
+            validationQuery="select 1 from dual"
+            removeAbandoned="true"
+            removeAbandonedTimeout="60000"
+            logAbandoned="true" />
+	<!--       <Resource name="jdbc/speed_db_sqlserver"
+              auth="Container"
+              type="javax.sql.DataSource"
+              username="root"
+              password="root"
+              driverClassName="net.sourceforge.jtds.jdbc.Driver"
+              url="jdbc:jtds:sqlserver://localhost;DatabaseName=dbname"
+              initialSize="35"
+              maxActive="70"
+              maxIdle="10"
+              validationQuery="select 1"
+              removeAbandoned="true"
+              removeAbandonedTimeout="60000"
+              logAbandoned="true" />
+       -->
+</Context>

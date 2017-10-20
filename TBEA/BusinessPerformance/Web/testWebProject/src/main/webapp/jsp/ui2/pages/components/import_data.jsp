@@ -193,6 +193,7 @@
 	padding:10px 15px 10px 15px;
 	border-left:none;
 	border-top:none;
+	white-space: nowrap;
 }
 
 .result-body-right{
@@ -201,6 +202,7 @@
 	border-left:none;
 	border-top:none;
 	border-right:none;
+	white-space: nowrap;
 }
 
 .progress{
@@ -532,7 +534,7 @@
 						jqtemplate.attr("dt", dt.year + "-" + dt.month + "-" + dt.day);
 					}					
 					
-					jqtemplate.find(".result-body-left").append('<div>' + 
+					jqtemplate.find(".result-body-left").append('<div >' +
 							getProText() + file.name + 
 					'</div>');
 					jqtemplate.find(".result-body-right").append('<div style="float:left; margin-right:5px"><i class="fa fa-times" style="cursor:pointer"></i>' + 
