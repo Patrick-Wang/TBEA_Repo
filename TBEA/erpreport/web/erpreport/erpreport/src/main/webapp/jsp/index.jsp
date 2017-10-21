@@ -15,17 +15,17 @@ pageEncoding="utf-8"%>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/plugins/layui/css/layui.css" media="all">
     <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/build/css/app.css" media="all">
-    <script src="${pageContext.request.contextPath}/jsp/jquery-1.12.3.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/plugins/jquery/jquery-1.12.3.js"></script>
     <%--<script src="${pageContext.request.contextPath}/jsp/es5-shim.js"></script>--%>
     <%--<script src="${pageContext.request.contextPath}/jsp/es5-sham.js"></script>--%>
     <script src="${pageContext.request.contextPath}/jsp/json2.js"></script>
     <script src="${pageContext.request.contextPath}/jsp/ie8.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/layui-ie8.js"></script>
     <!--[if gte IE 8]>
     <style>
         .layui-nav li{
             padding-right:1px;
         }
-
     </style>
     <![endif]-->
 

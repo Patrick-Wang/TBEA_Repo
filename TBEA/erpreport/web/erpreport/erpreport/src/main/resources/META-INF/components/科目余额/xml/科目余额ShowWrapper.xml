@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="35A006162B95FC33F2933FD15A14596BShowWrapperJsp">
+        <list id="ids" type="int">0</list>
+        <list id="vals" type="string">科目余额</list>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="35A006162B95FC33F2933FD15A14596BUpdateWrapperClr"/>
+            <map key="exportUrl" value="35A006162B95FC33F2933FD15A14596BExportWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="35A006162B95FC33F2933FD15A14596BUpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="CUXACCOUNTBALANCEVUpdateClr"/>
+        </if>
+    </controller>
+    <controller id="35A006162B95FC33F2933FD15A14596BExportWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="CUXACCOUNTBALANCEVExportClr"/>
+        </if>
+    </controller>
+</components>
