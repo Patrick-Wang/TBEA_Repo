@@ -1,4 +1,3 @@
-/// <reference path="../util.ts" />
 var JQTable;
 (function (JQTable) {
     $.jgrid.extend({
@@ -298,7 +297,7 @@ var JQTable;
             });
         }
     });
-    window.__jqassistDragEnd = function (ts, p) {
+    window['__jqassistDragEnd'] = function (ts, p) {
         this.hDiv.style.cursor = "default";
         if (this.resizing) {
             var idx = this.resizing.idx, nw = this.headers[idx].newWidth || this.headers[idx].width;
@@ -344,12 +343,12 @@ var JQTable;
             return true;
         };
     };
+    var TextAlign;
     (function (TextAlign) {
         TextAlign[TextAlign["Left"] = 0] = "Left";
         TextAlign[TextAlign["Right"] = 1] = "Right";
         TextAlign[TextAlign["Center"] = 2] = "Center";
-    })(JQTable.TextAlign || (JQTable.TextAlign = {}));
-    var TextAlign = JQTable.TextAlign;
+    })(TextAlign = JQTable.TextAlign || (JQTable.TextAlign = {}));
     JQTable.NodeId = (function (idBase) {
         return function () {
             return "jq_" + (++idBase) + "_node";
@@ -365,6 +364,7 @@ var JQTable;
             if (editType === void 0) { editType = undefined; }
             if (options === void 0) { options = undefined; }
             if (isNumber === void 0) { isNumber = true; }
+            //add by hzdqzy
             if (isSortable === void 0) { isSortable = false; }
             if (sorttype === void 0) { sorttype = undefined; }
             this.mChilds = [];
@@ -493,19 +493,19 @@ var JQTable;
             return this.mOpts.name;
         };
         Node.prototype.children = function (depth) {
-            var children = new std.vector();
+            var children = [];
             children.push(this);
             for (var j = 0; j < depth; j++) {
-                var len = children.size();
+                var len = children.length;
                 for (var k = 0; k < len; k++) {
-                    var currentChilds = children.get(0).childs();
-                    children.erase(0);
+                    var currentChilds = children[0].childs();
+                    children.splice(0, 1);
                     for (var i = 0; i < currentChilds.length; i++) {
                         children.push(currentChilds[i]);
                     }
                 }
             }
-            return children.toArray();
+            return children;
         };
         //add by hzdqzy-------------------------------------------------------
         Node.prototype.isSortable = function () {
@@ -515,7 +515,7 @@ var JQTable;
             return this.mOpts.sorttype;
         };
         return Node;
-    })();
+    }());
     JQTable.Node = Node;
     var Cell = (function () {
         function Cell(row, col) {
@@ -538,7 +538,7 @@ var JQTable;
             return this.mCol;
         };
         return Cell;
-    })();
+    }());
     JQTable.Cell = Cell;
     var Formula = (function () {
         function Formula(destCell, srcCellarray, formula) {
@@ -575,7 +575,7 @@ var JQTable;
             }
         };
         return Formula;
-    })();
+    }());
     JQTable.Formula = Formula;
     var JQGridAssistant = (function () {
         function JQGridAssistant(titleNodes, gridName) {
@@ -810,7 +810,7 @@ var JQTable;
                 var rowdata = {};
                 rowdata["id"] = data[i][0];
                 for (var j = 0; j < colums.length; ++j) {
-                    col = parseInt(j) + 1;
+                    col = j + 1;
                     rowdata[colums[j].idChain()] = data[i][col] == undefined ? "" : data[i][col];
                 }
                 alldata.push(rowdata);
@@ -837,7 +837,7 @@ var JQTable;
                         });
                     }
                     $("#" + _this.mGridName + " #" + col + "" + mya[iRowStart] + "").attr("rowspan", ilen);
-                    if (Util.isMSIE()) {
+                    if (window['isie'] <= 9) {
                         //IE下overflow-y 无法正常工作
                         $("#" + _this.mGridName).parent().css("overflow-y", "hidden");
                     }
@@ -1203,7 +1203,7 @@ var JQTable;
             if (!dataWithId) {
                 data = [];
                 for (var i = 0; i < dataWithoutId.length; ++i) {
-                    data.push([i].concat(dataWithoutId[i]));
+                    data.push([i, dataWithoutId[i]]);
                 }
             }
             var rows = [];
@@ -1229,11 +1229,11 @@ var JQTable;
                     lastcell = iCol;
                     $("input").attr("disabled", true);
                     if (undefined != _this.mDisabledEditCells) {
-                        var oldFun = $.jgrid.createEl;
+                        var oldFun_1 = $.jgrid.createEl;
                         for (var i = 0; i < _this.mDisabledEditCells.length; ++i) {
                             if (_this.mDisabledEditCells[i].row() == (iRow - 1) && _this.mDisabledEditCells[i].col() == iCol) {
                                 $.jgrid.createEl = function () {
-                                    $.jgrid.createEl = oldFun;
+                                    $.jgrid.createEl = oldFun_1;
                                 };
                                 break;
                             }
@@ -1243,7 +1243,7 @@ var JQTable;
                 afterSaveCell: function () {
                     $("input").attr("disabled", false);
                     var ids = grid.jqGrid('getDataIDs');
-                    if (Util.indexOf(_this.mEditedRows, ids[lastsel - 1]) < 0) {
+                    if (_this.mEditedRows.indexOf(ids[lastsel - 1]) < 0) {
                         _this.mEditedRows.push(ids[lastsel - 1]);
                     }
                     lastsel = "";
@@ -1339,7 +1339,7 @@ var JQTable;
                                 _this.showError("数据已保存，无法删除");
                                 return;
                             }
-                            var ind = Util.indexOf(_this.mEditedRows, rowid);
+                            var ind = _this.mEditedRows.indexOf(rowid);
                             if (ind >= 0) {
                                 _this.mEditedRows.splice(ind, 1);
                             }
@@ -1491,7 +1491,7 @@ var JQTable;
                 var _this = this;
                 if (this.grid) {
                     this.grid.dragEnd = function () {
-                        __jqassistDragEnd.call(_this.grid, _this, _this.p);
+                        window['__jqassistDragEnd'].call(_this.grid, _this, _this.p);
                     };
                 }
             });
@@ -1513,6 +1513,6 @@ var JQTable;
             }
         };
         return JQGridAssistant;
-    })();
+    }());
     JQTable.JQGridAssistant = JQGridAssistant;
 })(JQTable || (JQTable = {}));

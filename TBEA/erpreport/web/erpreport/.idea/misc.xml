@@ -7,12 +7,12 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/frame/pom.xml" />
-        <option value="$PROJECT_DIR$/erpreport/pom.xml" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/el/pom.xml" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/pom.xml" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/pom.xml" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/dynamicDS/pom.xml" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/pom.xml" />
+        <option value="$PROJECT_DIR$/erpreport/pom.xml" />
       </list>
     </option>
   </component>

@@ -5,7 +5,7 @@ if (!window.console) {
         }
     }
 }
-
+//asdfasdfasdf阿斯顿发送到发送到发生地方
 window.iever = 100;
 if (navigator.appName == "Microsoft Internet Explorer") {
     if (navigator.appVersion.match(/7./i) == "7.") {

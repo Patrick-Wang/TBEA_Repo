@@ -266,10 +266,10 @@ var home;
                     }
                     var url = "breads=" + JSON.stringify(breadcrumbNode);
                     if (node.data.url.indexOf("?") > 0) {
-                        url = node.data.url + "&" + url;
+                        url = encodeURI(node.data.url + "&" + url);
                     }
                     else {
-                        url = node.data.url + "?" + url;
+                        url = encodeURI(node.data.url + "?" + url);
                     }
                     $("#tabContent").append('<iframe frameborder="0" src=\'' + url + '\' ' +
                         'name="' + node.data.id + "tab" + '" ' +

@@ -1,5 +1,6 @@
 create or replace view CUX_ACCOUNTBALANCE_V as
 SELECT
+	rownum id,
     gcc.segment3 account_code, --科目段    
     gcc.concatenated_segments account_segments, --科目组合  
     (SELECT nvl(gb.begin_balance_dr_beq, 0) -

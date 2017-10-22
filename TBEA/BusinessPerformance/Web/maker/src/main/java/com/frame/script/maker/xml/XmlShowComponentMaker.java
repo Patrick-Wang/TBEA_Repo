@@ -87,7 +87,7 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 			}
 		}
 		
-		list.setTextContent(stitles.substring(1));	
+		list.appendChild(doc.createTextNode(stitles.substring(1)));	
 		controller.appendChild(list);
 			
 		 
@@ -258,10 +258,25 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		service.setAttribute("transaction", "transactionManager");
 		eRoot.appendChild(service);
 		
+		
+		
+		if (src.isPager()) {
+			Element sqlCount = doc.createElement(Schema.TAG_SQL);
+			sqlCount.setAttribute("id", "dataCount");
+			sqlCount.setAttribute("export", "true");
+			sqlCount.appendChild(doc.createTextNode("\nselect count(*) from " + src.getTableName() + "\n"));
+			service.appendChild(sqlCount);			
+		}
+		
 		Element sql = doc.createElement(Schema.TAG_SQL);
 		sql.setAttribute("id", "data");
+		if (src.isPager()) {
+			sql.setAttribute("pgNum", "${pgNum}");
+			sql.setAttribute("pgSize", "${pgSize}");
+		}
+				
 		
-		String sqlTmp = "select \n\tid";
+		String sqlTmp = "\nselect \n\tid";
 		for (int i = 0; i < src.getColNames().size(); ++i) {
 			if ("Y".equals(src.getVisiablity().get(i))){
 				sqlTmp += ",";
@@ -274,9 +289,9 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 			}
 		}
 		
-		sqlTmp += "\nfrom " + src.getTableName();
+		sqlTmp += "\nfrom " + src.getTableName() + "\n";
 		
-		sql.setTextContent(sqlTmp);
+		sql.appendChild(doc.createTextNode(sqlTmp));
 		service.appendChild(sql);
 		
 		Element list = doc.createElement(Schema.TAG_LIST);
@@ -328,6 +343,18 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		context.setAttribute("value", "${request.date.asCalendar}");
 		controller.appendChild(context);
 		
+		if (src.isPager()) {
+			context = doc.createElement(Schema.TAG_CONTEXT);
+			context.setAttribute("key", "pgNum");
+			context.setAttribute("value", "${request.pgNum.asInt}");
+			controller.appendChild(context);
+			context = doc.createElement(Schema.TAG_CONTEXT);
+			context.setAttribute("key", "pgSize");
+			context.setAttribute("value", "${request.pgSize.asInt}");
+			controller.appendChild(context);
+		}
+		
+		
 		Element callservice = doc.createElement(Schema.TAG_CALLSERVICE);
 		callservice.setAttribute("id", componentName + "ShowServ");
 		controller.appendChild(callservice);
@@ -360,7 +387,7 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 				header.appendChild(item);
 				Element name = doc.createElement("name");
 				item.appendChild(name);
-				name.setTextContent(src.getColTitles().get(i));
+				name.appendChild(doc.createTextNode(src.getColTitles().get(i)));
 				
 				if(src.getColTypes().get(i).getType() == ColType.TEXT ||
 						src.getColTypes().get(i).getType() == ColType.STRING ||	
@@ -368,25 +395,29 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 						src.getColTypes().get(i).getType() == ColType.OPTION) {
 					Element type = doc.createElement("type");
 					item.appendChild(type);
-					type.setTextContent("text");
+					type.appendChild(doc.createTextNode("text"));
 				}else if(src.getColTypes().get(i).getType() == ColType.DATE) {
 					Element type = doc.createElement("type");
 					item.appendChild(type);
-					type.setTextContent("date");
+					type.appendChild(doc.createTextNode("date"));
 				}
 			}
 		}
 		
 		
 		Element date = doc.createElement("data");
-		date.setTextContent("${fmtServ.result}");
+		date.appendChild(doc.createTextNode("${fmtServ.result}"));
 		response.appendChild(date);
+		
+		Element dateCount = doc.createElement("dateCount");
+		date.appendChild(doc.createTextNode("${dataCount[0]}"));
+		response.appendChild(dateCount);
 		
 	}
 
 	private void createShowController(Document doc, Element eRoot, String componentName, ConfigTable src) {
 		Element controller = doc.createElement(Schema.TAG_CONTROLLER);
-		controller.setAttribute("id", componentName + "Show");
+		controller.setAttribute("id", componentName + "SHOWCLR");
 		eRoot.appendChild(controller);
 		
 		Element response = doc.createElement(Schema.TAG_RESPONSE);
@@ -403,6 +434,13 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		map.setAttribute("key", "month");
 		map.setAttribute("value", "${calendar.current.month}");
 		response.appendChild(map);
+		
+		if (src.isPager()) {
+			map = doc.createElement("map");
+			map.setAttribute("key", "pager");
+			map.setAttribute("value", "pager");
+			response.appendChild(map);
+		}
 		
 		map = doc.createElement("map");
 		map.setAttribute("key", "updateUrl");
@@ -431,19 +469,19 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		Element eRoot = doc.createElement(Schema.TAG_COMPONENTS);
 		Element controller = doc.createElement(Schema.TAG_CONTROLLER);
 		eRoot.appendChild(controller);
-		controller.setAttribute("id", this.getId("showWrapperJsp"));
+		controller.setAttribute("id", this.getId("SWJ"));
 		
 		Element list = doc.createElement(Schema.TAG_LIST);
 		controller.appendChild(list);
 		list.setAttribute("id", "ids");
 		list.setAttribute("type", "int");
-		list.setTextContent(Util.join(ids));
+		list.appendChild(doc.createTextNode(Util.join(ids)));
 		
 		list = doc.createElement(Schema.TAG_LIST);
 		controller.appendChild(list);
 		list.setAttribute("id", "vals");
 		list.setAttribute("type", "string");
-		list.setTextContent(Util.join(vals));
+		list.appendChild(doc.createTextNode(Util.join(vals)));
 		
 		
 		Element response = doc.createElement(Schema.TAG_RESPONSE);

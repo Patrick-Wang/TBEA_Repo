@@ -339,6 +339,8 @@ public class ListXmlInterpreter implements XmlInterpreter {
 						list.add(conArr[i]);
 					}
 				}
+			}else if (conList instanceof List){
+				list = (List) conList;
 			}
 			if (null != list) {
 				repeatAddList(objs, list, repeat, insert);

@@ -1,7 +1,7 @@
 create or replace view CUX_USERCOMP_V as
-SELECT ur.user_name,
-       ffv.flex_value,
-       ffv.description
+SELECT ur.user_name user_name,
+       ffv.flex_value comp_id,
+       ffv.description comp_name
   FROM apps.fnd_flex_value_sets  ffs
       ,apps.fnd_flex_values_vl   ffv
       ,(SELECT substr(frv.responsibility_name,0,4) comp,

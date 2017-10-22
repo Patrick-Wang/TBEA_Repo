@@ -42,6 +42,7 @@ public class ConfigTable {
 
 	String title;
 	String tableName;
+	boolean isPager;
 	
 	
 	public List<String> getColTitles() {
@@ -52,10 +53,16 @@ public class ConfigTable {
 		this.colTitles = colTitles;
 	}
 
-	public ConfigTable(String title, String tableName) {
+	
+	public boolean isPager() {
+		return isPager;
+	}
+
+	public ConfigTable(String title, String tableName, String pager) {
 		super();
 		this.tableName = tableName;
 		this.title = title;
+		isPager = "分页".equals(pager);
 	}
 	
 	public List<ColType> getColTypes() {
@@ -94,13 +101,13 @@ public class ConfigTable {
 	}
 	
 	static String[] parseHeader(String title) {
-		return title.replaceAll("\\)", "").replaceAll(" ", "").split("\\(");
+		return title.replaceAll("\\)", ":").replaceAll("\\(", ":").replaceAll(" ", "").split(":");
 	}
 	
 	public static final ConfigTable parse(XSSFSheet sheet) {
 		XSSFRow row = sheet.getRow(0);
 		String[] header = parseHeader(row.getCell(0).getStringCellValue());
-		ConfigTable tb = new ConfigTable(header[0], header[1]);
+		ConfigTable tb = new ConfigTable(header[0], header[1], header.length > 2 ? header[2] : "");
 		for (int i = 2; i <= sheet.getLastRowNum(); ++i) {
 			row = sheet.getRow(i);
 			if (row == null || null == row.getCell(0) || row.getCell(0).getCellType() != XSSFCell.CELL_TYPE_STRING ||

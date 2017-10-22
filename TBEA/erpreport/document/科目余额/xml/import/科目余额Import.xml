@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="37CB4530FDDDB6A0000FFEBF3C178862IMPORTJSP">
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="37CB4530FDDDB6A0000FFEBF3C178862ImportClr"/>
+        </response>
+    </controller>
+    <controller id="37CB4530FDDDB6A0000FFEBF3C178862ImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="37CB4530FDDDB6A0000FFEBF3C178862ImportServ" transaction="transactionManager">
+        <merge data="${data}" table="CUX_ACCOUNTBALANCE_V">
+            <set>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

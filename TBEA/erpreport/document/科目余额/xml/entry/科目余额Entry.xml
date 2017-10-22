@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="37CB4530FDDDB6A0000FFEBF3C178862ENTRYJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="37CB4530FDDDB6A0000FFEBF3C178862EntryUpdateClr"/>
+            <map key="submitUrl" value="37CB4530FDDDB6A0000FFEBF3C178862EntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="37CB4530FDDDB6A0000FFEBF3C178862EntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="37CB4530FDDDB6A0000FFEBF3C178862EntryUpdateServ"/>
+        <callcontroller id="37CB4530FDDDB6A0000FFEBF3C178862EntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>科目代码</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>科目组合</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>年初余额</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>期初余额</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>本期借方</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>本期贷方</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>期末余额</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>本年累计借方</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>本年累计贷方</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>科目说明</name>
+                    <type>text</type>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="37CB4530FDDDB6A0000FFEBF3C178862EntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="37CB4530FDDDB6A0000FFEBF3C178862EntryUpdateServ" transaction="transactionManager">
+        <sql id="data">select 
+	id,
+	account_code,
+	account_segments,
+	year_begin_balance,
+	begin_balance,
+	period_net_dr,
+	period_net_cr,
+	end_balance,
+	year_acc_dr,
+	year_acc_cr,
+	account_segments_desc
+from CUX_ACCOUNTBALANCE_V</sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+        </table>
+    </service>
+    <controller id="37CB4530FDDDB6A0000FFEBF3C178862EntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="37CB4530FDDDB6A0000FFEBF3C178862EntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="37CB4530FDDDB6A0000FFEBF3C178862EntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="CUX_ACCOUNTBALANCE_V">
+            <where>
+                <id ref="0" type="int"/>
+            </where>
+            <set>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

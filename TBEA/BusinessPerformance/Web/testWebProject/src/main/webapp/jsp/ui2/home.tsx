@@ -297,9 +297,9 @@ namespace home {
                     }
                     let url = "breads=" + JSON.stringify(breadcrumbNode);
                     if (node.data.url.indexOf("?") > 0) {
-                        url = node.data.url + "&" + url;
+                        url = encodeURI(node.data.url + "&" + url);
                     } else {
-                        url = node.data.url + "?" + url;
+                        url = encodeURI(node.data.url + "?" + url);
                     }
 
                     $("#tabContent").append(

@@ -90,11 +90,11 @@ public class XmlEntryComponentMaker extends XmlComponentMaker {
 		controller.appendChild(response);
 		
 		Element errorCode = doc.createElement("errorCode");
-		errorCode.setTextContent("0");
+		errorCode.appendChild(doc.createTextNode("0"));
 		response.appendChild(errorCode);
 		
 		Element message = doc.createElement("message");
-		message.setTextContent("OK");
+		message.appendChild(doc.createTextNode("OK"));
 		response.appendChild(message);
 	}
 
@@ -123,7 +123,7 @@ public class XmlEntryComponentMaker extends XmlComponentMaker {
 		
 		sqlTmp += "\nfrom " + src.getTableName();
 		
-		sql.setTextContent(sqlTmp);
+		sql.appendChild(doc.createTextNode(sqlTmp));
 		service.appendChild(sql);
 		
 		Element list = doc.createElement(Schema.TAG_LIST);
@@ -358,40 +358,40 @@ public class XmlEntryComponentMaker extends XmlComponentMaker {
 				header.appendChild(item);
 				Element name = doc.createElement("name");
 				item.appendChild(name);
-				name.setTextContent(src.getColTitles().get(i));
+				name.appendChild(doc.createTextNode(src.getColTitles().get(i)));
 				
 				if(src.getColTypes().get(i).getType() == ColType.TEXT ||
 						src.getColTypes().get(i).getType() == ColType.STRING ||	
 						src.getColTypes().get(i).getType() == ColType.DATETIME ) {
 					Element type = doc.createElement("type");
 					item.appendChild(type);
-					type.setTextContent("text");
+					type.appendChild(doc.createTextNode("text"));
 				}else if(src.getColTypes().get(i).getType() == ColType.DATE) {
 					Element type = doc.createElement("type");
 					item.appendChild(type);
-					type.setTextContent("date");
+					type.appendChild(doc.createTextNode("date"));
 				}else if(src.getColTypes().get(i).getType() == ColType.OPTION) {
 					Element type = doc.createElement("type");
 					item.appendChild(type);
-					type.setTextContent("select");
+					type.appendChild(doc.createTextNode("select"));
 					Element options = doc.createElement("options");
 					item.appendChild(options);
 					options.setAttribute("type", "array");
-					options.setTextContent(src.getColTypes().get(i).getOptions());
+					options.appendChild(doc.createTextNode(src.getColTypes().get(i).getOptions()));
 				}
 			}
 		}
 		
 		
 		Element date = doc.createElement("data");
-		date.setTextContent("${fmtServ.result}");
+		date.appendChild(doc.createTextNode("${fmtServ.result}"));
 		response.appendChild(date);
 		
 	}
 
 	private void createEntryController(Document doc, Element eRoot, String componentName, ConfigTable src) {
 		Element controller = doc.createElement(Schema.TAG_CONTROLLER);
-		controller.setAttribute("id", componentName + "EntryJSP");
+		controller.setAttribute("id", componentName + "ENTRYJSP");
 		eRoot.appendChild(controller);
 		Element response = doc.createElement(Schema.TAG_RESPONSE);
 		response.setAttribute("type", "jsp");
@@ -423,19 +423,19 @@ public class XmlEntryComponentMaker extends XmlComponentMaker {
 		Element eRoot = doc.createElement(Schema.TAG_COMPONENTS);
 		Element controller = doc.createElement(Schema.TAG_CONTROLLER);
 		eRoot.appendChild(controller);
-		controller.setAttribute("id", this.getId("entryWrapperJsp"));
+		controller.setAttribute("id", this.getId("EWJ"));
 		
 		Element list = doc.createElement(Schema.TAG_LIST);
 		controller.appendChild(list);
 		list.setAttribute("id", "ids");
 		list.setAttribute("type", "int");
-		list.setTextContent(Util.join(ids));
+		list.appendChild(doc.createTextNode(Util.join(ids)));
 		
 		list = doc.createElement(Schema.TAG_LIST);
 		controller.appendChild(list);
 		list.setAttribute("id", "vals");
 		list.setAttribute("type", "string");
-		list.setTextContent(Util.join(vals));
+		list.appendChild(doc.createTextNode(Util.join(vals)));
 		
 		
 		Element response = doc.createElement(Schema.TAG_RESPONSE);
