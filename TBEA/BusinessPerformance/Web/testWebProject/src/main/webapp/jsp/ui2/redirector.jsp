@@ -89,7 +89,7 @@ table {
 </style>
 </head>
 <body>
-	<form action="${pageContext.request.contextPath}/${param.url}"
+	<form
 		method="post" style="display: none">
 		<%
 		Enumeration pNames = request.getParameterNames();
@@ -116,6 +116,8 @@ table {
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/jquery/jquery-1.12.3.js"></script>
 <script>
+
+	$("form")[0].action = encodeURI("${pageContext.request.contextPath}/${param.url}");
 		$("form")[0].submit();
 	</script>
 </html>

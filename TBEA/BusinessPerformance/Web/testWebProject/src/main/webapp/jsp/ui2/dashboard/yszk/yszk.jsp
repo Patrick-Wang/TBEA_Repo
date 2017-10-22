@@ -971,7 +971,7 @@
 	$(".chart").parent().on("click", function(e){
 		var count = $(e.currentTarget).children().eq(0).attr("data-value");
 		if (!stopClick){
-			window.open("/BusinessManagement/yszkgb/v2/show.do?firstItem=" + count + '&breads=[{"value":"应收账款管报"}]');
+			window.open(encodeURI("/BusinessManagement/yszkgb/v2/show.do?firstItem=" + count + '&breads=[{"value":"应收账款管报"}]'));
 			echarts.init(document.getElementById("yszkzl")).setOption(optionZl);
 			echarts.init(document.getElementById("kxxz")).setOption(optionXz);
 			echarts.init(document.getElementById("yqysz")).setOption(optionYq);

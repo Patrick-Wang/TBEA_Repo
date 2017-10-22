@@ -672,8 +672,8 @@
 											value : '应收账款',
 											url : '/BusinessManagement/dashboard/yszk.do'
 										});
-								window.open("/BusinessManagement/redirector/redirect.do?url=dashboard/yszk.do&breads="
-										+ JSON.stringify(breads));
+								window.open(encodeURI("/BusinessManagement/redirector/redirect.do?url=dashboard/yszk.do&breads="
+										+ JSON.stringify(breads)));
 								breads = breads.slice(0, breads.length - 1);
 							});
 
@@ -683,8 +683,8 @@
 							id : 101,
 							value : '利润总额'
 						});
-						window.open("/BusinessManagement/redirector/redirect.do?url=report/dashboardLrze.do&breads="
-								+ JSON.stringify(breads));
+						window.open(encodeURI("/BusinessManagement/redirector/redirect.do?url=report/dashboardLrze.do&breads="
+								+ JSON.stringify(breads)));
 						breads = breads.slice(0, breads.length - 1);
 					});
 			

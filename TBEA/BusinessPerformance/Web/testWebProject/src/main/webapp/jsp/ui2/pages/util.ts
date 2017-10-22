@@ -796,7 +796,7 @@ module Util {
 
             $.ajax({
                 type: "POST",
-                url: this.mBaseUrl,
+                url: encodeURI(this.mBaseUrl),
                 data: option,
                 success: (data: any) => {
                     var jsonData = JSON.parse(data);
@@ -817,7 +817,7 @@ module Util {
             if (undefined == cacheData) {
                 $.ajax({
                     type: "GET",
-                    url: this.mBaseUrl,
+                    url: encodeURI(this.mBaseUrl),
                     data: option,
                     success: (data: any) => {
                         var jsonData = JSON.parse(data);

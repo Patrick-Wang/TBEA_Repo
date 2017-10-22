@@ -709,7 +709,7 @@ var Util;
             var promise = new Promise();
             $.ajax({
                 type: "POST",
-                url: this.mBaseUrl,
+                url: encodeURI(this.mBaseUrl),
                 data: option,
                 success: function (data) {
                     var jsonData = JSON.parse(data);
@@ -730,7 +730,7 @@ var Util;
             if (undefined == cacheData) {
                 $.ajax({
                     type: "GET",
-                    url: this.mBaseUrl,
+                    url: encodeURI(this.mBaseUrl),
                     data: option,
                     success: function (data) {
                         var jsonData = JSON.parse(data);
