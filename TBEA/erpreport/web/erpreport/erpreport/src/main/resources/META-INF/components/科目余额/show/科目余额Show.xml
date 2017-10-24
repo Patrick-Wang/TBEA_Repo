@@ -12,7 +12,6 @@
                         "param" : "ledger",
                         "name": "分类账",
                         "option": ${ledgers.asJson},
-                        "direct": "期间"
                     },
                     {
                         "param" : "currency",
