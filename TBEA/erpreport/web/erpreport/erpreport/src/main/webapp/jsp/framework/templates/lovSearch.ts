@@ -25,7 +25,7 @@ module search {
 
     function findDirector(actor: Option) {
         for (let i = 0; i < context.options.length; ++i) {
-            if (context.options[i].direct == actor.name) {
+            if (context.options[i].direct == actor.param) {
                 return context.options[i];
             }
         }
@@ -33,7 +33,7 @@ module search {
 
     function findActor(director: Option) {
         for (let i = 0; i < context.options.length; ++i) {
-            if (director.direct == context.options[i].name) {
+            if (director.direct == context.options[i].param) {
                 return context.options[i];
             }
         }

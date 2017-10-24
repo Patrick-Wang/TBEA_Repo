@@ -27,7 +27,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="科目余额Show.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="科目余额Show.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
@@ -70,14 +70,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lovSearch.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lovSearch.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="72" column="54" lean-forward="true" selection-start-line="72" selection-start-column="54" selection-end-line="72" selection-end-column="54" />
+            <state relative-caret-position="330">
+              <caret line="37" column="13" lean-forward="true" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
               <folding>
-                <marker date="1508845216108" expanded="true" signature="1286:1300" ph="..." />
-                <marker date="1508845216108" expanded="true" signature="2147:2161" ph="..." />
+                <marker date="1508845309089" expanded="true" signature="1288:1302" ph="..." />
+                <marker date="1508845309089" expanded="true" signature="2149:2163" ph="..." />
               </folding>
             </state>
           </provider>
@@ -171,9 +171,9 @@
       <find>getIds</find>
       <find>Table</find>
       <find>findDirector</find>
-      <find>fmtData</find>
       <find>.com</find>
       <find>pager</find>
+      <find>fmtData</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
@@ -226,8 +226,8 @@
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.css" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.jsp" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts" />
         <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts" />
       </list>
     </option>
   </component>
@@ -251,7 +251,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="27" />
     <option name="y" value="19" />
     <option name="width" value="1346" />
@@ -1048,7 +1048,7 @@
       <workItem from="1508668258921" duration="327000" />
       <workItem from="1508668644017" duration="4115000" />
       <workItem from="1508724829975" duration="27441000" />
-      <workItem from="1508813929673" duration="22755000" />
+      <workItem from="1508813929673" duration="22791000" />
     </task>
     <servers />
   </component>
@@ -1079,7 +1079,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88730000" />
+    <option name="totallyTimeSpent" value="88766000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1091,7 +1091,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1566,22 +1566,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="72" column="54" lean-forward="true" selection-start-line="72" selection-start-column="54" selection-end-line="72" selection-end-column="54" />
-          <folding>
-            <marker date="1508845216108" expanded="true" signature="1286:1300" ph="..." />
-            <marker date="1508845216108" expanded="true" signature="2147:2161" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="37" column="13" lean-forward="true" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+          <folding>
+            <marker date="1508845309089" expanded="true" signature="1288:1302" ph="..." />
+            <marker date="1508845309089" expanded="true" signature="2149:2163" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

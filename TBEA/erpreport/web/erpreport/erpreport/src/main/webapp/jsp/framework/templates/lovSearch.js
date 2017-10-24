@@ -3,14 +3,14 @@ var search;
     var pgSize = 5;
     function findDirector(actor) {
         for (var i = 0; i < context.options.length; ++i) {
-            if (context.options[i].direct == actor.name) {
+            if (context.options[i].direct == actor.param) {
                 return context.options[i];
             }
         }
     }
     function findActor(director) {
         for (var i = 0; i < context.options.length; ++i) {
-            if (director.direct == context.options[i].name) {
+            if (director.direct == context.options[i].param) {
                 return context.options[i];
             }
         }
