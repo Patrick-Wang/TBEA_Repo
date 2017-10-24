@@ -27,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="科目余额Show.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="科目余额Show.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+            <state relative-caret-position="-1035">
+              <caret line="39" column="68" lean-forward="true" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -70,7 +70,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lovSearch.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="lovSearch.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="330">
@@ -172,8 +172,8 @@
       <find>Table</find>
       <find>findDirector</find>
       <find>.com</find>
-      <find>pager</find>
       <find>fmtData</find>
+      <find>pager</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
@@ -226,8 +226,8 @@
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.css" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.jsp" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml" />
       </list>
     </option>
   </component>
@@ -1048,7 +1048,7 @@
       <workItem from="1508668258921" duration="327000" />
       <workItem from="1508668644017" duration="4115000" />
       <workItem from="1508724829975" duration="27441000" />
-      <workItem from="1508813929673" duration="22791000" />
+      <workItem from="1508813929673" duration="23857000" />
     </task>
     <servers />
   </component>
@@ -1079,7 +1079,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88766000" />
+    <option name="totallyTimeSpent" value="89832000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1566,14 +1566,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -1582,6 +1574,14 @@
             <marker date="1508845309089" expanded="true" signature="1288:1302" ph="..." />
             <marker date="1508845309089" expanded="true" signature="2149:2163" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1035">
+          <caret line="39" column="68" lean-forward="true" selection-start-line="39" selection-start-column="68" selection-end-line="39" selection-end-column="68" />
+          <folding />
         </state>
       </provider>
     </entry>

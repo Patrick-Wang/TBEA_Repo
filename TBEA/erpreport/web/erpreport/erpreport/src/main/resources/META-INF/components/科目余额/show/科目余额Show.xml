@@ -11,7 +11,7 @@
                     {
                         "param" : "ledger",
                         "name": "分类账",
-                        "option": ${ledgers.asJson},
+                        "option": ${ledgers.asJson}
                     },
                     {
                         "param" : "currency",
