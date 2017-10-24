@@ -115,9 +115,15 @@
    <logger name="REPORT-TRACE">  
       <level value="INFO" />  
       <appender-ref ref="console" />
-   </logger>  
-  
-   <!-- Root Logger -->  
+   </logger>
+
+    <logger name="SQL">
+        <level value="INFO" />
+        <appender-ref ref="DEFAULT-APPENDER" />
+        <appender-ref ref="console" />
+    </logger>
+
+    <!-- Root Logger -->
    <root>  
        <level value="INFO"></level>  
        <appender-ref ref="DEFAULT-APPENDER" />  

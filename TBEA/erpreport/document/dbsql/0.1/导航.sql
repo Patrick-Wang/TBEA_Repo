@@ -24,7 +24,7 @@ insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) valu
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
 (7, 3, '现金流量表', 'fa fa-fax', 0, '/', 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(8, 3, '科目余额查询', 'fa fa-fax', 0, '/', 1);
+(8, 3, '科目余额查询', 'fa fa-fax', 0, '/erpreport/report/37CB4530FDDDB6A0000FFEBF3C178862SHOWCLR.do', 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
 (9, 4, '应付账龄报表', 'fa fa-fax', 0, '/', 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values

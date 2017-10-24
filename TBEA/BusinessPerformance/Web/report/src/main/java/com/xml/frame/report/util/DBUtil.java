@@ -69,4 +69,33 @@ public class DBUtil {
 		}
 		return SQL_RET_EMPTY;		
 	}
+
+	public static Object jdbcTransform(Object obj) {
+			if (null != obj) {
+				if (obj instanceof BigDecimal) {
+					BigDecimal bd = (BigDecimal) obj;
+					if (bd.scale() == 0){
+						obj = bd.intValue();
+					}else{
+						obj = bd.doubleValue();
+					}
+				} else if (obj instanceof Long) {
+					obj = ((Long) obj).intValue();
+				} else if (obj instanceof BigInteger) {
+					obj = ((BigInteger) obj).intValue();
+				} else if (obj instanceof Date) {
+					obj = new java.util.Date(((Date) obj).getTime());
+				} else if (obj instanceof Clob) {
+					Clob clob = (Clob) obj;
+					try {
+						obj = clob.getSubString(1, (int) clob.length());
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			return obj;
+
+	}
 }

@@ -1203,7 +1203,7 @@ var JQTable;
             if (!dataWithId) {
                 data = [];
                 for (var i = 0; i < dataWithoutId.length; ++i) {
-                    data.push([i, dataWithoutId[i]]);
+                    data.push([i].concat(dataWithoutId[i]));
                 }
             }
             var rows = [];

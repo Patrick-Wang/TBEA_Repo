@@ -3,42 +3,47 @@
     <controller id="37CB4530FDDDB6A0000FFEBF3C178862SHOWCLR">
         <context key="userName" value="${session.account.name}"/>
         <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ"/>
-        <response name="framework/templates/singleDateReport/show" type="jsp">
-            <map key="year" value="${calendar.current.year}"/>
-            <map key="month" value="${calendar.current.month}"/>
+        <response name="framework/templates/lovSearch" type="jsp">
             <map key="pager" value="pager"/>
-            <map key="options">[
-                {
-                &quot;name&quot;: &quot;分类账&quot;,
-                &quot;option&quot;: &quot;${ledgers.asJson}&quot;,
-                &quot;direct&quot;: &quot;期间&quot;
-                },
-                {
-                &quot;name&quot;: &quot;期间&quot;,
-                &quot;option&quot;: &quot;${period.asJson}&quot;
-                },
-                {
-                &quot;name&quot;: &quot;公司&quot;,
-                &quot;option&quot;: &quot;${comps.asJson}&quot;
-                },
-                {
-                &quot;name&quot;: &quot;币种&quot;,
-                &quot;option&quot;: &quot;${currency.asJson}&quot;
-                },
-                {
-                &quot;name&quot;: &quot;科目&quot;,
-                &quot;option&quot;: &quot;${accounts.asJson}&quot;
-                }
+            <map key="options"><![CDATA[
+                [
+                    {
+                        "param" : "ledger",
+                        "name": "分类账",
+                        "option": ${ledgers.asJson},
+                        "direct": "期间"
+                    },
+                    {
+                        "param" : "period",
+                        "name": "期间",
+                        "option": ${period.asJson}
+                    },
+
+                    {
+                        "param" : "currency",
+                        "name": "币种",
+                        "option": ${currency.asJson}
+                    },
+                    {
+                        "param" : "account",
+                        "name": "科目",
+                        "option": ${accounts.asJson}
+                    }
                 ]
+            ]]>
             </map>
             <map key="updateUrl" value="37CB4530FDDDB6A0000FFEBF3C178862UpdateClr"/>
             <map key="exportUrl" value="37CB4530FDDDB6A0000FFEBF3C178862ExportClr"/>
         </response>
     </controller>
     <controller id="37CB4530FDDDB6A0000FFEBF3C178862UpdateClr">
-        <context key="cal" value="${request.date.asCalendar}"/>
         <context key="pgNum" value="${request.pgNum.asInt}"/>
         <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <context key="ledger" value="${request.ledger.asString}"/>
+        <context key="period" value="${request.period.asString}"/>
+        <context key="comp" value="${request.comp.asString}"/>
+        <context key="currency" value="${request.currency.asString}"/>
+        <context key="account" value="${request.account.asString}"/>
         <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ShowServ"/>
         <callcontroller id="37CB4530FDDDB6A0000FFEBF3C178862FmtClr"/>
         <formatterServer id="fmtServ" table="${result.matrixNoIds}">
@@ -87,8 +92,8 @@
                     <type>text</type>
                 </item>
             </header>
-            <data>${dataCount[0]}</data>
-            <dateCount/>
+            <data>${fmtServ.result}</data>
+            <dataCount>${dataCount[0]}</dataCount>
         </response>
     </controller>
     <controller id="37CB4530FDDDB6A0000FFEBF3C178862FmtClr">
@@ -97,7 +102,13 @@
         </formatter>
     </controller>
     <controller id="37CB4530FDDDB6A0000FFEBF3C178862ExportClr">
-        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="pgNum" value="${request.pgNum.asInt}"/>
+        <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <context key="ledger" value="${request.ledger.asString}"/>
+        <context key="period" value="${request.period.asString}"/>
+        <context key="currency" value="${request.currency.asString}"/>
+        <context key="account" value="${request.account.asString}"/>
+
         <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ShowServ"/>
         <callcontroller id="37CB4530FDDDB6A0000FFEBF3C178862FmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="科目余额"/>
@@ -126,39 +137,58 @@
         </formatterServer>
         <response name="科目余额.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
-    <service id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ" transaction="transactionManager">
+    <service id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ" ds="repods">
+
         <sql id="comps" export="true">
             select comp_id, comp_name from CUX_USERCOMP_V where user_name = ${userName}
+            group by comp_id, comp_name
         </sql>
         <sql id="ledgers" export="true">
             select ledger_id, ledger_name from CUX_USERLEDGER_V where user_name = ${userName}
+            group by ledger_id, ledger_name
         </sql>
         <sql id="currency" export="true">
             select currency_code, currency_code from apps.fnd_currencies where currency_flag = 'Y' and enabled_flag =
             'Y'
         </sql>
         <list id="ledgerIds" sql="ledgers" value="0"/>
-        <sql id="peroid" export="true">
-            select period_name, period_name
+        <sql id="period" export="true"><![CDATA[
+            select  period_name,
+                    period_name,
+                    ledger_id
             from apps.gl_period_statuses
             where application_id = 101 and
-            adjustment_period_flag = 'Y' and
-            ledger_id in ${ledgerIds}
-        </sql>
-        <sql id="accounts" export="true">
-            SELECT flvv.flex_value, flvv.description
-            FROM apps.fnd_flex_value_sets flvs,
-            apps.fnd_flex_values_vl flvv
-            WHERE flvs.flex_value_set_id = flvv.flex_value_set_id
-            AND flvs.flex_value_set_name = 'TBEA_COA_AC'
-            ORDER BY flvv.flex_value;
-        </sql>
+                adjustment_period_flag = 'Y' and
+                ledger_id in ${ledgerIds}
+        ]]></sql>
+        <sql id="accounts" export="true"><![CDATA[
+            select
+                flvv.flex_value,
+                flvv.description
+            from
+                apps.fnd_flex_value_sets flvs,
+                apps.fnd_flex_values_vl flvv
+            where
+                flvs.flex_value_set_name = 'TBEA_COA_AC' and
+                flvv.structured_hierarchy_level = '14' and
+                flvs.flex_value_set_id = flvv.flex_value_set_id
+            order by
+                flvv.flex_value
+        ]]></sql>
     </service>
-    <service id="37CB4530FDDDB6A0000FFEBF3C178862ShowServ" transaction="transactionManager">
-        <sql id="dataCount" export="true">
-            select count(*) from CUX_ACCOUNTBALANCE_V
-        </sql>
-        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}">
+    <service id="37CB4530FDDDB6A0000FFEBF3C178862ShowServ" ds="repods">
+        <sql id="dataCount" export="true"><![CDATA[
+            select
+                count(*)
+            from
+                CUX_ACCOUNTBALANCE_V
+            where
+                ('all' = ${account} or account_code = ${account}) and
+                ('all' = ${ledger} or ledger_id = ${ledger}) and
+                ('all' = ${currency} or currency_code = ${currency}) and
+                ('all' = ${period} or period_name = ${period})
+        ]]></sql>
+        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
             select
                 id,
                 account_code,
@@ -172,7 +202,13 @@
                 year_acc_cr,
                 account_segments_desc
             from CUX_ACCOUNTBALANCE_V
-        </sql>
+            where
+                ('all' = ${account} or account_code = ${account}) and
+                ('all' = ${ledger} or ledger_id = ${ledger}) and
+                ('all' = ${currency} or currency_code = ${currency}) and
+                ('all' = ${period} or period_name = ${period})
+
+        ]]></sql>
         <list id="ids" sql="data" value="0"/>
         <context key="counter" value="${counterFactory.newCounter}"/>
         <table export="true" id="result" rowIds="ids">

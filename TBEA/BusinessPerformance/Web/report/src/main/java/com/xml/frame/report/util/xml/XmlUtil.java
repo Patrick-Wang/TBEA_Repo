@@ -13,6 +13,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.CDATASection;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -305,7 +306,15 @@ public class XmlUtil {
 
 	public static boolean hasText(Element e) {
 		if (e.getFirstChild() != null){
-			return e.getFirstChild().getNodeType() == Node.TEXT_NODE;
+            Node node = e.getFirstChild();
+            while (node != null){
+                if (node.getNodeType() == Node.TEXT_NODE){
+                    return true;
+                }else if (node.getNodeType() == Node.CDATA_SECTION_NODE){
+                    return true;
+                }
+                node = node.getNextSibling();
+            }
 		}
 		return false;
 	}
@@ -317,6 +326,9 @@ public class XmlUtil {
 			while (node != null){
 				if (node.getNodeType() == Node.TEXT_NODE){
 					text += node.getNodeValue();
+				}else if (node.getNodeType() == Node.CDATA_SECTION_NODE){
+					CDATASection cds = (CDATASection)node;
+					text += cds.getData();
 				}
 				node = node.getNextSibling();
 			}

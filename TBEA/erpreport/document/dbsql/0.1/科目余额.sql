@@ -33,7 +33,7 @@ SELECT
         AND gb1.code_combination_id = gb.code_combination_id
         AND gb1.currency_code = gb.currency_code)  year_acc_cr, --本年累计贷方
     apps.gl_flexfields_pkg.Get_Concat_Description(gl.CHART_OF_ACCOUNTS_ID, gcc.code_combination_id) account_segments_desc, --科目组合说明
-	gb.ledger_id,
+	to_char(gb.ledger_id) ledger_id,
 	gb.currency_code,
 	gb.period_name,
 	gcc.segment1 company_code --公司段

@@ -25,6 +25,9 @@ var index;
     function buildTreeItemMap(tree) {
         for (var i = 0; tree && i < tree.length; ++i) {
             treeItemMap[tree[i].id] = tree[i];
+            if (tree[i].url) {
+                tree[i].url = encodeURI(tree[i].url);
+            }
             var spread = tree[i].spread;
             tree[i].spread = (spread == '1');
             buildTreeItemMap(tree[i].children);

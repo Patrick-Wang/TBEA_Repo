@@ -1,10 +1,6 @@
 package com.xml.frame.report.interpreter;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.sql.DataSource;
 
+import oracle.sql.ARRAY;
+import oracle.sql.ArrayDescriptor;
+import org.apache.commons.httpclient.util.DateUtil;
 import org.w3c.dom.Element;
 
 import com.frame.script.el.ELExpression;
@@ -42,10 +41,12 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		}
 		return false;
 	}
-	
+
+
 	Pair<String, List<Pair<Integer, Object>>> parseSqlParam(String sql, boolean isJpa){
 		List<ELExpression> elexps = el.parser(sql);
 		List<Pair<Integer, Object>> params = new ArrayList<Pair<Integer, Object>>();
+		int listCount = 0;
 		for (int i = elexps.size() - 1; i >= 0 ; --i){
 			try {
 				lp.trace("exp : " + elexps.get(i).exp());
@@ -53,11 +54,27 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 				String preFix = sql.substring(0, elexps.get(i).start());
 				if (isInWhereClause(preFix)){
 					if (!isJpa) {
-						sql = preFix + "?" + sql.substring(elexps.get(i).end());
+						if (obj instanceof List){
+							List ls = (List)obj;
+							StringBuilder sb = new StringBuilder();
+							sb.append("(?");
+                            params.add(new Pair<Integer, Object>(i + listCount, ls.get(0)));
+							for (int j = 1; j < ls.size(); ++j){
+                                sb.append(",?");
+                                params.add(new Pair<Integer, Object>(i + listCount + j, ls.get(j)));
+							}
+							sb.append(")");
+							sql = preFix + sb.toString() + sql.substring(elexps.get(i).end());
+							listCount += ls.size();
+						}else{
+							sql = preFix + "?" + sql.substring(elexps.get(i).end());
+							params.add(new Pair<Integer, Object>(i + listCount, obj));
+						}
 					}else {
 						sql = preFix + "?" + i + sql.substring(elexps.get(i).end());
+						params.add(new Pair<Integer, Object>(i - listCount, obj));
 					}
-					params.add(new Pair<Integer, Object>(i, obj));
+
 				}else{
 					sql = preFix + obj + sql.substring(elexps.get(i).end());
 				}
@@ -73,8 +90,8 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 	Query setQueryParam(Pair<String, List<Pair<Integer, Object>>> sqlParam, EntityManager em){
 		Query q = em.createNativeQuery(sqlParam.getFirst());
 		for (Pair<Integer, Object> pair : sqlParam.getSecond()){
-			q.setParameter(pair.getFirst(), pair.getSecond());
 			lp.info("?" + pair.getFirst() + " : " + pair.getSecond() + "\t");
+			q.setParameter(pair.getFirst(), pair.getSecond());
 		}
 
 		return q;
@@ -82,10 +99,10 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 
 
 	private PreparedStatement setQueryParam(Pair<String, List<Pair<Integer, Object>>> sqlParams, Connection con) throws SQLException {
-		PreparedStatement ps = con.prepareStatement(sqlParams.getFirst());
+		PreparedStatement ps = con.prepareStatement(sqlParams.getFirst(),ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		for (Pair<Integer, Object> pair : sqlParams.getSecond()){
-			ps.setObject(pair.getFirst() + 1, pair.getSecond());
 			lp.info("?" + (pair.getFirst() + 1) + " : " + pair.getSecond() + "\t");
+            ps.setObject(pair.getFirst() + 1, pair.getSecond());
 		}
 		return ps;
 	}
@@ -124,9 +141,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		}
 		return sqlRet;
 	}
-	
-	
-	
+
 	
 	void updateLogger(Element e) {
 		lp = new LoggerProxy();
@@ -149,7 +164,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			if (retType != DBUtil.SQL_RET_VALUE){
 				sqlRet = parseOrder(sqlRet, component, e, null);
 			}
-			lp.info(JSONArray.fromObject(sqlRet).toString());
+			lp.info(sqlRet, 15);
 			component.put(e, sqlRet);
 		}else{
 			q.executeUpdate();
@@ -161,20 +176,21 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		PreparedStatement ps = setQueryParam(sqlParams, con);
 		if (e.hasAttribute("id")){
 			if (pgSize > 0 && pgNum >= 0) {
-				ps.setMaxRows(pgSize);
+				ps.setMaxRows((pgNum + 1) * pgSize);
 			}
 			ResultSet rs = ps.executeQuery();
 			if (pgSize > 0 && pgNum >= 0) {
-				rs.relative(pgNum * pgSize);
+				rs.absolute(pgNum * pgSize);
 			}
 			ResultSetMetaData rsmd = rs.getMetaData();
 			int count = rsmd.getColumnCount();
+
 			e.setAttribute("colcount", "" + count);
 			List<Object> sqlRet = new ArrayList<Object>();
 			while (rs.next()) {
-				List<Object> row = new ArrayList<Object>();
+				List<Object> row = new ArrayList<Object>(count);
 				for (int i = 1; i <= count; ++i) {
-					row.add(DBUtil.transform(rs.getObject(i)));
+					row.add(DBUtil.jdbcTransform(rs.getObject(i)));
 				}
 				sqlRet.add(row);
 			}
@@ -183,7 +199,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			}else {
 				sqlRet = parseOrder(sqlRet, component, e, null);
 			}
-			lp.info(JSONArray.fromObject(sqlRet).toString());
+			lp.info(sqlRet, 15);
 			component.put(e, sqlRet);
 		}else {
 			ps.executeUpdate(sqlParams.getFirst());
@@ -228,7 +244,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 		}else{
 			List sqlRet = (List) component.getVar(e.getAttribute("id"));
 			sqlRet = parseOrder(sqlRet, component, e, null);
-			lp.info(JSONArray.fromObject(sqlRet).toString());
+			lp.info(sqlRet, 15);
 			component.put(e, sqlRet);
 		}
 		

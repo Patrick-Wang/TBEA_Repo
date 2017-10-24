@@ -3,6 +3,7 @@ package com.tbea.erp.report.service.report;
 import com.datasource.dynamic.HikariCPDataSourceFactory;
 import com.tbea.erp.report.service.report.handlers.ContextHandlers;
 import com.tbea.erp.report.service.report.handlers.RequestContextHandler;
+import com.tbea.erp.report.service.report.handlers.UtilContextHandler;
 import com.util.tools.DataNode;
 import com.util.tools.PathUtil;
 import com.xml.frame.report.ReportLogger;
@@ -36,6 +37,7 @@ public class ReportServiceImpl implements ReportService, Scheduler {
     public void onSchedule(Context context, Controller controller) throws Exception {
         ReportLogger.trace().info(" on schedule " + controller.getId());
         ContextHandlers handlers = new ContextHandlers();
+        handlers.add(new UtilContextHandler());
         context.put("isSchedule", true);
         handlers.onHandle(context);
         controller.run(context);
@@ -59,6 +61,7 @@ public class ReportServiceImpl implements ReportService, Scheduler {
         if (null != controller) {
             ContextHandlers handlers = new ContextHandlers();
             handlers.add(new RequestContextHandler(request, response));
+            handlers.add(new UtilContextHandler());
             context.put("isSchedule", false);
             handlers.onHandle(context);
             controller.run(context);
@@ -76,6 +79,7 @@ public class ReportServiceImpl implements ReportService, Scheduler {
         Service service = compMgr.createService(null, serviceId);
         if (null != service) {
             ContextHandlers handlers = new ContextHandlers();
+            handlers.add(new UtilContextHandler());
             context.put("isSchedule", false);
             handlers.onHandle(context);
             service.run(context);

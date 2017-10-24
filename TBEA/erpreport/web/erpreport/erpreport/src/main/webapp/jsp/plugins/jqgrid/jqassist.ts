@@ -1319,12 +1319,12 @@ module JQTable {
             });
         }
 
-        public addData(total:number, page:number, records:number, dataWithoutId:string[][], dataWithId:string[][]) {
+        public addData(total:number, page:number, records:number, dataWithoutId:any[][], dataWithId:any[][]) {
             var data : any = dataWithId;
             if (!dataWithId){
                 data = [];
                 for (var i = 0; i < dataWithoutId.length; ++i){
-                    data.push([i, dataWithoutId[i]]);
+                    data.push([i].concat(dataWithoutId[i]));
                 }
             }
 

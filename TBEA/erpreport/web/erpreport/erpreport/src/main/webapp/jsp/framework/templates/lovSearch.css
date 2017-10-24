@@ -1,0 +1,48 @@
+.nav-area{
+    background:#f3f3f3;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+    padding-left:15px;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.nav-area a:hover, .nav-area a:focus{
+    text-decoration: none;
+}
+
+.search-area{
+    width:100%;
+    background:lightgray;
+    padding-top:10px;
+    padding-bottom: 10px;
+    padding-left:30px;
+    padding-right:30px;
+}
+
+.option-area .bootstrap-select{
+    margin : 3px 5px 3px 5px;
+}
+
+.option-area .btn-search{
+    margin : 3px 0px 3px 0px;
+}
+
+.layui-btn-custom-sz {
+    height: 34px;
+    line-height: 34px;
+    width:105px;
+    /*padding: 0 10px;*/
+    font-size: 12px;
+}
+
+.layui-btn+.layui-btn {
+    margin-left: 5px;
+}
+
+.btn{
+    border-radius: 0px;
+}
+
+.bootstrap-select .dropdown-menu{
+    border : none !important;
+}

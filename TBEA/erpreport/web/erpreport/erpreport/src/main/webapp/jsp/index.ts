@@ -43,6 +43,9 @@ module index {
     function buildTreeItemMap(tree: TreeItem[]) {
         for (let i = 0; tree && i < tree.length; ++i) {
             treeItemMap[tree[i].id] = tree[i];
+            if (tree[i].url){
+                tree[i].url = encodeURI(tree[i].url);
+            }
             let spread:any = tree[i].spread;
             tree[i].spread = (spread == '1');
             buildTreeItemMap(tree[i].children);
