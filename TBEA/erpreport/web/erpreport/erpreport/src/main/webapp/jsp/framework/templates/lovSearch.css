@@ -47,3 +47,20 @@
 .bootstrap-select .dropdown-menu{
     border : none !important;
 }
+
+.search-area .search-col{
+    display: table;
+}
+
+.search-area .search-label{
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    width:30%;
+}
+
+.search-area .search-item{
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+}

@@ -202,4 +202,14 @@ var Util;
         //  return !window.invalidate && window.parent.invalidate;
     }
     Util.isIframe = isIframe;
+    function zeroDiv(sub, base) {
+        return (sub - (sub % base)) / base;
+    }
+    Util.zeroDiv = zeroDiv;
+    function roundDiv(sub, base) {
+        var ret = (sub - (sub % base)) / base;
+        ret += (sub % base > 0) ? 1 : 0;
+        return ret;
+    }
+    Util.roundDiv = roundDiv;
 })(Util || (Util = {}));

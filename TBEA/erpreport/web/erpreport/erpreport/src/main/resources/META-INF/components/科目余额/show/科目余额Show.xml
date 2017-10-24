@@ -4,7 +4,8 @@
         <context key="userName" value="${session.account.name}"/>
         <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ"/>
         <response name="framework/templates/lovSearch" type="jsp">
-            <map key="pager" value="pager"/>
+            <map key="pager" value="true"/>
+            <map key="period" value="true"/>
             <map key="options"><![CDATA[
                 [
                     {
@@ -13,12 +14,6 @@
                         "option": ${ledgers.asJson},
                         "direct": "期间"
                     },
-                    {
-                        "param" : "period",
-                        "name": "期间",
-                        "option": ${period.asJson}
-                    },
-
                     {
                         "param" : "currency",
                         "name": "币种",
@@ -40,7 +35,6 @@
         <context key="pgNum" value="${request.pgNum.asInt}"/>
         <context key="pgSize" value="${request.pgSize.asInt}"/>
         <context key="ledger" value="${request.ledger.asString}"/>
-        <context key="period" value="${request.period.asString}"/>
         <context key="comp" value="${request.comp.asString}"/>
         <context key="currency" value="${request.currency.asString}"/>
         <context key="account" value="${request.account.asString}"/>
@@ -185,8 +179,7 @@
             where
                 ('all' = ${account} or account_code = ${account}) and
                 ('all' = ${ledger} or ledger_id = ${ledger}) and
-                ('all' = ${currency} or currency_code = ${currency}) and
-                ('all' = ${period} or period_name = ${period})
+                ('all' = ${currency} or currency_code = ${currency})
         ]]></sql>
         <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}" export="true"><![CDATA[
             select
@@ -204,8 +197,7 @@
             where
                 ('all' = ${account} or account_code = ${account}) and
                 ('all' = ${ledger} or ledger_id = ${ledger}) and
-                ('all' = ${currency} or currency_code = ${currency}) and
-                ('all' = ${period} or period_name = ${period})
+                ('all' = ${currency} or currency_code = ${currency})
 
         ]]></sql>
         <list id="ids">

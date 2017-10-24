@@ -1,5 +1,6 @@
 var search;
 (function (search) {
+    var pgSize = 5;
     function findDirector(actor) {
         for (var i = 0; i < context.options.length; ++i) {
             if (context.options[i].direct == actor.name) {
@@ -15,7 +16,12 @@ var search;
         }
     }
     function appendSelect(i, p, opt) {
-        p.append('<select id="sel' + i + '" class="selectpicker" data-live-search="true" title="' + opt.name + '" ></select>');
+        p.children('div:eq(0)').append('<span class="search-label">' + opt.name + '</span>');
+        p.children('div:eq(0)').append('<div class="search-item">' +
+            '<select id="sel' + i + '" class="selectpicker" data-live-search="true" title="' + opt.name + '" >' +
+            '<option value="all" style="color:darkgray">' + opt.name + '</option>' +
+            '</select>' +
+            '</div>');
         var sel = p.find('#sel' + i);
         if (opt.option[0] && opt.option[0].length == 2) {
             for (var i_1 = 0; i_1 < opt.option.length; ++i_1) {
@@ -24,43 +30,40 @@ var search;
         }
         sel.selectpicker({});
         sel.on('changed.bs.select', function (e) {
-            if (opt.direct) {
-                var val = sel.selectpicker("val");
-                var actor = findActor(opt);
-                var actorElem = p.find("select[title='" + actor.name + "']");
-                actorElem.empty();
-                for (var i_2 = 0; i_2 < actor.option.length; ++i_2) {
-                    if (actor.option[i_2][2] == val) {
-                        actorElem.append('<option value="' + actor.option[i_2][0] + '">' + actor.option[i_2][1] + '</option>');
+            var val = sel.selectpicker("val");
+            if (val != 'all') {
+                if (opt.direct) {
+                    var actor = findActor(opt);
+                    var actorElem = p.parent().find("select[title='" + actor.name + "']");
+                    actorElem.empty();
+                    actorElem.append('<option value="all" style="color:darkgray">' + actor.name + '</option>');
+                    for (var i_2 = 0; i_2 < actor.option.length; ++i_2) {
+                        if (actor.option[i_2][2] == val) {
+                            actorElem.append('<option value="' + actor.option[i_2][0] + '">' + actor.option[i_2][1] + '</option>');
+                        }
                     }
+                    actorElem.selectpicker('refresh');
                 }
-                actorElem.selectpicker('refresh');
+            }
+            else {
+                sel.find("option:selected").attr("selected", false);
+                sel.selectpicker('refresh');
             }
         });
     }
-    function zeroDiv(sub, base) {
-        return (sub - (sub % base)) / base;
+    function buildSearchItems() {
+        var optArea = $(".option-area");
+        var rowCount = context.options.length;
+        rowCount = rowCount > 0 ? rowCount : 1;
+        var btns = optArea.find('.cux-btn-group').remove();
+        for (var i = 0; i < rowCount; ++i) {
+            optArea.append('<div class="row"><div class="col-md-8 search-col"></div><div class="col-md-4"></div></div>');
+        }
+        optArea.children('.row').eq(rowCount - 1).children('div:eq(1)').append(btns);
+        for (var i = 0; i < context.options.length; ++i) {
+            appendSelect(i, optArea.children('.row').eq(i), context.options[i]);
+        }
     }
-    function roundDiv(sub, base) {
-        var ret = (sub - (sub % base)) / base;
-        ret += (sub % base > 0) ? 1 : 0;
-        return ret;
-    }
-    var optArea = $(".option-area");
-    var colCount = 3;
-    var rowCount = roundDiv((context.options.length + 1), colCount);
-    var btns = optArea.find('.cux-btn-group').remove();
-    for (var i = 0; i < rowCount; ++i) {
-        optArea.append('<div class="row"><div class="col-md-4"></div><div class="col-md-4"></div><div class="col-md-4"></div></div>');
-    }
-    optArea.children('.row').eq(rowCount - 1).children('div:eq(2)').append(btns);
-    function findWell(index) {
-        return optArea.children('.row').eq(zeroDiv(index, colCount)).children('div').eq(index % colCount);
-    }
-    for (var i = 0; i < context.options.length; ++i) {
-        var select = appendSelect(i, findWell(i), context.options[i]);
-    }
-    var pgSize = 5;
     function updatePgSize() {
         var tbHeader = 30;
         var tbPager = 30;
@@ -73,7 +76,7 @@ var search;
             navHeight -
             searchHeight;
         var bodyHeight = leftHeight - tbHeader - tbPager - wellPaddingBottom - wellPaddingTop;
-        var newPgSize = zeroDiv(bodyHeight, rowHeight);
+        var newPgSize = Util.zeroDiv(bodyHeight, rowHeight);
         pgSize = newPgSize > 5 ? newPgSize : 5;
     }
     function onClickSearch() {
@@ -119,7 +122,7 @@ var search;
         var tableAssist = Util.createTable("table-jq", gridCtrl);
         tableAssist.create({
             assistData: gridCtrl.data,
-            assistTotal: roundDiv(gridCtrl.dataCount, pgSize),
+            assistTotal: Util.roundDiv(gridCtrl.dataCount, pgSize),
             assistRecords: gridCtrl.dataCount,
             assistPagedata: function (postdata) {
                 dataOpt.pgNum = postdata.page - 1;
@@ -129,7 +132,7 @@ var search;
                     data: dataOpt,
                     success: function (data) {
                         var dataNew = JSON.parse(data);
-                        tableAssist.addData(roundDiv(dataNew.dataCount, pgSize), postdata.page, dataNew.dataCount, dataNew.data, undefined);
+                        tableAssist.addData(Util.roundDiv(dataNew.dataCount, pgSize), postdata.page, dataNew.dataCount, dataNew.data, undefined);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         //promise.failed(textStatus);
@@ -147,11 +150,12 @@ var search;
             autoScroll: true,
             rowNum: pgSize,
             viewrecords: true,
-            pager: context.pager == 'pager' ? "#pager" : undefined
+            pager: context.pager ? "#pager" : undefined
         });
         adjustSize();
     }
     $(window).on('resize', function () {
         adjustSize();
     });
+    buildSearchItems();
 })(search || (search = {}));

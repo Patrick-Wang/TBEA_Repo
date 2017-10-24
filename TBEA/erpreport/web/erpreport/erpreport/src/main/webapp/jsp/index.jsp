@@ -15,7 +15,8 @@ pageEncoding="utf-8"%>
     <title>特变电工报表管理平台</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/jsp/build/images/icon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/plugins/layui/css/layui.css" media="all">
-    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/jsp\plugins\font-awesome\css\font-awesome.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/build/css/app.css" media="all">
     <script src="${pageContext.request.contextPath}/jsp/plugins/jquery/jquery-1.12.3.js"></script>
     <%--<script src="${pageContext.request.contextPath}/jsp/es5-shim.js"></script>--%>
@@ -206,10 +207,10 @@ pageEncoding="utf-8"%>
 
     </div>
 </div>
-<script type="text/javascript">
-    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-    document.write(unescape("%3Cspan id='cnzz_stat_icon_1264021086'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1264021086%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
-</script>
+<%--<script type="text/javascript">--%>
+    <%--var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");--%>
+    <%--document.write(unescape("%3Cspan id='cnzz_stat_icon_1264021086'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s22.cnzz.com/z_stat.php%3Fid%3D1264021086%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));--%>
+<%--</script>--%>
 <script src="${pageContext.request.contextPath}/jsp/plugins/layui/layui.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/index.js"></script>
 <script>

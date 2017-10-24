@@ -273,4 +273,14 @@ module Util {
     export function isIframe(){
       //  return !window.invalidate && window.parent.invalidate;
     }
+
+    export function zeroDiv(sub, base){
+        return (sub - (sub % base)) / base;
+    }
+
+    export function roundDiv(sub, base){
+        let ret = (sub - (sub % base)) / base;
+        ret += (sub % base > 0) ?  1 : 0;
+        return ret;
+    }
 }

@@ -103,7 +103,8 @@
 <script src="${pageContext.request.contextPath}/jsp/plugins/layui/layui.all.js"></script>
 <script>
     var context = {
-        pager: '${pager}',
+        pager: '${pager}' == 'true',
+        period: '${period}' == 'true',
         options: JSON.parse('${options}'),
         updateUrl: '${updateUrl}.do',
         exportUrl: '${exportUrl}.do'
