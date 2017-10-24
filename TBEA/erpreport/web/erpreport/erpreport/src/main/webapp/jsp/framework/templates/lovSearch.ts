@@ -100,9 +100,14 @@ module search {
         let rowHeight = 33;
         let wellPaddingTop = $("#table").parent().css("padding-top").replace("px", "");
         let wellPaddingBottom = $("#table").parent().css("padding-bottom").replace("px", "");
-        let leftHeight = document.documentElement.clientHeight - $(".nav-area").height() - $(".search-area").height();
+        let navHeight =  $(".nav-area").css("height").replace("px", "");
+        let searchHeight = $(".search-area").css("height").replace("px", "");
+        let leftHeight = document.documentElement.clientHeight -
+            navHeight -
+            searchHeight;
         let bodyHeight = leftHeight - tbHeader - tbPager - wellPaddingBottom - wellPaddingTop;
-        pgSize = zeroDiv(bodyHeight, rowHeight);
+        let newPgSize = zeroDiv(bodyHeight, rowHeight);
+        pgSize = newPgSize > 5 ? newPgSize : 5;
     }
 
 
@@ -193,6 +198,8 @@ module search {
         adjustSize();
     }
 
-
+    $(window).on('resize', function (){
+        adjustSize();
+    });
 
 }

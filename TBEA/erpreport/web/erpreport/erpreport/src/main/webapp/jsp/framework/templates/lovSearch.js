@@ -67,9 +67,14 @@ var search;
         var rowHeight = 33;
         var wellPaddingTop = $("#table").parent().css("padding-top").replace("px", "");
         var wellPaddingBottom = $("#table").parent().css("padding-bottom").replace("px", "");
-        var leftHeight = document.documentElement.clientHeight - $(".nav-area").height() - $(".search-area").height();
+        var navHeight = $(".nav-area").css("height").replace("px", "");
+        var searchHeight = $(".search-area").css("height").replace("px", "");
+        var leftHeight = document.documentElement.clientHeight -
+            navHeight -
+            searchHeight;
         var bodyHeight = leftHeight - tbHeader - tbPager - wellPaddingBottom - wellPaddingTop;
-        pgSize = zeroDiv(bodyHeight, rowHeight);
+        var newPgSize = zeroDiv(bodyHeight, rowHeight);
+        pgSize = newPgSize > 5 ? newPgSize : 5;
     }
     function onClickSearch() {
         updatePgSize();
@@ -146,4 +151,7 @@ var search;
         });
         adjustSize();
     }
+    $(window).on('resize', function () {
+        adjustSize();
+    });
 })(search || (search = {}));

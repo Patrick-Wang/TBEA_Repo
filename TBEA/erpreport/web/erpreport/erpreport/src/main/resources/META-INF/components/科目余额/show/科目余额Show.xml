@@ -188,9 +188,8 @@
                 ('all' = ${currency} or currency_code = ${currency}) and
                 ('all' = ${period} or period_name = ${period})
         ]]></sql>
-        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
+        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}" export="true"><![CDATA[
             select
-                id,
                 account_code,
                 account_segments,
                 year_begin_balance,
@@ -209,19 +208,10 @@
                 ('all' = ${period} or period_name = ${period})
 
         ]]></sql>
-        <list id="ids" sql="data" value="0"/>
+        <list id="ids">
+            <item from="0" to="${data.size - 1}"></item>
+        </list>
         <context key="counter" value="${counterFactory.newCounter}"/>
-        <table export="true" id="result" rowIds="ids">
-            <list sql="data" type="string" value="${counter.reset[1].val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-        </table>
+        <table export="true" id="result" rowIds="ids" table="${data}"/>
     </service>
 </components>

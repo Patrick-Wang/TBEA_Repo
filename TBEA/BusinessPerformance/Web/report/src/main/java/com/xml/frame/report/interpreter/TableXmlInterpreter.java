@@ -2,7 +2,6 @@ package com.xml.frame.report.interpreter;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -243,20 +242,20 @@ public class TableXmlInterpreter implements XmlInterpreter {
             return;
         }
 
-        if (rows.get(0) instanceof List) {
-            parseList(rows, tb);
-            return;
-        }
-
         if (rows.get(0) != null && rows.get(0).getClass().isArray()) {
             parseArray(rows, tb);
             return;
         }
 
-        parseRow(rows, tb);
+        if (rows.get(0) != null && rows.get(0) instanceof List) {
+            parseList(rows, tb);
+            return;
+        }
+
+//        parseList2(rows, tb);
     }
 
-    private void parseRow(List<List<Object>> rows, Table tb) {
+    private void parseList(List<List<Object>> rows, Table tb) {
         for (int i = 0; i < rows.size(); ++i) {
             for (int j = 0; j < rows.get(i).size(); ++j) {
                 if (tb.getValues().size() <= j) {
@@ -292,16 +291,16 @@ public class TableXmlInterpreter implements XmlInterpreter {
         }
     }
 
-    private void parseList(List<Object> row, Table tb) {
-        for (int i = 0; i < row.size(); ++i) {
-            if (tb.getValues().size() <= i) {
-                tb.getValues().add(new ArrayList<Object>());
-            }
-            List<Object> col = new ArrayList<Object>();
-            col.add(o2s(row.get(i)));
-            tb.getValues().add(col);
-        }
-    }
+//    private void parseList2(List<Object> row, Table tb) {
+//        for (int i = 0; i < row.size(); ++i) {
+//            if (tb.getValues().size() <= i) {
+//                tb.getValues().add(new ArrayList<Object>());
+//            }
+//            List<Object> col = new ArrayList<Object>();
+//            col.add(o2s(row.get(i)));
+//            tb.getValues().add(col);
+//        }
+//    }
 
     protected void parseGrowthRates(AbstractXmlComponent component, Table tb,
                                     Element elem) throws Exception {
