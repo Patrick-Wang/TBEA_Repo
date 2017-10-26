@@ -166,19 +166,19 @@ module index {
         return parents;
     }
 
+    let lastTopId;
+
     export function init() {
-        let lastId;
         let onelevelopt = {
             elem: "#navTop",
             data: getOnLevelData(),
             onClicked: (id) => {
-                if (lastId != id){
+                if (lastTopId != id){
                     triggerOnClick([id]);
-                    lastId = id;
+                    lastTopId = id;
                 }
             }
         };
-
         layui.onelevel.set(onelevelopt).render();
         let items: any = [context.item];
         if (!items[0]) {
@@ -190,8 +190,16 @@ module index {
         } else {
             items = findParents(context.item);
         }
-        lastId = items[0];
+        lastTopId = items[0];
         triggerOnClick(items);
+    }
 
+    export function onClickNavFromSub(item){
+        let items: any = [item];
+        if (items[0]) {
+            items = findParents(item);
+        }
+        lastTopId = items[0];
+        triggerOnClick(items);
     }
 }

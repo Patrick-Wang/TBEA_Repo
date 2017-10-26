@@ -30,40 +30,8 @@
       <file leaf-file-name="我的收藏.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/我的收藏/我的收藏.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="33" lean-forward="false" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="科目余额Show.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="6" column="33" lean-forward="false" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="48" column="71" lean-forward="false" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="71" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/main.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="30" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="122" selection-end-column="7" />
+            <state relative-caret-position="116">
+              <caret line="47" column="42" lean-forward="true" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -72,45 +40,71 @@
       <file leaf-file-name="favorite.jsp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="73" column="49" lean-forward="false" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
+            <state relative-caret-position="225">
+              <caret line="57" column="28" lean-forward="false" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loading.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/loading.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="49" lean-forward="false" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ztree.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/ztree.js">
+      <file leaf-file-name=".classpath" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/.classpath">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tab.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/tab.js">
+      <file leaf-file-name="ResponseXmlInterpreter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/ResponseXmlInterpreter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="28" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="28" />
+            <state relative-caret-position="19">
+              <caret line="163" column="0" lean-forward="false" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/main.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="79" column="39" lean-forward="true" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="XmlElWalker.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/xml/XmlElWalker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="110">
+              <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="XmlUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/xml/XmlUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="favorite.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="361">
+              <caret line="50" column="9" lean-forward="true" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <marker date="1508988154304" expanded="true" signature="2693:2701" ph="&amp;##xe68e;" />
-                <marker date="1508988154304" expanded="true" signature="2796:2802" ph="&amp;nbsp;" />
-                <marker date="1508988154304" expanded="true" signature="10095:10103" ph="&amp;##x1006;" />
+                <marker date="1508992610913" expanded="true" signature="790:838" ph="..." />
+                <marker date="1508992610913" expanded="true" signature="1994:2042" ph="..." />
               </folding>
             </state>
           </provider>
@@ -119,8 +113,8 @@
       <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="85" />
+            <state relative-caret-position="-675">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding>
                 <marker date="1508988255929" expanded="true" signature="1762:1841" ph="..." />
                 <marker date="1508988255929" expanded="true" signature="1786:1829" ph="{...}" />
@@ -129,11 +123,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.ts">
+      <file leaf-file-name="ui2.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/ui2.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="11" column="9" lean-forward="true" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -150,12 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>cux-btn-group-fun</find>
-      <find>buildstructure</find>
-      <find>jsp</find>
-      <find>+</find>
-      <find>bread</find>
-      <find>== 1</find>
       <find>onClickC</find>
       <find>ajax</find>
       <find>isFav</find>
@@ -176,15 +164,22 @@
       <find>mainUrl</find>
       <find>getFavorateServ</find>
       <find>main.html</find>
-      <find>baseUrl</find>
       <find>font</find>
-      <find>layui.js</find>
+      <find>util.js</find>
+      <find>\n</find>
+      <find>baseUrl</find>
+      <find>context.item</find>
+      <find>parseMap</find>
+      <find>jquery</find>
       <find>isFavorite</find>
+      <find>layui.js</find>
+      <find>context.favorites[i]</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
       <replace>time</replace>
       <replace>isFavorite</replace>
+      <replace>fav</replace>
     </replaceStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -227,7 +222,6 @@
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/util.ts" />
         <option value="$PROJECT_DIR$/erpreport/src/main/java/com/tbea/erp/report/model/entity/Authority.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/xml/XmlUtil.java" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.ts" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/SqlXmlInterpreter.java" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.jsp" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts" />
@@ -237,7 +231,9 @@
         <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/tab.js" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.ts" />
         <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/我的收藏/我的收藏.xml" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.jsp" />
       </list>
     </option>
@@ -617,143 +613,6 @@
               <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="model" type="cbb8eebc:String" user="model" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="service" type="cbb8eebc:String" user="service" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="我的收藏" type="cbb8eebc:String" user="我的收藏" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="科目余额" type="cbb8eebc:String" user="科目余额" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="科目余额" type="cbb8eebc:String" user="科目余额" />
-              <item name="show" type="cbb8eebc:String" user="show" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
               <item name="webapp" type="cbb8eebc:String" user="webapp" />
             </path>
             <path>
@@ -773,7 +632,7 @@
               <item name="main" type="cbb8eebc:String" user="main" />
               <item name="webapp" type="cbb8eebc:String" user="webapp" />
               <item name="jsp" type="cbb8eebc:String" user="jsp" />
-              <item name="build" type="cbb8eebc:String" user="build" />
+              <item name="framework" type="cbb8eebc:String" user="framework" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -783,8 +642,8 @@
               <item name="main" type="cbb8eebc:String" user="main" />
               <item name="webapp" type="cbb8eebc:String" user="webapp" />
               <item name="jsp" type="cbb8eebc:String" user="jsp" />
-              <item name="build" type="cbb8eebc:String" user="build" />
-              <item name="js" type="cbb8eebc:String" user="js" />
+              <item name="framework" type="cbb8eebc:String" user="framework" />
+              <item name="templates" type="cbb8eebc:String" user="templates" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -1210,7 +1069,7 @@
       <workItem from="1508898928898" duration="3333000" />
       <workItem from="1508902760080" duration="276000" />
       <workItem from="1508903078037" duration="22974000" />
-      <workItem from="1508983766030" duration="4771000" />
+      <workItem from="1508983766030" duration="8834000" />
     </task>
     <servers />
   </component>
@@ -1241,7 +1100,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="127552000" />
+    <option name="totallyTimeSpent" value="131615000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1257,8 +1116,8 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18090452" sideWeight="0.28290468" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.4697428" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39865997" sideWeight="0.28744328" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.4667171" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4154104" sideWeight="0.52118003" order="7" side_tool="true" content_ui="tabs" />
@@ -1267,7 +1126,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.49436393" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18090452" sideWeight="0.7170953" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39865997" sideWeight="0.7125567" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.49092284" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.47881997" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1278,7 +1137,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283082" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.49394855" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.48789713" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23524962" sideWeight="0.47411445" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35552195" sideWeight="0.47411445" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33888048" sideWeight="0.5258856" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33888048" sideWeight="0.5258856" order="2" side_tool="true" content_ui="tabs" />
@@ -1299,6 +1158,7 @@
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.js" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.js" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/util.js" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.js" />
       </list>
     </option>
   </component>
@@ -1315,32 +1175,11 @@
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="47" />
+      <option name="time" value="48" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/component/controller/ControllerSession.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/component/controller/ControllerRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="64" column="31" lean-forward="false" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/java/com/tbea/erp/report/service/report/handlers/Counter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1512,22 +1351,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/xml/XmlUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1310">
-          <caret line="121" column="31" lean-forward="true" selection-start-line="121" selection-start-column="31" selection-end-line="121" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/ResponseXmlInterpreter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="163" column="0" lean-forward="false" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/java/com/tbea/erp/report/service/report/handlers/RequestContextHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="106">
@@ -1589,37 +1412,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="324" column="29" lean-forward="false" selection-start-line="324" selection-start-column="29" selection-end-line="324" selection-end-column="29" />
-          <folding>
-            <marker date="1508985749280" expanded="true" signature="2052:2066" ph="..." />
-            <marker date="1508985749280" expanded="true" signature="2992:3006" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/ui2.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="1" lean-forward="false" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -1637,16 +1433,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="30" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="122" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1663,7 +1451,7 @@
         <state relative-caret-position="180">
           <caret line="48" column="71" lean-forward="false" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="71" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1673,19 +1461,11 @@
         <state relative-caret-position="330">
           <caret line="22" column="28" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="28" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
             <marker date="1508988154304" expanded="true" signature="2693:2701" ph="&amp;##xe68e;" />
             <marker date="1508988154304" expanded="true" signature="2796:2802" ph="&amp;nbsp;" />
             <marker date="1508988154304" expanded="true" signature="10095:10103" ph="&amp;##x1006;" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="11" column="9" lean-forward="true" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1697,10 +1477,85 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1508985749280" expanded="true" signature="2052:2066" ph="..." />
+            <marker date="1508985749280" expanded="true" signature="2992:3006" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="39" column="93" lean-forward="true" selection-start-line="39" selection-start-column="93" selection-end-line="40" selection-end-column="98" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/.classpath">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/xml/XmlUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/xml/XmlElWalker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="103" column="0" lean-forward="false" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/ResponseXmlInterpreter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="163" column="0" lean-forward="false" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="79" column="39" lean-forward="true" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/我的收藏/我的收藏.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="116">
+          <caret line="47" column="42" lean-forward="true" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="85" />
+        <state relative-caret-position="-675">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <marker date="1508988255929" expanded="true" signature="1762:1841" ph="..." />
             <marker date="1508988255929" expanded="true" signature="1786:1829" ph="{...}" />
@@ -1708,18 +1563,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/我的收藏/我的收藏.xml">
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/ui2.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="33" lean-forward="false" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="33" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="1" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="50" column="9" lean-forward="true" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
+          <folding>
+            <marker date="1508992610913" expanded="true" signature="790:838" ph="..." />
+            <marker date="1508992610913" expanded="true" signature="1994:2042" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="73" column="49" lean-forward="false" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
+        <state relative-caret-position="225">
+          <caret line="57" column="28" lean-forward="false" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
           <folding />
         </state>
       </provider>

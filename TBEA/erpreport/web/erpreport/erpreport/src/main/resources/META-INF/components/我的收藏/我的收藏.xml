@@ -14,7 +14,7 @@
         <callservice id="getFavorateServ"/>
         <response name="favorite" type="jsp">
             <map key="userName" value="${session.account.name}"></map>
-            <map key="myFavorites">${myFavorites.asJson}</map>
+            <map key="myFavorites" value="${myFavorites.asJson}"></map>
         </response>
     </controller>
     <controller id="unfavorite">
@@ -35,10 +35,11 @@
     <service id="getFavorateServ" ds="repods">
         <sql id="myFavorites" export="true"><![CDATA[
             select
+                id,
                 nav.title,
                 nav.icon,
                 nav.url,
-                to_char(fav.createTime, 'yyyy-mm-dd HH24:mi:ss:ff')
+                to_char(fav.createTime, 'yyyy-mm-dd HH24:mi:ss')
             from
                 CUX_FAVOURITE_T fav,
                 CUX_NAVIGATEITEM_T nav

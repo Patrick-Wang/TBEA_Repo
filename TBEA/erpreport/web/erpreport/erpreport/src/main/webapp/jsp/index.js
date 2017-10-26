@@ -137,15 +137,15 @@ var index;
         }
         return parents;
     }
+    var lastTopId;
     function init() {
-        var lastId;
         var onelevelopt = {
             elem: "#navTop",
             data: getOnLevelData(),
             onClicked: function (id) {
-                if (lastId != id) {
+                if (lastTopId != id) {
                     triggerOnClick([id]);
-                    lastId = id;
+                    lastTopId = id;
                 }
             }
         };
@@ -162,8 +162,17 @@ var index;
         else {
             items = findParents(context.item);
         }
-        lastId = items[0];
+        lastTopId = items[0];
         triggerOnClick(items);
     }
     index.init = init;
+    function onClickNavFromSub(item) {
+        var items = [item];
+        if (items[0]) {
+            items = findParents(item);
+        }
+        lastTopId = items[0];
+        triggerOnClick(items);
+    }
+    index.onClickNavFromSub = onClickNavFromSub;
 })(index || (index = {}));
