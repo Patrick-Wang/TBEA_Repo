@@ -20,7 +20,7 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
     var Tab = function() {
         this.config = {
             elem: undefined,
-            mainUrl: 'main.html',
+            mainUrl: context.baseUrl + 'report/showFavorite.do',
             renderType: 'iframe',
             openWait: true
         };

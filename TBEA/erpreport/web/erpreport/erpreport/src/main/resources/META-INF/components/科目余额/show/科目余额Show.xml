@@ -4,7 +4,7 @@
         <context key="userName" value="${session.account.name}"/>
         <context key="item" value="${request.item.asInt}"/>
         <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ"/>
-        <callservice id="isFavorateServ"/>
+        <callservice id="isFavoriteServ"/>
         <response name="framework/templates/lovSearch" type="jsp">
             <map key="pager" value="true"/>
             <map key="period" value="true"/>

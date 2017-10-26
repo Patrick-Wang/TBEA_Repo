@@ -36,7 +36,7 @@
 
     <script>
         var context = {
-            baseUrl: "${pageContext.request.contextPath}/jsp",
+            baseUrl: "${pageContext.request.contextPath}/",
             userName: '${userName}',
             navTree: JSON.parse('${navTree}'),
             item: '${item}'

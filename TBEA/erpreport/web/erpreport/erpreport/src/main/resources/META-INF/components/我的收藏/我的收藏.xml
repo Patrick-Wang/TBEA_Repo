@@ -4,9 +4,17 @@
         <context key="userName" value="${session.account.name}"/>
         <context key="item" value="${request.item.asInt}"/>
         <callservice id="setFavorite"/>
-        <response name="framework/templates/lovSearch" type="json">
+        <response type="json">
             <errorCode>0</errorCode>
             <message>OK</message>
+        </response>
+    </controller>
+    <controller id="showFavorite">
+        <context key="userName" value="${session.account.name}"/>
+        <callservice id="getFavorateServ"/>
+        <response name="favorite" type="jsp">
+            <map key="userName" value="${session.account.name}"></map>
+            <map key="myFavorites">${myFavorites.asJson}</map>
         </response>
     </controller>
     <controller id="unfavorite">
@@ -18,14 +26,29 @@
             <message>OK</message>
         </response>
     </controller>
-    <service id="isFavorateServ" ds="repods">
+    <service id="isFavoriteServ" ds="repods">
         <sql id="favorite">
             select count(*) from CUX_FAVOURITE_T where itemId = ${item}
         </sql>
         <context key="isFavorite" value="${favorite[0] > 0}"></context>
     </service>
+    <service id="getFavorateServ" ds="repods">
+        <sql id="myFavorites" export="true"><![CDATA[
+            select
+                nav.title,
+                nav.icon,
+                nav.url,
+                to_char(fav.createTime, 'yyyy-mm-dd HH24:mi:ss:ff')
+            from
+                CUX_FAVOURITE_T fav,
+                CUX_NAVIGATEITEM_T nav
+            where
+                fav.itemId = nav.id and
+                fav.userName = ${userName}
+        ]]></sql>
+    </service>
     <service id="setFavorite" ds="repods">
-        <callservice id="isFavorateServ"/>
+        <callservice id="isFavoriteServ"/>
         <sql skip="${isFavorite}">
             insert into CUX_FAVOURITE_T (itemId, userName, createTime) values
             (${item}, '${userName}', to_timestamp('${calendar.current.msFormat}', 'yyyy-mm-dd hh24:mi:ss.ff'))
