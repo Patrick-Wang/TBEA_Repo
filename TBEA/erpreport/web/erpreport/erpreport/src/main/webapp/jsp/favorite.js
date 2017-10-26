@@ -1,8 +1,21 @@
 var index;
 (function (index) {
-    function buildFavoriteItem(p, fav) {
+    var colors = [
+        '#dd4b39',
+        '#00a65a',
+        '#f39c12',
+        '#00c0ef'
+    ];
+    if (!Array.prototype.shuffle) {
+        Array.prototype.shuffle = function () {
+            for (var j = void 0, x = void 0, i = this.length; i; j = parseInt(Math.random() * i), x = this[--i], this[i] = this[j], this[j] = x)
+                ;
+            return this;
+        };
+    }
+    function buildFavoriteItem(color, p, fav) {
         p.append('<div class="layui-col-md3"><div class="info-box" id="fav_' + fav[0] + '">' +
-            '<span class="info-box-icon" style="background-color:#f39c12 !important;color:white;">' +
+            '<span class="info-box-icon" style="background-color:' + color + ' !important;color:white;">' +
             '<i class="' + fav[2] + '" aria-hidden="true"></i></span>' +
             '<div class="info-box-content">' +
             '<span class="info-box-text">' + fav[1] + '</span>' +
@@ -19,7 +32,10 @@ var index;
             $(".layui-fluid").append('<div class="layui-row layui-col-space15"></div>');
         }
         for (var i = 0; i < context.favorites.length; ++i) {
-            buildFavoriteItem($(".layui-fluid .layui-row").eq(i % 4), context.favorites[i]);
+            if (i % 4 == 0) {
+                colors.shuffle();
+            }
+            buildFavoriteItem(colors[i % 4], $(".layui-fluid .layui-row").eq(i % 4), context.favorites[i]);
         }
         if (rowCount == 0) {
             $(".layui-fluid").append('<div class="layui-row layui-col-space15"></div>');

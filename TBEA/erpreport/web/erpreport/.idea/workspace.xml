@@ -37,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="favorite.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="favorite.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="57" column="28" lean-forward="false" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
+            <state relative-caret-position="232">
+              <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="95" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -70,9 +70,14 @@
       <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="79" column="39" lean-forward="true" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="39" />
-              <folding />
+            <state relative-caret-position="90">
+              <caret line="69" column="49" lean-forward="true" selection-start-line="69" selection-start-column="49" selection-end-line="69" selection-end-column="49" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -97,14 +102,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="favorite.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="favorite.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="50" column="9" lean-forward="true" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
+            <state relative-caret-position="541">
+              <caret line="60" column="16" lean-forward="false" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="16" />
               <folding>
-                <marker date="1508992610913" expanded="true" signature="790:838" ph="..." />
-                <marker date="1508992610913" expanded="true" signature="1994:2042" ph="..." />
+                <marker date="1508993209600" expanded="true" signature="1157:1174" ph="..." />
+                <marker date="1508993209600" expanded="true" signature="1157:1211" ph="..." />
+                <marker date="1508993209600" expanded="true" signature="2459:2507" ph="..." />
               </folding>
             </state>
           </provider>
@@ -233,8 +239,8 @@
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.ts" />
         <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/我的收藏/我的收藏.xml" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.jsp" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts" />
       </list>
     </option>
   </component>
@@ -1069,7 +1075,7 @@
       <workItem from="1508898928898" duration="3333000" />
       <workItem from="1508902760080" duration="276000" />
       <workItem from="1508903078037" duration="22974000" />
-      <workItem from="1508983766030" duration="8834000" />
+      <workItem from="1508983766030" duration="9330000" />
     </task>
     <servers />
   </component>
@@ -1100,7 +1106,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131615000" />
+    <option name="totallyTimeSpent" value="132111000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1536,14 +1542,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="79" column="39" lean-forward="true" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/我的收藏/我的收藏.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
@@ -1571,22 +1569,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts">
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="50" column="9" lean-forward="true" selection-start-line="50" selection-start-column="9" selection-end-line="50" selection-end-column="9" />
+        <state relative-caret-position="90">
+          <caret line="69" column="49" lean-forward="true" selection-start-line="69" selection-start-column="49" selection-end-line="69" selection-end-column="49" />
           <folding>
-            <marker date="1508992610913" expanded="true" signature="790:838" ph="..." />
-            <marker date="1508992610913" expanded="true" signature="1994:2042" ph="..." />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="57" column="28" lean-forward="false" selection-start-line="57" selection-start-column="28" selection-end-line="57" selection-end-column="28" />
+        <state relative-caret-position="232">
+          <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="95" selection-end-column="8" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="541">
+          <caret line="60" column="16" lean-forward="false" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="16" />
+          <folding>
+            <marker date="1508993209600" expanded="true" signature="1157:1174" ph="..." />
+            <marker date="1508993209600" expanded="true" signature="1157:1211" ph="..." />
+            <marker date="1508993209600" expanded="true" signature="2459:2507" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
