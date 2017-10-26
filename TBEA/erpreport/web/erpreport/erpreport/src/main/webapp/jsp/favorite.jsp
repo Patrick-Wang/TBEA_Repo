@@ -18,6 +18,7 @@
 			height: 85px;
 			background-color: white;
 			background-color: #ecf0f5;
+            cursor:pointer;
 		}
 
 		.info-box .info-box-icon {
