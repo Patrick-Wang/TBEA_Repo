@@ -202,7 +202,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 			lp.info(sqlRet, 15);
 			component.put(e, sqlRet);
 		}else {
-			ps.executeUpdate(sqlParams.getFirst());
+			ps.executeUpdate();
 		}
 		con.close();
 		con = null;

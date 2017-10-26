@@ -3,6 +3,14 @@ body {
 	font-family: "Microsoft YaHei";
 }
 
+.kit-nav * {
+	font-size: 15px;
+}
+
+.layui-nav * {
+	font-size: 15px;
+}
+
 .panel-content-border {
 	height: 350px;
 	width: 1000px;

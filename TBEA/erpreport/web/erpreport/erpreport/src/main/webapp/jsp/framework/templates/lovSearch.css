@@ -1,10 +1,14 @@
+html, body{
+    font-family: "Microsoft YaHei";
+}
+
 .nav-area{
     background:#f3f3f3;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
     padding-left:15px;
     padding-top:5px;
     padding-bottom:5px;
-
+    border-bottom:solid 1px darkgray;
 }
 
 .nav-area a:hover, .nav-area a:focus{
@@ -13,7 +17,7 @@
 
 .search-area{
     width:100%;
-    background:lightgray;
+    background:white;
     padding-top:10px;
     padding-bottom: 10px;
     padding-left:30px;
@@ -28,16 +32,10 @@
     margin : 3px 0px 3px 0px;
 }
 
-.layui-btn-custom-sz {
-    height: 34px;
-    line-height: 34px;
+.btn-custom-sz {
     width:105px;
     /*padding: 0 10px;*/
     font-size: 12px;
-}
-
-.layui-btn+.layui-btn {
-    margin-left: 5px;
 }
 
 .btn{
@@ -48,19 +46,67 @@
     border : none !important;
 }
 
-.search-area .search-col{
-    display: table;
+.search-area .search-item-lov{
+    width:220px;
+    float:left;
 }
 
-.search-area .search-label{
-    display: table-cell;
-    text-align: left;
-    vertical-align: middle;
-    width:30%;
+.option-area .search-item-period{
+    width:220px;
+    margin : 3px 0px 3px 0px;
+    float:left;
 }
 
-.search-area .search-item{
-    display: table-cell;
-    text-align: left;
-    vertical-align: middle;
+.option-area .search-item-period > input{
+   height:32px;
 }
+
+.option-area .search-item-input > input{
+    height:32px;
+    width:220px;
+    padding-left: 10px;
+}
+
+.option-area .search-item-input{
+    margin : 3px 0px 3px 0px;
+}
+
+.option-area .search-label{
+    margin : 3px 0px 3px 0px;
+    height:32px;
+    line-height: 32px;
+    text-align: left;
+    float:left;
+    width:150px;
+}
+
+.option-area table{
+    border:0;
+    cellspacing:0;
+    cellpadding:0;
+    width:100%;
+}
+
+.option-area table .th1, .option-area table .th3{
+    width : 15%;
+}
+
+.option-area table .th2, .option-area table .th4{
+    width : 25%;
+}
+.option-area table .th5{
+    width : 20%;
+}
+
+.option-area .cux-btn-group-fun{
+    margin : 20px 0px 3px 0px;
+}
+
+.option-area .btn-export{
+    margin-right:20px;
+}
+
+.option-area .btn-search{
+    margin-right:14px;
+}
+

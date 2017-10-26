@@ -44,7 +44,15 @@ module index {
         for (let i = 0; tree && i < tree.length; ++i) {
             treeItemMap[tree[i].id] = tree[i];
             if (tree[i].url){
-                tree[i].url = encodeURI(tree[i].url);
+                let inheritList = tree[i].title;
+                let item = tree[i];
+                while(item.parent){
+                    item = treeItemMap[item.parent];
+                    inheritList = item.title + "##" + inheritList;
+                }
+                tree[i].url = encodeURI(tree[i].url + "?breadcrumb=" +
+                    JSON.stringify(inheritList.split("##")) +
+                    "&item=" + tree[i].id);
             }
             let spread:any = tree[i].spread;
             tree[i].spread = (spread == '1');

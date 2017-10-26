@@ -1,45 +1,54 @@
 var search;
 (function (search) {
     var pgSize = 5;
-    function findDirector(actor) {
+    function lovDirector(actor) {
         for (var i = 0; i < context.options.length; ++i) {
-            if (context.options[i].direct == actor.param) {
-                return context.options[i];
+            if (context.options[i].type == 'lov') {
+                if (context.options[i].lov.direct == actor.param) {
+                    return context.options[i];
+                }
             }
         }
     }
-    function findActor(director) {
+    function lovActor(director) {
         for (var i = 0; i < context.options.length; ++i) {
-            if (director.direct == context.options[i].param) {
-                return context.options[i];
+            if (context.options[i].type == 'lov') {
+                if (director.lov.direct == context.options[i].param) {
+                    return context.options[i];
+                }
             }
         }
     }
-    function appendSelect(i, p, opt) {
-        p.children('div:eq(0)').append('<span class="search-label">' + opt.name + '</span>');
-        p.children('div:eq(0)').append('<div class="search-item">' +
-            '<select id="sel' + i + '" class="selectpicker" data-live-search="true" title="' + opt.name + '" >' +
+    function buildSelect(rowMap, opt) {
+        var well = rowMap[opt.param];
+        var firstDiv = rowMap.searchArea.find('tbody > tr').eq(well.row).children('td').eq(well.col * 2);
+        firstDiv.append('<span class="search-label">' + opt.name + '</span>');
+        firstDiv.next().append('<div class="search-item-lov">' +
+            '<select id="_' + opt.param + '" class="selectpicker" data-live-search="true" title="' + opt.name + '" >' +
             '<option value="all" style="color:darkgray">' + opt.name + '</option>' +
             '</select>' +
             '</div>');
-        var sel = p.find('#sel' + i);
-        if (opt.option[0] && opt.option[0].length == 2) {
-            for (var i_1 = 0; i_1 < opt.option.length; ++i_1) {
-                sel.append('<option value="' + opt.option[i_1][0] + '">' + opt.option[i_1][1] + '</option>');
+        var sel = rowMap.searchArea.find('#_' + opt.param);
+        if (opt.lov.option[0] && opt.lov.option[0].length == 2) {
+            for (var i = 0; i < opt.lov.option.length; ++i) {
+                sel.append('<option value="' + opt.lov.option[i][0] + '">' + opt.lov.option[i][1] + '</option>');
             }
         }
-        sel.selectpicker({});
+        sel.selectpicker({
+            // style: 'btn-info'
+            size: 10
+        });
         sel.on('changed.bs.select', function (e) {
             var val = sel.selectpicker("val");
             if (val != 'all') {
-                if (opt.direct) {
-                    var actor = findActor(opt);
-                    var actorElem = p.parent().find("select[title='" + actor.name + "']");
+                if (opt.lov.direct) {
+                    var actor = lovActor(opt);
+                    var actorElem = rowMap.searchArea.parent().find("select[title='" + actor.name + "']");
                     actorElem.empty();
                     actorElem.append('<option value="all" style="color:darkgray">' + actor.name + '</option>');
-                    for (var i_2 = 0; i_2 < actor.option.length; ++i_2) {
-                        if (actor.option[i_2][2] == val) {
-                            actorElem.append('<option value="' + actor.option[i_2][0] + '">' + actor.option[i_2][1] + '</option>');
+                    for (var i = 0; i < actor.lov.option.length; ++i) {
+                        if (actor.lov.option[i][2] == val) {
+                            actorElem.append('<option value="' + actor.lov.option[i][0] + '">' + actor.lov.option[i][1] + '</option>');
                         }
                     }
                     actorElem.selectpicker('refresh');
@@ -51,18 +60,210 @@ var search;
             }
         });
     }
-    function buildSearchItems() {
-        var optArea = $(".option-area");
-        var rowCount = context.options.length;
-        rowCount = rowCount > 0 ? rowCount : 1;
-        var btns = optArea.find('.cux-btn-group').remove();
-        for (var i = 0; i < rowCount; ++i) {
-            optArea.append('<div class="row"><div class="col-md-8 search-col"></div><div class="col-md-4"></div></div>');
+    function setNow(time, date) {
+        if (time.type == 'year') {
+            time.now = [date.year, 1, 1].join('-');
         }
-        optArea.children('.row').eq(rowCount - 1).children('div:eq(1)').append(btns);
+        else if (time.type == 'month') {
+            time.now = [date.year, date.month, 1].join('-');
+        }
+        else if (!time.type || time.type == 'date') {
+            time.now = [date.year, date.month, date.date].join('-');
+        }
+        else if (time.type == 'time') {
+            time.now = [date.hours, date.minutes, date.seconds].join(':');
+        }
+        else if (time.type == 'datetime') {
+            time.now = [date.year, date.month, date.date].join('-') + " " + [date.hours, date.minutes, date.seconds].join(':');
+        }
+    }
+    function resetDate(opt) {
+        opt.date.ins = layui.laydate.render({
+            elem: '#_' + opt.param,
+            type: opt.date.type,
+            value: opt.date.init,
+            trigger: 'click',
+            change: function (value, date, endDate) {
+                setNow(opt.date, date);
+            },
+            ready: function (date) {
+                setNow(opt.date, date);
+            }
+        });
+        setTimeout(function () {
+            $('#_' + opt.param).trigger('click');
+            $('#_' + opt.param).parent().trigger('click');
+        }, 100);
+    }
+    function buildDate(rowMap, opt) {
+        var well = rowMap[opt.param];
+        var firstDiv = rowMap.searchArea.find('tbody > tr').eq(well.row).children('td').eq(well.col * 2);
+        firstDiv.append('<span class="search-label">' + opt.name + '</span>');
+        firstDiv.next().append('<div class="search-item-date">' +
+            '<input type="text" class="layui-input" id="_' + opt.param + ' readonly="readlony">' +
+            '</div>');
+        resetDate(opt);
+    }
+    function resetPeriodStart(opt) {
+        var params = opt.param.replace(/\s/g, '').split(",");
+        opt.period.start.ins = layui.laydate.render({
+            elem: '#_' + params[0],
+            type: opt.period.start.type,
+            value: opt.period.start.init,
+            trigger: 'click',
+            change: function (value, date, endDate) {
+                setNow(opt.period.start, date);
+            },
+            ready: function (date) {
+                setNow(opt.period.start, date);
+            }
+        });
+        setTimeout(function () {
+            $('#_' + params[0]).trigger('click');
+            $('#_' + params[0]).parent().trigger('click');
+        }, 100);
+    }
+    function resetPeriodEnd(opt) {
+        var params = opt.param.replace(/\s/g, '').split(",");
+        opt.period.end.ins = layui.laydate.render({
+            elem: '#_' + params[1],
+            type: opt.period.end.type,
+            value: opt.period.end.init,
+            trigger: 'click',
+            change: function (value, date, endDate) {
+                setNow(opt.period.end, date);
+            },
+            ready: function (date) {
+                setNow(opt.period.end, date);
+            }
+        });
+        setTimeout(function () {
+            $('#_' + params[1]).trigger('click');
+            $('#_' + params[1]).parent().trigger('click');
+        }, 100);
+    }
+    function buildPeriod(rowMap, opt) {
+        var well = rowMap[opt.param];
+        var firstDiv = rowMap.searchArea.find('tbody > tr').eq(well.row).children('td').eq(well.col * 2);
+        var names = opt.name.replace(/\s/g, '').split(",");
+        var params = opt.param.replace(/\s/g, '').split(",");
+        firstDiv.append('<span class="search-label">' + names[0] + '</span>');
+        firstDiv.next().append('<div class="search-item-period">' +
+            '<input type="text" class="layui-input" id="_' + params[0] + '" readonly="readlony">' +
+            '</div>');
+        var secondDiv = firstDiv.next().next();
+        secondDiv.append('<span class="search-label">' + names[1] + '</span>');
+        secondDiv.next().append('<div class="search-item-period">' +
+            '<input type="text" class="layui-input" id="_' + params[1] + '" readonly="readlony">' +
+            '</div>');
+        resetPeriodStart(opt);
+        resetPeriodEnd(opt);
+    }
+    function assignRow() {
+        var rowMap = {};
+        var itemCount = 0;
+        var rowCount = 0;
+        //每两个条件一行
         for (var i = 0; i < context.options.length; ++i) {
-            appendSelect(i, optArea.children('.row').eq(i), context.options[i]);
+            if (context.options[i].type == 'period') {
+                //区间单独占一行显示
+                rowCount = Util.roundDiv(itemCount, 2);
+                rowCount += 1;
+                itemCount = rowCount * 2;
+                rowMap[context.options[i].param] = {
+                    row: rowCount - 1,
+                    col: 0
+                };
+            }
+            else {
+                ++itemCount;
+                rowCount = Util.roundDiv(itemCount, 2);
+                rowMap[context.options[i].param] = {
+                    row: rowCount - 1,
+                    col: (itemCount - 1) % 2
+                };
+            }
         }
+        rowCount = Util.roundDiv(itemCount, 2);
+        //打印与导出单独占一行
+        rowMap.rowCount = rowCount + 1;
+        return rowMap;
+    }
+    function buildStructure() {
+        var optArea = $(".option-area");
+        var rowMap = assignRow();
+        var searchbtn = optArea.find('.btn-search').remove();
+        var resetbtn = optArea.find('.btn-reset').remove();
+        var funbtns = optArea.find('.cux-btn-group-fun').remove();
+        var optMap = {};
+        optArea.append("<table><thead><tr>" +
+            '<th class="th1"></th>' +
+            '<th class="th2"></th>' +
+            '<th class="th3"></th>' +
+            '<th class="th4"></th>' +
+            '<th class="th5"></th>' +
+            "</tr></thead><tbody></tbody></table>");
+        var tbArea = optArea.find("table > tbody");
+        for (var i = 0; i < rowMap.rowCount - 1; ++i) {
+            tbArea.append('<tr>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '</tr>');
+        }
+        optArea.append('<div class="row">' +
+            '<div class="col-md-12" class="search-func"></div>' +
+            '</div>');
+        if (rowMap.rowCount == 2) {
+            tbArea.find('tr:eq(0)').children('td:eq(4)').append(searchbtn)
+                .append(resetbtn);
+        }
+        else {
+            tbArea.find('tr:eq(0)').children('td:eq(4)').append(searchbtn);
+            tbArea.find('tr:eq(1)').children('td:eq(4)').append(resetbtn);
+        }
+        optArea.children('div').children('div').append(funbtns);
+        rowMap.searchArea = optArea;
+        updateFavorite();
+        return rowMap;
+    }
+    function updateFavorite() {
+        if (!context.isFavorite) {
+            $('.btn-collect').empty();
+            $('.btn-collect').append('<i class="fa fa-star"> </i>收藏');
+        }
+        else {
+            $('.btn-collect').empty();
+            $('.btn-collect').append('<i class="fa fa-star-o"> </i>取消收藏');
+        }
+    }
+    function buildInput(rowMap, opt) {
+        var well = rowMap[opt.param];
+        var firstDiv = rowMap.searchArea.find('tbody > tr').eq(well.row).children('td').eq(well.col * 2);
+        firstDiv.append('<span class="search-label">' + opt.name + '</span>');
+        firstDiv.next().append('<div class="search-item-input">' +
+            '<input type="text" id="_' + opt.param + '">' +
+            '</div>');
+    }
+    function buildSearchItems() {
+        var rowMap = buildStructure();
+        for (var i = 0; i < context.options.length; ++i) {
+            if (!context.options[i].type || context.options[i].type == 'lov') {
+                buildSelect(rowMap, context.options[i]);
+            }
+            else if (context.options[i].type == 'date') {
+                buildDate(rowMap, context.options[i]);
+            }
+            else if (context.options[i].type == 'period') {
+                buildPeriod(rowMap, context.options[i]);
+            }
+            else if (context.options[i].type == 'input') {
+                buildInput(rowMap, context.options[i]);
+            }
+        }
+        $(".option-area").removeClass("hidden");
     }
     function updatePgSize() {
         var tbHeader = 30;
@@ -79,18 +280,38 @@ var search;
         var newPgSize = Util.zeroDiv(bodyHeight, rowHeight);
         pgSize = newPgSize > 5 ? newPgSize : 5;
     }
-    function onClickSearch() {
-        updatePgSize();
+    function getSearchOption() {
         var dataOpt = {
             pgSize: pgSize,
             pgNum: 0
         };
         for (var i = 0; i < context.options.length; ++i) {
-            dataOpt[context.options[i].param] = $("#sel" + i).selectpicker("val");
-            if (!dataOpt[context.options[i].param]) {
-                dataOpt[context.options[i].param] = 'all';
+            if (!context.options[i].type || context.options[i].type == 'lov') {
+                dataOpt[context.options[i].param] = $("#_" + context.options[i].param).selectpicker("val");
+                if (!dataOpt[context.options[i].param]) {
+                    dataOpt[context.options[i].param] = 'all';
+                }
+            }
+            else if (context.options[i].type == 'date') {
+                dataOpt[context.options[i].param] = context.options[i].date.now;
+            }
+            else if (context.options[i].type == 'period') {
+                var params = context.options[i].param.replace(/\s/g, '').split(",");
+                dataOpt[params[0]] = context.options[i].period.start.now;
+                dataOpt[params[1]] = context.options[i].period.end.now;
+            }
+            else if (context.options[i].type == 'input') {
+                dataOpt[context.options[i].param] = $("#_" + context.options[i].param).val("");
+                if (!dataOpt[context.options[i].param]) {
+                    dataOpt[context.options[i].param] = 'all';
+                }
             }
         }
+        return dataOpt;
+    }
+    function onClickSearch() {
+        updatePgSize();
+        var dataOpt = getSearchOption();
         $.ajax({
             type: "POST",
             url: encodeURI(context.updateUrl),
@@ -104,6 +325,71 @@ var search;
         });
     }
     search.onClickSearch = onClickSearch;
+    function onClickExport() {
+        var dataOpt = getSearchOption();
+        var optTmp = [];
+        for (var index_1 in dataOpt) {
+            optTmp.push(index_1 + "=" + dataOpt[index_1]);
+        }
+        var params = optTmp.join("&");
+        $("#exportForm")[0].action = context.exportUrl + "?" + params;
+        $("#exportForm")[0].submit();
+    }
+    search.onClickExport = onClickExport;
+    function onClickReset() {
+        for (var i = 0; i < context.options.length; ++i) {
+            if (!context.options[i].type || context.options[i].type == 'lov') {
+                $("#_" + context.options[i].param + " option:selected").attr("selected", false);
+                $("#_" + context.options[i].param).selectpicker('refresh');
+            }
+            else if (context.options[i].type == 'date') {
+                resetDate(context.options[i]);
+            }
+            else if (context.options[i].type == 'period') {
+                resetPeriodStart(context.options[i]);
+                resetPeriodEnd(context.options[i]);
+            }
+            else if (context.options[i].type == 'input') {
+                $("#_" + context.options[i].param).val("");
+            }
+        }
+    }
+    search.onClickReset = onClickReset;
+    function onClickCollect() {
+        if (context.isFavorite) {
+            $.ajax({
+                type: "POST",
+                url: encodeURI(context.baseUrl + 'report/unfavorite.do'),
+                data: {
+                    item: context.item
+                },
+                success: function (data) {
+                    context.isFavorite = false;
+                    updateFavorite();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //promise.failed(textStatus);
+                }
+            });
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: encodeURI(context.baseUrl + 'report/favorite.do'),
+                data: {
+                    item: context.item
+                },
+                success: function (data) {
+                    context.isFavorite = true;
+                    updateFavorite();
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    //promise.failed(textStatus);
+                }
+            });
+        }
+    }
+    search.onClickCollect = onClickCollect;
     function adjustSize() {
         var jqgrid = $("#table-jq");
         if (jqgrid.width() != $("#table").width()) {

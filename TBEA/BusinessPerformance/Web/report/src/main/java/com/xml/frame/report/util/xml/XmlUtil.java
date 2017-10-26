@@ -111,8 +111,8 @@ public class XmlUtil {
 			if (exp.end() == el.length()){
 				return exp.value();
 			}else{
-				el = StringUtil.trim(el);
-				if (exp.end() == el.length()){
+				String elNew = StringUtil.trim(el);
+				if (exp.end() == elNew.length()){
 					return exp.value();
 				}
 				return el.substring(0, exp.start()) + exp.value() + el.substring(exp.end());

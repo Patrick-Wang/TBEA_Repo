@@ -13,15 +13,8 @@ public class Authority implements Serializable {
 
 	public static Authority parse(String auth, String companyName){
 		String[] segments = auth.split("_");
-		if (segments.length == 1){
-			return new Authority(null, null, null, segments[0]).setRaw(auth);
-		}else{
-			return new Authority(
-					segments[0].substring(0, 4),
-					segments[0].substring(4),
-					companyName,
-					segments[2]).setRaw(auth);
-		}
+		return new Authority(null, null, null, segments[0]).setRaw(auth);
+
 
 	}
 

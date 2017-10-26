@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+    <controller id="favorite">
+        <context key="userName" value="${session.account.name}"/>
+        <context key="item" value="${request.item.asInt}"/>
+        <callservice id="setFavorite"/>
+        <response name="framework/templates/lovSearch" type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <controller id="unfavorite">
+        <context key="userName" value="${session.account.name}"/>
+        <context key="item" value="${request.item.asInt}"/>
+        <callservice id="setUnfavorite"/>
+        <response name="framework/templates/lovSearch" type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="isFavorateServ" ds="repods">
+        <sql id="favorite">
+            select count(*) from CUX_FAVOURITE_T where itemId = ${item}
+        </sql>
+        <context key="isFavorite" value="${favorite[0] > 0}"></context>
+    </service>
+    <service id="setFavorite" ds="repods">
+        <callservice id="isFavorateServ"/>
+        <sql skip="${isFavorite}">
+            insert into CUX_FAVOURITE_T (itemId, userName, createTime) values
+            (${item}, '${userName}', to_timestamp('${calendar.current.msFormat}', 'yyyy-mm-dd hh24:mi:ss.ff'))
+        </sql>
+    </service>
+    <service id="setUnfavorite" ds="repods">
+        <sql>
+            delete from CUX_FAVOURITE_T where itemId = ${item}
+        </sql>
+    </service>
+</components>

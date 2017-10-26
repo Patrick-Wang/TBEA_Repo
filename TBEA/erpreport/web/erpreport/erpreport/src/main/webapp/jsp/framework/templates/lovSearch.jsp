@@ -15,7 +15,8 @@
     <title>特变电工报表管理平台</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/jsp/build/images/icon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/plugins/layui/css/layui.css" media="all">
-    <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+    <link rel="stylesheet" type="text/css"
+          href="${pageContext.request.contextPath}/jsp\plugins\font-awesome\css\font-awesome.css">
     <link
             href="${pageContext.request.contextPath}/jsp/plugins/bootstrap-3.3.0-dist/dist/css/bootstrap.min.css"
             rel="stylesheet" />
@@ -74,18 +75,29 @@
 <body>
 <div class="nav-area">
     <span class="layui-breadcrumb">
-      <a ><cite>首页</cite></a>
-      <a ><cite>演示</cite></a>
-      <a><cite>导航元素</cite></a>
     </span>
 </div>
+<script>
+    var breadcrumb = '${param.breadcrumb}';
+    if (breadcrumb){
+        breadcrumb = JSON.parse(breadcrumb);
+        for (var i = 0; i < breadcrumb.length; ++i){
+            $(".layui-breadcrumb").append('<a><cite>' + breadcrumb[i] + '</cite></a>')
+        }
+    }
+</script>
 <div class="search-area">
-    <div class="option-area">
-        <div class="cux-btn-group">
-            <button class="layui-btn layui-btn-primary layui-btn-custom-sz btn-search" lay-submit="" onclick="search.onClickSearch()">
-                查找</button>
-            <button class="layui-btn layui-btn-primary layui-btn-custom-sz btn-export" lay-submit="">
-                下载</button>
+    <div class="option-area hidden">
+        <button class="btn btn-primary btn-custom-sz btn-search" onclick="search.onClickSearch()">
+            <i class="fa fa-search"> </i>查找</button>
+        <button class="btn btn-primary btn-custom-sz btn-reset" onclick="search.onClickReset()">
+            <i class="fa fa-refresh"> </i>重置</button>
+
+        <div class="cux-btn-group-fun">
+            <button class="btn btn-primary btn-custom-sz btn-export" onclick="search.onClickExport()">
+                <i class="fa fa-file-excel-o"> </i>导出</button>
+            <button class="btn btn-primary btn-custom-sz btn-collect" onclick="search.onClickCollect()">
+                <i class="fa fa-star"> </i>收藏</button>
         </div>
     </div>
 
@@ -99,15 +111,20 @@
         </div>
     </div>
 </div>
+<form id="exportForm" method="post" style="display:none">
+
+</form>
 </body>
 <script src="${pageContext.request.contextPath}/jsp/plugins/layui/layui.all.js"></script>
 <script>
     var context = {
         pager: '${pager}' == 'true',
-        period: '${period}' == 'true',
         options: JSON.parse('${options}'),
         updateUrl: '${updateUrl}.do',
-        exportUrl: '${exportUrl}.do'
+        exportUrl: '${exportUrl}.do',
+        baseUrl: '${pageContext.request.contextPath}/',
+        item : ${param.item},
+        isFavorite : ${isFavorite ? "true" : "false"}
     }
 </script>
 <%@include file="../../loading.jsp"%>
