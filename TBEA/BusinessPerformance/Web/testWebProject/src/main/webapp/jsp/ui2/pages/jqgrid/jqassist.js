@@ -1218,16 +1218,23 @@ var JQTable;
                 rows: rows
             });
         };
-        JQGridAssistant.prototype.enablePageEdit = function (rowNum, pagername, nopagerbutton) {
+        JQGridAssistant.prototype.enablePageEdit = function (rowNum, pagername, nopagerbutton, option) {
             var _this = this;
             var grid = $("#" + this.mGridName + "");
             var lastsel = "";
             var lastcell = "";
+            var prevBtn = function (e) {
+                e.stopImmediatePropagation();
+            };
             var opt = {
                 beforeEditCell: function (rowid, cellname, v, iRow, iCol) {
                     lastsel = iRow;
                     lastcell = iCol;
-                    $("input").attr("disabled", true);
+                    $(".btn").attr("disabled", true).on('click', prevBtn).toTop('click', prevBtn);
+                    //  $("input").attr("disabled", true);
+                    if (option.assistOnEdit) {
+                        option.assistOnEdit(rowid, cellname, v, iRow, iCol);
+                    }
                     if (undefined != _this.mDisabledEditCells) {
                         var oldFun = $.jgrid.createEl;
                         for (var i = 0; i < _this.mDisabledEditCells.length; ++i) {
@@ -1241,7 +1248,11 @@ var JQTable;
                     }
                 },
                 afterSaveCell: function () {
-                    $("input").attr("disabled", false);
+                    $(".btn").attr("disabled", false).off('click', prevBtn);
+                    //  $("input").attr("disabled", false);
+                    if (option.assistPostEdit) {
+                        option.assistPostEdit();
+                    }
                     var ids = grid.jqGrid('getDataIDs');
                     if (Util.indexOf(_this.mEditedRows, ids[lastsel - 1]) < 0) {
                         _this.mEditedRows.push(ids[lastsel - 1]);
@@ -1250,7 +1261,11 @@ var JQTable;
                     _this.invokeFormula();
                 },
                 afterRestoreCell: function () {
-                    $("input").attr("disabled", false);
+                    $(".btn").attr("disabled", false).off('click', prevBtn);
+                    //  $("input").attr("disabled", false);
+                    if (option.assistPostEdit) {
+                        option.assistPostEdit();
+                    }
                     lastsel = "";
                 },
                 afterEditCell: function (rowid, cellname, v, iRow, iCol) {
@@ -1475,8 +1490,12 @@ var JQTable;
                     }
                 };
             }
+            if (option.assistOnEdit) {
+            }
+            if (option.assistPostEdit) {
+            }
             if (option.assistEditable) {
-                $.extend(option, this.enablePageEdit(option.rowNum, option.pager, option.nopagerbutton));
+                $.extend(option, this.enablePageEdit(option.rowNum, option.pager, option.nopagerbutton, option));
             }
             this.mOnMergedRows = option.onMergedRows;
             this.mOnMergedColums = option.onMergedColums;

@@ -1355,7 +1355,7 @@ module JQTable {
                 beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
                     lastsel = iRow;
                     lastcell = iCol;
-                    $(".btn").attr("disabled", true).on('click', prevBtn);
+                    $(".btn").attr("disabled", true).on('click', prevBtn).toTop('click', prevBtn);
                   //  $("input").attr("disabled", true);
                     if (option.assistOnEdit){
                         option.assistOnEdit(rowid, cellname, v, iRow, iCol);

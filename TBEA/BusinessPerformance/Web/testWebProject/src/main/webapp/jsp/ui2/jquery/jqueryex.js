@@ -135,6 +135,22 @@
                 }
             });
             return $(this);
+        },
+
+        toTop : function(eventType, fn){
+            if ($._data(this[0]).events[eventType]){
+                var events = $._data(this[0]).events[eventType];
+                $(events).each(function(i, e){
+                    if (e.handler = fn){
+                        var dest = events.splice(i, 1);
+                        var other = events.splice(0, events.length);
+                        events.push(dest);
+                        $(other).each(function(i, e1){
+                            events.push(e1);
+                        });
+                    }
+                });
+            }
         }
 
         //eResize : function(onResize){
