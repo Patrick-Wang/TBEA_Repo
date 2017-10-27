@@ -23,6 +23,7 @@ var yszkrb;
         function SimpleView() {
             this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/dailyReport/yszk_submit.do");
             this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/dailyReport/yszk_update.do", false);
+            this.mStopBtn = false;
             router.register(this);
         }
         SimpleView.prototype.getId = function () {
@@ -54,10 +55,14 @@ var yszkrb;
                 _this.adjustSize();
             });
             $("#grid-update").on("click", function () {
-                _this.updateUI();
+                if (!_this.mStopBtn) {
+                    _this.updateUI();
+                }
             });
             $("#submit").on("click", function () {
-                _this.submit();
+                if (!_this.mStopBtn) {
+                    _this.submit();
+                }
             });
             this.updateUI();
         };
@@ -141,6 +146,7 @@ var yszkrb;
             return this.tableAssist;
         };
         SimpleView.prototype.updateTable = function () {
+            var _this = this;
             this.createJqassist();
             var data = [];
             var row = [];
@@ -167,7 +173,15 @@ var yszkrb;
                 shrinkToFit: true,
                 rowNum: 2000,
                 autoScroll: true,
-                assistEditable: true
+                assistEditable: true,
+                assistOnEdit: function () {
+                    _this.mStopBtn = true;
+                    $('.btn').attr("disabled", true);
+                },
+                assistPostEdit: function () {
+                    _this.mStopBtn = false;
+                    $('.btn').attr("disabled", false);
+                }
             });
             this.adjustSize();
         };

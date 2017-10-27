@@ -51,7 +51,7 @@ module yszkrb {
             private mDt:string;
             private tableAssist:JQTable.JQGridAssistant;
             private mOpt: IViewOption;
-
+            private mStopBtn = false;
             public init(opt:any):void {
                 this.mOpt = opt;
 
@@ -72,10 +72,14 @@ module yszkrb {
                     this.adjustSize();
                 });
                 $("#grid-update").on("click", ()=> {
-                    this.updateUI();
+                    if (!this.mStopBtn){
+                        this.updateUI();
+                    }
                 });
                 $("#submit").on("click", ()=> {
-                    this.submit();
+                    if (!this.mStopBtn) {
+                        this.submit();
+                    }
                 });
                 this.updateUI();
             }
@@ -198,7 +202,15 @@ module yszkrb {
                     shrinkToFit: true,
                     rowNum: 2000,
                     autoScroll: true,
-                    assistEditable: true
+                    assistEditable: true,
+                    assistOnEdit:()=>{
+                        this.mStopBtn = true;
+                        $('.btn').attr("disabled", true);
+                    },
+                    assistPostEdit:()=>{
+                        this.mStopBtn = false;
+                        $('.btn').attr("disabled", false);
+                    }
                 });
 
                 this.adjustSize();
