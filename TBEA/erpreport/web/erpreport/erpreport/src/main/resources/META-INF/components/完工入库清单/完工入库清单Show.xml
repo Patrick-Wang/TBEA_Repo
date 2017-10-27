@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+    <controller id="FCCBD80F080E5B9B7AB788E2514E439BSHOWCLR">
+        <context key="userName" value="${session.account.name}"/>
+        <context key="item" value="${request.item.asInt}"/>
+        <callservice id="FCCBD80F080E5B9B7AB788E2514E439BShowClrServ"/>
+        <callservice id="isFavoriteServ"/>
+        <response name="framework/templates/lovSearch" type="jsp">
+            <map key="pager" value="true"/>
+            <map key="isFavorite" value="${isFavorite}"/>
+            <map key="updateUrl" value="FCCBD80F080E5B9B7AB788E2514E439BUpdateClr"/>
+            <map key="exportUrl" value="FCCBD80F080E5B9B7AB788E2514E439BExportClr"/>
+            <map key="options"><![CDATA[
+                [
+                    {
+                        "param" : "periodStart, periodEnd",
+                        "name": "完工时间",
+                        "type":"period",
+                        "period":{
+                            "start" : {
+                                "type":"date",
+                                "init":"${calendar.current.lastMonth.format}"
+                            },
+                            "end" : {
+                                "type":"date",
+                                "init":"${calendar.current.format}"
+                            }
+                        }
+                    },
+                    {
+                        "param" : "productUnit",
+                        "name": "生产部门",
+                        "type":"lov",
+                        "lov":{
+                            "option": ${productDep.asJson}
+                        }
+                    },
+                    {
+                        "param" : "productNum",
+                        "name": "生产号",
+                        "type":"input"
+                    },
+                    {
+                        "param" : "productType",
+                        "name": "产品型号",
+                        "type":"input"
+                    },
+                    {
+                        "param" : "workNum",
+                        "name": "工单号",
+                        "type":"input"
+                    }
+                ]
+            ]]>
+            </map>
+        </response>
+    </controller>
+    <controller id="FCCBD80F080E5B9B7AB788E2514E439BUpdateClr">
+        <context key="pgNum" value="${request.pgNum.asInt}"/>
+        <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <context key="workNum" value="${request.workNum.asString}"/>
+        <context key="productType" value="${request.productType.asString}"/>
+        <context key="productNum" value="${request.productNum.asString}"/>
+        <context key="productUnit" value="${request.productUnit.asString}"/>
+        <context key="periodStart" value="${request.periodStart.asCalendar}"/>
+        <context key="periodEnd" value="${request.periodEnd.asCalendar}"/>
+        <callservice id="FCCBD80F080E5B9B7AB788E2514E439BShowServ"/>
+        <callcontroller id="FCCBD80F080E5B9B7AB788E2514E439BFmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>序号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>生产号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>产品型号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>图号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>定货单位</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>完工时间</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>台数</name>
+                </item>
+                <item>
+                    <name>产值</name>
+                </item>
+                <item>
+                    <name>产量</name>
+                </item>
+                <item>
+                    <name>电压等级</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>生产部门</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>工单号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>物料编码</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>物料说明</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>完工人</name>
+                    <type>text</type>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+            <dataCount>${dataCount[0]}</dataCount>
+        </response>
+    </controller>
+    <controller id="FCCBD80F080E5B9B7AB788E2514E439BFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="0">
+                <DefaultMatcher cols="6,8"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="4">
+                <DefaultMatcher cols="7"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="FCCBD80F080E5B9B7AB788E2514E439BExportClr">
+        <context key="pgNum" value="${request.pgNum.asInt}"/>
+        <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <context key="workNum" value="${request.workNum.asString}"/>
+        <context key="productType" value="${request.productType.asString}"/>
+        <context key="productNum" value="${request.productNum.asInt}"/>
+        <context key="productUnit" value="${request.productUnit.asString}"/>
+        <context key="periodStart" value="${request.periodStart.asCalendar}"/>
+        <context key="periodEnd" value="${request.periodEnd.asCalendar}"/>
+        <callservice id="FCCBD80F080E5B9B7AB788E2514E439BShowServ"/>
+        <callcontroller id="FCCBD80F080E5B9B7AB788E2514E439BFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="完工入库清单"/>
+        <list id="title" type="string">序号,生产号,产品型号,图号,定货单位,完工时间,台数,产值,产量,电压等级,生产部门,工单号,物料编码,物料说明,完工人</list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="完工入库清单.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+
+    <service id="FCCBD80F080E5B9B7AB788E2514E439BShowClrServ" ds="repods">
+        <sql id="productDep" export="true"><![CDATA[
+            SELECT
+                department_code,
+                description
+            FROM
+                CUX_USERDEP_V
+            WHERE
+                user_name = ${userName}
+            group by
+                department_code,
+                description
+        ]]></sql>
+    </service>
+
+    <service id="FCCBD80F080E5B9B7AB788E2514E439BShowServ" ds="repods">
+        <sql export="true" id="dataCount"><![CDATA[
+            select
+                count(*)
+            from
+                CUX_DEVBALANCE_V
+            where
+                (${periodStart.date} is null or transaction_date >= ${periodStart.date}) and
+                (${periodEnd.date} is null or transaction_date <= ${periodEnd.date}) and
+                (${productUnit} is null or product_dep_code = ${productUnit}) and
+                (${productNum} is null or product_number like ${'%' + productNum + '%'}) and
+                (${productType} is null or project_model like ${'%' + productType + '%'}) and
+                (${workNum} is null or wip_entity_name like ${'%' + workNum + '%'})
+        ]]></sql>
+        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
+        select
+            serial,
+            product_number,
+            project_model,
+            pic_model,
+            order_company,
+            to_char(transaction_date, 'yyyy-mm-dd'),
+            transaction_quantity,
+            output_value,
+            output,
+            electric_level,
+            product_dep,
+            wip_entity_name,
+            materiel_code,
+            materiel_desc,
+            resp_peorson
+        from CUX_DEVBALANCE_V
+        where
+            (${periodStart.date} is null or transaction_date >= ${periodStart.date}) and
+            (${periodEnd.date} is null or transaction_date <= ${periodEnd.date}) and
+            (${productUnit} is null or product_dep_code = ${productUnit}) and
+            (${productNum} is null or product_number like ${'%' + productNum + '%'}) and
+            (${productType} is null or project_model like ${'%' + productType + '%'}) and
+            (${workNum} is null or wip_entity_name like ${'%' + workNum + '%'})
+]]></sql>
+        <list id="ids">
+            <item from="0" to="${data.size - 1}"></item>
+        </list>
+        <table export="true" id="result" rowIds="ids" table="${data}"/>
+    </service>
+</components>

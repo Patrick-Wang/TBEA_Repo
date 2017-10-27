@@ -61,6 +61,16 @@ html, body{
    height:32px;
 }
 
+.option-area .search-item-date {
+    width:220px;
+    margin : 3px 0px 3px 0px;
+    float:left;
+}
+
+.option-area .search-item-date > input{
+    height:32px;
+}
+
 .option-area .search-item-input > input{
     height:32px;
     width:220px;

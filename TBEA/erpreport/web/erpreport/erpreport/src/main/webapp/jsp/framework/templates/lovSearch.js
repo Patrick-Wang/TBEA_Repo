@@ -61,103 +61,158 @@ var search;
         });
     }
     function setNow(time, date) {
-        if (time.type == 'year') {
-            time.now = [date.year, 1, 1].join('-');
+        if ('string' != typeof date) {
+            if (date.year || date.hours) {
+                if (time.type == 'year') {
+                    time.now = [date.year, 1, 1].join('-');
+                }
+                else if (time.type == 'month') {
+                    time.now = [date.year, date.month, 1].join('-');
+                }
+                else if (!time.type || time.type == 'date') {
+                    time.now = [date.year, date.month, date.date].join('-');
+                }
+                else if (time.type == 'time') {
+                    time.now = [date.hours, date.minutes, date.seconds].join(':');
+                }
+                else if (time.type == 'datetime') {
+                    time.now = [date.year, date.month, date.date].join('-') + " " + [date.hours, date.minutes, date.seconds].join(':');
+                }
+            }
+            else {
+                time.now = undefined;
+            }
         }
-        else if (time.type == 'month') {
-            time.now = [date.year, date.month, 1].join('-');
-        }
-        else if (!time.type || time.type == 'date') {
-            time.now = [date.year, date.month, date.date].join('-');
-        }
-        else if (time.type == 'time') {
-            time.now = [date.hours, date.minutes, date.seconds].join(':');
-        }
-        else if (time.type == 'datetime') {
-            time.now = [date.year, date.month, date.date].join('-') + " " + [date.hours, date.minutes, date.seconds].join(':');
+        else {
+            if (date) {
+                if (time.type == 'year') {
+                    time.now = [date.substring(0, 4), 1, 1].join('-');
+                }
+                else if (time.type == 'month') {
+                    time.now = [date.substring(0, 4), date.substring(5, 7), 1].join('-');
+                }
+                else if (!time.type || time.type == 'date') {
+                    time.now = date;
+                }
+                else if (time.type == 'time') {
+                    time.now = date;
+                }
+                else if (time.type == 'datetime') {
+                    time.now = date;
+                }
+            }
+            else {
+                time.now = undefined;
+            }
         }
     }
     function resetDate(opt) {
+        setNow(opt.date, opt.date.init);
         opt.date.ins = layui.laydate.render({
             elem: '#_' + opt.param,
             type: opt.date.type,
             value: opt.date.init,
             trigger: 'click',
+            //showBottom: false,
             change: function (value, date, endDate) {
                 setNow(opt.date, date);
-            },
-            ready: function (date) {
-                setNow(opt.date, date);
             }
+            // ready: function (date) {
+            //     setNow(opt.date, date);
+            // }
         });
-        setTimeout(function () {
-            $('#_' + opt.param).trigger('click');
-            $('#_' + opt.param).parent().trigger('click');
-        }, 100);
+        // setTimeout(function () {
+        //     $('#_' + opt.param).trigger('click');
+        //     $('#_' + opt.param).parent().trigger('click');
+        // }, 100);
     }
     function buildDate(rowMap, opt) {
         var well = rowMap[opt.param];
         var firstDiv = rowMap.searchArea.find('tbody > tr').eq(well.row).children('td').eq(well.col * 2);
         firstDiv.append('<span class="search-label">' + opt.name + '</span>');
         firstDiv.next().append('<div class="search-item-date">' +
-            '<input type="text" class="layui-input" id="_' + opt.param + ' readonly="readlony">' +
+            '<input type="text" class="layui-input" id="_' + opt.param + '" readonly="readlony">' +
             '</div>');
         resetDate(opt);
     }
-    function resetPeriodStart(opt) {
-        var params = opt.param.replace(/\s/g, '').split(",");
-        opt.period.start.ins = layui.laydate.render({
-            elem: '#_' + params[0],
+    // function resetPeriodStart(opt: Option) {
+    //     let params = opt.param.replace(/\s/g, '').split(",");
+    //     opt.period.start.ins = layui.laydate.render({
+    //         elem: '#_' + params[0],
+    //         type: opt.period.start.type,
+    //         value: opt.period.start.init,
+    //         trigger: 'click',
+    //         showBottom: false,
+    //         change: function (value, date, endDate) {
+    //             setNow(opt.period.start, date);
+    //         },
+    //         ready: function (date) {
+    //             setNow(opt.period.start, date);
+    //         }
+    //     });
+    //     setTimeout(function () {
+    //         $('#_' + params[0]).trigger('click');
+    //         $('#_' + params[0]).parent().trigger('click');
+    //     }, 100);
+    // }
+    function resetPeriod(opt) {
+        setNow(opt.period.start, opt.period.start.init);
+        setNow(opt.period.end, opt.period.end.init);
+        var cfg = {
+            elem: '#_' + opt.param.replace(/(,|\s)/g, ''),
             type: opt.period.start.type,
-            value: opt.period.start.init,
             trigger: 'click',
-            change: function (value, date, endDate) {
+            range: true,
+            done: function (value, date, endDate) {
                 setNow(opt.period.start, date);
-            },
-            ready: function (date) {
-                setNow(opt.period.start, date);
+                setNow(opt.period.end, endDate);
             }
-        });
-        setTimeout(function () {
-            $('#_' + params[0]).trigger('click');
-            $('#_' + params[0]).parent().trigger('click');
-        }, 100);
+            // ready: function (date) {
+            //     setNow(opt.period.start, date);
+            // }
+        };
+        if (opt.period.start.init && opt.period.end.init) {
+            cfg.value = opt.period.start.init + ' - ' + opt.period.end.init;
+        }
+        opt.period.start.ins = layui.laydate.render(cfg);
     }
-    function resetPeriodEnd(opt) {
-        var params = opt.param.replace(/\s/g, '').split(",");
-        opt.period.end.ins = layui.laydate.render({
-            elem: '#_' + params[1],
-            type: opt.period.end.type,
-            value: opt.period.end.init,
-            trigger: 'click',
-            change: function (value, date, endDate) {
-                setNow(opt.period.end, date);
-            },
-            ready: function (date) {
-                setNow(opt.period.end, date);
-            }
-        });
-        setTimeout(function () {
-            $('#_' + params[1]).trigger('click');
-            $('#_' + params[1]).parent().trigger('click');
-        }, 100);
-    }
+    // function resetPeriodEnd(opt: Option) {
+    //     let params = opt.param.replace(/\s/g, '').split(",");
+    //     opt.period.end.ins = layui.laydate.render({
+    //         elem: '#_' + params[1],
+    //         type: opt.period.end.type,
+    //         value: opt.period.end.init,
+    //         trigger: 'click',
+    //         change: function (value, date, endDate) {
+    //             setNow(opt.period.end, date);
+    //         },
+    //         ready: function (date) {
+    //             setNow(opt.period.end, date);
+    //         }
+    //     });
+    //     setTimeout(function () {
+    //         $('#_' + params[1]).trigger('click');
+    //         $('#_' + params[1]).parent().trigger('click');
+    //     }, 100);
+    // }
     function buildPeriod(rowMap, opt) {
         var well = rowMap[opt.param];
         var firstDiv = rowMap.searchArea.find('tbody > tr').eq(well.row).children('td').eq(well.col * 2);
-        var names = opt.name.replace(/\s/g, '').split(",");
-        var params = opt.param.replace(/\s/g, '').split(",");
-        firstDiv.append('<span class="search-label">' + names[0] + '</span>');
+        //  let names = opt.name.replace(/\s/g, '').split(",");
+        // let params = opt.param.replace(/\s/g, '').split(",");
+        firstDiv.append('<span class="search-label">' + opt.name + '</span>');
         firstDiv.next().append('<div class="search-item-period">' +
-            '<input type="text" class="layui-input" id="_' + params[0] + '" readonly="readlony">' +
+            '<input type="text" class="layui-input" id="_' + opt.param.replace(/(,|\s)/g, '') + '" readonly="readlony">' +
             '</div>');
-        var secondDiv = firstDiv.next().next();
-        secondDiv.append('<span class="search-label">' + names[1] + '</span>');
-        secondDiv.next().append('<div class="search-item-period">' +
-            '<input type="text" class="layui-input" id="_' + params[1] + '" readonly="readlony">' +
-            '</div>');
-        resetPeriodStart(opt);
-        resetPeriodEnd(opt);
+        // let secondDiv = firstDiv.next().next();
+        // secondDiv.append('<span class="search-label">' + names[1] + '</span>');
+        // secondDiv.next().append(
+        //     '<div class="search-item-period">' +
+        //     '<input type="text" class="layui-input" id="_' + params[1] + '" readonly="readlony">' +
+        //     '</div>');
+        resetPeriod(opt);
+        // resetPeriodStart(opt);
+        // resetPeriodEnd(opt);
     }
     function assignRow() {
         var rowMap = {};
@@ -165,24 +220,24 @@ var search;
         var rowCount = 0;
         //每两个条件一行
         for (var i = 0; i < context.options.length; ++i) {
-            if (context.options[i].type == 'period') {
-                //区间单独占一行显示
-                rowCount = Util.roundDiv(itemCount, 2);
-                rowCount += 1;
-                itemCount = rowCount * 2;
-                rowMap[context.options[i].param] = {
-                    row: rowCount - 1,
-                    col: 0
-                };
-            }
-            else {
-                ++itemCount;
-                rowCount = Util.roundDiv(itemCount, 2);
-                rowMap[context.options[i].param] = {
-                    row: rowCount - 1,
-                    col: (itemCount - 1) % 2
-                };
-            }
+            // if (context.options[i].type == 'period') {
+            //     //区间单独占一行显示
+            //     rowCount = Util.roundDiv(itemCount, 2);
+            //     rowCount += 1;
+            //     itemCount = rowCount * 2;
+            //     rowMap[context.options[i].param] = {
+            //         row: rowCount - 1,
+            //         col: 0
+            //     };
+            // }
+            // else {
+            ++itemCount;
+            rowCount = Util.roundDiv(itemCount, 2);
+            rowMap[context.options[i].param] = {
+                row: rowCount - 1,
+                col: (itemCount - 1) % 2
+            };
+            // }
         }
         rowCount = Util.roundDiv(itemCount, 2);
         //打印与导出单独占一行
@@ -288,8 +343,8 @@ var search;
         for (var i = 0; i < context.options.length; ++i) {
             if (!context.options[i].type || context.options[i].type == 'lov') {
                 dataOpt[context.options[i].param] = $("#_" + context.options[i].param).selectpicker("val");
-                if (!dataOpt[context.options[i].param]) {
-                    dataOpt[context.options[i].param] = 'all';
+                if (!dataOpt[context.options[i].param] || 'all' == dataOpt[context.options[i].param]) {
+                    dataOpt[context.options[i].param] = undefined;
                 }
             }
             else if (context.options[i].type == 'date') {
@@ -301,9 +356,9 @@ var search;
                 dataOpt[params[1]] = context.options[i].period.end.now;
             }
             else if (context.options[i].type == 'input') {
-                dataOpt[context.options[i].param] = $("#_" + context.options[i].param).val("");
+                dataOpt[context.options[i].param] = $("#_" + context.options[i].param).val();
                 if (!dataOpt[context.options[i].param]) {
-                    dataOpt[context.options[i].param] = 'all';
+                    dataOpt[context.options[i].param] = undefined;
                 }
             }
         }
@@ -329,7 +384,9 @@ var search;
         var dataOpt = getSearchOption();
         var optTmp = [];
         for (var index_1 in dataOpt) {
-            optTmp.push(index_1 + "=" + dataOpt[index_1]);
+            if (dataOpt[index_1]) {
+                optTmp.push(index_1 + "=" + dataOpt[index_1]);
+            }
         }
         var params = optTmp.join("&");
         $("#exportForm")[0].action = context.exportUrl + "?" + params;
@@ -346,8 +403,7 @@ var search;
                 resetDate(context.options[i]);
             }
             else if (context.options[i].type == 'period') {
-                resetPeriodStart(context.options[i]);
-                resetPeriodEnd(context.options[i]);
+                resetPeriod(context.options[i]);
             }
             else if (context.options[i].type == 'input') {
                 $("#_" + context.options[i].param).val("");

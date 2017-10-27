@@ -168,7 +168,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 							val = XmlUtil.parseELText(XmlUtil.getText(elem), elp);
 						}
 						if (null != val && val instanceof String){
-							val = ((String)val).replaceAll("\\s", "");
+							val = ((String)val).replaceAll("\\n", "");
 						}
 					}
 					map.put(key, val);

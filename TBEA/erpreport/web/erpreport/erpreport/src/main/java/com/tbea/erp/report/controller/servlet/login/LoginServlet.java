@@ -164,7 +164,6 @@ public class LoginServlet {
         if (validate(userName, time, token)) {
             if (login(userName, loginService.login(userName), request)){
                 return new ModelAndView("redirect:/Login/index.do?item=" + item);
-
             }else{
                 return new ModelAndView("userNotExists");
             }

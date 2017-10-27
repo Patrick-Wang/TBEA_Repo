@@ -30,10 +30,9 @@ module index {
         '#f39c12',
         '#00c0ef'];
 
-    if (!Array.prototype.shuffle) {
-        Array.prototype.shuffle = function() {
-            for(let j, x, i = this.length; i; j = parseInt(Math.random() * i), x = this[--i], this[i] = this[j], this[j] = x);
-            return this;
+    if (!Array.prototype['shuffle']) {
+        Array.prototype['shuffle'] = function() {
+            this.sort(function(a,b){ return Math.random()>.5 ? -1 : 1;});
         };
     }
 
@@ -60,7 +59,7 @@ module index {
             if (i % 4 == 0){
                 colors.shuffle();
             }
-            buildFavoriteItem(colors[i % 4], $(".layui-fluid .layui-row").eq(i % 4), context.favorites[i]);
+            buildFavoriteItem(colors[i % 4], $(".layui-fluid .layui-row").eq(Util.zeroDiv(i, 4)), context.favorites[i]);
         }
 
         if (rowCount == 0){

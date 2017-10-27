@@ -409,9 +409,9 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		date.appendChild(doc.createTextNode("${fmtServ.result}"));
 		response.appendChild(date);
 		
-		Element dateCount = doc.createElement("dateCount");
-		date.appendChild(doc.createTextNode("${dataCount[0]}"));
-		response.appendChild(dateCount);
+		Element dataCount = doc.createElement("dataCount");
+		dataCount.appendChild(doc.createTextNode("${dataCount[0]}"));
+		response.appendChild(dataCount);
 		
 	}
 

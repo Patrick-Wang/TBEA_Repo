@@ -12,7 +12,7 @@
     <meta http-equiv="Content-Type" content="text/javascript;charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>特变电工报表管理平台</title>
+    <title>ERP报表管理平台</title>
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/jsp/build/images/icon.ico">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/jsp/plugins/layui/css/layui.css" media="all">
 

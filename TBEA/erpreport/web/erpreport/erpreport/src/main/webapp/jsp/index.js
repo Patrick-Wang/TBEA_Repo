@@ -67,7 +67,8 @@ var index;
         }
         return data;
     }
-    function triggerOnClick(ids) {
+    function triggerOnClick(ids, time) {
+        if (time === void 0) { time = 500; }
         var navItem = $(".layui-side .layui-nav-item");
         for (var i = 0, j = 0; curTreeItem && i < curTreeItem.children.length; ++i) {
             if (!curTreeItem.children[i].url) {
@@ -111,7 +112,7 @@ var index;
                                     break;
                                 }
                             }
-                        }, 500);
+                        }, time);
                     }
                 }
                 else {
@@ -122,7 +123,7 @@ var index;
                         }
                     }
                 }
-            }, 500);
+            }, time);
         }
     }
     function findParents(itemId) {
@@ -172,7 +173,7 @@ var index;
             items = findParents(item);
         }
         lastTopId = items[0];
-        triggerOnClick(items);
+        triggerOnClick(items, 500);
     }
     index.onClickNavFromSub = onClickNavFromSub;
 })(index || (index = {}));

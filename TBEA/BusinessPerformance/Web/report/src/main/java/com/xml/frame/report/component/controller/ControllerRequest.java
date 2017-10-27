@@ -38,47 +38,82 @@ public class ControllerRequest extends PropMap{
 		}
 
 		public JSONArray asJsonArray(){
-			String val = req.getParameter(paraName);
-			return JSONArray.fromObject(val);
+			try{
+				String val = req.getParameter(paraName);
+				return JSONArray.fromObject(val);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;
 		}
 		
 		public List asList(){
-			String val = req.getParameter(paraName);
-			JSONArray arr = JSONArray.fromObject(val);
-			List ret = new ArrayList();
-			for (int i = 0; i < arr.size(); ++i){
-				ret.add(arr.get(i));
+			try{
+				String val = req.getParameter(paraName);
+				JSONArray arr = JSONArray.fromObject(val);
+				List ret = new ArrayList();
+				for (int i = 0; i < arr.size(); ++i){
+					ret.add(arr.get(i));
+				}
+				return ret;
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-			return ret;
+			return null;
+
 		}
 		
 		public JSONObject asJsonObject(){
-			String val = req.getParameter(paraName);
-			return JSONObject.fromObject(val);
+			try{
+				String val = req.getParameter(paraName);
+				return JSONObject.fromObject(val);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;
+
 		}
 		
 		public EasyCalendar asCalendar(){
-			String val = req.getParameter(paraName);
-			return new EasyCalendar(Date.valueOf((String) val));
+			try{
+				String val = req.getParameter(paraName);
+				return new EasyCalendar(Date.valueOf((String) val));
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;
+
 		}
 
 		public Integer asInt(){
-			String val = req.getParameter(paraName);
-			return Integer.valueOf((String) val);
+			try{
+				String val = req.getParameter(paraName);
+				return Integer.valueOf((String) val);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;
+
 		}
 		
 		public Map<String, Object> asMap() throws Exception{
-			if ("parameters".equals(paraName)){
-				Map<String, Object> mp = new HashMap<String, Object>();
-				String key = null;
-				Enumeration<String> keys = req.getParameterNames();
-				while (keys.hasMoreElements()){
-					key = keys.nextElement();
-					mp.put(key, req.getParameter(key));
+			try{
+				if ("parameters".equals(paraName)){
+					Map<String, Object> mp = new HashMap<String, Object>();
+					String key = null;
+					Enumeration<String> keys = req.getParameterNames();
+					while (keys.hasMoreElements()){
+						key = keys.nextElement();
+						mp.put(key, req.getParameter(key));
+					}
+					return mp;
 				}
-				return mp;
+				throw new Exception(paraName + " cannot be cast to map");
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-			throw new Exception(paraName + " cannot be cast to map");
+			return null;
+
 		}
 		
 		public String asString(){
@@ -90,27 +125,43 @@ public class ControllerRequest extends PropMap{
 		}
 		
 		public XSSFWorkbook asExcel() throws IOException{
-			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req; 
-			CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);
-			return new XSSFWorkbook(file.getInputStream());
+			try{
+				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
+				CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);
+				return new XSSFWorkbook(file.getInputStream());
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;
+
 		}
 		
 		public String getFileName() throws IOException{
-			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req; 
-			CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);
-			return file.getFileItem().getName();
+			try{
+				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
+				CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);
+				return file.getFileItem().getName();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			return null;
 		}
 		
 		public List<String[]> asCSVUtf8() throws IOException{
-			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req; 
-			CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);
-			String csv = IOUtils.toString(file.getInputStream(), "utf-8");
-			List<String[]> result = new ArrayList<String[]>();
-			String[] rows = csv.split("\n");
-			for (int i = 1; i < rows.length; ++i){
-				result.add(rows[i].split(","));
+			try{
+				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) req;
+				CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile(paraName);
+				String csv = IOUtils.toString(file.getInputStream(), "utf-8");
+				List<String[]> result = new ArrayList<String[]>();
+				String[] rows = csv.split("\n");
+				for (int i = 1; i < rows.length; ++i){
+					result.add(rows[i].split(","));
+				}
+				return result;
+			}catch(Exception e){
+				e.printStackTrace();
 			}
-			return result;
+			return null;
 		}
 		
 	}

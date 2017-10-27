@@ -89,7 +89,7 @@ module index {
         return data;
     }
 
-    function triggerOnClick(ids: any) {
+    function triggerOnClick(ids: any, time :number = 500) {
         let navItem = $(".layui-side .layui-nav-item");
         for (let i = 0, j = 0; curTreeItem && i < curTreeItem.children.length; ++i){
             if (!curTreeItem.children[i].url){
@@ -136,7 +136,7 @@ module index {
                                 }
                             }
 
-                        }, 500);
+                        }, time);
                     }
                 }else{
                     for (let i = 0; i < treeItem.children.length; ++i) {
@@ -148,7 +148,7 @@ module index {
                 }
 
 
-            }, 500);
+            }, time);
         }
 
     }
@@ -200,6 +200,6 @@ module index {
             items = findParents(item);
         }
         lastTopId = items[0];
-        triggerOnClick(items);
+        triggerOnClick(items, 500);
     }
 }

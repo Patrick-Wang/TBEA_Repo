@@ -6,11 +6,9 @@ var index;
         '#f39c12',
         '#00c0ef'
     ];
-    if (!Array.prototype.shuffle) {
-        Array.prototype.shuffle = function () {
-            for (var j = void 0, x = void 0, i = this.length; i; j = parseInt(Math.random() * i), x = this[--i], this[i] = this[j], this[j] = x)
-                ;
-            return this;
+    if (!Array.prototype['shuffle']) {
+        Array.prototype['shuffle'] = function () {
+            this.sort(function (a, b) { return Math.random() > .5 ? -1 : 1; });
         };
     }
     function buildFavoriteItem(color, p, fav) {
@@ -35,7 +33,7 @@ var index;
             if (i % 4 == 0) {
                 colors.shuffle();
             }
-            buildFavoriteItem(colors[i % 4], $(".layui-fluid .layui-row").eq(i % 4), context.favorites[i]);
+            buildFavoriteItem(colors[i % 4], $(".layui-fluid .layui-row").eq(Util.zeroDiv(i, 4)), context.favorites[i]);
         }
         if (rowCount == 0) {
             $(".layui-fluid").append('<div class="layui-row layui-col-space15"></div>');

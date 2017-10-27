@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="68930B806E9883C70ED00994205C2EE5EWJ">
+        <list id="ids" type="int">0</list>
+        <list id="vals" type="string">完工入库清单</list>
+        <response name="framework/templates/dateReport/entry" type="jsp">
+            <map key="updateUrl" value="68930B806E9883C70ED00994205C2EE5EntryUpdateWrapperClr"/>
+            <map key="submitUrl" value="68930B806E9883C70ED00994205C2EE5EntrySubmitWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="68930B806E9883C70ED00994205C2EE5EntryUpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="FCCBD80F080E5B9B7AB788E2514E439BEntryUpdateClr"/>
+        </if>
+    </controller>
+    <controller id="68930B806E9883C70ED00994205C2EE5EntrySubmitWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="FCCBD80F080E5B9B7AB788E2514E439BEntrySubmitClr"/>
+        </if>
+    </controller>
+</components>
