@@ -70,7 +70,7 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 						}
 					}else {
 						sql = preFix + "?" + i + sql.substring(elexps.get(i).end());
-						params.add(new Pair<Integer, Object>(0, obj));
+						params.add(new Pair<Integer, Object>(i, obj));
 					}
 
 				}else{

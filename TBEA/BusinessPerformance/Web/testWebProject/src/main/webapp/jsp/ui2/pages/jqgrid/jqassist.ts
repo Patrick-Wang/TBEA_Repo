@@ -1344,17 +1344,22 @@ module JQTable {
                  });
         }
 
-        private enablePageEdit(rowNum:number, pagername:string, nopagerbutton:any):any {
+        private enablePageEdit(rowNum:number, pagername:string, nopagerbutton:any, option:any):any {
             var grid = $("#" + this.mGridName + "");
             let lastsel:any = "";
             let lastcell:any = "";
+            let prevBtn = (e)=>{
+                e.stopImmediatePropagation();
+            }
             let opt = {
                 beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
                     lastsel = iRow;
                     lastcell = iCol;
-                    $("input").attr("disabled", true);
-
-
+                    $(".btn").attr("disabled", true).on('click', prevBtn);
+                  //  $("input").attr("disabled", true);
+                    if (option.assistOnEdit){
+                        option.assistOnEdit(rowid, cellname, v, iRow, iCol);
+                    }
                     if (undefined != this.mDisabledEditCells) {
                         let oldFun = $.jgrid.createEl;
                         for (let i = 0; i < this.mDisabledEditCells.length; ++i) {
@@ -1369,7 +1374,11 @@ module JQTable {
                 },
 
                 afterSaveCell: () => {
-                    $("input").attr("disabled", false);
+                    $(".btn").attr("disabled", false).off('click', prevBtn);
+                  //  $("input").attr("disabled", false);
+                    if (option.assistPostEdit){
+                        option.assistPostEdit();
+                    }
                     let ids:string[] = grid.jqGrid('getDataIDs');
                     if (Util.indexOf(this.mEditedRows, ids[lastsel - 1]) < 0) {
                         this.mEditedRows.push(ids[lastsel - 1]);
@@ -1379,7 +1388,11 @@ module JQTable {
                 },
 
                 afterRestoreCell: () => {
-                    $("input").attr("disabled", false);
+                    $(".btn").attr("disabled", false).off('click', prevBtn);
+                  //  $("input").attr("disabled", false);
+                    if (option.assistPostEdit){
+                        option.assistPostEdit();
+                    }
                     lastsel = "";
                 },
 
@@ -1625,8 +1638,15 @@ module JQTable {
 
             }
 
+            if (option.assistOnEdit) {
+
+            }
+            if (option.assistPostEdit) {
+
+            }
+
             if (option.assistEditable) {
-                $.extend(option, this.enablePageEdit(option.rowNum, option.pager, option.nopagerbutton));
+                $.extend(option, this.enablePageEdit(option.rowNum, option.pager, option.nopagerbutton, option));
             }
 
 
