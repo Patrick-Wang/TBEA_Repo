@@ -142,7 +142,9 @@ group by
   <sql id="sxTotal">select 
 	nullif(sum(authCreditAmount), 0) aca
 from 
-financing_bank_currency_credit where nf=${cal.year} and yf=${cal.month}</sql>
+financing_bank_currency_credit where nf=${cal.year} and yf=${cal.month}
+and
+	bankName in ${yhs}</sql>
   <sql id="sxzb" order="yhs" by="0" colcount="2">select 
 	bankName,
 	sum(authCreditAmount)/${sxTotal[0]} aca

@@ -1355,7 +1355,7 @@ module JQTable {
                 beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
                     lastsel = iRow;
                     lastcell = iCol;
-                    $(".btn").attr("disabled", true).on('click', prevBtn).toTop('click', prevBtn);
+                   // $(".btn").attr("disabled", true).on('click', prevBtn).toTop('click', prevBtn);
                   //  $("input").attr("disabled", true);
                     if (option.assistOnEdit){
                         option.assistOnEdit(rowid, cellname, v, iRow, iCol);
@@ -1374,7 +1374,7 @@ module JQTable {
                 },
 
                 afterSaveCell: () => {
-                    $(".btn").attr("disabled", false).off('click', prevBtn);
+                    //$(".btn").attr("disabled", false).off('click', prevBtn);
                   //  $("input").attr("disabled", false);
                     if (option.assistPostEdit){
                         option.assistPostEdit();
@@ -1388,7 +1388,7 @@ module JQTable {
                 },
 
                 afterRestoreCell: () => {
-                    $(".btn").attr("disabled", false).off('click', prevBtn);
+                    //$(".btn").attr("disabled", false).off('click', prevBtn);
                   //  $("input").attr("disabled", false);
                     if (option.assistPostEdit){
                         option.assistPostEdit();

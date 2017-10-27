@@ -269,7 +269,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-211" />
     <option name="y" value="50" />
     <option name="width" value="1346" />
@@ -1202,7 +1202,7 @@
       <workItem from="1508983766030" duration="9693000" />
       <workItem from="1508993648933" duration="16864000" />
       <workItem from="1509027772899" duration="84000" />
-      <workItem from="1509070657332" duration="12217000" />
+      <workItem from="1509070657332" duration="12814000" />
     </task>
     <servers />
   </component>
@@ -1233,7 +1233,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="161639000" />
+    <option name="totallyTimeSpent" value="162236000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1245,7 +1245,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1683,7 +1683,7 @@
         <state relative-caret-position="79">
           <caret line="48" column="57" lean-forward="false" selection-start-line="48" selection-start-column="57" selection-end-line="48" selection-end-column="57" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>

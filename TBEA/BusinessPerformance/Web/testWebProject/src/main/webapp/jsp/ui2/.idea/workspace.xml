@@ -98,21 +98,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jqassist.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="jqassist.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="47.2">
-              <caret line="1493" column="55" selection-start-line="1493" selection-start-column="49" selection-end-line="1493" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.3325301">
+              <caret line="1390" column="76" selection-start-line="1390" selection-start-column="69" selection-end-line="1390" selection-end-column="76" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jqueryex.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="jqueryex.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jquery/jqueryex.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.78651685">
-              <caret line="148" column="44" selection-start-line="148" selection-start-column="44" selection-end-line="148" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="159" column="27" selection-start-line="159" selection-start-column="27" selection-end-line="159" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -210,8 +210,8 @@
         <option value="$PROJECT_DIR$/home.jsp" />
         <option value="$PROJECT_DIR$/pages/authorityMgr/roleMgr.ts" />
         <option value="$PROJECT_DIR$/pages/entry_template.ts" />
-        <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
         <option value="$PROJECT_DIR$/jquery/jqueryex.js" />
+        <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
       </list>
     </option>
   </component>
@@ -851,18 +851,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
+    <entry file="file://$PROJECT_DIR$/jquery/jqueryex.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="47.2">
-          <caret line="1493" column="55" selection-start-line="1493" selection-start-column="49" selection-end-line="1493" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="159" column="27" selection-start-line="159" selection-start-column="27" selection-end-line="159" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jquery/jqueryex.js">
+    <entry file="file://$PROJECT_DIR$/pages/jqgrid/jqassist.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78651685">
-          <caret line="148" column="44" selection-start-line="148" selection-start-column="44" selection-end-line="148" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.3325301">
+          <caret line="1390" column="76" selection-start-line="1390" selection-start-column="69" selection-end-line="1390" selection-end-column="76" />
           <folding />
         </state>
       </provider>

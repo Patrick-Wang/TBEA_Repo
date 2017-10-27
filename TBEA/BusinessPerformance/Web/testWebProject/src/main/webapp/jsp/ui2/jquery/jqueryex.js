@@ -138,19 +138,26 @@
         },
 
         toTop : function(eventType, fn){
-            if ($._data(this[0]).events[eventType]){
-                var events = $._data(this[0]).events[eventType];
-                $(events).each(function(i, e){
-                    if (e.handler = fn){
-                        var dest = events.splice(i, 1);
-                        var other = events.splice(0, events.length);
-                        events.push(dest);
-                        $(other).each(function(i, e1){
-                            events.push(e1);
-                        });
+            for (var k = 0; k < this.length; ++k){
+                if ($._data(this[k]).events[eventType]){
+                    var events = $._data(this[k]).events[eventType];
+                    for (var i = 0; i < events.length; ++i){
+                        if (events[i].handler = fn){
+                            var dest = events.splice(i, 1);
+                            //var other = events.splice(0, events.length);
+                            events.push(dest[0]);
+                            //for (var j = 0; j < other.length; ++j){
+                            //    events.push(other[j]);
+                            //}
+                            //$(other).each(function(i, e1){
+                            //    events.push(e1);
+                            //});
+                           //  return false;
+                        }
                     }
-                });
+                }
             }
+            return $(this);
         }
 
         //eResize : function(onResize){
