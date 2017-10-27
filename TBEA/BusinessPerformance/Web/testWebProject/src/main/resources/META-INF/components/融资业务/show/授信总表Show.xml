@@ -328,20 +328,30 @@
 中信租赁公司	,
 农银租赁公司	,
 兴业金融租赁公司	,
+济宁银行,
+章泽融资租赁公司,
+哈密银行,
+盛京银行,
+法兴银行,
+珠海华润银行,
 汇丰（中国）	,
 澳新银行（中国）	,
 人民币合计,
-
 汇丰银行	,
 HDFC银行	,
 印度SBI银行	,
 印度ICBC银行	,
 美元合计,
-
 德意志银行,
 第纳尔合计
 </list>
   <list id="bzs" type="string">
+人民币	,
+人民币	,
+人民币	,
+人民币	,
+人民币	,
+人民币	,
 人民币	,
 人民币	,
 人民币	,
@@ -567,17 +577,17 @@ HDFC银行	,
    <list sql="hj" type="double" value="1" skip="${dwid.size == 1}"/>
    <list sql="hj" type="double" value="2" skip="${dwid.size == 1}"/>
    <list sql="hj" type="double" value="3" skip="${dwid.size == 1}"/>
-   <sumRow toRow="31">
+   <sumRow toRow="37">
     <excludeCol>0,1,3,7,11,15,19,23,27,31,35,39,43</excludeCol>
-    <rangeRows>0, 30</rangeRows>
+    <rangeRows>0, 36</rangeRows>
    </sumRow>
-   <excludeCol>0,1,3,7,11,15,19,23,27,31,35,39,43</excludeCol>
-   <sumRow toRow="36">
-    <rangeRows>32, 35</rangeRows>
-   </sumRow>
-   <sumRow toRow="38">
+   <sumRow toRow="42">
     <excludeCol>0,1,3,7,11,15,19,23,27,31,35,39,43</excludeCol>
-    <inRows>37</inRows>
+    <rangeRows>38, 41</rangeRows>
+   </sumRow>
+   <sumRow toRow="44">
+    <excludeCol>0,1,3,7,11,15,19,23,27,31,35,39,43</excludeCol>
+    <inRows>43</inRows>
    </sumRow>
   </table>
  </service>
