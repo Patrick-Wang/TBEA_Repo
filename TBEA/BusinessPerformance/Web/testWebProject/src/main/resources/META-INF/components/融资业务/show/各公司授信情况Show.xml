@@ -99,24 +99,24 @@
   <sql id="sxhj">select
 sum(authCreditAmount) aca,
 sum(usedAmount) ua
-from financing_bank_currency_credit_v where nf=${cal.year} and yf=${cal.month} and dwid in(0,1,2,10,7,9,4,6,301)</sql>
+from financing_bank_currency_credit where nf=${cal.year} and yf=${cal.month} and dwid in(0,1,2,10,7,9,4,6,301)</sql>
   <sql id="gssx" order="ids" by="0" colcount="4">select 
         dwid,
 sum(authCreditAmount) aca,
 sum(authCreditAmount) / ${sxhj[0][0] == 0 ? null : sxhj[0][0]} acazb,
 sum(usedAmount) ua
- from financing_bank_currency_credit_v where nf=${cal.year} and yf=${cal.month}
+ from financing_bank_currency_credit where nf=${cal.year} and yf=${cal.month}
 group by dwid</sql>
   <sql id="ldhhj">select
 sum(authCreditAmount) aca
-from financing_bank_currency_credit_v
+from financing_bank_currency_credit
 where bankName in ('中国进出口银行', '国家开发银行', '中国工商银行','中国农业银行', '中国银行','中国建设银行') and dwid in(0,1,2,10,7,9,4,6,301) and nf=${cal.year} and yf=${cal.month}
 </sql>
   <sql id="ldhsx" order="ids" by="0"  colcount="4">select 
         dwid,
 sum(authCreditAmount) aca,
 sum(authCreditAmount) / ${ldhhj[0] == 0 ? null : ldhhj[0]} acazb
-from financing_bank_currency_credit_v 
+from financing_bank_currency_credit 
 where bankName in ('中国进出口银行', '国家开发银行', '中国工商银行','中国农业银行', '中国银行','中国建设银行') and dwid in(0,1,2,10,7,9,4,6,301) and nf=${cal.year} and yf=${cal.month}
 group by dwid</sql> 
 <list id="ids" type="int">1000</list>
