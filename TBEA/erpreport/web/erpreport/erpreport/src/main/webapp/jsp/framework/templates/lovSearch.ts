@@ -381,9 +381,9 @@ module search {
 
 
     function updatePgSize() {
-        let tbHeader = 30;
-        let tbPager = 30;
-        let rowHeight = 28;
+        let tbHeader = 28;
+        let tbPager = 28;
+        let rowHeight = 26;
         let wellPaddingTop = $("#table").parent().css("padding-top").replace("px", "");
         let wellPaddingBottom = $("#table").parent().css("padding-bottom").replace("px", "");
         let navHeight = $(".nav-area").css("height").replace("px", "");
@@ -573,4 +573,5 @@ module search {
     });
 
     buildSearchItems();
+    updatePgSize();
 }

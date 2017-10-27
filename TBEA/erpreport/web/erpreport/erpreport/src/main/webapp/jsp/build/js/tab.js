@@ -201,7 +201,9 @@ layui.define(['jquery', 'element', 'nprogress', 'utils'], function(exports) {
                         $('.kit-tab .layui-tab-content').height(currBoxHeight - 43);
                         break;
                     case renderType.iframe:
-                        $('.kit-tab .layui-tab-content iframe').height(currBoxHeight - 47);
+                        $('.kit-tab .layui-tab-content iframe').height(currBoxHeight - 42);
+                        $('.kit-tab .layui-tab-content iframe').parent().height(currBoxHeight - 42);
+                        $('.kit-tab .layui-tab-content iframe').parent().css("overflow", "hidden");
                         break;
                 }
             }).resize();

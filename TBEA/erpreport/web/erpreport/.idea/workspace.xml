@@ -27,108 +27,105 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ELExpression.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/el/src/main/java/com/frame/script/el/ELExpression.java">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="206" column="0" lean-forward="false" selection-start-line="206" selection-start-column="0" selection-end-line="206" selection-end-column="0" />
+            <state relative-caret-position="79">
+              <caret line="48" column="57" lean-forward="false" selection-start-line="48" selection-start-column="57" selection-end-line="48" selection-end-column="57" />
               <folding>
-                <element signature="e#6291#6299#0" expanded="true" />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="完工入库清单Show.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/完工入库清单/完工入库清单Show.xml">
+      <file leaf-file-name="loader.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/loader.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="40" column="58" lean-forward="false" selection-start-line="40" selection-start-column="58" selection-end-line="40" selection-end-column="58" />
+            <state relative-caret-position="0">
+              <caret line="0" column="31" lean-forward="false" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContextXmlInterpreter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/ContextXmlInterpreter.java">
+      <file leaf-file-name="app.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/app.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="178">
-              <caret line="22" column="12" lean-forward="false" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
+            <state relative-caret-position="15">
+              <caret line="1" column="779" lean-forward="false" selection-start-line="1" selection-start-column="779" selection-end-line="1" selection-end-column="779" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/component/controller/Controller.java">
+      <file leaf-file-name="nprogress.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/nprogress.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+            <state relative-caret-position="15">
+              <caret line="1" column="214" lean-forward="false" selection-start-line="1" selection-start-column="214" selection-end-line="1" selection-end-column="214" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ControllerSession.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/component/controller/ControllerSession.java">
+      <file leaf-file-name="message.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/message.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PropMap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/el/src/main/java/com/frame/script/util/PropMap.java">
+      <file leaf-file-name="login_styles.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/login_styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClosureMap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/el/src/main/java/com/frame/script/util/ClosureMap.java">
+      <file leaf-file-name="login.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/login.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PackingMap.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/el/src/main/java/com/frame/script/el/PackingMap.java">
+      <file leaf-file-name="doc.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/doc.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="124" column="0" lean-forward="true" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layui.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/plugins/layui/css/layui.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="70">
+              <caret line="1" column="17203" lean-forward="false" selection-start-line="1" selection-start-column="17203" selection-end-line="1" selection-end-column="17203" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nprogress.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/nprogress.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-255">
+              <caret line="13" column="9" lean-forward="true" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
               <folding>
-                <element signature="e#3040#3041#0" expanded="true" />
-                <element signature="e#3087#3088#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="科目余额Show.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="61" column="21" lean-forward="true" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EMColumn.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/el/src/main/java/com/frame/script/el/em/EMColumn.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="43" column="0" lean-forward="false" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -145,18 +142,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>assignRow</find>
-      <find>setNOw</find>
-      <find>buildDate</find>
-      <find>setNow</find>
-      <find>getSearch</find>
-      <find>Easy</find>
-      <find>Format</find>
-      <find>parseMap</find>
-      <find>shu</find>
-      <find>productdep</find>
-      <find>all</find>
-      <find>getSele</find>
       <find>productNum</find>
       <find>onClickExport</find>
       <find>PRODUCT_CENTER</find>
@@ -165,7 +150,6 @@
       <find>cux</find>
       <find>33</find>
       <find>adjust</find>
-      <find>updatePgSize</find>
       <find>15</find>
       <find>build</find>
       <find>productDep</find>
@@ -175,6 +159,19 @@
       <find>exeDsQuery</find>
       <find>_km_currency</find>
       <find>FCCBD80F080E5B9B7AB788E2514E439BShowClrServ</find>
+      <find>updatePgSize</find>
+      <find>30px</find>
+      <find>iframe</find>
+      <find>foot</find>
+      <find>47</find>
+      <find>loadi</find>
+      <find>f</find>
+      <find>shade</find>
+      <find>left</find>
+      <find>queue</find>
+      <find>toBarPerc</find>
+      <find>translate</find>
+      <find>render</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
@@ -220,7 +217,6 @@
         <option value="$PROJECT_DIR$/erpreport/src/main/java/com/tbea/erp/report/model/entity/Authority.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/xml/XmlUtil.java" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/app.js" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/tab.js" />
         <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/我的收藏/我的收藏.xml" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.jsp" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/config/excel/ConfigTable.java" />
@@ -230,18 +226,19 @@
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/ResponseXmlInterpreter.java" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.ts" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp" />
         <option value="$PROJECT_DIR$/erpreport/src/main/java/com/tbea/erp/report/controller/servlet/login/LoginServlet.java" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/login.html" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.jsp" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/ui2.css" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.css" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/SqlXmlInterpreter.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/el/src/main/java/com/frame/script/el/em/EMColumn.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/el/src/main/java/com/frame/script/el/PackingMap.java" />
-        <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml" />
         <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/完工入库清单/完工入库清单Show.xml" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/ui2.css" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.css" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/tab.js" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml" />
+        <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp" />
       </list>
     </option>
   </component>
@@ -272,7 +269,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-211" />
     <option name="y" value="50" />
     <option name="width" value="1346" />
@@ -572,28 +569,6 @@
               <item name="resources" type="cbb8eebc:String" user="resources" />
               <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
               <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="完工入库清单" type="cbb8eebc:String" user="完工入库清单" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="我的收藏" type="cbb8eebc:String" user="我的收藏" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
               <item name="科目余额" type="cbb8eebc:String" user="科目余额" />
             </path>
             <path>
@@ -610,6 +585,88 @@
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="build" type="cbb8eebc:String" user="build" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="build" type="cbb8eebc:String" user="build" />
+              <item name="images" type="cbb8eebc:String" user="images" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="build" type="cbb8eebc:String" user="build" />
+              <item name="js" type="cbb8eebc:String" user="js" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="plugins" type="cbb8eebc:String" user="plugins" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="plugins" type="cbb8eebc:String" user="plugins" />
+              <item name="layui" type="cbb8eebc:String" user="layui" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="plugins" type="cbb8eebc:String" user="plugins" />
+              <item name="layui" type="cbb8eebc:String" user="layui" />
+              <item name="css" type="cbb8eebc:String" user="css" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
               <item name="maker" type="cbb8eebc:String" user="maker" />
             </path>
             <path>
@@ -620,109 +677,6 @@
               <item name="Root" type="cbb8eebc:String" user="Root" />
               <item name="report" type="cbb8eebc:String" user="report" />
               <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-              <item name="frame" type="cbb8eebc:String" user="frame" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-              <item name="frame" type="cbb8eebc:String" user="frame" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-              <item name="frame" type="cbb8eebc:String" user="frame" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="component" type="cbb8eebc:String" user="component" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-              <item name="frame" type="cbb8eebc:String" user="frame" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="component" type="cbb8eebc:String" user="component" />
-              <item name="controller" type="cbb8eebc:String" user="controller" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-              <item name="frame" type="cbb8eebc:String" user="frame" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="interpreter" type="cbb8eebc:String" user="interpreter" />
             </path>
           </expand>
           <select />
@@ -1172,7 +1126,7 @@
       <workItem from="1508983766030" duration="9693000" />
       <workItem from="1508993648933" duration="16864000" />
       <workItem from="1509027772899" duration="84000" />
-      <workItem from="1509070657332" duration="6421000" />
+      <workItem from="1509070657332" duration="9326000" />
     </task>
     <servers />
   </component>
@@ -1203,7 +1157,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="155843000" />
+    <option name="totallyTimeSpent" value="158748000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1215,7 +1169,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1229,7 +1183,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.49436393" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.46733668" sideWeight="0.70121026" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.058626465" sideWeight="0.70121026" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.49092284" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.47881997" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1323,113 +1277,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/java/com/tbea/erp/report/service/report/ReportServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/ztree.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="48" column="71" lean-forward="false" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/tab.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="28" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/loading.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="49" lean-forward="false" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/.classpath">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="69" column="49" lean-forward="false" selection-start-line="69" selection-start-column="49" selection-end-line="69" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="27" lean-forward="false" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/完工入库清单/完工入库清单.xml" />
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/maker/xml/XmlImportComponentMaker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/maker/xml/XmlComponentMaker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-431">
-          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/maker/CodeMaker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/maker/ZipMaker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="93" column="18" lean-forward="false" selection-start-line="93" selection-start-column="18" selection-end-line="93" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/config/excel/ConfigTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="105" column="4" lean-forward="true" selection-start-line="105" selection-start-column="4" selection-end-line="105" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/maker/xml/XmlEntryComponentMaker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="115" column="58" lean-forward="false" selection-start-line="115" selection-start-column="58" selection-end-line="115" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/MakerApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="20" column="44" lean-forward="true" selection-start-line="20" selection-start-column="44" selection-end-line="20" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/config/ColType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
@@ -1512,52 +1359,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
           <caret line="32" column="27" lean-forward="true" selection-start-line="32" selection-start-column="27" selection-end-line="32" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-400">
-          <caret line="55" column="35" lean-forward="true" selection-start-line="55" selection-start-column="35" selection-end-line="55" selection-end-column="35" />
-          <folding>
-            <marker date="1509027293934" expanded="true" signature="1761:1840" ph="..." />
-            <marker date="1509027293934" expanded="true" signature="1785:1828" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/ui2.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="167" column="17" lean-forward="true" selection-start-line="167" selection-start-column="17" selection-end-line="167" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="30" lean-forward="false" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="76" selection-end-column="22" />
-          <folding>
-            <marker date="1509072225954" expanded="true" signature="2026:2040" ph="..." />
-            <marker date="1509072225954" expanded="true" signature="2951:2965" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1711,19 +1512,187 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="61" column="21" lean-forward="true" selection-start-line="61" selection-start-column="21" selection-end-line="61" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/完工入库清单/完工入库清单Show.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="40" column="58" lean-forward="false" selection-start-line="40" selection-start-column="58" selection-end-line="40" selection-end-column="58" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="384" column="24" lean-forward="false" selection-start-line="384" selection-start-column="24" selection-end-line="384" selection-end-column="24" />
+          <folding>
+            <marker date="1509078335349" expanded="true" signature="2026:2040" ph="..." />
+            <marker date="1509078335349" expanded="true" signature="2951:2965" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/ui2.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="579" column="21" lean-forward="false" selection-start-line="579" selection-start-column="17" selection-end-line="579" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/framework/templates/lovSearch.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="136" column="6" lean-forward="true" selection-start-line="136" selection-start-column="6" selection-end-line="136" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/tab.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="203" column="91" lean-forward="true" selection-start-line="203" selection-start-column="91" selection-end-line="203" selection-end-column="91" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1509079473372" expanded="true" signature="2693:2701" ph="&amp;##xe68e;" />
+            <marker date="1509079473372" expanded="true" signature="2796:2802" ph="&amp;nbsp;" />
+            <marker date="1509079473372" expanded="true" signature="10296:10304" ph="&amp;##x1006;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/images/logo_word.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/images/user.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/images/user2.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/images/icon.ico">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/images/bk.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="94" column="12" lean-forward="false" selection-start-line="94" selection-start-column="12" selection-end-line="94" selection-end-column="12" />
+          <folding>
+            <marker date="1509027293934" expanded="true" signature="1761:1840" ph="..." />
+            <marker date="1509027293934" expanded="true" signature="1785:1828" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/resources/META-INF/components/科目余额/show/科目余额Show.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="48" column="57" lean-forward="false" selection-start-line="48" selection-start-column="57" selection-end-line="48" selection-end-column="57" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/loader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="31" lean-forward="false" selection-start-line="0" selection-start-column="31" selection-end-line="0" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/app.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="779" lean-forward="false" selection-start-line="1" selection-start-column="779" selection-end-line="1" selection-end-column="779" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/nprogress.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="214" lean-forward="false" selection-start-line="1" selection-start-column="214" selection-end-line="1" selection-end-column="214" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/message.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/login_styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/login.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/doc.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/plugins/layui/css/layui.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="1" column="17203" lean-forward="false" selection-start-line="1" selection-start-column="17203" selection-end-line="1" selection-end-column="17203" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/nprogress.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-255">
+          <caret line="13" column="9" lean-forward="true" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

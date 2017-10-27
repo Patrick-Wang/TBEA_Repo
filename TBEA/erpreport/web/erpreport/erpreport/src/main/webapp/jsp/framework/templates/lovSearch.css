@@ -134,3 +134,7 @@ html, body{
     margin-right:14px;
 }
 
+.well{
+    padding-top:8px;
+    padding-bottom:5px;
+}

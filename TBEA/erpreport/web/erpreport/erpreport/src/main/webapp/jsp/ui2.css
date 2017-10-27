@@ -49,7 +49,7 @@ body {
 .btn_loading, .btn_detail {
 	width: 100px;
 	height: 30px;
-	padding: 5px, 10px;
+	padding: 5px 10px;
 	font-size: 12px;
 	line-height: 1.5;
 	boder-radius: 3px;
@@ -165,7 +165,7 @@ th.ui-th-ltr {
 	font-weight: normal;
 	overflow: hidden;
 	white-space: pre;
-	height: 28px;
+	height: 26px;
 	padding: 0 2px 0 2px;
 	border-bottom-width: 1px;
 	border-bottom-color: inherit;
@@ -411,8 +411,8 @@ th.ui-th-ltr {
 }
 
 .ui-jqgrid .ui-jqgrid-htable th{
-	height: 30px;
-	line-height: 30px;
+	height: 28px;
+	line-height: 28px;
 }
 
 .ui-jqgrid select {
@@ -591,11 +591,11 @@ th.ui-th-ltr {
 
 .ui-jqgrid .ui-jqgrid-pager{
     border-top:solid 0px;
-    height:30px;
+    height:28px;
 }
 
 .ui-jqgrid .ui-pager-control{
-    height:30px;
+    height:28px;
 }
 
 .ui-jqgrid #pager_center{

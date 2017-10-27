@@ -321,9 +321,9 @@ var search;
         $(".option-area").removeClass("hidden");
     }
     function updatePgSize() {
-        var tbHeader = 30;
-        var tbPager = 30;
-        var rowHeight = 28;
+        var tbHeader = 28;
+        var tbPager = 28;
+        var rowHeight = 26;
         var wellPaddingTop = $("#table").parent().css("padding-top").replace("px", "");
         var wellPaddingBottom = $("#table").parent().css("padding-bottom").replace("px", "");
         var navHeight = $(".nav-area").css("height").replace("px", "");
@@ -501,4 +501,5 @@ var search;
         adjustSize();
     });
     buildSearchItems();
+    updatePgSize();
 })(search || (search = {}));
