@@ -71,8 +71,8 @@ module search {
         firstDiv.append('<span class="search-label">' + opt.name + '</span>');
         firstDiv.next().append(
             '<div class="search-item-lov">' +
-            '<select id="_' + opt.param + '" class="selectpicker" data-live-search="true" title="' + opt.name + '" >' +
-            '<option value="all" style="color:darkgray">' + opt.name + '</option>' +
+            '<select id="_' + opt.param + '" class="selectpicker" data-live-search="true">' +
+            '<option value="all" style="color:darkgray"> </option>' +
             '</select>' +
             '</div>');
 
@@ -383,7 +383,7 @@ module search {
     function updatePgSize() {
         let tbHeader = 30;
         let tbPager = 30;
-        let rowHeight = 33;
+        let rowHeight = 28;
         let wellPaddingTop = $("#table").parent().css("padding-top").replace("px", "");
         let wellPaddingBottom = $("#table").parent().css("padding-bottom").replace("px", "");
         let navHeight = $(".nav-area").css("height").replace("px", "");
@@ -394,6 +394,7 @@ module search {
         let bodyHeight = leftHeight - tbHeader - tbPager - wellPaddingBottom - wellPaddingTop;
         let newPgSize = Util.zeroDiv(bodyHeight, rowHeight);
         pgSize = newPgSize > 5 ? newPgSize : 5;
+        $("#table").parent().css("height", leftHeight + "px");
     }
 
 

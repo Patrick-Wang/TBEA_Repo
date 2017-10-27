@@ -3,8 +3,14 @@
     <controller id="FCCBD80F080E5B9B7AB788E2514E439BSHOWCLR">
         <context key="userName" value="${session.account.name}"/>
         <context key="item" value="${request.item.asInt}"/>
-        <callservice id="FCCBD80F080E5B9B7AB788E2514E439BShowClrServ"/>
+
         <callservice id="isFavoriteServ"/>
+        <if test="${'session._wg_' == 'null'}">
+            <callservice id="FCCBD80F080E5B9B7AB788E2514E439BShowClrServ"/>
+            <context key="tmp" value="${session.put['_wg_']['_wg_']}"/>
+            <context key="tmp" value="${session.put['_wg_pu'][productDep.col[0]]}"/>
+            <context key="tmp" value="${session.put['_wg_pu_lov'][productDep]}"/>
+        </if>
         <response name="framework/templates/lovSearch" type="jsp">
             <map key="pager" value="true"/>
             <map key="isFavorite" value="${isFavorite}"/>
@@ -32,7 +38,7 @@
                         "name": "生产部门",
                         "type":"lov",
                         "lov":{
-                            "option": ${productDep.asJson}
+                            "option": ${session._wg_pu_lov.asJson}
                         }
                     },
                     {
@@ -56,6 +62,7 @@
         </response>
     </controller>
     <controller id="FCCBD80F080E5B9B7AB788E2514E439BUpdateClr">
+        <context key="userName" value="${session.account.name}"/>
         <context key="pgNum" value="${request.pgNum.asInt}"/>
         <context key="pgSize" value="${request.pgSize.asInt}"/>
         <context key="workNum" value="${request.workNum.asString}"/>
@@ -206,7 +213,10 @@
             where
                 (${periodStart.date} is null or transaction_date >= ${periodStart.date}) and
                 (${periodEnd.date} is null or transaction_date <= ${periodEnd.date}) and
-                (${productUnit} is null or product_dep_code = ${productUnit}) and
+                (
+                    (${productUnit} is null and product_dep_code in ${session._wg_pu}) or
+                    (${productUnit} is not null and product_dep_code = ${productUnit})
+                ) and
                 (${productNum} is null or product_number like ${'%' + productNum + '%'}) and
                 (${productType} is null or project_model like ${'%' + productType + '%'}) and
                 (${workNum} is null or wip_entity_name like ${'%' + workNum + '%'})
@@ -232,7 +242,10 @@
         where
             (${periodStart.date} is null or transaction_date >= ${periodStart.date}) and
             (${periodEnd.date} is null or transaction_date <= ${periodEnd.date}) and
-            (${productUnit} is null or product_dep_code = ${productUnit}) and
+            (
+                    (${productUnit} is null and product_dep_code in ${session._wg_pu}) or
+                    (${productUnit} is not null and product_dep_code = ${productUnit})
+            ) and
             (${productNum} is null or product_number like ${'%' + productNum + '%'}) and
             (${productType} is null or project_model like ${'%' + productType + '%'}) and
             (${workNum} is null or wip_entity_name like ${'%' + workNum + '%'})

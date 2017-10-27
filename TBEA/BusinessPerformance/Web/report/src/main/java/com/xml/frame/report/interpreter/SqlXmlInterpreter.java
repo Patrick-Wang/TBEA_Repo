@@ -46,7 +46,6 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 	Pair<String, List<Pair<Integer, Object>>> parseSqlParam(String sql, boolean isJpa){
 		List<ELExpression> elexps = el.parser(sql);
 		List<Pair<Integer, Object>> params = new ArrayList<Pair<Integer, Object>>();
-		int listCount = 0;
 		for (int i = elexps.size() - 1; i >= 0 ; --i){
 			try {
 				lp.trace("exp : " + elexps.get(i).exp());
@@ -58,21 +57,20 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 							List ls = (List)obj;
 							StringBuilder sb = new StringBuilder();
 							sb.append("(?");
-                            params.add(new Pair<Integer, Object>(i + listCount, ls.get(0)));
+                            params.add(new Pair<Integer, Object>(0, ls.get(0)));
 							for (int j = 1; j < ls.size(); ++j){
                                 sb.append(",?");
-                                params.add(new Pair<Integer, Object>(i + listCount + j, ls.get(j)));
+                                params.add(new Pair<Integer, Object>(0, ls.get(j)));
 							}
 							sb.append(")");
 							sql = preFix + sb.toString() + sql.substring(elexps.get(i).end());
-							listCount += ls.size();
 						}else{
 							sql = preFix + "?" + sql.substring(elexps.get(i).end());
-							params.add(new Pair<Integer, Object>(i + listCount, obj));
+							params.add(new Pair<Integer, Object>(0, obj));
 						}
 					}else {
 						sql = preFix + "?" + i + sql.substring(elexps.get(i).end());
-						params.add(new Pair<Integer, Object>(i - listCount, obj));
+						params.add(new Pair<Integer, Object>(0, obj));
 					}
 
 				}else{
@@ -100,9 +98,10 @@ public class SqlXmlInterpreter implements XmlInterpreter {
 
 	private PreparedStatement setQueryParam(Pair<String, List<Pair<Integer, Object>>> sqlParams, Connection con) throws SQLException {
 		PreparedStatement ps = con.prepareStatement(sqlParams.getFirst(),ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		for (Pair<Integer, Object> pair : sqlParams.getSecond()){
-			lp.info("?" + (pair.getFirst() + 1) + " : " + pair.getSecond() + "\t");
-            ps.setObject(pair.getFirst() + 1, pair.getSecond());
+		for (int i = 0, len = sqlParams.getSecond().size(); i < len; ++i){
+			Pair<Integer, Object> pair = sqlParams.getSecond().get(i);
+			lp.info("?" + (len - i) + " : " + pair.getSecond() + "\t");
+            ps.setObject(len - i, pair.getSecond());
 		}
 		return ps;
 	}

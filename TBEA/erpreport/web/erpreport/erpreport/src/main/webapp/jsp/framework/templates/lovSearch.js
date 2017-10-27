@@ -24,8 +24,8 @@ var search;
         var firstDiv = rowMap.searchArea.find('tbody > tr').eq(well.row).children('td').eq(well.col * 2);
         firstDiv.append('<span class="search-label">' + opt.name + '</span>');
         firstDiv.next().append('<div class="search-item-lov">' +
-            '<select id="_' + opt.param + '" class="selectpicker" data-live-search="true" title="' + opt.name + '" >' +
-            '<option value="all" style="color:darkgray">' + opt.name + '</option>' +
+            '<select id="_' + opt.param + '" class="selectpicker" data-live-search="true">' +
+            '<option value="all" style="color:darkgray"> </option>' +
             '</select>' +
             '</div>');
         var sel = rowMap.searchArea.find('#_' + opt.param);
@@ -323,7 +323,7 @@ var search;
     function updatePgSize() {
         var tbHeader = 30;
         var tbPager = 30;
-        var rowHeight = 33;
+        var rowHeight = 28;
         var wellPaddingTop = $("#table").parent().css("padding-top").replace("px", "");
         var wellPaddingBottom = $("#table").parent().css("padding-bottom").replace("px", "");
         var navHeight = $(".nav-area").css("height").replace("px", "");
@@ -334,6 +334,7 @@ var search;
         var bodyHeight = leftHeight - tbHeader - tbPager - wellPaddingBottom - wellPaddingTop;
         var newPgSize = Util.zeroDiv(bodyHeight, rowHeight);
         pgSize = newPgSize > 5 ? newPgSize : 5;
+        $("#table").parent().css("height", leftHeight + "px");
     }
     function getSearchOption() {
         var dataOpt = {

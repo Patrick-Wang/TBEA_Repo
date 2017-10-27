@@ -3,8 +3,19 @@
     <controller id="37CB4530FDDDB6A0000FFEBF3C178862SHOWCLR">
         <context key="userName" value="${session.account.name}"/>
         <context key="item" value="${request.item.asInt}"/>
-        <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ"/>
+
         <callservice id="isFavoriteServ"/>
+        <if test="${'session._km_' == 'null'}">
+            <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ"/>
+            <context key="tmp" value="${session.put['_km_']['_km_']}"/>
+            <context key="tmp" value="${session.put['_km_ledgers'][ledgers.col[0]]}"/>
+            <context key="tmp" value="${session.put['_km_currency'][currency.col[0]]}"/>
+            <context key="tmp" value="${session.put['_km_accounts'][accounts.col[0]]}"/>
+            <context key="tmp" value="${session.put['_km_ledgers_lov'][ledgers]}"/>
+            <context key="tmp" value="${session.put['_km_currency_lov'][currency]}"/>
+            <context key="tmp" value="${session.put['_km_accounts_lov'][accounts]}"/>
+        </if>
+
         <response name="framework/templates/lovSearch" type="jsp">
             <map key="pager" value="true"/>
             <map key="isFavorite" value="${isFavorite}"/>
@@ -30,7 +41,7 @@
                         "name": "分类账",
                         "type":"lov",
                         "lov":{
-                            "option": ${ledgers.asJson}
+                            "option": ${session._km_ledgers_lov.asJson}
                         }
                     },
                     {
@@ -38,7 +49,7 @@
                         "name": "币种",
                         "type":"lov",
                         "lov":{
-                            "option": ${currency.asJson}
+                            "option": ${session._km_currency_lov.asJson}
                         }
                     },
                     {
@@ -46,7 +57,7 @@
                         "name": "科目",
                         "type":"lov",
                         "lov":{
-                            "option": ${accounts.asJson}
+                            "option": ${session._km_accounts_lov.asJson}
                         }
                     }
                 ]
@@ -159,11 +170,6 @@
         <response name="科目余额.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ" ds="repods">
-
-        <sql id="comps" export="true">
-            select comp_id, comp_name from CUX_USERCOMP_V where user_name = ${userName}
-            group by comp_id, comp_name
-        </sql>
         <sql id="ledgers" export="true">
             select ledger_id, ledger_name from CUX_USERLEDGER_V where user_name = ${userName}
             group by ledger_id, ledger_name
@@ -172,16 +178,6 @@
             select currency_code, currency_code from apps.fnd_currencies where currency_flag = 'Y' and enabled_flag =
             'Y'
         </sql>
-        <list id="ledgerIds" sql="ledgers" value="0"/>
-        <sql id="period" export="true"><![CDATA[
-            select  period_name,
-                    period_name,
-                    ledger_id
-            from apps.gl_period_statuses
-            where application_id = 101 and
-                adjustment_period_flag = 'Y' and
-                ledger_id in ${ledgerIds}
-        ]]></sql>
         <sql id="accounts" export="true"><![CDATA[
             select
                 flvv.flex_value,
@@ -204,9 +200,18 @@
             from
                 CUX_ACCOUNTBALANCE_V
             where
-                (${account} is null or account_code = ${account}) and
-                (${ledger} is null or ledger_id = ${ledger}) and
-                (${currency} is null or currency_code = ${currency}) and
+                (
+                    (${account} is null and account_code in ${session._km_accounts}) or
+                    (${account} is not null and account_code = ${account})
+                ) and
+                (
+                    (${ledger} is null and ledger_id in ${session._km_ledgers}) or
+                    (${ledger} is not null and ledger_id = ${ledger})
+                ) and
+                (
+                    (${currency} is null and currency_code in ${session._km_currency}) or
+                    (${currency} is not null and currency_code = ${currency})
+                ) and
                 (${periodStart.date} is null or months_between(to_date(period_name || '-01','yyyy-mm-dd'), ${periodStart.date}) >= 0) and
                 (${periodEnd.date} is null or months_between(to_date(period_name || '-01','yyyy-mm-dd'), ${periodEnd.date}) <= 0)
         ]]></sql>
@@ -224,9 +229,18 @@
                 account_segments_desc
             from CUX_ACCOUNTBALANCE_V
             where
-                (${account} is null or account_code = ${account}) and
-                (${ledger} is null or ledger_id = ${ledger}) and
-                (${currency} is null or currency_code = ${currency}) and
+                (
+                    (${account} is null and account_code in ${session._km_accounts}) or
+                    (${account} is not null and account_code = ${account})
+                ) and
+                (
+                    (${ledger} is null and ledger_id in ${session._km_ledgers}) or
+                    (${ledger} is not null and ledger_id = ${ledger})
+                ) and
+                (
+                    (${currency} is null and currency_code in ${session._km_currency}) or
+                    (${currency} is not null and currency_code = ${currency})
+                ) and
                 (${periodStart.date} is null or months_between(to_date(period_name || '-01','yyyy-mm-dd'), ${periodStart.date}) >= 0) and
                 (${periodEnd.date} is null or months_between(to_date(period_name || '-01','yyyy-mm-dd'), ${periodEnd.date}) <= 0)
         ]]></sql>

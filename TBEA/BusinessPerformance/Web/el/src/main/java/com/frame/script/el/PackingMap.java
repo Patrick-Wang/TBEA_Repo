@@ -5,19 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.frame.script.el.em.EM2Fixed;
-import com.frame.script.el.em.EM2Int;
-import com.frame.script.el.em.EMArrayJudge;
-import com.frame.script.el.em.EMAsJson;
-import com.frame.script.el.em.EMAsTimestamp;
-import com.frame.script.el.em.EMDistinct;
-import com.frame.script.el.em.EMJsonString2Json;
-import com.frame.script.el.em.EMListJudge;
-import com.frame.script.el.em.EMListPack;
-import com.frame.script.el.em.EMListResize;
-import com.frame.script.el.em.EMTest;
-import com.frame.script.el.em.EMTranspose;
-import com.frame.script.el.em.ExtendMethod;
+import com.frame.script.el.em.*;
 import com.frame.script.util.ClosureMap;
 import com.frame.script.util.TypeUtil;
 
@@ -42,6 +30,7 @@ public class PackingMap extends ClosureMap {
 		extendMethods.add(new EM2Int());
 		extendMethods.add(new EM2Fixed());
 		extendMethods.add(new EMListResize());
+		extendMethods.add(new EMColumn());
 		extendMethods.add(new EMTest());
 	}
 	

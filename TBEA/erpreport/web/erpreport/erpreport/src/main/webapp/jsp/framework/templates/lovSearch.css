@@ -9,6 +9,8 @@ html, body{
     padding-top:5px;
     padding-bottom:5px;
     border-bottom:solid 1px darkgray;
+    height: 28px;
+    padding-top: 3px;
 }
 
 .nav-area a:hover, .nav-area a:focus{
@@ -50,6 +52,12 @@ html, body{
     width:220px;
     float:left;
 }
+.search-area .search-item-lov button{
+    height: 28px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
 
 .option-area .search-item-period{
     width:220px;
@@ -58,7 +66,7 @@ html, body{
 }
 
 .option-area .search-item-period > input{
-   height:32px;
+   height:28px;
 }
 
 .option-area .search-item-date {
@@ -68,11 +76,11 @@ html, body{
 }
 
 .option-area .search-item-date > input{
-    height:32px;
+    height:28px;
 }
 
 .option-area .search-item-input > input{
-    height:32px;
+    height:28px;
     width:220px;
     padding-left: 10px;
 }
@@ -83,7 +91,7 @@ html, body{
 
 .option-area .search-label{
     margin : 3px 0px 3px 0px;
-    height:32px;
+    height:28px;
     line-height: 32px;
     text-align: left;
     float:left;
@@ -109,7 +117,13 @@ html, body{
 }
 
 .option-area .cux-btn-group-fun{
-    margin : 20px 0px 3px 0px;
+    margin : 12px 0px 3px 0px;
+}
+
+.opt-btn{
+    height: 28px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 .option-area .btn-export{
