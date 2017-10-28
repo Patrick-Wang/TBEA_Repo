@@ -1,7 +1,7 @@
-<Context>
+﻿<Context>
 	<Resource name="jdbc/my_test_db" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.7.22:1433; DatabaseName=operating_management"
+		url="jdbc:sqlserver://localhost:1433; DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 		
@@ -36,28 +36,28 @@
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
 	<Resource name="jdbc/sb_db" auth="Container" type="javax.sql.DataSource"
-		username="sa" password="shenbian8112" driverClassName="net.sourceforge.jtds.jdbc.Driver"
-		url="jdbc:jtds:sqlserver://10.10.90.53;DatabaseName=应收帐款_中间表"
+		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://localhost:1433; DatabaseName=operating_management_test"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
 	<Resource name="jdbc/sb_db2" auth="Container" type="javax.sql.DataSource"
-		username="sa" password="shenbian8112" driverClassName="net.sourceforge.jtds.jdbc.Driver"
-		url="jdbc:jtds:sqlserver://10.10.90.53;DatabaseName=经营指标_中间表"
+		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://localhost:1433; DatabaseName=operating_management_test"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
 	<Resource name="jdbc/ll_db" auth="Container" type="javax.sql.DataSource"
-		username="llyszk" password="tbllyszk" driverClassName="net.sourceforge.jtds.jdbc.Driver"
-		url="jdbc:jtds:sqlserver://192.168.12.6;DatabaseName=llyszk"
+		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://localhost:1433; DatabaseName=operating_management_test"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
-	<Resource name="jdbc/xb_db" auth="Container" type="javax.sql.DataSource"
+	<!-- <Resource name="jdbc/xb_db" auth="Container" type="javax.sql.DataSource"
 		username="gszjk" password="gszjk" driverClassName="net.sourceforge.jtds.jdbc.Driver"
 		url="jdbc:jtds:sqlserver://192.168.1.26;DatabaseName=zjktbeat"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
-		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
+		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" /> -->
 
 	<Resource name="jdbc/xl_db" auth="Container" type="javax.sql.DataSource"
 		username="xlcyjtz" password="P@$$w0rd" driverClassName="net.sourceforge.jtds.jdbc.Driver"

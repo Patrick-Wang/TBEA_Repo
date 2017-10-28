@@ -228,9 +228,9 @@
                     (${productUnit} is null and product_dep_code in ${session._wg_pu}) or
                     (${productUnit} is not null and product_dep_code = ${productUnit})
                 ) and
-                (${productNum} is null or product_number like ${'%' + productNum + '%'}) and
-                (${productType} is null or project_model like ${'%' + productType + '%'}) and
-                (${workNum} is null or wip_entity_name like ${'%' + workNum + '%'})
+                (${productNum} is null or product_number like ${'%productNum%'}) and
+                (${productType} is null or project_model like ${'%productType%'}) and
+                (${workNum} is null or wip_entity_name like ${'%workNum%'})
         ]]></sql>
         <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
         select
@@ -257,9 +257,9 @@
                     (${productUnit} is null and product_dep_code in ${session._wg_pu}) or
                     (${productUnit} is not null and product_dep_code = ${productUnit})
             ) and
-            (${productNum} is null or product_number like ${'%' + productNum + '%'}) and
-            (${productType} is null or project_model like ${'%' + productType + '%'}) and
-            (${workNum} is null or wip_entity_name like ${'%' + workNum + '%'})
+            (${productNum} is null or product_number like ${'%productNum%'}) and
+            (${productType} is null or project_model like ${'%productType%'}) and
+            (${workNum} is null or wip_entity_name like ${'%workNum%'})
 ]]></sql>
         <list id="ids">
             <item from="0" to="${data.size - 1}"></item>

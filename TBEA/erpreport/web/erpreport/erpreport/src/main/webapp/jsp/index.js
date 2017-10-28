@@ -1,20 +1,5 @@
 var index;
 (function (index) {
-    var ClassListener = (function () {
-        function ClassListener() {
-        }
-        ClassListener.listen = function (condition, callback) {
-            if (condition()) {
-                callback();
-            }
-            else {
-                setTimeout(function () {
-                    ClassListener.listen(condition, callback);
-                }, 5);
-            }
-        };
-        return ClassListener;
-    }());
     var NavbarType;
     (function (NavbarType) {
         NavbarType[NavbarType["TOP"] = 0] = "TOP";
