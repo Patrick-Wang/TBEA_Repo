@@ -3,6 +3,12 @@ var Util;
     var Loading = (function () {
         function Loading() {
         }
+        Loading.pause = function () {
+            Loading.isPaused = true;
+        };
+        Loading.resume = function () {
+            Loading.isPaused = false;
+        };
         Loading.init = function () {
             if ($("#mloading").length == 0) {
                 $("body").children().eq(0).before("<div id='mloading' style='z-index:1999;position:absolute;width:100%;height:100%'></div>");
@@ -13,8 +19,10 @@ var Util;
         };
         Loading.start = function () {
             Loading.startTime = Date.now();
-            $("#mloading").show();
-            $("#mloading").mLoading("show");
+            if (!Loading.isPaused) {
+                $("#mloading").show();
+                $("#mloading").mLoading("show");
+            }
         };
         Loading.stop = function () {
             var endTime = Date.now();
@@ -30,6 +38,7 @@ var Util;
             }
         };
         Loading.startTime = 0;
+        Loading.isPaused = false;
         return Loading;
     }());
     Util.Loading = Loading;

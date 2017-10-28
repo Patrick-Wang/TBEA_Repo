@@ -1,6 +1,15 @@
 module Util {
     export class Loading {
         static startTime:number = 0;
+        static isPaused = false;
+
+        static pause(){
+            Loading.isPaused = true;
+        }
+
+        static resume(){
+            Loading.isPaused = false;
+        }
 
         static init() {
             if ($("#mloading").length == 0) {
@@ -19,8 +28,10 @@ module Util {
 
         static start() {
             Loading.startTime = Date.now();
-            $("#mloading").show();
-            $("#mloading").mLoading("show");
+            if (!Loading.isPaused){
+                $("#mloading").show();
+                $("#mloading").mLoading("show");
+            }
         }
 
         static stop() {

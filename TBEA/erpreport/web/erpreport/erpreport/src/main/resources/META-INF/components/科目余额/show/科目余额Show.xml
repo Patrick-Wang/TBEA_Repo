@@ -3,19 +3,7 @@
     <controller id="37CB4530FDDDB6A0000FFEBF3C178862SHOWCLR">
         <context key="userName" value="${session.account.name}"/>
         <context key="item" value="${request.item.asInt}"/>
-
         <callservice id="isFavoriteServ"/>
-        <if test="${'session._km_' == 'null'}">
-            <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ"/>
-            <context key="tmp" value="${session.put['_km_']['_km_']}"/>
-            <context key="tmp" value="${session.put['_km_ledgers'][ledgers.col[0]]}"/>
-            <context key="tmp" value="${session.put['_km_currency'][currency.col[0]]}"/>
-            <context key="tmp" value="${session.put['_km_accounts'][accounts.col[0]]}"/>
-            <context key="tmp" value="${session.put['_km_ledgers_lov'][ledgers]}"/>
-            <context key="tmp" value="${session.put['_km_currency_lov'][currency]}"/>
-            <context key="tmp" value="${session.put['_km_accounts_lov'][accounts]}"/>
-        </if>
-
         <response name="framework/templates/lovSearch" type="jsp">
             <map key="pager" value="true"/>
             <map key="isFavorite" value="${isFavorite}"/>
@@ -41,7 +29,8 @@
                         "name": "分类账",
                         "type":"lov",
                         "lov":{
-                            "option": ${session._km_ledgers_lov.asJson}
+                            "option": ${session._km_ledgers_lov.asJson},
+                            "url": "37CB4530FDDDB6A0000FFEBF3C178862SHOWCLRLOV.do?type=1"
                         }
                     },
                     {
@@ -49,7 +38,8 @@
                         "name": "币种",
                         "type":"lov",
                         "lov":{
-                            "option": ${session._km_currency_lov.asJson}
+                            "option": ${session._km_currency_lov.asJson},
+                            "url": "37CB4530FDDDB6A0000FFEBF3C178862SHOWCLRLOV.do?type=2"
                         }
                     },
                     {
@@ -57,7 +47,8 @@
                         "name": "科目",
                         "type":"lov",
                         "lov":{
-                            "option": ${session._km_accounts_lov.asJson}
+                            "option": ${session._km_accounts_lov.asJson},
+                            "url": "37CB4530FDDDB6A0000FFEBF3C178862SHOWCLRLOV.do?type=3"
                         }
                     }
                 ]
@@ -67,6 +58,33 @@
             <map key="exportUrl" value="37CB4530FDDDB6A0000FFEBF3C178862ExportClr"/>
         </response>
     </controller>
+
+    <controller id="37CB4530FDDDB6A0000FFEBF3C178862SHOWCLRLOV">
+        <context key="type" value="${request.type.asInt}"/>
+        <context key="userName" value="${session.account.name}"/>
+        <if test="${'session._km_' == 'null'}">
+            <callservice id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ"/>
+            <context key="tmp" value="${session.put['_km_']['_km_']}"/>
+            <context key="tmp" value="${session.put['_km_ledgers'][ledgers.col[0]]}"/>
+            <context key="tmp" value="${session.put['_km_currency'][currency.col[0]]}"/>
+            <context key="tmp" value="${session.put['_km_accounts'][accounts.col[0]]}"/>
+            <context key="tmp" value="${session.put['_km_ledgers_lov'][ledgers]}"/>
+            <context key="tmp" value="${session.put['_km_currency_lov'][currency]}"/>
+            <context key="tmp" value="${session.put['_km_accounts_lov'][accounts]}"/>
+        </if>
+        <response type="json">
+            <lov type="jarray" skip="${type != 1}">
+                ${session._km_ledgers_lov.asJson}
+            </lov>
+            <lov type="jarray" skip="${type != 2}">
+                ${session._km_currency_lov.asJson}
+            </lov>
+            <lov type="jarray" skip="${type != 3}">
+                ${session._km_accounts_lov.asJson}
+            </lov>
+        </response>
+    </controller>
+
     <controller id="37CB4530FDDDB6A0000FFEBF3C178862UpdateClr">
         <context key="pgNum" value="${request.pgNum.asInt}"/>
         <context key="pgSize" value="${request.pgSize.asInt}"/>

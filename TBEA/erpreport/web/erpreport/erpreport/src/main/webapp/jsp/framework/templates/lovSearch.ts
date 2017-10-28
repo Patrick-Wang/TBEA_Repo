@@ -15,6 +15,7 @@ module search {
     interface Lov {
         direct: string;
         option: string[];
+        url:string;
     }
 
     interface Option {
@@ -91,15 +92,17 @@ module search {
             if (val != 'all') {
                 if (opt.lov.direct) {
                     let actor = lovActor(opt);
-                    let actorElem = rowMap.searchArea.parent().find("select[title='" + actor.name + "']");
-                    actorElem.empty();
-                    actorElem.append('<option value="all" style="color:darkgray">' + actor.name + '</option>');
-                    for (let i = 0; i < actor.lov.option.length; ++i) {
-                        if (actor.lov.option[i][2] == val) {
-                            actorElem.append('<option value="' + actor.lov.option[i][0] + '">' + actor.lov.option[i][1] + '</option>');
+                    if (actor.lov.option){
+                        let actorElem = rowMap.searchArea.parent().find("#" + actor.param);
+                        actorElem.empty();
+                        actorElem.append('<option value="all" style="color:darkgray"></option>');
+                        for (let i = 0; i < actor.lov.option.length; ++i) {
+                            if (actor.lov.option[i][2] == val) {
+                                actorElem.append('<option value="' + actor.lov.option[i][0] + '">' + actor.lov.option[i][1] + '</option>');
+                            }
                         }
+                        actorElem.selectpicker('refresh');
                     }
-                    actorElem.selectpicker('refresh');
                 }
             } else {
                 sel.find("option:selected").attr("selected", false);
@@ -108,6 +111,81 @@ module search {
         });
     }
 
+    function buildAsyncSelect(rowMap: any, opt: Option) {
+        let well: any = rowMap[opt.param];
+        let firstDiv = rowMap.searchArea.find('tbody > tr').eq(well.row).children('td').eq(well.col * 2);
+        firstDiv.append('<span class="search-label">' + opt.name + '</span>');
+        firstDiv.next().append(
+            '<div class="search-item-lov">' +
+            '<select id="_' + opt.param + '" class="selectpicker" data-live-search="true">' +
+            '<option value="all" style="color:darkgray"> </option>' +
+            '</select>' +
+            '</div>');
+        let sel = rowMap.searchArea.find('#_' + opt.param);
+        let speed = 0;
+        let ins = setInterval(()=>{
+            sel.parent().find("button").attr("disabled", true);
+            let title = "加载中";
+            for (let i = 0; i <= speed; ++i){
+                title += ".";
+            }
+            sel.parent().find(".filter-option").text(title);
+            ++speed;
+            speed = speed % 3;
+        },500);
+
+        Util.Loading.pause();
+        $.ajax({
+            type: "POST",
+            url: encodeURI(opt.lov.url),
+            success: (data: any) => {
+                Util.Loading.resume();
+                clearInterval(ins);
+                sel.parent().find("button").attr("disabled", false);
+                opt.lov.option = JSON.parse(data).lov;
+                if (opt.lov.option[0] && opt.lov.option[0].length == 2) {
+                    for (let i = 0; i < opt.lov.option.length; ++i) {
+                        sel.append('<option value="' + opt.lov.option[i][0] + '">' + opt.lov.option[i][1] + '</option>');
+                    }
+                    sel.selectpicker('refresh');
+                }
+            },
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
+                Util.Loading.resume();
+                sel.parent().find("button").attr("disabled", true);
+                clearInterval(ins);
+                sel.parent().find(".filter-option").text("数据加载失败！");
+            }
+        });
+
+
+        sel.selectpicker({
+            // style: 'btn-info'
+            size: 10
+        });
+        sel.on('changed.bs.select', function (e) {
+            let val = sel.selectpicker("val");
+            if (val != 'all') {
+                if (opt.lov.direct) {
+                    let actor = lovActor(opt);
+                    if (actor.lov.option) {
+                        let actorElem = rowMap.searchArea.parent().find("#" + actor.param + "']");
+                        actorElem.empty();
+                        actorElem.append('<option value="all" style="color:darkgray"></option>');
+                        for (let i = 0; i < actor.lov.option.length; ++i) {
+                            if (actor.lov.option[i][2] == val) {
+                                actorElem.append('<option value="' + actor.lov.option[i][0] + '">' + actor.lov.option[i][1] + '</option>');
+                            }
+                        }
+                        actorElem.selectpicker('refresh');
+                    }
+                }
+            } else {
+                sel.find("option:selected").attr("selected", false);
+                sel.selectpicker('refresh');
+            }
+        });
+    }
 
     function setNow(time: Time, date) {
         if ('string' != typeof date){
@@ -367,7 +445,11 @@ module search {
         let rowMap: any = buildStructure();
         for (let i = 0; i < context.options.length; ++i) {
             if (!context.options[i].type || context.options[i].type == 'lov') {
-                buildSelect(rowMap, context.options[i]);
+                if (context.options[i].lov.option){
+                    buildSelect(rowMap, context.options[i]);
+                }else{
+                    buildAsyncSelect(rowMap, context.options[i]);
+                }
             } else if (context.options[i].type == 'date') {
                 buildDate(rowMap, context.options[i]);
             } else if (context.options[i].type == 'period') {

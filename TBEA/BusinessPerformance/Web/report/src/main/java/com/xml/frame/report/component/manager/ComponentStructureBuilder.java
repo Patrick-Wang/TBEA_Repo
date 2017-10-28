@@ -63,6 +63,9 @@ public class ComponentStructureBuilder implements ConfigLoadedListener {
 			return null;
 		}
 		int index = path.indexOf("\\", start + 1);
+		if (index < 0){
+			path.indexOf("/", start + 1);
+		}
 		if (index >= 0){
 			return path.substring(start, index);
 		}
@@ -73,6 +76,9 @@ public class ComponentStructureBuilder implements ConfigLoadedListener {
 	public DataNode getParentNode(String path){
 		if (lastNode != null){
 			int end = path.lastIndexOf("\\");
+			if (end < 0){
+				path.indexOf("/");
+			}
 			return getNode(path.substring(0, end));
 		}
 		return null;
@@ -106,7 +112,11 @@ public class ComponentStructureBuilder implements ConfigLoadedListener {
 			if (lastNode != null){
 				runStack.push(lastNode);
 			}else{
-				basePath = filePath.substring(0, filePath.lastIndexOf("\\"));
+				int index = filePath.lastIndexOf("\\");
+				if (index < 0){
+					index = filePath.lastIndexOf("/");
+				}
+				basePath = filePath.substring(0, index);
 				DataNode node = getFolderNode(filePath);
 				node.getData().setId(0);
 				runStack.push(node);

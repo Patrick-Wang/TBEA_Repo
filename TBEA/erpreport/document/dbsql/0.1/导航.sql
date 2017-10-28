@@ -10,27 +10,27 @@ CREATE TABLE CUX_NAVIGATEITEM_T(
 );
 
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(1, null, '财务', 'fa fa-fax', 0, null, 0);
+(1, null, '财务', 'fa fa-suitcase', 0, null, 0);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(2, null, '生产', 'fa fa-fax', 0, null, 0);
+(2, null, '生产', 'fa fa-cogs', 0, null, 0);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(3, 1, '总账', 'fa fa-fax', 0, null, 1);
+(3, 1, '总账', 'fa fa-suitcase', 0, null, 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
 (4, 1, '应付', 'fa fa-fax', 0, null, 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(5, 1, '应收', 'fa fa-fax', 0, null, 1);
+(5, 1, '应收', 'fa fa-sticky-note', 0, null, 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(6, 2, '在制品管理', 'fa fa-fax', 0, null, 1);
+(6, 2, '在制品管理', 'fa fa-cogs', 0, null, 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(7, 3, '现金流量表', 'fa fa-fax', 0, '/', 1);
+(7, 3, '科目余额查询', 'fa fa-suitcase', 0, '/erpreport/report/37CB4530FDDDB6A0000FFEBF3C178862SHOWCLR.do', 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(8, 3, '科目余额查询', 'fa fa-fax', 0, '/erpreport/report/37CB4530FDDDB6A0000FFEBF3C178862SHOWCLR.do', 1);
+(8, 3, '现金流量表', 'fa fa-suitcase', 0, '/', 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
 (9, 4, '应付账龄报表', 'fa fa-fax', 0, '/', 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(10, 5, '应收收款报表', 'fa fa-fax', 0, '/', 1);
+(10, 5, '应收收款报表', 'fa fa-sticky-note', 0, '/', 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
-(11, 6, '车间月度完工入库清单', 'fa fa-fax', 0, '/', 1);
+(11, 6, '车间月度完工入库清单', 'fa fa-cogs', 0, '/erpreport/report/FCCBD80F080E5B9B7AB788E2514E439BSHOWCLR.do', 1);
 
 commit;
 

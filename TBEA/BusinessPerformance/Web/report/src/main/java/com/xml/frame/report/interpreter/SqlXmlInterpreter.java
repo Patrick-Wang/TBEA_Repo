@@ -8,9 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.sql.DataSource;
 
-import oracle.sql.ARRAY;
-import oracle.sql.ArrayDescriptor;
-import org.apache.commons.httpclient.util.DateUtil;
 import org.w3c.dom.Element;
 
 import com.frame.script.el.ELExpression;
