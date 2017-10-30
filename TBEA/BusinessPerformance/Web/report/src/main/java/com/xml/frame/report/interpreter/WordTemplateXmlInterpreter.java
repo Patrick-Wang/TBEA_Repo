@@ -26,12 +26,11 @@ import com.xml.frame.report.util.xml.XmlUtil;
 
 public class WordTemplateXmlInterpreter implements XmlInterpreter {
 
-	
 	ELParser elp;
 	
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
-		
+
 		if (!Schema.isWordTemplete(e)){
 			return false;
 		}

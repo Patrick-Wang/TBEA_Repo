@@ -89,6 +89,7 @@ public class DocxQuery {
         }
     }
 
+
     public static DocxQuery q(Object obj, Class<?> cls) {
         return new DocxQuery(query(obj, cls));
     }

@@ -27,14 +27,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WordTemplateXmlInterpreter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WordTemplateXmlInterpreter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/WordTemplateXmlInterpreter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="120" column="9" lean-forward="true" selection-start-line="120" selection-start-column="9" selection-end-line="120" selection-end-column="9" />
+            <state relative-caret-position="1065">
+              <caret line="307" column="39" lean-forward="false" selection-start-line="307" selection-start-column="39" selection-end-line="307" selection-end-column="39" />
               <folding>
-                <element signature="e#2374#2388#0" expanded="true" />
-                <element signature="e#5834#5861#0" expanded="true" />
+                <element signature="e#2370#2384#0" expanded="true" />
+                <element signature="e#5830#5857#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -43,12 +43,22 @@
       <file leaf-file-name="DocxQuery.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DocxQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="42" column="40" lean-forward="false" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="40" />
+            <state relative-caret-position="-1942">
+              <caret line="77" column="52" lean-forward="true" selection-start-line="77" selection-start-column="52" selection-end-line="77" selection-end-column="52" />
               <folding>
-                <element signature="e#7100#7108#0" expanded="true" />
-                <element signature="e#10511#10519#0" expanded="true" />
+                <element signature="e#7101#7109#0" expanded="true" />
+                <element signature="e#10512#10520#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MathUtilTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/src/test/java/com/util/tools/MathUtilTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -132,8 +142,8 @@
       <find>last</find>
       <find>getParent</find>
       <find>getELObjName</find>
-      <find>findPosition</find>
       <find>prepareFixedRowTable</find>
+      <find>findPosition</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
@@ -150,7 +160,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/LoggerProxy.java" />
         <option value="$PROJECT_DIR$/erpreport/src/main/java/com/tbea/erp/report/service/report/ReportServiceImpl.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/el/src/main/java/com/frame/script/util/StringUtil.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/CallXmlInterpreter.java" />
@@ -199,8 +208,9 @@
         <option value="$PROJECT_DIR$/erpreport/src/main/java/com/tbea/erp/report/service/login/LoginServiceImpl.java" />
         <option value="$PROJECT_DIR$/erpreport/src/main/java/com/tbea/erp/report/controller/servlet/login/LoginServlet.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DocxUtil.java" />
-        <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DocxQuery.java" />
+        <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/src/test/java/com/util/tools/MathUtilTest.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/WordTemplateXmlInterpreter.java" />
+        <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DocxQuery.java" />
       </list>
     </option>
   </component>
@@ -545,198 +555,6 @@
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="controller" type="cbb8eebc:String" user="controller" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="controller" type="cbb8eebc:String" user="controller" />
-              <item name="servlet" type="cbb8eebc:String" user="servlet" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="erp" type="cbb8eebc:String" user="erp" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="controller" type="cbb8eebc:String" user="controller" />
-              <item name="servlet" type="cbb8eebc:String" user="servlet" />
-              <item name="login" type="cbb8eebc:String" user="login" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="完工入库清单" type="cbb8eebc:String" user="完工入库清单" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="科目余额" type="cbb8eebc:String" user="科目余额" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="科目余额" type="cbb8eebc:String" user="科目余额" />
-              <item name="show" type="cbb8eebc:String" user="show" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="webapp" type="cbb8eebc:String" user="webapp" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="webapp" type="cbb8eebc:String" user="webapp" />
-              <item name="jsp" type="cbb8eebc:String" user="jsp" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="webapp" type="cbb8eebc:String" user="webapp" />
-              <item name="WEB-INF" type="cbb8eebc:String" user="WEB-INF" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
               <item name="report" type="cbb8eebc:String" user="report" />
             </path>
             <path>
@@ -756,82 +574,6 @@
               <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-              <item name="frame" type="cbb8eebc:String" user="frame" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-              <item name="frame" type="cbb8eebc:String" user="frame" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-              <item name="frame" type="cbb8eebc:String" user="frame" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="interpreter" type="cbb8eebc:String" user="interpreter" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="xml" type="cbb8eebc:String" user="xml" />
-              <item name="frame" type="cbb8eebc:String" user="frame" />
-              <item name="report" type="cbb8eebc:String" user="report" />
-              <item name="util" type="cbb8eebc:String" user="util" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -841,57 +583,6 @@
               <item name="Root" type="cbb8eebc:String" user="Root" />
               <item name="tools" type="cbb8eebc:String" user="tools" />
               <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="tools" type="cbb8eebc:String" user="tools" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="tools" type="cbb8eebc:String" user="tools" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="tools" type="cbb8eebc:String" user="tools" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="tools" type="cbb8eebc:String" user="tools" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="tools" type="cbb8eebc:String" user="tools" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="util" type="cbb8eebc:String" user="util" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="tools" type="cbb8eebc:String" user="tools" />
-              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\tools" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="util" type="cbb8eebc:String" user="util" />
-              <item name="tools" type="cbb8eebc:String" user="tools" />
             </path>
           </expand>
           <select />
@@ -965,7 +656,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.MakerApp">
+  <component name="RunManager" selected="JUnit.MathUtilTest.testSumListOfDouble">
     <configuration name="MakerApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -998,6 +689,31 @@
       <option name="PACKAGE_NAME" value="com.util.tools" />
       <option name="MAIN_CLASS_NAME" value="com.util.tools.MathUtilTest" />
       <option name="METHOD_NAME" value="testSumDoubleArray" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration name="MathUtilTest.testSumListOfDouble" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.util.tools.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="tools" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.util.tools" />
+      <option name="MAIN_CLASS_NAME" value="com.util.tools.MathUtilTest" />
+      <option name="METHOD_NAME" value="testSumListOfDouble" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -1235,15 +951,17 @@
         </SHUTDOWN>
       </ConfigurationWrapper>
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Tomcat Server.erpreport" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.MathUtilTest.testSumDoubleArray" />
       <item index="2" class="java.lang.String" itemvalue="Application.MakerApp" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.MathUtilTest.testSumListOfDouble" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Application.MakerApp" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.MathUtilTest.testSumDoubleArray" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.MathUtilTest.testSumListOfDouble" />
+        <item index="1" class="java.lang.String" itemvalue="Application.MakerApp" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.MathUtilTest.testSumDoubleArray" />
       </list>
     </recent_temporary>
   </component>
@@ -1279,7 +997,7 @@
       <workItem from="1509070657332" duration="15581000" />
       <workItem from="1509159542706" duration="17064000" />
       <workItem from="1509330352199" duration="400000" />
-      <workItem from="1509331056838" duration="21250000" />
+      <workItem from="1509331056838" duration="24690000" />
     </task>
     <servers />
   </component>
@@ -1308,9 +1026,15 @@
     <history-entry file="MathUtilTest_testSumDoubleArray - 2017.10.20 at 11h 30m 40s.xml">
       <configuration name="MathUtilTest.testSumDoubleArray" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="MathUtilTest_testSumListOfDouble - 2017.10.30 at 22h 42m 01s.xml">
+      <configuration name="MathUtilTest.testSumListOfDouble" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="MathUtilTest_testSumListOfDouble - 2017.10.30 at 22h 43m 17s.xml">
+      <configuration name="MathUtilTest.testSumListOfDouble" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203717000" />
+    <option name="totallyTimeSpent" value="207157000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1327,7 +1051,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.72864324" sideWeight="0.2987897" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16247906" sideWeight="0.46369138" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.51926297" sideWeight="0.46369138" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4154104" sideWeight="0.52118003" order="7" side_tool="true" content_ui="tabs" />
@@ -1338,12 +1062,13 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23283082" sideWeight="0.70121026" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.49092284" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.47881997" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.49394855" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283082" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32663316" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.49394855" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.48789713" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20574887" sideWeight="0.47411445" order="0" side_tool="false" content_ui="combo" />
@@ -1354,7 +1079,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.47881997" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1436,13 +1160,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/login.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/doc.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1851,25 +1568,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DocxQuery.java">
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/WordTemplateXmlInterpreter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="42" column="40" lean-forward="false" selection-start-line="42" selection-start-column="17" selection-end-line="42" selection-end-column="40" />
+        <state relative-caret-position="1065">
+          <caret line="307" column="39" lean-forward="false" selection-start-line="307" selection-start-column="39" selection-end-line="307" selection-end-column="39" />
           <folding>
-            <element signature="e#7100#7108#0" expanded="true" />
-            <element signature="e#10511#10519#0" expanded="true" />
+            <element signature="e#2370#2384#0" expanded="true" />
+            <element signature="e#5830#5857#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/WordTemplateXmlInterpreter.java">
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DocxQuery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="120" column="9" lean-forward="true" selection-start-line="120" selection-start-column="9" selection-end-line="120" selection-end-column="9" />
+        <state relative-caret-position="-1942">
+          <caret line="77" column="52" lean-forward="true" selection-start-line="77" selection-start-column="52" selection-end-line="77" selection-end-column="52" />
           <folding>
-            <element signature="e#2374#2388#0" expanded="true" />
-            <element signature="e#5834#5861#0" expanded="true" />
+            <element signature="e#7101#7109#0" expanded="true" />
+            <element signature="e#10512#10520#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/src/test/java/com/util/tools/MathUtilTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -4,8 +4,8 @@ DROP TABLE storage_swccptz
 CREATE TABLE [dbo].[storage_swccptz](
 	[id] 	[int] IDENTITY(1,1) NOT NULL	,
 	serial		varchar(50)	,-- 序列号
-	statistics_year		int	，--统计年份
-	statistics_month	int	，--统计月份	
+	statistics_year		int	,----统计年份
+	statistics_month	int	,--统计月份	
 	status	varchar(100)	,	--	状态	
 	company_name	varchar(300)	,	--	项目公司	
 	contract_no	varchar(300)	,	--	合同编号	
@@ -40,8 +40,8 @@ DROP TABLE storage_yclmx
 CREATE TABLE [dbo].[storage_yclmx](
 	[id] 	[int] IDENTITY(1,1) NOT NULL	,
 	serial		varchar(50)	,-- 序列号
-	statistics_year		int	，--统计年份
-	statistics_month	int	，--统计月份	
+	statistics_year		int	,----统计年份
+	statistics_month	int	,--统计月份	
 	company_name	varchar(300)	,--	项目公司	
 	material_name	varchar(300)	,--	材料名称	
 	model	varchar(300)	,--	规格型号	
@@ -77,8 +77,8 @@ DROP TABLE storage_bcpmx
 CREATE TABLE [dbo].[storage_bcpmx](
 	[id]	[int] IDENTITY(1,1) NOT NULL	,
 	serial		varchar(50)	,-- 序列号
-	statistics_year		int	，--统计年份
-	statistics_month	int	，--统计月份
+	statistics_year		int	,----统计年份
+	statistics_month	int	,--统计月份	
 	company_name	varchar(300)	,--	项目单位	
 	type_name	varchar(300)	,--	大类名称	
 	model	varchar(300)	,--	规格型号	
