@@ -6,19 +6,26 @@ import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
-import org.docx4j.wml.CTFFData;
-import org.docx4j.wml.CTFFTextInput;
-import org.docx4j.wml.FldChar;
-import org.docx4j.wml.Tbl;
-import org.docx4j.wml.Tc;
-import org.docx4j.wml.TcPr;
+import org.docx4j.wml.*;
 import org.docx4j.wml.TcPrInner.GridSpan;
 import org.docx4j.wml.TcPrInner.HMerge;
 import org.docx4j.wml.TcPrInner.VMerge;
-import org.docx4j.wml.Tr;
 
 public class DocxUtil {
-	
+
+	public static void setDefaultText(FldChar fldChar, String text) {
+		String val = "";
+		CTFFData fdData = fldChar.getFfData();
+		List<JAXBElement<?>> jaxbes = fdData.getNameOrEnabledOrCalcOnExit();
+		for (JAXBElement<?> jaxb : jaxbes) {
+			if (jaxb.getValue() instanceof CTFFTextInput) {
+				CTFFTextInput input = (CTFFTextInput) jaxb.getValue();
+				input.getDefault().setVal(text);
+				break;
+			}
+		}
+	}
+
 	public static String getDefaultText(FldChar fldChar) {
 		String val = "";
 		CTFFData fdData = fldChar.getFfData();
@@ -27,6 +34,20 @@ public class DocxUtil {
 			if (jaxb.getValue() instanceof CTFFTextInput) {
 				CTFFTextInput input = (CTFFTextInput) jaxb.getValue();
 				val = input.getDefault().getVal();
+				break;
+			}
+		}
+		return val;
+	}
+
+	public static String getStatusText(FldChar fldChar) {
+		String val = "";
+		CTFFData fdData = fldChar.getFfData();
+		List<JAXBElement<?>> jaxbes = fdData.getNameOrEnabledOrCalcOnExit();
+		for (JAXBElement<?> jaxb : jaxbes) {
+			if (jaxb.getValue() instanceof CTFFStatusText) {
+				CTFFStatusText statusText = (CTFFStatusText) jaxb.getValue();
+				val = statusText.getVal();
 				break;
 			}
 		}

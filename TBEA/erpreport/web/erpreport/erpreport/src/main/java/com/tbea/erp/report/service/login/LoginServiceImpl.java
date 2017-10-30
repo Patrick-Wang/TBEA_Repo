@@ -45,10 +45,10 @@ public class LoginServiceImpl implements LoginService {
 		return null;
 	}
 
-	@Override
-	public List<Authority> getAuthority(Account account) {
-		return accountDao.getAuthority(account);
-	}
+//	@Override
+//	public List<Authority> getAuthority(Account account) {
+//		return accountDao.getAuthority(account);
+//	}
 
 	@Override
 	public void logout(Account account,
@@ -57,7 +57,7 @@ public class LoginServiceImpl implements LoginService {
 			String ip,
 			List<UserRequestEntity> ures) {
 		UserUsageEntity userUsage = new UserUsageEntity();
-		userUsage.setUserName(account.getName());
+		userUsage.setUserName(account.getName() + "##" + account.getRole());
 		userUsage.setLoginTime(new Timestamp(creationTime));
 		userUsage.setLastAccessedTime(new Timestamp(lastAccessedTime));
 		userUsage.setLogoutTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
@@ -82,15 +82,17 @@ public class LoginServiceImpl implements LoginService {
 
 
 	@Override
-	public List<NavigateItemEntity> getNavigateItems(List<Authority> authority) {
-		List<String> auths = new ArrayList<String>();
-		for (Authority auth : authority){
-			auths.add(auth.getRaw());
-		}
-		List<NavigateItemEntity> nies = navigateItemDao.getItems(auths);
+	public List<NavigateItemEntity> getNavigateItems(Account account) {
+
+		List<NavigateItemEntity> nies = navigateItemDao.getItems(account);
 		return buildTree(nies);
 	}
 
+//	@Override
+//	public NavigateItemEntity getNavigateItem(Integer item) {
+//		return navigateItemDao.getItem(item);
+//	}
+//
 	private List<NavigateItemEntity> buildTree(List<NavigateItemEntity> nies) {
 		List<NavigateItemEntity> roots = findRoots(nies);
 		for (int i = roots.size() - 1; i >= 0; --i){

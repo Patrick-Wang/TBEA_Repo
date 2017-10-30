@@ -2,7 +2,15 @@
  <service id="servKcswcptzImportEntry" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
   <merge data="${data}" table="storage_swccptz" from="2">
+     <where>
+  	<serial type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+   	<statistic_year	type="int"	ref="${counter.next.val}" test="${this != null}"/>
+   	<statistic_month	type="int"	ref="${counter.next.val}" test="${this != null}"/>
+  </where>
    <set>
+   	<serial type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+   	<statistic_year	type="int"	ref="${counter.next.val}" test="${this != null}"/>
+   	<statistic_month	type="int"	ref="${counter.next.val}" test="${this != null}"/>
     <status type="string" ref="${counter.reset[0].val}"/>
     <company_name type="string" ref="${counter.next.val}"/>
     <contract_no type="string" ref="${counter.next.val}"/>

@@ -2,8 +2,16 @@
  <service id="servYclmxImportEntry" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
   <merge data="${data}" table="storage_yclmx" from="2">
+  <where>
+  	<serial type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+   	<statistic_year	type="int"	ref="${counter.next.val}" test="${this != null}"/>
+   	<statistic_month	type="int"	ref="${counter.next.val}" test="${this != null}"/>
+  </where>
    <set>
-	<company_name	type="string"	ref="${counter.reset[0].val}" test="${this != null}"/>
+   	<serial type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
+   	<statistic_year	type="int"	ref="${counter.next.val}" test="${this != null}"/>
+   	<statistic_month	type="int"	ref="${counter.next.val}" test="${this != null}"/>
+	<company_name	type="string"	ref="${counter.next.val}" test="${this != null}"/>
 	<material_name	type="string"	ref="${counter.next.val}" test="${this != null}"/>
 	<model	type="string"	ref="${counter.next.val}"/>
 	<provider	type="string"	ref="${counter.next.val}"/>

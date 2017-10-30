@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,8 @@ import java.util.Map;
 public class LoginServlet {
     @Resource(name = LoginServiceImpl.NAME)
     LoginService loginService;
+
+    final static String VALIDATION_KEY = "report";
 
     @Autowired
     public void init() {
@@ -85,37 +88,6 @@ public class LoginServlet {
         return new ModelAndView("index", map);
     }
 
-    boolean login(String userName, Account account, HttpServletRequest request) {
-       // Map<String, Object> map = new HashMap<String, Object>();
-        if (null != account) {
-            if (!SessionManager.isOnline(request) ||
-                    !SessionManager.getAccount(request.getSession(false)).getName().equals(userName)) {
-                SessionManager.destorySession(request);
-                HttpSession session = SessionManager.createSession(request, account);
-                List<Authority> authority = loginService.getAuthority(account);
-                session.setAttribute("authority", authority);
-                List<NavigateItemEntity> navTree = loginService.getNavigateItems(authority);
-                session.setAttribute("navTree", navTree);
-            }
-            return true;
-           // map.put("navTree", JSONArray.fromObject(request.getSession(false).getAttribute("navTree")).toString());
-           // return new ModelAndView("index", map);
-        }
-        return false;
-        //return new ModelAndView("userNotExists", map);
-    }
-
-    @RequestMapping(value = {"portal.do"})
-    public ModelAndView portalLogin(HttpServletRequest request,
-                                    HttpServletResponse response) {
-
-        String userName = request.getHeader("SSO_USER");
-        if (login(userName, loginService.login(userName), request)){
-            return new ModelAndView("redirect:/Login/index.do");
-        }
-        return new ModelAndView("userNotExists");
-    }
-
     String byteHEX(byte ib) {
         char[] Digit = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         char[] ob = new char[2];
@@ -136,7 +108,7 @@ public class LoginServlet {
     }
 
     boolean validate(String userName, String time, String token) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        String srcKey = userName + time + "report";
+        String srcKey = userName + time + VALIDATION_KEY;
         String destToken = encoderByMd5(srcKey);
         boolean invalidLink = false;
         if (destToken.equals(token.toUpperCase())) {
@@ -154,15 +126,40 @@ public class LoginServlet {
         return true;//!invalidLink;
     }
 
+    boolean isOnline(Account account, HttpServletRequest request){
+        if (SessionManager.isOnline(request)){
+            Account oldAcc = SessionManager.getAccount(request.getSession(false));
+            if (oldAcc.getName().equals(account.getName()) && oldAcc.getRole().equals(account.getRole())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @RequestMapping(value = {"erp.do"}, method = RequestMethod.GET)
     public ModelAndView erpLogin(HttpServletRequest request,
                                  HttpServletResponse response,
                                  @RequestParam(value = "userName") String userName,
+                                 @RequestParam(value = "roleName") String roleName,
                                  @RequestParam(value = "time") String time,
                                  @RequestParam(value = "token") String token,
                                  @RequestParam(value = "item") String item) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         if (validate(userName, time, token)) {
-            if (login(userName, loginService.login(userName), request)){
+            Account account = loginService.login(userName);
+            if (null != account){
+                account.setRole(roleName);
+                if (isOnline(account ,request)){
+                    SessionManager.destorySession(request);
+                    HttpSession session = SessionManager.createSession(request, account);
+                    Enumeration<String> params = request.getParameterNames();
+                    String name = null;
+                    while (params.hasMoreElements()){
+                        name = params.nextElement();
+                        session.setAttribute(name, request.getParameter(name));
+                    }
+                    List<NavigateItemEntity> navTree = loginService.getNavigateItems(account);
+                    session.setAttribute("navTree", navTree);
+                }
                 return new ModelAndView("redirect:/Login/index.do?item=" + item);
             }else{
                 return new ModelAndView("userNotExists");

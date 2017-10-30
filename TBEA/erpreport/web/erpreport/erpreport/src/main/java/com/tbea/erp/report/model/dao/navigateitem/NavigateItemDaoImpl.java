@@ -3,6 +3,7 @@ package com.tbea.erp.report.model.dao.navigateitem;
 
 import com.tbea.erp.report.model.dao.navigateitem.NavigateItemDao;
 import com.speed.frame.model.dao.AbstractReadWriteDaoImpl;
+import com.tbea.erp.report.model.entity.Account;
 import com.tbea.erp.report.model.entity.NavigateItemEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,20 +27,32 @@ public class NavigateItemDaoImpl extends AbstractReadWriteDaoImpl<NavigateItemEn
 	}
 
 
-	public List<NavigateItemEntity> getItems(List<String> auths){
 
-		Query q = this.getEntityManager().createNativeQuery("select distinct navigator_item_id " +
-				"from CUX_NAVIGATEAUTHORITY_T where authority in :auths");
-		q.setParameter("auths", auths);
-		List<BigDecimal> navItemIds = q.getResultList();
-
-		List<Integer> ids = new ArrayList<Integer>();
-		for (BigDecimal bd : navItemIds){
-			ids.add(bd.intValue());
+	@Override
+	public NavigateItemEntity getItem(Integer item) {
+		Query q = this.getEntityManager().createQuery("from NavigateItemEntity where id = :id");
+		q.setParameter("id", item);
+		List ret = q.getResultList();
+		if (ret.isEmpty()){
+			return null;
 		}
-
-		q = this.getEntityManager().createQuery("from NavigateItemEntity where url is null or id in :ids");
-		q.setParameter("ids", ids);
-		return q.getResultList();
+		return (NavigateItemEntity) ret.get(0);
 	}
+
+    @Override
+    public List<NavigateItemEntity> getItems(Account account) {
+        Query q = this.getEntityManager().createNativeQuery("select distinct navigator_item_id " +
+                "from CUX_NAVIGATEAUTHORITY_T where authority = :role");
+        q.setParameter("role", account.getRole());
+        List<BigDecimal> navItemIds = q.getResultList();
+
+        List<Integer> ids = new ArrayList<Integer>();
+        for (BigDecimal bd : navItemIds){
+            ids.add(bd.intValue());
+        }
+
+        q = this.getEntityManager().createQuery("from NavigateItemEntity where url is null or id in :ids");
+        q.setParameter("ids", ids);
+        return q.getResultList();
+    }
 }

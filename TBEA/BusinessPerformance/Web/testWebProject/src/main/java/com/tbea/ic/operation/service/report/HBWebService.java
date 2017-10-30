@@ -87,7 +87,8 @@ public class HBWebService {
 		LbParameter lbParameter = new LbParameter();
 		lbParameter.setName("P1");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		lbParameter.setValue("2017-1-1");
+		
+		lbParameter.setValue(sdf.format(d));
 		lbParameterList.add(lbParameter);
 		QueryResult queryResult = client.query(loginResult.getSessionId(),
 				schema, lbParameterList, "", queryOption);

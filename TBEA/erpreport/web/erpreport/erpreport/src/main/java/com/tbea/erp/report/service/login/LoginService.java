@@ -11,11 +11,13 @@ public interface LoginService {
 
 	Account login(String usrName);
 
-	List<Authority> getAuthority(Account account);
+//	List<Authority> getAuthority(Account account);
 
 	void logout(Account account, long creationTime, long lastAccessedTime, String ip,
                 List<UserRequestEntity> ures);
 
 
-    List<NavigateItemEntity> getNavigateItems(List<Authority> authority);
+    List<NavigateItemEntity> getNavigateItems(Account account);
+
+//	NavigateItemEntity getNavigateItem(Integer item);
 }

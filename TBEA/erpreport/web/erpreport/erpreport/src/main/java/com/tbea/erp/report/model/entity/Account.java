@@ -15,6 +15,8 @@ public class Account implements Serializable {
 
 	String name;
 
+    String role;
+
 	public Account(String name) {
 		this.name = name;
 	}
@@ -25,5 +27,14 @@ public class Account implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 }

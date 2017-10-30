@@ -6,16 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.frame.script.util.StringUtil;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
-import org.docx4j.wml.FldChar;
-import org.docx4j.wml.P;
-import org.docx4j.wml.R;
-import org.docx4j.wml.STFldCharType;
-import org.docx4j.wml.Tbl;
-import org.docx4j.wml.Tc;
-import org.docx4j.wml.Text;
-import org.docx4j.wml.Tr;
+import org.docx4j.wml.*;
 import org.jvnet.jaxb2_commons.ppp.Child;
 import org.w3c.dom.Element;
 
@@ -59,15 +53,107 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 		
 		if (null != pkg) {
 			Map<String, List<MergeRegion>> mrs = parseMRs(e);
+			preHandleWord(pkg, e);
 			writeWord(pkg, mrs);
-			component.put(e, pkg);
+            component.put(e, pkg);
 		}
 		return true;
 	}
-	
+
+    private void preHandleWord(WordprocessingMLPackage pkg, Element e) throws Exception {
+	    XmlElWalker.each(e.getElementsByTagName("preHandler"), elp, new Loop(){
+
+            @Override
+            public void on(Element elem) throws Exception {
+                if ("spreadWord".equals(elem.getAttribute("type"))){
+                    handleSpreadWord(pkg);
+                }
+            }
+        });
+    }
+
+    private void handleSpreadWord(WordprocessingMLPackage pkg) throws Exception {
+        MainDocumentPart documentPart = pkg.getMainDocumentPart();
+        DocxQuery dq = DocxQuery.find(documentPart, FldChar.class);
+        Map<String, List> tableGroup = new HashMap<String, List>();
+        Integer[] maxCount = new Integer[0];
+        dq.each(new OnEach() {
+
+            @Override
+            public boolean on(int i, Object elem) throws Exception {
+                FldChar fdChar = (FldChar) elem;
+                STFldCharType tp = fdChar.getFldCharType();
+                if (tp == STFldCharType.BEGIN) {
+                    DocxQuery dqFd = DocxQuery.q(elem);
+                    DocxQuery dqTb = dqFd.parent(Tbl.class);;
+                    if (!dqTb.isEmpty()) {
+                        String el = DocxUtil.getDefaultText(fdChar);
+                        Object val = XmlUtil.parseELText(el, elp);
+                        if (val instanceof List){
+                            List table = (List) val;
+                            int rOffset = (int) dqFd.parent(Tr.class).pos().val(0);
+                            int rCount =  dqTb.q(Tr.class).size() - rOffset;
+                            Integer tableCount = table.size() / rCount;
+                            tableCount += (((table.size() % rCount) > 0) ? 1 : 0);
+                            maxCount[0] = ((maxCount[0] > tableCount) ? maxCount[0] : tableCount);
+                            tableGroup.put(el, table);
+                        }
+                    }
+                }
+                return true;
+            }
+        });
+
+        spreadWord(dq, maxCount[0] - 1, tableGroup);
+    }
 
 
-	private Map<String, List<MergeRegion>> parseMRs(Element e) throws Exception {
+
+    private void spreadWord(DocxQuery dq, Integer newPgCount, Map<String, List> tableGroup) throws Exception {
+        DocxQuery p = dq.find(P.class);
+        DocxQuery pNew = dq.find(P.class);
+        updateTableGroup(dq, 0, tableGroup);
+        for (int i = 0; i < newPgCount; ++i){
+            DocxQuery newPg = p.clone();
+            pNew.last().after(newPg);
+            pNew = dq.find(P.class);
+            updateTableGroup(newPg, (i + 1), tableGroup);
+        }
+    }
+
+    private void updateTableGroup(DocxQuery dq, int pgIndex, Map<String, List> tableGroup) throws Exception {
+
+        dq.find(FldChar.class).each(new OnEach() {
+
+            @Override
+            public boolean on(int i, Object elem) throws Exception {
+                FldChar fdChar = (FldChar) elem;
+                STFldCharType tp = fdChar.getFldCharType();
+                if (tp == STFldCharType.BEGIN) {
+                    DocxQuery dqFd = DocxQuery.q(elem);
+                    DocxQuery dqTb = dqFd.parent(Tbl.class);;
+                    if (!dqTb.isEmpty()) {
+                        String el = DocxUtil.getDefaultText(fdChar);
+                        if (tableGroup.containsKey(el)){
+                            List table = tableGroup.get(el);
+                            int rOffset = (int) dqFd.parent(Tr.class).pos().val(0);
+                            int rCount =  dqTb.q(Tr.class).size() - rOffset;
+                            if (table.size() > pgIndex * rCount){
+                                el =  "${" + getELObjName(el) + ".subList[" + (pgIndex * rCount) + "][" + (pgIndex * rCount + rCount) + "]}";
+                                DocxUtil.setDefaultText(fdChar, el);
+                            }else{
+                                DocxQuery.q(fdChar).remove();
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
+
+    private Map<String, List<MergeRegion>> parseMRs(Element e) throws Exception {
 		Map<String, List<MergeRegion>> mrs = new HashMap<String, List<MergeRegion>>();
 		XmlElWalker.each(e.getElementsByTagName("merge"), elp, new Loop() {
 
@@ -89,6 +175,14 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 	}
 
 
+	private String getELObjName(String el){
+	    String objExp = el.replace("{", "").replace("}", "");
+	    int index = objExp.indexOf("[");
+	    if (index > 0){
+	        objExp = objExp.substring(0, index);
+        }
+        return StringUtil.trim(objExp);
+    }
 
 	private void writeWord(WordprocessingMLPackage pkg, Map<String, List<MergeRegion>> mrs) throws Exception {
 		MainDocumentPart documentPart = pkg.getMainDocumentPart();
@@ -103,14 +197,13 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 					String val = DocxUtil.getDefaultText(fdChar);
 					Object obj = XmlUtil.parseELText(val, elp);
 					if (obj != null && obj instanceof List) {
-						tableReplace((List)obj, fdChar, mrs.get(val.replace("${", "").replace("}", "")));
+						tableReplace((List)obj, fdChar, mrs.get(getELObjName(val)));
 					}else {
 						textReplace(obj + "", fdChar);
 					}
 				}
 				return true;
 			}
-			
 		});
 	}
 	
