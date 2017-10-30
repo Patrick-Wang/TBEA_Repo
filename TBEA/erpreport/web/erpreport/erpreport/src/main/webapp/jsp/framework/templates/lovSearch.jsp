@@ -88,15 +88,15 @@
 </script>
 <div class="search-area">
     <div class="option-area hidden">
-        <button class="btn btn-primary btn-custom-sz btn-search opt-btn" onclick="search.onClickSearch()">
+        <button class="btn btn-primary btn-custom-sz btn-search opt-btn" onclick="search.searchPanel.onClickSearch()">
             <i class="fa fa-search"> </i>查找</button>
-        <button class="btn btn-primary btn-custom-sz btn-reset opt-btn" onclick="search.onClickReset()">
+        <button class="btn btn-primary btn-custom-sz btn-reset opt-btn" onclick="search.searchPanel.onClickReset()">
             <i class="fa fa-refresh"> </i>重置</button>
 
         <div class="cux-btn-group-fun">
-            <button class="btn btn-primary btn-custom-sz btn-export opt-btn" onclick="search.onClickExport()">
+            <button class="btn btn-primary btn-custom-sz btn-export opt-btn" onclick="search.searchPanel.onClickExport()">
                 <i class="fa fa-file-excel-o"> </i>导出</button>
-            <button class="btn btn-primary btn-custom-sz btn-collect opt-btn" onclick="search.onClickCollect()">
+            <button class="btn btn-primary btn-custom-sz btn-collect opt-btn" onclick="search.searchPanel.onClickCollect()">
                 <i class="fa fa-star"> </i>收藏</button>
         </div>
     </div>

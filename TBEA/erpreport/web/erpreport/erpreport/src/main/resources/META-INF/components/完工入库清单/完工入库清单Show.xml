@@ -5,12 +5,7 @@
         <context key="item" value="${request.item.asInt}"/>
 
         <callservice id="isFavoriteServ"/>
-        <if test="${'session._wg_' == 'null'}">
-            <callservice id="FCCBD80F080E5B9B7AB788E2514E439BShowClrServ"/>
-            <context key="tmp" value="${session.put['_wg_']['_wg_']}"/>
-            <context key="tmp" value="${session.put['_wg_pu'][productDep.col[0]]}"/>
-            <context key="tmp" value="${session.put['_wg_pu_lov'][productDep]}"/>
-        </if>
+
         <response name="framework/templates/lovSearch" type="jsp">
             <map key="pager" value="true"/>
             <map key="isFavorite" value="${isFavorite}"/>
@@ -38,7 +33,8 @@
                         "name": "生产部门",
                         "type":"lov",
                         "lov":{
-                            "option": ${session._wg_pu_lov.asJson}
+                            "option": ${session._wg_pu_lov.asJson},
+                            "url": "FCCBD80F080E5B9B7AB788E2514E439BSHOWCLRLOV.do?type=1"
                         }
                     },
                     {
@@ -59,6 +55,21 @@
                 ]
             ]]>
             </map>
+        </response>
+    </controller>
+    <controller id="FCCBD80F080E5B9B7AB788E2514E439BSHOWCLRLOV">
+        <context key="type" value="${request.type.asInt}"/>
+        <context key="userName" value="${session.account.name}"/>
+        <if test="${'session._wg_' == 'null'}">
+            <callservice id="FCCBD80F080E5B9B7AB788E2514E439BShowClrServ"/>
+            <context key="tmp" value="${session.put['_wg_']['_wg_']}"/>
+            <context key="tmp" value="${session.put['_wg_pu'][productDep.col[0]]}"/>
+            <context key="tmp" value="${session.put['_wg_pu_lov'][productDep]}"/>
+        </if>
+        <response type="json">
+            <lov type="jarray">
+                ${session._wg_pu_lov.asJson}
+            </lov>
         </response>
     </controller>
     <controller id="FCCBD80F080E5B9B7AB788E2514E439BUpdateClr">
@@ -217,9 +228,9 @@
                     (${productUnit} is null and product_dep_code in ${session._wg_pu}) or
                     (${productUnit} is not null and product_dep_code = ${productUnit})
                 ) and
-                (${productNum} is null or product_number like ${'%' + productNum + '%'}) and
-                (${productType} is null or project_model like ${'%' + productType + '%'}) and
-                (${workNum} is null or wip_entity_name like ${'%' + workNum + '%'})
+                (${productNum} is null or product_number like ${'%productNum%'}) and
+                (${productType} is null or project_model like ${'%productType%'}) and
+                (${workNum} is null or wip_entity_name like ${'%workNum%'})
         ]]></sql>
         <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
         select
@@ -246,9 +257,9 @@
                     (${productUnit} is null and product_dep_code in ${session._wg_pu}) or
                     (${productUnit} is not null and product_dep_code = ${productUnit})
             ) and
-            (${productNum} is null or product_number like ${'%' + productNum + '%'}) and
-            (${productType} is null or project_model like ${'%' + productType + '%'}) and
-            (${workNum} is null or wip_entity_name like ${'%' + workNum + '%'})
+            (${productNum} is null or product_number like ${'%productNum%'}) and
+            (${productType} is null or project_model like ${'%productType%'}) and
+            (${workNum} is null or wip_entity_name like ${'%workNum%'})
 ]]></sql>
         <list id="ids">
             <item from="0" to="${data.size - 1}"></item>

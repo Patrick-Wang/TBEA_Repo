@@ -1,17 +1,5 @@
 module index {
 
-    class ClassListener{
-        static listen(condition:()=>boolean, callback:()=>void):void{
-            if (condition()){
-                callback();
-            }else{
-                setTimeout(()=>{
-                    ClassListener.listen(condition, callback);
-                }, 5);
-            }
-        }
-    }
-//你好您啦快速的减肥卢卡斯
     interface TreeItem {
         id: number;
         parent: number;

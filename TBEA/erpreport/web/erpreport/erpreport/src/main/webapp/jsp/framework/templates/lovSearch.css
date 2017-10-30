@@ -92,10 +92,13 @@ html, body{
 .option-area .search-label{
     margin : 3px 0px 3px 0px;
     height:28px;
-    line-height: 32px;
+    line-height: 28px;
     text-align: left;
     float:left;
     width:150px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
 }
 
 .option-area table{
@@ -137,4 +140,11 @@ html, body{
 .well{
     padding-top:8px;
     padding-bottom:5px;
+}
+
+.search-label-warning{
+    color:red;
+    font-size:8px;
+    padding-left:5px;
+    font-style:normal;
 }
