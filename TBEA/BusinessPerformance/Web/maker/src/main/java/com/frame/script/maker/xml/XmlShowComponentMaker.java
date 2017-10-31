@@ -408,10 +408,12 @@ public class XmlShowComponentMaker extends XmlComponentMaker{
 		Element date = doc.createElement("data");
 		date.appendChild(doc.createTextNode("${fmtServ.result}"));
 		response.appendChild(date);
-		
-		Element dataCount = doc.createElement("dataCount");
-		dataCount.appendChild(doc.createTextNode("${dataCount[0]}"));
-		response.appendChild(dataCount);
+
+		if (src.isPager()) {
+			Element dataCount = doc.createElement("dataCount");
+			dataCount.appendChild(doc.createTextNode("${dataCount[0]}"));
+			response.appendChild(dataCount);
+		}
 		
 	}
 

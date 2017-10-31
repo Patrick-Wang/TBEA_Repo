@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="D35C19B83C5D9AE431EC38ADBA30358DSHOWCLR">
+        <response name="framework/templates/singleDateReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map key="updateUrl" value="D35C19B83C5D9AE431EC38ADBA30358DUpdateClr"/>
+            <map key="exportUrl" value="D35C19B83C5D9AE431EC38ADBA30358DExportClr"/>
+        </response>
+    </controller>
+    <controller id="D35C19B83C5D9AE431EC38ADBA30358DUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="D35C19B83C5D9AE431EC38ADBA30358DShowServ"/>
+        <callcontroller id="D35C19B83C5D9AE431EC38ADBA30358DFmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>ID
+</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>状态</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>项目公司</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>合同编号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>客户单位名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>合同约定交货期</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>合同金额</name>
+                </item>
+                <item>
+                    <name>规格型号及电压等级/产品大类</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>库存数量</name>
+                </item>
+                <item>
+                    <name>库存金额</name>
+                </item>
+                <item>
+                    <name>完工入库日期</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>库存部分合同金额</name>
+                </item>
+                <item>
+                	<name>库存部分已付货款</name>
+                	<sub type="array">
+	                	 <item>
+	                    <name>金额</name>
+	                </item>
+	                <item>
+	                    <name>占库存合同金额比例</name>
+	                </item>
+                	</sub>
+                </item>
+               
+                <item>
+                    <name>预计发货时间</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>未发货原因</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>风险评估</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>库存新增月份</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>是否形成积压</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>责任人</name>
+                    <type>text</type>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="D35C19B83C5D9AE431EC38ADBA30358DFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="6,8,9,11,12,13"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="D35C19B83C5D9AE431EC38ADBA30358DExportClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="D35C19B83C5D9AE431EC38ADBA30358DShowServ"/>
+        <callcontroller id="D35C19B83C5D9AE431EC38ADBA30358DFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="实物成品台账数据"/>
+       	<list id="title" type="string">ID,状态,项目公司,合同编号,客户单位名称,合同约定交货期,合同金额,规格型号及电压等级/产品大类,库存数量,库存金额,完工入库日期,库存部分合同金额,库存部分已付货款,库存部分已付货款,预计发货时间,未发货原因,风险评估,库存新增月份,是否形成积压,责任人</list>
+     	<list id="title1" type="string">ID,状态,项目公司,合同编号,客户单位名称,合同约定交货期,合同金额,规格型号及电压等级/产品大类,库存数量,库存金额,完工入库日期,库存部分合同金额,金额,占库存合同金额比例,预计发货时间,未发货原因,风险评估,库存新增月份,是否形成积压,责任人</list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                    <title ref="title1"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelMergeFormatter>
+			    <ExcelTemplate ref="excelTemplate"/>
+			    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+			   </ExcelMergeFormatter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="2"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="2"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="${request.date.asString}实物成品台账数据.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+    <service id="D35C19B83C5D9AE431EC38ADBA30358DShowServ" transaction="transactionManager">
+        <sql id="data">
+select 
+	id,
+	serial,
+	status,
+	company_name,
+	contract_no,
+	customer_name,
+	CONVERT(varchar(20),deliver_date, 23) tmp7,
+	contract_amount,
+	level,
+	stock_amount,
+	stock_money,
+	CONVERT(varchar(20),complete_date, 23) tmp12,
+	stock_contract_date,
+	amount_of_paid,
+	ratio_of_paid,
+	CONVERT(varchar(20),plan_of_send_date, 23) tmp16,
+	reason_of_nondeliver,
+	risk,
+	CONVERT(varchar(20),added_month, 23) tmp19,
+	is_overstock,
+	person_liable
+from storage_swccptz
+where
+	statistics_year = ${cal.year} and
+	statistics_month = ${cal.month} and
+	jydw = ${compId}
+</sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.reset[2].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+        </table>
+    </service>
+</components>

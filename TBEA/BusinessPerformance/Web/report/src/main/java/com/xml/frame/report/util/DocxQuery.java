@@ -3,9 +3,12 @@ package com.xml.frame.report.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.relation.Relation;
 import javax.xml.bind.JAXBElement;
 
 import org.docx4j.XmlUtils;
+import org.docx4j.openpackaging.parts.DrawingML.Chart;
+import org.docx4j.openpackaging.parts.relationships.RelationshipsPart;
 import org.docx4j.wml.ContentAccessor;
 import org.jvnet.jaxb2_commons.ppp.Child;
 

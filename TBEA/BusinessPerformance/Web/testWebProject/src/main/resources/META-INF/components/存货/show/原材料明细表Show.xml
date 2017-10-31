@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="39BEDCDE08FB34634A2A16BC642D365ASHOWCLR">
+        <response name="framework/templates/singleDateReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map key="updateUrl" value="39BEDCDE08FB34634A2A16BC642D365AUpdateClr"/>
+            <map key="exportUrl" value="39BEDCDE08FB34634A2A16BC642D365AExportClr"/>
+        </response>
+    </controller>
+    <controller id="39BEDCDE08FB34634A2A16BC642D365AUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="39BEDCDE08FB34634A2A16BC642D365AShowServ"/>
+        <callcontroller id="39BEDCDE08FB34634A2A16BC642D365AFmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>ID
+</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>企业名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>材料名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>规格型号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>供应商</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>计量单位</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>数量</name>
+                </item>
+                <item>
+                    <name>单价</name>
+                </item>
+                <item>
+                    <name>金额（元）</name>
+                </item>
+                <item>
+                    <name>入库日期</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>库存时长</name>
+                </item>
+                <item>
+                    <name>形成原因</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>建议处置措施</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>风险预警评估</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>新增月份</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>是否形成积压</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>责任人</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>完成时间</name>
+                    <type>date</type>
+                </item>
+                <item>
+                	<name>本月消化库存（含积压物资）</name>
+                	<sub type="array">
+                	<item>
+	                    <name>数量</name>
+	                </item>
+	                <item>
+	                    <name>金额</name>
+	                </item>
+	                <item>
+	                    <name>处置措施</name>
+	                    <type>text</type>
+	                </item>
+                	</sub>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="39BEDCDE08FB34634A2A16BC642D365AFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="6,7,8,10,18,19"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="39BEDCDE08FB34634A2A16BC642D365AExportClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="39BEDCDE08FB34634A2A16BC642D365AShowServ"/>
+        <callcontroller id="39BEDCDE08FB34634A2A16BC642D365AFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="原材料明细表"/>
+         <list id="title" type="string">ID,企业名称,材料名称,规格型号,供应商,计量单位,数量,单价,金额（元）,入库日期,库存时长,形成原因,建议处置措施,风险预警评估,新增月份,是否形成积压,责任人,完成时间,本月消化库存（含积压物资）,本月消化库存（含积压物资）,本月消化库存（含积压物资）</list>
+        
+        <list id="title1" type="string">ID,企业名称,材料名称,规格型号,供应商,计量单位,数量,单价,金额（元）,入库日期,库存时长,形成原因,建议处置措施,风险预警评估,新增月份,是否形成积压,责任人,完成时间,数量,金额（元）,处置措施</list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                    <title ref="title1"/>
+                </titles>
+            </ExcelTitleFilter>
+             <ExcelMergeFormatter>
+			    <ExcelTemplate ref="excelTemplate"/>
+			    <MergeRegion x="0" y="0" width="${title.size}" height="2"/>
+			   </ExcelMergeFormatter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="2"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="2"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="${request.date.asString}原材料明细表.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+    <service id="39BEDCDE08FB34634A2A16BC642D365AShowServ" transaction="transactionManager">
+        <sql id="data">
+select 
+	id,
+	serial,
+	company_name,
+	material_name,
+	model,
+	provider,
+	measurement_unit,
+	amount,
+	unit_price,
+	amount_of_money,
+	CONVERT(varchar(20),storage_date, 23) tmp11,
+	stock_duration,
+	cause,
+	treatment,
+	risk_assessment,
+	CONVERT(varchar(20),added_month, 23) tmp16,
+	is_overstock,
+	person_liable,
+	CONVERT(varchar(20),comletion_date, 23) tmp19,
+	amount_of_this_month,
+	money_of_this_month,
+	action_of_this_month
+from storage_yclmx
+where
+	statistics_year = ${cal.year} and
+	statistics_month = ${cal.month} and
+	jydw = ${compId}
+</sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.reset[2].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+        </table>
+    </service>
+</components>

@@ -30,12 +30,9 @@
       <file leaf-file-name="WordTemplateXmlInterpreter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/WordTemplateXmlInterpreter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1065">
-              <caret line="307" column="39" lean-forward="false" selection-start-line="307" selection-start-column="39" selection-end-line="307" selection-end-column="39" />
-              <folding>
-                <element signature="e#2370#2384#0" expanded="true" />
-                <element signature="e#5830#5857#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="232">
+              <caret line="246" column="49" lean-forward="true" selection-start-line="246" selection-start-column="49" selection-end-line="246" selection-end-column="49" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -43,21 +40,41 @@
       <file leaf-file-name="DocxQuery.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DocxQuery.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1942">
-              <caret line="77" column="52" lean-forward="true" selection-start-line="77" selection-start-column="52" selection-end-line="77" selection-end-column="52" />
+            <state relative-caret-position="60">
+              <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding>
-                <element signature="e#7101#7109#0" expanded="true" />
-                <element signature="e#10512#10520#0" expanded="true" />
+                <element signature="e#7524#7525#0" expanded="true" />
+                <element signature="e#7552#7553#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MathUtilTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="XmlShowComponentMaker.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/maker/xml/XmlShowComponentMaker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2827">
+              <caret line="423" column="8" lean-forward="true" selection-start-line="423" selection-start-column="8" selection-end-line="423" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DBUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DBUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MathUtilTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/src/test/java/com/util/tools/MathUtilTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+            <state relative-caret-position="165">
+              <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -86,7 +103,7 @@
       <file leaf-file-name="XmlWalker.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/src/main/java/com/util/tools/xml/XmlWalker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="724">
+            <state relative-caret-position="1290">
               <caret line="88" column="26" lean-forward="false" selection-start-line="88" selection-start-column="20" selection-end-line="88" selection-end-column="26" />
               <folding />
             </state>
@@ -96,8 +113,8 @@
       <file leaf-file-name="XmlUtil.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/xml/XmlUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="115" column="39" lean-forward="true" selection-start-line="115" selection-start-column="39" selection-end-line="115" selection-end-column="39" />
+            <state relative-caret-position="1410">
+              <caret line="115" column="39" lean-forward="false" selection-start-line="115" selection-start-column="39" selection-end-line="115" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -114,8 +131,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>search-label</find>
-      <find>validation</find>
       <find>.search-label</find>
       <find>item</find>
       <find>onClickExport</find>
@@ -144,6 +159,8 @@
       <find>getELObjName</find>
       <find>prepareFixedRowTable</find>
       <find>findPosition</find>
+      <find>subList</find>
+      <find>dataCount</find>
     </findStrings>
     <replaceStrings>
       <replace>&quot;</replace>
@@ -176,7 +193,6 @@
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.jsp" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/config/excel/ConfigTable.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/MakerApp.java" />
-        <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/maker/xml/XmlShowComponentMaker.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/component/controller/ControllerRequest.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/ResponseXmlInterpreter.java" />
         <option value="$PROJECT_DIR$/erpreport/src/main/webapp/jsp/favorite.ts" />
@@ -211,6 +227,7 @@
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/src/test/java/com/util/tools/MathUtilTest.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/WordTemplateXmlInterpreter.java" />
         <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DocxQuery.java" />
+        <option value="$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/maker/xml/XmlShowComponentMaker.java" />
       </list>
     </option>
   </component>
@@ -241,7 +258,7 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-39" />
     <option name="y" value="309" />
     <option name="width" value="1346" />
@@ -541,6 +558,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -552,6 +570,104 @@
               <item name="Root" type="cbb8eebc:String" user="Root" />
               <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
               <item name="erpreport" type="cbb8eebc:String" user="erpreport" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+              <item name="script" type="cbb8eebc:String" user="script" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+              <item name="script" type="cbb8eebc:String" user="script" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+              <item name="script" type="cbb8eebc:String" user="script" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="sql" type="cbb8eebc:String" user="sql" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\maker" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+              <item name="script" type="cbb8eebc:String" user="script" />
+              <item name="maker" type="cbb8eebc:String" user="maker" />
+              <item name="xml" type="cbb8eebc:String" user="xml" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -577,6 +693,69 @@
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="xml" type="cbb8eebc:String" user="xml" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="xml" type="cbb8eebc:String" user="xml" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="xml" type="cbb8eebc:String" user="xml" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="xml" type="cbb8eebc:String" user="xml" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="util" type="cbb8eebc:String" user="util" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
               <item name="tools" type="cbb8eebc:String" user="tools" />
             </path>
             <path>
@@ -588,6 +767,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane>
           <expand>
@@ -604,8 +784,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -626,15 +804,8 @@
     <property name="Repository.Attach.Sources" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\erpreport\web\erpreport\erpreport\src\main\resources\META-INF\components\我的收藏" />
-      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\erpreport\web\erpreport\erpreport\src\main\webapp\jsp\plugins\jquery" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.util.tools" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.frame.script.el.em" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\erpreport\web\erpreport\erpreport\src\main\resources\META-INF\components\完工入库清单" />
@@ -642,6 +813,13 @@
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\erpreport\web\erpreport\erpreport\src\main\resources\META-INF\components" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\erpreport\web\erpreport\erpreport\src\main\webapp\jsp\plugins" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\erpreport\web\erpreport\erpreport\src\main\webapp\jsp\plugins\beyond" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.frame.script.el.em" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\erpreport\web\erpreport\erpreport\src\main\resources\META-INF\components\我的收藏" />
+      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\erpreport\web\erpreport\erpreport\src\main\webapp\jsp\plugins\jquery" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -997,7 +1175,8 @@
       <workItem from="1509070657332" duration="15581000" />
       <workItem from="1509159542706" duration="17064000" />
       <workItem from="1509330352199" duration="400000" />
-      <workItem from="1509331056838" duration="24690000" />
+      <workItem from="1509331056838" duration="25131000" />
+      <workItem from="1509417667753" duration="1548000" />
     </task>
     <servers />
   </component>
@@ -1034,7 +1213,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="207157000" />
+    <option name="totallyTimeSpent" value="209146000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1046,7 +1225,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1062,16 +1241,15 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23283082" sideWeight="0.70121026" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.49092284" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.47881997" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.49394855" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32663316" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.49394855" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.48789713" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20574887" sideWeight="0.47411445" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4130106" sideWeight="0.47411445" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33888048" sideWeight="0.5258856" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33888048" sideWeight="0.5258856" order="6" side_tool="true" content_ui="tabs" />
@@ -1079,6 +1257,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.47881997" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1160,20 +1339,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/css/doc.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/build/js/nprogress.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/erpreport/src/main/webapp/jsp/plugins/layui/css/layui.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1199,7 +1364,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1257,7 +1421,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1265,7 +1428,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="12540">
           <caret line="849" column="29" lean-forward="false" selection-start-line="849" selection-start-column="29" selection-end-line="849" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1273,9 +1435,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1283,9 +1442,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1293,7 +1449,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1301,9 +1456,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="36" lean-forward="false" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1311,10 +1463,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="538" column="27" lean-forward="false" selection-start-line="538" selection-start-column="27" selection-end-line="538" selection-end-column="27" />
-          <folding>
-            <marker date="1509189392275" expanded="true" signature="6016:6030" ph="..." />
-            <marker date="1509189392275" expanded="true" signature="8832:8846" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1322,7 +1470,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1330,10 +1477,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1509188918899" expanded="true" signature="1761:1840" ph="..." />
-            <marker date="1509188918899" expanded="true" signature="1785:1828" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1341,9 +1484,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="35" column="4" lean-forward="false" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="4" />
-          <folding>
-            <element signature="e#1126#1142#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1359,16 +1499,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="38" column="0" lean-forward="false" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
-          <folding>
-            <element signature="e#555#556#0" expanded="false" />
-            <element signature="e#573#574#0" expanded="false" />
-            <element signature="e#609#610#0" expanded="false" />
-            <element signature="e#632#633#0" expanded="false" />
-            <element signature="e#664#665#0" expanded="false" />
-            <element signature="e#691#692#0" expanded="false" />
-            <element signature="e#731#732#0" expanded="false" />
-            <element signature="e#763#764#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1376,10 +1506,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
           <caret line="80" column="22" lean-forward="false" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
-          <folding>
-            <element signature="e#2028#2029#0" expanded="false" />
-            <element signature="e#2077#2078#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1387,7 +1513,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="10" column="28" lean-forward="true" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1413,7 +1538,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1421,7 +1545,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="22" column="1" lean-forward="true" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1445,9 +1568,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
           <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1455,7 +1575,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1463,7 +1582,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1471,7 +1589,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1490,7 +1607,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="49">
           <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="26" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1498,9 +1614,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="71" column="48" lean-forward="false" selection-start-line="71" selection-start-column="48" selection-end-line="71" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#6472#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1508,13 +1621,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/src/main/java/com/util/tools/xml/XmlWalker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="724">
+        <state relative-caret-position="1290">
           <caret line="88" column="26" lean-forward="false" selection-start-line="88" selection-start-column="20" selection-end-line="88" selection-end-column="26" />
           <folding />
         </state>
@@ -1532,7 +1644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1548,14 +1659,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="50">
           <caret line="220" column="9" lean-forward="true" selection-start-line="220" selection-start-column="9" selection-end-line="220" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/xml/XmlUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="115" column="39" lean-forward="true" selection-start-line="115" selection-start-column="39" selection-end-line="115" selection-end-column="39" />
+        <state relative-caret-position="1410">
+          <caret line="115" column="39" lean-forward="false" selection-start-line="115" selection-start-column="39" selection-end-line="115" selection-end-column="39" />
           <folding />
         </state>
       </provider>
@@ -1568,32 +1678,45 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/src/test/java/com/util/tools/MathUtilTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="18" column="47" lean-forward="false" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/WordTemplateXmlInterpreter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1065">
-          <caret line="307" column="39" lean-forward="false" selection-start-line="307" selection-start-column="39" selection-end-line="307" selection-end-column="39" />
-          <folding>
-            <element signature="e#2370#2384#0" expanded="true" />
-            <element signature="e#5830#5857#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="232">
+          <caret line="246" column="49" lean-forward="true" selection-start-line="246" selection-start-column="49" selection-end-line="246" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DBUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/util/DocxQuery.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1942">
-          <caret line="77" column="52" lean-forward="true" selection-start-line="77" selection-start-column="52" selection-end-line="77" selection-end-column="52" />
+        <state relative-caret-position="60">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding>
-            <element signature="e#7101#7109#0" expanded="true" />
-            <element signature="e#10512#10520#0" expanded="true" />
+            <element signature="e#7524#7525#0" expanded="true" />
+            <element signature="e#7552#7553#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/tools/src/test/java/com/util/tools/MathUtilTest.java">
+    <entry file="file://$PROJECT_DIR$/../../../BusinessPerformance/Web/maker/src/main/java/com/frame/script/maker/xml/XmlShowComponentMaker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="14" column="52" lean-forward="true" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+        <state relative-caret-position="2827">
+          <caret line="423" column="8" lean-forward="true" selection-start-line="423" selection-start-column="8" selection-end-line="423" selection-end-column="8" />
           <folding />
         </state>
       </provider>

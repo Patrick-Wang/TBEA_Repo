@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="183377BE33E01D50D0178B54FD00AD9BSWJ">
+        <list id="ids" type="int">0,1,2</list>
+        <list id="vals" type="string">原材料明细表,半成品统计表,实物成品台账数据</list>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="183377BE33E01D50D0178B54FD00AD9BUpdateWrapperClr"/>
+            <map key="exportUrl" value="183377BE33E01D50D0178B54FD00AD9BExportWrapperClr"/>
+            <map map="${authMgr[69]}"/>
+            <map key="nodeData2" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="183377BE33E01D50D0178B54FD00AD9BUpdateWrapperClr">
+  		<context key="cal" value="${request.date.asCalendar}"/>
+  		<context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+        <context key="item" value="${request.item2.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="39BEDCDE08FB34634A2A16BC642D365AUpdateClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="19632C6B3B937A43A0E9DA8CB022257AUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 2}">
+            <callcontroller id="D35C19B83C5D9AE431EC38ADBA30358DUpdateClr"/>
+        </elseif>
+    </controller>
+    <controller id="183377BE33E01D50D0178B54FD00AD9BExportWrapperClr">
+  		<context key="cal" value="${request.date.asCalendar}"/>
+  		<context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+        <context key="item" value="${request.item2.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="39BEDCDE08FB34634A2A16BC642D365AExportClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="19632C6B3B937A43A0E9DA8CB022257AExportClr"/>
+        </elseif>
+        <elseif test="${item == 2}">
+            <callcontroller id="D35C19B83C5D9AE431EC38ADBA30358DExportClr"/>
+        </elseif>
+    </controller>
+</components>

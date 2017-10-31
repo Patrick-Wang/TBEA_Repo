@@ -138,7 +138,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
                             int rOffset = (int) dqFd.parent(Tr.class).pos().val(0);
                             int rCount =  dqTb.q(Tr.class).size() - rOffset;
                             if (table.size() > pgIndex * rCount){
-                                el =  "${" + getELObjName(el) + ".subList[" + (pgIndex * rCount) + "][" + (pgIndex * rCount + rCount) + "]}";
+                                el =  "${" + getELObjName(el) + ".subList[" + (pgIndex * rCount) + "][" + Math.min(table.size(), pgIndex * rCount + rCount) + "]}";
                                 DocxUtil.setDefaultText(fdChar, el);
                             }else{
                                 DocxQuery.q(fdChar).remove();
