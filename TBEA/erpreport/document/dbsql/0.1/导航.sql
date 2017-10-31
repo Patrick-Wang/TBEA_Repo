@@ -36,18 +36,18 @@ commit;
 
 CREATE TABLE CUX_NAVIGATEAUTHORITY_T(
 	navigator_item_id number(8) NOT NULL,
-	authority varchar(100)
+	role varchar(100)
 );
-insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, authority) values
-(7, '1001AP_股份本部_应付会计');
-insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, authority) values
-(8, '1001AP_股份本部_应付会计');
-insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, authority) values
-(9, '1001AP_股份本部_应付会计');
-insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, authority) values
-(10, '1001AP_股份本部_应付会计');
-insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, authority) values
-(11, '1001AP_股份本部_应付会计');
+insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, role) values
+(7, '应付会计');
+insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, role) values
+(8, '应付会计');
+insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, role) values
+(9, '应付会计');
+insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, role) values
+(10, '应付会计');
+insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, role) values
+(11, '应付会计');
 commit;
 
 --测试用户DCSUP06

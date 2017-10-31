@@ -3,12 +3,9 @@ package com.xml.frame.report.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.relation.Relation;
 import javax.xml.bind.JAXBElement;
 
 import org.docx4j.XmlUtils;
-import org.docx4j.openpackaging.parts.DrawingML.Chart;
-import org.docx4j.openpackaging.parts.relationships.RelationshipsPart;
 import org.docx4j.wml.ContentAccessor;
 import org.jvnet.jaxb2_commons.ppp.Child;
 
@@ -22,7 +19,7 @@ public class DocxQuery {
     }
 
     //find in its direct children
-    private static List query(Object obj, Class<?> cls) {
+    private static List findChildren(Object obj, Class<?> cls) {
         obj = unpackJAXB(obj);
         List<Object> ret = new ArrayList<Object>();
         if (obj instanceof ContentAccessor) {
@@ -93,8 +90,8 @@ public class DocxQuery {
     }
 
 
-    public static DocxQuery q(Object obj, Class<?> cls) {
-        return new DocxQuery(query(obj, cls));
+    public static DocxQuery children(Object obj, Class<?> cls) {
+        return new DocxQuery(findChildren(obj, cls));
     }
 
     public static DocxQuery q(Object obj) {
@@ -102,7 +99,32 @@ public class DocxQuery {
             return new DocxQuery((List<Object>) obj);
         }
         List<Object> es = new ArrayList<Object>();
-        es.add(obj);
+        if (null != obj){
+            es.add(obj);
+        }
+        return new DocxQuery(es);
+    }
+
+    public DocxQuery append(Object obj){
+        Object c = unpackJAXB(obj);
+        for (Object e : elems) {
+            e = unpackJAXB(e);
+            if (c instanceof Child && e instanceof ContentAccessor) {
+                ((Child)c).setParent(e);
+                ((ContentAccessor)e).getContent().add(c);
+            }
+        }
+        return this;
+    }
+
+    public DocxQuery children() {
+        List<Object> es = new ArrayList<Object>();
+        for (Object e : elems) {
+            e = unpackJAXB(e);
+            if (e instanceof ContentAccessor) {
+                es.addAll(((ContentAccessor)e).getContent());
+            }
+        }
         return new DocxQuery(es);
     }
 
@@ -257,24 +279,11 @@ public class DocxQuery {
         return new DocxQuery(es);
     }
 
-    public DocxQuery append(Object element) {
-        for (Object e : elems) {
-            e = unpackJAXB(e);
-            if (e instanceof ContentAccessor) {
-                ((ContentAccessor) e).getContent().add(element);
-                element = unpackJAXB(element);
-                if (element instanceof Child) {
-                    ((Child) element).setParent(e);
-                }
-            }
-        }
-        return this;
-    }
 
-    public DocxQuery q(Class cls) {
+    public DocxQuery children(Class cls) {
         List<Object> es = new ArrayList<Object>();
         for (Object e : elems) {
-            es.addAll(query(e, cls));
+            es.addAll(findChildren(e, cls));
         }
         return new DocxQuery(es);
     }
@@ -304,7 +313,7 @@ public class DocxQuery {
         return DocxQuery.q(elems.get(elems.size() - 1));
     }
 
-    public DocxQuery after(DocxQuery silibing) {
+    public DocxQuery after(DocxQuery sibling) {
         List<Object> ps = new ArrayList<Object>();
         int pos = -1;
         Object p = null;
@@ -316,7 +325,7 @@ public class DocxQuery {
             }
 
             p = ((Child) e).getParent();
-            if (p == null || p instanceof ContentAccessor) {
+            if (p == null || !(p instanceof ContentAccessor)) {
                 continue;
             }
 
@@ -326,21 +335,59 @@ public class DocxQuery {
                 continue;
             }
 
-            if (((ContentAccessor) p).getContent().size() - 1 > pos) {
-                for (int i = 0, len = silibing.val().size() - 1; i >= 0; --i) {
-                     if (silibing.val().get(i) instanceof Child){
-                         c = (Child) silibing.val().get(i);
-                         c.setParent(p);
-                         ((ContentAccessor) p).getContent().add(pos + 1, silibing.val().get(i));
-                     }
-                                   }
-            } else {
-                for (int i = 0, len = silibing.val().size(); i < len; ++i) {
-                    if (silibing.val().get(i) instanceof Child){
-                        c = (Child) silibing.val().get(i);
+            List child = sibling.val();
+
+            //last one
+            if (parent.getContent().size() == (pos + 1)) {
+                for (int i = 0, len = child.size(); i < len; ++i) {
+                    if (child.get(i) instanceof Child) {
+                        c = (Child) child.get(i);
                         c.setParent(p);
-                        ((ContentAccessor) p).getContent().add(silibing.val().get(i));
+                        parent.getContent().add(c);
                     }
+                }
+            } else {
+                for (int i = child.size() - 1; i >= 0; --i) {
+                    if (child.get(i) instanceof Child) {
+                        c = (Child) child.get(i);
+                        c.setParent(p);
+                        parent.getContent().add(pos + 1, c);
+                    }
+                }
+            }
+        }
+        return this;
+    }
+
+    public DocxQuery before(DocxQuery sibling) {
+        List<Object> ps = new ArrayList<Object>();
+        int pos = -1;
+        Object p = null;
+        Child c = null;
+        for (Object e : elems) {
+            e = unpackJAXB(e);
+            if (!(e instanceof Child)) {
+                continue;
+            }
+
+            p = ((Child) e).getParent();
+            if (p == null || !(p instanceof ContentAccessor)) {
+                continue;
+            }
+
+            ContentAccessor parent = (ContentAccessor) p;
+            pos = findPosition((Child) e);
+            if (pos < 0) {
+                continue;
+            }
+
+            List child = sibling.val();
+
+            for (int i = 0, len = child.size(); i < len; ++i) {
+                if (child.get(i) instanceof Child) {
+                    c = (Child) child.get(i);
+                    c.setParent(parent);
+                    parent.getContent().add(pos, c);
                 }
             }
         }
@@ -431,7 +478,7 @@ public class DocxQuery {
                     continue;
                 }
                 int index = findPosition((Child) e, e.getClass());
-                List objs = query(p, e.getClass());
+                List objs = findChildren(p, e.getClass());
                 if (objs.size() > index) {
                     ps.add(objs.get(index));
                 }
@@ -455,7 +502,7 @@ public class DocxQuery {
                     continue;
                 }
                 int index = findPosition((Child) e, e.getClass());
-                List objs = query(p, e.getClass());
+                List objs = findChildren(p, e.getClass());
                 if (objs.size() > index) {
                     ps.add(objs.get(index));
                 }

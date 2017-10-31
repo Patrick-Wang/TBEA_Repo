@@ -2,6 +2,7 @@
 <components>
     <controller id="favorite">
         <context key="userName" value="${session.account.name}"/>
+        <context key="roleName" value="${session.account.role}"/>
         <context key="item" value="${request.item.asInt}"/>
         <callservice id="setFavorite"/>
         <response type="json">
@@ -19,6 +20,7 @@
     </controller>
     <controller id="unfavorite">
         <context key="userName" value="${session.account.name}"/>
+        <context key="roleName" value="${session.account.role}"/>
         <context key="item" value="${request.item.asInt}"/>
         <callservice id="setUnfavorite"/>
         <response name="framework/templates/lovSearch" type="json">
@@ -45,14 +47,14 @@
                 CUX_NAVIGATEITEM_T nav
             where
                 fav.itemId = nav.id and
-                fav.userName = ${userName}
+                fav.userName = ${'userName' + '_' + 'roleName'}
         ]]></sql>
     </service>
     <service id="setFavorite" ds="repods">
         <callservice id="isFavoriteServ"/>
         <sql skip="${isFavorite}">
             insert into CUX_FAVOURITE_T (itemId, userName, createTime) values
-            (${item}, '${userName}', to_timestamp('${calendar.current.msFormat}', 'yyyy-mm-dd hh24:mi:ss.ff'))
+            (${item}, '${'userName' + '_' + 'roleName'}', to_timestamp('${calendar.current.msFormat}', 'yyyy-mm-dd hh24:mi:ss.ff'))
         </sql>
     </service>
     <service id="setUnfavorite" ds="repods">

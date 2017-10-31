@@ -27,7 +27,7 @@ import com.xml.frame.report.util.xml.XmlUtil;
 public class WordTemplateXmlInterpreter implements XmlInterpreter {
 
 	ELParser elp;
-	
+	AbstractXmlComponent component;
 	@Override
 	public boolean accept(AbstractXmlComponent component, Element e) throws Exception {
 
@@ -36,7 +36,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 		}
 		
 		elp = new ELParser(component);
-
+		this.component = component;
 		WordprocessingMLPackage pkg = null;
 		
 		if (e.hasAttribute("src")) {
@@ -53,13 +53,32 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 		if (null != pkg) {
 			Map<String, List<MergeRegion>> mrs = parseMRs(e);
 			preHandleWord(pkg, e);
+			completePreHandle(pkg);
 			writeWord(pkg, mrs);
             component.put(e, pkg);
 		}
 		return true;
 	}
 
-    private void preHandleWord(WordprocessingMLPackage pkg, Element e) throws Exception {
+	private void completePreHandle(WordprocessingMLPackage pkg) throws Exception {
+		DocxQuery dq = DocxQuery.find(pkg.getMainDocumentPart(), FldChar.class);
+		dq.each(new OnEach() {
+			@Override
+			public boolean on(int i, Object elem) throws Exception {
+				FldChar fdChar = (FldChar) elem;
+				STFldCharType tp = fdChar.getFldCharType();
+				if (tp == STFldCharType.BEGIN) {
+					String el = DocxUtil.getDefaultText(fdChar);
+					if (el.startsWith("#")) {
+						DocxUtil.setDefaultText(fdChar, el.substring(1));
+					}
+				}
+				return true;
+			}
+		});
+	}
+
+	private void preHandleWord(WordprocessingMLPackage pkg, Element e) throws Exception {
 	    XmlElWalker.each(e.getElementsByTagName("preHandler"), elp, new Loop(){
 
             @Override
@@ -71,51 +90,110 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
         });
     }
 
+    private Integer countPage(DocxQuery body) throws Exception {
+		Integer[] pgCount = new Integer[]{1};
+		body.find(Br.class).each(new OnEach() {
+			@Override
+			public boolean on(int i, Object elem) throws Exception {
+				Br br = (Br) elem;
+				if (br.getType() == STBrType.PAGE){
+					++pgCount[0];
+				}
+				return true;
+			}
+		});
+		return pgCount[0];
+	}
+
+	private Integer preCompile(DocxQuery dq, Map<String, List> tableGroup) throws Exception {
+		Integer[] maxCount = new Integer[]{1};
+		dq.each(new OnEach() {
+
+			@Override
+			public boolean on(int i, Object elem) throws Exception {
+				FldChar fdChar = (FldChar) elem;
+				STFldCharType tp = fdChar.getFldCharType();
+				if (tp == STFldCharType.BEGIN) {
+					DocxQuery dqFd = DocxQuery.q(elem);
+					DocxQuery dqTb = dqFd.parent(Tbl.class);
+					if (!dqTb.isEmpty()) {
+						String el = DocxUtil.getDefaultText(fdChar);
+						if (el.startsWith("#")){
+							el = el.substring(1);
+							Object val = XmlUtil.parseELText(el, elp);
+							if (val instanceof List){
+								List table = (List) val;
+								int rOffset = (int) dqFd.parent(Tr.class).pos().val(0);
+								int rCount =  dqTb.children(Tr.class).size() - rOffset;
+								Integer tableCount = table.size() / rCount;
+								tableCount += (((table.size() % rCount) > 0) ? 1 : 0);
+								maxCount[0] = ((maxCount[0] > tableCount) ? maxCount[0] : tableCount);
+								tableGroup.put(el, table);
+							}
+						}
+					}
+				}
+				return true;
+			}
+		});
+		return maxCount[0];
+	}
+
     private void handleSpreadWord(WordprocessingMLPackage pkg) throws Exception {
-        MainDocumentPart documentPart = pkg.getMainDocumentPart();
-        DocxQuery dq = DocxQuery.find(documentPart, FldChar.class);
+		DocxQuery body = DocxQuery.q(pkg.getMainDocumentPart());
+
         Map<String, List> tableGroup = new HashMap<String, List>();
-        Integer[] maxCount = new Integer[0];
-        dq.each(new OnEach() {
 
-            @Override
-            public boolean on(int i, Object elem) throws Exception {
-                FldChar fdChar = (FldChar) elem;
-                STFldCharType tp = fdChar.getFldCharType();
-                if (tp == STFldCharType.BEGIN) {
-                    DocxQuery dqFd = DocxQuery.q(elem);
-                    DocxQuery dqTb = dqFd.parent(Tbl.class);;
-                    if (!dqTb.isEmpty()) {
-                        String el = DocxUtil.getDefaultText(fdChar);
-                        Object val = XmlUtil.parseELText(el, elp);
-                        if (val instanceof List){
-                            List table = (List) val;
-                            int rOffset = (int) dqFd.parent(Tr.class).pos().val(0);
-                            int rCount =  dqTb.q(Tr.class).size() - rOffset;
-                            Integer tableCount = table.size() / rCount;
-                            tableCount += (((table.size() % rCount) > 0) ? 1 : 0);
-                            maxCount[0] = ((maxCount[0] > tableCount) ? maxCount[0] : tableCount);
-                            tableGroup.put(el, table);
-                        }
-                    }
-                }
-                return true;
-            }
-        });
+        Integer docCount = preCompile(body.find(FldChar.class), tableGroup);
 
-        spreadWord(dq, maxCount[0] - 1, tableGroup);
+        spreadWord(body, docCount - 1, tableGroup);
+
+		component.local("pageCount", countPage(body));
+
+		component.local("docCount", docCount);
     }
 
+//	 <w:p w:rsidR="007F5D8A" w:rsidRDefault="007F5D8A">
+//		<w:pPr>
+//			<w:widowControl/>
+//			<w:jc w:val="left"/>
+//		</w:pPr>
+//		<w:r>
+//			<w:br w:type="page"/>
+//		</w:r>
+//	</w:p>
+    private DocxQuery createPageSeperator(){
+		P pager = new P();
+		PPr ppr = new PPr();
+		pager.getContent().add(ppr);
+		ppr.setParent(pager);
 
+		Jc jc = new Jc();
+		jc.setVal(JcEnumeration.LEFT);
+		ppr.setJc(jc);
+		jc.setParent(ppr);
 
-    private void spreadWord(DocxQuery dq, Integer newPgCount, Map<String, List> tableGroup) throws Exception {
-        DocxQuery p = dq.find(P.class);
-        DocxQuery pNew = dq.find(P.class);
-        updateTableGroup(dq, 0, tableGroup);
-        for (int i = 0; i < newPgCount; ++i){
-            DocxQuery newPg = p.clone();
-            pNew.last().after(newPg);
-            pNew = dq.find(P.class);
+		R r = new R();
+		pager.getContent().add(r);
+		r.setParent(pager);
+
+		Br br = new Br();
+		br.setType(STBrType.PAGE);
+		r.getContent().add(br);
+		br.setParent(r);
+		return DocxQuery.q(pager);
+	}
+
+    private void spreadWord(DocxQuery dqBody, Integer newDocCount, Map<String, List> tableGroup) throws Exception {
+       	DocxQuery children = dqBody.children();
+		DocxQuery docTemplate = children.clone();
+		DocxQuery pagerTemplate = createPageSeperator();
+        updateTableGroup(children, 0, tableGroup);
+        for (int i = 0; i < newDocCount; ++i){
+            DocxQuery newPg = docTemplate.clone();
+			DocxQuery pager = pagerTemplate.clone();
+			dqBody.children().last().after(pager);
+			dqBody.children().last().after(newPg);
             updateTableGroup(newPg, (i + 1), tableGroup);
         }
     }
@@ -133,16 +211,19 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
                     DocxQuery dqTb = dqFd.parent(Tbl.class);;
                     if (!dqTb.isEmpty()) {
                         String el = DocxUtil.getDefaultText(fdChar);
-                        if (tableGroup.containsKey(el)){
-                            List table = tableGroup.get(el);
-                            int rOffset = (int) dqFd.parent(Tr.class).pos().val(0);
-                            int rCount =  dqTb.q(Tr.class).size() - rOffset;
-                            if (table.size() > pgIndex * rCount){
-                                el =  "${" + getELObjName(el) + ".subList[" + (pgIndex * rCount) + "][" + Math.min(table.size(), pgIndex * rCount + rCount) + "]}";
-                                DocxUtil.setDefaultText(fdChar, el);
-                            }else{
-                                DocxQuery.q(fdChar).remove();
-                            }
+                        if (el.startsWith("#")){
+                        	el = el.substring(1);
+                        	if (tableGroup.containsKey(el)) {
+								List table = tableGroup.get(el);
+								int rOffset = (int) dqFd.parent(Tr.class).pos().val(0);
+								int rCount = dqTb.children(Tr.class).size() - rOffset;
+								if (table.size() > pgIndex * rCount) {
+									el = "${" + getELObjName(el) + ".subList[" + (pgIndex * rCount) + "][" + Math.min(table.size(), pgIndex * rCount + rCount) + "]}";
+									DocxUtil.setDefaultText(fdChar, el);
+								} else {
+									DocxUtil.setDefaultText(fdChar, "");
+								}
+							}
                         }
                     }
                 }
@@ -175,7 +256,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 
 
 	private String getELObjName(String el){
-	    String objExp = el.replace("{", "").replace("}", "");
+	    String objExp = el.replace("${", "").replace("}", "");
 	    int index = objExp.indexOf("[");
 	    if (index > 0){
 	        objExp = objExp.substring(0, index);
@@ -211,13 +292,13 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 		DocxQuery dqTb = DocxQuery.q(tbl);
 		for (int i = 0; i < table.size(); ++i) {
 			if (i >= rCount) {
-				Tr trNew = (Tr) dqTb.q(Tr.class).eq(i - 1 + rOffset).clone().val(0);
+				Tr trNew = (Tr) dqTb.children(Tr.class).eq(i - 1 + rOffset).clone().val(0);
 				dqTb.append(trNew);
 			}
-			DocxQuery dqTr = dqTb.q(Tr.class).eq(i + rOffset);
+			DocxQuery dqTr = dqTb.children(Tr.class).eq(i + rOffset);
 			for (int j = 0; j < table.get(i).size() && j < cCount; ++j) {
-				DocxQuery dqTc = dqTr.q(Tc.class).eq(j + cOffset);
-				DocxQuery dq = dqTc.q(P.class).q(R.class);
+				DocxQuery dqTc = dqTr.children(Tc.class).eq(j + cOffset);
+				DocxQuery dq = dqTc.children(P.class).children(R.class);
 				if (dq.isEmpty()) {
 					if (i == 0) {
 						dq = dqTc.pre().find(R.class);
@@ -232,7 +313,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 					}					
 				}
 				R r = (R) dq.clone().val(0);
-				dqTc.q(P.class).append(r);
+				dqTc.children(P.class).append(r);
 			}
 		}
 	}
@@ -257,12 +338,12 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 		}else {
 			int rOffset = (int) dqfd.parent(Tr.class).pos().val(0);
 			int cOffset = (int) dqfd.parent(Tc.class).pos().val(0);
-			int rCount =  dqTb.q(Tr.class).size() - rOffset;
-			int cCount =  dqfd.parent(Tr.class).q(Tc.class).size() - cOffset;
+			int rCount =  dqTb.children(Tr.class).size() - rOffset;
+			int cCount =  dqfd.parent(Tr.class).children(Tc.class).size() - cOffset;
 
 			prepareTable(table, (Tbl) dqTb.val(0), rOffset, cOffset, rCount, cCount, fdChar);
 			
-			DocxQuery dqTrs = dqTb.q(Tr.class);
+			DocxQuery dqTrs = dqTb.children(Tr.class);
 			
 			List<MergeRegion> mrlist = null;
 			if (null != mrs) {
@@ -338,8 +419,8 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 	}
 
 	private void setTc(Tc tc, String val) {
-		R r = (R) DocxQuery.q(tc, P.class).first().q(R.class).first().val(0);
-		Text text = (Text) DocxQuery.q(r, Text.class).first().val(0);
+		R r = (R) DocxQuery.children(tc, P.class).first().children(R.class).first().val(0);
+		Text text = (Text) DocxQuery.children(r, Text.class).first().val(0);
 		if (null == text) {
 			text = new Text();
 			text.setParent(r);

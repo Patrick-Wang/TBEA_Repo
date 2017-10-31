@@ -148,8 +148,7 @@ public class LoginServlet {
             Account account = loginService.login(userName);
             if (null != account){
                 account.setRole(roleName);
-                if (isOnline(account ,request)){
-                    SessionManager.destorySession(request);
+                if (!isOnline(account ,request)){
                     HttpSession session = SessionManager.createSession(request, account);
                     Enumeration<String> params = request.getParameterNames();
                     String name = null;
@@ -160,6 +159,7 @@ public class LoginServlet {
                     List<NavigateItemEntity> navTree = loginService.getNavigateItems(account);
                     session.setAttribute("navTree", navTree);
                 }
+
                 return new ModelAndView("redirect:/Login/index.do?item=" + item);
             }else{
                 return new ModelAndView("userNotExists");

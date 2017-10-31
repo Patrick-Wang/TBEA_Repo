@@ -16,12 +16,16 @@ public class DocxUtil {
 	public static void setDefaultText(FldChar fldChar, String text) {
 		String val = "";
 		CTFFData fdData = fldChar.getFfData();
-		List<JAXBElement<?>> jaxbes = fdData.getNameOrEnabledOrCalcOnExit();
-		for (JAXBElement<?> jaxb : jaxbes) {
-			if (jaxb.getValue() instanceof CTFFTextInput) {
-				CTFFTextInput input = (CTFFTextInput) jaxb.getValue();
-				input.getDefault().setVal(text);
-				break;
+		if (fdData != null) {
+			List<JAXBElement<?>> jaxbes = fdData.getNameOrEnabledOrCalcOnExit();
+			for (JAXBElement<?> jaxb : jaxbes) {
+				if (jaxb.getValue() instanceof CTFFTextInput) {
+					CTFFTextInput input = (CTFFTextInput) jaxb.getValue();
+					if (null != input.getDefault()) {
+						input.getDefault().setVal(text);
+					}
+					break;
+				}
 			}
 		}
 	}
@@ -29,12 +33,16 @@ public class DocxUtil {
 	public static String getDefaultText(FldChar fldChar) {
 		String val = "";
 		CTFFData fdData = fldChar.getFfData();
-		List<JAXBElement<?>> jaxbes = fdData.getNameOrEnabledOrCalcOnExit();
-		for (JAXBElement<?> jaxb : jaxbes) {
-			if (jaxb.getValue() instanceof CTFFTextInput) {
-				CTFFTextInput input = (CTFFTextInput) jaxb.getValue();
-				val = input.getDefault().getVal();
-				break;
+		if (fdData != null) {
+			List<JAXBElement<?>> jaxbes = fdData.getNameOrEnabledOrCalcOnExit();
+			for (JAXBElement<?> jaxb : jaxbes) {
+				if (jaxb.getValue() instanceof CTFFTextInput) {
+					CTFFTextInput input = (CTFFTextInput) jaxb.getValue();
+					if (null != input.getDefault()) {
+						val = input.getDefault().getVal();
+					}
+					break;
+				}
 			}
 		}
 		return val;
@@ -43,12 +51,14 @@ public class DocxUtil {
 	public static String getStatusText(FldChar fldChar) {
 		String val = "";
 		CTFFData fdData = fldChar.getFfData();
-		List<JAXBElement<?>> jaxbes = fdData.getNameOrEnabledOrCalcOnExit();
-		for (JAXBElement<?> jaxb : jaxbes) {
-			if (jaxb.getValue() instanceof CTFFStatusText) {
-				CTFFStatusText statusText = (CTFFStatusText) jaxb.getValue();
-				val = statusText.getVal();
-				break;
+		if (fdData != null) {
+			List<JAXBElement<?>> jaxbes = fdData.getNameOrEnabledOrCalcOnExit();
+			for (JAXBElement<?> jaxb : jaxbes) {
+				if (jaxb.getValue() instanceof CTFFStatusText) {
+					CTFFStatusText statusText = (CTFFStatusText) jaxb.getValue();
+					val = statusText.getVal();
+					break;
+				}
 			}
 		}
 		return val;

@@ -1,0 +1,134 @@
+﻿<components>
+	<service id="gsztzbhz" transaction="transactionManager" db="localDB">
+		
+		<list id="dwids" type="int">
+			<item>1</item>
+			<item>2</item>
+			<item>3</item>
+		</list>
+		
+		<list id="zbids" type="int">
+			1,
+			6,
+			28,
+			29,
+			32,
+			33,
+			34,
+			35,
+			36,
+			48,
+			290,
+			299,
+			304,
+			57,
+			60,
+			61,
+			62,
+			63,
+			64,
+			65,
+			20000,
+			20001
+		</list>
+		
+		<sql id="ndjhsql">select zbid, sum(ndjhz) from jygk_ndjhzb 
+			where dwid in ${dwids} and zbid in ${zbids} and nf = ${date.year} group by zbid</sql>
+		<sql id="zbssql">select ID,name from jygk_zbxx 
+			where ID in ${zbids}</sql>
+		
+		<list id="ndjhslist" sql="ndjhsql" value="1" order="zbids" by="0" type="double"/>
+		<list id="zbsslist" sql="zbssql" value="1" order="zbids" by="0" type="string">
+			<item index="${zbids.size - 2}">合计</item>
+			<item index="${zbids.size - 1}">测试</item>
+		</list>
+
+		
+		<table id="result" name="全年计划" rowIds="zbids">
+			<col list="zbsslist"/>
+			<col list="ndjhslist"/>
+			<col list="ndjhslist"/>
+			<col/> 
+			<col/>
+			<col/>
+			<sumRow toId="20000">
+				<rangeRows>1, ${zbids.size - 2}</rangeRows>
+			</sumRow>
+			<divRow toId="20001">
+				<excludeCol>0, 1</excludeCol>
+				<subId>1</subId>
+				<baseRow>${zbids.size - 2}</baseRow>
+			</divRow>
+			<divCol toCol="5" sub="1" base="2">
+				<excludeRow>0,1,2,3</excludeRow>
+			</divCol>
+			<growthRates toCol="5" sj="1" tq="2">
+				<excludeRow>0,1,2,3</excludeRow>
+			</growthRates>
+			<copyCol rowId="20000" from="1" to="4,3"></copyCol>
+
+		</table>
+
+		<context key="tbs" value="${result.matrix}"/>
+	</service>
+
+	<controller id="test">
+
+		
+<!-- 		<formatter id="excel"> -->
+<!-- 			<ExcelHeaderCenterFormatter> -->
+<!-- 				<DefaultMatcher rows="" cols=""/> -->
+<!-- 				<ExcelTemplate ref="excel"/> -->
+<!-- 				<Offset row="" col=""/> -->
+<!-- 			</ExcelHeaderCenterFormatter> -->
+<!-- 			<ExcelMergeFormatter> -->
+<!-- 				<ExcelTemplate ref="excel"/> -->
+<!-- 				<MergeRegion x="" y="" width="" height=""/> -->
+<!-- 			</ExcelMergeFormatter> -->
+<!-- 		</formatter> -->
+		<context key="test1" value="你好"/>
+		<context key="test2" value="hello"/>
+		<list id = "ids" type="int"><item from="1" to="30"></item></list>
+		<list id = "ids2" type="int"><item from="1" to="39"></item></list>
+		<table id="tb" rowIds="ids">
+			<list type="int"><item repeat="30">1</item></list>
+			<list type="int"><item repeat="30">1</item></list>
+			<list type="int"><item from="1" to="30"></item></list>
+			<list type="int"><item from="1" to="30"></item></list>
+			<list type="int"><item from="1" to="30"></item></list>
+			<list type="int"><item from="1" to="30"></item></list>
+		</table>
+		<table id="tb2" rowIds="ids2">
+			<list type="int"><item repeat="39">1</item></list>
+			<list type="int"><item repeat="39">1</item></list>
+			<list type="int"><item from="1" to="39"></item></list>
+			<list type="int"><item from="1" to="39"></item></list>
+			<list type="int"><item from="1" to="39"></item></list>
+			<list type="int"><item from="1" to="39"></item></list>
+		</table>
+		<context key="page" value="${counterFactory.newCounter.reset[0]}"/>
+		<context key="table" value="${tb.matrix}"></context>
+		<context key="table2" value="${tb2.matrix}"></context>
+		<WordTemplate id="word" src="D:\\test1.docx">
+			<preHandler type="spreadWord"></preHandler>
+		</WordTemplate>
+
+		
+		<response type="word" name="test.docx" ref="word"/> 
+	</controller> 
+	
+	<service id="testDsServ" ds="mytest">
+		<sql id="ret" export="true">
+			select count(*) from jygk_account where name=${name} or id=${id}
+		</sql>
+	</service>
+	<controller id="testDs">
+
+		<context key="name" value="沈变公司"></context>
+		<context key="id" value="${2}"></context>
+		<callservice id="testDsServ"/>
+		<response type="json">
+			<ds>${ret.asJson}</ds>
+		</response> 
+	</controller> 
+</components>

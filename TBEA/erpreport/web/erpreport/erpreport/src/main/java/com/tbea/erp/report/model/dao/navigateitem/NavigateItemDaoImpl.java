@@ -42,7 +42,7 @@ public class NavigateItemDaoImpl extends AbstractReadWriteDaoImpl<NavigateItemEn
     @Override
     public List<NavigateItemEntity> getItems(Account account) {
         Query q = this.getEntityManager().createNativeQuery("select distinct navigator_item_id " +
-                "from CUX_NAVIGATEAUTHORITY_T where authority = :role");
+                "from CUX_NAVIGATEAUTHORITY_T where role = :role");
         q.setParameter("role", account.getRole());
         List<BigDecimal> navItemIds = q.getResultList();
 
@@ -50,9 +50,12 @@ public class NavigateItemDaoImpl extends AbstractReadWriteDaoImpl<NavigateItemEn
         for (BigDecimal bd : navItemIds){
             ids.add(bd.intValue());
         }
+		if (!ids.isEmpty()) {
+			q = this.getEntityManager().createQuery("from NavigateItemEntity where url is null or id in :ids");
+			q.setParameter("ids", ids);
+			return q.getResultList();
+		}
+		return new ArrayList<NavigateItemEntity>();
 
-        q = this.getEntityManager().createQuery("from NavigateItemEntity where url is null or id in :ids");
-        q.setParameter("ids", ids);
-        return q.getResultList();
     }
 }
