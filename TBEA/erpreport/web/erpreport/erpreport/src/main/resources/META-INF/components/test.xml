@@ -112,9 +112,24 @@
 		<WordTemplate id="word" src="D:\\test1.docx">
 			<preHandler type="spreadWord"></preHandler>
 		</WordTemplate>
+		<context key="pgCount" value="${pageCount}"></context>
+		<WordTemplate id="word2" src="D:\\test1.docx">
+			<preHandler type="spreadWord"></preHandler>
+		</WordTemplate>
+		<context key="pgCount" value="${pgCount + pageCount}"></context>
 
-		
-		<response type="word" name="test.docx" ref="word"/> 
+		<WordTemplate id="word3" src="D:\\test1.docx">
+			<preHandler type="spreadWord"></preHandler>
+		</WordTemplate>
+		<context key="pageCount" value="${pgCount + pageCount}" export="false"></context>
+		<list id="words" type="object">
+			<item>${word}</item>
+			<item>${word2}</item>
+			<item>${word3}</item>
+		</list>
+		<WordMerge id="word4" src="words"/>
+
+		<response type="word" target="pdf" name="test.pdf" ref="word4"/>
 	</controller> 
 	
 	<service id="testDsServ" ds="mytest">

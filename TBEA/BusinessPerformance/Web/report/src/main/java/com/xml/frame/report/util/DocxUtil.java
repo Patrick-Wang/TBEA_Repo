@@ -1,15 +1,49 @@
 package com.xml.frame.report.util;
 
+import java.io.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.converter.PicturesManager;
+import org.apache.poi.hwpf.converter.WordToFoConverter;
+import org.apache.poi.hwpf.converter.WordToFoUtils;
+import org.apache.poi.hwpf.converter.WordToHtmlConverter;
+import org.apache.poi.hwpf.usermodel.PictureType;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.converter.core.utils.XWPFUtils;
+import org.apache.poi.xwpf.converter.pdf.PdfConverter;
+import org.apache.poi.xwpf.converter.pdf.PdfOptions;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.docx4j.Docx4J;
+import org.docx4j.convert.out.FOSettings;
+import org.docx4j.fonts.IdentityPlusMapper;
+import org.docx4j.fonts.Mapper;
+import org.docx4j.fonts.PhysicalFonts;
+import org.docx4j.jaxb.Context;
+import org.docx4j.openpackaging.exceptions.Docx4JException;
+import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.docx4j.openpackaging.parts.PartName;
+import org.docx4j.openpackaging.parts.WordprocessingML.AlternativeFormatInputPart;
+import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
+import org.docx4j.org.apache.poi.util.IOUtils;
+import org.docx4j.relationships.Relationship;
 import org.docx4j.wml.*;
 import org.docx4j.wml.TcPrInner.GridSpan;
 import org.docx4j.wml.TcPrInner.HMerge;
 import org.docx4j.wml.TcPrInner.VMerge;
+import org.jvnet.jaxb2_commons.ppp.Child;
 
 public class DocxUtil {
 
@@ -208,5 +242,261 @@ public class DocxUtil {
 	            }  
 	        }  
 	        return trList;  
-	    }  
+	    }
+
+
+//	public static void mergeDocx(List<String> list,String path){
+//		List<InputStream>  inList=new ArrayList<InputStream>();
+//		for(int i=0;i<list.size();i++)
+//			try {
+//				inList.add(new FileInputStream(list.get(i)));
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		try {
+//			InputStream   inputStream=mergeDocx(inList);
+//			saveTemplate(inputStream,path);
+//		} catch (Docx4JException | IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+
+	//	 <w:p w:rsidR="007F5D8A" w:rsidRDefault="007F5D8A">
+//		<w:pPr>
+//			<w:widowControl/>
+//			<w:jc w:val="left"/>
+//		</w:pPr>
+//		<w:r>
+//			<w:br w:type="page"/>
+//		</w:r>
+//	</w:p>
+	public static P createPageSeperator(){
+		P pager = new P();
+		PPr ppr = new PPr();
+		pager.getContent().add(ppr);
+		ppr.setParent(pager);
+
+		Jc jc = new Jc();
+		jc.setVal(JcEnumeration.LEFT);
+		ppr.setJc(jc);
+		jc.setParent(ppr);
+
+		R r = new R();
+		pager.getContent().add(r);
+		r.setParent(pager);
+
+		Br br = new Br();
+		br.setType(STBrType.PAGE);
+		r.getContent().add(br);
+		br.setParent(r);
+		return pager;
+	}
+
+	public static WordprocessingMLPackage clone (WordprocessingMLPackage raw) throws Docx4JException {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		raw.save(baos);
+		ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+		return WordprocessingMLPackage.load(bais);
+	}
+
+	public static WordprocessingMLPackage mergeDocx(final List<WordprocessingMLPackage> streams)
+			throws Docx4JException, IOException {
+		WordprocessingMLPackage target = clone(streams.get(0));
+		DocxQuery dqRet = DocxQuery.q(target.getMainDocumentPart());
+		for (int i = 1; i < streams.size(); ++i){
+			dqRet.children().last().after(DocxQuery.q(DocxUtil.createPageSeperator()));
+			dqRet.children().last().after(DocxQuery.q(streams.get(i).getMainDocumentPart()).children());
+		}
+		return target;
+	}
+
+	public static byte[] toPdf(WordprocessingMLPackage word)
+			throws Exception {
+//		Mapper fontMapper = new IdentityPlusMapper();
+//		fontMapper.put("华文行楷", PhysicalFonts.get("STXingkai"));
+//		fontMapper.put("华文仿宋", PhysicalFonts.get("STFangsong"));
+//		fontMapper.put("隶书", PhysicalFonts.get("LiSu"));
+//		word.setFontMapper(fontMapper);
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+////		word.save(baos);
+////		WordprocessingMLPackage mlPackage = WordprocessingMLPackage.load(new File(docxPath));
+//		//Mapper fontMapper = new BestMatchingMapper();
+//		Mapper fontMapper = new IdentityPlusMapper();
+//		fontMapper.put("华文行楷", PhysicalFonts.get("STXingkai"));
+//		fontMapper.put("华文仿宋", PhysicalFonts.get("STFangsong"));
+//		fontMapper.put("隶书", PhysicalFonts.get("LiSu"));
+//		fontMapper.put("宋体", PhysicalFonts.get("SimSun"));
+//		word.setFontMapper(fontMapper);
+//
+////		os = new java.io.FileOutputStream(pdfPath);
+//
+//		FOSettings foSettings = Docx4J.createFOSettings();
+//		foSettings.setWmlPackage(word);
+//		Docx4J.toFO(foSettings, baos, Docx4J.FLAG_EXPORT_PREFER_XSL);
+
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		word.save(baos);
+		return toPdf(new ByteArrayInputStream(baos.toByteArray()));
+	}
+
+	public static byte[] toPdf(InputStream word)
+			throws Exception {
+
+		XWPFDocument document = new XWPFDocument(word);
+
+		// 2) Prepare Pdf options
+		PdfOptions options = PdfOptions.create();
+//		options.fontEncoding("GB2312");
+
+//		ExtITextFontRegistry fontProvider=ExtITextFontRegistry.getRegistry();
+//		options.fontProvider(fontProvider);
+
+		// 3) Convert XWPFDocument to HTML
+		ByteArrayOutputStream baos2 =  new ByteArrayOutputStream();
+
+		PdfConverter.getInstance().convert(document, baos2, options);
+
+		return baos2.toByteArray();
+	}
+
+//	public static byte[] toPdf2(InputStream wi)
+//			throws Exception {
+//		WordprocessingMLPackage word = WordprocessingMLPackage.load(wi);
+//		Mapper fontMapper = new IdentityPlusMapper();
+////		fontMapper.put("华文行楷", PhysicalFonts.get("STXingkai"));
+////		fontMapper.put("华文仿宋", PhysicalFonts.get("STFangsong"));
+////		fontMapper.put("华文仿宋", PhysicalFonts.get("STFangsong"));
+////		fontMapper.put("隶书", PhysicalFonts.get("LiSu"));
+////		fontMapper.put("宋体", PhysicalFonts.get("simsun"));
+//		word.setFontMapper(fontMapper);
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		word.save(baos);
+////		WordprocessingMLPackage mlPackage = WordprocessingMLPackage.load(new File(docxPath));
+//		//Mapper fontMapper = new BestMatchingMapper();
+//
+//
+////		os = new java.io.FileOutputStream(pdfPath);
+//
+//		FOSettings foSettings = Docx4J.createFOSettings();
+//		foSettings.setWmlPackage(word);
+//		Docx4J.toFO(foSettings, baos, Docx4J.FLAG_EXPORT_PREFER_XSL);
+//
+//		return baos.toByteArray();
+//	}
+
+//	public byte[] toPdf3(InputStream is) throws IOException, ParserConfigurationException {
+//		XWPFDocument wordDocument = new XWPFDocument(is);//WordToHtmlUtils.loadDoc(new FileInputStream(inputFile));
+//		//兼容2007 以上版本
+////        XSSFWorkbook xssfwork=new XSSFWorkbook(is);
+////		WordToFoUtils.loadDoc(is);
+//		WordToHtmlConverter wordToHtmlConverter = new WordToHtmlConverter(
+//				DocumentBuilderFactory.newInstance().newDocumentBuilder()
+//						.newDocument());
+//		wordToHtmlConverter.setPicturesManager( new PicturesManager()
+//		{
+//			public String savePicture(byte[] content,
+//									  PictureType pictureType, String suggestedName,
+//									  float widthInches, float heightInches )
+//			{
+//				return "test/"+suggestedName;
+//			}
+//		} );
+//		wordToHtmlConverter.proces
+//		//save pictures
+//		List pics=wordDocument.getPicturesTable().getAllPictures();
+//		if(pics!=null){
+//			for(int i=0;i<pics.size();i++){
+//				Picture pic = (Picture)pics.get(i);
+//				System.out.println();
+//				try {
+//					pic.writeImageContent(new FileOutputStream("D:/test/"
+//							+ pic.suggestFullFileName()));
+//				} catch (FileNotFoundException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		Document htmlDocument = wordToHtmlConverter.getDocument();
+//
+//		ByteArrayOutputStream out = new ByteArrayOutputStream();
+//		DOMSource domSource = new DOMSource(htmlDocument);
+//		StreamResult streamResult = new StreamResult(out);
+//
+//
+//		TransformerFactory tf = TransformerFactory.newInstance();
+//		Transformer serializer = tf.newTransformer();
+//		serializer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+//		serializer.setOutputProperty(OutputKeys.INDENT, "yes");
+//		serializer.setOutputProperty(OutputKeys.METHOD, "HTML");
+//		serializer.transform(domSource, streamResult);
+//		out.close();
+//		writeFile(new String(out.toByteArray()), outPutFile);
+//	}
+
+//	// 插入文档
+//	private static void insertDocx(MainDocumentPart main, byte[] bytes, int chunkId) {
+//		try {
+//			AlternativeFormatInputPart afiPart = new AlternativeFormatInputPart(
+//					new PartName("/part" + chunkId + ".docx"));
+//			//   afiPart.setContentType(new ContentType(CONTENT_TYPE));
+//			afiPart.setBinaryData(bytes);
+//			Relationship altChunkRel = main.addTargetPart(afiPart);
+//
+//			CTAltChunk chunk = Context.getWmlObjectFactory().createCTAltChunk();
+//			chunk.setId(altChunkRel.getId());
+//
+//			main.addObject(chunk);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+
+	public static void clean(Child r) {
+		List<Object> fdrs = new ArrayList<Object>();
+		DocxQuery dq = DocxQuery.q(r);
+		fdrs.add(r);
+		STFldCharType tp = STFldCharType.BEGIN;
+		while (tp != STFldCharType.END) {
+			dq = dq.anyNext();
+			fdrs.add(dq.val(0));
+			List fdTmps = dq.find(FldChar.class).val();
+			if (!fdTmps.isEmpty()) {
+				tp = ((FldChar)fdTmps.get(0)).getFldCharType();
+			}
+		}
+		DocxQuery.q(fdrs).remove();
+	}
+
+	public static void textReplace(String text, FldChar fdChar) {
+		DocxQuery dq = DocxQuery.q(fdChar);
+		DocxQuery p = dq.parent();
+		dq.remove();
+		Text t = new Text();
+		t.setValue(text);
+		p.append(t);
+		clean((Child) p.anyNext().val(0));
+	}
+
+//	public  static void saveTemplate(InputStream fis,String toDocPath){
+//		FileOutputStream fos;
+//		int bytesum = 0;
+//		int byteread = 0;
+//		try {
+//			fos = new FileOutputStream(toDocPath);
+//			byte[] buffer = new byte[1444];
+//			while ( (byteread = fis.read(buffer)) != -1) {
+//				bytesum += byteread; //字节数 文件大小
+//				fos.write(buffer, 0, byteread);
+//			}
+//			fis.close();
+//			fos.close();
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

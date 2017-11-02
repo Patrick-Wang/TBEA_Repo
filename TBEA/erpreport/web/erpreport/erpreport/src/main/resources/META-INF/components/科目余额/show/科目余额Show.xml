@@ -181,11 +181,11 @@
                 <Offset col="0" row="1"/>
             </ExcelOffsetFormatter>
         </formatter>
-        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+        <formatterServer id="fmtServ" table="${result.matrix}">
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
-        <response name="科目余额.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+        <response name="科目余额.pdf" ref="excelTemplate" target="pdf" serv="fmtServ" type="excel"/>
     </controller>
     <service id="37CB4530FDDDB6A0000FFEBF3C178862ShowClrServ" ds="repods">
         <sql id="ledgers" export="true">
@@ -235,6 +235,7 @@
         ]]></sql>
         <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}" export="true"><![CDATA[
             select
+                id,
                 account_code,
                 account_segments,
                 year_begin_balance,
@@ -262,10 +263,19 @@
                 (${periodStart.date} is null or months_between(to_date(period_name || '-01','yyyy-mm-dd'), ${periodStart.date}) >= 0) and
                 (${periodEnd.date} is null or months_between(to_date(period_name || '-01','yyyy-mm-dd'), ${periodEnd.date}) <= 0)
         ]]></sql>
-        <list id="ids">
-            <item from="0" to="${data.size - 1}"></item>
-        </list>
-        <context key="counter" value="${counterFactory.newCounter}"/>
-        <table export="true" id="result" rowIds="ids" table="${data}"/>
+        <list id="ids" sql="data" value="0"></list>
+        <context key="counter" value="${counterFactory.newCounter}"></context>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" value="${counter.reset[1].val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+        </table>
     </service>
 </components>

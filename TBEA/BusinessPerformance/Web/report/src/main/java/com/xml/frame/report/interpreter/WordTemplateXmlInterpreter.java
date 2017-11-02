@@ -153,41 +153,12 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 		component.local("docCount", docCount);
     }
 
-//	 <w:p w:rsidR="007F5D8A" w:rsidRDefault="007F5D8A">
-//		<w:pPr>
-//			<w:widowControl/>
-//			<w:jc w:val="left"/>
-//		</w:pPr>
-//		<w:r>
-//			<w:br w:type="page"/>
-//		</w:r>
-//	</w:p>
-    private DocxQuery createPageSeperator(){
-		P pager = new P();
-		PPr ppr = new PPr();
-		pager.getContent().add(ppr);
-		ppr.setParent(pager);
 
-		Jc jc = new Jc();
-		jc.setVal(JcEnumeration.LEFT);
-		ppr.setJc(jc);
-		jc.setParent(ppr);
-
-		R r = new R();
-		pager.getContent().add(r);
-		r.setParent(pager);
-
-		Br br = new Br();
-		br.setType(STBrType.PAGE);
-		r.getContent().add(br);
-		br.setParent(r);
-		return DocxQuery.q(pager);
-	}
 
     private void spreadWord(DocxQuery dqBody, Integer newDocCount, Map<String, List> tableGroup) throws Exception {
        	DocxQuery children = dqBody.children();
 		DocxQuery docTemplate = children.clone();
-		DocxQuery pagerTemplate = createPageSeperator();
+		DocxQuery pagerTemplate = DocxQuery.q(DocxUtil.createPageSeperator());
         updateTableGroup(children, 0, tableGroup);
         for (int i = 0; i < newDocCount; ++i){
             DocxQuery newPg = docTemplate.clone();
@@ -275,11 +246,13 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 				STFldCharType tp = fdChar.getFldCharType();
 				if (tp == STFldCharType.BEGIN) {
 					String val = DocxUtil.getDefaultText(fdChar);
-					Object obj = XmlUtil.parseELText(val, elp);
-					if (obj != null && obj instanceof List) {
-						tableReplace((List)obj, fdChar, mrs.get(getELObjName(val)));
-					}else {
-						textReplace(obj + "", fdChar);
+					if (!val.startsWith("M")) {
+						Object obj = XmlUtil.parseELText(val, elp);
+						if (obj != null && obj instanceof List) {
+							tableReplace((List) obj, fdChar, mrs.get(getELObjName(val)));
+						} else {
+							DocxUtil.textReplace(obj + "", fdChar);
+						}
 					}
 				}
 				return true;
@@ -288,7 +261,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 	}
 	
 	void prepareTable(List<List> table, Tbl tbl, int rOffset, int cOffset, int rCount, int cCount, FldChar fdChar){
-		textReplace("", fdChar);
+		DocxUtil.textReplace("", fdChar);
 		DocxQuery dqTb = DocxQuery.q(tbl);
 		for (int i = 0; i < table.size(); ++i) {
 			if (i >= rCount) {
@@ -334,7 +307,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 		DocxQuery dqfd = DocxQuery.q(fdChar);
 		DocxQuery dqTb = dqfd.parent(Tbl.class);
 		if (dqTb.isEmpty()) {
-			textReplace(table.toString(), fdChar);
+			DocxUtil.textReplace(table.toString(), fdChar);
 		}else {
 			int rOffset = (int) dqfd.parent(Tr.class).pos().val(0);
 			int cOffset = (int) dqfd.parent(Tc.class).pos().val(0);
@@ -429,29 +402,5 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 		text.setValue(val);
 	}
 
-	private void clean(Child r) {
-		List<Object> fdrs = new ArrayList<Object>();
-		DocxQuery dq = DocxQuery.q(r);
-		fdrs.add(r);
-		STFldCharType tp = STFldCharType.BEGIN;
-		while (tp != STFldCharType.END) {
-			dq = dq.anyNext();
-			fdrs.add(dq.val(0));
-			List fdTmps = dq.find(FldChar.class).val();
-			if (!fdTmps.isEmpty()) {
-				tp = ((FldChar)fdTmps.get(0)).getFldCharType();
-			}
-		}
-		DocxQuery.q(fdrs).remove();
-	}
-	
-	private void textReplace(String text, FldChar fdChar) {
-		DocxQuery dq = DocxQuery.q(fdChar);
-		DocxQuery p = dq.parent();
-		dq.remove();
-		Text t = new Text();
-		t.setValue(text);
-		p.append(t);
-		clean((Child) p.anyNext().val(0));
-	}
+
 }

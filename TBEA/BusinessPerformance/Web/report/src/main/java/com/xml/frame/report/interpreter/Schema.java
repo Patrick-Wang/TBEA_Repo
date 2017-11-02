@@ -24,11 +24,16 @@ public class Schema {
 	public static final String TAG_CONTROLLER = "controller";
 	public static final String TAG_SERVICE = "service";
 	public static final String TAG_WORDTEMPLETE = "WordTemplate";
+	public static final String TAG_WORDMERGE = "WordMerge";
 	
 	public static boolean isWordTemplete(Element e){
 		return TAG_WORDTEMPLETE.equals(e.getTagName());
 	}
-	
+
+	public static boolean isWordMerge(Element e){
+		return TAG_WORDMERGE.equals(e.getTagName());
+	}
+
 	public static boolean isLog(Element e){
 		return TAG_LOG.equals(e.getTagName());
 	}

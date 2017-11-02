@@ -98,6 +98,10 @@
                 <i class="fa fa-file-excel-o"> </i>导出</button>
             <button class="btn btn-primary btn-custom-sz btn-collect opt-btn" onclick="search.searchPanel.onClickCollect()">
                 <i class="fa fa-star"> </i>收藏</button>
+            <c:if test="${! empty printUrl}">
+                <button class="btn btn-primary btn-custom-sz btn-print opt-btn" onclick="search.searchPanel.onClickPrint()">
+                    <i class="fa fa-print"> </i>打印</button>
+            </c:if>
         </div>
     </div>
 
@@ -122,6 +126,7 @@
         options: JSON.parse('${options}'),
         updateUrl: '${updateUrl}.do',
         exportUrl: '${exportUrl}.do',
+        printUrl: '${printUrl}.do' != '.do',
         baseUrl: '${pageContext.request.contextPath}/',
         item : ${param.item},
         isFavorite : ${isFavorite ? "true" : "false"}

@@ -313,82 +313,82 @@ public class DocxQuery {
         return DocxQuery.q(elems.get(elems.size() - 1));
     }
 
+
+    static void append(Object p, Object c, int pos){
+        p = unpackJAXB(p);
+        c = unpackJAXB(c);
+        if (p instanceof ContentAccessor && c instanceof Child) {
+            ((Child)c).setParent(p);
+            ((ContentAccessor)p).getContent().add(pos, c);
+        }
+    }
+
+    static void append(Object p, Object c){
+        p = unpackJAXB(p);
+        c = unpackJAXB(c);
+        if (p instanceof ContentAccessor && c instanceof Child) {
+            ((Child)c).setParent(p);
+            ((ContentAccessor)p).getContent().add(c);
+        }
+    }
+
     public DocxQuery after(DocxQuery sibling) {
-        List<Object> ps = new ArrayList<Object>();
         int pos = -1;
         Object p = null;
         Child c = null;
+        List children = sibling.val();
         for (Object e : elems) {
             e = unpackJAXB(e);
             if (!(e instanceof Child)) {
                 continue;
             }
 
-            p = ((Child) e).getParent();
+            p = unpackJAXB(((Child) e).getParent());
             if (p == null || !(p instanceof ContentAccessor)) {
                 continue;
             }
 
-            ContentAccessor parent = (ContentAccessor) p;
             pos = findPosition((Child) e);
             if (pos < 0) {
                 continue;
             }
 
-            List child = sibling.val();
-
             //last one
-            if (parent.getContent().size() == (pos + 1)) {
-                for (int i = 0, len = child.size(); i < len; ++i) {
-                    if (child.get(i) instanceof Child) {
-                        c = (Child) child.get(i);
-                        c.setParent(p);
-                        parent.getContent().add(c);
-                    }
+            if (((ContentAccessor)p).getContent().size() == (pos + 1)) {
+                for (int i = 0, len = children.size(); i < len; ++i) {
+                    append(p, children.get(i));
                 }
             } else {
-                for (int i = child.size() - 1; i >= 0; --i) {
-                    if (child.get(i) instanceof Child) {
-                        c = (Child) child.get(i);
-                        c.setParent(p);
-                        parent.getContent().add(pos + 1, c);
-                    }
+                for (int i = children.size() - 1; i >= 0; --i) {
+                    append(p, children.get(i), pos + 1);
                 }
             }
         }
         return this;
     }
 
+
     public DocxQuery before(DocxQuery sibling) {
-        List<Object> ps = new ArrayList<Object>();
         int pos = -1;
         Object p = null;
-        Child c = null;
         for (Object e : elems) {
             e = unpackJAXB(e);
             if (!(e instanceof Child)) {
                 continue;
             }
 
-            p = ((Child) e).getParent();
+            p = unpackJAXB(((Child) e).getParent());
             if (p == null || !(p instanceof ContentAccessor)) {
                 continue;
             }
 
-            ContentAccessor parent = (ContentAccessor) p;
             pos = findPosition((Child) e);
             if (pos < 0) {
                 continue;
             }
 
-            List child = sibling.val();
-
-            for (int i = 0, len = child.size(); i < len; ++i) {
-                if (child.get(i) instanceof Child) {
-                    c = (Child) child.get(i);
-                    c.setParent(parent);
-                    parent.getContent().add(pos, c);
-                }
+            for (Object c : sibling.val()){
+                append(p, c, pos);
             }
         }
         return this;

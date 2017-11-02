@@ -135,6 +135,32 @@
           <element id="archive" name="tools-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="tools" />
           </element>
+          <element id="library" level="project" name="Maven: org.docx4j:docx4j-export-fo:3.3.6" />
+          <element id="library" level="project" name="Maven: org.plutext:jaxb-xslfo:1.0.1" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:fop:2.2" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-svg-dom:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-css:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-dom:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-parser:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-util:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-constants:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-i18n:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-bridge:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-anim:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-script:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-xml:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-awt-util:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-gvt:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-transcoder:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-svggen:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-extension:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.xmlgraphics:batik-ext:1.9" />
+          <element id="library" level="project" name="Maven: org.apache.pdfbox:fontbox:2.0.4" />
+          <element id="library" level="project" name="Maven: fr.opensagres.xdocreport:org.apache.poi.xwpf.converter.pdf:1.0.6" />
+          <element id="library" level="project" name="Maven: fr.opensagres.xdocreport:org.apache.poi.xwpf.converter.core:1.0.6" />
+          <element id="library" level="project" name="Maven: org.apache.poi:ooxml-schemas:1.1" />
+          <element id="library" level="project" name="Maven: fr.opensagres.xdocreport:fr.opensagres.xdocreport.itext.extension:1.0.6" />
+          <element id="library" level="project" name="Maven: com.lowagie:itext:2.1.7" />
           <element id="archive" name="maker-0.0.1-SNAPSHOT.jar">
             <element id="module-output" name="maker" />
           </element>

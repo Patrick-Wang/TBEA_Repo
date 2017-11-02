@@ -43,9 +43,9 @@ var search;
             var _this = this;
             $("#table").empty();
             $("#table").append('<table id="table-jq"></table><div id="pager"></div>');
-            var tableAssist = Util.createTable("table-jq", gridCtrl);
-            tableAssist.create({
-                assistData: gridCtrl.data,
+            this.tableAssist = Util.createTable("table-jq", gridCtrl);
+            this.tableAssist.create({
+                assistDataWithId: gridCtrl.data,
                 assistTotal: Util.roundDiv(gridCtrl.dataCount, this.pgSize),
                 assistRecords: gridCtrl.dataCount,
                 assistPagedata: function (postdata) {
@@ -56,7 +56,7 @@ var search;
                         data: dataOpt,
                         success: function (data) {
                             var dataNew = JSON.parse(data);
-                            tableAssist.addData(Util.roundDiv(dataNew.dataCount, _this.pgSize), postdata.page, dataNew.dataCount, dataNew.data, undefined);
+                            _this.tableAssist.addData(Util.roundDiv(dataNew.dataCount, _this.pgSize), postdata.page, dataNew.dataCount, undefined, dataNew.data);
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             //promise.failed(textStatus);
@@ -65,7 +65,7 @@ var search;
                 },
                 cellEdit: false,
                 cellsubmit: 'clientArray',
-                multiselect: false,
+                multiselect: !!context.printUrl,
                 drag: false,
                 resize: false,
                 height: '100%',
@@ -77,6 +77,9 @@ var search;
                 pager: context.pager ? "#pager" : undefined
             });
             this.adjustSize();
+        };
+        TablePanel.prototype.getSelRows = function () {
+            return this.tableAssist ? this.tableAssist.getCheckedRowIds() : undefined;
         };
         return TablePanel;
     }());
@@ -412,45 +415,50 @@ var search;
             }
             $(".option-area").removeClass("hidden");
         };
-        SearchPanel.prototype.getSearchOption = function () {
-            var dataOpt = {
+        SearchPanel.prototype.updateSearchOption = function () {
+            this.dataOpt = {
                 pgSize: this.tablePanel.getPgSize(),
                 pgNum: 0
             };
             for (var i = 0; i < context.options.length; ++i) {
                 if (!context.options[i].type || context.options[i].type == 'lov') {
-                    dataOpt[context.options[i].param] = $("#_" + context.options[i].param).selectpicker("val");
-                    if (!dataOpt[context.options[i].param] || 'all' == dataOpt[context.options[i].param]) {
-                        dataOpt[context.options[i].param] = undefined;
+                    this.dataOpt[context.options[i].param] = $("#_" + context.options[i].param).selectpicker("val");
+                    if (!this.dataOpt[context.options[i].param] || 'all' == this.dataOpt[context.options[i].param]) {
+                        this.dataOpt[context.options[i].param] = undefined;
                     }
                 }
                 else if (context.options[i].type == 'date') {
-                    dataOpt[context.options[i].param] = context.options[i].date.now;
+                    this.dataOpt[context.options[i].param] = context.options[i].date.now;
                 }
                 else if (context.options[i].type == 'period') {
                     var params = context.options[i].param.replace(/\s/g, '').split(",");
-                    dataOpt[params[0]] = context.options[i].period.start.now;
-                    dataOpt[params[1]] = context.options[i].period.end.now;
+                    this.dataOpt[params[0]] = context.options[i].period.start.now;
+                    this.dataOpt[params[1]] = context.options[i].period.end.now;
                 }
                 else if (context.options[i].type == 'input') {
-                    dataOpt[context.options[i].param] = $("#_" + context.options[i].param).val();
-                    if (!dataOpt[context.options[i].param]) {
-                        dataOpt[context.options[i].param] = undefined;
+                    this.dataOpt[context.options[i].param] = $("#_" + context.options[i].param).val();
+                    if (!this.dataOpt[context.options[i].param]) {
+                        this.dataOpt[context.options[i].param] = undefined;
                     }
                 }
             }
-            return dataOpt;
+        };
+        SearchPanel.prototype.getSearchOption = function () {
+            if (!this.dataOpt) {
+                this.updateSearchOption();
+            }
+            return this.dataOpt;
         };
         SearchPanel.prototype.onClickSearch = function () {
             var _this = this;
             this.tablePanel.updatePgSize();
-            var dataOpt = this.getSearchOption();
+            this.updateSearchOption();
             $.ajax({
                 type: "POST",
                 url: encodeURI(context.updateUrl),
-                data: dataOpt,
+                data: this.dataOpt,
                 success: function (data) {
-                    _this.tablePanel.updateTable(JSON.parse(data), dataOpt);
+                    _this.tablePanel.updateTable(JSON.parse(data), _this.dataOpt);
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     //promise.failed(textStatus);
@@ -459,6 +467,10 @@ var search;
         };
         SearchPanel.prototype.onClickExport = function () {
             var dataOpt = this.getSearchOption();
+            var ids = this.tablePanel.getSelRows();
+            if (ids) {
+                dataOpt['ids'] = JSON.stringify(ids);
+            }
             var optTmp = [];
             for (var index_1 in dataOpt) {
                 if (dataOpt[index_1]) {
@@ -466,8 +478,23 @@ var search;
                 }
             }
             var params = optTmp.join("&");
-            $("#exportForm")[0].action = context.exportUrl + "?" + params;
+            $("#exportForm")[0].action = encodeURI(context.exportUrl + "?" + params);
             $("#exportForm")[0].submit();
+        };
+        SearchPanel.prototype.onClickPrint = function () {
+            var ids = this.tablePanel.getSelRows();
+            if (ids) {
+                var dataOpt = this.getSearchOption();
+                var optTmp = ["ids=" + JSON.stringify(ids)];
+                for (var index_2 in dataOpt) {
+                    if (dataOpt[index_2]) {
+                        optTmp.push(index_2 + "=" + dataOpt[index_2]);
+                    }
+                }
+                var params = optTmp.join("&");
+                $("#exportForm")[0].action = encodeURI(context.exportUrl + "?" + params);
+                $("#exportForm")[0].submit();
+            }
         };
         SearchPanel.prototype.onClickReset = function () {
             for (var i = 0; i < context.options.length; ++i) {

@@ -1,5 +1,6 @@
 package com.xml.frame.report.component.service;
 
+import com.xml.frame.report.interpreter.*;
 import org.w3c.dom.Element;
 
 import com.util.tools.xml.Loop;
@@ -7,18 +8,6 @@ import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.component.entity.Context;
 import com.xml.frame.report.component.manager.ComponentManager;
-import com.xml.frame.report.interpreter.CallServiceXmlInterpreter;
-import com.xml.frame.report.interpreter.CallXmlInterpreter;
-import com.xml.frame.report.interpreter.ContextXmlInterpreter;
-import com.xml.frame.report.interpreter.IFXmlInterpreter;
-import com.xml.frame.report.interpreter.ListXmlInterpreter;
-import com.xml.frame.report.interpreter.LogXmlInterpreter;
-import com.xml.frame.report.interpreter.LoopXmlInterpreter;
-import com.xml.frame.report.interpreter.MergeXmlInterpreter;
-import com.xml.frame.report.interpreter.SqlXmlInterpreter;
-import com.xml.frame.report.interpreter.TableXmlInterpreter;
-import com.xml.frame.report.interpreter.WordTemplateXmlInterpreter;
-import com.xml.frame.report.interpreter.XmlInterpreter;
 import com.xml.frame.report.util.xml.XmlElWalker;
 import com.xml.frame.report.util.xml.XmlUtil;
 
@@ -45,7 +34,8 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 			new IFXmlInterpreter(),
 			new LoopXmlInterpreter(),
 			new LogXmlInterpreter(),
-			new WordTemplateXmlInterpreter()
+			new WordTemplateXmlInterpreter(),
+			new WordMergeXmlInterpreter()
 	};
 
 

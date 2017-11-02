@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.xml.frame.report.util.DocxUtil;
+import com.xml.frame.report.util.excel.ExcelUtil;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.springframework.web.servlet.ModelAndView;
 import org.w3c.dom.DOMException;
@@ -122,16 +124,32 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				ExcelHelper temp = (ExcelHelper) component.getVar(e.getAttribute("ref"));
 				FormatterServer serv = (FormatterServer) component.getVar(e.getAttribute("serv"));
 				serv.getResult();
-				temp.write(resp, XmlUtil.getString(e.getAttribute("name"), elp));
+
+				if ("pdf".equals(e.getAttribute("target"))) {
+//					resp.setContentType("application/octet-stream");
+//					resp.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode( XmlUtil.getString(e.getAttribute("name"), elp), "UTF-8")  +"\"");
+//					resp.getOutputStream().write(ExcelUtil.toPdf(temp.getWorkbook()));
+				} else{
+					temp.write(resp, XmlUtil.getString(e.getAttribute("name"), elp));
+				}
+
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		} else if ("word".equalsIgnoreCase(type)){
 			try {
 				WordprocessingMLPackage pkg = (WordprocessingMLPackage) component.getVar(e.getAttribute("ref"));
+
+
 				resp.setContentType("application/octet-stream");
 				resp.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode( XmlUtil.getString(e.getAttribute("name"), elp), "UTF-8")  +"\"");
-				pkg.save(resp.getOutputStream());
+
+				if ("pdf".equals(e.getAttribute("target"))){
+					byte[] pdf = DocxUtil.toPdf(pkg);
+					resp.getOutputStream().write(pdf);
+				}else{
+					pkg.save(resp.getOutputStream());
+				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

@@ -11,6 +11,7 @@
             <map key="isFavorite" value="${isFavorite}"/>
             <map key="updateUrl" value="FCCBD80F080E5B9B7AB788E2514E439BUpdateClr"/>
             <map key="exportUrl" value="FCCBD80F080E5B9B7AB788E2514E439BExportClr"/>
+            <map key="printUrl" value="FCCBD80F080E5B9B7AB788E2514E439BPrintClr"/>
             <map key="options"><![CDATA[
                 [
                     {
@@ -84,7 +85,7 @@
         <context key="periodEnd" value="${request.periodEnd.asCalendar}"/>
         <callservice id="FCCBD80F080E5B9B7AB788E2514E439BShowServ"/>
         <callcontroller id="FCCBD80F080E5B9B7AB788E2514E439BFmtClr"/>
-        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+        <formatterServer id="fmtServ" table="${result.matrix}">
             <formatter ref="fmtData"/>
         </formatterServer>
         <response type="json">
@@ -154,10 +155,10 @@
     <controller id="FCCBD80F080E5B9B7AB788E2514E439BFmtClr">
         <formatter export="true" id="fmtData">
             <NumberFormatter reservedCount="0">
-                <DefaultMatcher cols="6,8"/>
+                <DefaultMatcher cols="7,9"/>
             </NumberFormatter>
             <NumberFormatter reservedCount="4">
-                <DefaultMatcher cols="7"/>
+                <DefaultMatcher cols="8"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -166,6 +167,7 @@
         <context key="pgNum" value="${request.pgNum.asInt}"/>
         <context key="pgSize" value="${request.pgSize.asInt}"/>
         <context key="workNum" value="${request.workNum.asString}"/>
+        <context key="ids" value="${request.ids.asList}"/>
         <context key="productType" value="${request.productType.asString}"/>
         <context key="productNum" value="${request.productNum.asInt}"/>
         <context key="productUnit" value="${request.productUnit.asString}"/>
@@ -234,6 +236,7 @@
         ]]></sql>
         <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
         select
+            id,
             serial,
             product_number,
             project_model,
@@ -261,9 +264,24 @@
             (${productType} is null or project_model like ${'%productType%'}) and
             (${workNum} is null or wip_entity_name like ${'%workNum%'})
 ]]></sql>
-        <list id="ids">
-            <item from="0" to="${data.size - 1}"></item>
-        </list>
-        <table export="true" id="result" rowIds="ids" table="${data}"/>
+        <list id="ids" sql="data" value="0"></list>
+        <context key="counter" value="${counterFactory.newCounter}"></context>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" value="${counter.reset[1].val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+            <list sql="data" value="${counter.next.val}"></list>
+        </table>
     </service>
 </components>

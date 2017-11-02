@@ -1,5 +1,7 @@
 module search {
 
+    import JQGridAssistant = JQTable.JQGridAssistant;
+
     interface Time {
         type: string; //year month date time datetime
         init: string;
@@ -38,6 +40,7 @@ module search {
         options: Option[];
         updateUrl: string;
         exportUrl: string;
+        printUrl: string;
         baseUrl: string;
         isFavorite: boolean;
         item: number;
@@ -50,7 +53,7 @@ module search {
     class TablePanel {
 
         pgSize: number = 5;
-
+        tableAssist:JQGridAssistant;
         constructor() {
             $(window).on('resize', () => {
                 this.adjustSize();
@@ -96,9 +99,9 @@ module search {
         updateTable(gridCtrl, dataOpt) {
             $("#table").empty();
             $("#table").append('<table id="table-jq"></table><div id="pager"></div>');
-            let tableAssist = Util.createTable("table-jq", gridCtrl)
-            tableAssist.create({
-                assistData: gridCtrl.data,
+            this.tableAssist = Util.createTable("table-jq", gridCtrl)
+            this.tableAssist.create({
+                assistDataWithId: gridCtrl.data,
                 assistTotal: Util.roundDiv(gridCtrl.dataCount, this.pgSize),
                 assistRecords: gridCtrl.dataCount,
                 assistPagedata: (postdata) => {
@@ -109,11 +112,11 @@ module search {
                         data: dataOpt,
                         success: (data: any) => {
                             let dataNew = JSON.parse(data);
-                            tableAssist.addData(
+                            this.tableAssist.addData(
                                 Util.roundDiv(dataNew.dataCount, this.pgSize),
                                 postdata.page,
                                 dataNew.dataCount,
-                                dataNew.data, undefined);
+                                undefined, dataNew.data);
 
                         },
                         error: (XMLHttpRequest, textStatus, errorThrown) => {
@@ -124,7 +127,7 @@ module search {
                 },
                 cellEdit: false,
                 cellsubmit: 'clientArray',
-                multiselect: false,
+                multiselect: !!context.printUrl,
                 drag: false,
                 resize: false,
                 height: '100%',
@@ -137,11 +140,16 @@ module search {
             });
             this.adjustSize();
         }
+
+        getSelRows(){
+            return this.tableAssist ? this.tableAssist.getCheckedRowIds() : undefined;
+        }
     }
 
     class SearchPanel {
 
         tablePanel: TablePanel;
+        dataOpt:any;
 
         constructor(tablePanel: TablePanel) {
             this.tablePanel = tablePanel;
@@ -488,46 +496,50 @@ module search {
             $(".option-area").removeClass("hidden");
         }
 
-        getSearchOption() {
-            var dataOpt = {
+        updateSearchOption(){
+            this.dataOpt = {
                 pgSize: this.tablePanel.getPgSize(),
                 pgNum: 0
             };
             for (let i = 0; i < context.options.length; ++i) {
                 if (!context.options[i].type || context.options[i].type == 'lov') {
-                    dataOpt[context.options[i].param] = $("#_" + context.options[i].param).selectpicker("val");
-                    if (!dataOpt[context.options[i].param] || 'all' == dataOpt[context.options[i].param]) {
-                        dataOpt[context.options[i].param] = undefined;
+                    this.dataOpt[context.options[i].param] = $("#_" + context.options[i].param).selectpicker("val");
+                    if (!this.dataOpt[context.options[i].param] || 'all' == this.dataOpt[context.options[i].param]) {
+                        this.dataOpt[context.options[i].param] = undefined;
                     }
                 } else if (context.options[i].type == 'date') {
-                    dataOpt[context.options[i].param] = context.options[i].date.now;
+                    this.dataOpt[context.options[i].param] = context.options[i].date.now;
                 } else if (context.options[i].type == 'period') {
                     let params = context.options[i].param.replace(/\s/g, '').split(",");
-                    dataOpt[params[0]] = context.options[i].period.start.now;
-                    dataOpt[params[1]] = context.options[i].period.end.now;
+                    this.dataOpt[params[0]] = context.options[i].period.start.now;
+                    this.dataOpt[params[1]] = context.options[i].period.end.now;
                 } else if (context.options[i].type == 'input') {
-                    dataOpt[context.options[i].param] = $("#_" + context.options[i].param).val();
-                    if (!dataOpt[context.options[i].param]) {
-                        dataOpt[context.options[i].param] = undefined;
+                    this.dataOpt[context.options[i].param] = $("#_" + context.options[i].param).val();
+                    if (!this.dataOpt[context.options[i].param]) {
+                        this.dataOpt[context.options[i].param] = undefined;
                     }
                 }
 
             }
-            return dataOpt;
+        }
+
+        getSearchOption() {
+            if (!this.dataOpt){
+                this.updateSearchOption();
+            }
+            return this.dataOpt;
         }
 
         onClickSearch() {
             this.tablePanel.updatePgSize();
-
-            var dataOpt = this.getSearchOption();
-
+            this.updateSearchOption();
 
             $.ajax({
                 type: "POST",
                 url: encodeURI(context.updateUrl),
-                data: dataOpt,
+                data: this.dataOpt,
                 success: (data: any) => {
-                    this.tablePanel.updateTable(JSON.parse(data), dataOpt);
+                    this.tablePanel.updateTable(JSON.parse(data), this.dataOpt);
                 },
                 error: (XMLHttpRequest, textStatus, errorThrown) => {
                     //promise.failed(textStatus);
@@ -537,7 +549,10 @@ module search {
 
         onClickExport() {
             var dataOpt = this.getSearchOption();
-
+            let ids = this.tablePanel.getSelRows();
+            if (ids){
+                dataOpt['ids'] = JSON.stringify(ids);
+            }
             let optTmp = [];
 
             for (let index in dataOpt) {
@@ -546,8 +561,24 @@ module search {
                 }
             }
             var params = optTmp.join("&");
-            $("#exportForm")[0].action = context.exportUrl + "?" + params;
+            $("#exportForm")[0].action = encodeURI(context.exportUrl + "?" + params);
             $("#exportForm")[0].submit();
+        }
+
+        onClickPrint() {
+            let ids = this.tablePanel.getSelRows();
+            if (ids){
+                var dataOpt = this.getSearchOption();
+                let optTmp = ["ids=" + JSON.stringify(ids)];
+                for (let index in dataOpt) {
+                    if (dataOpt[index]) {
+                        optTmp.push(index + "=" + dataOpt[index]);
+                    }
+                }
+                var params = optTmp.join("&");
+                $("#exportForm")[0].action = encodeURI(context.exportUrl + "?" + params);
+                $("#exportForm")[0].submit();
+            }
         }
 
         onClickReset() {

@@ -12,6 +12,7 @@
     </controller>
     <controller id="showFavorite">
         <context key="userName" value="${session.account.name}"/>
+        <context key="roleName" value="${session.account.role}"/>
         <callservice id="getFavorateServ"/>
         <response name="favorite" type="jsp">
             <map key="userName" value="${session.account.name}"></map>

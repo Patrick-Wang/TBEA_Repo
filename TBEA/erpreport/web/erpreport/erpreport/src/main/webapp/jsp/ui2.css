@@ -421,8 +421,12 @@ th.ui-th-ltr {
 }
 
 .ui-jqgrid input[type=checkbox]{
-	position:static;
-	opacity:1;
+	position: static;
+	opacity: 1;
+	height: 15px;
+	width: 15px;
+	float: left;
+	margin-left: 3px;
 }
 
 .ui-multiselect-menu input[type=checkbox]{
