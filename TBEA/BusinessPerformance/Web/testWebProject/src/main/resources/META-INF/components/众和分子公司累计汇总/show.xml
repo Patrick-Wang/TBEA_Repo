@@ -234,7 +234,7 @@
 			<param type="object">${zhxmgs}</param>
 		</call>
 		
-		<call id="ndjhhj" object="${accFactory.njhByGroup}" method="computeByZbs">
+	<!--	<call id="ndjhhj" object="${accFactory.njhByGroup}" method="computeByZbs">
 			<param type="int">0</param>
 			<param type="date">${cal.date}</param>
 			<param type="date">${cal.date}</param>
@@ -262,7 +262,7 @@
 			<param type="object">${lrwxysch}</param>
 			<param type="object">${comps}</param>
 		</call>
-		<call id="ndljhj" object="${accFactory.sjByGroup}" method="computeByZbs">
+	 	<call id="ndljhj" object="${accFactory.sjByGroup}" method="computeByZbs">
 			<param type="int">0</param>
 			<param type="date">${cal.months[1].date}</param>
 			<param type="date">${cal.date}</param>
@@ -275,7 +275,7 @@
 			<param type="date">${cal.lastYear.date}</param>
 			<param type="object">${lrwxysch}</param>
 			<param type="object">${comps}</param>
-		</call> 
+		</call>  -->
 
 		
 		<list id="dwids" type="int">
@@ -287,108 +287,124 @@
 			<col list="zbmc" />
 			<list type="double">
 				<item concat="ndjh"/>
-				<item concat="ndjhhj"/>
+				<item repeat="4" isNull="true"/>
 			</list>
 			<list type="double">
 				<item concat="jdjh"/>
-				<item concat="jdjhhj"/>
+				<item repeat="4" isNull="true"/>
 			</list>
 			<list type="double">
 				<item concat="jdlj"/>
-				<item concat="jdljhj"/>
+				<item repeat="4" isNull="true"/>
 			</list>
 			<col instruction="完成率">${
-	function wcl(){
-		var sub = cols[4][i];
-		var base = cols[3][i];
-		if (sub == null || base == null){
-			return null;
-		}
-		
-		if (base &gt; 0){
-			return sub / base;
-		}
-		
-		if (base &lt; 0){
-			return 2 - sub / base;
-		}
-		
-		return null;
-	}
-	wcl();
-}</col>
+				function wcl(){
+					var sub = cols[4][i];
+					var base = cols[3][i];
+					if (sub == null || base == null){
+						return null;
+					}
+					
+					if (base &gt; 0){
+						return sub / base;
+					}
+					
+					if (base &lt; 0){
+						return 2 - sub / base;
+					}
+					
+					return null;
+				}
+				wcl();
+			}</col>
 			<list type="double"> 
 				<item concat="jdljqntq"/>
-				<item concat="jdljqntqhj"/>
+				<item repeat="4" isNull="true"/>
 			</list>
 			<col instruction="同比增幅" >${
-	function tbzf(){
-		var sj = cols[4][i];
-		var tq = cols[6][i];
-		if (sj == null || tq == null){
-			return null;
-		}
-		
-		if (tq &gt; 0){
-			return sj / tq - 1;
-		}
-		
-		if (tq &lt; 0){
-			return 1 - sj / tq;
-		}
-		
-		return null;
-	}
-	tbzf();
-}</col>
+			function tbzf(){
+				var sj = cols[4][i];
+				var tq = cols[6][i];
+				if (sj == null || tq == null){
+					return null;
+				}
+				
+				if (tq &gt; 0){
+					return sj / tq - 1;
+				}
+				
+				if (tq &lt; 0){
+					return 1 - sj / tq;
+				}
+				
+				return null;
+			}
+			tbzf();
+		}</col>
 			<list type="double">
 				<item concat="ndlj"></item>
-				<item concat="ndljhj"></item>
+				<item repeat="4" isNull="true"/>
 			</list>
-			<col instruction="年计划完成率" >${
-	function wcl(){
-		var sub = cols[8][i];
-		var base = cols[2][i];
-		if (sub == null || base == null){
-			return null;
-		}
-		
-		if (base &gt; 0){
-			return sub / base;
-		}
-		
-		if (base &lt; 0){
-			return 2 - sub / base;
-		}
-		
-		return null;
-	}
-	wcl();
-}</col>
+					<col instruction="年计划完成率" >${
+			function wcl(){
+				var sub = cols[8][i];
+				var base = cols[2][i];
+				if (sub == null || base == null){
+					return null;
+				}
+				
+				if (base &gt; 0){
+					return sub / base;
+				}
+				
+				if (base &lt; 0){
+					return 2 - sub / base;
+				}
+				
+				return null;
+			}
+			wcl();
+		}</col>
 			<list type="double">
 				<item concat="ndljqntq"></item>
-				<item concat="ndljqntqhj"></item>
+				<item repeat="4" isNull="true"/>
 			</list>
 			<col instruction="同比增幅" >${
-	function tbzf(){
-		var sj = cols[8][i];
-		var tq = cols[10][i];
-		if (sj == null || tq == null){
-			return null;
-		}
-		
-		if (tq &gt; 0){
-			return sj / tq - 1;
-		}
-		
-		if (tq &lt; 0){
-			return 1 - sj / tq;
-		}
-		
-		return null;
-	}
-	tbzf();
-}</col>
+				function tbzf(){
+					var sj = cols[8][i];
+					var tq = cols[10][i];
+					if (sj == null || tq == null){
+						return null;
+					}
+					
+					if (tq &gt; 0){
+						return sj / tq - 1;
+					}
+					
+					if (tq &lt; 0){
+						return 1 - sj / tq;
+					}
+					
+					return null;
+				}
+				tbzf();
+			}</col>
+			<sumRow toRow="${51}">
+		    	<inRows>0,5,10,15,19,24,28,29,31,34,37,41,45,48</inRows>
+		    	<excludeCol>0,1,5,7,9,11</excludeCol>
+		   	</sumRow>
+		   	<sumRow toRow="${52}">
+		    	<inRows>2,7,12,21,39,43,50</inRows>
+		    	<excludeCol>0,1,5,7,9,11</excludeCol>
+		   	</sumRow>
+		   	<sumRow toRow="${53}">
+		    	<inRows>3,8,13,17,22,26,33,36,40,44,47</inRows>
+		    	<excludeCol>0,1,5,7,9,11</excludeCol>
+		   	</sumRow>
+		   	<sumRow toRow="${54}">
+		    	<inRows>4,9,14,18,23</inRows>
+		    	<excludeCol>0,1,5,7,9,11</excludeCol>
+		   	</sumRow>
 		</table>
 	</service>
 

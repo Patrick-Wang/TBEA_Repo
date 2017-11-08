@@ -129,8 +129,11 @@ public class AdvanceAccByGroup{
 	public List<Double> computeByZbs(int col, Date start, Date end,
 			List<Integer> zbs, List<List<Company>> companies) {
 		List<Double> result = new ArrayList<Double>();
+		List<Integer> zbTmp = new ArrayList<Integer>();
+		zbTmp.add(null);
 		for (int i = 0; i < zbs.size(); ++i){
-			result.addAll(proxy.compute(col, start, end, zbs, companies.get(i)));
+			zbTmp.set(0, zbs.get(i));
+			result.addAll(proxy.compute(col, start, end, zbTmp, companies.get(i)));
 		}
 		return result;
 	}

@@ -62,7 +62,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	
 	private void injectFromSql(List<Object> objs, List sqlRet, int index,
 			List order, int by) {
-		if (sqlRet.get(0) instanceof List) {
+		if (!sqlRet.isEmpty() && sqlRet.get(0) instanceof List) {
 			List row = null;
 			for (int i = 0; i < order.size(); ++i){
 				objs.add(null);
@@ -95,7 +95,7 @@ public class ListXmlInterpreter implements XmlInterpreter {
 	}
 
 	private void injectFromSql(List<Object> objs, List sqlRet, int index) {
-		if (sqlRet.get(0) instanceof List) {
+		if (!sqlRet.isEmpty() && sqlRet.get(0) instanceof List) {
 			List row = null;
 			for (int i = 0; i < sqlRet.size(); ++i){
 				row = (List) sqlRet.get(i);
