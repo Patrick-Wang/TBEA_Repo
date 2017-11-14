@@ -16,7 +16,7 @@ import com.tbea.ic.operation.common.BMResponse;
 import com.tbea.ic.operation.common.ErrorCode;
 import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.common.Util;
-import com.tbea.ic.operation.service.report.ComponentManagerService;
+import com.tbea.ic.operation.service.report.ReportService;
 import com.util.tools.DataNode;
 import com.xml.frame.report.component.controller.Controller;
 import com.xml.frame.report.component.entity.Context;
@@ -29,7 +29,7 @@ import net.sf.json.JSONObject;
 public class ReportServlet{
 	
 	@Autowired
-	ComponentManagerService cms;
+	ReportService cms;
 	
 	@RequestMapping(value = "console/show.do")
 	public ModelAndView consoleShow(HttpServletRequest request,

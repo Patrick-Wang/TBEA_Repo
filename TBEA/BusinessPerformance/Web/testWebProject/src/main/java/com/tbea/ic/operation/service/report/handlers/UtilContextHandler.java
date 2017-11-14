@@ -32,7 +32,7 @@ import com.tbea.ic.operation.service.approve.ApproveService;
 import com.tbea.ic.operation.service.entry.EntryService;
 import com.tbea.ic.operation.service.report.CompanyHelper;
 import com.tbea.ic.operation.service.report.CompanyTypeHelper;
-import com.tbea.ic.operation.service.report.ComponentManagerServiceImpl;
+import com.tbea.ic.operation.service.report.ReportServiceImpl;
 import com.tbea.ic.operation.service.report.HBWebService;
 import com.tbea.ic.operation.service.ydzb.pipe.acc.AccumulatorFactory;
 import com.xml.frame.report.component.Component;
@@ -47,7 +47,7 @@ public class UtilContextHandler implements ContextHandler {
 	protected static String templatePath;
 	static {
 		try {
-			templatePath = new URI(ComponentManagerServiceImpl.class.getClassLoader().getResource("")
+			templatePath = new URI(ReportServiceImpl.class.getClassLoader().getResource("")
 					.getPath()).getPath().substring(1)
 					+ "META-INF/templates/";
 		} catch (URISyntaxException e) {

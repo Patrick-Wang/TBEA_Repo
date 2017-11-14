@@ -1,0 +1,28 @@
+<components>
+	<controller id="owrJydwztqkClr">
+		<context key="data" value="${wrs.jydwztzb[compId][cal.date]}"/>
+		<list id="ids">
+			<item from="0" to="${data.size - 1}"/>
+		</list>
+		<table id="tbData" rowIds="ids" table="${data}"/>
+		<formatter id="fmtData">
+			<PercentFormatter reservedCount="1">
+				<DefaultMatcher cols="3,5,8,10,12,14" />
+			</PercentFormatter>
+			<NumberFormatter reservedCount="0" />
+		</formatter>		
+		<formatterServer id="fmtServ" table="${tbData.matrixNoIds}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+		<context key="jydwztqk" value="${fmtServ.result}"/>
+	</controller>
+	<controller id="operWorkReportXlClr">
+		<context key="cal" value="${request.date.asCalendar}"/>
+		<context key="compId" value="${request.compId.asInt}"/>
+		<context key="dwmc" value="${request.dwmc.asString}"/>
+		<callcontroller id="owrJydwztqkClr"/>
+		<WordTemplate id="word" src="${TEMPLATE}jygzhb_xl_template.docx" />
+		<response type="word"
+			name="${dwmc}${cal.year}年${cal.month}月经营工作分析材料.docx" ref="word" />
+	</controller>
+</components>

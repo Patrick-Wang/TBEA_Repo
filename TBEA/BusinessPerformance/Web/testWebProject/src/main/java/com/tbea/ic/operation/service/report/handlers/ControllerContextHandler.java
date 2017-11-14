@@ -20,6 +20,6 @@ public abstract class ControllerContextHandler implements ContextHandler{
 		onHandle(context, request, resp);
 	}
 
-	abstract void onHandle(Context context, HttpServletRequest request, HttpServletResponse resp);
+	protected abstract void onHandle(Context context, HttpServletRequest request, HttpServletResponse resp);
 
 }

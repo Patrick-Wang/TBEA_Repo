@@ -21,53 +21,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="beyond.min.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/css/beyond.min.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="202674" selection-start-line="0" selection-start-column="202674" selection-end-line="0" selection-end-column="202674" />
-              <folding>
-                <element signature="e#62198#62829#2" expanded="true" />
-                <element signature="e#80511#81142#2" expanded="true" />
-                <element signature="e#86939#87570#2" expanded="true" />
-                <element signature="e#114532#115163#2" expanded="true" />
-                <element signature="e#116231#116862#2" expanded="true" />
-                <element signature="e#118161#118792#2" expanded="true" />
-                <element signature="e#120145#120776#2" expanded="true" />
-                <element signature="e#122148#122779#2" expanded="true" />
-                <element signature="e#124166#124797#2" expanded="true" />
-                <element signature="e#126155#126786#2" expanded="true" />
-                <element signature="e#128115#128746#2" expanded="true" />
-                <element signature="e#130070#130701#2" expanded="true" />
-                <element signature="e#132083#132714#2" expanded="true" />
-                <element signature="e#134168#134799#2" expanded="true" />
-                <element signature="e#136204#136835#2" expanded="true" />
-                <element signature="e#138290#138921#2" expanded="true" />
-                <element signature="e#140319#140950#2" expanded="true" />
-                <element signature="e#142331#142962#2" expanded="true" />
-                <element signature="e#197436#198067#2" expanded="true" />
-                <element signature="e#211450#211879#1" expanded="true" />
-                <element signature="e#212131#212560#1" expanded="true" />
-                <element signature="e#231996#232627#2" expanded="true" />
-                <element signature="e#300649#300906#1" expanded="true" />
-                <element signature="e#301097#301354#1" expanded="true" />
-                <element signature="e#312623#313254#2" expanded="true" />
-                <element signature="e#315557#316188#2" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="userMgr.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pages/authorityMgr/userMgr.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="290" column="15" selection-start-line="290" selection-start-column="15" selection-end-line="290" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/entry_template.ts">
           <provider selected="true" editor-type-id="text-editor">
@@ -98,11 +51,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="yszkrb.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="yszkrb.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pages/yszkrb.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41189426">
-              <caret line="120" column="43" selection-start-line="120" selection-start-column="43" selection-end-line="120" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="102" column="41" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dzclcb.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pages/dzwzgb/dzclcb/dzclcb.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dzclcb.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pages/dzwzgb/dzclcb/dzclcb.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.4493392">
+              <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -163,7 +138,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pages/nwbzlqk/xkyclzlwt/xkyclzlwt.ts" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/xkwbzlwttjqk/xkwbzlwttjqk.ts" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/xksjzlqk/xksjzlqk.ts" />
         <option value="$PROJECT_DIR$/pages/nwbzlqk/xksczzzlwtxxxx/xksczzzlwtxxxx.ts" />
@@ -214,6 +188,7 @@
         <option value="$PROJECT_DIR$/jquery/jqueryex.js" />
         <option value="$PROJECT_DIR$/pages/jqgrid/jqassist.ts" />
         <option value="$PROJECT_DIR$/pages/yszkrb.ts" />
+        <option value="$PROJECT_DIR$/pages/dzwzgb/dzclcb/dzclcb.ts" />
       </list>
     </option>
   </component>
@@ -225,7 +200,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="width" value="1378" />
     <option name="height" value="754" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -281,7 +256,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -291,8 +265,73 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dzwzgb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dzwzgb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="dzclcb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -377,13 +416,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="-8" y="-8" width="1378" height="754" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22544643" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22537313" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22222222" sideWeight="0.38690478" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22222222" sideWeight="0.6130952" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22222222" sideWeight="0.38208956" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22222222" sideWeight="0.61791044" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32934928" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -428,20 +467,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pages/cpzlqk/pdcpycssbhgxxfb/pdcpycssbhgxxfb.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pages/cpzlqk/cpzlqkEntry.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.245283">
-          <caret line="133" column="1" selection-start-line="133" selection-start-column="1" selection-end-line="135" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/toastr/toastr.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="9.2">
@@ -700,32 +725,32 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="202674" selection-start-line="0" selection-start-column="202674" selection-end-line="0" selection-end-column="202674" />
           <folding>
-            <element signature="e#62198#62829#2" expanded="true" />
-            <element signature="e#80511#81142#2" expanded="true" />
-            <element signature="e#86939#87570#2" expanded="true" />
-            <element signature="e#114532#115163#2" expanded="true" />
-            <element signature="e#116231#116862#2" expanded="true" />
-            <element signature="e#118161#118792#2" expanded="true" />
-            <element signature="e#120145#120776#2" expanded="true" />
-            <element signature="e#122148#122779#2" expanded="true" />
-            <element signature="e#124166#124797#2" expanded="true" />
-            <element signature="e#126155#126786#2" expanded="true" />
-            <element signature="e#128115#128746#2" expanded="true" />
-            <element signature="e#130070#130701#2" expanded="true" />
-            <element signature="e#132083#132714#2" expanded="true" />
-            <element signature="e#134168#134799#2" expanded="true" />
-            <element signature="e#136204#136835#2" expanded="true" />
-            <element signature="e#138290#138921#2" expanded="true" />
-            <element signature="e#140319#140950#2" expanded="true" />
-            <element signature="e#142331#142962#2" expanded="true" />
-            <element signature="e#197436#198067#2" expanded="true" />
-            <element signature="e#211450#211879#1" expanded="true" />
-            <element signature="e#212131#212560#1" expanded="true" />
-            <element signature="e#231996#232627#2" expanded="true" />
-            <element signature="e#300649#300906#1" expanded="true" />
-            <element signature="e#301097#301354#1" expanded="true" />
-            <element signature="e#312623#313254#2" expanded="true" />
-            <element signature="e#315557#316188#2" expanded="true" />
+            <element signature="e#62198#62829#2" expanded="false" />
+            <element signature="e#80511#81142#2" expanded="false" />
+            <element signature="e#86939#87570#2" expanded="false" />
+            <element signature="e#114532#115163#2" expanded="false" />
+            <element signature="e#116231#116862#2" expanded="false" />
+            <element signature="e#118161#118792#2" expanded="false" />
+            <element signature="e#120145#120776#2" expanded="false" />
+            <element signature="e#122148#122779#2" expanded="false" />
+            <element signature="e#124166#124797#2" expanded="false" />
+            <element signature="e#126155#126786#2" expanded="false" />
+            <element signature="e#128115#128746#2" expanded="false" />
+            <element signature="e#130070#130701#2" expanded="false" />
+            <element signature="e#132083#132714#2" expanded="false" />
+            <element signature="e#134168#134799#2" expanded="false" />
+            <element signature="e#136204#136835#2" expanded="false" />
+            <element signature="e#138290#138921#2" expanded="false" />
+            <element signature="e#140319#140950#2" expanded="false" />
+            <element signature="e#142331#142962#2" expanded="false" />
+            <element signature="e#197436#198067#2" expanded="false" />
+            <element signature="e#211450#211879#1" expanded="false" />
+            <element signature="e#212131#212560#1" expanded="false" />
+            <element signature="e#231996#232627#2" expanded="false" />
+            <element signature="e#300649#300906#1" expanded="false" />
+            <element signature="e#301097#301354#1" expanded="false" />
+            <element signature="e#312623#313254#2" expanded="false" />
+            <element signature="e#315557#316188#2" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -771,8 +796,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/yszkrb.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41189426">
-          <caret line="120" column="43" selection-start-line="120" selection-start-column="43" selection-end-line="120" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="41" selection-start-line="102" selection-start-column="41" selection-end-line="102" selection-end-column="41" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -808,6 +833,24 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="406" column="1" selection-start-line="406" selection-start-column="1" selection-end-line="406" selection-end-column="1" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/dzwzgb/dzclcb/dzclcb.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pages/dzwzgb/dzclcb/dzclcb.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.4493392">
+          <caret line="69" column="30" selection-start-line="69" selection-start-column="30" selection-end-line="69" selection-end-column="30" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

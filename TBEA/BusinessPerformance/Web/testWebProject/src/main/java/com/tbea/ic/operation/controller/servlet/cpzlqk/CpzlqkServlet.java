@@ -51,7 +51,7 @@ import com.tbea.ic.operation.service.cpzlqk.xlbhgcpmx.XlbhgcpmxServiceImpl;
 import com.tbea.ic.operation.service.cpzlqk.xlnwbzlztqk.XlnwbzlztqkService;
 import com.tbea.ic.operation.service.cpzlqk.xlnwbzlztqk.XlnwbzlztqkServiceImpl;
 import com.tbea.ic.operation.service.extendauthority.ExtendAuthorityService;
-import com.tbea.ic.operation.service.report.ComponentManagerService;
+import com.tbea.ic.operation.service.report.ReportService;
 import com.xml.frame.report.component.entity.Context;
 import com.xml.frame.report.util.EasyList;
 
@@ -262,7 +262,7 @@ public class CpzlqkServlet {
 	}
 	
 	@Autowired
-	ComponentManagerService cms;
+	ReportService cms;
 	
 	@Resource(name=ByqacptjjgServiceImpl.NAME)
 	ByqacptjjgService byqacptjjgService;

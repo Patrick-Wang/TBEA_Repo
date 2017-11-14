@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
 import com.tbea.ic.operation.service.report.handlers.AuthContextHandler;
 import com.tbea.ic.operation.service.report.handlers.ContextHandlers;
@@ -16,6 +18,7 @@ import com.tbea.ic.operation.service.report.handlers.QualityHandler;
 import com.tbea.ic.operation.service.report.handlers.RequestContextHandler;
 import com.tbea.ic.operation.service.report.handlers.TransactionContextHandler;
 import com.tbea.ic.operation.service.report.handlers.UtilContextHandler;
+import com.tbea.ic.operation.service.report.handlers.workreport.WorkReportHandler;
 import com.util.tools.DataNode;
 import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.controller.Controller;
@@ -24,14 +27,14 @@ import com.xml.frame.report.component.entity.Context;
 import com.xml.frame.report.component.manager.ComponentManager;
 import com.xml.frame.report.component.service.Service;
 @org.springframework.stereotype.Service
-public class ComponentManagerServiceImpl implements ComponentManagerService,  Scheduler{
+public class ReportServiceImpl implements ReportService,  Scheduler{
 
 	protected static String resPath;
 	protected static String dsConfigPath;
 	
 	static {
 		try {
-			resPath = new URI(ComponentManagerServiceImpl.class.getClassLoader().getResource("")
+			resPath = new URI(ReportServiceImpl.class.getClassLoader().getResource("")
 					.getPath()).getPath().substring(1)
 					+ "META-INF/components/";
 		} catch (URISyntaxException e) {
@@ -65,6 +68,9 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 	@Resource(type = QualityHandler.class)
 	ContextHandler qualityContext;
 
+	@Autowired
+	WorkReportHandler wrh;
+	
 	@Override
 	public void onSchedule(Context context, Controller controller) throws Exception {
 		ReportLogger.trace().info(" on schedule " + controller.getId());
@@ -102,6 +108,7 @@ public class ComponentManagerServiceImpl implements ComponentManagerService,  Sc
 					.add(orgsContext)
 					.add(authContext)
 					.add(qualityContext)
+					.add(wrh)
 					.add(new DataNodeContextHandler());
 			context.put("isSchedule", false);
 			handlers.onHandle(context);

@@ -72,6 +72,7 @@ var dzwzgb;
             };
             ShowView.prototype.pluginUpdate = function (date, compType) {
                 var _this = this;
+                this.mCompType = compType;
                 this.mDt = date;
                 this.mAjax.get({
                     date: date,

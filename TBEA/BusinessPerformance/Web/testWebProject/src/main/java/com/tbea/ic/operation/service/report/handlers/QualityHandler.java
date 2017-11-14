@@ -34,7 +34,7 @@ public class QualityHandler extends ControllerContextHandler {
 	CompanyManager companyManager;
 	
 	@Override
-	void onHandle(Context context, HttpServletRequest request, HttpServletResponse resp) {
+	protected void onHandle(Context context, HttpServletRequest request, HttpServletResponse resp) {
 		context.put("zlzts", new ClosureMap(){
 
 			@Override

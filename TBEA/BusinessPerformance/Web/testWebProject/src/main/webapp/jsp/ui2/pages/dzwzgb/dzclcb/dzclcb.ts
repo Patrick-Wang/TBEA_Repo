@@ -67,6 +67,7 @@ module dzwzgb {
             }
 
             public pluginUpdate(date:string, compType:Util.CompanyType):void {
+                this.mCompType = compType;
                 this.mDt = date;
                 this.mAjax.get({
                         date: date,

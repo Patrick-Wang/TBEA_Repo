@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.util.tools.DataNode;
 import com.xml.frame.report.component.entity.Context;
 
-public interface ComponentManagerService {
+public interface ReportService {
 
 	Context doController(HttpServletRequest request, HttpServletResponse response, String controllor) throws Exception;
 
