@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.report;
+package com.tbea.ic.operation.service.report.trans;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,14 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.xml.frame.report.component.service.ServiceRunnable;
 import com.xml.frame.report.component.service.JpaTransaction;
 
-@Service(TransDl.NAME)
-public class TransDl implements JpaTransaction{
+@Service(TransXb.NAME)
+public class TransXb implements JpaTransaction{
 	
-	public static final String NAME = "TransDl";
-	@PersistenceContext(unitName = "DlDB")
+	public static final String NAME = "TransXb";
+	@PersistenceContext(unitName = "XbDB")
 	EntityManager em;
 	
-	@Transactional("transDl")
+	@Transactional("transXb")
 	public void run(ServiceRunnable run) throws Exception{
 		run.run();
 	}

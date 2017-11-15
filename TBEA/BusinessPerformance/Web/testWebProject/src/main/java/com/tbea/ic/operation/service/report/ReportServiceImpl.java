@@ -18,7 +18,7 @@ import com.tbea.ic.operation.service.report.handlers.QualityHandler;
 import com.tbea.ic.operation.service.report.handlers.RequestContextHandler;
 import com.tbea.ic.operation.service.report.handlers.TransactionContextHandler;
 import com.tbea.ic.operation.service.report.handlers.UtilContextHandler;
-import com.tbea.ic.operation.service.report.handlers.workreport.WorkReportHandler;
+import com.tbea.ic.operation.service.report.handlers.WorkReportHandler;
 import com.util.tools.DataNode;
 import com.xml.frame.report.ReportLogger;
 import com.xml.frame.report.component.controller.Controller;

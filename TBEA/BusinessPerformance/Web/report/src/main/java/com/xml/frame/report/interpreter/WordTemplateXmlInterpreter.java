@@ -6,14 +6,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.frame.script.util.StringUtil;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
-import org.docx4j.wml.*;
-import org.jvnet.jaxb2_commons.ppp.Child;
+import org.docx4j.wml.Br;
+import org.docx4j.wml.FldChar;
+import org.docx4j.wml.P;
+import org.docx4j.wml.R;
+import org.docx4j.wml.STBrType;
+import org.docx4j.wml.STFldCharType;
+import org.docx4j.wml.Tbl;
+import org.docx4j.wml.Tc;
+import org.docx4j.wml.Text;
+import org.docx4j.wml.Tr;
 import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
+import com.frame.script.util.StringUtil;
 import com.util.tools.xml.Loop;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.util.DocxQuery;

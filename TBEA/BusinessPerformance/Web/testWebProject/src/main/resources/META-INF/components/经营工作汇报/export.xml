@@ -1,26 +1,113 @@
 <components>
 	<controller id="owrJydwztqkClr">
-		<context key="data" value="${wrs.jydwztzb[compId][cal.date]}"/>
+		<context key="data" value="${wrs.jydwztzb[compId][cal.date]}" />
 		<list id="ids">
-			<item from="0" to="${data.size - 1}"/>
+			<item from="0" to="${data.size - 1}" />
 		</list>
-		<table id="tbData" rowIds="ids" table="${data}"/>
+		<table id="tbData" rowIds="ids" table="${data}" />
 		<formatter id="fmtData">
 			<PercentFormatter reservedCount="1">
 				<DefaultMatcher cols="3,5,8,10,12,14" />
 			</PercentFormatter>
 			<NumberFormatter reservedCount="0" />
-		</formatter>		
+		</formatter>
 		<formatterServer id="fmtServ" table="${tbData.matrixNoIds}">
 			<formatter ref="fmtData" />
 		</formatterServer>
-		<context key="jydwztqk" value="${fmtServ.result}"/>
+		<context key="jydwztqk" value="${fmtServ.result}" />
+	</controller>
+	<controller id="owrLrsrzbClr">
+		<context key="data" value="${wrs.lrsrzb[compId][cal.date]}" />
+		<context key="totalLr" value="${math.sum[data.col[11].subList[0][6]]}" />
+		<context key="totalXs" value="${math.sum[data.col[11].subList[6][11]]}" />
+		<list id="ids">
+			<item from="0" to="${data.size - 1 + 5}" />
+		</list>
+		<list id="zb" type="double">
+			<item>1</item>
+			<item>${var ret = math.div[data[1][11]][data[0][11]]; ret >= 0 ? ret
+				: null}</item>
+			<item>${var ret = math.div[data[2][11]][data[0][11]]; ret >= 0 ? ret
+				: null}</item>
+			<item>${var ret = math.div[data[3][11]][data[0][11]]; ret >= 0 ? ret
+				: null}</item>
+			<item>${var ret = math.div[data[4][11]][data[0][11]]; ret >= 0 ? ret
+				: null}</item>
+			<item>${var ret = math.div[data[5][11]][data[0][11]]; ret >= 0 ? ret
+				: null}</item>
+			<item>1</item>
+			<item>${var ret = math.div[data[7][11]][data[6][11]]; ret >= 0 ? ret
+				: null}</item>
+			<item>${var ret = math.div[data[8][11]][data[6][11]]; ret >= 0 ? ret
+				: null}</item>
+			<item>${var ret = math.div[data[9][11]][data[6][11]]; ret >= 0 ? ret
+				: null}</item>
+			<item>${var ret = math.div[data[10][11]][data[6][11]]; ret >= 0 ? ret
+				: null}</item>
+			<item repeat="5" isNull="true"></item>
+		</list>
+		<table id="tbData" rowIds="ids">
+			<list sql="data" value="0" />
+			<list sql="data" value="1" />
+			<list sql="data" value="2" />
+			<list sql="data" value="3" />
+			<list sql="data" value="4" />
+			<list sql="data" value="5" />
+			<list sql="data" value="11" />
+			<list sql="data" value="12" />
+			<list sql="data" value="13" />
+			<list sql="data" value="14" />
+			<col list="zb" />
+			<divRow toRow="11">
+				<excludeCol>3,5,7,9,10</excludeCol>
+				<subRow>0</subRow>
+				<baseRow>6</baseRow>
+			</divRow>
+			<divRow toRow="12">
+				<excludeCol>3,5,7,9,10</excludeCol>
+				<subRow>1</subRow>
+				<baseRow>7</baseRow>
+			</divRow>
+			<divRow toRow="13">
+				<excludeCol>3,5,7,9,10</excludeCol>
+				<subRow>2</subRow>
+				<baseRow>8</baseRow>
+			</divRow>
+			<divRow toRow="14">
+				<excludeCol>3,5,7,9,10</excludeCol>
+				<subRow>3</subRow>
+				<baseRow>9</baseRow>
+			</divRow>
+			<divRow toRow="15">
+				<excludeCol>3,5,7,9,10</excludeCol>
+				<subRow>5</subRow>
+				<baseRow>10</baseRow>
+			</divRow>
+			<divCol toCol="3" sub="2" base="1" />
+			<growthRates toCol="5" sj="2" tq="4" />
+			<divCol toCol="7" sub="6" base="0" />
+			<growthRates toCol="9" sj="7" tq="9" />
+		</table>
+		<formatter id="fmtData">
+			<PercentFormatter reservedCount="1">
+				<DefaultMatcher cols="3,5,7,9,10" />
+			</PercentFormatter>
+			<PercentFormatter reservedCount="1">
+				<DefaultMatcher rows="11,12,13,14,15" />
+			</PercentFormatter>
+			<NumberFormatter reservedCount="0" />
+		</formatter>
+		<formatterServer id="fmtServ" table="${tbData.matrixNoIds}">
+			<formatter ref="fmtData" />
+		</formatterServer>
+		<context key="lrsrzb" value="${fmtServ.result}" />
 	</controller>
 	<controller id="operWorkReportXlClr">
-		<context key="cal" value="${request.date.asCalendar}"/>
-		<context key="compId" value="${request.compId.asInt}"/>
-		<context key="dwmc" value="${request.dwmc.asString}"/>
-		<callcontroller id="owrJydwztqkClr"/>
+		<context key="cal" value="${request.date.asCalendar}" />
+		<context key="compId" value="${request.compId.asInt}" />
+		<context key="dwmc" value="${request.dwmc.asString}" />
+		<callcontroller id="owrJydwztqkClr" />
+		<callcontroller id="owrLrsrzbClr" />
 		<WordTemplate id="word" src="${TEMPLATE}jygzhb_xl_template.docx" />
 		<response type="word"
 			name="${dwmc}${cal.year}年${cal.month}月经营工作分析材料.docx" ref="word" />

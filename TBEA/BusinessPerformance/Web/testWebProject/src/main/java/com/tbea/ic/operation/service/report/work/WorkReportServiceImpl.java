@@ -1,4 +1,4 @@
-package com.tbea.ic.operation.service.report.workreport;
+package com.tbea.ic.operation.service.report.work;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -53,6 +53,22 @@ public class WorkReportServiceImpl implements WorkReportService {
 		gsztzbs.add(GSZB.SXFY64.value());
 		gsztzbs.add(GSZB.SXFYL_65.value());
 	}
+	
+	private static List<Integer> lrsrzb = new ArrayList<Integer>();
+	static {
+		lrsrzb.add(1);
+		lrsrzb.add(195);
+		lrsrzb.add(196);
+		lrsrzb.add(197);
+		lrsrzb.add(198);
+		lrsrzb.add(199);
+		
+		lrsrzb.add(6);
+		lrsrzb.add(7);
+		lrsrzb.add(12);
+		lrsrzb.add(16); 
+		lrsrzb.add(253);
+	}
 		
 	@Autowired
 	SbdNdjhZbDao sbdNdjhzbDao;
@@ -99,5 +115,12 @@ public class WorkReportServiceImpl implements WorkReportService {
 		BasicPipe pipe = new BasicPipe(gsztzbs, companyManager.getBMDBOrganization().getCompanyById(compId), date,
 				configFac.getStandardConfigurator());
 		return pipe.getData();
-	}	
+	}
+	
+	@Override
+	public List<Double[]> getLrsrzb(Integer compId, Date date) {
+		BasicPipe pipe = new BasicPipe(lrsrzb, companyManager.getBMDBOrganization().getCompanyById(compId), date,
+				configFac.getStandardConfigurator());
+		return pipe.getData();
+	}
 }

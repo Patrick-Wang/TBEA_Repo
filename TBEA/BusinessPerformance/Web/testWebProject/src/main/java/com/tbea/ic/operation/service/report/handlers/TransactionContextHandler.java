@@ -5,15 +5,15 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import com.tbea.ic.operation.controller.servlet.report.ContextHandler;
-import com.tbea.ic.operation.service.report.Trans15;
-import com.tbea.ic.operation.service.report.TransDl;
-import com.tbea.ic.operation.service.report.TransLl;
-import com.tbea.ic.operation.service.report.TransLocal;
-import com.tbea.ic.operation.service.report.TransNC;
-import com.tbea.ic.operation.service.report.TransSb;
-import com.tbea.ic.operation.service.report.TransTb;
-import com.tbea.ic.operation.service.report.TransXb;
-import com.tbea.ic.operation.service.report.TransXl;
+import com.tbea.ic.operation.service.report.trans.Trans15;
+import com.tbea.ic.operation.service.report.trans.TransDl;
+import com.tbea.ic.operation.service.report.trans.TransLl;
+import com.tbea.ic.operation.service.report.trans.TransLocal;
+import com.tbea.ic.operation.service.report.trans.TransNC;
+import com.tbea.ic.operation.service.report.trans.TransSb;
+import com.tbea.ic.operation.service.report.trans.TransTb;
+import com.tbea.ic.operation.service.report.trans.TransXb;
+import com.tbea.ic.operation.service.report.trans.TransXl;
 import com.xml.frame.report.component.entity.Context;
 import com.xml.frame.report.component.service.JpaTransaction;
 

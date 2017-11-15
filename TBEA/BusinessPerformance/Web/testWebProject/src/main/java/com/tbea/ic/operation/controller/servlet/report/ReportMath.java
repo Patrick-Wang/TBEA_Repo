@@ -2,6 +2,8 @@ package com.tbea.ic.operation.controller.servlet.report;
 
 import java.util.List;
 
+import com.util.tools.MathUtil;
+
 public class ReportMath {
 	
 	public ReportMath() {
@@ -20,5 +22,9 @@ public class ReportMath {
 			}
 		}
 		return ret;
+	}
+	
+	public Double div(Double sub, Double base){
+		return MathUtil.division(sub, base);
 	}
 }
