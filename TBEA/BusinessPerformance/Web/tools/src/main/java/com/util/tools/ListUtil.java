@@ -31,8 +31,8 @@ public class ListUtil {
 	
 	public static List left(List l, int count) {
 		List lr = new ArrayList();
-		int len = l.size();
-		for (int i = 0; i < len && i < count; ++i){
+		int len = Math.min(l.size(), count);
+		for (int i = 0; i < len; ++i){
 			lr.add(l.get(i));
 		}
 		return lr;
