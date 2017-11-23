@@ -42,6 +42,8 @@ public class EMRegistry {
 		register(new EMListLeft());
 		register(new EMListRight());
 		register(new EMListSub());
+		register(new EMListLastSub());
+		register(new EMListMid());
 	}
 
 	public static void register(ExtendMethod em) {

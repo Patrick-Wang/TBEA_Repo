@@ -5,18 +5,18 @@ import java.util.List;
 import com.util.tools.ListUtil;
 
 
-public class EMListSub extends NamedEM {
+public class EMListMid extends NamedEM {
 
 	
 	
-    public EMListSub() {
-        super("sub");
+    public EMListMid() {
+        super("mid");
     }
 
 
     @Override
     public int paramCount() {
-        return 1;
+        return 2;
     }
 
 
@@ -26,8 +26,9 @@ public class EMListSub extends NamedEM {
     public Object invoke(Object stub, List<Object> args) {
         if (stub instanceof List) {
             List list = (List) stub;
-            Integer index = (Integer) args.get(0);
-        	return ListUtil.sub(list, index);
+            Integer from = (Integer) args.get(0);
+            Integer to = (Integer) args.get(1);
+        	return ListUtil.mid(list, from, to);
         }
         return null;
     }

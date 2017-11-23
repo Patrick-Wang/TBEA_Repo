@@ -478,7 +478,7 @@
 		内部因素,客户资信,滚动付款,项目变化,合同因素,手续办理	,诉讼,合计
   </list>
  </controller>
- <controller id="owrChdqwcClr">
+ <controller id="owrXlChdqwcClr">
   <list id="zbs" type="int">35, 279, 282, 284, 289</list>
   
   <table id="tbData" rowIds="zbs">
@@ -693,7 +693,7 @@
  </controller>
  <controller id="owrGnqywcqkClr">
   <list id="ids">
-   <item from="0" to="7"/>
+   <item from="0" to="6"/>
   </list>
   <table id="tbData" rowIds="ids">
    <list type="double">
@@ -725,7 +725,7 @@
    </list>
    <col instruction="同比增幅"/>
    <sumRow toRow="0">
-    <inRows>1, 3</inRows>
+    <inRows>1, 3, 6</inRows>
    </sumRow>
    <divCol toCol="3" sub="2" base="1"/>
    <growthRates toCol="5" sj="2" tq="4"/>
@@ -744,30 +744,32 @@
   <context key="gnqywcqk" value="${fmtServ.result}"/>
  </controller>
   <controller id="owrXlGnqywcqkClr">
-  <list id="zbs" type="int" export="true">291, 294, 300, 900, 301, 352, 305</list>
+  <list id="zbs" type="int" export="true">291, 294, 300, 301, 352, 305</list>
   <callcontroller id="owrGnqywcqkClr"/>
   </controller>
  <controller id="owrGnqyhyqyClr">
-  <context key="data" value="${wrs.xfscqy[compId][cal.date].rmCol[0]}" export="false"/>
+  <context key="data" value="${wrs.xfscqy[compId][cal.date]}" export="false"/>
+  <context key="gnqyhyqyHeader" value="${data.col[0]}"></context>
   <formatter id="fmtData">
    <NumberFormatter reservedCount="1"/>
   </formatter>
-  <formatterServer id="fmtServ" table="${data}">
+  <formatterServer id="fmtServ" table="${data.rmCol[0]}">
    <formatter ref="fmtData"/>
   </formatterServer>
   <context key="gnqyhyqy" value="${fmtServ.result}"/>
  </controller>
  <controller id="owrXlGnqycpqyClr">
-  <context key="data" value="${wrs.xlXfcpqy[compId][cal.date].rmCol[0]}" export="false"/>
+  <context key="data" value="${wrs.xlXfcpqy[compId][cal.date]}" export="false"/>
+  <context key="gnqycpqyHeader" value="${data.col[0]}"></context>
   <formatter id="fmtData">
    <NumberFormatter reservedCount="1"/>
   </formatter>
-  <formatterServer id="fmtServ" table="${data}">
+  <formatterServer id="fmtServ" table="${data.rmCol[0]}">
    <formatter ref="fmtData"/>
   </formatterServer>
   <context key="gnqycpqy" value="${fmtServ.result}"/>
   
-  <list id="gnqycpqyHeader" type="string" export="true">
+ <!--  <list id="gnqycpqyHeader" type="string" export="true">
 	导线,
 	布电线,
 	架空线,
@@ -779,7 +781,7 @@
 	电缆附件,
 	其它,
 	合计  
-  </list>
+  </list> -->
  </controller>
  <controller id="owrXlCzwcqkClr">
   <context key="data" value="${wrs.xlCzwcqk[compId][cal.date].rmCol[0]}" export="false"/>
@@ -988,7 +990,7 @@
   <callcontroller id="owrYszkkxxzClr"/>
   <callcontroller id="owrYszkyqysysClr"/>
   <callcontroller id="owrYszkyjtzClr"/>
-  <callcontroller id="owrChdqwcClr"/>
+  <callcontroller id="owrXlChdqwcClr"/>
   <callcontroller id="owrChjgqkClr"/>
   <callcontroller id="owrChzlClr"/>
   <callcontroller id="owrChxzClr"/>
@@ -1015,7 +1017,9 @@
   
   <WordTemplate id="word" src="${TEMPLATE}jygzhb_xl_template.docx">
    <merge ref="hScrollHeader" x="${12 - cal.month + 1}" y="0" width="${cal.month}" height="1"/>
-   <merge ref="hScrollHeader" x="0" y="0" width="${12 - cal.month + 1}" height="1"/>
+   <merge ref="hScrollHeader" x="0" y="0" width="${12 - cal.month + 1}" height="1"/>   
+   <merge ref="hScrollHeader.left[1]" x="${12 - cal.month + 1}" y="0" width="${cal.month}" height="1"/>
+   <merge ref="hScrollHeader.left[1]" x="0" y="0" width="${12 - cal.month + 1}" height="1"/>
    <merge ref="vScrollHeader" x="0" y="${12 - cal.month + 1}" width="1" height="${cal.month}"/>
    <merge ref="vScrollHeader" x="0" y="0" width="1" height="${12 - cal.month + 1}"/>
   </WordTemplate>

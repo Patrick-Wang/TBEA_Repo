@@ -2,6 +2,8 @@ package com.frame.script.el.em;
 
 import java.util.List;
 
+import com.util.tools.ListUtil;
+
 
 public class EMListLeft extends NamedEM {
 
@@ -25,9 +27,7 @@ public class EMListLeft extends NamedEM {
         if (stub instanceof List) {
             List list = (List) stub;
             Integer index = (Integer) args.get(0);
-            if (list.size() > index) {
-            	return list.subList(0, index);
-            }
+        	return ListUtil.left(list, index);
         }
         return null;
     }

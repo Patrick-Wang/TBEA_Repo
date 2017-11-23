@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EasyList<T> {
+	
 	List<T> list = new ArrayList<T>();
 	
 	public EasyList(T[] arr){

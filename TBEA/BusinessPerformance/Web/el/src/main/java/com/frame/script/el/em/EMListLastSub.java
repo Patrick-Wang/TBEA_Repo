@@ -5,12 +5,12 @@ import java.util.List;
 import com.util.tools.ListUtil;
 
 
-public class EMListSub extends NamedEM {
+public class EMListLastSub extends NamedEM {
 
 	
 	
-    public EMListSub() {
-        super("sub");
+    public EMListLastSub() {
+        super("lastSub");
     }
 
 
@@ -27,7 +27,7 @@ public class EMListSub extends NamedEM {
         if (stub instanceof List) {
             List list = (List) stub;
             Integer index = (Integer) args.get(0);
-        	return ListUtil.sub(list, index);
+        	return ListUtil.lastSub(list, index);
         }
         return null;
     }

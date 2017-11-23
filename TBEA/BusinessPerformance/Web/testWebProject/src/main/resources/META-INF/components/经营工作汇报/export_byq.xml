@@ -22,57 +22,38 @@
    <formatter ref="fmtData"/>
   </formatterServer>
   <context key="gnqycpqy" value="${fmtServ.result}"/>
-  
- <!--  <list id="gnqycpqyHeader" type="string" export="true">
-	交流变压器,
-	35KV及以下,
-	66-110KV,
-	220KV,
-	330KV,
-	500KV,
-	750kV,
-	1000kV,
-	直流变压器,
-	±400kv及以下,
-	±500kv,
-	±600kv,
-	±800kv,
-	平波电抗器,
-	电抗器,
-	330kV及以下,
-	500kV电,
-	750kV电,
-	1000kV电,
-	干式变压器,
-	F级干变,
-	H级干变,
-	干式电抗器,
-	配电变压器,
-	非晶合金,
-	卷铁芯,
-	叠铁芯,
-	配电变压器其它,
-	箱式变电站,
-	欧式变电站,
-	美式变电站,
-	华式变电站,
-	箱式变电站其它,
-	特种变压器,
-	整流变,
-	牵引变,
-	隔爆变,
-	油田变,
-	特种变压器其它,
-	产业链延伸类,
-	配网自动化,
-	开关,
-	套管,
-	互感器,
-	维修备件,
-	产业链延伸类其它,
-	合计 
-  </list> -->
  </controller>
+ <controller id="owrByqChdqwcClr">
+  <list id="zbs" type="int">35, 279, 282, 284, 289</list>
+  
+  <table id="tbData" rowIds="zbs">
+   <col list="${accFactory.njhAcc.compute[0][cal.date][cal.date][zbs][comps]}"/>
+   <col list="${accFactory.yjhAcc.compute[0][cal.date][cal.date][zbs][comps]}"/>
+   <col list="${accFactory.sjAcc.compute[0][cal.date][cal.date][zbs][comps]}"/>
+   <col instruction="计划完成率"/>
+   <col list="${accFactory.sjAcc.compute[0][cal.lastYear.date][cal.lastYear.date][zbs][comps]}"/>
+   <col instruction="同比增幅"/>
+   <col list="${accFactory.sjAcc.compute[0][cal.months[1].date][cal.date][zbs][comps]}"/>
+   <col instruction="计划完成率"/>
+   <col list="${accFactory.sjAcc.compute[0][cal.lastYear.months[1].date][cal.lastYear.date][zbs][comps]}"/>
+   <col instruction="同比增幅"/>
+   <divCol toCol="3" sub="2" base="1"/>
+   <growthRates toCol="5" sj="2" tq="4"/>
+    <divCol toCol="7" sub="6" base="0"/>
+   <growthRates toCol="9" sj="6" tq="8"/>
+  </table>
+  <formatter id="fmtData">
+   <PercentFormatter reservedCount="1">
+    <DefaultMatcher cols="3,5,7,9"/>
+   </PercentFormatter>
+   <NumberFormatter reservedCount="1"/>
+  </formatter>
+  <formatterServer id="fmtServ" table="${tbData.matrixNoIds}">
+   <formatter ref="fmtData"/>
+  </formatterServer>
+  <context key="chdqwc" value="${fmtServ.result}"/>
+ </controller>
+ 
   <controller id="owrByqCzwcqkClr">
   <context key="data" value="${wrs.byqCzwcqk[compId][cal.date].rmCol[0]}" export="false"/>
   <formatter id="fmtData">
@@ -94,7 +75,7 @@
   <context key="clwcqk" value="${fmtServ.result}"/>
  </controller>
  <controller id="owrByqKglyddcplbkjClr">
-  <context key="data" value="${wrs.byqKglyddcplbkj[compId][cal.date].lastRmCol[0].lastRmCol[0]}" export="false"/>
+  <context key="data" value="${wrs.byqKglyddcplbkj[compId][cal.date].rmCol[0].lastSub[2]}" export="false"/>
   <if test="${!data.isEmpty}">
   	<context key="dataLeft" value="${data.transpose.left[15]}"></context>
   <list id="other" type="object">
@@ -123,7 +104,7 @@
   
  </controller>
  <controller id="owrByqKglyddscdykjClr">
-  <context key="data" value="${wrs.byqKglyddscdykj[compId][cal.date].lastRmCol[0].lastRmCol[0]}" export="false"/>
+  <context key="data" value="${wrs.byqKglyddscdykj[compId][cal.date].lastSub[2]}" export="false"/>
   <if test="${!data.isEmpty}">
   	<context key="dataLeft" value="${data.transpose.left[15]}"></context>
   <list id="other" type="object">
@@ -191,14 +172,14 @@
   <callcontroller id="owrYszkkxxzClr"/>
   <callcontroller id="owrYszkyqysysClr"/>
   <callcontroller id="owrYszkyjtzClr"/>
-  <callcontroller id="owrChdqwcClr"/>
+  <callcontroller id="owrByqChdqwcClr"/>
   <callcontroller id="owrChjgqkClr"/>
   <callcontroller id="owrChzlClr"/>
   <callcontroller id="owrChxzClr"/>
  <callcontroller id="owrHkqkClr"/>
   <callcontroller id="owrHkfsqkClr"/>
-<!--   <callcontroller id="owrGjqywcqkClr"/>
-  <callcontroller id="owrGjqydjqyClr"/> -->
+  <callcontroller id="owrGjqywcqkClr"/>
+  <callcontroller id="owrGjqydjqyClr"/> 
   <callcontroller id="owrByqGnqywcqkClr"/>
   <callcontroller id="owrGnqyhyqyClr"/> 
   <callcontroller id="owrByqGnqycpqyClr"/>
@@ -220,6 +201,8 @@
   <WordTemplate id="word" src="${TEMPLATE}jygzhb_byq_template.docx">
    <merge ref="hScrollHeader" x="${12 - cal.month + 1}" y="0" width="${cal.month}" height="1"/>
    <merge ref="hScrollHeader" x="0" y="0" width="${12 - cal.month + 1}" height="1"/>
+   <merge ref="hScrollHeader.left[1]" x="${12 - cal.month + 1}" y="0" width="${cal.month}" height="1"/>
+   <merge ref="hScrollHeader.left[1]" x="0" y="0" width="${12 - cal.month + 1}" height="1"/>
    <merge ref="vScrollHeader" x="0" y="${12 - cal.month + 1}" width="1" height="${cal.month}"/>
    <merge ref="vScrollHeader" x="0" y="0" width="1" height="${12 - cal.month + 1}"/>
   </WordTemplate>

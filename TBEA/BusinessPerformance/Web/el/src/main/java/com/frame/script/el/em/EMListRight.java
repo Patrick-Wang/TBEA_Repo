@@ -2,6 +2,8 @@ package com.frame.script.el.em;
 
 import java.util.List;
 
+import com.util.tools.ListUtil;
+
 
 public class EMListRight extends NamedEM {
 
@@ -22,12 +24,11 @@ public class EMListRight extends NamedEM {
    
     @Override
     public Object invoke(Object stub, List<Object> args) {
+    	
         if (stub instanceof List) {
             List list = (List) stub;
             Integer index = (Integer) args.get(0);
-            if (list.size() > index) {
-            	return list.subList(list.size() - index, list.size());
-            }
+        	return ListUtil.right(list, index);
         }
         return null;
     }
