@@ -78,14 +78,17 @@ public class FormatterServer {
 	
 	public List<List<String>> format(List<List<String>> table){
 		String result = null;
-		String cell = null;
+		Object cell = null;
 		List<String> row;
 		for (int i = 0, r = table.size(); i < r; ++i){
 			row = table.get(i);
 			for (int j = 0, c = row.size(); j < c; ++j){
 				for (Entry<Integer, Pair<FormatterHandler, FormatterHandler>> entry : groupHandler.entrySet()){
 					cell = row.get(j);
-					result = entry.getValue().getFirst().handle(table, i, j, cell);
+					if (!(cell instanceof String)) {
+						cell = "" + cell;
+					}
+					result = entry.getValue().getFirst().handle(table, i, j, (String) cell);
 					if (null == result){
 						result = nullAs;
 					}

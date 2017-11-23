@@ -25,6 +25,7 @@ public class Schema {
 	public static final String TAG_SERVICE = "service";
 	public static final String TAG_WORDTEMPLETE = "WordTemplate";
 	public static final String TAG_WORDMERGE = "WordMerge";
+	public static final String TAG_SCRIPT = "script";
 	
 	public static boolean isWordTemplete(Element e){
 		return TAG_WORDTEMPLETE.equals(e.getTagName());
@@ -101,4 +102,7 @@ public class Schema {
 		return TAG_LOOP.equals(e.getTagName());
 	}
 	
+	public static boolean isScript(Element e){
+		return TAG_SCRIPT.equals(e.getTagName());
+	}
 }

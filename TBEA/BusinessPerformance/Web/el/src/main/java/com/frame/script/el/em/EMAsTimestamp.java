@@ -8,6 +8,8 @@ import com.frame.script.util.TypeUtil;
 
 public class EMAsTimestamp extends NamedEM{
 
+	
+	
 	public EMAsTimestamp() {
 		super("asTimestamp");
 	}

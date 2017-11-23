@@ -3,11 +3,11 @@ package com.xml.frame.report.component;
 import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
-import com.frame.script.el.ELParser.ObjectLoader;
+import com.frame.script.el.ELParser.ElContext;
 import com.xml.frame.report.component.entity.Context;
 import com.xml.frame.report.component.manager.ComponentManager;
 
-public abstract class AbstractXmlComponent implements Component, ObjectLoader {
+public abstract class AbstractXmlComponent implements Component, ElContext {
 	
 	protected Context local = new Context();
 	protected Context global;
@@ -16,6 +16,11 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	protected ComponentManager mgr;
 	protected ELParser elp = new ELParser(this);
 	
+	public AbstractXmlComponent(AbstractXmlComponent preComponent, Element e, ComponentManager mgr){
+		this.config = e;
+		this.preComponent = preComponent;
+		this.mgr = mgr;
+	}
 	
 	public ComponentManager getCM(){
 		return mgr;
@@ -29,6 +34,11 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 	@Override
 	public boolean hasObject(String key){
 		return local.contains(key) || global.contains(key);
+	}
+	
+	@Override
+	public void storeObject(String key, Object obj){
+		local.put(key, obj);
 	}
 	
 	@Override
@@ -61,6 +71,16 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 		}
 	}
 	
+	public void global(String key, Object value){
+
+		if (!key.isEmpty()){
+			global.put(key, value);
+		}
+		if (value == null){
+			System.out.println("global object " + key + " is null");
+		}
+	}
+
 	public void put(Element eVar, Object val){
 		if (eVar.hasAttribute("id")){
 			if ("true".equals(eVar.getAttribute("export"))){
@@ -71,21 +91,8 @@ public abstract class AbstractXmlComponent implements Component, ObjectLoader {
 		}
 	}
 	
-	public void global(String key, Object value){
-
-		if (!key.isEmpty()){
-			global.put(key, value);
-		}
-		if (value == null){
-			System.out.println("global object " + key + " is null");
-		}
-	}
 	
-	public AbstractXmlComponent(AbstractXmlComponent preComponent, Element e, ComponentManager mgr){
-		this.config = e;
-		this.preComponent = preComponent;
-		this.mgr = mgr;
-	}
+	
 	
 	abstract public AbstractXmlComponent clone(Element e);
 	

@@ -92,10 +92,10 @@ var cpzlqk;
             pageSlector.change(function () {
                 if (pageSlector.getPath()[0] == 1) {
                     if (pageType == cpzlqk.PageType.APPROVE) {
-                        window.location.href = "/BusinessManagement/report/v2/yclhglqktj.do?approve=true&breads=" + breads;
+                        window.location.href = encodeURI("/BusinessManagement/report/v2/yclhglqktj.do?approve=true&breads=" + breads);
                     }
                     else {
-                        window.location.href = "/BusinessManagement/report/v2/yclhglqktj.do?breads=" + breads;
+                        window.location.href = encodeURI("/BusinessManagement/report/v2/yclhglqktj.do?breads=" + breads);
                     }
                 }
             });

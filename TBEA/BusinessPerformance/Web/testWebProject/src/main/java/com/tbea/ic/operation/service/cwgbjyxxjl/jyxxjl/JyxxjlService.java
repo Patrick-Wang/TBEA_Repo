@@ -22,4 +22,6 @@ public interface JyxxjlService {
 	ErrorCode submitJyxxjl(Date d, Company company, JSONArray data);
 	
 	ZBStatus getJyxxjlStatus(Date d, Company comp);
+
+	List<String> getJyxxjlYDSJ(Date d, Company company);
 }

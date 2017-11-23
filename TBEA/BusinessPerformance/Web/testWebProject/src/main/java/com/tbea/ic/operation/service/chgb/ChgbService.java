@@ -48,4 +48,8 @@ public interface ChgbService {
 	void importZbmFromNC(Date d, List<Company> cOMPS);
 
 	void importNychFromNC(Date d, List<Company> cOMPS);
+
+	List<List<String>> getChzlbhqkDy(Date d, Company company);
+
+	List<List<String>> getChxzqkDy(Date d, Company company);
 }

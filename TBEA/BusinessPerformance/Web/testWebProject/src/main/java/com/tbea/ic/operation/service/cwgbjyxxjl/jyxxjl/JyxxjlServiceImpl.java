@@ -164,6 +164,23 @@ public class JyxxjlServiceImpl implements JyxxjlService {
 	}
 	
 	@Override
+	public List<String> getJyxxjlYDSJ(Date d, Company company) {
+		List<String> result = new ArrayList<String>();
+		List<Integer> kmIdList = getKmIdList();
+		for (int cp = 0; cp < kmIdList.size(); cp++) {
+			JyxxjlEntity entity= jyxxjlDao.getByDate(d, company, kmIdList.get(cp));
+			if (null != entity) {
+				result.add("" + entity.getSjz());
+			}else {
+				result.add("null");
+			}
+			
+		}
+		
+		return result;
+	}
+	
+	@Override
 	public List<List<String>> getJyxxjlEntry(Date d, Company company) {
 
 		List<List<String>> result = new ArrayList<List<String>>();

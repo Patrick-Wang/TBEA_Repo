@@ -1,28 +1,21 @@
-package com.xml.frame.report.interpreter;
+package com.xml.frame.report.interpreter.word;
+
+import java.util.List;
+
+import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
+import org.docx4j.wml.FldChar;
+import org.docx4j.wml.STFldCharType;
+import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
-import com.frame.script.util.StringUtil;
-import com.util.tools.xml.Loop;
 import com.xml.frame.report.component.AbstractXmlComponent;
+import com.xml.frame.report.interpreter.Schema;
+import com.xml.frame.report.interpreter.XmlInterpreter;
 import com.xml.frame.report.util.DocxQuery;
 import com.xml.frame.report.util.DocxQuery.OnEach;
 import com.xml.frame.report.util.DocxUtil;
-import com.xml.frame.report.util.v2.core.MergeRegion;
-import com.xml.frame.report.util.xml.XmlElWalker;
 import com.xml.frame.report.util.xml.XmlUtil;
-import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
-import org.docx4j.wml.*;
-import org.jvnet.jaxb2_commons.ppp.Child;
-import org.w3c.dom.Element;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public class WordMergeXmlInterpreter implements XmlInterpreter {
@@ -70,7 +63,7 @@ public class WordMergeXmlInterpreter implements XmlInterpreter {
                 STFldCharType tp = fdChar.getFldCharType();
                 if (tp == STFldCharType.BEGIN) {
                     String val = DocxUtil.getDefaultText(fdChar);
-                    if (val.startsWith("M")) {
+                    if (val.startsWith(WordCompileTag.MERGECOMPILE)) {
                         Object obj = XmlUtil.parseELText(val.substring(1), elp);
                         DocxUtil.textReplace(obj + "", fdChar);
                     }

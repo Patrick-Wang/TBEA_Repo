@@ -1,6 +1,9 @@
 package com.xml.frame.report.component.service;
 
 import com.xml.frame.report.interpreter.*;
+import com.xml.frame.report.interpreter.word.WordMergeXmlInterpreter;
+import com.xml.frame.report.interpreter.word.WordTemplateXmlInterpreter;
+
 import org.w3c.dom.Element;
 
 import com.util.tools.xml.Loop;
@@ -35,7 +38,8 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 			new LoopXmlInterpreter(),
 			new LogXmlInterpreter(),
 			new WordTemplateXmlInterpreter(),
-			new WordMergeXmlInterpreter()
+			new WordMergeXmlInterpreter(),
+			new ScriptXmlInterpreter()
 	};
 
 

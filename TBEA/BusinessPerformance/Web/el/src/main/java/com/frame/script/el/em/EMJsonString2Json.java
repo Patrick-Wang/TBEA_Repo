@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 
 public class EMJsonString2Json extends NamedEM {
 
+	
 	public EMJsonString2Json() {
 		super("json");
 	}

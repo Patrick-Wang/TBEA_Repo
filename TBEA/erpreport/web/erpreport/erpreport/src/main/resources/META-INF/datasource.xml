@@ -4,7 +4,7 @@
 		username="repo"
 		password="erpreport"
 		driverClassName="oracle.jdbc.driver.OracleDriver"
-		jdbcUrl="jdbc:oracle:thin:@172.20.8.104:1523/ERPDEV"
+		jdbcUrl="jdbc:oracle:thin:@172.20.8.104:1523/ERPPRD"
 		minimumIdle="10" 
 		maximumPoolSize="70" 
 		idleTimeout="10000" 

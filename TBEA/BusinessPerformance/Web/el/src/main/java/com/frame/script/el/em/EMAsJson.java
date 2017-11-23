@@ -10,6 +10,8 @@ import net.sf.json.JSONObject;
 
 public class EMAsJson extends NamedEM{
 
+	
+	
 	public EMAsJson() {
 		super("asJson");
 	}

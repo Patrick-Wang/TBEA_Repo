@@ -63,6 +63,10 @@ public class TypeUtil {
 		return java.sql.Date.class.isAssignableFrom(cls);
 	}
 	
+	public static boolean isVoid(Class<? extends Object> cls) {
+		return Void.class.equals(cls);
+	}
+	
 	public static String asString(String val){
 		if (val.charAt(0) == '\'' && val.charAt(val.length() - 1) == '\''){
 			return val.substring(1, val.length() - 1);

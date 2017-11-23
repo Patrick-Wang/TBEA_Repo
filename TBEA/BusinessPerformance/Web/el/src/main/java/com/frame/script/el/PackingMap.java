@@ -2,10 +2,11 @@ package com.frame.script.el;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.frame.script.el.em.*;
+import com.frame.script.el.ELParser.ElContext;
+import com.frame.script.el.em.EMRegistry;
+import com.frame.script.el.em.ExtendMethod;
 import com.frame.script.util.ClosureMap;
 import com.frame.script.util.TypeUtil;
 
@@ -16,31 +17,16 @@ public class PackingMap extends ClosureMap {
 	int nextSize = 0;
 	Method md;
 	ExtendMethod emd;
-	
-	static List<ExtendMethod> extendMethods = new ArrayList<ExtendMethod>();
-	static{
-		extendMethods.add(new EMAsJson());
-		extendMethods.add(new EMArrayJudge());
-		extendMethods.add(new EMListJudge());
-		extendMethods.add(new EMDistinct());
-		extendMethods.add(new EMTranspose());
-		extendMethods.add(new EMListPack());
-		extendMethods.add(new EMAsTimestamp());
-		extendMethods.add(new EMJsonString2Json());
-		extendMethods.add(new EM2Int());
-		extendMethods.add(new EM2Fixed());
-		extendMethods.add(new EMListResize());
-		extendMethods.add(new EMColumn());
-		extendMethods.add(new EMTest());
-	}
+	ElContext elContext;
 	
 	public Object unpack(){
 		return packageObj;
 	}
 	
-	public PackingMap(Object packageObj) {
+	public PackingMap(Object packageObj, ElContext elContext) {
 		super();
 		this.packageObj = packageObj;
+		this.elContext = elContext;
 	}
 
 	private boolean findObjectMethod(String methodName){
@@ -57,12 +43,11 @@ public class PackingMap extends ClosureMap {
 	}
 	
 	private boolean findExtendMethod(String paramName){
-		for (ExtendMethod em : extendMethods){
-			if (em.check(paramName)){
-				emd = em;
-				nextSize = emd.paramCount() + 1;
-				return true;
-			}
+		ExtendMethod em = EMRegistry.find(paramName);
+		if (null != em){
+			emd = em;
+			nextSize = emd.paramCount() + 1;
+			return true;
 		}
 		return false;
 	}
@@ -124,6 +109,7 @@ public class PackingMap extends ClosureMap {
 	}
 
 	private Object invokeExtendMethod(List<Object> args) {
+		args.add(elContext);
 		return this.emd.invoke(packageObj, args);
 	}
 }

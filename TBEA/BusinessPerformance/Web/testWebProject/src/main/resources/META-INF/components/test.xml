@@ -144,4 +144,25 @@
 			<ds>${ret.asJson}</ds>
 		</response> 
 	</controller> 
+	
+	<controller id="testScript">
+		<script>
+			function mx(a, b){
+				return a > b ? a : b;
+			}
+		</script>
+		<context key="mx2" value="${mx(100,2)}"></context>
+		<response type="json">
+			<sc>${mx2}</sc>
+		</response> 
+	</controller> 
+	
+	<controller id="lsAdd">
+		<list id="a" type="string"> qw,qwe,weq,qwe</list>
+		<list id="b" type="string"> dddd</list>
+		<context key="tmp" value="${a.push[b].store.yy[0]}"></context>
+		<response type="json">
+			<sc>${yy.asJson}</sc>
+		</response> 
+	</controller> 
 </components>

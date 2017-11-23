@@ -11,8 +11,9 @@ import java.util.regex.Pattern;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
-import com.frame.script.el.ELParser.ObjectLoader;
+import com.frame.script.el.ELParser.ElContext;
 import com.frame.script.el.querier.ExpressionQuerier;
 import com.frame.script.el.querier.IndexQuerier;
 import com.frame.script.el.querier.ObjectQuerier;
@@ -40,15 +41,20 @@ public class ELExpression{
 	int start;
 	int end;
 	String expression;
-	ObjectLoader loader;
+	ElContext elContext;
 	static ScriptEngine jse = new ScriptEngineManager().getEngineByName("JavaScript");
+	
+	public static ScriptEngine getJse() {
+		return jse;
+	}
+	
 	public ELExpression(int start, int end, String expression,
-			ObjectLoader loader) {
+			ElContext elContext) {
 		super();
 		this.start = start;
 		this.end = end;
 		this.expression = expression;
-		this.loader = loader;
+		this.elContext = elContext;
 	}
 	
 	public String exp(){
@@ -79,11 +85,21 @@ public class ELExpression{
 		try {
 			return obj.getClass().getMethod(name);
 		} catch (NoSuchMethodException | SecurityException e) {
+			Object o = e;
 		}
 		return null;
 	}
 	
 	
+	private Object invokeMethod(Method md, Object obj) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Object result = obj;
+		if (TypeUtil.typeOf(md.getReturnType(), void.class)) {
+			md.invoke(obj);
+		}else {
+			result = md.invoke(obj);
+		}
+		return result;		
+	}
 	
 	private Object getObjectProp(Object obj, String propName) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		Method md = getMethod(obj, propName);
@@ -92,15 +108,15 @@ public class ELExpression{
 			String getMdName = makeGetMethodName(propName);
 			md = getMethod(obj, getMdName);
 			if (null == md){
-				result = new PackingMap(obj).get(propName);
+				result = new PackingMap(obj, elContext).get(propName);
 				if (null == result){
-					result = new PackingMap(obj).get(getMdName);
+					result = new PackingMap(obj, elContext).get(getMdName);
 				}
 			}else{
-				result = md.invoke(obj);
+				result = invokeMethod(md, obj);
 			}
 		}else{
-			result = md.invoke(obj);
+			result = invokeMethod(md, obj);
 		}
 		return result;
 	}
@@ -205,7 +221,12 @@ public class ELExpression{
 		}
 
 		if (!isObject && !expressTmp.equals(obj)){
-			obj = jse.eval(expressTmp);
+			try {
+				obj = jse.eval(expressTmp);
+			} catch (ScriptException e) {
+				obj = null;
+				e.printStackTrace();
+			}
 			if (null != obj &&
 				!TypeUtil.isDouble(obj.getClass()) &&
 				!TypeUtil.isInt(obj.getClass()) &&
@@ -245,7 +266,7 @@ public class ELExpression{
 				continue;
 			}
 			
-			ELExpression exp = new ELExpression(0, val.length(), val, this.loader);
+			ELExpression exp = new ELExpression(0, val.length(), val, this.elContext);
 			indxs.add(exp.value());
 		}
 		return indxs;
@@ -258,16 +279,16 @@ public class ELExpression{
 		String objName = objExp;
 		if (index > 0){
 			objName = objExp.substring(0, index);
-			if (!loader.hasObject(objName)){
+			if (!elContext.hasObject(objName)){
 				throw new ELInitObjectNotExist(objName);
 			}
-			ret = loader.onGetObject(objName);
+			ret = elContext.onGetObject(objName);
 			ret = getPropByIndex(ret, getIndexs(objExp.substring(index)));
 		}else{
-			if (!loader.hasObject(objName)){
+			if (!elContext.hasObject(objName)){
 				throw new ELInitObjectNotExist(objName);
 			}
-			ret = loader.onGetObject(objName);
+			ret = elContext.onGetObject(objName);
 		}
 		return ret;
 	}

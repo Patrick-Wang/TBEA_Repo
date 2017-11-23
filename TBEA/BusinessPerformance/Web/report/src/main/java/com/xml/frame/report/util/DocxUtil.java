@@ -1,56 +1,50 @@
 package com.xml.frame.report.util;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.converter.PicturesManager;
-import org.apache.poi.hwpf.converter.WordToFoConverter;
-import org.apache.poi.hwpf.converter.WordToFoUtils;
-import org.apache.poi.hwpf.converter.WordToHtmlConverter;
-import org.apache.poi.hwpf.usermodel.PictureType;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.xwpf.converter.core.utils.XWPFUtils;
 import org.apache.poi.xwpf.converter.pdf.PdfConverter;
 import org.apache.poi.xwpf.converter.pdf.PdfOptions;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.docx4j.Docx4J;
-import org.docx4j.convert.out.FOSettings;
-import org.docx4j.fonts.IdentityPlusMapper;
-import org.docx4j.fonts.Mapper;
-import org.docx4j.fonts.PhysicalFonts;
-import org.docx4j.jaxb.Context;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-import org.docx4j.openpackaging.parts.PartName;
-import org.docx4j.openpackaging.parts.WordprocessingML.AlternativeFormatInputPart;
-import org.docx4j.openpackaging.parts.WordprocessingML.MainDocumentPart;
-import org.docx4j.org.apache.poi.util.IOUtils;
-import org.docx4j.relationships.Relationship;
-import org.docx4j.wml.*;
+import org.docx4j.wml.Br;
+import org.docx4j.wml.CTFFData;
+import org.docx4j.wml.CTFFStatusText;
+import org.docx4j.wml.CTFFTextInput;
+import org.docx4j.wml.FldChar;
+import org.docx4j.wml.Jc;
+import org.docx4j.wml.JcEnumeration;
+import org.docx4j.wml.P;
+import org.docx4j.wml.PPr;
+import org.docx4j.wml.R;
+import org.docx4j.wml.STBrType;
+import org.docx4j.wml.STFldCharType;
+import org.docx4j.wml.Tbl;
+import org.docx4j.wml.Tc;
+import org.docx4j.wml.TcPr;
 import org.docx4j.wml.TcPrInner.GridSpan;
 import org.docx4j.wml.TcPrInner.HMerge;
 import org.docx4j.wml.TcPrInner.VMerge;
+import org.docx4j.wml.Text;
+import org.docx4j.wml.Tr;
 import org.jvnet.jaxb2_commons.ppp.Child;
+
+import com.frame.script.util.StringUtil;
 
 public class DocxUtil {
 
 	public static void setDefaultText(FldChar fldChar, String text) {
-		String val = "";
 		CTFFData fdData = fldChar.getFfData();
 		if (fdData != null) {
+			JAXBElement<?> jaxbStatus = null;
 			List<JAXBElement<?>> jaxbes = fdData.getNameOrEnabledOrCalcOnExit();
 			for (JAXBElement<?> jaxb : jaxbes) {
 				if (jaxb.getValue() instanceof CTFFTextInput) {
@@ -58,8 +52,12 @@ public class DocxUtil {
 					if (null != input.getDefault()) {
 						input.getDefault().setVal(text);
 					}
-					break;
+				}else if (jaxb.getValue() instanceof CTFFStatusText) {
+					jaxbStatus = jaxb;
 				}
+			}
+			if (null != jaxbStatus) {
+				jaxbes.remove(jaxbStatus);
 			}
 		}
 	}
@@ -72,10 +70,15 @@ public class DocxUtil {
 			for (JAXBElement<?> jaxb : jaxbes) {
 				if (jaxb.getValue() instanceof CTFFTextInput) {
 					CTFFTextInput input = (CTFFTextInput) jaxb.getValue();
-					if (null != input.getDefault()) {
-						val = input.getDefault().getVal();
+					if (null != input.getDefault() && null != input.getDefault().getVal()) {
+						val = input.getDefault().getVal() + " ";
 					}
-					break;
+				} else if (jaxb.getValue() instanceof CTFFStatusText) {
+					CTFFStatusText statusText = (CTFFStatusText) jaxb.getValue();
+					if (null != statusText.getVal()) {
+						val = statusText.getVal();
+						break;
+					}
 				}
 			}
 		}
@@ -471,6 +474,9 @@ public class DocxUtil {
 	}
 
 	public static void textReplace(String text, FldChar fdChar) {
+		if (StringUtil.shrink(text).isEmpty()) {
+			text = "";
+		}
 		DocxQuery dq = DocxQuery.q(fdChar);
 		DocxQuery p = dq.parent();
 		dq.remove();

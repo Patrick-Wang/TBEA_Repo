@@ -1,4 +1,4 @@
-package com.xml.frame.report.interpreter;
+package com.xml.frame.report.interpreter.word;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,8 +22,11 @@ import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
 import com.frame.script.util.StringUtil;
+import com.frame.script.util.TypeUtil;
 import com.util.tools.xml.Loop;
 import com.xml.frame.report.component.AbstractXmlComponent;
+import com.xml.frame.report.interpreter.Schema;
+import com.xml.frame.report.interpreter.XmlInterpreter;
 import com.xml.frame.report.util.DocxQuery;
 import com.xml.frame.report.util.DocxQuery.OnEach;
 import com.xml.frame.report.util.DocxUtil;
@@ -33,7 +36,7 @@ import com.xml.frame.report.util.xml.XmlUtil;
 
 
 public class WordTemplateXmlInterpreter implements XmlInterpreter {
-
+	
 	ELParser elp;
 	AbstractXmlComponent component;
 	@Override
@@ -77,7 +80,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 				STFldCharType tp = fdChar.getFldCharType();
 				if (tp == STFldCharType.BEGIN) {
 					String el = DocxUtil.getDefaultText(fdChar);
-					if (el.startsWith("#")) {
+					if (el.startsWith(WordCompileTag.PRECOMPILE)) {
 						DocxUtil.setDefaultText(fdChar, el.substring(1));
 					}
 				}
@@ -126,7 +129,7 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 					DocxQuery dqTb = dqFd.parent(Tbl.class);
 					if (!dqTb.isEmpty()) {
 						String el = DocxUtil.getDefaultText(fdChar);
-						if (el.startsWith("#")){
+						if (el.startsWith(WordCompileTag.PRECOMPILE)){
 							el = el.substring(1);
 							Object val = XmlUtil.parseELText(el, elp);
 							if (val instanceof List){
@@ -234,6 +237,11 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 	}
 
 
+    private String getELText(String el){
+	    String objExp = el.replace("${", "").replace("}", "");
+        return StringUtil.trim(objExp);
+    }
+    
 	private String getELObjName(String el){
 	    String objExp = el.replace("${", "").replace("}", "");
 	    int index = objExp.indexOf("[");
@@ -254,13 +262,23 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 				STFldCharType tp = fdChar.getFldCharType();
 				if (tp == STFldCharType.BEGIN) {
 					String val = DocxUtil.getDefaultText(fdChar);
-					if (!val.startsWith("M")) {
+					if (!val.startsWith(WordCompileTag.MERGECOMPILE)) {
+						System.out.println(i + " " + val + " begin ----------------------");
 						Object obj = XmlUtil.parseELText(val, elp);
 						if (obj != null && obj instanceof List) {
-							tableReplace((List) obj, fdChar, mrs.get(getELObjName(val)));
-						} else {
+							tableReplace((List) obj, fdChar, mrs.get(getELText(val)));
+						} else if(null != obj &&
+								(TypeUtil.isDouble(obj.getClass()) ||
+								TypeUtil.isInt(obj.getClass()) ||
+								TypeUtil.isLong(obj.getClass()) ||
+								TypeUtil.isBoolean(obj.getClass()) ||
+								TypeUtil.isString(obj.getClass()))) {
 							DocxUtil.textReplace(obj + "", fdChar);
+						} else {
+							DocxUtil.textReplace("", fdChar);
 						}
+
+						System.out.println(i + " end ----------------------");
 					}
 				}
 				return true;

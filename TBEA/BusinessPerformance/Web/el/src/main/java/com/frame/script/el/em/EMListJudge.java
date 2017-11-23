@@ -7,6 +7,8 @@ import com.frame.script.util.TypeUtil;
 
 public class EMListJudge extends NamedEM{
 
+	
+	
 	public EMListJudge() {
 		super("isList");
 	}

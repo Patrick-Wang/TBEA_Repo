@@ -7,6 +7,8 @@ import com.frame.script.util.TypeUtil;
 
 public class EM2Int extends NamedEM{
 
+	
+	
 	public EM2Int() {
 		super("toInt");
 	}

@@ -1,12 +1,13 @@
 package com.frame.script.el.em;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.frame.script.util.TypeUtil;
 
 
 public class EMTranspose  extends NamedEM{
-
+	
 	public EMTranspose() {
 		super("transpose");
 	}
@@ -19,10 +20,17 @@ public class EMTranspose  extends NamedEM{
 
 	
 	private Object transposeArray(List<Object[]> matrix){
-		Object retMatrix[][] = new Object[matrix.get(0).length][matrix.size()];
+		List<List> retMatrix = new ArrayList<List>();
+		for (int i = 0; i < matrix.get(i).length; ++i) {
+			retMatrix.add(new ArrayList<Object>());
+			for (int j = 0; j < matrix.size(); ++j) {
+				retMatrix.get(i).add(null);
+			}
+		}
+		
 		for (int i = 0; i < matrix.size(); ++i){
 			for (int j = 0; j < matrix.get(i).length; ++j){
-				retMatrix[j][i] = matrix.get(i)[j];
+				retMatrix.get(j).set(i,  matrix.get(i)[j]);
 			}
 		}
 		return retMatrix;
@@ -44,10 +52,17 @@ public class EMTranspose  extends NamedEM{
 	}
 
 	private Object transposeList(List<List> matrix) {
-		Object retMatrix[][] = new Object[matrix.get(0).size()][matrix.size()];
+		List<List> retMatrix = new ArrayList<List>();
+		for (int i = 0; i < matrix.get(0).size(); ++i) {
+			retMatrix.add(new ArrayList<Object>());
+			for (int j = 0; j < matrix.size(); ++j) {
+				retMatrix.get(i).add(null);
+			}
+		}
+		
 		for (int i = 0; i < matrix.size(); ++i){
 			for (int j = 0; j < matrix.get(i).size(); ++j){
-				retMatrix[j][i] = matrix.get(i).get(j);
+				retMatrix.get(j).set(i, matrix.get(i).get(j));
 			}
 		}
 		return retMatrix;

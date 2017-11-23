@@ -7,6 +7,8 @@ import com.frame.script.util.TypeUtil;
 
 public class EMDistinct extends NamedEM{
 
+	
+	
 	public EMDistinct() {
 		super("distinct");
 	}

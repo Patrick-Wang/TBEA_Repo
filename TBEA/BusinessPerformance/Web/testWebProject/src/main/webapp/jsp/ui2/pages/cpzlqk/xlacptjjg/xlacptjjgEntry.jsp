@@ -5,7 +5,7 @@
 		</div>
     </div>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/xlacptjjg/xlacptjjgEntry.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/xlacptjjg/xlacptjjgEntry.js?ver=1.0"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     framework.router

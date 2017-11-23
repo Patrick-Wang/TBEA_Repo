@@ -6,7 +6,6 @@ import java.util.List;
 public class EMListResize  extends NamedEM{
 
 	
-	
 	public EMListResize() {
 		super("resize");
 	}

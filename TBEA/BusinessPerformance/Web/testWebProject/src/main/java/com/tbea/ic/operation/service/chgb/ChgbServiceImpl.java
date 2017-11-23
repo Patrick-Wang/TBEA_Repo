@@ -92,6 +92,13 @@ public class ChgbServiceImpl implements ChgbService {
 			list.add("" + entity.getYz());
 			result.add(list);
 		}
+		if (result.isEmpty()) {
+			List<String> list = new ArrayList<String>();
+			list.add("null");
+			list.add("null");
+			list.add("null");
+			result.add(list);
+		}
 		return result;
 	}
 	
@@ -256,6 +263,35 @@ public class ChgbServiceImpl implements ChgbService {
 		return result;
 	}
 	
+	@Override
+	public List<List<String>> getChzlbhqkDy(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+
+		List<ChzlbhqkEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = chzlbhqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		}else{
+			entities = chzlbhqkDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies());
+		}
+		
+		
+		result.add(new ArrayList<String>());
+		for (ChzlbhqkEntity entity : entities){
+			if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
+				result.set(result.size() - 1, toList(entity));
+				entities.remove(entity);
+				break;
+			}
+		}
+		if (result.get(result.size() - 1).isEmpty()){
+			ListUtil.resize(result.get(result.size() - 1), 7);
+		}
+		
+		return result;
+	}
+	
 	private List<String> toList(ChxzqkEntity entity) {
 		List<String> list = new ArrayList<String>();
 		list.add("" + entity.getYcl());
@@ -311,6 +347,32 @@ public class ChgbServiceImpl implements ChgbService {
 		return result;
 	}
 	
+	@Override
+	public List<List<String>> getChxzqkDy(Date d, Company company) {
+		List<List<String>> result = new ArrayList<List<String>>();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+
+		List<ChxzqkEntity> entities = null;
+		if (companyManager.getBMDBOrganization().owns(company)){
+			entities = chxzqkDao.getByDate(new Date(cal.getTimeInMillis()), d, company);
+		}else{
+			entities = chxzqkDao.getSumByDate(new Date(cal.getTimeInMillis()), d, company.getSubCompanies());
+		}
+		
+		result.add(new ArrayList<String>());
+		for (ChxzqkEntity entity : entities){
+			if (entity.getNf() == cal.get(Calendar.YEAR) && entity.getYf() == cal.get(Calendar.MONTH) + 1){
+				result.set(result.size() - 1, toList(entity));
+				entities.remove(entity);
+				break;
+			}
+		}
+		if (result.get(result.size() - 1).isEmpty()){
+			ListUtil.resize(result.get(result.size() - 1), 9);
+		}
+		return result;
+	}
 	
 	private List<String> toList(NychEntity entity) {
 		List<String> list = new ArrayList<String>();

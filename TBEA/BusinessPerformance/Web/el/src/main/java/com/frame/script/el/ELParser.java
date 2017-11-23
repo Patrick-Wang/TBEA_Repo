@@ -8,15 +8,16 @@ import com.frame.script.el.querier.Querier;
 
 public class ELParser {
 
-	public static interface ObjectLoader {
+	public static interface ElContext {
 		Object onGetObject(String key);
 		boolean hasObject(String key);
+		void storeObject(String key, Object obj);
 	}
 
-	ObjectLoader loader;
+	ElContext elContext;
 
-	public ELParser(ObjectLoader loader) {
-		this.loader = loader;
+	public ELParser(ElContext loader) {
+		this.elContext = loader;
 	}
 
 	public List<ELExpression> parser(String express) {
@@ -27,7 +28,7 @@ public class ELParser {
 					querier.start(), 
 					querier.end(), 
 					querier.next(),
-					loader));
+					elContext));
 		}
 		return exps;
 	}

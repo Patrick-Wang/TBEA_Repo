@@ -13,10 +13,10 @@
         <dependent-module archiveName="el-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/el/el">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="dynamicDS-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dynamicDS/dynamicDS">
+        <dependent-module archiveName="tools-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/tools/tools">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="tools-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/tools/tools">
+        <dependent-module archiveName="dynamicDS-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/dynamicDS/dynamicDS">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="maker-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/maker/maker">

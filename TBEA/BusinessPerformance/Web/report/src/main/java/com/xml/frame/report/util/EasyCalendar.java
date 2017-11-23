@@ -363,6 +363,20 @@ public class EasyCalendar {
 		return new EasyCalendar(cal);
 	}
 	
+	public EasyCalendar getMonthBefore(int monthCount){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.MONTH, -1 * monthCount);
+		return new EasyCalendar(cal);
+	}
+	
+	public EasyCalendar getMonthAfter(int monthCount){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(this.cal.getTimeInMillis());
+		cal.add(Calendar.MONTH, monthCount);
+		return new EasyCalendar(cal);
+	}
+	
 	public EasyCalendar getNextYear(){
 		if (cache.containsKey(KEY_NextYear)){
 			return (EasyCalendar) cache.get(KEY_NextYear);

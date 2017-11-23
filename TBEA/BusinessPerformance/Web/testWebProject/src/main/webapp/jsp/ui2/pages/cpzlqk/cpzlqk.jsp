@@ -156,7 +156,7 @@
 <%@include file="../framework/basic/basicShow.jsp"%>
 <script src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/cpzlqkdef.js"
 	type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/cpzlqk.js"
+<script src="${pageContext.request.contextPath}/jsp/ui2/pages/cpzlqk/cpzlqk.js?ver=1.0"
 	type="text/javascript"></script>
 <%@include file="../../ie8-b.jsp"%>
 <style>

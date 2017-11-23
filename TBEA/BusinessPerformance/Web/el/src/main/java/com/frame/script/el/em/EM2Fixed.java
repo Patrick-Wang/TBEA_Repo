@@ -7,6 +7,8 @@ import com.frame.script.util.TypeUtil;
 
 public class EM2Fixed extends NamedEM{
 
+
+	
 	public EM2Fixed() {
 		super("toFixed");
 	}

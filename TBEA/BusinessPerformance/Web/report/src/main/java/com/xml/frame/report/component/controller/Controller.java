@@ -1,6 +1,9 @@
 package com.xml.frame.report.component.controller;
 
 import com.xml.frame.report.interpreter.*;
+import com.xml.frame.report.interpreter.word.WordMergeXmlInterpreter;
+import com.xml.frame.report.interpreter.word.WordTemplateXmlInterpreter;
+
 import org.w3c.dom.Element;
 
 import com.util.tools.xml.Loop;
@@ -41,7 +44,8 @@ public class Controller extends AbstractXmlComponent {
 			new LogXmlInterpreter(),
 			new WordTemplateXmlInterpreter(),
 			new TableXmlInterpreter(),
-			new WordMergeXmlInterpreter()
+			new WordMergeXmlInterpreter(),
+			new ScriptXmlInterpreter()
 	}; 
 	
 	

@@ -93,6 +93,10 @@ public class MathUtil {
 	
 	public static Double toDouble(String val) {
 		try {
+			if (val.endsWith("%")) {
+				val = val.substring(0, val.length() - 1);
+				return Double.valueOf(val) / 100;
+			}		
 			return Double.valueOf(val);
 		} catch (Exception e) {
 		}

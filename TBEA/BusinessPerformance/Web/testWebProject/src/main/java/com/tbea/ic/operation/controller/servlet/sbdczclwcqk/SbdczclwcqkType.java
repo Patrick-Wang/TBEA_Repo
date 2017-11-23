@@ -1,7 +1,5 @@
 package com.tbea.ic.operation.controller.servlet.sbdczclwcqk;
 
-import com.tbea.ic.operation.common.GSZB;
-
 public enum SbdczclwcqkType{
 
 	SBDCZCLWCQK_CZ_BYQ(11),

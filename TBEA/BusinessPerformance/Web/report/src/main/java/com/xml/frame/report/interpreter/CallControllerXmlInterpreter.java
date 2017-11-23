@@ -27,7 +27,7 @@ public class CallControllerXmlInterpreter implements XmlInterpreter {
 		if (null != controller){
 			controller.run(component.globalContext());
 		}else{
-			System.out.println("call controller " + e.toString() + " find failed");
+			System.out.println("call controller " + id + " find failed");
 		}
 		return true;
 	}

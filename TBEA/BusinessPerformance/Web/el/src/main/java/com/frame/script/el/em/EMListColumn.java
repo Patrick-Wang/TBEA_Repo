@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EMColumn extends NamedEM {
+public class EMListColumn extends NamedEM {
 
-    public EMColumn() {
+	
+	
+    public EMListColumn() {
         super("col");
     }
 
@@ -36,9 +38,7 @@ public class EMColumn extends NamedEM {
     public Object invoke(Object stub, List<Object> args) {
         if (stub instanceof List) {
             List list = (List) stub;
-            if (list.isEmpty()) {
-                return new ArrayList();
-            } else {
+            if (!list.isEmpty()) {
                 if (list.get(0) instanceof List) {
                     Integer col = (Integer) args.get(0);
                     return getColFromList(list, col);
