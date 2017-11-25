@@ -106,6 +106,8 @@ public class TableXmlInterpreter implements XmlInterpreter {
 					parseGrowthRates(component, tb, elem);
 				} else if ("copyCol".equals(elem.getTagName())) {
 					parseCopyCol(tb, elem);
+				} else if ("copyRow".equals(elem.getTagName())) {
+					parseCopyRow(tb, elem);
 				}
 			}
 
@@ -299,9 +301,22 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			List<Object> tarCols = tb.getValues().get(target);
 			List<Object> sjCols = tb.getValues().get(sj);
 			List<Object> tqCols = tb.getValues().get(tq);
+			Double dSj = null;
+			Double dTq = null;
 			for (int i = 0; i < tarCols.size(); ++i) {
 				if (excludeRows.indexOf(i) < 0) {
-					tarCols.set(i, MathUtil.minus(div(MathUtil.o2d(sjCols.get(i)), MathUtil.o2d(tqCols.get(i))), 1.0));
+					dSj = MathUtil.o2d(sjCols.get(i));
+					dTq = MathUtil.o2d(tqCols.get(i));					
+					if (null == dSj || 
+						null == dTq || 
+						MathUtil.isNegative(dSj) ||
+						MathUtil.isNegative(dTq) ||
+						MathUtil.isZero(dSj) ||
+						MathUtil.isZero(dTq)) {
+						tarCols.set(i, null);
+					} else {
+						tarCols.set(i, dSj / dTq - 1);
+					}
 				}
 			}
 		}
@@ -317,6 +332,18 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			}
 		}
 	}
+	
+	protected void parseCopyRow(Table tb, Element elem) throws Exception {
+		Integer from = XmlUtil.getIntAttr(elem, "from", elp, null);
+		List<Integer> targets = parserArray(elem.getAttribute("to"));
+		if (from != null && !targets.isEmpty()) {
+			for (List c : tb.getValues()) {
+				for (Integer tar : targets) {
+					c.set(tar, c.get(from));
+				}
+			}
+		}
+	}
 
 	protected void parseDivCol(AbstractXmlComponent component, Table tb, Element elem) throws Exception {
 		ELParser elp = new ELParser(component);
@@ -329,9 +356,22 @@ public class TableXmlInterpreter implements XmlInterpreter {
 			List<Object> tarCols = tb.getValues().get(target);
 			List<Object> subCols = tb.getValues().get(sub);
 			List<Object> baseCols = tb.getValues().get(base);
+			Double dSub = null;
+			Double dBase = null;
 			for (int i = 0; i < tarCols.size(); ++i) {
 				if (excludeRows.indexOf(i) < 0) {
-					tarCols.set(i, div(MathUtil.o2d(subCols.get(i)), MathUtil.o2d(baseCols.get(i))));
+					dSub = MathUtil.o2d(subCols.get(i));
+					dBase = MathUtil.o2d(baseCols.get(i));					
+					if (null == dSub || 
+						null == dBase || 
+						MathUtil.isNegative(dSub) ||
+						MathUtil.isNegative(dBase) ||
+						MathUtil.isZero(dSub) ||
+						MathUtil.isZero(dBase)) {
+						tarCols.set(i, null);
+					} else {
+						tarCols.set(i, dSub / dBase);
+					}
 				}
 			}
 		}

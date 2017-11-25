@@ -1,15 +1,16 @@
-package com.frame.script.el.em;
+package com.frame.script.el.em.list.copy;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.frame.script.el.em.NamedEM;
 import com.util.tools.MathUtil;
 
 
-public class EMListMaxI  extends NamedEM{
+public class EMListMinI  extends NamedEM{
 
-	public EMListMaxI() {
-		super("maxI");
+	public EMListMinI() {
+		super("minI");
 	}
 
 	@Override
@@ -21,30 +22,29 @@ public class EMListMaxI  extends NamedEM{
 	public Object invoke(Object stub, List<Object> args) {
 		if (stub != null && stub instanceof List) {
 			List list = (List) stub;
-			Double mxVal = MathUtil.o2d(list.get(0));
+			List<Integer> minI = new ArrayList<Integer>();
+			Double minVal = MathUtil.o2d(list.get(0));
 			Double tmpVal = null;
-			List<Integer> maxI = new ArrayList<Integer>();
 			for (int j = 1; j < list.size(); ++j) {
 				tmpVal = MathUtil.o2d(list.get(j));
 				if (tmpVal != null) {
-					if (mxVal == null || mxVal < tmpVal) {
-						mxVal = tmpVal;
+					if (minVal == null || minVal > tmpVal) {
+						minVal = tmpVal;
 					}
 				}
 			}
 			
+
 			for (int j = 0; j < list.size(); ++j) {
 				tmpVal = MathUtil.o2d(list.get(j));
-				tmpVal = MathUtil.minus(mxVal, tmpVal);
+				tmpVal = MathUtil.minus(minVal, tmpVal);
 				if (tmpVal != null) {
 					if (MathUtil.isZero(tmpVal)) {
-						maxI.add(j);
-						mxVal = tmpVal;
+						minI.add(j);
 					}
 				}
 			}
-			
-			return maxI;
+			return minI;
 		}
 		return null;
 	}

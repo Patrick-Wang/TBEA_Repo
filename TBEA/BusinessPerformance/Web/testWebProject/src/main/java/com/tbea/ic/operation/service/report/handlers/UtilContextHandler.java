@@ -2,6 +2,7 @@ package com.tbea.ic.operation.service.report.handlers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
@@ -138,6 +139,18 @@ public class UtilContextHandler implements ContextHandler {
 			@Override
 			public Object getProperty(Object key) throws Exception {
 				return new LoggerProxy().getLogger((String) key);
+			}
+			
+		});
+		
+		context.put("list", new PropMap(){
+
+			@Override
+			public Object getProperty(Object key) throws Exception {
+				if ("new".equals(key)) {
+					return new ArrayList();
+				}
+				return null;
 			}
 			
 		});

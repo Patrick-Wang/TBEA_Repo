@@ -6,6 +6,9 @@
   </list>
   <table id="tbData" rowIds="ids" table="${data}"/>
   <formatter id="fmtData">
+  	<PercentFormatter reservedCount="1">
+    <DefaultMatcher rows="17"/>
+   </PercentFormatter>
    <PercentFormatter reservedCount="1">
     <DefaultMatcher cols="3,5,8,10,12,14"/>
    </PercentFormatter>
@@ -698,30 +701,30 @@
   <table id="tbData" rowIds="ids">
    <list type="double">
     <item isNull="true"/>
-    <item concat="${accFactory.njhAcc.compute[0][cal.date][cal.date][zbs][comps]}"/>
+    <item concat="${accFactory.njhAcc.compute[0][cal.date][cal.date][gnqywcqkZbs][comps]}"/>
    </list>
    <list type="double">
     <item isNull="true"/>
-    <item concat="${accFactory.yjhAcc.compute[0][cal.date][cal.date][zbs][comps]}"/>
+    <item concat="${accFactory.yjhAcc.compute[0][cal.date][cal.date][gnqywcqkZbs][comps]}"/>
    </list>
    <list type="double">
     <item isNull="true"/>
-    <item concat="${accFactory.sjAcc.compute[0][cal.date][cal.date][zbs][comps]}"/>
+    <item concat="${accFactory.sjAcc.compute[0][cal.date][cal.date][gnqywcqkZbs][comps]}"/>
    </list>
    <col instruction="计划完成率"/>
    <list type="double">
     <item isNull="true"/>
-    <item concat="${accFactory.sjAcc.compute[0][cal.lastYear.date][cal.lastYear.date][zbs][comps]}"/>
+    <item concat="${accFactory.sjAcc.compute[0][cal.lastYear.date][cal.lastYear.date][gnqywcqkZbs][comps]}"/>
    </list>
    <col instruction="同比增幅"/>
    <list type="double">
     <item isNull="true"/>
-    <item concat="${accFactory.sjAcc.compute[0][cal.months[1].date][cal.date][zbs][comps]}"/>
+    <item concat="${accFactory.sjAcc.compute[0][cal.months[1].date][cal.date][gnqywcqkZbs][comps]}"/>
    </list>
    <col instruction="计划完成率"/>
    <list type="double">
     <item isNull="true"/>
-    <item concat="${accFactory.sjAcc.compute[0][cal.lastYear.months[1].date][cal.lastYear.date][zbs][comps]}"/>
+    <item concat="${accFactory.sjAcc.compute[0][cal.lastYear.months[1].date][cal.lastYear.date][gnqywcqkZbs][comps]}"/>
    </list>
    <col instruction="同比增幅"/>
    <sumRow toRow="0">
@@ -738,13 +741,13 @@
    </PercentFormatter>
    <NumberFormatter reservedCount="1"/>
   </formatter>
-  <formatterServer id="fmtServ" table="${tbData.matrixNoIds.subList[0][7]}">
+  <formatterServer id="fmtServ" table="${tbData.matrixNoIds.lastSub[1]}">
    <formatter ref="fmtData"/>
   </formatterServer>
   <context key="gnqywcqk" value="${fmtServ.result}"/>
  </controller>
   <controller id="owrXlGnqywcqkClr">
-  <list id="zbs" type="int" export="true">291, 294, 300, 301, 352, 305</list>
+  <list id="gnqywcqkZbs" type="int" export="true">291, 294, 300, 301, 352, 305</list>
   <callcontroller id="owrGnqywcqkClr"/>
   </controller>
  <controller id="owrGnqyhyqyClr">
@@ -784,11 +787,12 @@
   </list> -->
  </controller>
  <controller id="owrXlCzwcqkClr">
-  <context key="data" value="${wrs.xlCzwcqk[compId][cal.date].rmCol[0]}" export="false"/>
+  <context key="data" value="${wrs.xlCzwcqk[compId][cal.date]}" export="false"/>
+  <context key="czwcqkHeader" value="${data.col[0]}"/>
   <formatter id="fmtData">
    <NumberFormatter reservedCount="1"/>
   </formatter>
-  <formatterServer id="fmtServ" table="${data}">
+  <formatterServer id="fmtServ" table="${data.rmCol[0]}">
    <formatter ref="fmtData"/>
   </formatterServer>
   <context key="czwcqk" value="${fmtServ.result}"/>
@@ -922,10 +926,14 @@
 <loop from="0" to="12">
 	<list id="dataTmp" type="double" clear="true">
 		<item concat="${accFactory.sjAcc.compute[0][calStart.date][calStart.date][zbs][comps]}"/>
-		<item insert="3" isNull="true"/>
 		<item isNull="true"/>
 		<item isNull="true"/>
 	</list>
+	
+	<list id="dataTmp" type="double">
+		<item insert="3" isNull="true"/>
+	</list>
+	
 	<list id="data" type="object">
 		<item>${dataTmp}</item>
 	</list>	
@@ -938,9 +946,7 @@
    <sumRow toRow="3">
     <inRows>0,1,2</inRows>
    </sumRow>
-   <sumRow toRow="5">
-    <inRows>4</inRows>
-   </sumRow>
+   <copyRow from="4" to="5"/>
    <divRow toRow="6">
     <subRow>3</subRow>
     <baseRow>5</baseRow>
@@ -966,6 +972,9 @@
    </list>
    <list id="vScrollHeader" type="object" export="true">
     <item>${vScrollheaderRow}</item>
+   </list>
+    <list id="scrollHeader" type="string" export="true">
+    <item>${calStart.year}年${calStart.month}月</item>
    </list>
    <context key="calStart" value="${calStart.nextMonth}" export="false"/>
   </loop>

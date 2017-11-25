@@ -9,7 +9,7 @@
  	<callcontroller id="owrCpdlmlClr"/>
  </controller>
    <controller id="owrByqGnqywcqkClr">
-  <list id="zbs" type="int" export="true">291, 294, 300, 900, 301, 352, 305</list>
+  <list id="gnqywcqkZbs" type="int" export="true">291, 294, 300, 301, 352, 305</list>
   <callcontroller id="owrGnqywcqkClr"/>
   </controller>
    <controller id="owrByqGnqycpqyClr">
@@ -75,25 +75,28 @@
   <context key="clwcqk" value="${fmtServ.result}"/>
  </controller>
  <controller id="owrByqKglyddcplbkjClr">
-  <context key="data" value="${wrs.byqKglyddcplbkj[compId][cal.date].rmCol[0].lastSub[2]}" export="false"/>
+  <context key="data" value="${wrs.byqKglyddcplbkj[compId][cal.date]}" export="false"/>
   <if test="${!data.isEmpty}">
-  	<context key="dataLeft" value="${data.transpose.left[15]}"></context>
+  	<context key="dataLeft" value="${data.transpose.lastSub[2].store['tranData'].left[16]}"></context>
   <list id="other" type="object">
-  	<item>${wru.lplus4[data.col[15]][data.col[18]][data.col[21]][data.col[24]]}</item>
-  	<item>${wru.lplus4[data.col[16]][data.col[19]][data.col[22]][data.col[25]]}</item>
+  	<item>${wru.lplus4[tranData[16]][tranData[19]][tranData[22]][tranData[25]]}</item>
+  	<item>${wru.lplus4[tranData[17]][tranData[20]][tranData[23]][tranData[26]]}</item>
   </list>
   <list id="other" type="object">
-  	<item>${wru.lwcl[other[1]][data.col[1]]}</item>
+  	<item>${wru.lwcl[other[1]][tranData[2]]}</item>
   </list>
   <formatter id="fmtData">
   <EmptyFormatter cols="0">
   </EmptyFormatter>
+  	<EmptyFormatter>
+  		<DefaultMatcher cols="0"></DefaultMatcher>
+  	</EmptyFormatter>
   	<PercentFormatter>
-  		<DefaultMatcher cols="8, 11, 14, 17"></DefaultMatcher>
+  		<DefaultMatcher cols="8, 12, 15, 18"></DefaultMatcher>
   	</PercentFormatter>
    <NumberFormatter reservedCount="1"/>
   </formatter>
-  <formatterServer id="fmtServ" table="${dataLeft.concat[other].concat[data.transpose.right[2]].transpose}">
+  <formatterServer id="fmtServ" table="${dataLeft.concat[other].concat[tranData.right[2]].transpose}">
    <formatter ref="fmtData"/>
   </formatterServer>
   <context key="kglyddcplbkj" value="${fmtServ.result}"/>
@@ -104,15 +107,15 @@
   
  </controller>
  <controller id="owrByqKglyddscdykjClr">
-  <context key="data" value="${wrs.byqKglyddscdykj[compId][cal.date].lastSub[2]}" export="false"/>
+  <context key="data" value="${wrs.byqKglyddscdykj[compId][cal.date]}" export="false"/>
   <if test="${!data.isEmpty}">
-  	<context key="dataLeft" value="${data.transpose.left[15]}"></context>
+  	<context key="dataLeft" value="${data.transpose.store['tranData'].left[16]}"></context>
   <list id="other" type="object">
-  	<item>${wru.lplus4[data.col[15]][data.col[18]][data.col[21]][data.col[24]]}</item>
-  	<item>${wru.lplus4[data.col[16]][data.col[19]][data.col[22]][data.col[25]]}</item>
+  	<item>${wru.lplus4[tranData[15]][tranData[18]][tranData[21]][tranData[24]]}</item>
+  	<item>${wru.lplus4[tranData[16]][tranData[19]][tranData[22]][tranData[25]]}</item>
   </list>
   <list id="other" type="object">
-  	<item>${wru.lwcl[other[1]][data.col[1]]}</item>
+  	<item>${wru.lwcl[other[1]][tranData[1]]}</item>
   </list>
   <formatter id="fmtData">
   <EmptyFormatter cols="0">
@@ -122,7 +125,7 @@
   	</PercentFormatter>
    <NumberFormatter reservedCount="1"/>
   </formatter>
-  <formatterServer id="fmtServ" table="${dataLeft.concat[other].concat[data.transpose.right[2]].transpose}">
+  <formatterServer id="fmtServ" table="${dataLeft.concat[other].concat[tranData.right[2]].transpose}">
    <formatter ref="fmtData"/>
   </formatterServer>
   <context key="kglyddscdykj" value="${fmtServ.result}"/>

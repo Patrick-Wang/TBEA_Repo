@@ -1,16 +1,17 @@
-package com.frame.script.el.em;
+package com.frame.script.el.em.list.copy;
 
 import java.util.List;
 
+import com.frame.script.el.em.NamedEM;
 import com.util.tools.ListUtil;
 
 
-public class EMListLastSub extends NamedEM {
+public class EMListLeft extends NamedEM {
 
 	
 	
-    public EMListLastSub() {
-        super("lastSub");
+    public EMListLeft() {
+        super("left");
     }
 
 
@@ -27,7 +28,7 @@ public class EMListLastSub extends NamedEM {
         if (stub instanceof List) {
             List list = (List) stub;
             Integer index = (Integer) args.get(0);
-        	return ListUtil.lastSub(list, index);
+        	return ListUtil.left(list, index);
         }
         return null;
     }

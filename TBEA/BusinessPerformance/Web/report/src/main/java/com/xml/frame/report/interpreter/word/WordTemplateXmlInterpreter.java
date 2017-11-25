@@ -277,8 +277,6 @@ public class WordTemplateXmlInterpreter implements XmlInterpreter {
 						} else {
 							DocxUtil.textReplace("", fdChar);
 						}
-
-						System.out.println(i + " end ----------------------");
 					}
 				}
 				return true;

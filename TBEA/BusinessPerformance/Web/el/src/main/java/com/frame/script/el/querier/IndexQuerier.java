@@ -8,7 +8,8 @@ public class IndexQuerier extends AbstractQuerier {
 		this.expression = expression;
 	}
 	
-	private void passInvisible(){
+	private boolean passInvisible(){
+		boolean isEnd = true;
 		while (start < expression.length()){
 			if (expression.charAt(start) == '\t' ||
 				expression.charAt(start) == '\n' ||
@@ -16,30 +17,46 @@ public class IndexQuerier extends AbstractQuerier {
 				expression.charAt(start) == ' '){
 				++start;
 			}else{
+				isEnd = false;
 				break;
 			}
 		}
+		return isEnd;
 	}
 	
-	private int queryIndexBlock(){
-		if (start >= 0 && expression.length() > start){
-			if (expression.charAt(start) != '['){
-				passInvisible();
-				if (expression.length() > start && expression.charAt(start) == '['){
-					return StringUtil.findPair(expression, start, '[', ']');
-				}
-			}else{
-				return StringUtil.findPair(expression, start, '[', ']');
+	private boolean rangeCheck(int index) {
+		return index >= 0 && index < expression.length();
+	}
+	
+	private boolean findIndexStart() {
+		if (rangeCheck(start)) {
+			if (expression.charAt(start) == '[' ||
+				(!passInvisible() && expression.charAt(start) == '[')) {
+				return true;
 			}
 		}
-		return -1;
+		return false;
+	}
+	
+	
+	private boolean queryIndexBlock(){
+		if (findIndexStart()){
+			end = StringUtil.findPair(expression, start, '[', ']');
+			if (end < 0) {
+				System.out.println(expression + " find end ']' failed from '[' start=" + start);
+			}
+			return end > 0;
+		}
+		else {
+			end = -1;
+			return false;
+		}
 	}
 
 	@Override
 	public boolean hasNext() {
 		start = end;
-		end = this.queryIndexBlock();
-		return end >= 0;
+		return queryIndexBlock();
 	}
 
 	//返回值去掉了[ ] 两个括号

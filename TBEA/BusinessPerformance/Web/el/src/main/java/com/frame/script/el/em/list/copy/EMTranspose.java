@@ -1,8 +1,9 @@
-package com.frame.script.el.em;
+package com.frame.script.el.em.list.copy;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.frame.script.el.em.NamedEM;
 import com.frame.script.util.TypeUtil;
 
 

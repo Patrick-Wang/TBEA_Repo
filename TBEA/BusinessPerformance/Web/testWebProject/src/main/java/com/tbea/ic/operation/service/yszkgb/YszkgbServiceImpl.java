@@ -85,9 +85,9 @@ public class YszkgbServiceImpl implements YszkgbService {
 		}
 		List<String> list = new ArrayList<String>();
 		if (null != entity){
-			list.add("" + entity.getZmje());
+			list.add("" + entity.getYz());//原值存的账面净额
 			list.add("" + entity.getHzzb());
-			list.add("" + entity.getYz());
+			list.add("" + entity.getZmje());//账面净额存的是原值
 			
 		}else{
 			ListUtil.resize(list, 3);
@@ -706,7 +706,7 @@ public class YszkgbServiceImpl implements YszkgbService {
 			"	imdx.m10097 ersan,	"+	//二至三年
 			"	imdx.m10144 yier,	"+	//一至二年
 			"	imdx.m10016 yi,	"+	//一年以内
-			"	imdx.m10033 hj,	"+	//合计
+			"	(imdx.m10080 + imdx.m10020 + imdx.m10111 + imdx.m10097 + imdx.m10144 + imdx.m10016) hj,	"+	//合计
 			"	inputdate	"+	//日期
 			"	from	"+	
 			"	iufo_measure_data_xyy6hd5t imdx	"+	

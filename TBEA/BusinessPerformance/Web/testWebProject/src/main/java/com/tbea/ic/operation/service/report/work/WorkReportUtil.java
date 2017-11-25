@@ -19,6 +19,50 @@ public class WorkReportUtil {
 		}
 		return "增长" + ratio;		
 	}
+	
+	public String topN(Integer n, List<String> top) {
+		String tN = "--";
+		if ("--".equals(top.get(0))) {
+			return tN;
+		}
+		
+		tN = top.get(0);
+		
+		for (int i = 1; i < n; ++i) {
+			if ("--".equals(top.get(i))) {
+				return tN;
+			}
+			tN += "、" + top.get(i);
+		}
+		
+		return tN;
+	}
+	
+	public String topNBy(Integer n, List<String> top, List<String> by) {
+		String tN = "--";
+		if ("--".equals(by.get(0))) {
+			return tN;
+		}
+		
+		tN = top.get(0);
+		
+		for (int i = 1; i < n; ++i) {
+			if ("--".equals(by.get(i))) {
+				return tN;
+			}
+			tN += "、" + top.get(i);
+		}
+		
+		return tN;
+	}
+	
+	public String top3(List<String> top) {
+		return topN(3, top);
+	}
+	
+	public String top3By(List<String> top, List<String> by) {
+		return topNBy(3, top, by);
+	}
 
 	private String getMonthText(Calendar cal) {
 		return (cal.get(Calendar.MONTH) + 1) + "月";
@@ -147,7 +191,7 @@ public class WorkReportUtil {
 		Double dSub = MathUtil.o2d(sub);
 		Double dBase = MathUtil.o2d(base);
 		Double ret = MathUtil.division(dSub, dBase);
-		if (ret != null && ret >= 0) {
+		if (ret != null && ret >= 0 && dSub != null && !(dSub < 0) && dBase != null && dBase > 0) {
 			BigDecimal b = new BigDecimal(ret * 100);
 			String sRet = b.setScale(1, BigDecimal.ROUND_HALF_UP).toPlainString();
 			return sRet + "%";
@@ -166,7 +210,7 @@ public class WorkReportUtil {
 	public String plus(String s1, String s2) {
 		Double d1 = MathUtil.o2d(s1);
 		Double d2 = MathUtil.o2d(s2);
-		Double dr = MathUtil.sum(d1, 2d);
+		Double dr = MathUtil.sum(d1, d2);
 		if (dr != null) {
 			BigDecimal b = new BigDecimal(dr);
 			String sRet = b.setScale(1, BigDecimal.ROUND_HALF_UP).toPlainString();

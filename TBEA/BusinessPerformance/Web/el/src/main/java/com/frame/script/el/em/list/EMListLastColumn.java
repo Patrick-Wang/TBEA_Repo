@@ -1,15 +1,17 @@
-package com.frame.script.el.em;
+package com.frame.script.el.em.list;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.frame.script.el.em.NamedEM;
 
-public class EMListColumn extends NamedEM {
+
+public class EMListLastColumn extends NamedEM {
 
 	
 	
-    public EMListColumn() {
-        super("col");
+    public EMListLastColumn() {
+        super("lastCol");
     }
 
 
@@ -40,10 +42,10 @@ public class EMListColumn extends NamedEM {
             List list = (List) stub;
             if (!list.isEmpty()) {
                 if (list.get(0) instanceof List) {
-                    Integer col = (Integer) args.get(0);
+                    Integer col = list.size() - (Integer) args.get(0) - 1;
                     return getColFromList(list, col);
                 } else if (list.get(0).getClass().isArray()) {
-                    Integer col = (Integer) args.get(0);
+                	Integer col = list.size() - (Integer) args.get(0) - 1;
                     return getColFromArray(list, col);
                 }
             }
