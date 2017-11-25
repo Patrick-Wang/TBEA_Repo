@@ -980,11 +980,34 @@
   </loop>
   <context key="hScrollHeader" value="${vScrollHeader.transpose}"/>
  </controller>
+  <controller id="operDwmcByIdClr">
+  	<if test="${compId == 1}">
+  		 <context key="dwmc" value="沈变"/>
+  	</if>
+  	<elseif test="${compId == 2}">
+  		 <context key="dwmc" value="衡变"/>
+  	</elseif>
+  	<elseif test="${compId == 3}">
+  		 <context key="dwmc" value="新变"/>
+  	</elseif>
+  	<elseif test="${compId == 301}">
+  		 <context key="dwmc" value="天变"/>
+  	</elseif>
+  	<elseif test="${compId == 4}">
+  		 <context key="dwmc" value="鲁缆"/>
+  	</elseif>
+  	<elseif test="${compId == 5}">
+  		 <context key="dwmc" value="新缆"/>
+  	</elseif>
+  	<elseif test="${compId == 6}">
+  		 <context key="dwmc" value="德缆"/>
+  	</elseif>
+  </controller>
  <controller id="operWorkReportXlClr">
   <context key="cal" value="${request.date.asCalendar}"/>
   <context key="compId" value="${request.compId.asInt}"/>
   <context key="comps" value="${orgs.BMDBOrganization.companiesByIds[compId.packAsList]}"/>
-  <context key="dwmc" value="${request.dwmc.asString}"/>
+  <callcontroller id="operDwmcByIdClr"/>
   
   <callcontroller id="operScrollHeaderClr"/>
   <callcontroller id="owrJydwztqkClr"/>

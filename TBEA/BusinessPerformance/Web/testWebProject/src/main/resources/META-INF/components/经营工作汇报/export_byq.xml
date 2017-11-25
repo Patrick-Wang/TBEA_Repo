@@ -155,11 +155,12 @@
   </formatterServer>
   <context key="wlyddmlspcs" value="${fmtServ.result}"/>
  </controller>
+ 
   <controller id="operWorkReportByqClr">
   <context key="cal" value="${request.date.asCalendar}"/>
   <context key="compId" value="${request.compId.asInt}"/>
   <context key="comps" value="${orgs.BMDBOrganization.companiesByIds[compId.packAsList]}"/>
-  <context key="dwmc" value="${request.dwmc.asString}"/>
+ 	<callcontroller id="operDwmcByIdClr"/>
   
   <callcontroller id="operScrollHeaderClr"/>
   <callcontroller id="owrJydwztqkClr"/>
@@ -179,7 +180,7 @@
   <callcontroller id="owrChjgqkClr"/>
   <callcontroller id="owrChzlClr"/>
   <callcontroller id="owrChxzClr"/>
- <callcontroller id="owrHkqkClr"/>
+  <callcontroller id="owrHkqkClr"/>
   <callcontroller id="owrHkfsqkClr"/>
   <callcontroller id="owrGjqywcqkClr"/>
   <callcontroller id="owrGjqydjqyClr"/> 
