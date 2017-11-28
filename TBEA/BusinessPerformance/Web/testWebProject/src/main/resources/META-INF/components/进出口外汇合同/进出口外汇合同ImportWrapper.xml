@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="B60D4AAC5CB0C71C5F807D2F68E9F535IWJ">
+        <list id="ids" type="int">0,1</list>
+        <list id="vals" type="string">进口外汇合同,出口外汇合同</list>
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="B60D4AAC5CB0C71C5F807D2F68E9F535ImportWrapper"/>
+            <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+        </response>
+    </controller>
+    <controller id="B60D4AAC5CB0C71C5F807D2F68E9F535ImportWrapper">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="B6433EB172F2E2533CF75BB9767C9588ImportClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="03592CA737B3E3319931BEECE7E0089FImportClr"/>
+        </elseif>
+    </controller>
+</components>

@@ -1,0 +1,77 @@
+<components>
+ <controller id="operDwmcByIdClr">
+  <if test="${compId == 1}">
+   <context key="dwmc" value="沈变"/>
+   <context key="isByq" value="${true}"/>
+  </if>
+  <elseif test="${compId == 2}">
+   <context key="dwmc" value="衡变"/>
+   <context key="isByq" value="${true}"/>
+  </elseif>
+  <elseif test="${compId == 3}">
+   <context key="dwmc" value="新变"/>
+   <context key="isByq" value="${true}"/>
+  </elseif>
+  <elseif test="${compId == 301}">
+   <context key="dwmc" value="天变"/>
+   <context key="isByq" value="${true}"/>
+  </elseif>
+  <elseif test="${compId == 4}">
+   <context key="dwmc" value="鲁缆"/>
+   <context key="isByq" value="${false}"/>
+  </elseif>
+  <elseif test="${compId == 5}">
+   <context key="dwmc" value="新缆"/>
+   <context key="isByq" value="${false}"/>
+  </elseif>
+  <elseif test="${compId == 6}">
+   <context key="dwmc" value="德缆"/>
+   <context key="isByq" value="${false}"/>
+  </elseif>
+ </controller>
+ <controller id="operWorkReportShowClr">
+  <response name="workReport/show" type="jsp">
+   <map key="year" value="${calendar.current.year}"/>
+   <map key="month" value="${calendar.current.month}"/>
+   <map map="${authMgr[95]}"/>
+   <map key="updateUrl" value="operWorkReportUpdateClr"/>
+   <map key="exportUrl" value="operWorkReportDownloadClr"/>
+  </response>
+ </controller>
+ <controller id="operWorkReportUpdateClr">
+  <context key="cal" value="${request.date.asCalendar}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="token" value="${compId}_${cal.year}_${cal.month}"/>
+  <context key="tokenTag" value="${token}Tag"/>
+  <if test="${session[tokenTag] == null}">
+   <context key="comps" value="${orgs.BMDBOrganization.companiesByIds[compId.packAsList]}"/>
+   <callcontroller id="operDwmcByIdClr"/>
+   <if test="${isByq}">
+    <callcontroller id="operWorkReportByqClr"/>
+   </if>
+   <else>
+    <callcontroller id="operWorkReportXlClr"/>
+   </else>
+   <context key="dateKey" value="${token}Date"/>
+   <context key="dwmcKey" value="${token}Dwmc"/>
+   <context key="tmp" value="${session.put[token][word]}"/>
+   <context key="tmp" value="${session.put[tokenTag]['true']}"/>
+   <context key="tmp" value="${session.put[dateKey][cal]}"/>
+   <context key="tmp" value="${session.put[dwmcKey][dwmc]}"/>
+   <context key="tmp" value="${session.timeout[token][600]}"/>
+   <context key="tmp" value="${session.timeout[dateKey][600]}"/>
+   <context key="tmp" value="${session.timeout[dwmcKey][600]}"/>
+   <context key="tmp" value="${session.timeout[tokenTag][600]}"/>
+  </if>
+  <response type="json">
+   <token>${token}</token>
+  </response>
+ </controller>
+ <controller id="operWorkReportDownloadClr">
+  <context key="token" value="${request.token.asString}"/>
+  <context key="dateKey" value="${token}Date"/>
+  <context key="dwmcKey" value="${token}Dwmc"/>
+  <context key="word" value="${session[token]}"/>
+  <response type="word" name="${session[dwmcKey]}${session[dateKey].year}年${session[dateKey].month}月经营工作分析材料.docx" ref="word"/>
+ </controller>
+</components>

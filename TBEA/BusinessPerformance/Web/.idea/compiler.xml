@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="BusinessManagement" />
+        <module name="DataTransfer" />
+        <module name="dynamicDS" />
+        <module name="el" />
+        <module name="ep" />
+        <module name="maker" />
+        <module name="report" />
+        <module name="template" />
+        <module name="testWebProject" />
+        <module name="tools" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="DataTransfer" target="1.5" />
+      <module name="dynamicDS" target="1.8" />
+      <module name="el" target="1.8" />
+      <module name="ep" target="1.8" />
+      <module name="maker" target="1.8" />
+      <module name="report" target="1.8" />
+      <module name="template" target="1.8" />
+      <module name="testWebProject" target="1.8" />
+      <module name="tools" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

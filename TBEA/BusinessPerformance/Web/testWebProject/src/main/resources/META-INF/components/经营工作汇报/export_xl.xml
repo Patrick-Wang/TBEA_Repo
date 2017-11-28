@@ -980,35 +980,9 @@
   </loop>
   <context key="hScrollHeader" value="${vScrollHeader.transpose}"/>
  </controller>
-  <controller id="operDwmcByIdClr">
-  	<if test="${compId == 1}">
-  		 <context key="dwmc" value="沈变"/>
-  	</if>
-  	<elseif test="${compId == 2}">
-  		 <context key="dwmc" value="衡变"/>
-  	</elseif>
-  	<elseif test="${compId == 3}">
-  		 <context key="dwmc" value="新变"/>
-  	</elseif>
-  	<elseif test="${compId == 301}">
-  		 <context key="dwmc" value="天变"/>
-  	</elseif>
-  	<elseif test="${compId == 4}">
-  		 <context key="dwmc" value="鲁缆"/>
-  	</elseif>
-  	<elseif test="${compId == 5}">
-  		 <context key="dwmc" value="新缆"/>
-  	</elseif>
-  	<elseif test="${compId == 6}">
-  		 <context key="dwmc" value="德缆"/>
-  	</elseif>
-  </controller>
- <controller id="operWorkReportXlClr">
-  <context key="cal" value="${request.date.asCalendar}"/>
-  <context key="compId" value="${request.compId.asInt}"/>
-  <context key="comps" value="${orgs.BMDBOrganization.companiesByIds[compId.packAsList]}"/>
-  <callcontroller id="operDwmcByIdClr"/>
   
+ <controller id="operWorkReportXlClr">
+ 
   <callcontroller id="operScrollHeaderClr"/>
   <callcontroller id="owrJydwztqkClr"/>
   <callcontroller id="owrLrsrzbClr"/>
@@ -1046,8 +1020,7 @@
   <callcontroller id="owrYclbfqkClr"/>
   <callcontroller id="owrSxfybdqsClr"/>
   
-  
-  <WordTemplate id="word" src="${TEMPLATE}jygzhb_xl_template.docx">
+  <WordTemplate id="word" src="${TEMPLATE}jygzhb_xl_template.docx" export="true">
    <merge ref="hScrollHeader" x="${12 - cal.month + 1}" y="0" width="${cal.month}" height="1"/>
    <merge ref="hScrollHeader" x="0" y="0" width="${12 - cal.month + 1}" height="1"/>   
    <merge ref="hScrollHeader.left[1]" x="${12 - cal.month + 1}" y="0" width="${cal.month}" height="1"/>
@@ -1055,6 +1028,6 @@
    <merge ref="vScrollHeader" x="0" y="${12 - cal.month + 1}" width="1" height="${cal.month}"/>
    <merge ref="vScrollHeader" x="0" y="0" width="1" height="${12 - cal.month + 1}"/>
   </WordTemplate>
-  <response type="word" name="${dwmc}${cal.year}年${cal.month}月经营工作分析材料.docx" ref="word"/>
+  
  </controller>
 </components>

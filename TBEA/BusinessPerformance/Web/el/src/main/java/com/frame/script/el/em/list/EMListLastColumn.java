@@ -49,6 +49,7 @@ public class EMListLastColumn extends NamedEM {
                     return getColFromArray(list, col);
                 }
             }
+            return new ArrayList();
         }
         return null;
     }

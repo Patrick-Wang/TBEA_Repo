@@ -8,8 +8,8 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/mloading/loading.js"></script>
 <script type="text/javascript">
-	Util.Loading.init();
 	$(document).ajaxStart(function() {
+		Util.Loading.init();
 		Util.Loading.start();
 	}).ajaxStop(function() {
 		Util.Loading.stop();

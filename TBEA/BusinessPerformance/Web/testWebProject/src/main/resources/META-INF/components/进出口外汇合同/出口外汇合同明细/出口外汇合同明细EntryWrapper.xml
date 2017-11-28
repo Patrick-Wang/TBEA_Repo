@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <service id="51480AEBDE770C9A1AB0824BF8685B66CCServ" transaction="transactionManager">
+        <sql id="cc" export="true"><![CDATA[
+            select id, num + '(' + currency + ')' nc
+                from foreign_exchange_export_contract
+            where
+                companyName in ${cnames}
+        ]]></sql>
+        <if test="${cc.isEmpty}">
+            <list id="cc" type="object">
+                <item>${list.new.push[0].push['无']}</item>
+            </list>
+        </if>
+    </service>
+    <controller id="51480AEBDE770C9A1AB0824BF8685B66EWJ">
+        <context key="cnames" value="${sysAuth.cnames[102]}"></context>
+        <if test="${sysAuth.has[100]}">
+            <context key="cnames" value="${cnames.push['特变电工股份有限公司（采购中心）']}"></context>
+        </if>
+        <if test="${sysAuth.has[101]}">
+            <context key="cnames" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
+        </if>
+        <callservice id="51480AEBDE770C9A1AB0824BF8685B66CCServ"></callservice>
+        <response name="framework/templates/dateReport/entry" type="jsp">
+            <map key="updateUrl" value="51480AEBDE770C9A1AB0824BF8685B66EntryUpdateWrapperClr"/>
+            <map key="submitUrl" value="51480AEBDE770C9A1AB0824BF8685B66EntrySubmitWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[cc.col[0]][cc.col[1]].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="51480AEBDE770C9A1AB0824BF8685B66EntryUpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <callcontroller id="E9170B6930092F54471CD717CC5FABF7EntryUpdateClr"/>
+    </controller>
+    <controller id="51480AEBDE770C9A1AB0824BF8685B66EntrySubmitWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <callcontroller id="E9170B6930092F54471CD717CC5FABF7EntrySubmitClr"/>
+    </controller>
+</components>

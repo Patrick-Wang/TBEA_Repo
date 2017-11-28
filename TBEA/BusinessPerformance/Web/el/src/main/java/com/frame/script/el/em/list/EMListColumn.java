@@ -49,6 +49,7 @@ public class EMListColumn extends NamedEM {
                     return getColFromArray(list, col);
                 }
             }
+            return new ArrayList();
         }
         return null;
     }

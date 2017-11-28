@@ -265,4 +265,20 @@ public class WorkReportUtil {
 		}
 		return "";
 	}
+	
+	public String diff(String s1, String s2) {
+		Double d1 = MathUtil.o2d(s1);
+		Double d2 = MathUtil.o2d(s2);
+		if (d1 != null && d2 != null) {
+			if (MathUtil.isZero(d1) && MathUtil.isZero(d2)) {
+				return "相同";
+			}
+			if (MathUtil.isNegative(d1 * d2)) {
+				return "不同";
+			}else {
+				return "相同";
+			}
+		}
+		return "--";
+	}
 }

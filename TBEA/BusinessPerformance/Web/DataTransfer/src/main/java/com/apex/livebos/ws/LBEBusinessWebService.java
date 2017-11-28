@@ -1,10 +1,13 @@
-
 package com.apex.livebos.ws;
 
-import oracle.net.ano.Service;
-
-import org.apache.tomcat.util.net.URL;
-import org.dom4j.QName;
+import javax.xml.namespace.QName;
+import javax.xml.ws.WebEndpoint;
+import javax.xml.ws.WebServiceClient;
+import javax.xml.ws.WebServiceException;
+import javax.xml.ws.WebServiceFeature;
+import javax.xml.ws.Service;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 /**
@@ -14,8 +17,7 @@ import org.dom4j.QName;
  * 
  */
 @WebServiceClient(name = "LBEBusinessWebService", targetNamespace = "http://ws.livebos.apex.com/", wsdlLocation = "http://192.168.100.12:8080/service/LBEBusiness?wsdl")
-public class LBEBusinessWebService
-    extends Service
+public class LBEBusinessWebService  extends Service
 {
 
     private final static URL LBEBUSINESSWEBSERVICE_WSDL_LOCATION;

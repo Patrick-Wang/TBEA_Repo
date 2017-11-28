@@ -27,15 +27,7 @@ import sun.misc.BASE64Encoder;
 
 
 public class SignTest {
-	
-	/**
-	 * 从文件中输入流中加载公钥
-	 * 
-	 * @param in
-	 *            公钥输入流
-	 * @throws Exception
-	 *             加载公钥时产生的异常
-	 */
+
 	public static String loadPublicKeyByFile(String path) throws Exception {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path
@@ -78,14 +70,7 @@ public class SignTest {
 		}
 	}
 
-	/**
-	 * 从文件中加载私钥
-	 * 
-	 * @param keyFileName
-	 *            私钥文件名
-	 * @return 是否成功
-	 * @throws Exception
-	 */
+
 	public static String loadPrivateKeyByFile(String path) throws Exception {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path

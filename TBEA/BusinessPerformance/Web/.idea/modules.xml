@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DataTransfer/DataTransfer.iml" filepath="$PROJECT_DIR$/DataTransfer/DataTransfer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dynamicDS/dynamicDS.iml" filepath="$PROJECT_DIR$/dynamicDS/dynamicDS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/el/el.iml" filepath="$PROJECT_DIR$/el/el.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ep/ep.iml" filepath="$PROJECT_DIR$/ep/ep.iml" />
+      <module fileurl="file://$PROJECT_DIR$/maker/maker.iml" filepath="$PROJECT_DIR$/maker/maker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report/report.iml" filepath="$PROJECT_DIR$/report/report.iml" />
+      <module fileurl="file://$PROJECT_DIR$/template/template.iml" filepath="$PROJECT_DIR$/template/template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testWebProject/testWebProject.iml" filepath="$PROJECT_DIR$/testWebProject/testWebProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tools/tools.iml" filepath="$PROJECT_DIR$/tools/tools.iml" />
+    </modules>
+  </component>
+</project>

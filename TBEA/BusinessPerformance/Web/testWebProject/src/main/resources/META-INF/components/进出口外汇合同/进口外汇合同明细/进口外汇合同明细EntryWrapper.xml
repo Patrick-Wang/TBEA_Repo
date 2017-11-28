@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <service id="D502EC08D6FB66F4F3B05B3E9B014133CCServ" transaction="transactionManager">
+        <sql id="cc" export="true">
+            select
+                id, num + '(' + currency + ')', companyName nc
+            from
+                foreign_exchange_import_contract
+            where
+                companyName in ${cnames}
+        </sql>
+        <if test="${cc.isEmpty}">
+            <list id="cc" type="object">
+                <item>${list.new.push[0].push['无']}</item>
+            </list>
+        </if>
+    </service>
+
+    <controller id="D502EC08D6FB66F4F3B05B3E9B014133EWJ">
+        <context key="cnames" value="${sysAuth.cnames[102]}"></context>
+        <if test="${sysAuth.has[100]}">
+            <context key="cnames" value="${cnames.push['特变电工股份有限公司（采购中心）']}"></context>
+        </if>
+        <if test="${sysAuth.has[101]}">
+            <context key="cnames" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
+        </if>
+        <callservice id="D502EC08D6FB66F4F3B05B3E9B014133CCServ"></callservice>
+        <response name="framework/templates/dateReport/entry" type="jsp">
+            <map key="updateUrl" value="D502EC08D6FB66F4F3B05B3E9B014133EntryUpdateWrapperClr"/>
+            <map key="submitUrl" value="D502EC08D6FB66F4F3B05B3E9B014133EntrySubmitWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[cc.col[0]][cc.col[1]].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="D502EC08D6FB66F4F3B05B3E9B014133EntryUpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <callcontroller id="991BBF8F796F1CD4451D7CA119E764E5EntryUpdateClr"/>
+    </controller>
+    <controller id="D502EC08D6FB66F4F3B05B3E9B014133EntrySubmitWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <callcontroller id="991BBF8F796F1CD4451D7CA119E764E5EntrySubmitClr"/>
+    </controller>
+</components>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="B6433EB172F2E2533CF75BB9767C9588IMPORTJSP">
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="B6433EB172F2E2533CF75BB9767C9588ImportClr"/>
+        </response>
+    </controller>
+    <controller id="B6433EB172F2E2533CF75BB9767C9588ImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="B6433EB172F2E2533CF75BB9767C9588ImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="B6433EB172F2E2533CF75BB9767C9588ImportServ" transaction="transactionManager">
+        <merge data="${data}" table="foreign_exchange_import_contract">
+            <set>
+                <companyName ref="0" type="string"/>
+                <num ref="1" type="string"/>
+                <name ref="2" type="string"/>
+                <supplier ref="3" type="string"/>
+                <country ref="4" type="string"/>
+                <currency ref="5" type="string"/>
+                <payingBank ref="6" type="string"/>
+                <amount ref="7" type="double"/>
+                <startDate ref="8" type="date"/>
+                <exchangeRate ref="9" type="double"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

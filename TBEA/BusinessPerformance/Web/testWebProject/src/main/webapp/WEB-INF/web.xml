@@ -1,6 +1,6 @@
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-app_2_3.xsd"
-	version="2.3">
+	version="2.4">
 	<display-name>Business Management</display-name>
 	<welcome-file-list>
 		<welcome-file>/Login/v2/login.do</welcome-file>
@@ -38,10 +38,6 @@
 	<servlet>
 		<servlet-name>CXFServlet</servlet-name>
 		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext-webservices.xml</param-value>
-		</init-param>
 		</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -137,7 +133,8 @@
 	</listener>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext-services.xml,/WEB-INF/applicationContext-webservices.xml</param-value>
+		<param-value>/WEB-INF/applicationContext-services.xml,
+					/WEB-INF/applicationContext-webservices.xml</param-value>
 	</context-param>
 	<servlet>
 		<servlet-name>spring-mvc</servlet-name>

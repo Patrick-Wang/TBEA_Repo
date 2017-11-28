@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="E9170B6930092F54471CD717CC5FABF7ENTRYJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="E9170B6930092F54471CD717CC5FABF7EntryUpdateClr"/>
+            <map key="submitUrl" value="E9170B6930092F54471CD717CC5FABF7EntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="E9170B6930092F54471CD717CC5FABF7EntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="E9170B6930092F54471CD717CC5FABF7EntryUpdateServ"/>
+        <callcontroller id="E9170B6930092F54471CD717CC5FABF7EntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>合同编号</name>
+                    <type>text</type>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>合同名称</name>
+                    <type>text</type>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>项目名称</name>
+                    <type>text</type>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>对方单位名称</name>
+                    <type>text</type>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>所在国家</name>
+                    <type>text</type>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>币种 </name>
+                    <type>text</type>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>收款银行</name>
+                    <type>text</type>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>合同金额 </name>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>签订合同起始日</name>
+                    <type>date</type>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>签订合同汇率</name>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>已回款金额</name>
+                </item>
+                <item>
+                    <name>实际回款金额</name>
+                </item>
+                <item>
+                    <name>实际回款时间</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>款项性质</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>回款方式</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>预计未回款金额</name>
+                </item>
+                <item>
+                    <name>预计回款金额</name>
+                </item>
+                <item>
+                    <name>预计回款时间</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>预计回款方式</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>已操作金额</name>
+                </item>
+                <item>
+                    <name>交易类型</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>锁汇价格</name>
+                </item>
+                <item>
+                    <name>交割日</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>备注</name>
+                    <type>text</type>
+                </item>
+                <pager>none</pager>
+            </header>
+            <data>${fmtServ.result}</data>
+            <pager>none</pager>
+        </response>
+    </controller>
+    <controller id="E9170B6930092F54471CD717CC5FABF7EntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <PercentFormatter reservedCount="1">
+                <DefaultMatcher cols="10"/>
+            </PercentFormatter>
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="8,11,12,16,17,20,22"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+
+    <service id="E9170B6930092F54471CD717CC5FABF7EntryFindServ">
+        <sql id="data" export="true"><![CDATA[
+        select
+            feecd.id tmp0,
+            companyName,
+            num,
+            name,
+            projectName,
+            clientCompanyName,
+            country,
+            currency,
+            dueBank,
+            amount,
+            CONVERT(varchar(20),startDate, 23) tmp1,
+            exchangeRate,
+            cashCollected,
+            cashCollectionAmount,
+            CONVERT(varchar(20),cashCollectionDate, 23) tmp5,
+            moneyType,
+            cashCollectionType,
+            predictCashCollectionLeftAmount,
+            predictCashCollectionAmount,
+            CONVERT(varchar(20),predictCashCollectionDate, 23) tmp10,
+            predictCashCollectionType,
+            operationAmount,
+            transactionType,
+            lockPrice,
+            CONVERT(varchar(20),tradeDate, 23) tmp15,
+            remark
+        from
+            foreign_exchange_export_contract_detail feecd,
+            foreign_exchange_export_contract feic
+        where
+            feecd.exportContractId = feic.id and
+            year = ${cal.year} and
+            month = ${cal.month} and
+            feic.id = ${item}
+        ]]></sql>
+
+    </service>
+
+    <service id="E9170B6930092F54471CD717CC5FABF7EntryUpdateServ" transaction="transactionManager">
+        <callservice id="E9170B6930092F54471CD717CC5FABF7EntryFindServ"></callservice>
+        <if test="${data.isEmpty}">
+            <sql><![CDATA[
+                insert into foreign_exchange_export_contract_detail
+                    (exportContractId, year, month)
+                values
+                    (${item}, ${cal.year}, ${cal.month})
+            ]]></sql>
+            <callservice id="E9170B6930092F54471CD717CC5FABF7EntryFindServ"></callservice>
+        </if>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+        </table>
+    </service>
+    <controller id="E9170B6930092F54471CD717CC5FABF7EntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="E9170B6930092F54471CD717CC5FABF7EntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="E9170B6930092F54471CD717CC5FABF7EntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="foreign_exchange_export_contract_detail">
+            <where>
+                <id ref="0" type="int"/>
+            </where>
+            <set>
+                <cashCollected ref="12" type="double"/>
+                <cashCollectionAmount ref="13" type="double"/>
+                <cashCollectionDate ref="14" type="date"/>
+                <moneyType ref="15" type="string"/>
+                <cashCollectionType ref="16" type="string"/>
+                <predictCashCollectionLeftAmount ref="17" type="double"/>
+                <predictCashCollectionAmount ref="18" type="double"/>
+                <predictCashCollectionDate ref="19" type="date"/>
+                <predictCashCollectionType ref="20" type="string"/>
+                <operationAmount ref="21" type="double"/>
+                <transactionType ref="22" type="string"/>
+                <lockPrice ref="23" type="double"/>
+                <tradeDate ref="24" type="date"/>
+                <remark ref="26" type="string"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

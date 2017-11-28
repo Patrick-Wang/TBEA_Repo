@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <service id="D502EC08D6FB66F4F3B05B3E9B014133Filter" transaction="transactionManager">
+        <sql id="currency" export="true">
+            select
+                distinct currency
+            from
+                foreign_exchange_import_contract
+            where
+                companyName in ${cnames}
+        </sql>
+        <if test="${currency.isEmpty}">
+            <list id="currency" type="string">无</list>
+        </if>
+        <list id="currIds" export="true">
+            <item from="0" to="${currency.size - 1}"></item>
+        </list>
+    </service>
+
+    <controller id="D502EC08D6FB66F4F3B05B3E9B014133SWJ">
+        <context key="cnames" value="${sysAuth.cnames[96]}"></context>
+        <if test="${sysAuth.has[98]}">
+            <context key="cnames" value="${cnames.push['特变电工股份有限公司（采购中心）']}"></context>
+        </if>
+        <if test="${sysAuth.has[99]}">
+            <context key="cnames" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
+        </if>
+        <list id="cids">
+            <item from="0" to="${cnames.size - 1}"></item>
+        </list>
+        <callservice id="D502EC08D6FB66F4F3B05B3E9B014133Filter"></callservice>
+        <context key="tmp" value="${session.put['cur_import'][currency]}"></context>
+        <context key="tmp" value="${session.put['cnames_import'][cnames]}"></context>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="D502EC08D6FB66F4F3B05B3E9B014133UpdateWrapperClr"/>
+            <map key="exportUrl" value="D502EC08D6FB66F4F3B05B3E9B014133ExportWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[cids][cnames].asJson}"/>
+            <map key="nodeData2" value="${dataNodeFactory[currIds][currency].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="D502EC08D6FB66F4F3B05B3E9B014133UpdateWrapperClr">
+        <context key="item" value="${session['cur_import'][request.item.asInt]}"/>
+        <context key="dwmc" value="${session['cnames_import'][request.item2.asInt]}"/>
+        <callcontroller id="991BBF8F796F1CD4451D7CA119E764E5UpdateClr"/>
+    </controller>
+    <controller id="D502EC08D6FB66F4F3B05B3E9B014133ExportWrapperClr">
+        <context key="item" value="${session['cur_import'][request.item.asInt]}"/>
+        <context key="dwmc" value="${session['cnames_import'][request.item2.asInt]}"/>
+        <callcontroller id="991BBF8F796F1CD4451D7CA119E764E5ExportClr"/>
+    </controller>
+</components>

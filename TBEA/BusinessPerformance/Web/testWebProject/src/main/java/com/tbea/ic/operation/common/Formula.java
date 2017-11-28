@@ -160,7 +160,7 @@ public class Formula {
 			List<Double> gp = this.values.get(group);
 			String tmpScript = this.script;
 			for (int i = 0; i < this.params.size(); ++i) {
-				val = gp.get(i) == null ? 0 : gp.get(i);
+				val = gp.get(i) == null ? 0d : gp.get(i);
 				tmpScript = tmpScript.replace("#" + this.params.get(i), "" + val);
 			}
 			return (Double) jse.eval(tmpScript);

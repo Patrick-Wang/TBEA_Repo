@@ -29,8 +29,7 @@
     <orderEntry type="library" name="Maven: org.apache.ant:ant-launcher:1.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi-scratchpad:3.15" level="project" />
     <orderEntry type="module" module-name="report" />
-    <orderEntry type="library" name="Maven: cn.com.tbea:template:0.0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="module" module-name="template" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:4.1.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.1.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.1.0.RELEASE" level="project" />
@@ -72,6 +71,7 @@
     <orderEntry type="library" name="Maven: net.sf.json-lib:json-lib:jdk15:2.4" level="project" />
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: net.sf.ezmorph:ezmorph:1.0.6" level="project" />
+    <orderEntry type="module" module-name="tools" />
     <orderEntry type="library" name="Maven: org.docx4j:docx4j:3.3.5" level="project" />
     <orderEntry type="library" name="Maven: org.plutext:jaxb-svg11:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: net.engio:mbassador:1.2.4.2" level="project" />
@@ -96,7 +96,6 @@
     <orderEntry type="library" name="Maven: com.thedeanda:lorem:2.0" level="project" />
     <orderEntry type="module" module-name="dynamicDS" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:2.7.1" level="project" />
-    <orderEntry type="module" module-name="tools" />
     <orderEntry type="library" name="Maven: com.oracle:ojdbc7:12.1.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.docx4j:docx4j-export-fo:3.3.6" level="project" />
     <orderEntry type="library" name="Maven: org.plutext:jaxb-xslfo:1.0.1" level="project" />

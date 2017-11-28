@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="E9170B6930092F54471CD717CC5FABF7SHOWCLR">
+        <response name="framework/templates/singleDateReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map key="updateUrl" value="E9170B6930092F54471CD717CC5FABF7UpdateClr"/>
+            <map key="exportUrl" value="E9170B6930092F54471CD717CC5FABF7ExportClr"/>
+        </response>
+    </controller>
+    <controller id="E9170B6930092F54471CD717CC5FABF7UpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="E9170B6930092F54471CD717CC5FABF7ShowServ"/>
+        <callcontroller id="E9170B6930092F54471CD717CC5FABF7FmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>合同编号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>合同名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>项目名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>对方单位名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>所在国家</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>币种 </name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>收款银行</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>合同金额 </name>
+                </item>
+                <item>
+                    <name>签订合同起始日</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>签订合同汇率</name>
+                </item>
+                <item>
+                    <name>已回款金额</name>
+                </item>
+                <item>
+                    <name>实际回款金额</name>
+                </item>
+                <item>
+                    <name>实际回款时间</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>款项性质</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>回款方式</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>预计未回款金额</name>
+                </item>
+                <item>
+                    <name>预计回款金额</name>
+                </item>
+                <item>
+                    <name>预计回款时间</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>预计回款方式</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>已操作金额</name>
+                </item>
+                <item>
+                    <name>交易类型</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>锁汇价格</name>
+                </item>
+                <item>
+                    <name>交割日</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>备注</name>
+                    <type>text</type>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+            <dateCount/>
+        </response>
+    </controller>
+    <controller id="E9170B6930092F54471CD717CC5FABF7FmtClr">
+        <formatter export="true" id="fmtData">
+            <PercentFormatter reservedCount="1">
+                <DefaultMatcher cols="9"/>
+            </PercentFormatter>
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="7,10,11,15,16,19,21"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="E9170B6930092F54471CD717CC5FABF7ExportClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="E9170B6930092F54471CD717CC5FABF7ShowServ"/>
+        <callcontroller id="E9170B6930092F54471CD717CC5FABF7FmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="出口外汇合同明细"/>
+        <list id="title" type="string">单位名称,合同编号,合同名称,供货商名称,所在国家,币种 ,付款银行,合同金额 ,签订合同起始日,签订合同汇率,已回款金额,实际回款金额,实际回款时间,款项性质,回款方式,预计未回款金额,预计回款金额,预计回款时间,预计回款方式,已操作金额,交易类型,锁汇价格,交割日,备注</list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="${request.date.asString}出口外汇合同明细.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+    <service id="E9170B6930092F54471CD717CC5FABF7ShowServ" transaction="transactionManager">
+        <sql id="data"><![CDATA[
+            select
+                feecd.id tmp0,
+                companyName,
+                num,
+                name,
+                projectName,
+                clientCompanyName,
+                country,
+                currency,
+                dueBank,
+                amount,
+                CONVERT(varchar(20),startDate, 23) tmp9,
+                exchangeRate,
+                cashCollected,
+                cashCollectionAmount,
+                CONVERT(varchar(20),cashCollectionDate, 23) tmp5,
+                moneyType,
+                cashCollectionType,
+                predictCashCollectionLeftAmount,
+                predictCashCollectionAmount,
+                CONVERT(varchar(20),predictCashCollectionDate, 23) tmp10,
+                predictCashCollectionType,
+                operationAmount,
+                transactionType,
+                lockPrice,
+                CONVERT(varchar(20),tradeDate, 23) tmp15,
+                remark
+            from
+                foreign_exchange_export_contract_detail feecd,
+                foreign_exchange_export_contract feic
+            where
+                feecd.exportContractId = feic.id and
+                year = ${cal.year} and
+                month = ${cal.month} and
+                feic.companyName = ${dwmc}
+            ]]></sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+        </table>
+    </service>
+</components>

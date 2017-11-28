@@ -55,11 +55,12 @@
  </controller>
  
   <controller id="owrByqCzwcqkClr">
-  <context key="data" value="${wrs.byqCzwcqk[compId][cal.date].rmCol[0]}" export="false"/>
+  <context key="data" value="${wrs.byqCzwcqk[compId][cal.date]}" export="false"/>
+  <context key="czwcqkHeader" value="${data.col[0]}"/>
   <formatter id="fmtData">
    <NumberFormatter reservedCount="1"/>
-  </formatter>
-  <formatterServer id="fmtServ" table="${data}">
+  </formatter> 
+  <formatterServer id="fmtServ" table="${data.rmCol[0]}">
    <formatter ref="fmtData"/>
   </formatterServer>
   <context key="czwcqk" value="${fmtServ.result}"/>
@@ -157,10 +158,6 @@
  </controller>
  
   <controller id="operWorkReportByqClr">
-  <context key="cal" value="${request.date.asCalendar}"/>
-  <context key="compId" value="${request.compId.asInt}"/>
-  <context key="comps" value="${orgs.BMDBOrganization.companiesByIds[compId.packAsList]}"/>
- 	<callcontroller id="operDwmcByIdClr"/>
   
   <callcontroller id="operScrollHeaderClr"/>
   <callcontroller id="owrJydwztqkClr"/>
@@ -202,7 +199,7 @@
   <callcontroller id="owrSxfybdqsClr"/> 
   
   
-  <WordTemplate id="word" src="${TEMPLATE}jygzhb_byq_template.docx">
+  <WordTemplate id="word" src="${TEMPLATE}jygzhb_byq_template.docx" export="true">
    <merge ref="hScrollHeader" x="${12 - cal.month + 1}" y="0" width="${cal.month}" height="1"/>
    <merge ref="hScrollHeader" x="0" y="0" width="${12 - cal.month + 1}" height="1"/>
    <merge ref="hScrollHeader.left[1]" x="${12 - cal.month + 1}" y="0" width="${cal.month}" height="1"/>
@@ -210,6 +207,6 @@
    <merge ref="vScrollHeader" x="0" y="${12 - cal.month + 1}" width="1" height="${cal.month}"/>
    <merge ref="vScrollHeader" x="0" y="0" width="1" height="${12 - cal.month + 1}"/>
   </WordTemplate>
-  <response type="word" name="${dwmc}${cal.year}年${cal.month}月经营工作分析材料.docx" ref="word"/>
+  
  </controller>
 </components>

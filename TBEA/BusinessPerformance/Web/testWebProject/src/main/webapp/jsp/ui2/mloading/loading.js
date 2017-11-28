@@ -6,7 +6,9 @@ var Util;
         Loading.init = function () {
             if ($("#mloading").length == 0) {
                 $("body").children().eq(0).before("<div id='mloading' style='z-index:1999;position:absolute;width:100%;height:100%'></div>");
-                $("#mloading").mLoading({});
+                $("#mloading").mLoading({
+                    text: Loading.DEFAULT_TEXT //加载文字，默认值：加载中...
+                });
                 $("#mloading").mLoading("hide");
                 $("#mloading").hide();
             }
@@ -14,7 +16,10 @@ var Util;
         Loading.start = function () {
             Loading.startTime = Date.now();
             $("#mloading").show();
-            $("#mloading").mLoading("show");
+            $("#mloading").mLoading({
+                text: Loading.DEFAULT_TEXT //加载文字，默认值：加载中...
+            });
+            //$("#mloading").mLoading("show");
         };
         Loading.stop = function () {
             var endTime = Date.now();
@@ -30,6 +35,7 @@ var Util;
             }
         };
         Loading.startTime = 0;
+        Loading.DEFAULT_TEXT = "加载中...";
         return Loading;
     })();
     Util.Loading = Loading;
