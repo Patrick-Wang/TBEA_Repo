@@ -1,4 +1,4 @@
-package com.frame.script.util;
+package com.util.tools;
 
 
 public class StringUtil {

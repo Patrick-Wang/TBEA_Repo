@@ -9,15 +9,19 @@
 from
 	tcnycsdc_year_plan_zb
 where
-	year = ${cal.year}</sql>
-  <sql id="jdjh" order="ids" by="0" colcount="2">select 
+	year = ${cal.year} and
+  dwid = ${compId}</sql>
+  <sql id="jdjh" order="ids" by="0" colcount="2">
+
+      select
 	zbid, 
 	value
 from 
 	tcnycsdc_season_plan_zb
 where
 	year = ${cal.year} and
-	season = ${cal.season}</sql>
+	season = ${cal.season} and
+      dwid = ${compId}</sql>
   <sql id="yjh" order="ids" by="0" colcount="2">select 
 	zbid, 
 	value
@@ -25,48 +29,61 @@ from
 	tcnycsdc_month_plan_zb
 where
 	year = ${cal.year} and
-	month = ${cal.month}</sql>
-  <sql id="ylj" order="dayIds" by="0" colcount="2">select 
-	zbid, 
-   	CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
-		sum(value) / nullif(count(*), 0)
-	ELSE sum(value) END ylj
-from 
-	tcnycsdc_day_plan_zb
-where
-	day &gt;= ${cal.days[1].date} and 
-	day &lt;=  ${cal.lastDays.date} and
-	zbid in ${dayIds}
-group by
-	zbid
+	month = ${cal.month} and
+      dwid = ${compId}</sql>
+  <sql id="ylj" order="dayIds" by="0" colcount="2">
+    select
+        zbid,
+        CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
+            sum(value) / nullif(count(*), 0)
+        ELSE sum(value) END ylj
+    from
+        tcnycsdc_day_plan_zb
+    where
+        day &gt;= ${cal.days[1].date} and
+        day &lt;=  ${cal.lastDays.date} and
+        zbid in ${dayIds} and
+        value is not null and
+      value &lt;&gt; 0 and
+      dwid = ${compId}
+    group by
+        zbid
 	</sql>
-  <sql id="jdlj" order="dayIds" by="0" colcount="2">select 
-	zbid, 
-    CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
-		sum(value) / nullif(count(*), 0)
-	ELSE sum(value) END ylj
-from 
-	tcnycsdc_day_plan_zb
-where
-	day &gt;= ${cal.seasonStart.days[1].date} and 
-	day &lt;=  ${cal.lastDays.date} and
-	zbid in ${dayIds}
-group by
-	zbid
+  <sql id="jdlj" order="dayIds" by="0" colcount="2">
+    select
+        zbid,
+        CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
+            sum(value) / nullif(count(*), 0)
+        ELSE sum(value) END ylj
+    from
+        tcnycsdc_day_plan_zb
+    where
+        day &gt;= ${cal.seasonStart.days[1].date} and
+        day &lt;=  ${cal.lastDays.date} and
+        zbid in ${dayIds} and
+        value is not null and
+      value &lt;&gt; 0 and
+      dwid = ${compId}
+    group by
+        zbid
 	</sql>
-  <sql id="ndlj" order="dayIds" by="0" colcount="2">select 
-  	zbid,
-	CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
-		sum(value) / nullif(count(*), 0)
-	ELSE sum(value) END ylj
-from 
-	tcnycsdc_day_plan_zb
-where
-	day &gt;= ${cal.months[1].days[1].date} and 
-	day &lt;=  ${cal.lastDays.date} and
-	zbid in ${dayIds}
-group by
-	zbid
+  <sql id="ndlj" order="dayIds" by="0" colcount="2">
+    select
+  	    zbid,
+        CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
+            sum(value) / nullif(count(*), 0)
+        ELSE sum(value) END ylj
+    from
+        tcnycsdc_day_plan_zb
+    where
+        day &gt;= ${cal.months[1].days[1].date} and
+        day &lt;=  ${cal.lastDays.date} and
+        zbid in ${dayIds} and
+        value is not null and
+        value &lt;&gt; 0 and
+      dwid = ${compId}
+    group by
+        zbid
 	</sql>
   <table id="result" rowIds="ids" export="true">
    <list type="string" sql="zbs" value="1"/>
@@ -94,10 +111,7 @@ group by
    <PercentFormatter reservedCount="1">
     <DefaultMatcher cols="7,9,11"/>
    </PercentFormatter>
-   <PercentFormatter reservedCount="1">
-    <DefaultMatcher rows="4,5,26,27,28,33,37"/>
-   </PercentFormatter>
-   <NumberFormatter reservedCount="1"/>
+   <NumberFormatter reservedCount="2"/>
   </formatter>
  </controller>
  <controller id="tcnycrdcMonthReportExport">
@@ -146,6 +160,8 @@ group by
   <response type="excel" ref="excelTemplate" name="${request.date.asString}天池能源有限责任公司昌热电厂_月生产报表.xls" serv="fmtServ"/>
  </controller>
  <controller id="tcnycrdcMonthReportUpdate">
+
+     <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
   <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="servTcnycrdcMonthReportUpdate"/>
   <callcontroller id="fmtterTcnycrdcMonthReport"/>
@@ -200,12 +216,12 @@ group by
   </response>
  </controller>
  <controller id="tcnycrdcMonthReport">
-  <response type="jsp" name="framework/templates/singleDateReport/show">
+  <response type="jsp" name="framework/templates/dateReport/show">
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
    <map key="updateUrl" value="tcnycrdcMonthReportUpdate"/>
    <map key="exportUrl" value="tcnycrdcMonthReportExport"/>
-   <map key="title" value="天池能源有限责任公司昌热电厂"/>
+      <map map="${authMgr[83]}"/>
   </response>
  </controller>
 </components>

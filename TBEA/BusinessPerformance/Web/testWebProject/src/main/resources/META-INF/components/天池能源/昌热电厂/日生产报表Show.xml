@@ -2,49 +2,60 @@
  <service id="servTcnycrdcDayReportUpdate" transaction="transactionManager">
   <sql id="zbs">select id, category, name, unit from identifier_tcnycsdc_daily_zb</sql>
   <list id="ids" sql="zbs" value="0" type="int"/>
-  <sql id="yjh" order="ids" by="0" colcount="2">select 
+  <sql id="yjh" order="ids" by="0" colcount="2">
+      select
 	iden.dailyId, 
 	value
-from 
-	tcnycsdc_month_plan_zb, 
-	identifier_tcnycsdc_monthly_zb iden
-where
-	zbid = iden.id and
-	year = ${cal.year} and
-	month = ${cal.month}</sql>
-  <sql id="drwc" order="ids" by="0" colcount="2">select 
-	zbid, 
-        	value
-from 
-	tcnycsdc_day_plan_zb
-where
-	day = ${cal.date}
+    from
+        tcnycsdc_month_plan_zb,
+        identifier_tcnycsdc_monthly_zb iden
+    where
+        zbid = iden.id and
+        year = ${cal.year} and
+        month = ${cal.month} and
+      dwid = ${compId}</sql>
+      <sql id="drwc" order="ids" by="0" colcount="2">select
+        zbid,
+                value
+    from
+        tcnycsdc_day_plan_zb
+    where
+        day = ${cal.date} and
+          dwid = ${compId}
 	</sql>
-  <sql id="ylj" order="ids" by="0" colcount="2">select 
-	zbid, 
-	CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
-		sum(value) / nullif(count(*), 0)
-	ELSE sum(value) END ylj
-from 
-	tcnycsdc_day_plan_zb
-where
-	day &gt;= ${cal.days[1].date} and 
-	day &lt;=  ${cal.date}
-group by
-	zbid
+  <sql id="ylj" order="ids" by="0" colcount="2">
+    select
+        zbid,
+        CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
+            sum(value) / nullif(count(*), 0)
+        ELSE sum(value) END ylj
+    from
+        tcnycsdc_day_plan_zb
+    where
+        day &gt;= ${cal.days[1].date} and
+        day &lt;=  ${cal.date} and
+        value is not null and
+      value &lt;&gt; 0 and
+      dwid = ${compId}
+    group by
+        zbid
 	</sql>
-  <sql id="ndlj" order="ids" by="0" colcount="2">select 
-	zbid, 
-	CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
-		sum(value) / nullif(count(*), 0)
-	ELSE sum(value) END ylj
-from 
-	tcnycsdc_day_plan_zb
-where
-	day &gt;= ${cal.months[1].days[1].date} and 
-	day &lt;=  ${cal.date}
-group by
-	zbid
+  <sql id="ndlj" order="ids" by="0" colcount="2">
+    select
+        zbid,
+        CASE WHEN zbid in (7,8,9,13,14,15,16,17,26,27,28,29,31,33,34,35,37,47,48,49,50,51,52,53,54) THEN
+            sum(value) / nullif(count(*), 0)
+        ELSE sum(value) END ylj
+    from
+        tcnycsdc_day_plan_zb
+    where
+        day &gt;= ${cal.months[1].days[1].date} and
+        day &lt;=  ${cal.date} and
+        value is not null and
+      value &lt;&gt; 0 and
+      dwid = ${compId}
+    group by
+        zbid
 	</sql>
   <table id="result" rowIds="ids" export="true">
    <list type="string" sql="zbs" value="1"/>
@@ -63,10 +74,7 @@ group by
    <EmptyFormatter>
     <DefaultMatcher cols="0,1,2"/>
    </EmptyFormatter>
-   <PercentFormatter reservedCount="1">
-    <DefaultMatcher rows="7,8,9,13,14,15"/>
-   </PercentFormatter>
-   <NumberFormatter reservedCount="1"/>
+   <NumberFormatter reservedCount="2"/>
   </formatter>
  </controller>
  <controller id="tcnycrdcDayReportExport">
@@ -111,6 +119,8 @@ group by
   <response type="excel" ref="excelTemplate" name="${request.date.asString}天池能源有限责任公司昌热电厂_日生产报表.xls" serv="fmtServ"/>
  </controller>
  <controller id="tcnycrdcDayReportUpdate">
+
+     <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
   <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="servTcnycrdcDayReportUpdate"/>
   <callcontroller id="fmtterTcnycrdcDayReport"/>
@@ -153,13 +163,14 @@ group by
   </response>
  </controller>
  <controller id="tcnycrdcDayReport">
-  <response type="jsp" name="framework/templates/singleDateReport/show">
+  <response type="jsp" name="framework/templates/dateReport/show">
    <map key="year" value="${calendar.current.year}"/>
    <map key="month" value="${calendar.current.month}"/>
    <map key="day" value="${calendar.current.day}"/>
    <map key="updateUrl" value="tcnycrdcDayReportUpdate"/>
    <map key="exportUrl" value="tcnycrdcDayReportExport"/>
-   <map key="title" value="天池能源有限责任公司昌热电厂"/>
+
+      <map map="${authMgr[83]}"/>
   </response>
  </controller>
 </components>

@@ -1,6 +1,6 @@
 package com.frame.script.el.querier;
 
-import com.frame.script.util.StringUtil;
+import com.util.tools.StringUtil;
 
 public class IndexQuerier extends AbstractQuerier {
 

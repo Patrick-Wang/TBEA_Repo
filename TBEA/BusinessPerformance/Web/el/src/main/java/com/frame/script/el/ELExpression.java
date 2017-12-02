@@ -18,8 +18,8 @@ import com.frame.script.el.querier.ExpressionQuerier;
 import com.frame.script.el.querier.IndexQuerier;
 import com.frame.script.el.querier.ObjectQuerier;
 import com.frame.script.el.querier.Querier;
-import com.frame.script.util.StringUtil;
 import com.frame.script.util.TypeUtil;
+import com.util.tools.StringUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;

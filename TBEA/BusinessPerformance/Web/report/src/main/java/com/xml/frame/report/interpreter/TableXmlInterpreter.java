@@ -11,11 +11,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.frame.script.el.ELParser;
-import com.frame.script.util.StringUtil;
 import com.util.tools.DateUtil;
 import com.util.tools.ListUtil;
 import com.util.tools.MathUtil;
 import com.util.tools.Pair;
+import com.util.tools.StringUtil;
 import com.util.tools.xml.Loop;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.component.entity.Table;

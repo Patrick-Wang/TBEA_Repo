@@ -20,8 +20,8 @@ import org.w3c.dom.Node;
 
 import com.frame.script.el.ELExpression;
 import com.frame.script.el.ELParser;
-import com.frame.script.util.StringUtil;
 import com.frame.script.util.TypeUtil;
+import com.util.tools.StringUtil;
 
 public class XmlUtil {
 

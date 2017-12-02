@@ -7,15 +7,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.xml.frame.report.util.DocxUtil;
-import com.xml.frame.report.util.excel.ExcelUtil;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.springframework.web.servlet.ModelAndView;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
-import com.frame.script.util.StringUtil;
+import com.util.tools.StringUtil;
+import com.util.tools.word.POIPdf;
 import com.util.tools.xml.Loop;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.component.controller.Controller;
@@ -145,7 +144,7 @@ public class ResponseXmlInterpreter implements XmlInterpreter {
 				resp.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode( XmlUtil.getString(e.getAttribute("name"), elp), "UTF-8")  +"\"");
 
 				if ("pdf".equals(e.getAttribute("target"))){
-					byte[] pdf = DocxUtil.toPdf(pkg);
+					byte[] pdf = POIPdf.docx2Pdf(pkg);
 					resp.getOutputStream().write(pdf);
 				}else{
 					pkg.save(resp.getOutputStream());

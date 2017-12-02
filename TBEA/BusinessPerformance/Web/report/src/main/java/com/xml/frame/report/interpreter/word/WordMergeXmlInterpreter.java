@@ -9,12 +9,12 @@ import org.docx4j.wml.STFldCharType;
 import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
+import com.util.tools.word.DocxQuery;
+import com.util.tools.word.DocxUtil;
+import com.util.tools.word.DocxQuery.OnEach;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.interpreter.Schema;
 import com.xml.frame.report.interpreter.XmlInterpreter;
-import com.xml.frame.report.util.DocxQuery;
-import com.xml.frame.report.util.DocxQuery.OnEach;
-import com.xml.frame.report.util.DocxUtil;
 import com.xml.frame.report.util.xml.XmlUtil;
 
 

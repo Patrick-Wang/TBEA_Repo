@@ -12,8 +12,8 @@ import org.w3c.dom.Element;
 
 import com.frame.script.el.ELExpression;
 import com.frame.script.el.ELParser;
-import com.frame.script.util.StringUtil;
 import com.util.tools.Pair;
+import com.util.tools.StringUtil;
 import com.xml.frame.report.component.AbstractXmlComponent;
 import com.xml.frame.report.component.manager.ComponentManager;
 import com.xml.frame.report.component.service.JpaTransaction;

@@ -4,11 +4,15 @@
    <where>
     <zbid type="int" value="${i + 1}"/>
     <day type="date" value="${cal.date}"/>
+
+    <dwid type="int" value="${compId}"/>
    </where>
    <set>
     <zbid type="int" value="${i + 1}"/>
     <day type="date" value="${cal.date}"/>
     <value type="double" ref="${4}"/>
+
+    <dwid type="int" value="${compId}"/>
     <source type="string" value="${src}"/>
     <time type="date" value="${time}"/>
    </set>
@@ -20,12 +24,16 @@
     <zbid type="int" value="${i + 1}"/>
     <year type="int" value="${cal.year}"/>
     <month type="int" value="${cal.month}"/>
+
+    <dwid type="int" value="${compId}"/>
    </where>
    <set>
     <zbid type="int" value="${i + 1}"/>
     <year type="int" value="${cal.year}"/>
     <month type="int" value="${cal.month}"/>
     <value type="double" ref="${4}"/>
+
+    <dwid type="int" value="${compId}"/>
     <source type="string" value="${src}"/>
     <time type="date" value="${time}"/>
    </set>
@@ -37,12 +45,15 @@
     <zbid type="int" value="${i + 1}"/>
     <year type="int" value="${cal.year}"/>
     <season type="int" value="${cal.season}"/>
+    <dwid type="int" value="${compId}"/>
    </where>
    <set>
     <zbid type="int" value="${i + 1}"/>
     <year type="int" value="${cal.year}"/>
     <season type="int" value="${cal.season}"/>
     <value type="double" ref="${4}"/>
+
+    <dwid type="int" value="${compId}"/>
     <source type="string" value="${src}"/>
     <time type="date" value="${time}"/>
    </set>
@@ -53,18 +64,22 @@
    <where>
     <zbid type="int" value="${i + 1}"/>
     <year type="int" value="${cal.year}"/>
+    <dwid type="int" value="${compId}"/>
    </where>
    <set>
     <zbid type="int" value="${i + 1}"/>
     <year type="int" value="${cal.year}"/>
     <value type="double" ref="${4}"/>
+    <dwid type="int" value="${compId}"/>
     <source type="string" value="${src}"/>
     <time type="date" value="${time}"/>
    </set>
   </merge>
  </service>
  <controller id="tcnycrdcscbbImportWrapper">
-  <context key="item" value="${request.item.asInt}"/>
+
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+  <context key="item" value="${request.item2.asInt}"/>
   <context key="data" value="${request.upfile.asExcel}"/>
   <context value="${request.date.asCalendar}" key="cal"/>
   <context value="${calendar.current.date}" key="time"/>
@@ -102,6 +117,8 @@
 }</map>
    <map key="date" value="${calendar.current.format}"/>
    <map key="title" value="生产报表导入"/>
+
+   <map map="${authMgr[82]}"/>
   </response>
  </controller>
 </components>

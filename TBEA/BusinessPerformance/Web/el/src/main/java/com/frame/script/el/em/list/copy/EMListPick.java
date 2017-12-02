@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.frame.script.el.em.NamedEM;
-import com.frame.script.util.StringUtil;
 import com.frame.script.util.TypeUtil;
+import com.util.tools.StringUtil;
 
 
 public class EMListPick extends NamedEM {

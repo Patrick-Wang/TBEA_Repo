@@ -1,5 +1,6 @@
 package com.util.tools.xml;
 
+import org.w3c.dom.CDATASection;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -15,6 +16,24 @@ public class XmlWalker {
 		return (Element) node;
 	}
 
+	public static String getText(Element e) {
+        if (null != e) {
+            String text = "";
+            Node node = e.getFirstChild();
+            while (node != null) {
+                if (node.getNodeType() == Node.TEXT_NODE) {
+                    text += node.getNodeValue();
+                } else if (node.getNodeType() == Node.CDATA_SECTION_NODE) {
+                    CDATASection cds = (CDATASection) node;
+                    text += cds.getData();
+                }
+                node = node.getNextSibling();
+            }
+            return text;
+        }
+        return null;
+    }
+	
 	public static Element element(NodeList list, int index) {
 		try {
 			return each(list, new Each() {

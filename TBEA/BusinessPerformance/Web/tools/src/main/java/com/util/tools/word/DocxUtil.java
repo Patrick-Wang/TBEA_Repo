@@ -1,18 +1,14 @@
-package com.xml.frame.report.util;
+package com.util.tools.word;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
-import org.apache.poi.xwpf.converter.pdf.PdfConverter;
-import org.apache.poi.xwpf.converter.pdf.PdfOptions;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.wml.Br;
@@ -37,7 +33,7 @@ import org.docx4j.wml.Text;
 import org.docx4j.wml.Tr;
 import org.jvnet.jaxb2_commons.ppp.Child;
 
-import com.frame.script.util.StringUtil;
+import com.util.tools.StringUtil;
 
 public class DocxUtil {
 
@@ -314,130 +310,6 @@ public class DocxUtil {
 		}
 		return target;
 	}
-
-	public static byte[] toPdf(WordprocessingMLPackage word)
-			throws Exception {
-//		Mapper fontMapper = new IdentityPlusMapper();
-//		fontMapper.put("华文行楷", PhysicalFonts.get("STXingkai"));
-//		fontMapper.put("华文仿宋", PhysicalFonts.get("STFangsong"));
-//		fontMapper.put("隶书", PhysicalFonts.get("LiSu"));
-//		word.setFontMapper(fontMapper);
-//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-////		word.save(baos);
-////		WordprocessingMLPackage mlPackage = WordprocessingMLPackage.load(new File(docxPath));
-//		//Mapper fontMapper = new BestMatchingMapper();
-//		Mapper fontMapper = new IdentityPlusMapper();
-//		fontMapper.put("华文行楷", PhysicalFonts.get("STXingkai"));
-//		fontMapper.put("华文仿宋", PhysicalFonts.get("STFangsong"));
-//		fontMapper.put("隶书", PhysicalFonts.get("LiSu"));
-//		fontMapper.put("宋体", PhysicalFonts.get("SimSun"));
-//		word.setFontMapper(fontMapper);
-//
-////		os = new java.io.FileOutputStream(pdfPath);
-//
-//		FOSettings foSettings = Docx4J.createFOSettings();
-//		foSettings.setWmlPackage(word);
-//		Docx4J.toFO(foSettings, baos, Docx4J.FLAG_EXPORT_PREFER_XSL);
-
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		word.save(baos);
-		return toPdf(new ByteArrayInputStream(baos.toByteArray()));
-	}
-
-	public static byte[] toPdf(InputStream word)
-			throws Exception {
-
-		XWPFDocument document = new XWPFDocument(word);
-
-		// 2) Prepare Pdf options
-		PdfOptions options = PdfOptions.create();
-//		options.fontEncoding("GB2312");
-
-//		ExtITextFontRegistry fontProvider=ExtITextFontRegistry.getRegistry();
-//		options.fontProvider(fontProvider);
-
-		// 3) Convert XWPFDocument to HTML
-		ByteArrayOutputStream baos2 =  new ByteArrayOutputStream();
-
-		PdfConverter.getInstance().convert(document, baos2, options);
-
-		return baos2.toByteArray();
-	}
-
-//	public static byte[] toPdf2(InputStream wi)
-//			throws Exception {
-//		WordprocessingMLPackage word = WordprocessingMLPackage.load(wi);
-//		Mapper fontMapper = new IdentityPlusMapper();
-////		fontMapper.put("华文行楷", PhysicalFonts.get("STXingkai"));
-////		fontMapper.put("华文仿宋", PhysicalFonts.get("STFangsong"));
-////		fontMapper.put("华文仿宋", PhysicalFonts.get("STFangsong"));
-////		fontMapper.put("隶书", PhysicalFonts.get("LiSu"));
-////		fontMapper.put("宋体", PhysicalFonts.get("simsun"));
-//		word.setFontMapper(fontMapper);
-//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//		word.save(baos);
-////		WordprocessingMLPackage mlPackage = WordprocessingMLPackage.load(new File(docxPath));
-//		//Mapper fontMapper = new BestMatchingMapper();
-//
-//
-////		os = new java.io.FileOutputStream(pdfPath);
-//
-//		FOSettings foSettings = Docx4J.createFOSettings();
-//		foSettings.setWmlPackage(word);
-//		Docx4J.toFO(foSettings, baos, Docx4J.FLAG_EXPORT_PREFER_XSL);
-//
-//		return baos.toByteArray();
-//	}
-
-//	public byte[] toPdf3(InputStream is) throws IOException, ParserConfigurationException {
-//		XWPFDocument wordDocument = new XWPFDocument(is);//WordToHtmlUtils.loadDoc(new FileInputStream(inputFile));
-//		//兼容2007 以上版本
-////        XSSFWorkbook xssfwork=new XSSFWorkbook(is);
-////		WordToFoUtils.loadDoc(is);
-//		WordToHtmlConverter wordToHtmlConverter = new WordToHtmlConverter(
-//				DocumentBuilderFactory.newInstance().newDocumentBuilder()
-//						.newDocument());
-//		wordToHtmlConverter.setPicturesManager( new PicturesManager()
-//		{
-//			public String savePicture(byte[] content,
-//									  PictureType pictureType, String suggestedName,
-//									  float widthInches, float heightInches )
-//			{
-//				return "test/"+suggestedName;
-//			}
-//		} );
-//		wordToHtmlConverter.proces
-//		//save pictures
-//		List pics=wordDocument.getPicturesTable().getAllPictures();
-//		if(pics!=null){
-//			for(int i=0;i<pics.size();i++){
-//				Picture pic = (Picture)pics.get(i);
-//				System.out.println();
-//				try {
-//					pic.writeImageContent(new FileOutputStream("D:/test/"
-//							+ pic.suggestFullFileName()));
-//				} catch (FileNotFoundException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		Document htmlDocument = wordToHtmlConverter.getDocument();
-//
-//		ByteArrayOutputStream out = new ByteArrayOutputStream();
-//		DOMSource domSource = new DOMSource(htmlDocument);
-//		StreamResult streamResult = new StreamResult(out);
-//
-//
-//		TransformerFactory tf = TransformerFactory.newInstance();
-//		Transformer serializer = tf.newTransformer();
-//		serializer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-//		serializer.setOutputProperty(OutputKeys.INDENT, "yes");
-//		serializer.setOutputProperty(OutputKeys.METHOD, "HTML");
-//		serializer.transform(domSource, streamResult);
-//		out.close();
-//		writeFile(new String(out.toByteArray()), outPutFile);
-//	}
 
 //	// 插入文档
 //	private static void insertDocx(MainDocumentPart main, byte[] bytes, int chunkId) {
