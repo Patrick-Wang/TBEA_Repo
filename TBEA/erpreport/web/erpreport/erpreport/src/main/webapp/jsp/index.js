@@ -6,7 +6,7 @@ var index;
         NavbarType[NavbarType["LEFT"] = 1] = "LEFT";
     })(NavbarType || (NavbarType = {}));
     var treeItemMap = {};
-    var curTreeItem;
+    var curRootItem;
     function buildTreeItemMap(tree) {
         for (var i = 0; tree && i < tree.length; ++i) {
             treeItemMap[tree[i].id] = tree[i];
@@ -52,64 +52,127 @@ var index;
         }
         return data;
     }
-    function triggerOnClick(ids, time) {
+    function triggerOnClick(ids, time, pItemElem) {
         if (time === void 0) { time = 500; }
-        var navItem = $(".layui-side .layui-nav-item");
-        for (var i = 0, j = 0; curTreeItem && i < curTreeItem.children.length; ++i) {
-            if (!curTreeItem.children[i].url) {
-                if ($(navItem[j]).hasClass('layui-nav-itemed')) {
-                    curTreeItem.children[i].spread = true;
+        if (pItemElem === void 0) { pItemElem = undefined; }
+        var id = ids.splice(0, 1);
+        var treeItem = treeItemMap[id];
+        if (typeof pItemElem === "function") {
+            pItemElem = pItemElem();
+        }
+        if (!treeItem.parent) {
+            pItemElem = $(".layui-side .layui-nav-item");
+            //save spread status
+            for (var i = 0, j = 0; curRootItem && i < curRootItem.children.length; ++i) {
+                if (!curRootItem.children[i].url) {
+                    if ($(pItemElem[j]).hasClass('layui-nav-itemed')) {
+                        curRootItem.children[i].spread = true;
+                    }
+                    else {
+                        curRootItem.children[i].spread = false;
+                    }
+                    ++j;
                 }
-                else {
-                    curTreeItem.children[i].spread = false;
+            }
+            curRootItem = treeItem;
+            layui.navbar.set({ data: treeItem.children }).render(function (data) {
+                layui.tab.tabAdd(data);
+            });
+            pItemElem = function () { return $(".layui-side .layui-nav-tree"); };
+        }
+        else if (!treeItem.url) {
+            var pTreeItem = treeItemMap[treeItem.parent];
+            var liItem = void 0;
+            for (var i = 0, j = 0; i < pTreeItem.children.length; ++i) {
+                if (pTreeItem.children[i].id == treeItem.id) {
+                    liItem = pItemElem.children(".layui-nav-item:eq(" + j + ")");
+                    if (!liItem.hasClass('layui-nav-itemed')) {
+                        liItem.find(">a").click();
+                        pItemElem = liItem;
+                    }
+                    break;
                 }
-                ++j;
+                if (!pTreeItem.children[i].url) {
+                    ++j;
+                }
             }
         }
-        var treeItem = treeItemMap[ids[0]];
-        layui.navbar.set({ data: treeItem.children }).render(function (data) {
-            layui.tab.tabAdd(data);
-        });
-        curTreeItem = treeItem;
-        if (ids.length > 1) {
+        else if (treeItem.url) {
+            if (pItemElem[0].tagName.toLowerCase() == 'ul') {
+                var pTreeItem = treeItemMap[treeItem.parent];
+                pItemElem = pItemElem.children(".layui-nav-item");
+                for (var i = 0; i < pTreeItem.children.length; ++i) {
+                    if (pTreeItem.children[i].id == id) {
+                        pItemElem.eq(i).find('a').click();
+                        break;
+                    }
+                }
+            }
+            else if (pItemElem[0].tagName.toLowerCase() == 'li') {
+                var pTreeItem = treeItemMap[treeItem.parent];
+                pItemElem = pItemElem.find("dd");
+                for (var i = 0; i < pTreeItem.children.length; ++i) {
+                    if (pTreeItem.children[i].id == id) {
+                        pItemElem.eq(i).find('a').click();
+                        break;
+                    }
+                }
+            }
+            else {
+                console.log("模拟点击失败");
+            }
+        }
+        if (ids.length > 0) {
             setTimeout(function () {
-                treeItem = treeItemMap[ids[1]];
-                if (!treeItem.url) {
-                    var parent_1 = treeItemMap[treeItem.parent];
-                    var liItem_1;
-                    for (var i = 0, j = 0; i < parent_1.children.length; ++i) {
-                        if (parent_1.children[i].id == treeItem.id) {
-                            liItem_1 = $(".layui-side .layui-nav-item:eq(" + j + ")");
-                            if (!liItem_1.hasClass('layui-nav-itemed')) {
-                                liItem_1.find(">a").click();
-                            }
-                            break;
-                        }
-                        if (!parent_1.children[i].url) {
-                            ++j;
-                        }
-                    }
-                    if (ids.length > 2) {
-                        setTimeout(function () {
-                            for (var i = 0; i < treeItem.children.length; ++i) {
-                                if (treeItem.children[i].id == ids[2]) {
-                                    liItem_1.find("dd:eq(" + i + ") a").click();
-                                    break;
-                                }
-                            }
-                        }, time);
-                    }
-                }
-                else {
-                    for (var i = 0; i < treeItem.children.length; ++i) {
-                        if (treeItem.children[i].id == ids[2]) {
-                            var ddItem = $(".layui-nav-tree").children().eq(i).find("a").click();
-                            break;
-                        }
-                    }
-                }
+                triggerOnClick(ids, time, pItemElem);
             }, time);
         }
+        //
+        //
+        //
+        //
+        // if (ids.length > 1) {
+        //     setTimeout(() => {
+        //         treeItem = treeItemMap[ids[1]];
+        //         if (!treeItem.url){
+        //             let parent: TreeItem = treeItemMap[treeItem.parent];
+        //             let liItem: any;
+        //             for (let i = 0, j = 0; i < parent.children.length; ++i) {
+        //                 if (parent.children[i].id == treeItem.id) {
+        //                     liItem = $(".layui-side .layui-nav-item:eq(" + j + ")");
+        //                     if (!liItem.hasClass('layui-nav-itemed')){
+        //                         liItem.find(">a").click();
+        //                     }
+        //                     break;
+        //                 }
+        //                 if (!parent.children[i].url){
+        //                     ++j;
+        //                 }
+        //             }
+        //             if (ids.length > 2) {
+        //                 setTimeout(() => {
+        //
+        //                     for (let i = 0; i < treeItem.children.length; ++i) {
+        //                         if (treeItem.children[i].id == ids[2]) {
+        //                             liItem.find("dd:eq(" + i + ") a").click();
+        //                             break;
+        //                         }
+        //                     }
+        //
+        //                 }, time);
+        //             }
+        //         }else{
+        //             for (let i = 0; i < treeItem.children.length; ++i) {
+        //                 if (treeItem.children[i].id == ids[2]) {
+        //                     let ddItem = $(".layui-nav-tree").children().eq(i).find("a").click();
+        //                     break;
+        //                 }
+        //             }
+        //         }
+        //
+        //
+        //     }, time);
+        // }
     }
     function findParents(itemId) {
         var parents = [itemId];

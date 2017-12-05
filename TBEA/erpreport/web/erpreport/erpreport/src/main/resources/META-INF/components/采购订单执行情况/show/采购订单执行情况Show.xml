@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+    <controller id="12C2F859487F356CC6C3E30D787725F6SHOWCLR">
+        <context key="userName" value="${session.account.name}"/>
+        <context key="item" value="${request.item.asInt}"/>
+        <callservice id="isFavoriteServ"/>
+        <response name="framework/templates/lovSearch" type="jsp">
+            <map key="pager" value="true"/>
+            <map key="isFavorite" value="${isFavorite}"/>
+            <map key="options"><![CDATA[
+                [
+                    {
+                        "param" : "orderNum",
+                        "name": "采购订单编号",
+                        "type":"input"
+                    },
+                    {
+                        "param" : "person",
+                        "name": "采购员名称",
+                        "type":"input"
+                    },
+                    {
+                        "param" : "vender",
+                        "name": "供应商名称",
+                        "type":"input"
+                    },
+                    {
+                        "param" : "materielCode",
+                        "name": "物料编码",
+                        "type":"input"
+                    },
+                    {
+                        "param" : "orderCreateStart, orderCreateEnd",
+                        "name": "订单创建日期",
+                        "type":"period",
+                        "period":{
+                            "start" : {
+                                "type":"date",
+                                "init":"${calendar.current.lastMonth.format}"
+                            },
+                            "end" : {
+                                "type":"date",
+                                "init":"${calendar.current.format}"
+                            }
+                        }
+                    },
+                    {
+                        "param" : "receiveDateStart, receiveDateEnd",
+                        "name": "到货接收日期",
+                        "type":"period",
+                        "period":{
+                            "start" : {
+                                "type":"date",
+                                "init":"${calendar.current.lastMonth.format}"
+                            },
+                            "end" : {
+                                "type":"date",
+                                "init":"${calendar.current.format}"
+                            }
+                        }
+                    },
+                    {
+                        "param" : "billDateStart, billDateEnd",
+                        "name": "开票日期",
+                        "type":"period",
+                        "period":{
+                            "start" : {
+                                "type":"date",
+                                "init":"${calendar.current.lastMonth.format}"
+                            },
+                            "end" : {
+                                "type":"date",
+                                "init":"${calendar.current.format}"
+                            }
+                        }
+                    },
+                    {
+                        "param" : "status",
+                        "name": "审批状态",
+                        "type":"lovNoSearch",
+                        "lov":{
+                            "option": [
+                                ["批准", "批准"],
+                                ["已拒绝", "已拒绝"],
+                                ["要求重新审批", "要求重新审批"],
+                                ["处理中", "处理中"],
+                                ["未完成", "未完成"],
+                                ["预审批", "预审批"]
+                            ]
+                        }
+                    }
+                ]
+            ]]>
+            </map>
+            <map key="updateUrl" value="12C2F859487F356CC6C3E30D787725F6UpdateClr"/>
+            <map key="exportUrl" value="12C2F859487F356CC6C3E30D787725F6ExportClr"/>
+        </response>
+    </controller>
+
+    <controller id="12C2F859487F356CC6C3E30D787725F6SHOWCLRLOV">
+        <context key="type" value="${request.type.asInt}"/>
+        <context key="userName" value="${session.account.name}"/>
+        <if test="${'session._km_' == 'null'}">
+            <callservice id="12C2F859487F356CC6C3E30D787725F6SHOWCLRLOVSERV"/>
+            <context key="tmp" value="${session.put['_km_']['_km_']}"/>
+            <context key="tmp" value="${session.put['_km_orderNum'][orderNum.col[0]]}"/>
+            <context key="tmp" value="${session.put['_km_orderNum_lov'][orderNum]}"/>
+            <context key="tmp" value="${session.put['_km_materielCode'][materielCode.col[0]]}"/>
+            <context key="tmp" value="${session.put['_km_materielCode_lov'][materielCode]}"/>
+        </if>
+        <response type="json">
+            <lov type="jarray" skip="${type != 1}">
+                ${session._km_orderNum_lov.asJson}
+            </lov>
+            <lov type="jarray" skip="${type != 2}">
+                ${session._km_materielCode_lov.asJson}
+            </lov>
+        </response>
+    </controller>
+    <service id="12C2F859487F356CC6C3E30D787725F6SHOWCLRLOVSERV" ds="repods">
+        <sql id="orderNum" export="true">
+            select order_num, order_num from CUX_PURORDER_V group by order_num
+        </sql>
+        <sql id="materielCode" export="true">
+            select materiel_code, materiel_code + '(' + materiel_intr + ')'
+            from CUX_PURORDER_V
+            group by
+            materiel_code, materiel_intr
+        </sql>
+        <sql id="accounts" export="true"><![CDATA[
+            select
+                flvv.flex_value,
+                flvv.description
+            from
+                apps.fnd_flex_value_sets flvs,
+                apps.fnd_flex_values_vl flvv
+            where
+                flvs.flex_value_set_name = 'TBEA_COA_AC' and
+                flvv.structured_hierarchy_level = '14' and
+                flvs.flex_value_set_id = flvv.flex_value_set_id
+            order by
+                flvv.flex_value
+        ]]></sql>
+    </service>
+
+    <controller id="12C2F859487F356CC6C3E30D787725F6UpdateClr">
+        <context key="pgNum" value="${request.pgNum.asInt}"/>
+        <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <context key="orderNum" value="${request.orderNum.asString}"/>
+        <context key="person" value="${request.person.asString}"/>
+        <context key="vender" value="${request.vender.asString}"/>
+        <context key="materielCode" value="${request.materielCode.asString}"/>
+        <context key="orderCreateStart" value="${request.orderCreateStart.asCalendar}"/>
+        <context key="orderCreateEnd" value="${request.orderCreateEnd.asCalendar}"/>
+        <context key="receiveDateStart" value="${request.receiveDateStart.asCalendar}"/>
+        <context key="receiveDateEnd" value="${request.receiveDateEnd.asCalendar}"/>
+        <context key="billDateStart" value="${request.billDateStart.asCalendar}"/>
+        <context key="billDateEnd" value="${request.billDateEnd.asCalendar}"/>
+        <context key="status" value="${request.status.asString}"/>
+
+        <callservice id="12C2F859487F356CC6C3E30D787725F6ShowServ"/>
+        <callcontroller id="12C2F859487F356CC6C3E30D787725F6FmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>采购员</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>订单号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>创建日期</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>审批状态</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>供应商名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>行号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>物料编码</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>物料说明</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>单位</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>数量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>税码</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>单价</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>金额</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>含税单价</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>含税总额</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>承诺日期</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>预计交货日期</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>接收日期</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>已订购数量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>已开单数量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>要求检验</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>未质检数量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>已质检数量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>合格数量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>不合格数量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>已取消数量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>已接收数量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>接收金额</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>接收组织</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>库存现有量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>库存可用量</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>图号</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>合同产品号</name>
+                    <type>text</type>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+            <dataCount>${dataCount[0]}</dataCount>
+            <shrinkToFit>true</shrinkToFit>
+        </response>
+    </controller>
+    <controller id="12C2F859487F356CC6C3E30D787725F6FmtClr">
+        <formatter export="true" id="fmtData">
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="12C2F859487F356CC6C3E30D787725F6ExportClr">
+        <context key="orderNum" value="${request.orderNum.asString}"/>
+        <context key="person" value="${request.person.asString}"/>
+        <context key="vender" value="${request.vender.asString}"/>
+        <context key="materielCode" value="${request.materielCode.asString}"/>
+        <context key="orderCreateStart" value="${request.orderCreateStart.asCalendar}"/>
+        <context key="orderCreateEnd" value="${request.orderCreateEnd.asCalendar}"/>
+        <context key="receiveDateStart" value="${request.receiveDateStart.asCalendar}"/>
+        <context key="receiveDateEnd" value="${request.receiveDateEnd.asCalendar}"/>
+        <context key="billDateStart" value="${request.billDateStart.asCalendar}"/>
+        <context key="billDateEnd" value="${request.billDateEnd.asCalendar}"/>
+        <context key="status" value="${request.status.asString}"/>
+        <callservice id="12C2F859487F356CC6C3E30D787725F6ShowServ"/>
+        <callcontroller id="12C2F859487F356CC6C3E30D787725F6FmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="采购订单执行情况"/>
+        <list id="title" type="string">
+            采购员,订单号,创建日期,审批状态,供应商名称,行号,物料编码,物料说明,单位,数量,税码,单价,金额,含税单价,含税总额,承诺日期,预计交货日期,接收日期,已订购数量,已开单数量,要求检验,未质检数量,已质检数量,合格数量,不合格数量,已取消数量,已接收数量,接收金额,接收组织,库存现有量,库存可用量,图号,合同产品号
+        </list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="采购订单执行情况.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+    <service id="12C2F859487F356CC6C3E30D787725F6ShowServ" ds="repods">
+        <sql export="true" id="dataCount"><![CDATA[
+            select
+                count(*)
+            from
+                CUX_PURORDER_V
+            where
+                (${person} is null or person like ${'%person%'}) and
+                (${orderNum} is null or order_num like ${'%orderNum%'}) and
+                (${vender} is null or vender like ${'%vender%'}) and
+                (${status} is null or approve_status = ${status}) and
+                (${materielCode} is null or materiel_code like ${'%materielCode%'}) and
+                (${orderCreateStart.date} is null or create_date >= ${orderCreateStart.date}) and
+                (${orderCreateEnd.date} is null or create_date <= ${orderCreateEnd.date}) and
+                (${receiveDateStart.date} is null or REC_date >= ${receiveDateStart.date}) and
+                (${receiveDateEnd.date} is null or REC_date <= ${receiveDateEnd.date}) and
+                (${billDateStart.date} is null or bill_date >= ${billDateStart.date}) and
+                (${billDateEnd.date} is null or bill_date <= ${billDateEnd.date})
+    ]]></sql>
+        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
+        select
+            id,
+            person,
+            order_num,
+            create_date,
+            approve_status,
+            vender,
+            line_num,
+            materiel_code,
+            materiel_intr,
+            unit,
+            num,
+            tax_rate,
+            unit_price,
+            amount,
+            tax_unit_price,
+            tax_amount,
+            promise_date,
+            EDD,
+            REC_DATE,
+            ord_num,
+            bill_num,
+            require_check,
+            uncheck_num,
+            checked_num,
+            qualified_num,
+            unqualified_num,
+            cancel_num,
+            rec_num,
+            rec_amount,
+            rec_org,
+            stock_num,
+            stock_available_num,
+            figure_num,
+            contract_num
+        from
+            CUX_PURORDER_V
+        where
+            (${person} is null or person like ${'%person%'}) and
+            (${orderNum} is null or order_num like ${'%orderNum%'}) and
+            (${vender} is null or vender like ${'%vender%'}) and
+            (${status} is null or approve_status = ${status}) and
+            (${materielCode} is null or materiel_code like ${'%materielCode%'}) and
+            (${orderCreateStart.date} is null or create_date >= ${orderCreateStart.date}) and
+            (${orderCreateEnd.date} is null or create_date <= ${orderCreateEnd.date}) and
+            (${receiveDateStart.date} is null or REC_date >= ${receiveDateStart.date}) and
+            (${receiveDateEnd.date} is null or REC_date <= ${receiveDateEnd.date}) and
+            (${billDateStart.date} is null or bill_date >= ${billDateStart.date}) and
+            (${billDateEnd.date} is null or bill_date <= ${billDateEnd.date})
+    ]]></sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+        </table>
+    </service>
+</components>

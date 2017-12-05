@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="858EB25BC3BCAC395925E2F3A26DFB38SWJ">
+        <list id="ids" type="int">0</list>
+        <list id="vals" type="string">采购订单执行情况</list>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="858EB25BC3BCAC395925E2F3A26DFB38UpdateWrapperClr"/>
+            <map key="exportUrl" value="858EB25BC3BCAC395925E2F3A26DFB38ExportWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="858EB25BC3BCAC395925E2F3A26DFB38UpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="12C2F859487F356CC6C3E30D787725F6UpdateClr"/>
+        </if>
+    </controller>
+    <controller id="858EB25BC3BCAC395925E2F3A26DFB38ExportWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="12C2F859487F356CC6C3E30D787725F6ExportClr"/>
+        </if>
+    </controller>
+</components>

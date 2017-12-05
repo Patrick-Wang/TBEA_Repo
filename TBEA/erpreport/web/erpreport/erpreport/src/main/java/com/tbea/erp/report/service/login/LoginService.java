@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface LoginService {
 
-	Account login(String usrName);
+	Account login(String usrName, String roleName);
 
 //	List<Authority> getAuthority(Account account);
 

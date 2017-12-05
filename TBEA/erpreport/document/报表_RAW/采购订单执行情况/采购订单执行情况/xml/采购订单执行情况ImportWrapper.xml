@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="858EB25BC3BCAC395925E2F3A26DFB38IWJ">
+        <list id="ids" type="int">0</list>
+        <list id="vals" type="string">采购订单执行情况</list>
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="858EB25BC3BCAC395925E2F3A26DFB38ImportWrapper"/>
+            <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+        </response>
+    </controller>
+    <controller id="858EB25BC3BCAC395925E2F3A26DFB38ImportWrapper">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="12C2F859487F356CC6C3E30D787725F6ImportClr"/>
+        </if>
+    </controller>
+</components>

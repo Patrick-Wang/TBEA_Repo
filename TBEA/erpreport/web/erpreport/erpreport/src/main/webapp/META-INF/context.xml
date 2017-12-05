@@ -22,7 +22,7 @@
             username="repo"
             password="erpreport"
             driverClassName="oracle.jdbc.driver.OracleDriver"
-            url="jdbc:oracle:thin:@172.20.8.104:1523/ERPPRD"
+            url="jdbc:oracle:thin:@172.20.8.195:1525/TST8004"
             initialSize="35"
             maxActive="70"
             maxIdle="10"

@@ -79,7 +79,7 @@ public class LoginServlet {
 
     @RequestMapping(value = {"index.do"})
     public ModelAndView index(HttpServletRequest request,
-                                    HttpServletResponse response) {
+                              HttpServletResponse response) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("navTree", JSONArray.fromObject(request.getSession(false).getAttribute("navTree")).toString());
         map.put("item", request.getParameter("item"));
@@ -126,10 +126,24 @@ public class LoginServlet {
         return true;//!invalidLink;
     }
 
-    boolean isOnline(Account account, HttpServletRequest request){
-        if (SessionManager.isOnline(request)){
+    boolean cmp(String s1, String s2) {
+        if (s1 == s2) {
+            return true;
+        }
+
+        if (s1 != null && s1.equals(s2)) {
+            return true;
+        }
+        return false;
+    }
+
+    boolean isOnline(Account account, HttpServletRequest request) {
+        if (SessionManager.isOnline(request)) {
             Account oldAcc = SessionManager.getAccount(request.getSession(false));
-            if (oldAcc.getName().equals(account.getName()) && oldAcc.getRole().equals(account.getRole())){
+            if (cmp(oldAcc.getName(), account.getName()) &&
+                    cmp(oldAcc.getRole(), account.getRole()) &&
+                    cmp(oldAcc.getOrganizationId(), account.getOrganizationId()) &&
+                    cmp(oldAcc.getOrgId(), account.getOrgId())) {
                 return true;
             }
         }
@@ -143,25 +157,28 @@ public class LoginServlet {
                                  @RequestParam(value = "roleName") String roleName,
                                  @RequestParam(value = "time") String time,
                                  @RequestParam(value = "token") String token,
-                                 @RequestParam(value = "item") String item) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+                                 @RequestParam(value = "item") String item,
+                                 @RequestParam(value = "orgId", required = false) String orgId,
+                                 @RequestParam(value = "organizationId", required = false) String organizationId)
+            throws NoSuchAlgorithmException, UnsupportedEncodingException {
         if (validate(userName, time, token)) {
-            Account account = loginService.login(userName);
-            if (null != account){
-                account.setRole(roleName);
-                if (!isOnline(account ,request)){
+            Account account = loginService.login(userName, roleName);
+            if (null != account) {
+                account.setOrgId(orgId);
+                account.setOrganizationId(organizationId);
+                if (!isOnline(account, request)) {
                     HttpSession session = SessionManager.createSession(request, account);
                     Enumeration<String> params = request.getParameterNames();
                     String name = null;
-                    while (params.hasMoreElements()){
+                    while (params.hasMoreElements()) {
                         name = params.nextElement();
                         session.setAttribute(name, request.getParameter(name));
                     }
                     List<NavigateItemEntity> navTree = loginService.getNavigateItems(account);
                     session.setAttribute("navTree", navTree);
                 }
-
                 return new ModelAndView("redirect:/Login/index.do?item=" + item);
-            }else{
+            } else {
                 return new ModelAndView("userNotExists");
             }
         }

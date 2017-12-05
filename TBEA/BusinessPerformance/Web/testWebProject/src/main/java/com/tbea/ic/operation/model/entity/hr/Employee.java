@@ -19,22 +19,33 @@ public class Employee extends AbstractReadWriteEntity implements Serializable {
 	* 
 	*/
 	private static final long serialVersionUID = 1L;
-	String code;
-	String name;
-	String spell;
-	String sex;
-	String category;
-	String companyId;
-	String company;
-	String departId;
-	String depart;
-	String citizenId;
-	String telephone;
-	String cellphone;
-	String e_mail;
-	String position;
-	String post;
-	String isInPost;
+	String source;
+	String	workNum	;
+	String	name	;
+	String	sax	;
+	String	companyCode	;
+	String	companyName	;
+	String	parentCompanyCode	;
+	String	parentCompanyName	;
+	String	departCode	;
+	String	departName	;
+	String	parentDepartCode	;
+	String	parentDepartName	;
+	String	postCode	;
+	String	postName	;
+	String	jobLevel	;
+	String	enterDate	;
+	String	leaveDate	;
+	String	isInDuty	;
+	String	transferStatus	;
+	String	employeeCategoryCode	;
+	String	employeeCategory	;
+	String	country	;
+	String	range	;
+	String	certificateType	;
+	String	jobIndicate	;
+	String	firstEnterDate	;
+	String	stopTag	;
 	String mdmCode;
 	String mdmDataUuid;
 	String mdmBatch;
@@ -55,12 +66,20 @@ public class Employee extends AbstractReadWriteEntity implements Serializable {
 		return super.getId();
 	}
 
-	public String getCode() {
-		return code;
+	public String getSource() {
+		return source;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public String getWorkNum() {
+		return workNum;
+	}
+
+	public void setWorkNum(String workNum) {
+		this.workNum = workNum;
 	}
 
 	public String getName() {
@@ -71,116 +90,196 @@ public class Employee extends AbstractReadWriteEntity implements Serializable {
 		this.name = name;
 	}
 
-	public String getSpell() {
-		return spell;
+	public String getSax() {
+		return sax;
 	}
 
-	public void setSpell(String spell) {
-		this.spell = spell;
+	public void setSax(String sax) {
+		this.sax = sax;
 	}
 
-	public String getSex() {
-		return sex;
+	public String getCompanyCode() {
+		return companyCode;
 	}
 
-	public void setSex(String sex) {
-		this.sex = sex;
+	public void setCompanyCode(String companyCode) {
+		this.companyCode = companyCode;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getCompanyName() {
+		return companyName;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 
-	public String getCompanyId() {
-		return companyId;
+	public String getParentCompanyCode() {
+		return parentCompanyCode;
 	}
 
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
+	public void setParentCompanyCode(String parentCompanyCode) {
+		this.parentCompanyCode = parentCompanyCode;
 	}
 
-	public String getCompany() {
-		return company;
+	public String getParentCompanyName() {
+		return parentCompanyName;
 	}
 
-	public void setCompany(String company) {
-		this.company = company;
+	public void setParentCompanyName(String parentCompanyName) {
+		this.parentCompanyName = parentCompanyName;
 	}
 
-	public String getDepartId() {
-		return departId;
+	public String getDepartCode() {
+		return departCode;
 	}
 
-	public void setDepartId(String departId) {
-		this.departId = departId;
+	public void setDepartCode(String departCode) {
+		this.departCode = departCode;
 	}
 
-	public String getDepart() {
-		return depart;
+	public String getDepartName() {
+		return departName;
 	}
 
-	public void setDepart(String depart) {
-		this.depart = depart;
+	public void setDepartName(String departName) {
+		this.departName = departName;
 	}
 
-	public String getCitizenId() {
-		return citizenId;
+	public String getParentDepartCode() {
+		return parentDepartCode;
 	}
 
-	public void setCitizenId(String citizenId) {
-		this.citizenId = citizenId;
+	public void setParentDepartCode(String parentDepartCode) {
+		this.parentDepartCode = parentDepartCode;
 	}
 
-	public String getTelephone() {
-		return telephone;
+	public String getParentDepartName() {
+		return parentDepartName;
 	}
 
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
+	public void setParentDepartName(String parentDepartName) {
+		this.parentDepartName = parentDepartName;
 	}
 
-	public String getCellphone() {
-		return cellphone;
+	public String getPostCode() {
+		return postCode;
 	}
 
-	public void setCellphone(String cellphone) {
-		this.cellphone = cellphone;
+	public void setPostCode(String postCode) {
+		this.postCode = postCode;
 	}
 
-	public String getE_mail() {
-		return e_mail;
+	public String getPostName() {
+		return postName;
 	}
 
-	public void setE_mail(String e_mail) {
-		this.e_mail = e_mail;
+	public void setPostName(String postName) {
+		this.postName = postName;
 	}
 
-	public String getPosition() {
-		return position;
+	public String getJobLevel() {
+		return jobLevel;
 	}
 
-	public void setPosition(String position) {
-		this.position = position;
+	public void setJobLevel(String jobLevel) {
+		this.jobLevel = jobLevel;
 	}
 
-	public String getPost() {
-		return post;
+	public String getEnterDate() {
+		return enterDate;
 	}
 
-	public void setPost(String post) {
-		this.post = post;
+	public void setEnterDate(String enterDate) {
+		this.enterDate = enterDate;
 	}
 
-	public String getIsInPost() {
-		return isInPost;
+	public String getLeaveDate() {
+		return leaveDate;
 	}
 
-	public void setIsInPost(String isInPost) {
-		this.isInPost = isInPost;
+	public void setLeaveDate(String leaveDate) {
+		this.leaveDate = leaveDate;
+	}
+
+	public String getIsInDuty() {
+		return isInDuty;
+	}
+
+	public void setIsInDuty(String isInDuty) {
+		this.isInDuty = isInDuty;
+	}
+
+	public String getTransferStatus() {
+		return transferStatus;
+	}
+
+	public void setTransferStatus(String transferStatus) {
+		this.transferStatus = transferStatus;
+	}
+
+	public String getEmployeeCategoryCode() {
+		return employeeCategoryCode;
+	}
+
+	public void setEmployeeCategoryCode(String employeeCategoryCode) {
+		this.employeeCategoryCode = employeeCategoryCode;
+	}
+
+	public String getEmployeeCategory() {
+		return employeeCategory;
+	}
+
+	public void setEmployeeCategory(String employeeCategory) {
+		this.employeeCategory = employeeCategory;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getRange() {
+		return range;
+	}
+
+	public void setRange(String range) {
+		this.range = range;
+	}
+
+	public String getCertificateType() {
+		return certificateType;
+	}
+
+	public void setCertificateType(String certificateType) {
+		this.certificateType = certificateType;
+	}
+
+	public String getJobIndicate() {
+		return jobIndicate;
+	}
+
+	public void setJobIndicate(String jobIndicate) {
+		this.jobIndicate = jobIndicate;
+	}
+
+	public String getFirstEnterDate() {
+		return firstEnterDate;
+	}
+
+	public void setFirstEnterDate(String firstEnterDate) {
+		this.firstEnterDate = firstEnterDate;
+	}
+
+	public String getStopTag() {
+		return stopTag;
+	}
+
+	public void setStopTag(String stopTag) {
+		this.stopTag = stopTag;
 	}
 
 	public String getMdmCode() {

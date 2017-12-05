@@ -2,16 +2,13 @@ package com.tbea.erp.report.model.entity;
 
 import com.speed.frame.model.entity.AbstractReadWriteEntity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
 
 
-//@Entity
-//@Table(name = "CUX_USREREQUEST_T")
+@Entity
+@Table(name = "CUX_USREREQUEST_T")
 public class UserRequestEntity extends AbstractReadWriteEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,8 +24,8 @@ public class UserRequestEntity extends AbstractReadWriteEntity implements Serial
 	private static final long serialVersionUID = 1L;
 
 	Integer usageId;
-	Timestamp requestTime;
-	Timestamp responseTime;
+	Date requestTime;
+	Date responseTime;
 	String url;
 	Integer isAjax;
 	
@@ -40,16 +37,16 @@ public class UserRequestEntity extends AbstractReadWriteEntity implements Serial
 	}
 
 	
-	public Timestamp getRequestTime() {
+	public Date getRequestTime() {
 		return requestTime;
 	}
-	public void setRequestTime(Timestamp requestTime) {
+	public void setRequestTime(Date requestTime) {
 		this.requestTime = requestTime;
 	}
-	public Timestamp getResponseTime() {
+	public Date getResponseTime() {
 		return responseTime;
 	}
-	public void setResponseTime(Timestamp responseTime) {
+	public void setResponseTime(Date responseTime) {
 		this.responseTime = responseTime;
 	}
 	public String getUrl() {

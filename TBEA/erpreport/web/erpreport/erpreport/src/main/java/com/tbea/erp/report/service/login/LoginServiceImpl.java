@@ -36,11 +36,11 @@ public class LoginServiceImpl implements LoginService {
 	
 	@Resource(name=AccountDaoImpl.NAME)
 	AccountDao accountDao;
-	
+
 	@Override
-	public Account login(String usrName) {
-		if (usrName != null && !usrName.isEmpty()) {
-			return accountDao.getByName(usrName);
+	public Account login(String usrName, String roleName) {
+		if (usrName != null && !usrName.isEmpty() && roleName != null && !roleName.isEmpty()) {
+			return accountDao.getAccount(usrName, roleName);
 		}
 		return null;
 	}
@@ -57,7 +57,10 @@ public class LoginServiceImpl implements LoginService {
 			String ip,
 			List<UserRequestEntity> ures) {
 		UserUsageEntity userUsage = new UserUsageEntity();
-		userUsage.setUserName(account.getName() + "##" + account.getRole());
+		userUsage.setUserName(account.getName() + "##" +
+				account.getRole() + "##" +
+				account.getOrgId() + "##" +
+				account.getOrganizationId());
 		userUsage.setLoginTime(new Timestamp(creationTime));
 		userUsage.setLastAccessedTime(new Timestamp(lastAccessedTime));
 		userUsage.setLogoutTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));

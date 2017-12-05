@@ -121,12 +121,13 @@
 </body>
 <script src="${pageContext.request.contextPath}/jsp/plugins/layui/layui.all.js"></script>
 <script>
+    var printUrl = '${printUrl}';
     var context = {
         pager: '${pager}' == 'true',
         options: JSON.parse('${options}'),
         updateUrl: '${updateUrl}.do',
         exportUrl: '${exportUrl}.do',
-        printUrl: '${printUrl}.do' != '.do',
+        printUrl: printUrl ? printUrl + ".do" : "",
         baseUrl: '${pageContext.request.contextPath}/',
         item : ${param.item},
         isFavorite : ${isFavorite ? "true" : "false"}

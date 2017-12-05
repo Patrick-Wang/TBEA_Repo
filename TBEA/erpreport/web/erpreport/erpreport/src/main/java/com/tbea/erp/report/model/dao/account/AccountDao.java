@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AccountDao  {
 
-	Account getByName(String usrName);
+	Account getAccount(String usrName, String roleName);
 
 	List<Authority> getAuthority(Account account);
 

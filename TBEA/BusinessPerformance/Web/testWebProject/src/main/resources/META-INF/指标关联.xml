@@ -29,115 +29,128 @@
 				indi ：指标引用
 -->
 <relationships>
-	<indicators>
-		<mtxlzh name="煤炭销量总和" />
-		<jekxl name="将二矿销量" />
-		<nltkxl name="南露天矿销量" />
-		<otherxl name ='其他销量'/>
-		<n1 name="南矿大中块" />
-		<n2 name="南矿三八块" />
-		<n3 name="南矿其他" />
-		<n4 name="南矿末煤" />
+    <indicators>
+        <mtxlzh name="煤炭销量总和"/>
+        <jekxl name="将二矿销量"/>
+        <nltkxl name="南露天矿销量"/>
+        <otherxl name='其他销量'/>
+        <n1 name="南矿大中块"/>
+        <n2 name="南矿三八块"/>
+        <n3 name="南矿其他"/>
+        <n4 name="南矿末煤"/>
 
-		<j1 name="二矿大中块" />
-		<j2 name="二矿三八块" />
-		<j3 name="二矿其他" />
-		<j4 name="二矿末煤" />
+        <j1 name="二矿大中块"/>
+        <j2 name="二矿三八块"/>
+        <j3 name="二矿其他"/>
+        <j4 name="二矿末煤"/>
 
-		<zh1 name="产量-发电量（万度）" />
-		<zh2 name="产量-电子铝箔（吨）" />
-		<zh3 name="产量-非电子箔（吨）" />
-		
-		<zh4 name="产量-化成箔（万平米）" />
-		<zh5 name="销量-电子铝箔（吨）" />
-		<zh6 name="销量-非电子箔（吨）" />
-		<zh7 name="销量-化成箔（万平米）" />
-		
-		<xny1 name="逆变器产值"/>
-		<xny2 name="销量-逆变器（MW）"/>
-		<xny3 name="产量-逆变器（MW）"/>
-		
-		<xny4 name="SVG产值"/>
-		<xny5 name="产量-SVG（Mvar）"/>
-		<xny6 name="销量-SVG（Mvar）"/>
-		
-		<xny7 name="硅片产值"/>
-		<xny8 name="产量-硅片（万片）"/>
-		<xny9 name="销量-硅片（万片）"/>
-		
-		<sb_ydny1 name="印度能源合同签约"/>
-		<sb_ydny2 name="其中：印度能源制造业合同签约"/>
-		<sb_ydny3 name="其中：印度能源集成服务业合同签约"/>
-		
-		<ydny1 name="合同签约额"/>
-		<ydny2 name="合同签约-制造业签约"/>
-		<ydny3 name="集成服务业务（含工程和检测修试）签约"/>
-		
-	</indicators>
-	<share indi="nltkxl,n1,n2,n3,n4" type="月实际,20预计,28预计,月计划,年计划">
-		<company id="7" />
-		<company id="701" />
-	</share>
-	<share indi="jekxl,j1,j2,j3,j4" type="月实际,20预计,28预计,月计划,年计划">
-		<company id="7" />
-		<company id="702" />
-	</share>
-	
-	<share indi="zh1" type="月实际,20预计,28预计,月计划,年计划">
-		<company id="13" />
-		<company id="1307" />
-	</share>
-	
-	<share indi="zh4,zh7" type="月实际,20预计,28预计,月计划,年计划">
-		<company id="13" />
-		<company id="1304" />
-	</share>
-	
-	<share indi="zh2,zh3,zh5,zh6" type="月实际,20预计,28预计,月计划,年计划">
-		<company id="13" />
-		<company id="1303" />
-	</share>
-	
-	<share indi="xny1,xny2,xny3" type="月实际,20预计,28预计,月计划,年计划">
-		<company id="9" />
-		<company id="903" />
-	</share>
-	<share indi="xny4,xny5,xny6" type="月实际,20预计,28预计,月计划,年计划">
-		<company id="9" />
-		<company id="911" />
-	</share>
-	<share indi="xny7,xny8,xny9" type="月实际,20预计,28预计,月计划,年计划">
-		<company id="9" />
-		<company id="905" />
-	</share>
-	<share indi="xny7,xny8,xny9" type="月实际,20预计,28预计,月计划,年计划">
-		<company id="9" />
-		<company id="905" />
-	</share>
-	
-	<sum type="月实际,20预计,28预计,月计划,年计划">
-		<target indi="sb_ydny1">
-			<company id="1" />
-		</target>
-		<src indi="ydny1">
-			<company id="115" />
-		</src>
-	</sum>
-	<sum type="月实际,20预计,28预计,月计划,年计划">
-		<target indi="sb_ydny2">
-			<company id="1" />
-		</target>
-		<src indi="ydny2">
-			<company id="115" />
-		</src>
-	</sum>
-	<sum type="月实际,20预计,28预计,月计划,年计划">
-		<target indi="sb_ydny3">
-			<company id="1" />
-		</target>
-		<src indi="ydny3">
-			<company id="115" />
-		</src>
-	</sum>
-	
+        <zh1 name="产量-发电量（万度）"/>
+        <zh2 name="产量-电子铝箔（吨）"/>
+        <zh3 name="产量-非电子箔（吨）"/>
+
+        <zh4 name="产量-化成箔（万平米）"/>
+        <zh5 name="销量-电子铝箔（吨）"/>
+        <zh6 name="销量-非电子箔（吨）"/>
+        <zh7 name="销量-化成箔（万平米）"/>
+
+        <xny1 name="逆变器产值"/>
+        <xny2 name="销量-逆变器（MW）"/>
+        <xny3 name="产量-逆变器（MW）"/>
+
+        <xny4 name="SVG产值"/>
+        <xny5 name="产量-SVG（Mvar）"/>
+        <xny6 name="销量-SVG（Mvar）"/>
+
+        <xny7 name="硅片产值"/>
+        <xny8 name="产量-硅片（万片）"/>
+        <xny9 name="销量-硅片（万片）"/>
+
+        <sb_ydny1 name="印度能源合同签约"/>
+        <sb_ydny2 name="其中：印度能源制造业合同签约"/>
+        <sb_ydny3 name="其中：印度能源集成服务业合同签约"/>
+
+        <ydny1 name="合同签约额"/>
+        <ydny2 name="合同签约-制造业签约"/>
+        <ydny3 name="集成服务业务（含工程和检测修试）签约"/>
+
+    </indicators>
+    <share indi="nltkxl,n1,n2,n3,n4" type="月实际,20预计,28预计,月计划,年计划">
+        <company id="7"/>
+        <company id="701"/>
+    </share>
+    <share indi="jekxl,j1,j2,j3,j4" type="月实际,20预计,28预计,月计划,年计划">
+        <company id="7"/>
+        <company id="702"/>
+    </share>
+
+    <share indi="zh1" type="月实际,20预计,28预计,月计划,年计划">
+        <company id="13"/>
+        <company id="1307"/>
+    </share>
+
+    <share indi="zh4,zh7" type="月实际,20预计,28预计,月计划,年计划">
+        <company id="13"/>
+        <company id="1304"/>
+    </share>
+
+    <share indi="zh2,zh3,zh5,zh6" type="月实际,20预计,28预计,月计划,年计划">
+        <company id="13"/>
+        <company id="1303"/>
+    </share>
+
+    <share indi="xny1,xny2,xny3" type="月实际,20预计,28预计,月计划,年计划">
+        <company id="9"/>
+        <company id="903"/>
+    </share>
+    <share indi="xny4,xny5,xny6" type="月实际,20预计,28预计,月计划,年计划">
+        <company id="9"/>
+        <company id="911"/>
+    </share>
+    <share indi="xny7,xny8,xny9" type="月实际,20预计,28预计,月计划,年计划">
+        <company id="9"/>
+        <company id="905"/>
+    </share>
+    <share indi="xny7,xny8,xny9" type="月实际,20预计,28预计,月计划,年计划">
+        <company id="9"/>
+        <company id="905"/>
+    </share>
+
+    <sum type="月实际,20预计,28预计,月计划,年计划">
+        <target indi="sb_ydny1">
+            <company id="1"/>
+        </target>
+        <src indi="ydny1">
+            <company id="115"/>
+        </src>
+    </sum>
+    <sum type="月实际,20预计,28预计,月计划,年计划">
+        <target indi="sb_ydny2">
+            <company id="1"/>
+        </target>
+        <src indi="ydny2">
+            <company id="115"/>
+        </src>
+    </sum>
+    <sum type="月实际,20预计,28预计,月计划,年计划">
+        <target indi="sb_ydny3">
+            <company id="1"/>
+        </target>
+        <src indi="ydny3">
+            <company id="115"/>
+        </src>
+    </sum>
+    <sum type="月实际,20预计,28预计,月计划,年计划">
+        <target indi="mtxlzh">
+            <company id="7"/>
+        </target>
+        <src indi="nltkxl">
+            <company id="7"/>
+        </src>
+        <src indi="jekxl">
+            <company id="7"/>
+        </src>
+        <src indi="otherxl">
+            <company id="7"/>
+        </src>
+    </sum>
 </relationships>

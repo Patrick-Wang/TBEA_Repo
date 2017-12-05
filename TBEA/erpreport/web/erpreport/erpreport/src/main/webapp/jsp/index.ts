@@ -27,7 +27,7 @@ module index {
     declare var layui: any;
 
     var treeItemMap = {};
-    var curTreeItem:any;
+    var curRootItem:any;
     function buildTreeItemMap(tree: TreeItem[]) {
         for (let i = 0; tree && i < tree.length; ++i) {
             treeItemMap[tree[i].id] = tree[i];
@@ -77,67 +77,123 @@ module index {
         return data;
     }
 
-    function triggerOnClick(ids: any, time :number = 500) {
-        let navItem = $(".layui-side .layui-nav-item");
-        for (let i = 0, j = 0; curTreeItem && i < curTreeItem.children.length; ++i){
-            if (!curTreeItem.children[i].url){
-                if ($(navItem[j]).hasClass('layui-nav-itemed')){
-                    curTreeItem.children[i].spread = true;
-                }else{
-                    curTreeItem.children[i].spread = false;
+    function triggerOnClick(ids: any, time :number = 500, pItemElem : any = undefined) {
+        let id = ids.splice(0, 1);
+        let treeItem: TreeItem = treeItemMap[id];
+        if (typeof pItemElem === "function"){
+            pItemElem = pItemElem();
+        }
+
+        if (!treeItem.parent){
+            pItemElem = $(".layui-side .layui-nav-item");
+            //save spread status
+            for (let i = 0, j = 0; curRootItem && i < curRootItem.children.length; ++i){
+                if (!curRootItem.children[i].url){
+                    if ($(pItemElem[j]).hasClass('layui-nav-itemed')){
+                        curRootItem.children[i].spread = true;
+                    }else{
+                        curRootItem.children[i].spread = false;
+                    }
+                    ++j;
                 }
-                ++j;
+            }
+            curRootItem = treeItem;
+            layui.navbar.set({data: treeItem.children}).render(function (data) {
+                layui.tab.tabAdd(data);
+            });
+            pItemElem = ()=>{return $(".layui-side .layui-nav-tree")};
+        } else if (!treeItem.url){
+            let pTreeItem: TreeItem = treeItemMap[treeItem.parent];
+            let liItem: any;
+            for (let i = 0, j = 0; i < pTreeItem.children.length; ++i) {
+                if (pTreeItem.children[i].id == treeItem.id) {
+                    liItem = pItemElem.children(".layui-nav-item:eq(" + j + ")");
+                    if (!liItem.hasClass('layui-nav-itemed')){
+                        liItem.find(">a").click();
+                        pItemElem = liItem;
+                    }
+                    break;
+                }
+                if (!pTreeItem.children[i].url){
+                    ++j;
+                }
+            }
+        } else if (treeItem.url){
+            if (pItemElem[0].tagName.toLowerCase() == 'ul'){
+                let pTreeItem: TreeItem = treeItemMap[treeItem.parent];
+                pItemElem = pItemElem.children(".layui-nav-item");
+                for (let i = 0; i < pTreeItem.children.length; ++i) {
+                    if (pTreeItem.children[i].id == id) {
+                        pItemElem.eq(i).find('a').click();
+                        break;
+                    }
+                }
+            }else if (pItemElem[0].tagName.toLowerCase() == 'li'){
+                let pTreeItem: TreeItem = treeItemMap[treeItem.parent];
+                pItemElem = pItemElem.find("dd");
+                for (let i = 0; i < pTreeItem.children.length; ++i) {
+                    if (pTreeItem.children[i].id == id) {
+                        pItemElem.eq(i).find('a').click();
+                        break;
+                    }
+                }
+            }else{
+                console.log("模拟点击失败")
             }
         }
 
-        let treeItem: TreeItem = treeItemMap[ids[0]];
-        layui.navbar.set({data: treeItem.children}).render(function (data) {
-            layui.tab.tabAdd(data);
-        });
-        curTreeItem = treeItem;
-        if (ids.length > 1) {
-            setTimeout(() => {
-
-                treeItem = treeItemMap[ids[1]];
-                if (!treeItem.url){
-                    let parent: TreeItem = treeItemMap[treeItem.parent];
-                    let liItem: any;
-                    for (let i = 0, j = 0; i < parent.children.length; ++i) {
-                        if (parent.children[i].id == treeItem.id) {
-                            liItem = $(".layui-side .layui-nav-item:eq(" + j + ")");
-                            if (!liItem.hasClass('layui-nav-itemed')){
-                                liItem.find(">a").click();
-                            }
-                            break;
-                        }
-                        if (!parent.children[i].url){
-                            ++j;
-                        }
-                    }
-                    if (ids.length > 2) {
-                        setTimeout(() => {
-
-                            for (let i = 0; i < treeItem.children.length; ++i) {
-                                if (treeItem.children[i].id == ids[2]) {
-                                    liItem.find("dd:eq(" + i + ") a").click();
-                                    break;
-                                }
-                            }
-
-                        }, time);
-                    }
-                }else{
-                    for (let i = 0; i < treeItem.children.length; ++i) {
-                        if (treeItem.children[i].id == ids[2]) {
-                            let ddItem = $(".layui-nav-tree").children().eq(i).find("a").click();
-                            break;
-                        }
-                    }
-                }
-
-
+        if (ids.length > 0){
+            setTimeout(()=>{
+                triggerOnClick(ids, time, pItemElem);
             }, time);
         }
+
+        //
+        //
+        //
+        //
+        // if (ids.length > 1) {
+        //     setTimeout(() => {
+        //         treeItem = treeItemMap[ids[1]];
+        //         if (!treeItem.url){
+        //             let parent: TreeItem = treeItemMap[treeItem.parent];
+        //             let liItem: any;
+        //             for (let i = 0, j = 0; i < parent.children.length; ++i) {
+        //                 if (parent.children[i].id == treeItem.id) {
+        //                     liItem = $(".layui-side .layui-nav-item:eq(" + j + ")");
+        //                     if (!liItem.hasClass('layui-nav-itemed')){
+        //                         liItem.find(">a").click();
+        //                     }
+        //                     break;
+        //                 }
+        //                 if (!parent.children[i].url){
+        //                     ++j;
+        //                 }
+        //             }
+        //             if (ids.length > 2) {
+        //                 setTimeout(() => {
+        //
+        //                     for (let i = 0; i < treeItem.children.length; ++i) {
+        //                         if (treeItem.children[i].id == ids[2]) {
+        //                             liItem.find("dd:eq(" + i + ") a").click();
+        //                             break;
+        //                         }
+        //                     }
+        //
+        //                 }, time);
+        //             }
+        //         }else{
+        //             for (let i = 0; i < treeItem.children.length; ++i) {
+        //                 if (treeItem.children[i].id == ids[2]) {
+        //                     let ddItem = $(".layui-nav-tree").children().eq(i).find("a").click();
+        //                     break;
+        //                 }
+        //             }
+        //         }
+        //
+        //
+        //     }, time);
+        // }
 
     }
 

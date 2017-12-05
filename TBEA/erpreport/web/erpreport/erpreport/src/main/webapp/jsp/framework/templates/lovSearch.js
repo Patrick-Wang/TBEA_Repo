@@ -69,7 +69,7 @@ var search;
                 drag: false,
                 resize: false,
                 height: '100%',
-                shrinkToFit: true,
+                shrinkToFit: (gridCtrl.shrinkToFit == undefined) ? "true" : gridCtrl.shrinkToFit,
                 assistEditable: false,
                 autoScroll: true,
                 rowNum: this.pgSize,
@@ -163,7 +163,8 @@ var search;
             }
             sel.selectpicker({
                 // style: 'btn-info'
-                size: 10
+                size: 10,
+                liveSearch: opt.type != 'lovNoSearch'
             });
             sel.on('changed.bs.select', function (e) {
                 var val = sel.selectpicker("val");
@@ -400,7 +401,9 @@ var search;
         SearchPanel.prototype.buildSearchItems = function () {
             var rowMap = this.buildStructure();
             for (var i = 0; i < context.options.length; ++i) {
-                if (!context.options[i].type || context.options[i].type == 'lov') {
+                if (!context.options[i].type ||
+                    context.options[i].type == 'lov' ||
+                    context.options[i].type == 'lovNoSearch') {
                     this.buildSelect(rowMap, context.options[i]);
                 }
                 else if (context.options[i].type == 'date') {
@@ -421,7 +424,9 @@ var search;
                 pgNum: 0
             };
             for (var i = 0; i < context.options.length; ++i) {
-                if (!context.options[i].type || context.options[i].type == 'lov') {
+                if (!context.options[i].type ||
+                    context.options[i].type == 'lov' ||
+                    context.options[i].type == 'lovNoSearch') {
                     this.dataOpt[context.options[i].param] = $("#_" + context.options[i].param).selectpicker("val");
                     if (!this.dataOpt[context.options[i].param] || 'all' == this.dataOpt[context.options[i].param]) {
                         this.dataOpt[context.options[i].param] = undefined;
@@ -492,13 +497,15 @@ var search;
                     }
                 }
                 var params = optTmp.join("&");
-                $("#exportForm")[0].action = encodeURI(context.exportUrl + "?" + params);
+                $("#exportForm")[0].action = encodeURI(context.printUrl + "?" + params);
                 $("#exportForm")[0].submit();
             }
         };
         SearchPanel.prototype.onClickReset = function () {
             for (var i = 0; i < context.options.length; ++i) {
-                if (!context.options[i].type || context.options[i].type == 'lov') {
+                if (!context.options[i].type ||
+                    context.options[i].type == 'lov' ||
+                    context.options[i].type == 'lovNoSearch') {
                     $("#_" + context.options[i].param + " option:selected").attr("selected", false);
                     $("#_" + context.options[i].param).selectpicker('refresh');
                 }

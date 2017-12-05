@@ -115,11 +115,11 @@ public class EntryController {
 		Account account = SessionManager.getAccount(request.getSession(false));
 
 		List<String[]> ret =  entryService.getZb(date, account, comp, entryType);
-		for (int i = ret.size() - 1; i >= 0; --i) {
-			if ("354".equals(ret.get(i)[0]) || "355".equals(ret.get(i)[0]) || "356".equals(ret.get(i)[0])) {
-				ret.remove(i);
-			}
-		}
+//		for (int i = ret.size() - 1; i >= 0; --i) {
+//			if ("354".equals(ret.get(i)[0]) || "355".equals(ret.get(i)[0]) || "356".equals(ret.get(i)[0])) {
+//				ret.remove(i);
+//			}
+//		}
 		
 		String zb = JSONArray.fromObject(ret).toString().replace("null", "\"\"");
 		List<ZBStatus> approved = entryService.getZbStatus(date, comp, entryType);

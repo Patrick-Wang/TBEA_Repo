@@ -17,8 +17,29 @@ public class Account implements Serializable {
 
     String role;
 
-	public Account(String name) {
+    String orgId;
+
+    String organizationId;
+
+	public String getOrgId() {
+		return orgId;
+	}
+
+	public void setOrgId(String orgId) {
+		this.orgId = orgId;
+	}
+
+	public String getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(String organizationId) {
+		this.organizationId = organizationId;
+	}
+
+	public Account(String name, String role) {
 		this.name = name;
+		this.role = role;
 	}
 
 	public String getName() {

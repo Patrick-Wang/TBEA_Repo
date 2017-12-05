@@ -31,6 +31,10 @@ insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) valu
 (10, 5, '应收收款报表', 'fa fa-sticky-note', 0, '/', 1);
 insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
 (11, 6, '车间月度完工入库清单', 'fa fa-cogs', 0, '/erpreport/report/FCCBD80F080E5B9B7AB788E2514E439BSHOWCLR.do', 1);
+insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
+(12, null, '采购', 'fa fa-suitcase', 0, null, 0);
+insert into CUX_NAVIGATEITEM_T (id, parent, title, icon, spread, url, type) values
+(13, 12, '采购订单执行情况', 'fa fa-fax', 0, '/erpreport/report/12C2F859487F356CC6C3E30D787725F6SHOWCLR.do', 1);
 
 commit;
 
@@ -48,6 +52,8 @@ insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, role) values
 (10, '应付会计');
 insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, role) values
 (11, '应付会计');
+insert into CUX_NAVIGATEAUTHORITY_T (navigator_item_id, role) values
+(13, '应付会计');
 commit;
 
 --测试用户DCSUP06

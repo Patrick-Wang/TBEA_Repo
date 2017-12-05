@@ -1,14 +1,14 @@
 <Resource>
-<datasource
-		name="repods"
-		username="repo"
-		password="erpreport"
-		driverClassName="oracle.jdbc.driver.OracleDriver"
-		jdbcUrl="jdbc:oracle:thin:@172.20.8.104:1523/ERPPRD"
-		minimumIdle="10"
-		maximumPoolSize="70"
-		idleTimeout="10000"
-		connectionTestQuery="select 1 from dual"
-		connectionTimeout="60000"
-		maxLifetime="1800000"/>
+    <datasource
+            name="repods"
+            username="repo"
+            password="erpreport"
+            driverClassName="oracle.jdbc.driver.OracleDriver"
+            jdbcUrl="jdbc:oracle:thin:@172.20.8.195:1525/TST8004"
+            minimumIdle="10"
+            maximumPoolSize="70"
+            idleTimeout="10000"
+            connectionTestQuery="select 1 from dual"
+            connectionTimeout="60000"
+            maxLifetime="1800000"/>
 </Resource>
