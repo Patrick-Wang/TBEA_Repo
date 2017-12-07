@@ -12,6 +12,9 @@ import java.io.OutputStream;
 
 public class MakerApp {
     public static void main(String args[]) throws IOException, InvalidFormatException {
+
+       String s = java.net.URLEncoder.encode("你好", "utf-8");
+
         File f = new File(args[0]);
         XSSFWorkbook workbook = new XSSFWorkbook(f);
         String fName = f.getAbsolutePath();

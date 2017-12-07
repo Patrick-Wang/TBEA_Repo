@@ -357,6 +357,7 @@
             from
                 CUX_PURORDER_V
             where
+                org_id = ${session.orgId} and
                 (${person} is null or person like ${'%person%'}) and
                 (${orderNum} is null or order_num like ${'%orderNum%'}) and
                 (${vender} is null or vender like ${'%vender%'}) and
@@ -408,6 +409,7 @@
         from
             CUX_PURORDER_V
         where
+            org_id = ${session.orgId} and
             (${person} is null or person like ${'%person%'}) and
             (${orderNum} is null or order_num like ${'%orderNum%'}) and
             (${vender} is null or vender like ${'%vender%'}) and

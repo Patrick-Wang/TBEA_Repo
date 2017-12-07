@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -123,7 +124,7 @@ public class LoginServlet {
         } else {
             invalidLink = true;
         }
-        return true;//!invalidLink;
+        return !invalidLink;
     }
 
     boolean cmp(String s1, String s2) {
@@ -141,9 +142,7 @@ public class LoginServlet {
         if (SessionManager.isOnline(request)) {
             Account oldAcc = SessionManager.getAccount(request.getSession(false));
             if (cmp(oldAcc.getName(), account.getName()) &&
-                    cmp(oldAcc.getRole(), account.getRole()) &&
-                    cmp(oldAcc.getOrganizationId(), account.getOrganizationId()) &&
-                    cmp(oldAcc.getOrgId(), account.getOrgId())) {
+                    cmp(oldAcc.getRole(), account.getRole())) {
                 return true;
             }
         }
@@ -158,14 +157,13 @@ public class LoginServlet {
                                  @RequestParam(value = "time") String time,
                                  @RequestParam(value = "token") String token,
                                  @RequestParam(value = "item") String item,
+                                 @RequestParam(value = "cc", required = false) String cc,
                                  @RequestParam(value = "orgId", required = false) String orgId,
                                  @RequestParam(value = "organizationId", required = false) String organizationId)
             throws NoSuchAlgorithmException, UnsupportedEncodingException {
         if (validate(userName, time, token)) {
             Account account = loginService.login(userName, roleName);
             if (null != account) {
-                account.setOrgId(orgId);
-                account.setOrganizationId(organizationId);
                 if (!isOnline(account, request)) {
                     HttpSession session = SessionManager.createSession(request, account);
                     Enumeration<String> params = request.getParameterNames();
@@ -177,11 +175,30 @@ public class LoginServlet {
                     List<NavigateItemEntity> navTree = loginService.getNavigateItems(account);
                     session.setAttribute("navTree", navTree);
                 }
+                HttpSession session = request.getSession(false);
+                if (cc != null){
+                    session.setAttribute("cc", cc);
+                }
+                if (orgId != null){
+                    session.setAttribute("orgId", orgId);
+                }
+                if (organizationId != null){
+                    session.setAttribute("organizationId", organizationId);
+                }
                 return new ModelAndView("redirect:/Login/index.do?item=" + item);
             } else {
                 return new ModelAndView("userNotExists");
             }
         }
         return new ModelAndView("invalidLink");
+    }
+
+    @RequestMapping(value = {"token.do"}, method = RequestMethod.GET)
+    public @ResponseBody byte[] erpLogin(
+        @RequestParam(value = "userName") String userName,
+        @RequestParam(value = "time") String time) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        String srcKey = userName + time + VALIDATION_KEY;
+        String destToken = encoderByMd5(srcKey);
+        return destToken.getBytes("utf-8");
     }
 }

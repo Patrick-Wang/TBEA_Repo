@@ -4,7 +4,7 @@ import com.speed.frame.model.entity.AbstractReadWriteEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -24,9 +24,9 @@ public class UserUsageEntity extends AbstractReadWriteEntity implements Serializ
 	private static final long serialVersionUID = 1L;
 
 	String userName; 
-	Date loginTime;
-	Date logoutTime;
-	Date lastAccessedTime;
+	Timestamp loginTime;
+	Timestamp logoutTime;
+	Timestamp lastAccessedTime;
 	String ip;
 
 	public String getUserName() {
@@ -35,22 +35,22 @@ public class UserUsageEntity extends AbstractReadWriteEntity implements Serializ
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public Date getLoginTime() {
+	public Timestamp getLoginTime() {
 		return loginTime;
 	}
-	public void setLoginTime(Date loginTime) {
+	public void setLoginTime(Timestamp loginTime) {
 		this.loginTime = loginTime;
 	}
-	public Date getLogoutTime() {
+	public Timestamp getLogoutTime() {
 		return logoutTime;
 	}
-	public void setLogoutTime(Date logoutTime) {
+	public void setLogoutTime(Timestamp logoutTime) {
 		this.logoutTime = logoutTime;
 	}
-	public Date getLastAccessedTime() {
+	public Timestamp getLastAccessedTime() {
 		return lastAccessedTime;
 	}
-	public void setLastAccessedTime(Date lastAccessedTime) {
+	public void setLastAccessedTime(Timestamp lastAccessedTime) {
 		this.lastAccessedTime = lastAccessedTime;
 	}
 	public String getIp() {

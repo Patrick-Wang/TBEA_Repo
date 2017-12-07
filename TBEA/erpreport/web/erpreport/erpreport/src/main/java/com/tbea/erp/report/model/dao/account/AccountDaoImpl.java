@@ -24,14 +24,10 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public Account getAccount(String usrName, String roleName) {
-		Query q = entityManager.createNativeQuery("select distinct(user_name) from apps.fnd_user where user_name = :userName");
-		q.setParameter("userName", usrName);
+		Query q = entityManager.createNativeQuery("select distinct(role) from CUX_NAVIGATEAUTHORITY_T where role = :roleName");
+		q.setParameter("roleName", roleName);
 		if (!q.getResultList().isEmpty()){
-			q = entityManager.createNativeQuery("select distinct(role) from CUX_NAVIGATEAUTHORITY_T where role = :roleName");
-			q.setParameter("roleName", roleName);
-			if (!q.getResultList().isEmpty()){
-				return new Account(usrName, roleName);
-			}
+			return new Account(usrName, roleName);
 		}
 		return null;
 	}

@@ -4,7 +4,7 @@ import com.speed.frame.model.entity.AbstractReadWriteEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -24,8 +24,8 @@ public class UserRequestEntity extends AbstractReadWriteEntity implements Serial
 	private static final long serialVersionUID = 1L;
 
 	Integer usageId;
-	Date requestTime;
-	Date responseTime;
+	Timestamp requestTime;
+	Timestamp responseTime;
 	String url;
 	Integer isAjax;
 	
@@ -37,16 +37,16 @@ public class UserRequestEntity extends AbstractReadWriteEntity implements Serial
 	}
 
 	
-	public Date getRequestTime() {
+	public Timestamp getRequestTime() {
 		return requestTime;
 	}
-	public void setRequestTime(Date requestTime) {
+	public void setRequestTime(Timestamp requestTime) {
 		this.requestTime = requestTime;
 	}
-	public Date getResponseTime() {
+	public Timestamp getResponseTime() {
 		return responseTime;
 	}
-	public void setResponseTime(Date responseTime) {
+	public void setResponseTime(Timestamp responseTime) {
 		this.responseTime = responseTime;
 	}
 	public String getUrl() {
