@@ -2,9 +2,9 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 var cbfx;
 (function (cbfx) {
+    var CbfxType;
     (function (CbfxType) {
         CbfxType[CbfxType["dmcbfx"] = 0] = "dmcbfx";
         CbfxType[CbfxType["dmcbqsfx"] = 1] = "dmcbqsfx";
-    })(cbfx.CbfxType || (cbfx.CbfxType = {}));
-    var CbfxType = cbfx.CbfxType;
+    })(CbfxType = cbfx.CbfxType || (cbfx.CbfxType = {}));
 })(cbfx || (cbfx = {}));

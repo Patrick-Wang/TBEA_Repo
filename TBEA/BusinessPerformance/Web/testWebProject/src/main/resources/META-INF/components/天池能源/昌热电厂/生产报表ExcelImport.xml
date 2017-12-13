@@ -24,7 +24,6 @@
     <zbid type="int" value="${i + 1}"/>
     <year type="int" value="${cal.year}"/>
     <month type="int" value="${cal.month}"/>
-
     <dwid type="int" value="${compId}"/>
    </where>
    <set>
@@ -32,7 +31,6 @@
     <year type="int" value="${cal.year}"/>
     <month type="int" value="${cal.month}"/>
     <value type="double" ref="${4}"/>
-
     <dwid type="int" value="${compId}"/>
     <source type="string" value="${src}"/>
     <time type="date" value="${time}"/>
@@ -78,8 +76,8 @@
  </service>
  <controller id="tcnycrdcscbbImportWrapper">
 
-  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
-  <context key="item" value="${request.item2.asInt}"/>
+  <context key="compId" value="${orgs.BMDBOrganization.ids[request.compId.asInt]}"/>
+  <context key="item" value="${request.item.asInt}"/>
   <context key="data" value="${request.upfile.asExcel}"/>
   <context value="${request.date.asCalendar}" key="cal"/>
   <context value="${calendar.current.date}" key="time"/>
@@ -93,9 +91,9 @@
   <elseif test="${item == 3}">
    <callservice id="tcnycrdcscbbSeasonImport"/>
   </elseif>
-  <else>
+  <elseif test="${item == 4}">
    <callservice id="tcnycrdcscbbYearImport"/>
-  </else>
+  </elseif>
   <response type="json">
    <errorCode>0</errorCode>
    <message>OK</message>

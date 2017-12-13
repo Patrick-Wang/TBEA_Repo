@@ -80,7 +80,7 @@ var mkt_view_data;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var ErrorCode;
     (function (ErrorCode) {
         ErrorCode[ErrorCode["OK"] = 0] = "OK";
@@ -388,6 +388,6 @@ var mkt_view_data;
             }
         };
         return View;
-    })();
+    }());
     mkt_view_data.View = View;
 })(mkt_view_data || (mkt_view_data = {}));

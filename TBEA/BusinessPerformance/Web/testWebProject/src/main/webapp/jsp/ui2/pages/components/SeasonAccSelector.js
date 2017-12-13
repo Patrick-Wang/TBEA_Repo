@@ -163,6 +163,6 @@ var Util;
             return dates;
         };
         return SeasonAccSelector;
-    })();
+    }());
     Util.SeasonAccSelector = SeasonAccSelector;
 })(Util || (Util = {}));

@@ -63,7 +63,7 @@ var xl_fkfstj;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("xlfkfstj_update.do");
@@ -101,12 +101,14 @@ var xl_fkfstj;
                 var rawData = [
                     ["集中招标"],
                     ["非集中招标"],
-                    ["合计"]];
+                    ["合计"]
+                ];
                 _this.updateTable(_this.gwTableId, _this.gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(_this.gwTableId + "_jqgrid_1234"), rawData, fktjData[1]);
                 rawData = [
                     ["集中招标"],
                     ["非集中招标"],
-                    ["合计"]];
+                    ["合计"]
+                ];
                 _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rawData, fktjData[2], true);
                 $('h1').text("线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
                 document.title = "线缆 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
@@ -289,7 +291,8 @@ var xl_fkfstj;
                 ["非电力市场", "航天军工"],
                 ["非电力市场", "连锁经营"],
                 ["非电力市场", "其他"],
-                ["合", "计"]];
+                ["合", "计"]
+            ];
             var row = [];
             for (var i = 0; i < data.length; ++i) {
                 if (rawData[i] instanceof Array) {
@@ -322,9 +325,12 @@ var xl_fkfstj;
                 height: '100%',
                 width: 1250,
                 shrinkToFit: false
+                //                    autoScroll: true,
+                //                    footerrow: true,
+                //                    userDataOnFooter: true
             }));
         };
         return View;
-    })();
+    }());
     xl_fkfstj.View = View;
 })(xl_fkfstj || (xl_fkfstj = {}));

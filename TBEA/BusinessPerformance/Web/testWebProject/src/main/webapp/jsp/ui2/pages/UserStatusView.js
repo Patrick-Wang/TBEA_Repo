@@ -14,7 +14,7 @@ var userStatus;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
         }
@@ -37,7 +37,8 @@ var userStatus;
         View.prototype.updateTable = function (tableId) {
             var name = tableId + "_jqgrid";
             var tableAssist = JQGridAssistantFactory.createFlatTable(name, [
-                "用户名", "IP", "SID", "登录时间", "最近访问时间"]);
+                "用户名", "IP", "SID", "登录时间", "最近访问时间"
+            ]);
             var summary = "● 在线户数 : " + this.mData.active_user_count + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp";
             if (undefined != this.mData.latest_active_user) {
                 summary += "● 最近访问用户 : " + this.mData.latest_active_user + "&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;";
@@ -78,6 +79,6 @@ var userStatus;
         };
         View.instance = new View();
         return View;
-    })();
+    }());
     userStatus.View = View;
 })(userStatus || (userStatus = {}));

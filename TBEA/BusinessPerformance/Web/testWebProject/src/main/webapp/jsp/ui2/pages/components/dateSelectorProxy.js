@@ -5,9 +5,9 @@ var Util;
 (function (Util) {
     var DateSelectorProxy = (function () {
         function DateSelectorProxy(divId, dtStart, dtEnd, dtNow, asSeason, asSeasonAcc, jdName) {
-            var _this = this;
             if (asSeason === void 0) { asSeason = false; }
             if (asSeasonAcc === void 0) { asSeasonAcc = false; }
+            var _this = this;
             this.curDate = dtNow;
             if (asSeasonAcc) {
                 this.seasonAccSelect = new Util.SeasonAccSelector(dtStart, dtEnd, dtNow, divId, jdName);
@@ -90,6 +90,6 @@ var Util;
             return this.curDate;
         };
         return DateSelectorProxy;
-    })();
+    }());
     Util.DateSelectorProxy = DateSelectorProxy;
 })(Util || (Util = {}));

@@ -163,7 +163,7 @@ var tab;
                 var newNormalTabCount = this.getNormalTabSize() - normalTabSize;
                 var firstNewTab = this.q(".tab-normal:eq(" + normalTabSize + ")");
                 this.q(".tab-more").before('<div id="animHelper" style="float:left;overflow:hidden"></div>');
-                var animHelper = this.q('#animHelper');
+                var animHelper_1 = this.q('#animHelper');
                 var newTab = firstNewTab.next();
                 for (var i = 0; i < newNormalTabCount; ++i) {
                     var width_1 = firstNewTab.css("width");
@@ -173,23 +173,23 @@ var tab;
                     firstNewTab.css("width", width_1);
                     firstNewTab.find("div>div:first").css("height", textHeight_1);
                     firstNewTab.remove();
-                    animHelper.append(firstNewTab);
+                    animHelper_1.append(firstNewTab);
                     firstNewTab = newTab;
                     newTab = newTab.next();
                 }
-                var width = parseInt(animHelper.css("width").replace("px", ""));
+                var width = parseInt(animHelper_1.css("width").replace("px", ""));
                 var height_2 = newTab.css("height");
-                animHelper.css("width", "0px");
-                animHelper.css("height", height_2);
-                animHelper.animate({
+                animHelper_1.css("width", "0px");
+                animHelper_1.css("height", height_2);
+                animHelper_1.animate({
                     width: width + "px"
                 }, 'fast', 'swing', function () {
-                    animHelper.find("li").removeCss("width");
-                    animHelper.find("div").removeCss("width");
-                    animHelper.find("li").removeCss("height");
-                    animHelper.find("div").removeCss("height");
-                    for (var count = animHelper.children().length; count > 0; --count) {
-                        var tab_2 = animHelper.children().eq(0);
+                    animHelper_1.find("li").removeCss("width");
+                    animHelper_1.find("div").removeCss("width");
+                    animHelper_1.find("li").removeCss("height");
+                    animHelper_1.find("div").removeCss("height");
+                    for (var count = animHelper_1.children().length; count > 0; --count) {
+                        var tab_2 = animHelper_1.children().eq(0);
                         tab_2.remove();
                         _this.q(".tab-more").before(tab_2);
                         tab_2.find(" div div:first").click(tab_2, function (event) {
@@ -199,7 +199,7 @@ var tab;
                             _this.triggerClickClose(event.data.attr("id"));
                         });
                     }
-                    animHelper.remove();
+                    animHelper_1.remove();
                     closed1 = true;
                     if (closed1 && closed2) {
                         _this.internalOnEnd(id, callback);
@@ -492,6 +492,6 @@ var tab;
             return tab.hasClass("active");
         };
         return Tab;
-    })();
+    }());
     tab_1.Tab = Tab;
 })(tab || (tab = {}));

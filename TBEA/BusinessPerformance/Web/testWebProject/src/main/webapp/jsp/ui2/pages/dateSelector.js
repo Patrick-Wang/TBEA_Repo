@@ -84,6 +84,7 @@ var Util;
                 this.mEndDate.day = undefined;
                 this.mStartDate.day = undefined;
                 this.mEndDate.month = 3 * (parseInt((this.mEndDate.month - 1) / 3 + '') + 1);
+                // this.mEndDate = addMonth(this.mEndDate, -((this.mEndDate.month % 3));
             }
             else {
                 this.mAsSeasion = false;
@@ -101,6 +102,7 @@ var Util;
             }
             if (this.mAsSeasion) {
                 this.mStartDate.month = 3 * (parseInt((this.mStartDate.month - 1) / 3 + '') + 1);
+                //addMonth(this.mStartDate, -(this.mStartDate.month % 3));
             }
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             this.updateYear(this.mCurDate.year);
@@ -257,6 +259,13 @@ var Util;
                         _this.onMonthSelected(parseInt(newMonth));
                     }
                 });
+                //monthSel.multiselect({
+                //    multiple: false,
+                //    header: false,
+                //    minWidth: 80,
+                //    height: '100%',//this.mAsSeasion ? seasonCount * 28 : (endMonth - startMonth + 1) * 28,
+                //    selectedList: 1
+                //});
             }
         };
         DateSelector.prototype.getDaysInMonth = function (year, month) {
@@ -276,6 +285,13 @@ var Util;
                         'style="width: 100px;"></select>' +
                         '</td><td><div style="width:5px;"></div></td>');
                     daySel = $("#" + this.mCtrlId + "day");
+                    //daySel.multiselect({
+                    //    multiple: false,
+                    //    header: "Select an option",
+                    //    height: (endDay - startDay + 1) > 15 ? (15 * 28) + "px": '100%',
+                    //    noneSelectedText: "Select an Option",
+                    //    selectedList: 1
+                    //});
                 }
                 else {
                     daySel.empty();
@@ -296,6 +312,13 @@ var Util;
                         _this.onDaySelected(parseInt(newDay));
                     }
                 });
+                //daySel.multiselect({
+                //    multiple: false,
+                //    header: false,
+                //    minWidth: 80,
+                //    height: (endDay - startDay + 1) > 15 ? (15 * 28) + "px": '100%',
+                //    selectedList: 1
+                //});
             }
         };
         DateSelector.prototype.onYearSelected = function (year) {
@@ -354,6 +377,6 @@ var Util;
             return { year: this.mCurDate.year, month: this.mCurDate.month, day: this.mCurDate.day };
         };
         return DateSelector;
-    })();
+    }());
     Util.DateSelector = DateSelector;
 })(Util || (Util = {}));

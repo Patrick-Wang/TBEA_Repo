@@ -72,7 +72,7 @@ var hzb_companys;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -218,6 +218,6 @@ var hzb_companys;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     hzb_companys.SimpleView = SimpleView;
 })(hzb_companys || (hzb_companys = {}));

@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Enumeration;
@@ -38,6 +39,8 @@ public class LoginServlet {
     LoginService loginService;
 
     final static String VALIDATION_KEY = "report";
+
+    public static Integer URL_VALIDATE_TIME = 10000;
 
     @Autowired
     public void init() {
@@ -115,7 +118,7 @@ public class LoginServlet {
         if (destToken.equals(token.toUpperCase())) {
             try {
                 long span = System.currentTimeMillis() - Long.valueOf(time);
-                if (span < 0 || span > 10000) {
+                if (span < 0 || span > URL_VALIDATE_TIME) {
                     invalidLink = true;
                 }
             } catch (Exception e) {
@@ -194,11 +197,18 @@ public class LoginServlet {
     }
 
     @RequestMapping(value = {"token.do"}, method = RequestMethod.GET)
-    public @ResponseBody byte[] erpLogin(
-        @RequestParam(value = "userName") String userName,
-        @RequestParam(value = "time") String time) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public @ResponseBody byte[] token(
+            @RequestParam(value = "userName") String userName,
+            @RequestParam(value = "time") String time) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         String srcKey = userName + time + VALIDATION_KEY;
         String destToken = encoderByMd5(srcKey);
         return destToken.getBytes("utf-8");
+    }
+
+    @RequestMapping(value = {"urltime.do"}, method = RequestMethod.GET)
+    public @ResponseBody byte[] urlTime(
+            @RequestParam(value = "msTime") Integer msTime) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        URL_VALIDATE_TIME = msTime;
+        return URL_VALIDATE_TIME.toString().getBytes("utf-8");
     }
 }

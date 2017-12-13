@@ -2,9 +2,9 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 var sbdscqyqk;
 (function (sbdscqyqk) {
+    var SbdscqyqkType;
     (function (SbdscqyqkType) {
         SbdscqyqkType[SbdscqyqkType["BYQ"] = 0] = "BYQ";
         SbdscqyqkType[SbdscqyqkType["XL"] = 1] = "XL";
-    })(sbdscqyqk.SbdscqyqkType || (sbdscqyqk.SbdscqyqkType = {}));
-    var SbdscqyqkType = sbdscqyqk.SbdscqyqkType;
+    })(SbdscqyqkType = sbdscqyqk.SbdscqyqkType || (sbdscqyqk.SbdscqyqkType = {}));
 })(sbdscqyqk || (sbdscqyqk = {}));

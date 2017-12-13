@@ -31,7 +31,7 @@ var hzbNC_zbhz;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -159,6 +159,6 @@ var hzbNC_zbhz;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     hzbNC_zbhz.SimpleView = SimpleView;
 })(hzbNC_zbhz || (hzbNC_zbhz = {}));

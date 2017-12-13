@@ -4,11 +4,16 @@
 /// <reference path="../../framework/basic/basicdef.ts"/>
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../nyzbscqkdef.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var plugin;
 (function (plugin) {
     plugin.nyzbscxl = framework.basic.endpoint.lastId();
@@ -27,19 +32,21 @@ var nyzbscqk;
                 var titleNodes = [
                     new JQTable.Node("矿区", "rqa", true, TextAlign.Center),
                     new JQTable.Node("煤种", "ab", true, TextAlign.Center),
-                    new JQTable.Node(year + "年", "nf", true, TextAlign.Center)];
+                    new JQTable.Node(year + "年", "nf", true, TextAlign.Center)
+                ];
                 for (var i = 1; i <= 12; ++i) {
                     titleNodes[2].append(new JQTable.Node(i + "月", "y" + i + "f"));
                 }
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
-                _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("/BusinessManagement/nyzbscxl/update.do", false);
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mAjax = new Util.Ajax("/BusinessManagement/nyzbscxl/update.do", false);
+                return _this;
             }
             ShowView.prototype.getId = function () {
                 return plugin.nyzbscxl;
@@ -151,6 +158,6 @@ var nyzbscqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(framework.basic.ShowPluginView);
+        }(framework.basic.ShowPluginView));
     })(nyzbscxl = nyzbscqk.nyzbscxl || (nyzbscqk.nyzbscxl = {}));
 })(nyzbscqk || (nyzbscqk = {}));

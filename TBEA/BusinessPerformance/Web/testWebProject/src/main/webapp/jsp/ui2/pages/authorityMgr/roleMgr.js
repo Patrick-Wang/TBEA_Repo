@@ -28,7 +28,7 @@ var role_mgr;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             router.register(this);
@@ -246,7 +246,7 @@ var role_mgr;
             var selIds = this.tableAssist.getSelection();
             var rData = this.tableAssist.getRowsData(selIds);
             if (rData.length > 0) {
-                var dialog = bootbox.dialog({
+                var dialog_1 = bootbox.dialog({
                     message: $("#configAuthTemplate").html().replace(/__/g, ""),
                     title: "编辑角色",
                     className: "modal-darkorange",
@@ -288,7 +288,7 @@ var role_mgr;
                                     aids: JSON.stringify(aids),
                                 })
                                     .then(function (dataArray) {
-                                    dialog.modal('hide');
+                                    dialog_1.modal('hide');
                                     for (var i = 0; i < rData.length; ++i) {
                                         _this.tableAssist.setCellValue(rData[i][0], 3, compNames.length > 0 ? compNames.join() : "");
                                     }
@@ -304,7 +304,7 @@ var role_mgr;
                         }
                     }
                 });
-                dialog.modal("show");
+                dialog_1.modal("show");
                 var rNames = [];
                 var aNames = [];
                 for (var i = 0; i < rData.length; ++i) {
@@ -405,16 +405,16 @@ var role_mgr;
                                 if (ret.errorCode == 0) {
                                     dialog.modal("hide");
                                     Util.Toast.success("角色权限添加成功");
-                                    var pgNum = _this.tableAssist.getCurrentPageNumber();
+                                    var pgNum_1 = _this.tableAssist.getCurrentPageNumber();
                                     _this.mUpdateAjax.post({
                                         rids: JSON.stringify(_this.rids),
                                         aids: JSON.stringify(_this.aids),
-                                        pgNum: pgNum - 1,
+                                        pgNum: pgNum_1 - 1,
                                         pgSize: _this.rowNum
                                     })
                                         .then(function (data) {
                                         _this.mData = data;
-                                        _this.tableAssist.addData(_this.totalCount(_this.mData.count), pgNum, _this.mData.count, _this.mData.data);
+                                        _this.tableAssist.addData(_this.totalCount(_this.mData.count), pgNum_1, _this.mData.count, _this.mData.data);
                                     });
                                 }
                                 else {
@@ -454,6 +454,6 @@ var role_mgr;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     role_mgr.SimpleView = SimpleView;
 })(role_mgr || (role_mgr = {}));

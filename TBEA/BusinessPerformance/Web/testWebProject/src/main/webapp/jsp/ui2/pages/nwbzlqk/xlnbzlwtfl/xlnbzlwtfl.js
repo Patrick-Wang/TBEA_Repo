@@ -6,11 +6,16 @@
 /// <reference path="../nwbzlqkdef.ts"/>
 ///<reference path="../nwbzlqk.ts"/>
 ///<reference path="../../jqgrid/jqgrid.d.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var plugin;
 (function (plugin) {
     plugin.xlnbzlwtfl = framework.basic.endpoint.lastId();
@@ -49,12 +54,13 @@ var nwbzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
-                _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("/BusinessManagement/xlnbzlwtfl/update.do", false);
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mAjax = new Util.Ajax("/BusinessManagement/xlnbzlwtfl/update.do", false);
+                return _this;
             }
             ShowView.prototype.getId = function () {
                 return plugin.xlnbzlwtfl;
@@ -123,7 +129,8 @@ var nwbzlqk;
                             .to(framework.basic.endpoint.FRAME_ID)
                             .send(nwbzlqk.Event.ZLFE_COMMENT_UPDATED, {
                             comment: comment,
-                            zt: cpzlqkResp.zt });
+                            zt: cpzlqkResp.zt
+                        });
                     }
                 };
                 this.mAjax.get({
@@ -137,7 +144,8 @@ var nwbzlqk;
                         url: this.mAjax.baseUrl(),
                         date: date,
                         companyId: compType,
-                        ydjd: this.mYdjdType }),
+                        ydjd: this.mYdjdType
+                    }),
                     compId: compType
                 }).then(complete);
             };
@@ -432,6 +440,6 @@ var nwbzlqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(nwbzlqk.ZlPluginView);
+        }(nwbzlqk.ZlPluginView));
     })(xlnbzlwtfl = nwbzlqk.xlnbzlwtfl || (nwbzlqk.xlnbzlwtfl = {}));
 })(nwbzlqk || (nwbzlqk = {}));

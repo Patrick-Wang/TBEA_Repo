@@ -3,11 +3,16 @@
 ///<reference path="nwbzlqkdef.ts"/>
 ///<reference path="../components/dateSelectorProxy.ts"/>
 ///<reference path="../framework/basic/basicdef.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var nwbzlqk;
 (function (nwbzlqk) {
     var router = framework.router;
@@ -16,10 +21,11 @@ var nwbzlqk;
     var NwbzlqkFrameView = (function (_super) {
         __extends(NwbzlqkFrameView, _super);
         function NwbzlqkFrameView() {
-            _super.apply(this, arguments);
-            this.isCompanySupported = false;
-            this.mAjaxApprove = new Util.Ajax("/BusinessManagement/nwbzlqk/doApprove.do", false);
-            this.mAjaxAuth = new Util.Ajax("/BusinessManagement/nwbzlqk/auth.do", false);
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.isCompanySupported = false;
+            _this.mAjaxApprove = new Util.Ajax("/BusinessManagement/nwbzlqk/doApprove.do", false);
+            _this.mAjaxAuth = new Util.Ajax("/BusinessManagement/nwbzlqk/auth.do", false);
+            return _this;
         }
         NwbzlqkFrameView.prototype.init = function (opt) {
             var _this = this;
@@ -372,13 +378,14 @@ var nwbzlqk;
             }
         };
         return NwbzlqkFrameView;
-    })(framework.basic.ShowFrameView);
+    }(framework.basic.ShowFrameView));
     var ZlPluginView = (function (_super) {
         __extends(ZlPluginView, _super);
         function ZlPluginView() {
-            _super.apply(this, arguments);
-            this.mCommentSubmit = new Util.Ajax("/BusinessManagement/report/zlfxSubmit.do", false);
-            this.mCommentGet = new Util.Ajax("/BusinessManagement/report/zlfxUpdate.do", false);
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.mCommentSubmit = new Util.Ajax("/BusinessManagement/report/zlfxSubmit.do", false);
+            _this.mCommentGet = new Util.Ajax("/BusinessManagement/report/zlfxUpdate.do", false);
+            return _this;
         }
         ZlPluginView.prototype.onEvent = function (e) {
             switch (e.id) {
@@ -400,7 +407,7 @@ var nwbzlqk;
             return _super.prototype.onEvent.call(this, e);
         };
         return ZlPluginView;
-    })(framework.basic.ShowPluginView);
+    }(framework.basic.ShowPluginView));
     nwbzlqk.ZlPluginView = ZlPluginView;
     var ins = new NwbzlqkFrameView();
 })(nwbzlqk || (nwbzlqk = {}));

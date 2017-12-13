@@ -21,7 +21,7 @@ var template;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("url");
@@ -72,6 +72,6 @@ var template;
         };
         View.instance = new View();
         return View;
-    })();
+    }());
     template.View = View;
 })(template || (template = {}));

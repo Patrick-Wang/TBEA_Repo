@@ -57,7 +57,7 @@ var mkt_contract_analysis;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mSelCompanys = [];
@@ -167,6 +167,6 @@ var mkt_contract_analysis;
             }
         };
         return View;
-    })();
+    }());
     mkt_contract_analysis.View = View;
 })(mkt_contract_analysis || (mkt_contract_analysis = {}));

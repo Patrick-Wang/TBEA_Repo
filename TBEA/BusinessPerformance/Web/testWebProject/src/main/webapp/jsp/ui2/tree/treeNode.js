@@ -145,6 +145,6 @@ var tree;
             this.subNodes = [];
         };
         return TreeNode;
-    })();
+    }());
     tree.TreeNode = TreeNode;
 })(tree || (tree = {}));

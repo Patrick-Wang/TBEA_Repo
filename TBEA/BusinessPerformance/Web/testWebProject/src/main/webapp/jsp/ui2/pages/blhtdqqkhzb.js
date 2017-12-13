@@ -42,7 +42,7 @@ var blhtdqqkhzb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
@@ -184,6 +184,6 @@ var blhtdqqkhzb;
             }));
         };
         return View;
-    })();
+    }());
     blhtdqqkhzb.View = View;
 })(blhtdqqkhzb || (blhtdqqkhzb = {}));

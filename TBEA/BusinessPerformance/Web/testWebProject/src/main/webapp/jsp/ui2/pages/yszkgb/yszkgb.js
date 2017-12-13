@@ -111,6 +111,6 @@ var yszkgb;
         };
         FrameView.ins = new FrameView();
         return FrameView;
-    })();
+    }());
     yszkgb.FrameView = FrameView;
 })(yszkgb || (yszkgb = {}));

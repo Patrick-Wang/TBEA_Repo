@@ -48,7 +48,7 @@ var yszkgb;
             return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         };
         return BasePluginView;
-    })();
+    }());
     yszkgb.BasePluginView = BasePluginView;
     var BaseEntryPluginView = (function () {
         function BaseEntryPluginView(id) {
@@ -107,6 +107,6 @@ var yszkgb;
             return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         };
         return BaseEntryPluginView;
-    })();
+    }());
     yszkgb.BaseEntryPluginView = BaseEntryPluginView;
 })(yszkgb || (yszkgb = {}));

@@ -176,7 +176,7 @@ var financial_zbhz_prediciton;
             }
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -368,7 +368,8 @@ var financial_zbhz_prediciton;
                 ["存 货", "国际工程公司"],
                 ["存 货", "股份合计"],
                 ["存 货", "众和公司"],
-                ["存 货", "集团合计"]];
+                ["存 货", "集团合计"]
+            ];
             var date = this.getDate();
             if (1 == (1 + (date.month - 1) % 3)) {
                 data = this.formatFirstMonthData(data);
@@ -395,6 +396,6 @@ var financial_zbhz_prediciton;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     financial_zbhz_prediciton.SimpleView = SimpleView;
 })(financial_zbhz_prediciton || (financial_zbhz_prediciton = {}));

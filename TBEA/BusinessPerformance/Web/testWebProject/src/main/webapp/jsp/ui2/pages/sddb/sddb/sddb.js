@@ -5,11 +5,16 @@
 /// <reference path="../../framework/route/route.ts"/>
 /// <reference path="../sddbdef.ts"/>
 ///<reference path="../sddb.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var plugin;
 (function (plugin) {
     plugin.sddb = framework.basic.endpoint.lastId();
@@ -23,7 +28,7 @@ var sddb;
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             ShowView.prototype.getId = function () {
                 return plugin.sddb;
@@ -157,6 +162,9 @@ var sddb;
                         else {
                             $("#" + this.mOpt.ctarea).addClass("single-chart");
                         }
+                        //.css("width", this.mData.width == undefined ? 1300 : this.mData.width)
+                        //.css("height", validCount / 2 * 300 + validCount % 2 * 300);
+                        //$("#chartName").css("display", "")[0].innerHTML=this.mData.chartName;
                     }
                     for (var i = 0; i < this.mData.charts.length; ++i) {
                         if (this.mData.charts[i].isValid) {
@@ -173,6 +181,13 @@ var sddb;
                             this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
                         }
                     }
+                    //setTimeout(()=>{
+                    //    for (let i = 0; i < this.mData.charts.length; ++i) {
+                    //        if (this.mData.charts[i]. isValid) {
+                    //            this.updateChart(this.mOpt.ctarea + i, this.mData.charts[i]);
+                    //        }
+                    //    }
+                    //}, 0);
                 }
                 $("#" + this.mOpt.ctarea).css("display", display);
                 //$("#chartName").css("display", display);
@@ -315,6 +330,6 @@ var sddb;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(framework.basic.ShowPluginView);
+        }(framework.basic.ShowPluginView));
     })(sddb = sddb_1.sddb || (sddb_1.sddb = {}));
 })(sddb || (sddb = {}));

@@ -6,11 +6,16 @@
 /// <reference path="../nwbzlqkdef.ts"/>
 ///<reference path="../nwbzlqk.ts"/>
 ///<reference path="../../jqgrid/jqgrid.d.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var plugin;
 (function (plugin) {
     plugin.byqnwbzlztqk = framework.basic.endpoint.lastId();
@@ -46,12 +51,43 @@ var nwbzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ShowView = (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
-                _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("/BusinessManagement/byqnwbzlztqk/update.do", false);
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mAjax = new Util.Ajax("/BusinessManagement/byqnwbzlztqk/update.do", false);
+                return _this;
+                //private updateTable():void {
+                //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+                //    var tableAssist:JQTable.JQGridAssistant;
+                //    if (this.mCompType == Util.CompanyType.BYQCY){
+                //        tableAssist = JQGridAssistantFactory.createZtTable(name, this.mYdjdType);
+                //    }else{
+                //        tableAssist = JQGridAssistantFactory.createFdwTable(name, this.mYdjdType);
+                //    }
+                //
+                //    let pagername = name + "pager"
+                //    var parent = this.$(this.option().tb);
+                //    parent.empty();
+                //    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+                //    tableAssist.mergeTitle();
+                //    this.$(name).jqGrid(
+                //        tableAssist.decorate({
+                //            datatype: "local",
+                //            data: tableAssist.getData(this.mData.tjjg),
+                //            multiselect: false,
+                //            drag: false,
+                //            resize: false,
+                //            height: this.mData.tjjg.length > 20 ? 20 * 22 : '100%',
+                //            width: 1200,
+                //            shrinkToFit: true,
+                //            autoScroll: true,
+                //            rowNum: this.mData.tjjg.length + 10,
+                //            viewrecords : true,
+                //            pager:'#' + pagername,
+                //        }));
+                //}
             }
             ShowView.prototype.getId = function () {
                 return plugin.byqnwbzlztqk;
@@ -119,7 +155,8 @@ var nwbzlqk;
                             .to(framework.basic.endpoint.FRAME_ID)
                             .send(nwbzlqk.Event.ZLFE_COMMENT_UPDATED, {
                             comment: comment,
-                            zt: cpzlqkResp.zt });
+                            zt: cpzlqkResp.zt
+                        });
                         _this.refresh();
                     }
                 };
@@ -134,7 +171,8 @@ var nwbzlqk;
                         url: this.mAjax.baseUrl(),
                         date: date,
                         companyId: compType,
-                        ydjd: this.mYdjdType }),
+                        ydjd: this.mYdjdType
+                    }),
                     compId: compType
                 }).then(complete);
             };
@@ -297,6 +335,6 @@ var nwbzlqk;
             };
             ShowView.ins = new ShowView();
             return ShowView;
-        })(nwbzlqk.ZlPluginView);
+        }(nwbzlqk.ZlPluginView));
     })(byqnwbzlztqk = nwbzlqk.byqnwbzlztqk || (nwbzlqk.byqnwbzlztqk = {}));
 })(nwbzlqk || (nwbzlqk = {}));

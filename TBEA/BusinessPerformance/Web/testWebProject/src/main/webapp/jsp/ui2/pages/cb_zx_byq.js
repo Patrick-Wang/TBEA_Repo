@@ -61,7 +61,7 @@ var cb_zx_byq;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zx_update.do");
@@ -206,7 +206,8 @@ var cb_zx_byq;
                 ["新变", "   ", "中标阶段"],
                 ["新变", "   ", "预期阶段"],
                 ["总计", "    ", "中标阶段"],
-                ["总计", "    ", "预期阶段"]];
+                ["总计", "    ", "预期阶段"]
+            ];
             var row = [];
             for (var i = 0; i < 4; ++i) {
                 tableAssist.mergeRow(1, i * 2, 2);
@@ -333,6 +334,6 @@ var cb_zx_byq;
             }));
         };
         return View;
-    })();
+    }());
     cb_zx_byq.View = View;
 })(cb_zx_byq || (cb_zx_byq = {}));

@@ -17,7 +17,7 @@ var Util;
             Notify(msg, 'bottom-right', '3000', 'danger', 'fa-bolt', closeAble);
         };
         return Toast;
-    })();
+    }());
     Util.Toast = Toast;
     var MessageBox = (function () {
         function MessageBox() {
@@ -115,6 +115,6 @@ var Util;
         };
         MessageBox.isMSIE = navigator.appName == "Microsoft Internet Explorer";
         return MessageBox;
-    })();
+    }());
     Util.MessageBox = MessageBox;
 })(Util || (Util = {}));

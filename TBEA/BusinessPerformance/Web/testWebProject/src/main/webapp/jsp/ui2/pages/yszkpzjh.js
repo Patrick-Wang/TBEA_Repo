@@ -11,7 +11,8 @@ var yszkpzjh;
                 new JQTable.Node("本月计划销售收入", "byjhxssr", true, JQTable.TextAlign.Right, 100),
                 new JQTable.Node("本月目标责任书应收指标", "bymbzrsyszb", true, JQTable.TextAlign.Right, 100),
                 new JQTable.Node("本月应收内控指标", "byysnkzb", true, JQTable.TextAlign.Right, 100),
-                new JQTable.Node("本月资金回笼计划", "byzjhljh", true, JQTable.TextAlign.Right, 120)], gridName);
+                new JQTable.Node("本月资金回笼计划", "byzjhljh", true, JQTable.TextAlign.Right, 120)
+            ], gridName);
         };
         JQGridAssistantFactory.createYSPZ2 = function (gridName) {
             return new JQTable.JQGridAssistant([
@@ -21,7 +22,8 @@ var yszkpzjh;
                 new JQTable.Node("(减)本月新增保理回款冲减应收金额", "byxzblhkcjysje", true, JQTable.TextAlign.Right, 120),
                 new JQTable.Node("本月预计账面应收余额", "byyjzmysye", true, JQTable.TextAlign.Right, 100),
                 new JQTable.Node("与目标责任书指标差距", "ymbzeszbcj", true, JQTable.TextAlign.Right, 100),
-                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, JQTable.TextAlign.Right, 100)], gridName);
+                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, JQTable.TextAlign.Right, 100)
+            ], gridName);
         };
         JQGridAssistantFactory.createYSPZ3 = function (gridName) {
             return new JQTable.JQGridAssistant([
@@ -40,10 +42,11 @@ var yszkpzjh;
                 new JQTable.Node("(减)本月回款降低应收金额（发货后的款项）", "byhkjdysje", true, JQTable.TextAlign.Right, 100),
                 new JQTable.Node("本月预计实际应收余额", "byyjsjysye", true, JQTable.TextAlign.Right, 100),
                 new JQTable.Node("与目标责任书指标差距", "ymbzeszbcj", true, JQTable.TextAlign.Right, 100),
-                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, JQTable.TextAlign.Right, 100)], gridName);
+                new JQTable.Node("与内部控制指标差距", "ynbkzzbcj", true, JQTable.TextAlign.Right, 100)
+            ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.SBGS;
@@ -178,6 +181,10 @@ var yszkpzjh;
                     $("#gbox_" + name1).css("border-bottom", "0px solid #a6c9e2");
                     $("#" + name1 + " #1").css("height", "24px");
                 }
+                //rowList : [ 4, 6, 12],
+                //viewrecords : true,
+                //pager : "#pager"
+                //caption : "应收账款预警台账"
             }));
             //t1Assist.group($("#" + listName + "1"));
             //for table 2
@@ -221,6 +228,10 @@ var yszkpzjh;
                     $("#" + name2 + " #1").css("height", "24px");
                     //ui-jqgrid ui-widget ui-widget-content ui-corner-all
                 }
+                //rowList : [ 4, 6, 12],
+                //viewrecords : true,
+                //pager : "#pager"
+                //caption : "应收账款预警台账"
             }));
             var name4 = listName + "4" + "_jqgrid_1234";
             parent = $("#" + listName + "4");
@@ -309,6 +320,6 @@ var yszkpzjh;
             }));
         };
         return View;
-    })();
+    }());
     yszkpzjh.View = View;
 })(yszkpzjh || (yszkpzjh = {}));

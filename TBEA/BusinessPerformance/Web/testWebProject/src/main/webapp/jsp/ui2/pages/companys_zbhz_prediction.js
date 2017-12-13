@@ -176,7 +176,7 @@ var companys_zbhz_prediction;
             }
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -359,6 +359,6 @@ var companys_zbhz_prediction;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     companys_zbhz_prediction.SimpleView = SimpleView;
 })(companys_zbhz_prediction || (companys_zbhz_prediction = {}));

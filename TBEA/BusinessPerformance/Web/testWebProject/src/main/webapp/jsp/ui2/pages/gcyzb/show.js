@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="../framework/route/route.ts"/>
 ///<reference path="../jqgrid/jqassist.ts"/>
 ///<reference path="../framework/basic/basicdef.ts"/>
@@ -22,7 +27,7 @@ var framework;
                 var GCYZBView = (function (_super) {
                     __extends(GCYZBView, _super);
                     function GCYZBView() {
-                        _super.apply(this, arguments);
+                        return _super !== null && _super.apply(this, arguments) || this;
                     }
                     GCYZBView.prototype.renderItemSelector = function (itemId) {
                         var sels = $("#" + itemId + " select");
@@ -32,6 +37,17 @@ var framework;
                             for (var j = 0; j < opts.length; ++j) {
                                 items.push(opts[j].text);
                             }
+                            //$(sels[i]) .multiselect({
+                            //    multiple: false,
+                            //    header: false,
+                            //    minWidth: Util.getUIWidth(items) + 40,
+                            //    height: '100%',
+                            //    // noneSelectedText: "请选择月份",
+                            //    selectedList: 1
+                            //})
+                            //.css("padding", "2px 0 2px 4px")
+                            //.css("text-align", "left")
+                            //.css("font-size", "12px");
                         }
                     };
                     GCYZBView.prototype.renderXmmcSelector = function (itemId) {
@@ -143,7 +159,7 @@ var framework;
                         $("#" + id)[0].submit();
                     };
                     return GCYZBView;
-                })(framework.templates.singleDateReport.ShowView);
+                }(framework.templates.singleDateReport.ShowView));
                 gcyzb.GCYZBView = GCYZBView;
             })(gcyzb = dateReport.gcyzb || (dateReport.gcyzb = {}));
         })(dateReport = templates.dateReport || (templates.dateReport = {}));

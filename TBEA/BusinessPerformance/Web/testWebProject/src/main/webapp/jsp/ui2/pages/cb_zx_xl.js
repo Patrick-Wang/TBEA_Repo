@@ -45,7 +45,7 @@ var cb_zx_xl;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
         }
@@ -166,7 +166,8 @@ var cb_zx_xl;
                 ["德缆", " ", "中标阶段"],
                 ["德缆", " ", "预期阶段"],
                 ["总计", "", "中标阶段"],
-                ["总计", "", "预期阶段"]];
+                ["总计", "", "预期阶段"]
+            ];
             var row = [];
             //            for (var i = 0; i < data.length; ++i) {
             //                if (rawData[i] instanceof Array) {
@@ -258,9 +259,14 @@ var cb_zx_xl;
                 shrinkToFit: true,
                 autoScroll: true,
                 rowNum: 100
+                //                    userData: {
+                //                        'title': "合计"
+                //                    },
+                //                    footerrow: true,
+                //                    userDataOnFooter: true
             }));
         };
         return View;
-    })();
+    }());
     cb_zx_xl.View = View;
 })(cb_zx_xl || (cb_zx_xl = {}));

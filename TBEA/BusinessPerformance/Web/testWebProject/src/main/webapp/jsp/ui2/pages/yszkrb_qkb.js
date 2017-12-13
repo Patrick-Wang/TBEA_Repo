@@ -24,7 +24,7 @@ var yszkrb_qkb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
         }
@@ -51,7 +51,8 @@ var yszkrb_qkb;
                 ["鲁缆公司"],
                 ["新缆厂"],
                 ["德缆公司"],
-                ["合计"]];
+                ["合计"]
+            ];
             for (var i = 0; i < data.length; ++i) {
                 if (this.mData[i] instanceof Array) {
                     data[i] = data[i].concat(this.mData[i]);
@@ -76,6 +77,6 @@ var yszkrb_qkb;
             }));
         };
         return View;
-    })();
+    }());
     yszkrb_qkb.View = View;
 })(yszkrb_qkb || (yszkrb_qkb = {}));

@@ -45,7 +45,7 @@ var approve_template;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     function transposition(data) {
         var dataRet = [];
         for (var i = 0; i < data[0].length; ++i) {
@@ -239,7 +239,7 @@ var approve_template;
             return jqAssist;
         };
         return QNJHSubView;
-    })();
+    }());
     var YDSubView = (function () {
         function YDSubView(opt) {
             this.mOpt = opt;
@@ -448,7 +448,7 @@ var approve_template;
             return jqAssist;
         };
         return YDSubView;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("/BusinessManagement/approve/zb_update.do", false);
@@ -487,6 +487,7 @@ var approve_template;
                     .removeCss("padding")
                     .removeCss("margin-top")
                     .addClass(seasonClass);
+                //this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, Util.addMonth(this.mOpt.date, 1), this.mOpt.dateId, true);
             }
             else if (this.mOpt.approveType == Util.ZBType.QNJH) {
                 var seasonClass = "year";
@@ -499,11 +500,13 @@ var approve_template;
                     isClear: false,
                     isToday: false,
                     minDate: Util.date2Str(Util.addYear(this.mOpt.date, -2)) + " 00:00:00",
-                    maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00" })
+                    maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00"
+                })
                     .removeCss("height")
                     .removeCss("padding")
                     .removeCss("margin-top")
                     .addClass(seasonClass);
+                //this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, { year: this.mOpt.date.year }, this.mOpt.dateId, true);
             }
             else {
                 var seasonClass = "month";
@@ -516,13 +519,20 @@ var approve_template;
                     isClear: false,
                     isToday: false,
                     minDate: Util.date2Str(Util.addYear(this.mOpt.date, -2)) + " 00:00:00",
-                    maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00" })
+                    maxDate: Util.date2Str(this.mOpt.date) + " 00:00:00"
+                })
                     .removeCss("height")
                     .removeCss("padding")
                     .removeCss("margin-top")
                     .addClass(seasonClass);
+                //this.mDateSelector = new Util.DateSelector({ year: this.mOpt.date.year - 2 }, this.mOpt.date, this.mOpt.dateId);
             }
-            this.mCompanySelector = new Util.CompanySelector(true, opt.companyId, opt.comps, opt.firstCompany);
+            this.mCompanySelector = new Util.CompanySelector(true, opt.companyId, opt.comps, opt.firstCompany
+            //                ,{
+            //                noneSelectedText : '经营单位',
+            //                selectedText: '# 个经营单位被选中'     
+            //                }
+            );
             this.mCompanySelector.checkAll();
             switch (this.mOpt.approveType) {
                 case Util.ZBType.YDJDMJH:
@@ -655,6 +665,6 @@ var approve_template;
         };
         View.instance = new View();
         return View;
-    })();
+    }());
     approve_template.View = View;
 })(approve_template || (approve_template = {}));

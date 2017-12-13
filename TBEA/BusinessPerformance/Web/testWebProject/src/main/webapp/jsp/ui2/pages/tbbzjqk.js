@@ -15,7 +15,7 @@ var tbbzjqk;
             return new JQTable.JQGridAssistant(cols, gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
@@ -65,7 +65,7 @@ var tbbzjqk;
             var data = [];
             data.push(lastYearData);
             data.push(currentYearData);
-            var legend = [this.mYear + "年"];
+            var legend = [/*this.mYear - 1 + "年",*/ this.mYear + "年"];
             var ser = [];
             for (var i = 0; i < legend.length; ++i) {
                 ser.push({
@@ -180,6 +180,6 @@ var tbbzjqk;
             }));
         };
         return View;
-    })();
+    }());
     tbbzjqk.View = View;
 })(tbbzjqk || (tbbzjqk = {}));

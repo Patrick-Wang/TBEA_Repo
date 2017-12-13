@@ -8,7 +8,7 @@ var Util;
             this.selectedText = '# 个项目公司被选中';
         }
         return ICompanySelectorOption;
-    })();
+    }());
     Util.ICompanySelectorOption = ICompanySelectorOption;
     var CompanySelector = (function () {
         function CompanySelector(multi, divId, comps, firstComp, opt) {
@@ -99,8 +99,19 @@ var Util;
                     selectedList: 1
                 });
                 sel.css("width", width);
+                //                if (sel.multiselect("getChecked").length > 1) {
+                //                    width = text.getWidth(13) + 25;
+                //                }
             }
             else {
+                //sel.multiselect({
+                //    multiple: multi,
+                //    header: multi,
+                //    minWidth: minWidth,
+                //    height　: '100%',///*itemCount * 27 > 600 ? 600 :*/ itemCount * itemHeight + 3,
+                //    // noneSelectedText: "请选择月份",
+                //    selectedList: 1
+                //});
             }
         };
         CompanySelector.prototype.useMultiSelect = function () {
@@ -172,6 +183,6 @@ var Util;
             return ret;
         };
         return CompanySelector;
-    })();
+    }());
     Util.CompanySelector = CompanySelector;
 })(Util || (Util = {}));

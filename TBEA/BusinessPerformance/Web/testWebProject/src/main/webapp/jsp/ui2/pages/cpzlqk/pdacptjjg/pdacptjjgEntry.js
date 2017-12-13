@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
@@ -33,14 +38,50 @@ var cpzlqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
-                _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/pdacptjjg/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("/BusinessManagement/pdacptjjg/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/pdacptjjg/entry/submit.do", false);
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/pdacptjjg/entry/update.do", false);
+                _this.mAjaxSave = new Util.Ajax("/BusinessManagement/pdacptjjg/entry/save.do", false);
+                _this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/pdacptjjg/entry/submit.do", false);
+                return _this;
+                //private updateTable():void {
+                //    var name = this.option().host + this.option().tb + "_jqgrid_uiframe";
+                //    var pagername = name + "pager";
+                //    this.mTableAssist = JQGridAssistantFactory.createTable(name, Util.ZBStatus.APPROVED == this.mData.status);
+                //
+                //    var parent = this.$(this.option().tb);
+                //    parent.empty();
+                //    parent.append("<table id='" + name + "'></table><div id='" + pagername + "'></div>");
+                //    let jqTable = this.$(name);
+                //    this.mTableAssist.mergeColum(0);
+                //    this.mTableAssist.mergeRow(0);
+                //    this.mTableAssist.mergeTitle(0);
+                //    jqTable.jqGrid(
+                //        this.mTableAssist.decorate({
+                //            datatype: "local",
+                //            data: this.mTableAssist.getDataWithId(this.mData.tjjg),
+                //            multiselect: false,
+                //            drag: false,
+                //            resize: false,
+                //            assistEditable: Util.ZBStatus.APPROVED != this.mData.status,
+                //            //autowidth : false,
+                //            cellsubmit: 'clientArray',
+                //            //editurl: 'clientArray',
+                //            cellEdit: true,
+                //            // height: data.length > 25 ? 550 : '100%',
+                //            // width: titles.length * 200,
+                //            rowNum: 1000,
+                //            height: '100%',
+                //            width: 1200,
+                //            shrinkToFit: true,
+                //            autoScroll: true,
+                //            //pager: '#' + pagername,
+                //            viewrecords: true
+                //        }));
+                //}
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.pdacptjjg;
@@ -192,6 +233,6 @@ var cpzlqk;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        })(cpzlqk.ZlEntryPluginView);
+        }(cpzlqk.ZlEntryPluginView));
     })(pdacptjjgEntry = cpzlqk.pdacptjjgEntry || (cpzlqk.pdacptjjgEntry = {}));
 })(cpzlqk || (cpzlqk = {}));

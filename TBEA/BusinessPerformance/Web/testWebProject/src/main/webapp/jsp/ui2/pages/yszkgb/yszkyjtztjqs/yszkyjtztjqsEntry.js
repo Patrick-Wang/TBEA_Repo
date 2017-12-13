@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="../../companySelector.ts" />
 /// <reference path="../../util.ts" />
@@ -32,14 +37,15 @@ var yszkgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var SimplePluginEntryView = (function (_super) {
             __extends(SimplePluginEntryView, _super);
             function SimplePluginEntryView(id) {
-                _super.call(this, id);
-                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/yszkgb//yszkyjtztjqs/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("/BusinessManagement/yszkgb/yszkyjtztjqs/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/yszkgb/yszkyjtztjqs/entry/submit.do", false);
+                var _this = _super.call(this, id) || this;
+                _this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/yszkgb//yszkyjtztjqs/entry/update.do", false);
+                _this.mAjaxSave = new Util.Ajax("/BusinessManagement/yszkgb/yszkyjtztjqs/entry/save.do", false);
+                _this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/yszkgb/yszkyjtztjqs/entry/submit.do", false);
+                return _this;
             }
             SimplePluginEntryView.prototype.pluginSave = function (dt, cpType) {
                 var allData = this.mTableAssist.getAllData();
@@ -166,6 +172,6 @@ var yszkgb;
             };
             SimplePluginEntryView.ins = new SimplePluginEntryView("yszkyjtztjqs");
             return SimplePluginEntryView;
-        })(BaseEntryPluginView);
+        }(BaseEntryPluginView));
     })(yszkyjtztjqs = yszkgb.yszkyjtztjqs || (yszkgb.yszkyjtztjqs = {}));
 })(yszkgb || (yszkgb = {}));

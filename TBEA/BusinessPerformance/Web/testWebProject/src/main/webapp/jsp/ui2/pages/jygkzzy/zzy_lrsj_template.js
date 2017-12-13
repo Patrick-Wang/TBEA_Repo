@@ -21,7 +21,7 @@ var zzy_lrsj_template;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zb_update.do", false);
@@ -405,7 +405,8 @@ var zzy_lrsj_template;
                         $.jgrid.jqModal = {
                             width: 290,
                             left: $("#table").offset().left + $("#table").width() / 2 - 290 / 2,
-                            top: $("#table").offset().top + $("#table").height() / 2 - 90 };
+                            top: $("#table").offset().top + $("#table").height() / 2 - 90
+                        };
                         return v;
                     }
                     else {
@@ -435,6 +436,11 @@ var zzy_lrsj_template;
                     $("input").attr("disabled", false);
                     lastsel = "";
                 }
+                //                    ,
+                //                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
+                //                        lastsel = ""; 
+                //                        lastcell = ""; 
+                //                    } 
             }));
             $('html').bind('click', function (e) {
                 if (lastsel != "") {
@@ -449,6 +455,6 @@ var zzy_lrsj_template;
         };
         View.instance = new View();
         return View;
-    })();
+    }());
     zzy_lrsj_template.View = View;
 })(zzy_lrsj_template || (zzy_lrsj_template = {}));

@@ -4,11 +4,16 @@
 /// <reference path="../yszkgbdef.ts" />
 ///<reference path="../../messageBox.ts"/>
 ///<reference path="../yszkgbEntry.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var yszkgb;
 (function (yszkgb) {
     var yszkkxxzEntry;
@@ -31,14 +36,15 @@ var yszkgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var YszkkxxzEntryView = (function (_super) {
             __extends(YszkkxxzEntryView, _super);
             function YszkkxxzEntryView() {
-                _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("yszkkxxz/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("yszkkxxz/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("yszkkxxz/entry/submit.do", false);
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mAjaxUpdate = new Util.Ajax("yszkkxxz/entry/update.do", false);
+                _this.mAjaxSave = new Util.Ajax("yszkkxxz/entry/save.do", false);
+                _this.mAjaxSubmit = new Util.Ajax("yszkkxxz/entry/submit.do", false);
+                return _this;
             }
             YszkkxxzEntryView.newInstance = function () {
                 return new YszkkxxzEntryView();
@@ -190,6 +196,11 @@ var yszkgb;
                         $("input").attr("disabled", false);
                         lastsel = "";
                     }
+                    //                    ,
+                    //                    afterEditCell:(rowid,cellname,v,iRow,iCol)=>{
+                    //                        lastsel = "";
+                    //                        lastcell = "";
+                    //                    }
                 }));
                 $('html').bind('click', function (e) {
                     if (lastsel != "") {
@@ -203,7 +214,7 @@ var yszkgb;
                 });
             };
             return YszkkxxzEntryView;
-        })(yszkgb.BaseEntryPluginView);
+        }(yszkgb.BaseEntryPluginView));
         yszkkxxzEntry.pluginView = YszkkxxzEntryView.newInstance();
     })(yszkkxxzEntry = yszkgb.yszkkxxzEntry || (yszkgb.yszkkxxzEntry = {}));
 })(yszkgb || (yszkgb = {}));

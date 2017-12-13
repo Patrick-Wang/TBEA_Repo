@@ -70,7 +70,7 @@ var cb_wg_xl;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             //      private mfdwData : string[];
@@ -195,7 +195,8 @@ var cb_wg_xl;
                 [this.mMonth + "月", "德缆", "", "完工阶段"],
                 [this.mYear + "年" + this.mMonth, "月小计", " ", "中标阶段"],
                 [this.mYear + "年" + this.mMonth, "月小计", " ", "预期阶段"],
-                [this.mYear + "年" + this.mMonth, "月小计", " ", "完工阶段"]];
+                [this.mYear + "年" + this.mMonth, "月小计", " ", "完工阶段"]
+            ];
             for (var i = 0; i < this.mJtData.length; ++i) {
                 if (this.mJtData[i] instanceof Array) {
                     for (var col in this.mJtData[i]) {
@@ -292,6 +293,11 @@ var cb_wg_xl;
                 shrinkToFit: true,
                 autoScroll: true,
                 rowNum: 10000
+                //                    userData: {
+                //                        'title': "合计"
+                //                    },
+                //                    footerrow: true,
+                //                    userDataOnFooter: true
             }));
         };
         View.prototype.updateFdyTable = function () {
@@ -377,6 +383,6 @@ var cb_wg_xl;
             }));
         };
         return View;
-    })();
+    }());
     cb_wg_xl.View = View;
 })(cb_wg_xl || (cb_wg_xl = {}));

@@ -57,7 +57,7 @@ var cb_xl;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             //      private mfdwData : string[];
@@ -200,6 +200,11 @@ var cb_xl;
                 shrinkToFit: false,
                 autoScroll: true,
                 rowNum: 1000
+                //                    userData: {
+                //                        'title': "合计"
+                //                    },
+                //                    footerrow: true,
+                //                    userDataOnFooter: true
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -209,7 +214,8 @@ var cb_xl;
                 ["鲁缆"],
                 ["新缆"],
                 ["德缆"],
-                ["总计"]];
+                ["总计"]
+            ];
             if (this.mJtData.length > 1) {
                 for (var i = 0; i < data.length; ++i) {
                     data[i] = this.format(data[i].concat(this.mJtData[i]));
@@ -284,6 +290,6 @@ var cb_xl;
             }));
         };
         return View;
-    })();
+    }());
     cb_xl.View = View;
 })(cb_xl || (cb_xl = {}));

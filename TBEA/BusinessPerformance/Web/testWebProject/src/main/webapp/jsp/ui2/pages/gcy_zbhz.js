@@ -52,7 +52,7 @@ var gcy_zbhz;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -191,7 +191,8 @@ var gcy_zbhz;
                 ["存 货", "国际工程公司"],
                 ["存 货", "股份合计"],
                 ["存 货", "众和公司"],
-                ["存 货", "集团合计"]];
+                ["存 货", "集团合计"]
+            ];
             var row = [];
             for (var i = 0; i < this.mData.length; ++i) {
                 row = [].concat(this.mData[i]);
@@ -223,6 +224,6 @@ var gcy_zbhz;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     gcy_zbhz.SimpleView = SimpleView;
 })(gcy_zbhz || (gcy_zbhz = {}));

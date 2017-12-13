@@ -69,7 +69,7 @@ var zTreeEx;
             $('#ztreeEx_rMenu_div').hide();
         };
         return RightMenu;
-    })();
+    }());
     function init(elem, setting, nodes) {
         var rm = new RightMenu(setting);
         return $.fn.zTree.init(elem, rm.getSetting(), nodes);

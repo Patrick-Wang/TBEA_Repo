@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="../framework/route/route.ts"/>
 ///<reference path="../framework/basic/basicdef.ts"/>
 ///<reference path="../framework/basic/basicShow.ts"/>
@@ -17,9 +22,10 @@ var rzywtj;
     var ItemShowView = (function (_super) {
         __extends(ItemShowView, _super);
         function ItemShowView() {
-            _super.apply(this, arguments);
-            this.doubleHeader = false;
-            this.item = 0;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.doubleHeader = false;
+            _this.item = 0;
+            return _this;
         }
         ItemShowView.prototype.onInitialize = function (opt) {
             var _this = this;
@@ -206,6 +212,31 @@ var rzywtj;
                     shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
                     rowNum: 10000,
                     autoScroll: true
+                    //onSelectRow: (rowid, status)=>{
+                    //    if (this.item != 13 && this.item != 14){
+                    //        if (status){
+                    //            this.mTableAssist.setCellValue(rowid, this.resp.data[0].length - 1, 'Y');
+                    //        }else{
+                    //            this.mTableAssist.setCellValue(rowid, this.resp.data[0].length - 1, 'N');
+                    //        }
+                    //        this.updateRowColor(rowid);
+                    //    }
+                    //},
+                    //onSelectAll: (rowids, status)=>{
+                    //    if (this.item != 13 && this.item != 14) {
+                    //        if (status) {
+                    //            for (let i = 0; i < rowids.length; ++i) {
+                    //                this.mTableAssist.setCellValue(rowids[i], this.resp.data[0].length - 1, 'Y');
+                    //            }
+                    //        } else {
+                    //            for (let i = 0; i < rowids.length; ++i) {
+                    //                this.mTableAssist.setCellValue(rowids[i], this.resp.data[0].length - 1, 'N');
+                    //            }
+                    //        }
+                    //
+                    //        this.updateColor();
+                    //    }
+                    //}
                 }, data));
                 if (this.item != 13 && this.item != 14) {
                     this.updateStatus();
@@ -215,5 +246,5 @@ var rzywtj;
             }
         };
         return ItemShowView;
-    })(framework.templates.singleDateReport.ShowView);
+    }(framework.templates.singleDateReport.ShowView));
 })(rzywtj || (rzywtj = {}));

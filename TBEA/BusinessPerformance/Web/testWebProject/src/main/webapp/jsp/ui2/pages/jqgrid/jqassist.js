@@ -344,12 +344,12 @@ var JQTable;
             return true;
         };
     };
+    var TextAlign;
     (function (TextAlign) {
         TextAlign[TextAlign["Left"] = 0] = "Left";
         TextAlign[TextAlign["Right"] = 1] = "Right";
         TextAlign[TextAlign["Center"] = 2] = "Center";
-    })(JQTable.TextAlign || (JQTable.TextAlign = {}));
-    var TextAlign = JQTable.TextAlign;
+    })(TextAlign = JQTable.TextAlign || (JQTable.TextAlign = {}));
     JQTable.NodeId = (function (idBase) {
         return function () {
             return "jq_" + (++idBase) + "_node";
@@ -365,6 +365,7 @@ var JQTable;
             if (editType === void 0) { editType = undefined; }
             if (options === void 0) { options = undefined; }
             if (isNumber === void 0) { isNumber = true; }
+            //add by hzdqzy
             if (isSortable === void 0) { isSortable = false; }
             if (sorttype === void 0) { sorttype = undefined; }
             this.mChilds = [];
@@ -515,7 +516,7 @@ var JQTable;
             return this.mOpts.sorttype;
         };
         return Node;
-    })();
+    }());
     JQTable.Node = Node;
     var Cell = (function () {
         function Cell(row, col) {
@@ -538,7 +539,7 @@ var JQTable;
             return this.mCol;
         };
         return Cell;
-    })();
+    }());
     JQTable.Cell = Cell;
     var Formula = (function () {
         function Formula(destCell, srcCellarray, formula) {
@@ -575,7 +576,7 @@ var JQTable;
             }
         };
         return Formula;
-    })();
+    }());
     JQTable.Formula = Formula;
     var JQGridAssistant = (function () {
         function JQGridAssistant(titleNodes, gridName) {
@@ -1236,11 +1237,11 @@ var JQTable;
                         option.assistOnEdit(rowid, cellname, v, iRow, iCol);
                     }
                     if (undefined != _this.mDisabledEditCells) {
-                        var oldFun = $.jgrid.createEl;
+                        var oldFun_1 = $.jgrid.createEl;
                         for (var i = 0; i < _this.mDisabledEditCells.length; ++i) {
                             if (_this.mDisabledEditCells[i].row() == (iRow - 1) && _this.mDisabledEditCells[i].col() == iCol) {
                                 $.jgrid.createEl = function () {
-                                    $.jgrid.createEl = oldFun;
+                                    $.jgrid.createEl = oldFun_1;
                                 };
                                 break;
                             }
@@ -1532,6 +1533,6 @@ var JQTable;
             }
         };
         return JQGridAssistant;
-    })();
+    }());
     JQTable.JQGridAssistant = JQGridAssistant;
 })(JQTable || (JQTable = {}));

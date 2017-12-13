@@ -2,11 +2,16 @@
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="../../wlyddqk/wlyddqkdef.ts" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var wlyddqk;
 (function (wlyddqk) {
     var xlkglydd;
@@ -47,12 +52,34 @@ var wlyddqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var XlkglyddView = (function (_super) {
             __extends(XlkglyddView, _super);
             function XlkglyddView() {
-                _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/xlkglydd/update.do", false);
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mAjax = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/xlkglydd/update.do", false);
+                return _this;
+                //private updateTable():void {
+                //    var name = this.option().host + this.option().tb + "_jqgrid_1234";
+                //    var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name, this.mType);
+                //    var parent = this.$(this.option().tb);
+                //    parent.empty();
+                //    parent.append("<table id='" + name + "'></table>");
+                //    this.$(name).jqGrid(
+                //        tableAssist.decorate({
+                //            multiselect: false,
+                //            drag: false,
+                //            resize: false,
+                //            height: '100%',
+                //            width: 1400,
+                //            shrinkToFit: true,
+                //            autoScroll: true,
+                //            rowNum: 20,
+                //            data: tableAssist.getData(this.mData),
+                //            datatype: "local",
+                //            viewrecords : true
+                //        }));
+                //}
             }
             XlkglyddView.prototype.isSupported = function (compType) {
                 if (compType == Util.CompanyType.LLGS || compType == Util.CompanyType.XLC || compType == Util.CompanyType.DLGS) {
@@ -132,7 +159,7 @@ var wlyddqk;
                 this.adjustSize();
             };
             return XlkglyddView;
-        })(wlyddqk.BasePluginView);
+        }(wlyddqk.BasePluginView));
         xlkglydd.pluginView = XlkglyddView.newInstance();
     })(xlkglydd = wlyddqk.xlkglydd || (wlyddqk.xlkglydd = {}));
 })(wlyddqk || (wlyddqk = {}));

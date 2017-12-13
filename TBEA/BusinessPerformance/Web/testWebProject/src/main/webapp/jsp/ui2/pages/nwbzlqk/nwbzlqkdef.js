@@ -2,18 +2,18 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 var nwbzlqk;
 (function (nwbzlqk) {
+    var PageType;
     (function (PageType) {
         PageType[PageType["NONE"] = 0] = "NONE";
         PageType[PageType["APPROVE"] = 1] = "APPROVE";
         PageType[PageType["ENTRY"] = 2] = "ENTRY";
         PageType[PageType["SHOW"] = 3] = "SHOW";
-    })(nwbzlqk.PageType || (nwbzlqk.PageType = {}));
-    var PageType = nwbzlqk.PageType;
+    })(PageType = nwbzlqk.PageType || (nwbzlqk.PageType = {}));
+    var YDJDType;
     (function (YDJDType) {
         YDJDType[YDJDType["YD"] = 0] = "YD";
         YDJDType[YDJDType["JD"] = 1] = "JD";
-    })(nwbzlqk.YDJDType || (nwbzlqk.YDJDType = {}));
-    var YDJDType = nwbzlqk.YDJDType;
+    })(YDJDType = nwbzlqk.YDJDType || (nwbzlqk.YDJDType = {}));
     var FrameEvent = framework.basic.FrameEvent;
     var Event;
     (function (Event) {
@@ -33,10 +33,10 @@ var nwbzlqk;
         Event.ZLFE_COMMENT_DENY = FrameEvent.lastEvent();
         Event.ZLFE_APPROVEAUTH_UPDATED = FrameEvent.lastEvent();
     })(Event = nwbzlqk.Event || (nwbzlqk.Event = {}));
+    var NwbzlType;
     (function (NwbzlType) {
         NwbzlType[NwbzlType["ZT"] = 0] = "ZT";
         NwbzlType[NwbzlType["SJZL"] = 1] = "SJZL";
         NwbzlType[NwbzlType["SCZZ"] = 2] = "SCZZ";
-    })(nwbzlqk.NwbzlType || (nwbzlqk.NwbzlType = {}));
-    var NwbzlType = nwbzlqk.NwbzlType;
+    })(NwbzlType = nwbzlqk.NwbzlType || (nwbzlqk.NwbzlType = {}));
 })(nwbzlqk || (nwbzlqk = {}));

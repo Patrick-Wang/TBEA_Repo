@@ -6,7 +6,10 @@ Array.prototype.pushAll = function (items) {
 };
 function createNode(value, url, icon, iconOpen) {
     if (url) {
-        url = baseUrl + url;
+        var protocol = "http://";
+        if (url.length < protocol.length || url.substring(0, protocol.length) != protocol) {
+            url = baseUrl + url;
+        }
         icon = icon ? icon : "fa fa-dot-circle-o";
         iconOpen = iconOpen ? iconOpen : "fa fa-dot-circle-o";
     }
@@ -120,7 +123,7 @@ var navi;
             return ret;
         };
         return Builder;
-    })();
+    }());
     navi.Builder = Builder;
     navi.uid = (function (seed) {
         return function () {

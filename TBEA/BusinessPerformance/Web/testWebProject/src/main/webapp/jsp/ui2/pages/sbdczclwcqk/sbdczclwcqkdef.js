@@ -2,6 +2,7 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 var sbdczclwcqk;
 (function (sbdczclwcqk) {
+    var SbdczclwcqkType;
     (function (SbdczclwcqkType) {
         SbdczclwcqkType[SbdczclwcqkType["SBDCZCLWCQK_CPCZWCQK_BYQ"] = 11] = "SBDCZCLWCQK_CPCZWCQK_BYQ";
         SbdczclwcqkType[SbdczclwcqkType["SBDCZCLWCQK_CPCZWCQK_XL"] = 12] = "SBDCZCLWCQK_CPCZWCQK_XL";
@@ -10,6 +11,5 @@ var sbdczclwcqk;
         SbdczclwcqkType[SbdczclwcqkType["SBDCZCLWCQK_CPCLWCQK_XL"] = 15] = "SBDCZCLWCQK_CPCLWCQK_XL";
         SbdczclwcqkType[SbdczclwcqkType["SBDCZCLWCQK_BYQ"] = 16] = "SBDCZCLWCQK_BYQ";
         SbdczclwcqkType[SbdczclwcqkType["SBDCZCLWCQK_XL"] = 17] = "SBDCZCLWCQK_XL";
-    })(sbdczclwcqk.SbdczclwcqkType || (sbdczclwcqk.SbdczclwcqkType = {}));
-    var SbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType;
+    })(SbdczclwcqkType = sbdczclwcqk.SbdczclwcqkType || (sbdczclwcqk.SbdczclwcqkType = {}));
 })(sbdczclwcqk || (sbdczclwcqk = {}));

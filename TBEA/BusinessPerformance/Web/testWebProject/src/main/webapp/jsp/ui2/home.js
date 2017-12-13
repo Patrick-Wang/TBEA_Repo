@@ -349,7 +349,23 @@ var home;
             $(".nav-other-clicked").removeClass("nav-other-clicked");
         }
     });
-    var resetPswHtml = React.renderToStaticMarkup(React.createElement("div", {"id": "resetPassword"}, React.createElement("div", {"className": "row"}, React.createElement("div", {"className": "col-md-12"}, React.createElement("form", {"role": "form"}, React.createElement("div", {"className": "form-group"}, React.createElement("span", {"className": "input-icon icon-right"}, React.createElement("input", {"type": "password", "className": "form-control", "id": "oldPsw", "placeholder": "原始密码"}), React.createElement("i", {"className": "fa fa-lock circular"}))), React.createElement("div", {"className": "form-group"}, React.createElement("span", {"className": "input-icon icon-right"}, React.createElement("input", {"type": "password", "className": "form-control", "id": "newPsw", "placeholder": "新密码"}), React.createElement("i", {"className": "fa fa-lock circular"}))), React.createElement("div", {"className": "form-group"}, React.createElement("span", {"className": "input-icon icon-right"}, React.createElement("input", {"type": "password", "className": "form-control", "id": "confPsw", "placeholder": "确认密码"}), React.createElement("i", {"className": "fa fa-lock circular"}))), React.createElement("div", {"className": "alert alert-danger fade in", "id": "warning", "style": { display: 'none' }}))))));
+    var resetPswHtml = React.renderToStaticMarkup(React.createElement("div", { id: "resetPassword" },
+        React.createElement("div", { className: "row" },
+            React.createElement("div", { className: "col-md-12" },
+                React.createElement("form", { role: "form" },
+                    React.createElement("div", { className: "form-group" },
+                        React.createElement("span", { className: "input-icon icon-right" },
+                            React.createElement("input", { type: "password", className: "form-control", id: "oldPsw", placeholder: "原始密码" }),
+                            React.createElement("i", { className: "fa fa-lock circular" }))),
+                    React.createElement("div", { className: "form-group" },
+                        React.createElement("span", { className: "input-icon icon-right" },
+                            React.createElement("input", { type: "password", className: "form-control", id: "newPsw", placeholder: "新密码" }),
+                            React.createElement("i", { className: "fa fa-lock circular" }))),
+                    React.createElement("div", { className: "form-group" },
+                        React.createElement("span", { className: "input-icon icon-right" },
+                            React.createElement("input", { type: "password", className: "form-control", id: "confPsw", placeholder: "确认密码" }),
+                            React.createElement("i", { className: "fa fa-lock circular" }))),
+                    React.createElement("div", { className: "alert alert-danger fade in", id: "warning", style: { display: 'none' } }))))));
     $("#btnResetPassword").on("click", function () {
         var dialog = bootbox.dialog({
             message: resetPswHtml,

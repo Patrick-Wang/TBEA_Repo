@@ -45,7 +45,7 @@ var yszkrb_view;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -207,6 +207,6 @@ var yszkrb_view;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     yszkrb_view.SimpleView = SimpleView;
 })(yszkrb_view || (yszkrb_view = {}));

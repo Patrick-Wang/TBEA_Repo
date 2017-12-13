@@ -45,7 +45,8 @@ public class Controller extends AbstractXmlComponent {
 			new WordTemplateXmlInterpreter(),
 			new TableXmlInterpreter(),
 			new WordMergeXmlInterpreter(),
-			new ScriptXmlInterpreter()
+			new ScriptXmlInterpreter(),
+			new HttpXmlInterpreter()
 	}; 
 	
 	

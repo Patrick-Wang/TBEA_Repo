@@ -31,7 +31,7 @@ var zbhz_overview;
             return this.companyId;
         };
         return YDZBDataSet;
-    })();
+    }());
     var DataSetManager = (function () {
         function DataSetManager(zbid) {
             this.dataSetMap = {};
@@ -61,7 +61,7 @@ var zbhz_overview;
             }
         };
         return DataSetManager;
-    })();
+    }());
     var ChartType;
     (function (ChartType) {
         ChartType[ChartType["YDZB"] = 0] = "YDZB";
@@ -447,6 +447,6 @@ var zbhz_overview;
             this.mDw = val;
         };
         return View;
-    })();
+    }());
     zbhz_overview.View = View;
 })(zbhz_overview || (zbhz_overview = {}));

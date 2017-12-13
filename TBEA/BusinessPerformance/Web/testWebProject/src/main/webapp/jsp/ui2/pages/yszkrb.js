@@ -18,7 +18,7 @@ var yszkrb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/dailyReport/yszk_submit.do");
@@ -187,6 +187,6 @@ var yszkrb;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     yszkrb.SimpleView = SimpleView;
 })(yszkrb || (yszkrb = {}));

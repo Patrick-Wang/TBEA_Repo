@@ -176,7 +176,7 @@ var hzb_zbhz_prediciton;
             }
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -354,6 +354,6 @@ var hzb_zbhz_prediciton;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     hzb_zbhz_prediciton.SimpleView = SimpleView;
 })(hzb_zbhz_prediciton || (hzb_zbhz_prediciton = {}));

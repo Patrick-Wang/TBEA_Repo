@@ -2,11 +2,16 @@
 /// <reference path="../../../util.ts" />
 /// <reference path="../../../dateSelector.ts" />
 /// <reference path="../jcycljgdef.ts" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var jcycljg;
 (function (jcycljg) {
     var ggp;
@@ -30,12 +35,35 @@ var jcycljg;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var GgpView = (function (_super) {
             __extends(GgpView, _super);
             function GgpView() {
-                _super.apply(this, arguments);
-                this.mAjax = new Util.Ajax("/BusinessManagement/jcycljg/update.do?type=" + jcycljg.JcycljgType.GGP, false);
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mAjax = new Util.Ajax("/BusinessManagement/jcycljg/update.do?type=" + jcycljg.JcycljgType.GGP, false);
+                return _this;
+                //private updateTable():void {
+                //    var name = this.option().host + this.option().tb + "_jqgrid_1234";
+                //    var tableAssist:JQTable.JQGridAssistant = JQGridAssistantFactory.createTable(name);
+                //    var parent = this.$(this.option().tb);
+                //    parent.empty();
+                //    parent.append("<table id='" + name + "'></table><div id='" + name + "pager" + "'></div>");
+                //    this.$(name).jqGrid(
+                //        tableAssist.decorate({
+                //            multiselect: false,
+                //            drag: false,
+                //            resize: false,
+                //            height: '100%',
+                //            width: 1200,
+                //            shrinkToFit: true,
+                //            autoScroll: true,
+                //            rowNum: 20,
+                //            data: tableAssist.getData(this.mData),
+                //            datatype: "local",
+                //            viewrecords : true,
+                //            pager : name + "pager"
+                //        }));
+                //}
             }
             GgpView.newInstance = function () {
                 return new GgpView();
@@ -185,7 +213,7 @@ var jcycljg;
                 });
             };
             return GgpView;
-        })(jcycljg.BasePluginView);
+        }(jcycljg.BasePluginView));
         ggp.pluginView = GgpView.newInstance();
     })(ggp = jcycljg.ggp || (jcycljg.ggp = {}));
 })(jcycljg || (jcycljg = {}));

@@ -31,7 +31,7 @@ var hzb_companysNC;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -161,6 +161,6 @@ var hzb_companysNC;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     hzb_companysNC.SimpleView = SimpleView;
 })(hzb_companysNC || (hzb_companysNC = {}));

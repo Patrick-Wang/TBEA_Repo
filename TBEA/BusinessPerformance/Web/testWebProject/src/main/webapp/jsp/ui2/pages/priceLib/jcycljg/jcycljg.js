@@ -211,7 +211,7 @@ var jcycljg;
             this.plugin(node).update(dts, dte);
         };
         return View;
-    })();
+    }());
     jcycljg.View = View;
 })(jcycljg || (jcycljg = {}));
 var view = new jcycljg.View();

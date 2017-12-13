@@ -38,15 +38,15 @@ var tree;
                 return;
             }
             if (treeNode.hasChildren()) {
-                var ul = this.q("#" + treeNode.data.id + ">ul");
+                var ul_1 = this.q("#" + treeNode.data.id + ">ul");
                 if (treeNode.getData().extracted) {
                     treeNode.getData().extracted = false;
-                    treeNode.data.height = ul.css("height");
+                    treeNode.data.height = ul_1.css("height");
                     if (treeNode.data.icon && treeNode.data.iconOpen) {
                         this.q("#" + treeNode.data.id + ">div i").removeClass(treeNode.data.icon_);
                         this.q("#" + treeNode.data.id + ">div i").addClass(this.getIcon(treeNode, treeNode.data.icon));
                     }
-                    ul.animate({
+                    ul_1.animate({
                         height: "0px"
                     }, 'fast');
                 }
@@ -56,10 +56,10 @@ var tree;
                         this.q("#" + treeNode.data.id + ">div i").removeClass(treeNode.data.icon_);
                         this.q("#" + treeNode.data.id + ">div i").addClass(this.getIcon(treeNode, treeNode.data.iconOpen));
                     }
-                    ul.animate({
+                    ul_1.animate({
                         height: treeNode.getData().height
                     }, 'fast', function () {
-                        ul.removeCss("height");
+                        ul_1.removeCss("height");
                     });
                 }
             }
@@ -142,6 +142,6 @@ var tree;
             }
         };
         return Tree;
-    })();
+    }());
     tree_1.Tree = Tree;
 })(tree || (tree = {}));

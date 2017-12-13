@@ -67,7 +67,7 @@ var cb_byq;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.SBGS;
@@ -144,6 +144,11 @@ var cb_byq;
                 shrinkToFit: false,
                 autoScroll: true,
                 rowNum: 1000
+                //                    userData: {
+                //                        'title': "合计"
+                //                    },
+                //                    footerrow: true,
+                //                    userDataOnFooter: true
             }));
         };
         View.prototype.updateJttbTable = function () {
@@ -153,7 +158,8 @@ var cb_byq;
                 ["沈变"],
                 ["衡变"],
                 ["新变"],
-                ["总计"]];
+                ["总计"]
+            ];
             for (var i = 0; i < data.length; ++i) {
                 data[i] = this.format(data[i].concat(this.mJtData[i]));
             }
@@ -224,6 +230,6 @@ var cb_byq;
             }));
         };
         return View;
-    })();
+    }());
     cb_byq.View = View;
 })(cb_byq || (cb_byq = {}));

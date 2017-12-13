@@ -16,7 +16,7 @@ var yqkqsbh;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqkbhqs_update.do");
@@ -60,6 +60,7 @@ var yqkqsbh;
             //            var total = [];
             for (var i = 1; i <= this.mMonth; ++i) {
                 month.push(i + "月");
+                //                total.push(0);
             }
             for (var j = 0; j < legend.length; ++j) {
                 for (var i = 1; i <= this.mMonth; ++i) {
@@ -158,6 +159,6 @@ var yqkqsbh;
             }));
         };
         return View;
-    })();
+    }());
     yqkqsbh.View = View;
 })(yqkqsbh || (yqkqsbh = {}));

@@ -25,7 +25,7 @@ var yszkjgqkb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mCurrentSelected = 0;
@@ -97,7 +97,8 @@ var yszkjgqkb;
             }
             var ser = [];
             var rgba = [
-                [193, 35, 43, 1], [181, 195, 52, 1], [252, 206, 16, 1]];
+                [193, 35, 43, 1], [181, 195, 52, 1], [252, 206, 16, 1]
+            ];
             var temp;
             for (var j = 0; j < legend.length; ++j) {
                 var k = j;
@@ -335,7 +336,8 @@ var yszkjgqkb;
                 ["电力及配套", "其他电源"],
                 ["出口", "合同"],
                 ["其", "它"],
-                ["合", "计"]];
+                ["合", "计"]
+            ];
             if (undefined != this.mTableData) {
                 var row = [];
                 for (var i = 0; i < data.length; ++i) {
@@ -369,6 +371,6 @@ var yszkjgqkb;
             }));
         };
         return View;
-    })();
+    }());
     yszkjgqkb.View = View;
 })(yszkjgqkb || (yszkjgqkb = {}));

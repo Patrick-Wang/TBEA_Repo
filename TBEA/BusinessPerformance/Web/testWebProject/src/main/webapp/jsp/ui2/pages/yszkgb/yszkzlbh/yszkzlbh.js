@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../messageBox.ts" />
@@ -29,12 +34,13 @@ var yszkgb;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var SimpleView = (function (_super) {
             __extends(SimpleView, _super);
             function SimpleView(id) {
-                _super.call(this, id);
-                this.mAjax = new Util.Ajax("/BusinessManagement/yszkgb/yszkzlbh/update.do", false);
+                var _this = _super.call(this, id) || this;
+                _this.mAjax = new Util.Ajax("/BusinessManagement/yszkgb/yszkzlbh/update.do", false);
+                return _this;
             }
             SimpleView.prototype.pluginGetExportUrl = function (date, cpType) {
                 return "/BusinessManagement/yszkgb/yszkzlbh/export.do?" + Util.Ajax.toUrlParam({
@@ -178,7 +184,7 @@ var yszkgb;
             };
             SimpleView.ins = new SimpleView("yszkzlbh");
             return SimpleView;
-        })(yszkgb.BasePluginView);
+        }(yszkgb.BasePluginView));
         yszkzlbh.SimpleView = SimpleView;
     })(yszkzlbh = yszkgb.yszkzlbh || (yszkgb.yszkzlbh = {}));
 })(yszkgb || (yszkgb = {}));

@@ -96,7 +96,7 @@ var year_total;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mData = [];
@@ -192,6 +192,6 @@ var year_total;
             return precentList;
         };
         return View;
-    })();
+    }());
     year_total.View = View;
 })(year_total || (year_total = {}));

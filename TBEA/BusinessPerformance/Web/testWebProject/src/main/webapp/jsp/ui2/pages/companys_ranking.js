@@ -170,7 +170,7 @@ var companys_ranking;
             }
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -404,7 +404,8 @@ var companys_ranking;
                         ["新特能源公司"],
                         ["进出口公司"],
                         ["国际工程公司"],
-                        ["众和公司"]];
+                        ["众和公司"]
+                    ];
                     data = this.formatData(predata);
                 }
                 else {
@@ -430,6 +431,6 @@ var companys_ranking;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     companys_ranking.SimpleView = SimpleView;
 })(companys_ranking || (companys_ranking = {}));

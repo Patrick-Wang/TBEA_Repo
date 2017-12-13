@@ -1,10 +1,15 @@
 ///<reference path="../framework/basic/basic.ts"/>
 ///<reference path="../framework/templates/singleDateReport/show.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var xtnyzb;
 (function (xtnyzb) {
     framework.templates.singleDateReport.createInstance = function () {
@@ -13,7 +18,7 @@ var xtnyzb;
     var XtnyzbShowView = (function (_super) {
         __extends(XtnyzbShowView, _super);
         function XtnyzbShowView() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         XtnyzbShowView.prototype.response = function () {
             return (this.resp);
@@ -74,6 +79,6 @@ var xtnyzb;
             }));
         };
         return XtnyzbShowView;
-    })(framework.templates.singleDateReport.ShowView);
+    }(framework.templates.singleDateReport.ShowView));
     var ins = new XtnyzbShowView();
 })(xtnyzb || (xtnyzb = {}));

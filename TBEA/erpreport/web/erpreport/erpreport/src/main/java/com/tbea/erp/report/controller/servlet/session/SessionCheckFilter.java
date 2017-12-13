@@ -22,7 +22,8 @@ public class SessionCheckFilter implements Filter {
 			Pattern.compile("/Login/portal.do"),
 			Pattern.compile("/Login/erp.do"),
 			Pattern.compile("/Login/timeout.do"),
-			Pattern.compile("/Login/token.do")
+			Pattern.compile("/Login/token.do"),
+			Pattern.compile("/Login/urltime.do")
 	};
 	
 	

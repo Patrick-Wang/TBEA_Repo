@@ -72,7 +72,7 @@ var cb_wg_byq;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             //		private mfdwData : string[];
@@ -199,7 +199,8 @@ var cb_wg_byq;
                 [this.mMonth + "月", "新变", "", "完工阶段"],
                 [this.mYear + "年" + this.mMonth, "月小计", " ", "中标阶段"],
                 [this.mYear + "年" + this.mMonth, "月小计", " ", "预期阶段"],
-                [this.mYear + "年" + this.mMonth, "月小计", " ", "完工阶段"]];
+                [this.mYear + "年" + this.mMonth, "月小计", " ", "完工阶段"]
+            ];
             for (var i = 0; i < this.mJtData.length; ++i) {
                 if (this.mJtData[i] instanceof Array) {
                     for (var col in this.mJtData[i]) {
@@ -366,6 +367,6 @@ var cb_wg_byq;
             }));
         };
         return View;
-    })();
+    }());
     cb_wg_byq.View = View;
 })(cb_wg_byq || (cb_wg_byq = {}));

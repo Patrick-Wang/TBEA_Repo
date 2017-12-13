@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
 /// <reference path="../route/route.ts" />
@@ -60,12 +65,12 @@ var framework;
                 return true;
             };
             return BasicEndpoint;
-        })();
+        }());
         basic.BasicEndpoint = BasicEndpoint;
         var FrameView = (function (_super) {
             __extends(FrameView, _super);
             function FrameView() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             FrameView.prototype.getId = function () {
                 return endpoint.FRAME_ID;
@@ -82,12 +87,12 @@ var framework;
                 return _super.prototype.onEvent.call(this, e);
             };
             return FrameView;
-        })(BasicEndpoint);
+        }(BasicEndpoint));
         basic.FrameView = FrameView;
         var BasePluginView = (function (_super) {
             __extends(BasePluginView, _super);
             function BasePluginView() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             BasePluginView.prototype.onInitialize = function (opt) {
                 this.mOpt = opt;
@@ -142,12 +147,12 @@ var framework;
                 return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
             };
             return BasePluginView;
-        })(BasicEndpoint);
+        }(BasicEndpoint));
         basic.BasePluginView = BasePluginView;
         var ShowPluginView = (function (_super) {
             __extends(ShowPluginView, _super);
             function ShowPluginView() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             ShowPluginView.prototype.onEvent = function (e) {
                 var val = _super.prototype.onEvent.call(this, e);
@@ -178,12 +183,12 @@ var framework;
                 return undefined;
             };
             return ShowPluginView;
-        })(BasePluginView);
+        }(BasePluginView));
         basic.ShowPluginView = ShowPluginView;
         var EntryPluginView = (function (_super) {
             __extends(EntryPluginView, _super);
             function EntryPluginView() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             EntryPluginView.prototype.onEvent = function (e) {
                 var val = _super.prototype.onEvent.call(this, e);
@@ -212,12 +217,12 @@ var framework;
                 return val;
             };
             return EntryPluginView;
-        })(BasePluginView);
+        }(BasePluginView));
         basic.EntryPluginView = EntryPluginView;
         var ApprovePluginView = (function (_super) {
             __extends(ApprovePluginView, _super);
             function ApprovePluginView() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             ApprovePluginView.prototype.onEvent = function (e) {
                 var val = _super.prototype.onEvent.call(this, e);
@@ -242,7 +247,7 @@ var framework;
                 return val;
             };
             return ApprovePluginView;
-        })(BasePluginView);
+        }(BasePluginView));
         basic.ApprovePluginView = ApprovePluginView;
         var EndpointProxy = (function () {
             function EndpointProxy(id, stub) {
@@ -257,7 +262,7 @@ var framework;
                 return framework.router.redirect(this.mStub, e);
             };
             return EndpointProxy;
-        })();
+        }());
         basic.EndpointProxy = EndpointProxy;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));

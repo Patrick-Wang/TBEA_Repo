@@ -23,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		for (int i = 0; i < employees.size(); ++i){
 			employees.get(i).setUpdateTime(updateTime);
 			employees.get(i).setMdmBatch(batch);
-			Employee employee = employeeDao.getByCode(employees.get(i).getCode());
+			Employee employee = employeeDao.getByCode(employees.get(i).getWorkNum());
 			if(employee != null){
 				employees.get(i).setId(employee.getId());
 			}

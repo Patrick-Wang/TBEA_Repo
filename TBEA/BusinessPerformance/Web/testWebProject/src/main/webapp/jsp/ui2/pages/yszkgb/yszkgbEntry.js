@@ -97,5 +97,5 @@ var yszkgb;
         };
         EntryView.ins = new EntryView();
         return EntryView;
-    })();
+    }());
 })(yszkgb || (yszkgb = {}));

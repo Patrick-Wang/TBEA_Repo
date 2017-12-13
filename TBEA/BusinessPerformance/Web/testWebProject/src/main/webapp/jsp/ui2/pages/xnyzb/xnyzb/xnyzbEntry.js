@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
@@ -32,11 +37,11 @@ var xnyzb;
                 return new JQTable.JQGridAssistant(nodes, gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var EntryView = (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
-                _super.apply(this, arguments);
+                return _super !== null && _super.apply(this, arguments) || this;
             }
             EntryView.prototype.getId = function () {
                 return pluginEntry.xnyzb;
@@ -45,6 +50,7 @@ var xnyzb;
                 switch (e.id) {
                     case framework.basic.FrameEvent.FE_SAVE:
                         {
+                            //this.pluginSave(e.data.dStart, e.data.dEnd, e.data.compType);
                         }
                         return;
                     case framework.basic.FrameEvent.FE_SUBMIT:
@@ -98,6 +104,10 @@ var xnyzb;
                     for (var j = 0; j < allData[i].length; ++j) {
                         submitData[i].push(allData[i][j]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+                        //if (j != 3 && "" == submitData[i][j]) {
+                        //    Util.MessageBox.tip("有空内容 无法提交")
+                        //    return;
+                        //}
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -181,6 +191,6 @@ var xnyzb;
             };
             EntryView.ins = new EntryView();
             return EntryView;
-        })(framework.basic.EntryPluginView);
+        }(framework.basic.EntryPluginView));
     })(xnyzbEntry = xnyzb.xnyzbEntry || (xnyzb.xnyzbEntry = {}));
 })(xnyzb || (xnyzb = {}));

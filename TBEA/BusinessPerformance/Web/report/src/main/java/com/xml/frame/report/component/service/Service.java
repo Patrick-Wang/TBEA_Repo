@@ -39,7 +39,8 @@ public class Service extends AbstractXmlComponent implements ServiceRunnable {
 			new LogXmlInterpreter(),
 			new WordTemplateXmlInterpreter(),
 			new WordMergeXmlInterpreter(),
-			new ScriptXmlInterpreter()
+			new ScriptXmlInterpreter(),
+			new HttpXmlInterpreter()
 	};
 
 

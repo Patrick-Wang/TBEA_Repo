@@ -2,11 +2,16 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 ///<reference path="../components/dateSelectorProxy.ts"/>
 ///<reference path="../unitedSelector.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var sddb;
 (function (sddb) {
     var router = framework.router;
@@ -19,7 +24,7 @@ var sddb;
     var SddbShowView = (function (_super) {
         __extends(SddbShowView, _super);
         function SddbShowView() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         SddbShowView.prototype.onEvent = function (e) {
             switch (e.id) {
@@ -27,12 +32,16 @@ var sddb;
                     if (this.mOpt.date != undefined) {
                         $("#dstart").parent().css("display", "");
                         $("#dEnd").parent().css("display", "");
+                        //$("#dstartLabel").css("display", "");
+                        //$("#dEndLabel").css("display", "");
                     }
                     break;
                 case SDDBEvent.FE_HIDETIME:
                     if (this.mOpt.date != undefined) {
                         $("#dstart").css("display", "none");
                         $("#dEnd").css("display", "none");
+                        //$("#dstartLabel").css("display", "none");
+                        //$("#dEndLabel").css("display", "none");
                     }
                     break;
             }
@@ -53,6 +62,17 @@ var sddb;
                     var hasScroll = $(sels).find("option").length > 10;
                     var extendWidth = hasScroll ? 27 : 0;
                     var width = Util.getUIWidth(items);
+                    //$(sels[i]) .multiselect({
+                    //        multiple: false,
+                    //        header: false,
+                    //        minWidth: width < 80 ? 80 + extendWidth : width + 20 + extendWidth,
+                    //        height: hasScroll ? 270 : '100%',
+                    //        // noneSelectedText: "请选择月份",
+                    //        selectedList: 1
+                    //    })
+                    //    .css("padding", "2px 0 2px 4px")
+                    //    .css("text-align", "left")
+                    //    .css("font-size", "12px");
                 }
             }
         };
@@ -114,35 +134,50 @@ var sddb;
                 //    Util.addDay(opt.date, -5 * 7)
                 //);
                 var dateWithOutDay = { year: opt.date.year, month: opt.date.month };
-                var startOpt = this.createInternalDate("dstart", dateWithOutDay, {
+                var startOpt_1 = this.createInternalDate("dstart", dateWithOutDay, {
                     nowDate: Util.date2Str(Util.addDay(opt.date, -5 * 7)),
                     minDate: Util.date2Str(opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart),
                     maxDate: Util.date2Str(opt.date),
                     choosefun: function (elem, val, date) {
                         setTimeout(function () {
-                            endOpt.minDate = Util.date2Str(_this.getStartDate());
+                            endOpt_1.minDate = Util.date2Str(_this.getStartDate());
                             endDates();
                         }, 0);
                     }
                 });
-                var endOpt = this.createInternalDate("dEnd", dateWithOutDay, {
+                var endOpt_1 = this.createInternalDate("dEnd", dateWithOutDay, {
                     nowDate: Util.date2Str(opt.date),
-                    minDate: startOpt.nowDate,
+                    minDate: startOpt_1.nowDate,
                     maxDate: Util.date2Str(opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd),
                     choosefun: function (elem, val, date) {
-                        startOpt.maxDate = Util.date2Str(_this.getEndDate()); //将结束日的初始值设定为开始日的最大日期
+                        startOpt_1.maxDate = Util.date2Str(_this.getEndDate()); //将结束日的初始值设定为开始日的最大日期
                     }
                 });
                 //这里是日期联动的关键
                 function endDates() {
                     //将结束日期的事件改成 false 即可
-                    endOpt.insTrigger = false;
+                    endOpt_1.insTrigger = false;
                     $("#dEnd").jePopup();
                 }
+                //this.mDEndSel = new Util.DateSelectorProxy("dEnd",
+                //    opt.dateStart == undefined ? Util.addYear(opt.date, -3) : opt.dateStart,
+                //    opt.dateEnd == undefined ? Util.addYear(opt.date, 20) : opt.dateEnd,
+                //    opt.date
+                //);
+                //this.mDEndSel.change((date:any)=>{
+                //    let d = this.mDStartSel.getDate();
+                //    let dS = Util.uDate2sDate(d).getTime();
+                //    let dE = Util.uDate2sDate(date).getTime();
+                //    if (dS > dE){
+                //        this.mDStartSel.setDate(date);
+                //    }
+                //});
             }
             else {
                 $("#dstart").parent().css("display", "none");
                 $("#dEnd").parent().css("display", "none");
+                //$("#dstartLabel").css("display", "none");
+                //$("#dEndLabel").css("display", "none");
             }
             //$("#ui-datepicker-div").css('font-size', '0.8em'); //改变大小;
             if (this.mOpt.comps != '') {
@@ -175,9 +210,16 @@ var sddb;
             router.broadcast(FrameEvent.FE_HIDE);
             router.to(this.mCurrentPlugin).send(FrameEvent.FE_SHOW);
             if (this.mCompanySelector == undefined) {
+                //$("#headertitle")[0].innerHTML = node.getData().value;
             }
             else {
                 this.mCurrentComp = this.mCompanySelector.getCompany();
+                //if (null != this.mCurrentComp){
+                //    $("#headertitle")[0].innerHTML = this.mCompanySelector.getCompanyName() + " " + node.getData().value;
+                //}
+                //else {
+                //    $("#headertitle")[0].innerHTML = node.getData().value;
+                //}
             }
             //let unit = router.to(this.mCurrentPlugin).send(FrameEvent.FE_GETUNIT);
             //if (undefined != unit){
@@ -204,6 +246,6 @@ var sddb;
             $("#" + elemId)[0].submit();
         };
         return SddbShowView;
-    })(framework.basic.ShowFrameView);
+    }(framework.basic.ShowFrameView));
     var ins = new SddbShowView();
 })(sddb || (sddb = {}));

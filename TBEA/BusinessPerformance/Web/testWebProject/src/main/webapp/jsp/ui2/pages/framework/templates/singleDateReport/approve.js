@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="../../route/route.ts"/>
 ///<reference path="../../basic/basicdef.ts"/>
 ///<reference path="../../../messageBox.ts"/>
@@ -22,7 +27,7 @@ var framework;
             var ApproveView = (function (_super) {
                 __extends(ApproveView, _super);
                 function ApproveView() {
-                    _super.apply(this, arguments);
+                    return _super !== null && _super.apply(this, arguments) || this;
                 }
                 ApproveView.prototype.getId = function () {
                     return framework.basic.endpoint.FRAME_ID;
@@ -245,7 +250,7 @@ var framework;
                     });
                 };
                 return ApproveView;
-            })(BasicEndpoint);
+            }(BasicEndpoint));
             singleDateReport.ApproveView = ApproveView;
         })(singleDateReport = templates.singleDateReport || (templates.singleDateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));

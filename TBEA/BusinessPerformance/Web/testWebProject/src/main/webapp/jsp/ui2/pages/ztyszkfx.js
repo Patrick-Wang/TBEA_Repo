@@ -34,7 +34,7 @@ var ztyszkfx;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("ztyszkfx_update.do");
@@ -184,6 +184,6 @@ var ztyszkfx;
             }));
         };
         return View;
-    })();
+    }());
     ztyszkfx.View = View;
 })(ztyszkfx || (ztyszkfx = {}));

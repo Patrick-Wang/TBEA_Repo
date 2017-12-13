@@ -2,6 +2,7 @@
 /// <reference path="../dateSelector.ts" />
 var wlyddqk;
 (function (wlyddqk) {
+    var WlyddType;
     (function (WlyddType) {
         WlyddType[WlyddType["SCDY"] = 0] = "SCDY";
         WlyddType[WlyddType["SCLB"] = 1] = "SCLB";
@@ -11,8 +12,7 @@ var wlyddqk;
         WlyddType[WlyddType["YLFX_WLYMLSP_XL_ZH"] = 14] = "YLFX_WLYMLSP_XL_ZH";
         WlyddType[WlyddType["YLFX_WLYMLSP_XL_CPFL"] = 15] = "YLFX_WLYMLSP_XL_CPFL";
         WlyddType[WlyddType["YLFX_WLYMLSP_BYQ_ZZY"] = 16] = "YLFX_WLYMLSP_BYQ_ZZY";
-    })(wlyddqk.WlyddType || (wlyddqk.WlyddType = {}));
-    var WlyddType = wlyddqk.WlyddType;
+    })(WlyddType = wlyddqk.WlyddType || (wlyddqk.WlyddType = {}));
     var BasePluginView = (function () {
         function BasePluginView() {
         }
@@ -55,7 +55,7 @@ var wlyddqk;
             return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         };
         return BasePluginView;
-    })();
+    }());
     wlyddqk.BasePluginView = BasePluginView;
     var TypeViewProxy = (function () {
         function TypeViewProxy(stub, type) {
@@ -90,7 +90,7 @@ var wlyddqk;
             return this.mStub.getExportUrl(date, compType);
         };
         return TypeViewProxy;
-    })();
+    }());
     wlyddqk.TypeViewProxy = TypeViewProxy;
     var BaseEntryPluginView = (function () {
         function BaseEntryPluginView() {
@@ -143,7 +143,7 @@ var wlyddqk;
             return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         };
         return BaseEntryPluginView;
-    })();
+    }());
     wlyddqk.BaseEntryPluginView = BaseEntryPluginView;
     var TypeEntryViewProxy = (function () {
         function TypeEntryViewProxy(stub, type) {
@@ -180,6 +180,6 @@ var wlyddqk;
             this.mStub.submit(date, compType);
         };
         return TypeEntryViewProxy;
-    })();
+    }());
     wlyddqk.TypeEntryViewProxy = TypeEntryViewProxy;
 })(wlyddqk || (wlyddqk = {}));

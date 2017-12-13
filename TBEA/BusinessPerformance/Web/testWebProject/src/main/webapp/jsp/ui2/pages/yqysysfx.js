@@ -19,7 +19,7 @@ var yqysysfx;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqysysfx_update.do");
@@ -143,7 +143,8 @@ var yqysysfx;
                 ["总数量", "户数"],
                 ["总数量", "金额"],
                 ["其中：法律手段清收", "户数"],
-                ["其中：法律手段清收", "金额"]];
+                ["其中：法律手段清收", "金额"]
+            ];
             if (this.mData != undefined) {
                 var row = [];
                 for (var i = 0; i < data.length; ++i) {
@@ -177,6 +178,6 @@ var yqysysfx;
             }));
         };
         return View;
-    })();
+    }());
     yqysysfx.View = View;
 })(yqysysfx || (yqysysfx = {}));

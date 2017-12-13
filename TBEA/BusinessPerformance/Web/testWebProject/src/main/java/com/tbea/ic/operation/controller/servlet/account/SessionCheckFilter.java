@@ -28,7 +28,8 @@ public class SessionCheckFilter implements Filter {
 			Pattern.compile("/Login/(v2/)?ssoLogout.do"),
 			Pattern.compile("/Login/(v2/)?validate.do"),
 			Pattern.compile("/Login/(v2/)?login.do"),
-			Pattern.compile("/Account/(v2/)?resetPassword.do")
+			Pattern.compile("/Account/(v2/)?resetPassword.do"),
+			Pattern.compile("/report/(v2/)?defineReportClr.do")
 	};
 	
 	

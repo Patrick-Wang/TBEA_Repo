@@ -50,7 +50,7 @@ var byq_fkfstj;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.SBGS;
@@ -88,19 +88,22 @@ var byq_fkfstj;
                     ["沈变"],
                     ["衡变"],
                     ["新变"],
-                    ["合计"]];
+                    ["合计"]
+                ];
                 _this.updateTable(_this.fdwTableId, _this.fdwTableId + "_jqgrid_1234", JQGridAssistantFactory.createFdwTable(_this.fdwTableId + "_jqgrid_1234"), rowData, fktjData[0]);
                 rowData = [
                     ["沈变"],
                     ["衡变"],
                     ["新变"],
-                    ["合计"]];
+                    ["合计"]
+                ];
                 _this.updateTable(_this.gwTableId, _this.gwTableId + "_jqgrid_1234", JQGridAssistantFactory.createGwTable(_this.gwTableId + "_jqgrid_1234"), rowData, fktjData[1]);
                 rowData = [
                     ["沈变"],
                     ["衡变"],
                     ["新变"],
-                    ["合计"]];
+                    ["合计"]
+                ];
                 _this.updateTable(_this.nwTableId, _this.nwTableId + "_jqgrid_1234", JQGridAssistantFactory.createNwTable(_this.nwTableId + "_jqgrid_1234"), rowData, fktjData[2]);
                 $('h1').text("变压器 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计");
                 document.title = "变压器 " + _this.mYear + "年" + _this.mMonth + "月 付款方式统计";
@@ -192,6 +195,6 @@ var byq_fkfstj;
             }));
         };
         return View;
-    })();
+    }());
     byq_fkfstj.View = View;
 })(byq_fkfstj || (byq_fkfstj = {}));

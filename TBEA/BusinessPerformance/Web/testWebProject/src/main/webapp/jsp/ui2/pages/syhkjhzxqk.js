@@ -15,7 +15,7 @@ var syhkjhzxqk;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
@@ -186,6 +186,6 @@ var syhkjhzxqk;
             }));
         };
         return View;
-    })();
+    }());
     syhkjhzxqk.View = View;
 })(syhkjhzxqk || (syhkjhzxqk = {}));

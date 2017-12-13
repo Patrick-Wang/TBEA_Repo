@@ -2,11 +2,16 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 ///<reference path="../components/dateSelectorProxy.ts"/>
 ///<reference path="../unitedSelector.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var cwsf;
 (function (cwsf) {
     var router = framework.router;
@@ -14,7 +19,7 @@ var cwsf;
     var CwsfShowView = (function (_super) {
         __extends(CwsfShowView, _super);
         function CwsfShowView() {
-            _super.apply(this, arguments);
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         CwsfShowView.prototype.getMaxWidth = function (opts) {
             var max = 0;
@@ -134,6 +139,6 @@ var cwsf;
             $("#" + elemId)[0].submit();
         };
         return CwsfShowView;
-    })(framework.basic.ShowFrameView);
+    }(framework.basic.ShowFrameView));
     var ins = new CwsfShowView();
 })(cwsf || (cwsf = {}));

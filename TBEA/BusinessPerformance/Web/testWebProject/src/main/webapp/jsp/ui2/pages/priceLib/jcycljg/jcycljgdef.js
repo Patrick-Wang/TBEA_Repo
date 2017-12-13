@@ -2,22 +2,22 @@
 /// <reference path="../../dateSelector.ts" />
 var jcycljg;
 (function (jcycljg) {
+    var DateType;
     (function (DateType) {
         DateType[DateType["DAY"] = 0] = "DAY";
         DateType[DateType["MONTH"] = 1] = "MONTH";
         DateType[DateType["YEAR"] = 2] = "YEAR";
-    })(jcycljg.DateType || (jcycljg.DateType = {}));
-    var DateType = jcycljg.DateType;
+    })(DateType = jcycljg.DateType || (jcycljg.DateType = {}));
+    var ContentType;
     (function (ContentType) {
         ContentType[ContentType["TABLE_CHART"] = 0] = "TABLE_CHART";
         ContentType[ContentType["TABLE"] = 1] = "TABLE";
-    })(jcycljg.ContentType || (jcycljg.ContentType = {}));
-    var ContentType = jcycljg.ContentType;
+    })(ContentType = jcycljg.ContentType || (jcycljg.ContentType = {}));
+    var DisplayType;
     (function (DisplayType) {
         DisplayType[DisplayType["TABLE"] = 0] = "TABLE";
         DisplayType[DisplayType["CHART"] = 1] = "CHART";
-    })(jcycljg.DisplayType || (jcycljg.DisplayType = {}));
-    var DisplayType = jcycljg.DisplayType;
+    })(DisplayType = jcycljg.DisplayType || (jcycljg.DisplayType = {}));
     var BasePluginView = (function () {
         function BasePluginView() {
         }
@@ -84,8 +84,9 @@ var jcycljg;
             return this.mOpt.host + this.mOpt.tb + "_jqgrid_real";
         };
         return BasePluginView;
-    })();
+    }());
     jcycljg.BasePluginView = BasePluginView;
+    var JcycljgType;
     (function (JcycljgType) {
         JcycljgType[JcycljgType["YSJS"] = 0] = "YSJS";
         JcycljgType[JcycljgType["GGP"] = 1] = "GGP";
@@ -104,6 +105,5 @@ var jcycljg;
         JcycljgType[JcycljgType["LWG"] = 14] = "LWG";
         JcycljgType[JcycljgType["PMICPIPPI"] = 15] = "PMICPIPPI";
         JcycljgType[JcycljgType["YHJZLL"] = 16] = "YHJZLL";
-    })(jcycljg.JcycljgType || (jcycljg.JcycljgType = {}));
-    var JcycljgType = jcycljg.JcycljgType;
+    })(JcycljgType = jcycljg.JcycljgType || (jcycljg.JcycljgType = {}));
 })(jcycljg || (jcycljg = {}));

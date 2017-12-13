@@ -24,7 +24,7 @@ var user_mgr;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -193,7 +193,7 @@ var user_mgr;
             var selIds = this.tableAssist.getSelection();
             if (selIds.length > 0) {
                 var rData = this.tableAssist.getRowsData(selIds);
-                var dialog = bootbox.dialog({
+                var dialog_1 = bootbox.dialog({
                     message: $("#configRoleTemplate").html().replace(/__/g, ""),
                     title: "角色分配",
                     className: "modal-darkorange",
@@ -228,7 +228,7 @@ var user_mgr;
                                     for (var j = 0; j < rData.length; ++j) {
                                         _this.tableAssist.setCellValue(rData[j][0], 2, roles.join());
                                     }
-                                    dialog.modal("hide");
+                                    dialog_1.modal("hide");
                                 });
                                 return false;
                             }
@@ -240,7 +240,7 @@ var user_mgr;
                         }
                     }
                 });
-                dialog.modal("show");
+                dialog_1.modal("show");
                 var uNames = [];
                 for (var i = 0; i < rData.length; ++i) {
                     uNames.push(rData[i][1]);
@@ -315,6 +315,6 @@ var user_mgr;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     user_mgr.SimpleView = SimpleView;
 })(user_mgr || (user_mgr = {}));

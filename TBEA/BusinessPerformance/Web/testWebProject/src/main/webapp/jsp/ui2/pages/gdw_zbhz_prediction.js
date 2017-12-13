@@ -173,7 +173,7 @@ var gdw_zbhz_prediciton;
             }
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -372,6 +372,6 @@ var gdw_zbhz_prediciton;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     gdw_zbhz_prediciton.SimpleView = SimpleView;
 })(gdw_zbhz_prediciton || (gdw_zbhz_prediciton = {}));

@@ -83,7 +83,7 @@ var report;
             });
         };
         return Console;
-    })();
+    }());
     report.Console = Console;
     var console = new Console();
 })(report || (report = {}));

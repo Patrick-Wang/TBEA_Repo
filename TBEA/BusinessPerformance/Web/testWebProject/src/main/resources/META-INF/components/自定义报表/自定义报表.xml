@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="defineReportClr">
+
+        <context key="token" value="${request.token.asString}"/>
+        <if test="${'SAIKU3' == 'token'}">
+            <context key="name" value="${request.name.asString}"/>
+            <context key="file" value="${request.file.asString}"/>
+            <context key="server" value="${request.server.asString}"/>
+            <context key="url" value="${server}?file=${file}&amp;type=open"/>
+            <callservice id="defineReportServ"/>
+            <response type="json">
+                <errorCode>${code}</errorCode>
+                <message>OK</message>
+            </response>
+        </if>
+        <else>
+            <response type="json">
+                <errorCode>-1</errorCode>
+                <message>非法访问</message>
+            </response>
+        </else>
+
+    </controller>
+    <service id="defineReportServ" transaction="transactionManager">
+        <sql id="item">
+            select * from navigator_item where url = ${url}
+        </sql>
+        <if test="${item.isEmpty}">
+            <sql>
+                insert into navigator_item (name, url, parent)
+                values ('${name}', '${url}', (select id from navigator_item where name='自定义报表'))
+            </sql>
+            <context key="code" value="${0}"></context>
+        </if>
+        <else>
+            <context key="code" value="${1}"></context>
+        </else>
+    </service>
+</components>

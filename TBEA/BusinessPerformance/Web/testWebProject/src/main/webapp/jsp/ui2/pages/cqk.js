@@ -16,7 +16,7 @@ var cqk;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var View = (function () {
         function View() {
             this.currentSelected = 0;
@@ -353,6 +353,6 @@ var cqk;
             }));
         };
         return View;
-    })();
+    }());
     cqk.View = View;
 })(cqk || (cqk = {}));

@@ -53,6 +53,6 @@ var Util;
             $("#" + this.mCtrlId).hide();
         };
         return CompanySelectorZzy;
-    })();
+    }());
     Util.CompanySelectorZzy = CompanySelectorZzy;
 })(Util || (Util = {}));

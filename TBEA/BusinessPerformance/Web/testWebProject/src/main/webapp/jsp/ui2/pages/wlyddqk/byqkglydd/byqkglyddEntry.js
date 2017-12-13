@@ -4,11 +4,16 @@
 ///<reference path="../../messageBox.ts"/>
 // <reference path="../sbdddcbjpcqkdef.ts" />
 ///<reference path="../../wlyddqk/wlyddqkEntry.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var wlyddqk;
 (function (wlyddqk) {
     var byqkglyddEntry;
@@ -75,14 +80,15 @@ var wlyddqk;
                 ], gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var ByqkglyddEntryView = (function (_super) {
             __extends(ByqkglyddEntryView, _super);
             function ByqkglyddEntryView() {
-                _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/entry/submit.do", false);
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/entry/update.do", false);
+                _this.mAjaxSave = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/entry/save.do", false);
+                _this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/sbdddcbjpcqk/byqkglydd/entry/submit.do", false);
+                return _this;
             }
             ByqkglyddEntryView.newInstance = function () {
                 return new ByqkglyddEntryView();
@@ -247,7 +253,7 @@ var wlyddqk;
                 //    }));
             };
             return ByqkglyddEntryView;
-        })(wlyddqk.BaseEntryPluginView);
+        }(wlyddqk.BaseEntryPluginView));
         byqkglyddEntry.pluginView = ByqkglyddEntryView.newInstance();
     })(byqkglyddEntry = wlyddqk.byqkglyddEntry || (wlyddqk.byqkglyddEntry = {}));
 })(wlyddqk || (wlyddqk = {}));

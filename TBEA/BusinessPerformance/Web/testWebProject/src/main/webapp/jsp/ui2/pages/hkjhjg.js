@@ -38,7 +38,7 @@ var hkjhjg;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var HKJHType;
     (function (HKJHType) {
         HKJHType[HKJHType["JG"] = 0] = "JG";
@@ -263,6 +263,6 @@ var hkjhjg;
             $(".ui-jqgrid-titlebar-close").hide();
         };
         return View;
-    })();
+    }());
     hkjhjg.View = View;
 })(hkjhjg || (hkjhjg = {}));

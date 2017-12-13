@@ -23,7 +23,7 @@ var entry_template;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     function find(data, id) {
         for (var i = 0; i < data.length; ++i) {
             if (data[i][0] == id) {
@@ -158,7 +158,8 @@ var entry_template;
             }
             this.mDataSet.get($.extend(date, {
                 entryType: this.mOpt.entryType,
-                companyId: this.mCompanySelector.getCompany() }))
+                companyId: this.mCompanySelector.getCompany()
+            }))
                 .then(function (data) {
                 _this.mStatusList = data.status;
                 _this.mTableData = data.values;
@@ -408,6 +409,7 @@ var entry_template;
                         return;
                     }
                 }
+                //}
             }
             this.mSubmit.post({
                 year: date.year,
@@ -461,6 +463,7 @@ var entry_template;
                         return;
                     }
                 }
+                //}
             }
             this.mSubmitToDeputy.post({
                 year: date.year,
@@ -894,6 +897,6 @@ var entry_template;
         };
         EntryView.ins = new EntryView();
         return EntryView;
-    })();
+    }());
     entry_template.EntryView = EntryView;
 })(entry_template || (entry_template = {}));

@@ -24,7 +24,7 @@ var xjlrb;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     var SimpleView = (function () {
         function SimpleView() {
             this.mData = [];
@@ -175,6 +175,6 @@ var xjlrb;
         };
         SimpleView.ins = new SimpleView();
         return SimpleView;
-    })();
+    }());
     xjlrb.SimpleView = SimpleView;
 })(xjlrb || (xjlrb = {}));
