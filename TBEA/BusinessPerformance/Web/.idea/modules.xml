@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/BIDesigner.iml" filepath="$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/BIDesigner.iml" />
       <module fileurl="file://$PROJECT_DIR$/DataTransfer/DataTransfer.iml" filepath="$PROJECT_DIR$/DataTransfer/DataTransfer.iml" />
       <module fileurl="file://$PROJECT_DIR$/dynamicDS/dynamicDS.iml" filepath="$PROJECT_DIR$/dynamicDS/dynamicDS.iml" />
       <module fileurl="file://$PROJECT_DIR$/el/el.iml" filepath="$PROJECT_DIR$/el/el.iml" />

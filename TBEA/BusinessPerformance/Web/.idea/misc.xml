@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner" />
     <file type="web" url="file://$PROJECT_DIR$/DataTransfer" />
     <file type="web" url="file://$PROJECT_DIR$/testWebProject" />
   </component>
@@ -16,6 +17,7 @@
         <option value="$PROJECT_DIR$/testWebProject/pom.xml" />
         <option value="$PROJECT_DIR$/tools/pom.xml" />
         <option value="$PROJECT_DIR$/maker/pom.xml" />
+        <option value="$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/pom.xml" />
       </list>
     </option>
   </component>

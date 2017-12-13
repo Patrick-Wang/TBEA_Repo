@@ -23,7 +23,7 @@
     </controller>
     <service id="defineReportServ" transaction="transactionManager">
         <sql id="item">
-            select * from navigator_item where url = ${url}
+            select id from navigator_item where url = ${url}
         </sql>
         <if test="${item.isEmpty}">
             <sql>
