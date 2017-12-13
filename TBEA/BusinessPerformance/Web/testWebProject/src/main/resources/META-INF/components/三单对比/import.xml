@@ -66,9 +66,6 @@
  <service id="servWinBiddingImportEntry" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
   <merge data="${data}" table="JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS">
-   <where>
-    <code type="string" ref="12"/>
-   </where>
    <set>
     <company_name type="string" ref="${counter.reset[0].val}" test="${this != null}"/>
     <win_bid_year type="int" ref="${counter.next.val}"/>

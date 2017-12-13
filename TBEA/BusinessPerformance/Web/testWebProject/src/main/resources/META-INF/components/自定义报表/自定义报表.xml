@@ -30,10 +30,17 @@
                 insert into navigator_item (name, url, parent)
                 values ('${name}', '${url}', (select id from navigator_item where name='自定义报表'))
             </sql>
-            <context key="code" value="${0}"></context>
+            <sql id="item">
+                select id from navigator_item where url = ${url}
+            </sql>
+            <context key="code" value="${item[0][0]}"></context>
+            <sql>
+                insert into navigator_positive_auth (itemId, authId) values (${code}, 3)
+            </sql>
         </if>
         <else>
-            <context key="code" value="${1}"></context>
+            <context key="code" value="${item[0][0]}"></context>
         </else>
+
     </service>
 </components>
