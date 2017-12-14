@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <OpenResources>
     <res url="/report/(v2/)?defineReportClr.do"></res>
     <res url="/report/(v2/)?getAuthNamesClr.do"></res>
