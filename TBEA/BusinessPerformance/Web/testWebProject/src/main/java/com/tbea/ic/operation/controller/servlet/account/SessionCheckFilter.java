@@ -2,6 +2,7 @@ package com.tbea.ic.operation.controller.servlet.account;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
@@ -18,18 +19,23 @@ import javax.servlet.http.HttpSession;
 import com.tbea.ic.operation.common.Url;
 import com.tbea.ic.operation.controller.servlet.dashboard.SessionManager;
 
+import com.util.tools.PathUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class SessionCheckFilter implements Filter {
+
+    OpenResources or;
+    public SessionCheckFilter() throws Exception {
+        or = new OpenResources(PathUtil.getClassRoot() + "META-INF/openRes.xml");
+    }
 
 	Pattern patterns[] = new Pattern[]{
 			Pattern.compile("/Login/(v2/)?ssoLogin.do"),
 			Pattern.compile("/Login/(v2/)?ssoLogout.do"),
 			Pattern.compile("/Login/(v2/)?validate.do"),
 			Pattern.compile("/Login/(v2/)?login.do"),
-			Pattern.compile("/Account/(v2/)?resetPassword.do"),
-			Pattern.compile("/report/(v2/)?defineReportClr.do")
+			Pattern.compile("/Account/(v2/)?resetPassword.do")
 	};
 	
 	
@@ -60,8 +66,7 @@ public class SessionCheckFilter implements Filter {
 				return true;
 			}
 		}
-		
-		return false;
+		return or.validate(url);
 	}
 	
 	@Override

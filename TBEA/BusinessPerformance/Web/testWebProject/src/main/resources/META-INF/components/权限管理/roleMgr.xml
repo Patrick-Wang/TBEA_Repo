@@ -159,4 +159,11 @@
 			<map key="createRoleUrl" value="roleMgrCreateRole" />
 		</response>
 	</controller>
+
+    <controller id="getAuthNamesClr">
+        <callservice id="servGetAuthNames" />
+        <response type="json">
+            <authNames>${authNames.asJson}</authNames>
+        </response>
+    </controller>
 </components>

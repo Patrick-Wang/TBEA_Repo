@@ -24,6 +24,9 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
     <option name="GROUP_SCHEMA" value="true" />
@@ -40,105 +43,104 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SaveQueryEx.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/js/saiku/views/SaveQueryEx.js">
+      <file leaf-file-name="SessionCheckFilter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/SessionCheckFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="287" column="83" lean-forward="false" selection-start-line="287" selection-start-column="77" selection-end-line="287" selection-end-column="83" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DimensionLookup.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/java/mondrian/rolap/DimensionLookup.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+            <state relative-caret-position="97">
+              <caret line="63" column="0" lean-forward="false" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IConnectionManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/java/org/saiku/datasources/connection/IConnectionManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="17" column="17" lean-forward="false" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="xx型号中标对比表.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/中标/xx型号中标对比表.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1082">
-              <caret line="233" column="1" lean-forward="false" selection-start-line="233" selection-start-column="1" selection-end-line="233" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="中标详细信息.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/详细信息/中标详细信息.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="47" column="39" lean-forward="false" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="自定义报表.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/自定义报表/自定义报表.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="23" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="13" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OverwriteModalCN.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/js/saiku/views/OverwriteModalCN.js">
+      <file leaf-file-name="openRes.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/openRes.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="roleMgr.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/权限管理/roleMgr.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="124">
+              <caret line="162" column="35" lean-forward="false" selection-start-line="162" selection-start-column="20" selection-end-line="162" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OpenResources.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/OpenResources.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="51" column="19" lean-forward="true" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#1660#1680#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="import.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/import.xml">
+      <file leaf-file-name="XmlWalker.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/src/main/java/com/util/tools/xml/XmlWalker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1005">
-              <caret line="67" column="66" lean-forward="false" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="66" />
+            <state relative-caret-position="219">
+              <caret line="79" column="14" lean-forward="false" selection-start-line="79" selection-start-column="14" selection-end-line="79" selection-end-column="14" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/index.html">
+      <file leaf-file-name="log4j.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/WEB-INF/log4j.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1178">
-              <caret line="1039" column="49" lean-forward="false" selection-start-line="1039" selection-start-column="49" selection-end-line="1039" selection-end-column="49" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="更新报表信息.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/resources/components/更新报表信息.xml">
+      <file leaf-file-name="ResetPasswordServlet.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/ResetPasswordServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DataSourceFactory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dynamicDS/src/main/java/com/datasource/dynamic/DataSourceFactory.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
-              <caret line="4" column="34" lean-forward="true" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+              <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HikariCPDataSourceFactory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dynamicDS/src/main/java/com/datasource/dynamic/HikariCPDataSourceFactory.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="208" column="19" lean-forward="true" selection-start-line="197" selection-start-column="8" selection-end-line="208" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/WEB-INF/config.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -155,14 +157,9 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>authMgr</find>
-      <find>import</find>
-      <find>nodeData</find>
-      <find>81</find>
       <find>cron</find>
       <find>isSchedule</find>
       <find>servGcyzbTransport</find>
-      <find>&lt;merge</find>
       <find>xny</find>
       <find>EasyCalendar</find>
       <find>timestamp</find>
@@ -185,6 +182,11 @@
       <find>report</find>
       <find>JYGK_SDDB_WIN_BIDDING_ORDER_DETAILS</find>
       <find>servModelZbFdwXh</find>
+      <find>servSubmitRoleMgr</find>
+      <find>&lt;merge</find>
+      <find>servGetAuthNames</find>
+      <find>watch</find>
+      <find>SessionCheckFilter</find>
     </findStrings>
     <replaceStrings>
       <replace>!=</replace>
@@ -202,9 +204,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/template/pom.xml" />
-        <option value="$PROJECT_DIR$/ep/src/main/java/com/tbea/lib/ep/SignTest.java" />
-        <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/Connection/DBConnectionManager.java" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/Formula.java" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/market/pipe/configurator/sign/CompanySignAnalysisConfigurator.java" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/market/pipe/configurator/sign/CompanySignAnalysisCompositeConfigurator.java" />
@@ -244,15 +243,18 @@
         <option value="$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/component/service/Service.java" />
         <option value="$PROJECT_DIR$/testWebProject/pom.xml" />
         <option value="$PROJECT_DIR$/report/pom.xml" />
-        <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/SessionCheckFilter.java" />
         <option value="$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/component/entity/WebResponse.java" />
-        <option value="$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/HttpXmlInterpreter.java" />
         <option value="$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/js/saiku/views/SaveQueryEx.js" />
         <option value="$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/resources/components/test.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/import.xml" />
         <option value="$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/index.html" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/自定义报表/自定义报表.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/权限管理/roleMgr.xml" />
+        <option value="$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/HttpXmlInterpreter.java" />
         <option value="$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/resources/components/更新报表信息.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/SessionCheckFilter.java" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/OpenResources.java" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/openRes.xml" />
       </list>
     </option>
   </component>
@@ -337,50 +339,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
-              <item name="ep" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
-              <item name="ep" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
-              <item name="ep" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-              <item name="tbea" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
-              <item name="ep" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-              <item name="tbea" type="1f31426a:PackageElementNode" />
-              <item name="lib" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
-              <item name="testWebProject" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
-              <item name="testWebProject" type="616d4139:PackageViewModuleNode" />
-              <item name="com" type="1f31426a:PackageElementNode" />
-            </path>
-            <path>
-              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
-              <item name="testWebProject" type="616d4139:PackageViewModuleNode" />
-              <item name="META-INF" type="1f31426a:PackageElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -464,7 +422,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -474,137 +431,168 @@
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="BIDesigner" type="cbb8eebc:String" user="BIDesigner" />
-              <item name="C:\Users\Floyd\Documents\GitHub\BIDesigner\BIDesigner" type="cbb8eebc:String" user="C:\Users\Floyd\Documents\GitHub\BIDesigner\BIDesigner" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
               <item name="src" type="cbb8eebc:String" user="src" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="datasource" type="cbb8eebc:String" user="datasource" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="datasource" type="cbb8eebc:String" user="datasource" />
+              <item name="dynamic" type="cbb8eebc:String" user="dynamic" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
+              <item name="dynamicDS" type="cbb8eebc:String" user="dynamicDS" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
               <item name="resources" type="cbb8eebc:String" user="resources" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="el" type="cbb8eebc:String" user="el" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="el" type="cbb8eebc:String" user="el" />
+              <item name="el" type="cbb8eebc:String" user="el" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="三单对比" type="cbb8eebc:String" user="三单对比" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="webapp" type="cbb8eebc:String" user="webapp" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-              <item name="Documents" type="cbb8eebc:String" user="Documents" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-              <item name="Documents" type="cbb8eebc:String" user="Documents" />
-              <item name="GitHub" type="cbb8eebc:String" user="GitHub" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-              <item name="Documents" type="cbb8eebc:String" user="Documents" />
-              <item name="GitHub" type="cbb8eebc:String" user="GitHub" />
-              <item name="BIDesigner" type="cbb8eebc:String" user="BIDesigner" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
+              <item name="ep" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
+              <item name="ep" type="616d4139:PackageViewModuleNode" />
+              <item name="com" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
+              <item name="ep" type="616d4139:PackageViewModuleNode" />
+              <item name="com" type="1f31426a:PackageElementNode" />
+              <item name="tbea" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
+              <item name="ep" type="616d4139:PackageViewModuleNode" />
+              <item name="com" type="1f31426a:PackageElementNode" />
+              <item name="tbea" type="1f31426a:PackageElementNode" />
+              <item name="lib" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
+              <item name="testWebProject" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
+              <item name="testWebProject" type="616d4139:PackageViewModuleNode" />
+              <item name="com" type="1f31426a:PackageElementNode" />
+            </path>
+            <path>
+              <item name="Web" type="58d84e3e:PackageViewProjectNode" />
+              <item name="testWebProject" type="616d4139:PackageViewModuleNode" />
+              <item name="META-INF" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path" value="C:/Program Files (x86)/nodejs/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.1510658" />
     <property name="project.structure.side.proportion" value="0.38112858" />
@@ -615,6 +603,7 @@
       <recent name="com.xml.frame.report.interpreter" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components\自定义报表" />
     </key>
   </component>
@@ -741,9 +730,7 @@
       </ConfigurationWrapper>
       <method>
         <option name="Make" enabled="true" />
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="BIDesigner:war exploded" />
-        </option>
+        <option name="BuildArtifacts" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
@@ -857,6 +844,9 @@
           <option name="PROGRAM_PARAMETERS" value="" />
         </SHUTDOWN>
       </ConfigurationWrapper>
+      <method>
+        <option name="BuildArtifacts" enabled="false" />
+      </method>
     </configuration>
     <configuration name="server" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.1" ALTERNATIVE_JRE_ENABLED="false">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080" />
@@ -864,11 +854,6 @@
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <deployment>
-        <artifact name="BIDesigner:war exploded">
-          <settings>
-            <option name="CONTEXT_PATH" value="/saiku3" />
-          </settings>
-        </artifact>
         <artifact name="testWebProject:war exploded">
           <settings>
             <option name="CONTEXT_PATH" value="/BusinessManagement" />
@@ -934,6 +919,9 @@
           <option name="PROGRAM_PARAMETERS" value="" />
         </SHUTDOWN>
       </ConfigurationWrapper>
+      <method>
+        <option name="BuildArtifacts" enabled="false" />
+      </method>
     </configuration>
     <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Tomcat Server.server" />
@@ -979,11 +967,12 @@
       <workItem from="1513049370343" duration="111000" />
       <workItem from="1513049653912" duration="8828000" />
       <workItem from="1513134700638" duration="6470000" />
+      <workItem from="1513218790012" duration="8309000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97983000" />
+    <option name="totallyTimeSpent" value="106292000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -996,10 +985,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.7386935" sideWeight="0.20347957" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39865997" sideWeight="0.48487142" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37688443" sideWeight="0.2375189" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39865997" sideWeight="0.47881997" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -1008,7 +998,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.87772197" sideWeight="0.7004539" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37688443" sideWeight="0.7624811" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.43040848" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1016,12 +1006,14 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.7386935" sideWeight="0.7965204" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7386935" sideWeight="0.7965204" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30937973" sideWeight="0.46496814" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35022694" sideWeight="0.46496814" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28971255" sideWeight="0.52380955" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37821484" sideWeight="0.53503186" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1029,7 +1021,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1040,138 +1031,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="22" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/指标关联.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2235">
-          <caret line="149" column="29" lean-forward="false" selection-start-line="149" selection-start-column="29" selection-end-line="149" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/entry/EntryService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="43" column="24" lean-forward="false" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/entry/EntryServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12120">
-          <caret line="871" column="41" lean-forward="false" selection-start-line="871" selection-start-column="41" selection-end-line="871" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/model/dao/jygk/yj28zb/YJ28ZBDaoImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2625">
-          <caret line="197" column="54" lean-forward="false" selection-start-line="197" selection-start-column="54" selection-end-line="197" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/entry/EntryController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1230">
-          <caret line="122" column="8" lean-forward="false" selection-start-line="122" selection-start-column="8" selection-end-line="122" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/webservice/mdm/person/PersonPushServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="68" column="50" lean-forward="false" selection-start-line="68" selection-start-column="50" selection-end-line="68" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/model/entity/hr/Employee.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="22" column="19" lean-forward="false" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/hr/employee/EmployeeServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="25" column="48" lean-forward="false" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
-          <caret line="80" column="38" lean-forward="false" selection-start-line="80" selection-start-column="38" selection-end-line="80" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/components/import_data.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8715">
-          <caret line="581" column="57" lean-forward="false" selection-start-line="581" selection-start-column="57" selection-end-line="581" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/天池能源/昌热电厂/生产报表ExcelImport.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="97" column="27" lean-forward="false" selection-start-line="97" selection-start-column="27" selection-end-line="97" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/tree/tree.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="22" lean-forward="false" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/home.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/home.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3435">
-          <caret line="229" column="30" lean-forward="false" selection-start-line="229" selection-start-column="30" selection-end-line="229" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/navigator.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1035">
-          <caret line="69" column="16" lean-forward="false" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/Schema.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="47" lean-forward="false" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/src/main/java/com/util/tools/xml/XmlWalker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="54" column="26" lean-forward="false" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/util/xml/XmlElWalker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="103">
-          <caret line="69" column="72" lean-forward="false" selection-start-line="69" selection-start-column="66" selection-end-line="69" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/util/xml/XmlUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -1183,15 +1047,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/component/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="47" column="38" lean-forward="false" selection-start-line="47" selection-start-column="38" selection-end-line="48" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1199,7 +1054,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1207,7 +1061,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="17" lean-forward="false" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1215,7 +1068,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="43" column="6" lean-forward="false" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1223,7 +1075,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="13545">
           <caret line="903" column="9" lean-forward="false" selection-start-line="903" selection-start-column="9" selection-end-line="903" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1238,7 +1089,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="1" lean-forward="false" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1268,23 +1118,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/SessionCheckFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="33" column="4" lean-forward="false" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/component/entity/WebResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="59" column="36" lean-forward="true" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1264#1265#0" expanded="false" />
-            <element signature="e#1331#1332#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1292,19 +1129,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="26" column="25" lean-forward="false" selection-start-line="26" selection-start-column="25" selection-end-line="26" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/HttpXmlInterpreter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="108" column="35" lean-forward="false" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
-          <folding>
-            <element signature="e#1872#1894#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1320,7 +1144,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="105" column="9" lean-forward="false" selection-start-line="105" selection-start-column="9" selection-end-line="105" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1328,9 +1151,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3150">
           <caret line="216" column="23" lean-forward="false" selection-start-line="216" selection-start-column="23" selection-end-line="216" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1338,7 +1158,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1346,7 +1165,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="123">
           <caret line="29" column="17" lean-forward="false" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1354,7 +1172,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="37" column="24" lean-forward="false" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1362,9 +1179,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#686#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1384,45 +1198,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/js/saiku/views/SaveQueryEx.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="287" column="83" lean-forward="false" selection-start-line="287" selection-start-column="77" selection-end-line="287" selection-end-column="83" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1178">
+        <state relative-caret-position="15585">
           <caret line="1039" column="49" lean-forward="false" selection-start-line="1039" selection-start-column="49" selection-end-line="1039" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/import.xml">
+    <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/resources/datasource.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1005">
-          <caret line="67" column="66" lean-forward="false" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="66" />
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/js/saiku/views/OverwriteModalCN.js">
+    <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/js/saiku/views/SaveQueryEx.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="78" column="11" lean-forward="true" selection-start-line="78" selection-start-column="11" selection-end-line="78" selection-end-column="11" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/自定义报表/自定义报表.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="39" lean-forward="false" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/详细信息/中标详细信息.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
+        <state relative-caret-position="-3045">
           <caret line="47" column="39" lean-forward="false" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="39" />
           <folding />
         </state>
@@ -1430,24 +1242,200 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/中标/xx型号中标对比表.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1082">
-          <caret line="233" column="1" lean-forward="false" selection-start-line="233" selection-start-column="1" selection-end-line="233" selection-end-column="1" />
+        <state relative-caret-position="195">
+          <caret line="245" column="1" lean-forward="true" selection-start-line="245" selection-start-column="1" selection-end-line="245" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/自定义报表/自定义报表.xml">
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/import.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="23" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="13" selection-end-column="23" />
+        <state relative-caret-position="15">
+          <caret line="67" column="66" lean-forward="false" selection-start-line="67" selection-start-column="31" selection-end-line="67" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/js/saiku/views/OverwriteModalCN.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="52" column="20" lean-forward="false" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="20" />
+          <folding>
+            <element signature="n#!!doc" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/util/xml/XmlElWalker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="81" column="0" lean-forward="false" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/component/controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="76" column="0" lean-forward="false" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/component/AbstractXmlComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="115" column="0" lean-forward="false" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/java/org/saiku/web/service/report/ReportServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/HttpXmlInterpreter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="91" column="22" lean-forward="true" selection-start-line="91" selection-start-column="22" selection-end-line="91" selection-end-column="22" />
+          <folding>
+            <element signature="e#1789#1811#0" expanded="true" />
+            <element signature="e#2429#2437#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/resources/components/更新报表信息.xml">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="25" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/report/ReportServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="31" column="11" lean-forward="false" selection-start-line="31" selection-start-column="11" selection-end-line="31" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/report/ReportService.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="34" lean-forward="true" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
+          <caret line="8" column="30" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/WEB-INF/config.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dynamicDS/src/main/java/com/datasource/dynamic/DataSourceFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/src/main/java/com/util/tools/PathUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="6" column="25" lean-forward="false" selection-start-line="6" selection-start-column="25" selection-end-line="6" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dynamicDS/src/main/java/com/datasource/dynamic/HikariCPDataSourceFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="208" column="19" lean-forward="true" selection-start-line="197" selection-start-column="8" selection-end-line="208" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/datasource.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="31" lean-forward="true" selection-start-line="12" selection-start-column="31" selection-end-line="12" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/WEB-INF/log4j.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/ResetPasswordServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/SessionCheckFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="63" column="0" lean-forward="false" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/权限管理/roleMgr.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="162" column="35" lean-forward="false" selection-start-line="162" selection-start-column="20" selection-end-line="162" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/src/main/java/com/util/tools/xml/XmlWalker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="79" column="14" lean-forward="false" selection-start-line="79" selection-start-column="14" selection-end-line="79" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/account/OpenResources.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="51" column="19" lean-forward="true" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1660#1680#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/openRes.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>

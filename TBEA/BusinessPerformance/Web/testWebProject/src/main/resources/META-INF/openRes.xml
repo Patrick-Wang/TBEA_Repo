@@ -1,0 +1,4 @@
+<OpenResources>
+    <res url="/report/(v2/)?defineReportClr.do"></res>
+    <res url="/report/(v2/)?getAuthNamesClr.do"></res>
+</OpenResources>

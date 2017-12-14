@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="defineReportClr">
-
         <context key="token" value="${request.token.asString}"/>
         <if test="${'SAIKU3' == 'token'}">
             <context key="name" value="${request.name.asString}"/>
             <context key="file" value="${request.file.asString}"/>
             <context key="server" value="${request.server.asString}"/>
+            <context key="auths" value="${request.auths.asString}"/>
             <context key="url" value="${server}?file=${file}&amp;type=open"/>
             <callservice id="defineReportServ"/>
             <response type="json">
@@ -41,6 +41,15 @@
         <else>
             <context key="code" value="${item[0][0]}"></context>
         </else>
-
+        <merge data="${auths.packAsList}" table="navigator_positive_item">
+            <where>
+                <itemId value="${item[0][0]}" type="int"/>
+                <authId ref="0" type="int"/>
+            </where>
+            <set>
+                <itemId value="${item[0][0]}" type="int"/>
+                <authId ref="0" type="int"/>
+            </set>
+        </merge>
     </service>
 </components>

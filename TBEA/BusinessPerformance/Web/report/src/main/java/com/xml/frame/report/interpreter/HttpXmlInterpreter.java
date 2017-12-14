@@ -20,10 +20,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class HttpXmlInterpreter implements XmlInterpreter {
@@ -79,9 +76,21 @@ public class HttpXmlInterpreter implements XmlInterpreter {
 
 		WebResponse wr = directSend(req.getMethod(), e, hs, ps, os);
 		if (e.hasAttribute("response")){
+		    Set<String> noHeaders = new HashSet<String>();
+		    XmlElWalker.eachChildren(e, elp, new Loop(){
+
+                @Override
+                public void on(Element elem) throws Exception {
+                    if (elem.getTagName().equals("noHeader")){
+                        noHeaders.add(XmlUtil.getString(XmlUtil.getText(elem), elp).toLowerCase());
+                    }
+                }
+            });
 			HttpServletResponse resp = (HttpServletResponse) XmlUtil.parseELText(e.getAttribute("response"), elp);
 			for (Map.Entry<String, List<String>> entry : wr.getHeaders().entrySet()){
-				resp.setHeader(entry.getKey(), entry.getValue().get(0));
+				if (null == entry.getKey() || !noHeaders.contains(entry.getKey().toLowerCase())){
+                    resp.setHeader(entry.getKey(), entry.getValue().get(0));
+                }
 			}
 
 			resp.setStatus(wr.getCode());
