@@ -32,10 +32,10 @@ public abstract class PropMap implements java.util.Map {
 	@Override
 	public Object get(Object key) {
 		try{
-			return getProperty(key);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+            return getProperty(key);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 		return null;
 	}
 

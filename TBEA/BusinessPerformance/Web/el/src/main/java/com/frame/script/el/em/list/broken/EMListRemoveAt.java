@@ -3,6 +3,7 @@ package com.frame.script.el.em.list.broken;
 import java.util.List;
 
 import com.frame.script.el.em.NamedEM;
+import com.util.tools.ListUtil;
 
 
 public class EMListRemoveAt  extends NamedEM{
@@ -22,13 +23,7 @@ public class EMListRemoveAt  extends NamedEM{
 	public Object invoke(Object stub, List<Object> args) {
 		if (stub != null) {
 			Integer index = (Integer) args.get(0);
-			if (stub instanceof List) {
-				List list = (List) stub;
-				if (list.size() > index){
-					list.remove(index.intValue());
-				}
-				return list;
-			}
+            return ListUtil.rmAt(stub, index);
 		}
 		return null;
 	}

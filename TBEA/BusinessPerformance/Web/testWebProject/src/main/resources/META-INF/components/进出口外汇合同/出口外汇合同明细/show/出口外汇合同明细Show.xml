@@ -25,10 +25,6 @@
                     <type>text</type>
                 </item>
                 <item>
-                    <name>合同名称</name>
-                    <type>text</type>
-                </item>
-                <item>
                     <name>项目名称</name>
                     <type>text</type>
                 </item>
@@ -77,14 +73,16 @@
                     <type>text</type>
                 </item>
                 <item>
-                    <name>预计未回款金额</name>
+                    <name>未回款金额</name>
                 </item>
                 <item>
-                    <name>预计回款金额</name>
+                    <name>预计${cal.nextMonth.month}月回款金额</name>
                 </item>
                 <item>
-                    <name>预计回款时间</name>
-                    <type>date</type>
+                    <name>预计${cal.monthAfter[2].month}月回款金额</name>
+                </item>
+                <item>
+                    <name>预计${cal.monthAfter[3].month}月回款金额</name>
                 </item>
                 <item>
                     <name>预计回款方式</name>
@@ -109,17 +107,16 @@
                     <type>text</type>
                 </item>
             </header>
+
+            <shrinkToFit>false</shrinkToFit>
             <data>${fmtServ.result}</data>
             <dateCount/>
         </response>
     </controller>
     <controller id="E9170B6930092F54471CD717CC5FABF7FmtClr">
         <formatter export="true" id="fmtData">
-            <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="9"/>
-            </PercentFormatter>
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="7,10,11,15,16,19,21"/>
+                <DefaultMatcher cols="9,10,11,15,16,17,18,20,22"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -129,7 +126,9 @@
         <callservice id="E9170B6930092F54471CD717CC5FABF7ShowServ"/>
         <callcontroller id="E9170B6930092F54471CD717CC5FABF7FmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="出口外汇合同明细"/>
-        <list id="title" type="string">单位名称,合同编号,合同名称,供货商名称,所在国家,币种 ,付款银行,合同金额 ,签订合同起始日,签订合同汇率,已回款金额,实际回款金额,实际回款时间,款项性质,回款方式,预计未回款金额,预计回款金额,预计回款时间,预计回款方式,已操作金额,交易类型,锁汇价格,交割日,备注</list>
+        <list id="title" type="string">
+            单位名称,合同编号,供货商名称,所在国家,币种 ,付款银行,合同金额 ,签订合同起始日,签订合同汇率,
+            已回款金额,实际回款金额,实际回款时间,款项性质,回款方式,未回款金额,预计${cal.monthAfter[1].month}月回款金额,预计${cal.monthAfter[2].month}月回款金额,预计${cal.monthAfter[3].month}月回款金额,预计回款方式,已操作金额,交易类型,锁汇价格,交割日,备注</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -160,28 +159,28 @@
                 feecd.id tmp0,
                 companyName,
                 num,
-                name,
                 projectName,
                 clientCompanyName,
                 country,
                 currency,
                 dueBank,
                 amount,
-                CONVERT(varchar(20),startDate, 23) tmp9,
+                CONVERT(varchar(20),startDate, 23) tmp8,
                 exchangeRate,
                 cashCollected,
                 cashCollectionAmount,
                 CONVERT(varchar(20),cashCollectionDate, 23) tmp5,
                 moneyType,
                 cashCollectionType,
-                predictCashCollectionLeftAmount,
-                predictCashCollectionAmount,
-                CONVERT(varchar(20),predictCashCollectionDate, 23) tmp10,
+                CashCollectionLeftAmount,
+                predictCashCollectionAmountN1,
+                predictCashCollectionAmountN2,
+                predictCashCollectionAmountN3,
                 predictCashCollectionType,
                 operationAmount,
                 transactionType,
                 lockPrice,
-                CONVERT(varchar(20),tradeDate, 23) tmp15,
+                CONVERT(varchar(20),tradeDate, 23) tmp16,
                 remark
             from
                 foreign_exchange_export_contract_detail feecd,
@@ -190,36 +189,10 @@
                 feecd.exportContractId = feic.id and
                 year = ${cal.year} and
                 month = ${cal.month} and
-                feic.companyName = ${dwmc}
+                feic.companyName = ${dwmc} and
+                (${item} = '全部' or currency = ${item})
             ]]></sql>
         <list id="ids" sql="data" value="0"/>
-        <context key="counter" value="${counterFactory.newCounter}"/>
-        <table export="true" id="result" rowIds="ids">
-            <list sql="data" type="string" value="${counter.reset[1].val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-        </table>
+        <table export="true" id="result" rowIds="ids" table="${data.rmCol[0]}"/>
     </service>
 </components>

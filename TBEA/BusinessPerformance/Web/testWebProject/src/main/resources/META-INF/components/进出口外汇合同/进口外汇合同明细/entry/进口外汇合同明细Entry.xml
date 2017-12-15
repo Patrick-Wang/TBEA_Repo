@@ -25,11 +25,6 @@
                     <readOnly>true</readOnly>
                 </item>
                 <item>
-                    <name>合同名称</name>
-                    <type>text</type>
-                    <readOnly>true</readOnly>
-                </item>
-                <item>
                     <name>供货商名称</name>
                     <type>text</type>
                     <readOnly>true</readOnly>
@@ -66,11 +61,15 @@
                     <name>已付款金额</name>
                 </item>
                 <item>
-                    <name>付款金额</name>
+                    <name>本月付款金额</name>
                 </item>
                 <item>
                     <name>付款时间</name>
                     <type>date</type>
+                </item>
+                <item>
+                    <name>款项性质</name>
+                    <type>text</type>
                 </item>
                 <item>
                     <name>付款方式</name>
@@ -80,11 +79,17 @@
                     <name>待付合同金额</name>
                 </item>
                 <item>
-                    <name>预计付款金额</name>
+                    <name>预计${cal.monthAfter[1].month}月付款金额</name>
                 </item>
                 <item>
                     <name>预计付款时间</name>
                     <type>date</type>
+                </item>
+                <item>
+                    <name>预计${cal.monthAfter[2].month}月付款金额</name>
+                </item>
+                <item>
+                    <name>预计${cal.monthAfter[3].month}月付款金额</name>
                 </item>
                 <item>
                     <name>预计付款方式</name>
@@ -109,17 +114,15 @@
                     <type>text</type>
                 </item>
             </header>
+            <shrinkToFit>false</shrinkToFit>
             <pager>none</pager>
             <data>${fmtServ.result}</data>
         </response>
     </controller>
     <controller id="991BBF8F796F1CD4451D7CA119E764E5EntryFmtClr">
         <formatter export="true" id="fmtData">
-            <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="8"/>
-            </PercentFormatter>
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="8,11,12,15,16,19,21"/>
+                <DefaultMatcher cols="9,10,11,15,16,18,19,21,23"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -129,28 +132,30 @@
         <sql id="data" export="true"><![CDATA[
         select
             feicd.id tmp0,
-            companyName, --单位名称
-            num , --合同编号
-            name, --合同名称
-            supplier, --供货商名称
-            country, --所在国家
-            currency , --币种
-            payingBank, --付款银行
-            amount, --合同金额
-            CONVERT(varchar(20),startDate, 23) tmp1,
+            companyName,
+            num,
+            supplier,
+            country,
+            currency,
+            payingBank,
+            amount,
+            CONVERT(varchar(20),startDate, 23) tmp7,
             exchangeRate,
             paidAmount,
-            paymentAmount,
+            paymentAmountTheMonth,
             CONVERT(varchar(20),paymentTime, 23) tmp5,
+            moneyType,
             transactionType,
             amountLeft,
-            predictPaymentAmount,
-            CONVERT(varchar(20),predictPaymentDate, 23) tmp9,
+            predictPaymentAmountN1,
+            CONVERT(varchar(20),predictPaymentDate, 23) tmp10,
+            predictPaymentAmountN2,
+            predictPaymentAmountN3,
             predictTransactionType,
             operationAmount,
             transactionTypeLeft,
             lockPrice,
-            CONVERT(varchar(20),tradeDate, 23) tmp14,
+            CONVERT(varchar(20),tradeDate, 23) tmp17,
             remark
         from
             foreign_exchange_import_contract_detail feicd,
@@ -177,25 +182,7 @@
         </if>
 
         <list id="ids" sql="data" value="0"/>
-        <context key="counter" value="${counterFactory.newCounter}"/>
-        <table export="true" id="result" rowIds="ids">
-            <list sql="data" type="int" value="${counter.reset[1].val}"/>
-            <list sql="data" type="int" value="${counter.next.val}"/>
-            <list sql="data" type="int" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-        </table>
+        <table export="true" id="result" rowIds="ids" table="${data.rmCol[0]}"/>
     </service>
     <controller id="991BBF8F796F1CD4451D7CA119E764E5EntrySubmitClr">
         <context key="cal" value="${request.date.asCalendar}"/>
@@ -214,19 +201,22 @@
                 <id ref="0" type="int"/>
             </where>
             <set>
-                <paidAmount ref="11" type="double"/>
-                <paymentAmount ref="12" type="double"/>
-                <paymentTime ref="13" type="date"/>
+                <paidAmount ref="10" type="double"/>
+                <paymentAmountTheMonth ref="11" type="double"/>
+                <paymentTime ref="12" type="date"/>
+                <moneyType ref="13" type="string"/>
                 <transactionType ref="14" type="string"/>
                 <amountLeft ref="15" type="double"/>
-                <predictPaymentAmount ref="16" type="double"/>
+                <predictPaymentAmountN1 ref="16" type="double"/>
                 <predictPaymentDate ref="17" type="date"/>
-                <predictTransactionType ref="18" type="string"/>
-                <operationAmount ref="19" type="double"/>
-                <transactionTypeLeft ref="20" type="string"/>
-                <lockPrice ref="21" type="double"/>
-                <tradeDate ref="22" type="date"/>
-                <remark ref="23" type="string"/>
+                <predictPaymentAmountN2 ref="18" type="double"/>
+                <predictPaymentAmountN3 ref="19" type="double"/>
+                <predictTransactionType ref="20" type="string"/>
+                <operationAmount ref="21" type="double"/>
+                <transactionTypeLeft ref="22" type="string"/>
+                <lockPrice ref="23" type="double"/>
+                <tradeDate ref="24" type="date"/>
+                <remark ref="25" type="string"/>
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

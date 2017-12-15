@@ -73,4 +73,44 @@ public class ListUtil {
 		}
 		return lr;
 	}
+
+	public static Object rmAt(Object list, int index){
+	    if (list instanceof List){
+	        if (index < ((List)list).size()) {
+                ((List) list).remove(index);
+            }
+        }else if (list.getClass().isArray()){
+            if (index < ((Object[])list).length) {
+                Object[] newList = new Object[((Object[])list).length - 1];
+                for (int i = ((Object[])list).length - 1, j = newList.length - 1; i >= 0; --i){
+                    if (i != index){
+                        newList[j--] = ((Object[])list)[i];
+                    }
+                }
+                list = newList;
+            }
+        }
+        return list;
+    }
+
+    public static Object lastRmAt(Object list, int index){
+        if (list instanceof List){
+            if (index < ((List)list).size()) {
+                int lastIndex = ((List)list).size() - index - 1;
+                ((List) list).remove(lastIndex);
+            }
+        }else if (list.getClass().isArray()){
+            if (index < ((Object[])list).length) {
+                int lastIndex = ((Object[])list).length - index - 1;
+                Object[] newList = new Object[((Object[])list).length - 1];
+                for (int i = ((Object[])list).length - 1, j = newList.length - 1; i >= 0; --i){
+                    if (i != lastIndex){
+                        newList[j--] = ((Object[])list)[i];
+                    }
+                }
+                list = newList;
+            }
+        }
+        return list;
+    }
 }

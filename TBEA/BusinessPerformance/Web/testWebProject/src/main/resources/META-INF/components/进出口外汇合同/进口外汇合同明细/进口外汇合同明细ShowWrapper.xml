@@ -11,6 +11,11 @@
         <if test="${currency.isEmpty}">
             <list id="currency" type="string">无</list>
         </if>
+        <elseif test="${currency.size > 1}">
+            <list id="currency" type="string">
+                <item insert="0">全部</item>
+            </list>
+        </elseif>
         <list id="currIds" export="true">
             <item from="0" to="${currency.size - 1}"></item>
         </list>
@@ -40,13 +45,13 @@
         </response>
     </controller>
     <controller id="D502EC08D6FB66F4F3B05B3E9B014133UpdateWrapperClr">
-        <context key="item" value="${session['cur_import'][request.item.asInt]}"/>
-        <context key="dwmc" value="${session['cnames_import'][request.item2.asInt]}"/>
+        <context key="item" value="${session['cur_import'][request.item2.asInt]}"/>
+        <context key="dwmc" value="${session['cnames_import'][request.item.asInt]}"/>
         <callcontroller id="991BBF8F796F1CD4451D7CA119E764E5UpdateClr"/>
     </controller>
     <controller id="D502EC08D6FB66F4F3B05B3E9B014133ExportWrapperClr">
-        <context key="item" value="${session['cur_import'][request.item.asInt]}"/>
-        <context key="dwmc" value="${session['cnames_import'][request.item2.asInt]}"/>
+        <context key="item" value="${session['cur_import'][request.item2.asInt]}"/>
+        <context key="dwmc" value="${session['cnames_import'][request.item.asInt]}"/>
         <callcontroller id="991BBF8F796F1CD4451D7CA119E764E5ExportClr"/>
     </controller>
 </components>

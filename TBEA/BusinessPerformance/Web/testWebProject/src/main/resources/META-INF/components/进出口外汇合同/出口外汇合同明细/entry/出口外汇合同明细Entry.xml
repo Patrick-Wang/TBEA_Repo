@@ -25,11 +25,6 @@
                     <readOnly>true</readOnly>
                 </item>
                 <item>
-                    <name>合同名称</name>
-                    <type>text</type>
-                    <readOnly>true</readOnly>
-                </item>
-                <item>
                     <name>项目名称</name>
                     <type>text</type>
                     <readOnly>true</readOnly>
@@ -119,17 +114,16 @@
                 </item>
                 <pager>none</pager>
             </header>
+
+            <shrinkToFit>false</shrinkToFit>
             <data>${fmtServ.result}</data>
             <pager>none</pager>
         </response>
     </controller>
     <controller id="E9170B6930092F54471CD717CC5FABF7EntryFmtClr">
         <formatter export="true" id="fmtData">
-            <PercentFormatter reservedCount="1">
-                <DefaultMatcher cols="10"/>
-            </PercentFormatter>
             <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="8,11,12,16,17,20,22"/>
+                <DefaultMatcher cols="10,11,12,16,17,18,19,21,23"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -141,28 +135,28 @@
             feecd.id tmp0,
             companyName,
             num,
-            name,
             projectName,
             clientCompanyName,
             country,
             currency,
             dueBank,
             amount,
-            CONVERT(varchar(20),startDate, 23) tmp1,
+            CONVERT(varchar(20),startDate, 23) tmp8,
             exchangeRate,
             cashCollected,
             cashCollectionAmount,
             CONVERT(varchar(20),cashCollectionDate, 23) tmp5,
             moneyType,
             cashCollectionType,
-            predictCashCollectionLeftAmount,
-            predictCashCollectionAmount,
-            CONVERT(varchar(20),predictCashCollectionDate, 23) tmp10,
+            CashCollectionLeftAmount,
+            predictCashCollectionAmountN1,
+            predictCashCollectionAmountN2,
+            predictCashCollectionAmountN3,
             predictCashCollectionType,
             operationAmount,
             transactionType,
             lockPrice,
-            CONVERT(varchar(20),tradeDate, 23) tmp15,
+            CONVERT(varchar(20),tradeDate, 23) tmp16,
             remark
         from
             foreign_exchange_export_contract_detail feecd,
@@ -188,34 +182,7 @@
             <callservice id="E9170B6930092F54471CD717CC5FABF7EntryFindServ"></callservice>
         </if>
         <list id="ids" sql="data" value="0"/>
-        <context key="counter" value="${counterFactory.newCounter}"/>
-        <table export="true" id="result" rowIds="ids">
-            <list sql="data" type="string" value="${counter.reset[1].val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-            <list sql="data" type="double" value="${counter.next.val}"/>
-            <list sql="data" type="date" value="${counter.next.val}"/>
-            <list sql="data" type="string" value="${counter.next.val}"/>
-        </table>
+        <table export="true" id="result" rowIds="ids" table="${data.rmCol[0]}"/>
     </service>
     <controller id="E9170B6930092F54471CD717CC5FABF7EntrySubmitClr">
         <context key="cal" value="${request.date.asCalendar}"/>
@@ -234,20 +201,20 @@
                 <id ref="0" type="int"/>
             </where>
             <set>
-                <cashCollected ref="12" type="double"/>
-                <cashCollectionAmount ref="13" type="double"/>
-                <cashCollectionDate ref="14" type="date"/>
-                <moneyType ref="15" type="string"/>
-                <cashCollectionType ref="16" type="string"/>
-                <predictCashCollectionLeftAmount ref="17" type="double"/>
-                <predictCashCollectionAmount ref="18" type="double"/>
-                <predictCashCollectionDate ref="19" type="date"/>
-                <predictCashCollectionType ref="20" type="string"/>
-                <operationAmount ref="21" type="double"/>
-                <transactionType ref="22" type="string"/>
-                <lockPrice ref="23" type="double"/>
-                <tradeDate ref="24" type="date"/>
-                <remark ref="26" type="string"/>
+                <cashCollected ref="11" type="double"/>
+                <cashCollectionAmount ref="12" type="double"/>
+                <cashCollectionDate ref="13" type="date"/>
+                <moneyType ref="14" type="string"/>
+                <cashCollectionType ref="15" type="string"/>
+                <predictCashCollectionLeftAmount ref="16" type="double"/>
+                <predictCashCollectionAmount ref="17" type="double"/>
+                <predictCashCollectionDate ref="18" type="date"/>
+                <predictCashCollectionType ref="19" type="string"/>
+                <operationAmount ref="20" type="double"/>
+                <transactionType ref="21" type="string"/>
+                <lockPrice ref="22" type="double"/>
+                <tradeDate ref="23" type="date"/>
+                <remark ref="25" type="string"/>
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

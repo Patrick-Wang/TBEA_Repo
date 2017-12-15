@@ -78,7 +78,10 @@
   </formatter>
  </controller>
  <controller id="tcnycrdcDayReportExport">
-  <context key="cal" value="${request.date.asCalendar}"/>
+
+     <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+     <context key="dwmc" value="${compMgr.BMDBOrganization.companyById[compId].name}"/>
+     <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="servTcnycrdcDayReportUpdate"/>
   <callcontroller id="fmtterTcnycrdcDayReport"/>
   <list id="title" type="string" export="true">条块,
@@ -89,7 +92,7 @@
 月累计完成,
 年度累计,
 月度完成比</list>
-  <ExcelTemplate id="excelTemplate" sheet="天池能源有限责任公司昌热电厂_日生产报表"/>
+  <ExcelTemplate id="excelTemplate" sheet="日生产报表"/>
   <formatter id="excel">
    <ExcelTitleFilter>
     <ExcelTemplate ref="excelTemplate"/>
@@ -116,11 +119,12 @@
    <formatter ref="fmtData"/>
    <formatter ref="excel"/>
   </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}天池能源有限责任公司昌热电厂_日生产报表.xls" serv="fmtServ"/>
+  <response type="excel" ref="excelTemplate" name="${request.date.asString}${dwmc}_日生产报表.xls" serv="fmtServ"/>
  </controller>
  <controller id="tcnycrdcDayReportUpdate">
 
      <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+     <context key="dwmc" value="${compMgr.BMDBOrganization.companyById[compId].name}"/>
   <context key="cal" value="${request.date.asCalendar}"/>
   <callservice id="servTcnycrdcDayReportUpdate"/>
   <callcontroller id="fmtterTcnycrdcDayReport"/>

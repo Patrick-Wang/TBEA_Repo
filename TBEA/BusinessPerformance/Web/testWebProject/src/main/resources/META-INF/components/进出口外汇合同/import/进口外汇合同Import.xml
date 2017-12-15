@@ -16,17 +16,20 @@
     </controller>
     <service id="B6433EB172F2E2533CF75BB9767C9588ImportServ" transaction="transactionManager">
         <merge data="${data}" table="foreign_exchange_import_contract">
+            <where>
+                <num ref="1" type="string"/>
+                <currency ref="4" type="string"/>
+            </where>
             <set>
                 <companyName ref="0" type="string"/>
-                <num ref="1" type="string"/>
-                <name ref="2" type="string"/>
-                <supplier ref="3" type="string"/>
-                <country ref="4" type="string"/>
-                <currency ref="5" type="string"/>
-                <payingBank ref="6" type="string"/>
-                <amount ref="7" type="double"/>
-                <startDate ref="8" type="date"/>
-                <exchangeRate ref="9" type="double"/>
+                <num ref="1" type="string" test="${this != null}"/>
+                <supplier ref="2" type="string"/>
+                <country ref="3" type="string"/>
+                <currency ref="4" type="string" test="${this != null}"/>
+                <payingBank ref="5" type="string"/>
+                <amount ref="6" type="double"/>
+                <startDate ref="7" type="date"/>
+                <exchangeRate ref="8" type="double"/>
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

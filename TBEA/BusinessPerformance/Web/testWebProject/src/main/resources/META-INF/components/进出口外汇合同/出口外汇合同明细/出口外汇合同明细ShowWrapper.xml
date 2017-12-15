@@ -12,6 +12,12 @@
         <if test="${currency.isEmpty}">
             <list id="currency" type="string">无</list>
         </if>
+        <elseif test="${currency.size > 1}">
+            <list id="currency" type="string">
+                <item insert="0">全部</item>
+            </list>
+        </elseif>
+        
         <list id="currIds" export="true">
             <item from="0" to="${currency.size - 1}"></item>
         </list>
@@ -20,10 +26,10 @@
     <controller id="51480AEBDE770C9A1AB0824BF8685B66SWJ">
         <context key="cnames" value="${sysAuth.cnames[96]}"></context>
         <if test="${sysAuth.has[98]}">
-            <context key="cnames" value="${cnames.push['特变电工股份有限公司（采购中心）']}"></context>
+            <context key="tmp" value="${cnames.push['特变电工股份有限公司（采购中心）']}"></context>
         </if>
         <if test="${sysAuth.has[99]}">
-            <context key="cnames" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
+            <context key="tmp" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
         </if>
         <list id="cids">
             <item from="0" to="${cnames.size - 1}"></item>
@@ -41,13 +47,13 @@
         </response>
     </controller>
     <controller id="51480AEBDE770C9A1AB0824BF8685B66UpdateWrapperClr">
-        <context key="item" value="${session['cur_export'][request.item.asInt]}"/>
-        <context key="dwmc" value="${session['cnames_export'][request.item2.asInt]}"/>
+        <context key="item" value="${session['cur_export'][request.item2.asInt]}"/>
+        <context key="dwmc" value="${session['cnames_export'][request.item.asInt]}"/>
         <callcontroller id="E9170B6930092F54471CD717CC5FABF7UpdateClr"/>
     </controller>
     <controller id="51480AEBDE770C9A1AB0824BF8685B66ExportWrapperClr">
-        <context key="item" value="${session['cur_export'][request.item.asInt]}"/>
-        <context key="dwmc" value="${session['cnames_export'][request.item2.asInt]}"/>
+        <context key="item" value="${session['cur_export'][request.item2.asInt]}"/>
+        <context key="dwmc" value="${session['cnames_export'][request.item.asInt]}"/>
         <callcontroller id="E9170B6930092F54471CD717CC5FABF7ExportClr"/>
     </controller>
 </components>

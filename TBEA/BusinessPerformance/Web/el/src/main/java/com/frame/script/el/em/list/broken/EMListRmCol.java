@@ -3,6 +3,7 @@ package com.frame.script.el.em.list.broken;
 import java.util.List;
 
 import com.frame.script.el.em.NamedEM;
+import com.util.tools.ListUtil;
 
 
 public class EMListRmCol  extends NamedEM{
@@ -22,9 +23,9 @@ public class EMListRmCol  extends NamedEM{
 			Integer index = (Integer) args.get(0);
 			if (stub instanceof List) {
 				List list = (List) stub;
-				if (!list.isEmpty() && ((List)list.get(0)).size() > index) {
+                if (!list.isEmpty()) {
 					for (int i = 0, len = list.size(); i < len; ++i) {
-						((List)list.get(i)).remove(index.intValue());
+                        list.set(i, ListUtil.rmAt(list.get(i), index));
 					}
 				}
 				return list;
