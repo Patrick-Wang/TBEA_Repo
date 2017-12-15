@@ -17,7 +17,7 @@
                 <item insert="0">全部</item>
             </list>
         </elseif>
-        
+
         <list id="currIds" export="true">
             <item from="0" to="${currency.size - 1}"></item>
         </list>
