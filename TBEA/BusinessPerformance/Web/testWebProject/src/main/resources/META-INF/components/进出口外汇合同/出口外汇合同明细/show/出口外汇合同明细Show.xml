@@ -61,10 +61,6 @@
                     <name>实际回款金额</name>
                 </item>
                 <item>
-                    <name>实际回款时间</name>
-                    <type>date</type>
-                </item>
-                <item>
                     <name>款项性质</name>
                     <type>text</type>
                 </item>
@@ -115,8 +111,14 @@
     </controller>
     <controller id="E9170B6930092F54471CD717CC5FABF7FmtClr">
         <formatter export="true" id="fmtData">
-            <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="9,10,11,15,16,17,18,20,22"/>
+            <NumberFormatter reservedCount="2">
+                <DefaultMatcher cols="7"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="4">
+                <DefaultMatcher cols="9"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="2">
+                <DefaultMatcher cols="10,11,14,15,16,17,19,21"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -127,8 +129,31 @@
         <callcontroller id="E9170B6930092F54471CD717CC5FABF7FmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="出口外汇合同明细"/>
         <list id="title" type="string">
-            单位名称,合同编号,供货商名称,所在国家,币种 ,付款银行,合同金额 ,签订合同起始日,签订合同汇率,
-            已回款金额,实际回款金额,实际回款时间,款项性质,回款方式,未回款金额,预计${cal.monthAfter[1].month}月回款金额,预计${cal.monthAfter[2].month}月回款金额,预计${cal.monthAfter[3].month}月回款金额,预计回款方式,已操作金额,交易类型,锁汇价格,交割日,备注</list>
+            单位名称	,
+            合同编号	,
+            项目名称	,
+            对方单位名称	,
+            所在国家	,
+            币种 	,
+            收款银行	,
+            合同金额 	,
+            签订合同起始日	,
+            签订合同汇率	,
+            已回款金额	,
+            实际回款金额	,
+            款项性质	,
+            回款方式	,
+            未回款金额	,
+            预计${cal.nextMonth.month}月回款金额	,
+            预计${cal.monthAfter[2].month}月回款金额	,
+            预计${cal.monthAfter[3].month}月回款金额	,
+            预计回款方式	,
+            已操作金额	,
+            交易类型	,
+            锁汇价格	,
+            交割日	,
+            备注
+        </list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -169,7 +194,6 @@
                 exchangeRate,
                 cashCollected,
                 cashCollectionAmount,
-                CONVERT(varchar(20),cashCollectionDate, 23) tmp5,
                 moneyType,
                 cashCollectionType,
                 CashCollectionLeftAmount,
@@ -189,8 +213,8 @@
                 feecd.exportContractId = feic.id and
                 year = ${cal.year} and
                 month = ${cal.month} and
-                feic.companyName = ${dwmc} and
-                (${item} = '全部' or currency = ${item})
+                ltrim(rtrim(feic.companyName)) = ${dwmc} and
+                (${item} = '全部币种' or currency = ${item})
             ]]></sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids" table="${data.rmCol[0]}"/>

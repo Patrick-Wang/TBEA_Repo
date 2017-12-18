@@ -544,7 +544,7 @@ public class NCController {
 		}
 	}
 
-	@Scheduled(cron = "0 0 10 1-2 * ?")
+	//@Scheduled(cron = "0 0 10 1-2 * ?")
 	public void scheduleImport15DB() {
 		Calendar cal = Calendar.getInstance();
 		Date d = DateUtil.toDate(cal);

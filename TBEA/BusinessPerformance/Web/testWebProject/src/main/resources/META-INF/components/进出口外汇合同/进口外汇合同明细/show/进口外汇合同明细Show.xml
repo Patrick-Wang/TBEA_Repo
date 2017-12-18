@@ -57,10 +57,6 @@
                     <name>本月付款金额</name>
                 </item>
                 <item>
-                    <name>付款时间</name>
-                    <type>date</type>
-                </item>
-                <item>
                     <name>款项性质</name>
                     <type>text</type>
                 </item>
@@ -73,10 +69,6 @@
                 </item>
                 <item>
                     <name>预计${cal.nextMonth.month}月付款金额</name>
-                </item>
-                <item>
-                    <name>预计付款时间</name>
-                    <type>date</type>
                 </item>
                 <item>
                     <name>预计${cal.monthAfter[2].month}月付款金额</name>
@@ -113,8 +105,14 @@
     </controller>
     <controller id="991BBF8F796F1CD4451D7CA119E764E5FmtClr">
         <formatter export="true" id="fmtData">
-            <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="8, 9,10,14,15,17,18,20,22"/>
+            <NumberFormatter reservedCount="2">
+                <DefaultMatcher cols="6"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="4">
+                <DefaultMatcher cols="8"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="2">
+                <DefaultMatcher cols="6,8,9,10,13,14,15,16,18,20"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -126,7 +124,7 @@
         <ExcelTemplate id="excelTemplate" sheet="进口外汇合同明细"/>
         <list id="title" type="string">
             单位名称,合同编号,供货商名称,所在国家,币种 ,付款银行,合同金额 ,签订合同起始日,签订合同汇率,
-            已付款金额,本月付款金额,付款时间,款项性质,付款方式,待付合同金额,预计${cal.monthAfter[1].month}月付款金额,预计付款时间,预计${cal.monthAfter[2].month}月付款金额,预计${cal.monthAfter[3].month}月付款金额,预计付款方式,已操作金额,剩余付款方式,锁汇价格,交割日,备注</list>
+            已付款金额,本月付款金额,款项性质,付款方式,待付合同金额,预计${cal.monthAfter[1].month}月付款金额,预计${cal.monthAfter[2].month}月付款金额,预计${cal.monthAfter[3].month}月付款金额,预计付款方式,已操作金额,剩余付款方式,锁汇价格,交割日,备注</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -166,12 +164,10 @@
             exchangeRate,
             paidAmount,
             paymentAmountTheMonth,
-            CONVERT(varchar(20),paymentTime, 23) tmp5,
             moneyType,
             transactionType,
             amountLeft,
             predictPaymentAmountN1,
-            CONVERT(varchar(20),predictPaymentDate, 23) tmp10,
             predictPaymentAmountN2,
             predictPaymentAmountN3,
             predictTransactionType,
@@ -187,8 +183,8 @@
             feicd.importContractId = feic.id and
             year = ${cal.year} and
             month = ${cal.month} and
-            feic.companyName = ${dwmc} and
-            (${item} = '全部' or currency = ${item})
+            ltrim(rtrim(feic.companyName)) = ${dwmc} and
+            (${item} = '全部币种' or currency = ${item})
         ]]></sql>
         <list id="ids" sql="data" value="0"/>
         <table export="true" id="result" rowIds="ids" table="${data.rmCol[0]}"/>

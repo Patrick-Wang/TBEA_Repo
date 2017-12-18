@@ -8,12 +8,10 @@ CREATE TABLE [dbo].[foreign_exchange_import_contract_detail](
 	month int, --月份
 	paidAmount numeric(18, 4), --已付款金额
 	paymentAmountTheMonth numeric(18, 4), --本月付款金额
-	paymentTime date, --付款时间
 	moneyType varchar(100), --款项性质
 	transactionType varchar(100), --付款方式
 	amountLeft numeric(18, 4), --待付合同金额
 	predictPaymentAmountN1 numeric(18, 4), --预计N1月付款金额
-	predictPaymentDate date, --预计付款时间
 	predictPaymentAmountN2 numeric(18, 4), --预计N2月付款金额
 	predictPaymentAmountN3 numeric(18, 4), --预计N3月付款金额
 	predictTransactionType varchar(100), --预计付款方式

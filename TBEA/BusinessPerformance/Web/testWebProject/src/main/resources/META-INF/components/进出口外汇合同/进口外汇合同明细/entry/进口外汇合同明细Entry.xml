@@ -64,10 +64,6 @@
                     <name>本月付款金额</name>
                 </item>
                 <item>
-                    <name>付款时间</name>
-                    <type>date</type>
-                </item>
-                <item>
                     <name>款项性质</name>
                     <type>text</type>
                 </item>
@@ -80,10 +76,6 @@
                 </item>
                 <item>
                     <name>预计${cal.monthAfter[1].month}月付款金额</name>
-                </item>
-                <item>
-                    <name>预计付款时间</name>
-                    <type>date</type>
                 </item>
                 <item>
                     <name>预计${cal.monthAfter[2].month}月付款金额</name>
@@ -121,8 +113,14 @@
     </controller>
     <controller id="991BBF8F796F1CD4451D7CA119E764E5EntryFmtClr">
         <formatter export="true" id="fmtData">
-            <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="9,10,11,15,16,18,19,21,23"/>
+            <NumberFormatter reservedCount="2">
+                <DefaultMatcher cols="7"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="4">
+                <DefaultMatcher cols="9"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="2">
+                <DefaultMatcher cols="10,11,14,15,16,17,19,21"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -143,12 +141,10 @@
             exchangeRate,
             paidAmount,
             paymentAmountTheMonth,
-            CONVERT(varchar(20),paymentTime, 23) tmp5,
             moneyType,
             transactionType,
             amountLeft,
             predictPaymentAmountN1,
-            CONVERT(varchar(20),predictPaymentDate, 23) tmp10,
             predictPaymentAmountN2,
             predictPaymentAmountN3,
             predictTransactionType,
@@ -203,20 +199,18 @@
             <set>
                 <paidAmount ref="10" type="double"/>
                 <paymentAmountTheMonth ref="11" type="double"/>
-                <paymentTime ref="12" type="date"/>
-                <moneyType ref="13" type="string"/>
-                <transactionType ref="14" type="string"/>
-                <amountLeft ref="15" type="double"/>
-                <predictPaymentAmountN1 ref="16" type="double"/>
-                <predictPaymentDate ref="17" type="date"/>
-                <predictPaymentAmountN2 ref="18" type="double"/>
-                <predictPaymentAmountN3 ref="19" type="double"/>
-                <predictTransactionType ref="20" type="string"/>
-                <operationAmount ref="21" type="double"/>
-                <transactionTypeLeft ref="22" type="string"/>
-                <lockPrice ref="23" type="double"/>
-                <tradeDate ref="24" type="date"/>
-                <remark ref="25" type="string"/>
+                <moneyType ref="12" type="string"/>
+                <transactionType ref="13" type="string"/>
+                <amountLeft ref="14" type="double"/>
+                <predictPaymentAmountN1 ref="15" type="double"/>
+                <predictPaymentAmountN2 ref="16" type="double"/>
+                <predictPaymentAmountN3 ref="17" type="double"/>
+                <predictTransactionType ref="18" type="string"/>
+                <operationAmount ref="19" type="double"/>
+                <transactionTypeLeft ref="20" type="string"/>
+                <lockPrice ref="21" type="double"/>
+                <tradeDate ref="22" type="date"/>
+                <remark ref="23" type="string"/>
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

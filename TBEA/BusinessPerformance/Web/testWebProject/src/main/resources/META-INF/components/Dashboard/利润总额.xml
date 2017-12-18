@@ -28,7 +28,7 @@
 244,
 198,
 199</list>
-  <context key="zbfx" value="${accFactory.sjAcc.compute&#10;[0]&#10;[cal.months[1].date]&#10;[cal.date]&#10;[zbids]&#10;[jydws]}"/>
+  <context key="zbfx" value="${accFactory.sjAcc.compute[0][calendar.current.months[1].date][calendar.current.date][zbids][jydws]}"/>
   <list id="stockIds" type="string">000400,
 600550,
 600312,

@@ -69,10 +69,6 @@
                     <name>实际回款金额</name>
                 </item>
                 <item>
-                    <name>实际回款时间</name>
-                    <type>date</type>
-                </item>
-                <item>
                     <name>款项性质</name>
                     <type>text</type>
                 </item>
@@ -81,13 +77,13 @@
                     <type>text</type>
                 </item>
                 <item>
-                    <name>预计未回款金额</name>
+                    <name>预计${cal.nextMonth.month}月回款金额</name>
                 </item>
                 <item>
-                    <name>预计回款金额</name>
+                    <name>预计${cal.monthAfter[2].month}月回款金额</name>
                 </item>
                 <item>
-                    <name>预计回款时间</name>
+                    <name>预计${cal.monthAfter[3].month}月回款时间</name>
                     <type>date</type>
                 </item>
                 <item>
@@ -122,8 +118,14 @@
     </controller>
     <controller id="E9170B6930092F54471CD717CC5FABF7EntryFmtClr">
         <formatter export="true" id="fmtData">
-            <NumberFormatter reservedCount="1">
-                <DefaultMatcher cols="10,11,12,16,17,18,19,21,23"/>
+            <NumberFormatter reservedCount="2">
+                <DefaultMatcher cols="8"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="4">
+                <DefaultMatcher cols="10"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="2">
+                <DefaultMatcher cols="11,12,15,16,17,18,20,22"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -145,7 +147,6 @@
             exchangeRate,
             cashCollected,
             cashCollectionAmount,
-            CONVERT(varchar(20),cashCollectionDate, 23) tmp5,
             moneyType,
             cashCollectionType,
             CashCollectionLeftAmount,
@@ -203,18 +204,17 @@
             <set>
                 <cashCollected ref="11" type="double"/>
                 <cashCollectionAmount ref="12" type="double"/>
-                <cashCollectionDate ref="13" type="date"/>
-                <moneyType ref="14" type="string"/>
-                <cashCollectionType ref="15" type="string"/>
-                <predictCashCollectionLeftAmount ref="16" type="double"/>
-                <predictCashCollectionAmount ref="17" type="double"/>
-                <predictCashCollectionDate ref="18" type="date"/>
-                <predictCashCollectionType ref="19" type="string"/>
-                <operationAmount ref="20" type="double"/>
-                <transactionType ref="21" type="string"/>
-                <lockPrice ref="22" type="double"/>
-                <tradeDate ref="23" type="date"/>
-                <remark ref="25" type="string"/>
+                <moneyType ref="13" type="string"/>
+                <cashCollectionType ref="14" type="string"/>
+                <predictCashCollectionLeftAmount ref="15" type="double"/>
+                <predictCashCollectionAmount ref="16" type="double"/>
+                <predictCashCollectionDate ref="17" type="date"/>
+                <predictCashCollectionType ref="18" type="string"/>
+                <operationAmount ref="19" type="double"/>
+                <transactionType ref="20" type="string"/>
+                <lockPrice ref="21" type="double"/>
+                <tradeDate ref="22" type="date"/>
+                <remark ref="23" type="string"/>
                 <_src type="string" value="${src}"/>
                 <_time type="date" value="${time}"/>
             </set>

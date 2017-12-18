@@ -8,7 +8,6 @@ CREATE TABLE [dbo].[foreign_exchange_export_contract_detail](
 	month int, --月份
 	cashCollected numeric(18, 4), --已回款金额
 	cashCollectionAmount numeric(18, 4), --实际回款金额
-	cashCollectionDate date, --实际回款时间
 	moneyType varchar(100), --款项性质
 	cashCollectionType varchar(100), --回款方式
 	CashCollectionLeftAmount numeric(18, 4), --未回款金额

@@ -7,14 +7,14 @@
             from
                 foreign_exchange_import_contract
             where
-                companyName in ${cnames}
+                ltrim(rtrim(companyName)) in ${cnames}
         </sql>
         <if test="${currency.isEmpty}">
             <list id="currency" type="string">无</list>
         </if>
         <elseif test="${currency.size > 1}">
             <list id="currency" type="string">
-                <item insert="0">全部</item>
+                <item insert="0">全部币种</item>
             </list>
         </elseif>
 

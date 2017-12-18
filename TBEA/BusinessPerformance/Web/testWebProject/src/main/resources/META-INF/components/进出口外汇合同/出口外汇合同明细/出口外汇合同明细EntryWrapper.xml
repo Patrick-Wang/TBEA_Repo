@@ -4,7 +4,7 @@
             select id, num + '(' + currency + ')' nc
                 from foreign_exchange_export_contract
             where
-                companyName in ${cnames}
+                ltrim(rtrim(companyName)) in ${cnames}
         ]]></sql>
         <if test="${cc.isEmpty}">
             <list id="cc" type="object">
