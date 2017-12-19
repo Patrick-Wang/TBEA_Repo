@@ -77,7 +77,8 @@
                   ,0
               FROM [fireceivable]
               WHERE [amount] > 10000 --金额大于一万元的记录
-
+                and fiyear = ${cal.year} and
+                fimonth = ${cal.month}
 
             /*##############################################*/
             /*#### 导入应付余额表                   ########*/
@@ -93,6 +94,8 @@
                   ,1
               FROM [dbo].[fipayable]
               WHERE [amount] > 10000 --金额大于一万元的记录
+                and fiyear = ${cal.year} and
+                fimonth = ${cal.month}
 
         ]]></sql>
 
