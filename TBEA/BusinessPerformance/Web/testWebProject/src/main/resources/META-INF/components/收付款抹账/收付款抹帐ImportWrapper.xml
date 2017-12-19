@@ -116,6 +116,7 @@
                 cusupyname ASC
                 ,[类型] DESC
         ]]></sql>
-        <table id="result" export="true" rowIds="${mz.col[0]}" table="${mz}"></table>
+        <list type="int" id="ids" sql="mz" value="0"></list>
+        <table id="result" export="true" rowIds="ids" table="${mz.rmCol[0]}"></table>
     </service>
 </components>

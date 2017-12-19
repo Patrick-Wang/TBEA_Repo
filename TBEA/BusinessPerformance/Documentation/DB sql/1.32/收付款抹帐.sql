@@ -38,8 +38,8 @@ CREATE TABLE [dbo].[fipayable](
 /*#### 应收应付抹帐统计表               ########*/
 /*##############################################*/
 CREATE TABLE [dbo].[fiwipeout](
-	[cusupyname] [nvarchar](50) NOT NULL,
-	[compname] [nvarchar](50) NOT NULL,
+	[cusupyname] [varchar](200) NOT NULL,
+	[compname] [varchar](200) NOT NULL,
 	[amount] [numeric](18, 2) NOT NULL,
 	[fiyear] [int] NULL,
 	[fimonth] [int] NULL,
