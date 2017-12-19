@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+    <controller id="48D8504E91873F9B81A7EF0C7FD1AFE8IWJ">
+        <list id="ids" type="int">0,1</list>
+        <list id="vals" type="string">应收账款,应付账款</list>
+        <response name="components/import_data_mz" type="jsp">
+            <map key="importUrl" value="48D8504E91873F9B81A7EF0C7FD1AFE8ImportWrapper"/>
+            <map key="exportUrl" value="48D8504E91873F9B81A7EF0C7FD1AFE8Export"/>
+            <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="48D8504E91873F9B81A7EF0C7FD1AFE8ImportWrapper">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="3417FFF4FF4A72A2AFA9318A10165073ImportClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="30D4C972418EA8A8B538ABAB8E428BBAImportClr"/>
+        </elseif>
+    </controller>
+    <controller id="48D8504E91873F9B81A7EF0C7FD1AFE8Export">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="48D8504E91873F9B81A7EF0C7FD1AFE8ExportServ"/>
+        <ExcelTemplate id="excelTemplate" sheet="收付款抹账"/>
+        <list id="title" type="string">往来单位名称, 类型,公司名称,金额,年份,月份</list>
+        <formatter id="fmtData">
+            <NumberFormatter reservedCount="2">
+                <DefaultMatcher cols="3"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="0">
+                <DefaultMatcher cols="4,5"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="${cal.monthFormat}收付款抹账.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+
+    <service id="48D8504E91873F9B81A7EF0C7FD1AFE8ExportServ" transaction="transactionManager">
+        <sql><![CDATA[
+            /****** Script for SELECTTopNRows command FROM SSMS  ******/
+
+            /*##############################################*/
+            /*#### 清空抹帐结果表                   ########*/
+            /*##############################################*/
+            DELETE FROM dbo.fiwipeout
+
+            /*##############################################*/
+            /*#### 导入应收余额表                   ########*/
+            /*#### 设置设别标志并排除小额记录       ########*/
+            /*##############################################*/
+            INSERT INTO dbo.fiwipeout
+            SELECT [custname]
+                  ,[compname]
+                  ,[amount]
+                  ,[fiyear]
+                  ,[fimonth]
+                  ,1
+                  ,0
+              FROM [fireceivable]
+              WHERE [amount] > 10000 --金额大于一万元的记录
+
+
+            /*##############################################*/
+            /*#### 导入应付余额表                   ########*/
+            /*#### 设置设别标志并排除小额记录       ########*/
+            /*##############################################*/
+            INSERT INTO dbo.fiwipeout
+            SELECT [supyname]
+                  ,[compname]
+                  ,[amount]
+                  ,[fiyear]
+                  ,[fimonth]
+                  ,0
+                  ,1
+              FROM [dbo].[fipayable]
+              WHERE [amount] > 10000 --金额大于一万元的记录
+
+        ]]></sql>
+
+        <sql id="mz"><![CDATA[
+            /*##############################################*/
+            /*#### 排除不可抹帐的往来单位           ########*/
+            /*##############################################*/
+            SELECT
+                  row_number() over(order by (select 0)) AS ROWNUM
+                  ,cusupyname as 往来单位名称
+                  ,case [tag1] when 1 then '应收' when 0 then '应付' else 'others' end as '类型'
+                  ,compname as 公司名称
+                  ,amount as 金额
+                  ,fiyear as 年度
+                  ,fimonth as 月份
+            FROM fiwipeout_v
+            WHERE
+            /*** filter for receivable only or payable only ***/
+                cusupyname IN (SELECT	cusupyname FROM fiwipeout_v GROUP BY cusupyname HAVING SUM(tag1)>0 AND SUM(tag2)>0)
+            ORDER BY
+                cusupyname ASC
+                ,[类型] DESC
+        ]]></sql>
+        <table id="result" export="true" rowIds="${mz.col[0]}" table="${mz}"></table>
+    </service>
+</components>

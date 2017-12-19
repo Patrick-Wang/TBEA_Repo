@@ -243,11 +243,12 @@
 							<div id="comp-sel" class="pull-left"></div>
 							<div id="picker" class="pull-left btn btn-default">选择文件</div>
 							<div id="ctlBtn" class="btn btn-default pull-left">开始上传</div>
-                            <div class="workinput pull-left">
+
+                            <div id="exportBtn" class="btn btn-default pull-right">导出</div>
+                            <div class="workinput pull-right">
                                 <input id="grid-export-date" type="text" readonly="readonly"><i
                                     class="fa fa-calendar"></i>
                             </div>
-                            <div id="exportBtn" class="btn btn-default pull-left">导出</div>
 						</div>
 					</div>
 					<span id="unit"></span>

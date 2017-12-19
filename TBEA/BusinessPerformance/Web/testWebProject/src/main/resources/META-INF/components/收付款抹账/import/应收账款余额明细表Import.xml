@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="3417FFF4FF4A72A2AFA9318A10165073IMPORTJSP">
+        <response name="components/import_data_mz" type="jsp">
+            <map key="importUrl" value="3417FFF4FF4A72A2AFA9318A10165073ImportClr"/>
+        </response>
+    </controller>
+    <controller id="3417FFF4FF4A72A2AFA9318A10165073ImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="3417FFF4FF4A72A2AFA9318A10165073ImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+
+    <service id="3417FFF4FF4A72A2AFA9318A10165073ImportServ" transaction="transactionManager">
+        <sql>
+            delete from fireceivable where fiyear = ${cal.year} and fimonth = ${cal.month}
+        </sql>
+        <merge data="${data}" table="fireceivable">
+            <set>
+                <custname ref="0" type="string"/>
+                <compname ref="1" type="string"/>
+                <amount ref="2" type="double"/>
+                <fiyear value="${cal.year}" type="int"/>
+                <fimonth value="${cal.month}" type="int"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

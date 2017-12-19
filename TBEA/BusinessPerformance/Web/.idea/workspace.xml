@@ -46,38 +46,78 @@
       <file leaf-file-name="进口外汇合同明细Entry.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/entry/进口外汇合同明细Entry.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
+            <state relative-caret-position="0">
               <caret line="121" column="45" lean-forward="false" selection-start-line="121" selection-start-column="45" selection-end-line="121" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="出口外汇合同明细Show.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/show/出口外汇合同明细Show.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="930">
-              <caret line="119" column="45" lean-forward="false" selection-start-line="119" selection-start-column="45" selection-end-line="119" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="进口外汇合同明细Show.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="进口外汇合同明细Show.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/show/进口外汇合同明细Show.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="113" column="47" lean-forward="true" selection-start-line="113" selection-start-column="47" selection-end-line="113" selection-end-column="47" />
+            <state relative-caret-position="150">
+              <caret line="106" column="41" lean-forward="false" selection-start-line="106" selection-start-column="41" selection-end-line="106" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="进口外汇合同明细EntryWrapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细EntryWrapper.xml">
+      <file leaf-file-name="EntryController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/entry/EntryController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-355">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="300">
+              <caret line="60" column="4" lean-forward="true" selection-start-line="60" selection-start-column="4" selection-end-line="60" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="应付账款余额明细表Import.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/import/应付账款余额明细表Import.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" column="47" lean-forward="true" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="应收账款余额明细表Import.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/import/应收账款余额明细表Import.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="247">
+              <caret line="26" column="44" lean-forward="false" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="收付款抹帐ImportWrapper.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/收付款抹帐ImportWrapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-678">
+              <caret line="53" column="29" lean-forward="false" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="import_data_mz.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/components/import_data_mz.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="247" column="60" lean-forward="true" selection-start-line="247" selection-start-column="60" selection-end-line="247" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="context.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="141">
+              <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -86,38 +126,8 @@
       <file leaf-file-name="出口外汇合同明细Entry.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/entry/出口外汇合同明细Entry.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
+            <state relative-caret-position="1890">
               <caret line="126" column="45" lean-forward="false" selection-start-line="126" selection-start-column="45" selection-end-line="126" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="出口外汇合同明细ShowWrapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/出口外汇合同明细ShowWrapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="出口外汇合同明细EntryWrapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/出口外汇合同明细EntryWrapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="进口外汇合同明细ShowWrapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细ShowWrapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -134,11 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Export</find>
-      <find>&quot;table&quot;</find>
-      <find>predictCashCollectionLeftAmount</find>
-      <find>lrfx</find>
-      <find>controller</find>
       <find>jydws</find>
       <find>accFactory</find>
       <find>sjAcc</find>
@@ -164,10 +169,16 @@
       <find>付款时间</find>
       <find>cashCollectionDate</find>
       <find>991BBF8F796F1CD4451D7CA119E764E5UpdateClr</find>
+      <find>[TBEA_MIS]</find>
+      <find>TBEA_MIS</find>
+      <find>OVER</find>
+      <find>row_number</find>
+      <find>#tbl1</find>
     </findStrings>
     <replaceStrings>
       <replace>!=</replace>
       <replace>not in (0)</replace>
+      <replace />
     </replaceStrings>
     <dirStrings>
       <dir>C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\java\com\tbea\ic\operation\controller\webservice\mdm\org</dir>
@@ -182,9 +193,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/maker/src/META-INF/MANIFEST.MF" />
-        <option value="$PROJECT_DIR$/maker/src/main/java/META-INF/MANIFEST.MF" />
-        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/工程一张表/transport.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/人力资源系统报表/show.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/指标关联.xml" />
@@ -224,8 +232,6 @@
         <option value="$PROJECT_DIR$/tools/src/main/java/com/util/tools/ListUtil.java" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/Dashboard/利润总额.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/nc/NCController.java" />
-        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/components/import_data_mz.jsp" />
-        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细ShowWrapper.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/出口外汇合同明细ShowWrapper.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/出口外汇合同明细EntryWrapper.xml" />
@@ -233,6 +239,11 @@
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/entry/出口外汇合同明细Entry.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/entry/进口外汇合同明细Entry.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/show/进口外汇合同明细Show.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/import/应收账款余额明细表Import.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/import/应付账款余额明细表Import.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/components/import_data_mz.jsp" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/收付款抹帐ImportWrapper.xml" />
       </list>
     </option>
   </component>
@@ -317,240 +328,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
-              <item name="出口外汇合同明细" type="cbb8eebc:String" user="出口外汇合同明细" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
-              <item name="出口外汇合同明细" type="cbb8eebc:String" user="出口外汇合同明细" />
-              <item name="entry" type="cbb8eebc:String" user="entry" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
-              <item name="出口外汇合同明细" type="cbb8eebc:String" user="出口外汇合同明细" />
-              <item name="show" type="cbb8eebc:String" user="show" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
-              <item name="进口外汇合同明细" type="cbb8eebc:String" user="进口外汇合同明细" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
-              <item name="进口外汇合同明细" type="cbb8eebc:String" user="进口外汇合同明细" />
-              <item name="entry" type="cbb8eebc:String" user="entry" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="resources" type="cbb8eebc:String" user="resources" />
-              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
-              <item name="components" type="cbb8eebc:String" user="components" />
-              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
-              <item name="进口外汇合同明细" type="cbb8eebc:String" user="进口外汇合同明细" />
-              <item name="show" type="cbb8eebc:String" user="show" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="webapp" type="cbb8eebc:String" user="webapp" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="webapp" type="cbb8eebc:String" user="webapp" />
-              <item name="WEB-INF" type="cbb8eebc:String" user="WEB-INF" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-              <item name="Documents" type="cbb8eebc:String" user="Documents" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-              <item name="Documents" type="cbb8eebc:String" user="Documents" />
-              <item name="GitHub" type="cbb8eebc:String" user="GitHub" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-              <item name="Documents" type="cbb8eebc:String" user="Documents" />
-              <item name="GitHub" type="cbb8eebc:String" user="GitHub" />
-              <item name="BIDesigner" type="cbb8eebc:String" user="BIDesigner" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-              <item name="Documents" type="cbb8eebc:String" user="Documents" />
-              <item name="GitHub" type="cbb8eebc:String" user="GitHub" />
-              <item name="BIDesigner" type="cbb8eebc:String" user="BIDesigner" />
-              <item name="BIExplorer" type="cbb8eebc:String" user="BIExplorer" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="External Dependencies" type="cbb8eebc:String" user="External Dependencies" />
-              <item name="C:" type="cbb8eebc:String" user="C:" />
-              <item name="Users" type="cbb8eebc:String" user="Users" />
-              <item name="Floyd" type="cbb8eebc:String" user="Floyd" />
-              <item name="Documents" type="cbb8eebc:String" user="Documents" />
-              <item name="GitHub" type="cbb8eebc:String" user="GitHub" />
-              <item name="BIDesigner" type="cbb8eebc:String" user="BIDesigner" />
-              <item name="BIExplorer" type="cbb8eebc:String" user="BIExplorer" />
-              <item name="BIExplorer" type="cbb8eebc:String" user="BIExplorer" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -634,6 +412,211 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="tbea" type="cbb8eebc:String" user="tbea" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="tbea" type="cbb8eebc:String" user="tbea" />
+              <item name="ic" type="cbb8eebc:String" user="ic" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="tbea" type="cbb8eebc:String" user="tbea" />
+              <item name="ic" type="cbb8eebc:String" user="ic" />
+              <item name="operation" type="cbb8eebc:String" user="operation" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="tbea" type="cbb8eebc:String" user="tbea" />
+              <item name="ic" type="cbb8eebc:String" user="ic" />
+              <item name="operation" type="cbb8eebc:String" user="operation" />
+              <item name="service" type="cbb8eebc:String" user="service" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="收付款抹账" type="cbb8eebc:String" user="收付款抹账" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="收付款抹账" type="cbb8eebc:String" user="收付款抹账" />
+              <item name="import" type="cbb8eebc:String" user="import" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+              <item name="pages" type="cbb8eebc:String" user="pages" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+              <item name="pages" type="cbb8eebc:String" user="pages" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+              <item name="pages" type="cbb8eebc:String" user="pages" />
+              <item name="framework" type="cbb8eebc:String" user="framework" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
       <pane id="PackagesPane">
         <subPane>
           <expand>
@@ -695,11 +678,11 @@
       <recent name="com.xml.frame.report.interpreter" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components" />
+      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components\抹账" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\ui2\pages\components" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components\进出口外汇合同" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components\进出口外汇合同\import" />
-      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF" />
-      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components\自定义报表" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -986,12 +969,13 @@
       <workItem from="1513218790012" duration="12928000" />
       <workItem from="1513300734624" duration="13223000" />
       <workItem from="1513569941329" duration="655000" />
-      <workItem from="1513573355787" duration="11900000" />
+      <workItem from="1513573355787" duration="12495000" />
+      <workItem from="1513649268564" duration="5719000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136689000" />
+    <option name="totallyTimeSpent" value="143003000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1007,7 +991,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27470687" sideWeight="0.2685325" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12060302" sideWeight="0.602118" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39865997" sideWeight="0.4697428" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1017,9 +1001,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27470687" sideWeight="0.7314675" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1959799" sideWeight="0.69818455" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32663316" sideWeight="0.4183056" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.58961475" sideWeight="0.39788198" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1028,10 +1012,10 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7386935" sideWeight="0.7965204" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27609682" sideWeight="0.46496814" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2730711" sideWeight="0.46496814" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28971255" sideWeight="0.52380955" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.4969743" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37821484" sideWeight="0.53503186" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1055,41 +1039,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/report/handlers/ContextHandlers.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/report/SystemAuthority.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/report/handlers/OrgsContextHandlers.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-26">
-          <caret line="38" column="30" lean-forward="false" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/companys/CompanyManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="58" column="18" lean-forward="false" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/companys/Organization.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="26" lean-forward="false" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/report/handlers/AuthContextHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1193,7 +1142,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1305">
           <caret line="88" column="17" lean-forward="false" selection-start-line="88" selection-start-column="17" selection-end-line="88" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1201,7 +1149,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1620">
           <caret line="138" column="0" lean-forward="false" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1217,7 +1164,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="83">
           <caret line="227" column="32" lean-forward="false" selection-start-line="227" selection-start-column="32" selection-end-line="227" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1225,7 +1171,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
           <caret line="38" column="35" lean-forward="false" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1241,7 +1186,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="34" column="28" lean-forward="false" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1249,7 +1193,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="44" column="24" lean-forward="false" selection-start-line="44" selection-start-column="24" selection-end-line="44" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1257,7 +1200,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="15" column="21" lean-forward="false" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1265,7 +1207,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="223">
           <caret line="411" column="0" lean-forward="false" selection-start-line="411" selection-start-column="0" selection-end-line="411" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1281,13 +1222,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
           <caret line="40" column="21" lean-forward="false" selection-start-line="40" selection-start-column="21" selection-end-line="40" selection-end-column="21" />
-          <folding>
-            <element signature="e#1323#1331#0" expanded="false" />
-            <element signature="e#1378#1396#0" expanded="false" />
-            <element signature="e#1613#1621#0" expanded="false" />
-            <element signature="e#1665#1673#0" expanded="false" />
-            <element signature="e#1715#1723#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1303,9 +1237,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1704">
           <caret line="90" column="16" lean-forward="false" selection-start-line="90" selection-start-column="16" selection-end-line="90" selection-end-column="16" />
-          <folding>
-            <marker date="1506409056352" expanded="true" signature="4277:5561" ph="select a.uni... iufo_unit_info" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1329,14 +1260,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/entry/EntryController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="89" column="34" lean-forward="true" selection-start-line="89" selection-start-column="34" selection-end-line="89" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/components/import_data.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-8994">
@@ -1353,30 +1276,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/components/import_data_mz.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="413" column="0" lean-forward="true" selection-start-line="413" selection-start-column="0" selection-end-line="413" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进出口外汇合同ImportWrapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-354">
-          <caret line="9" column="80" lean-forward="true" selection-start-line="9" selection-start-column="80" selection-end-line="9" selection-end-column="80" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1398,7 +1301,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细EntryWrapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-355">
+        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -1430,7 +1333,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/show/出口外汇合同明细Show.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
+        <state relative-caret-position="1785">
           <caret line="119" column="45" lean-forward="false" selection-start-line="119" selection-start-column="45" selection-end-line="119" selection-end-column="45" />
           <folding />
         </state>
@@ -1438,7 +1341,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/entry/出口外汇合同明细Entry.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
+        <state relative-caret-position="1890">
           <caret line="126" column="45" lean-forward="false" selection-start-line="126" selection-start-column="45" selection-end-line="126" selection-end-column="45" />
           <folding />
         </state>
@@ -1446,7 +1349,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/entry/进口外汇合同明细Entry.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
+        <state relative-caret-position="0">
           <caret line="121" column="45" lean-forward="false" selection-start-line="121" selection-start-column="45" selection-end-line="121" selection-end-column="45" />
           <folding />
         </state>
@@ -1454,8 +1357,72 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/show/进口外汇合同明细Show.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="113" column="47" lean-forward="true" selection-start-line="113" selection-start-column="47" selection-end-line="113" selection-end-column="47" />
+        <state relative-caret-position="150">
+          <caret line="106" column="41" lean-forward="false" selection-start-line="106" selection-start-column="41" selection-end-line="106" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/entry/EntryController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="60" column="4" lean-forward="true" selection-start-line="60" selection-start-column="4" selection-end-line="60" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/抹账/收付款抹帐ImportWrapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/components/import_data_mz.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="247" column="60" lean-forward="true" selection-start-line="247" selection-start-column="60" selection-end-line="247" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/import/应付账款余额明细表Import.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="47" lean-forward="true" selection-start-line="25" selection-start-column="47" selection-end-line="25" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/完工/xx型号订单完工三单对比分析表.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="38" lean-forward="true" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/收付款抹帐ImportWrapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-678">
+          <caret line="53" column="29" lean-forward="false" selection-start-line="53" selection-start-column="29" selection-end-line="53" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/import/应收账款余额明细表Import.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="26" column="44" lean-forward="false" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="44" />
           <folding />
         </state>
       </provider>
