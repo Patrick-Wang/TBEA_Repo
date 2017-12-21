@@ -6,13 +6,13 @@ import java.util.List;
 import com.frame.script.el.querier.ELBlockQuerier;
 import com.frame.script.el.querier.Querier;
 
-public class ELParser {
+//public interface ElContext {
+//    Object onGetObject(String key);
+//    boolean hasObject(String key);
+//    void storeObject(String key, Object obj);
+//}
 
-	public static interface ElContext {
-		Object onGetObject(String key);
-		boolean hasObject(String key);
-		void storeObject(String key, Object obj);
-	}
+public class ELParser {
 
 	ElContext elContext;
 

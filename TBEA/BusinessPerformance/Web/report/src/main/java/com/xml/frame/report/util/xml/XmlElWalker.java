@@ -1,5 +1,7 @@
 package com.xml.frame.report.util.xml;
 
+import com.util.tools.xml.XmlWalker;
+import org.docx4j.vml.root.Xml;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -67,61 +69,95 @@ public class XmlElWalker {
 		}
 	}
 
-	public static void eachChildren(Node elem, ELParser elp, Loop onLoop) throws Exception {
-		try {
-			Node node = elem.getFirstChild();
-			while (node != null) {
-				if (node instanceof Element && !skip((Element) node, elp)) {
-					onLoop.on((Element) node);
-				}
-				node = node.getNextSibling();
-			}
-		} catch (java.lang.NullPointerException e) {
-			e.printStackTrace();
-		}
+	public static void eachChildren(Node node, ELParser elp, Loop onLoop) throws Exception {
+//		try {
+//			Node node = elem.getFirstChild();
+//			while (node != null) {
+//				if (node instanceof Element && !skip((Element) node, elp)) {
+//					onLoop.on((Element) node);
+//				}
+//				node = node.getNextSibling();
+//			}
+//		} catch (java.lang.NullPointerException e) {
+//			e.printStackTrace();
+//		}
+        XmlWalker.eachChildren(node, new Loop() {
+            @Override
+            public void on(Element elem) throws Exception {
+                if(!skip(elem, elp)){
+                    onLoop.on(elem);
+                }
+            }
+        });
 	}
 
-	public static Element eachChildren(Node elem, ELParser elp, Each onEach) throws Exception {
-		try {
-			Node node = elem.getFirstChild();
-			while (node != null) {
-				if (node instanceof Element && !skip((Element) node, elp)) {
-					if (onEach.on((Element) node)) {
-						return (Element) node;
-					}
-				}
-				node = node.getNextSibling();
-			}
-		} catch (java.lang.NullPointerException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public static Element eachChildren(Node node, ELParser elp, Each onEach) throws Exception {
+	    return XmlWalker.eachChildren(node, new Each() {
+            @Override
+            public boolean on(Element elem) throws Exception {
+                if(!skip(elem, elp)){
+                    return onEach.on(elem);
+                }
+                return true;
+            }
+        });
+//		try {
+//			Node node = elem.getFirstChild();
+//			while (node != null) {
+//				if (node instanceof Element && !skip((Element) node, elp)) {
+//					if (onEach.on((Element) node)) {
+//						return (Element) node;
+//					}
+//				}
+//				node = node.getNextSibling();
+//			}
+//		} catch (java.lang.NullPointerException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
 	}
 
 	public static void each(NodeList list, ELParser elp, Loop onLoop) throws Exception {
-		try {
-			Node node = null;
-			for (int i = 0, len = list.getLength(); i < len; ++i) {
-				node = list.item(i);
-				if (node instanceof Element && !skip((Element) node, elp)) {
-					onLoop.on((Element) node);
-				}
-			}
-		} catch (java.lang.NullPointerException e) {
-			e.printStackTrace();
-		}
+	    XmlWalker.each(list, new Loop() {
+            @Override
+            public void on(Element elem) throws Exception {
+                if(!skip(elem, elp)){
+                    onLoop.on(elem);
+                }
+            }
+        });
+//		try {
+//			Node node = null;
+//			for (int i = 0, len = list.getLength(); i < len; ++i) {
+//				node = list.item(i);
+//				if (node instanceof Element && !skip((Element) node, elp)) {
+//					onLoop.on((Element) node);
+//				}
+//			}
+//		} catch (java.lang.NullPointerException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public static Element each(NodeList list, ELParser elp, Each onEach) throws Exception {
-		Node node = null;
-		for (int i = 0, len = list.getLength(); i < len; ++i) {
-			node = list.item(i);
-			if (node instanceof Element && !skip((Element) node, elp)) {
-				if (onEach.on((Element) node)) {
-					return (Element) node;
-				}
-			}
-		}
-		return null;
+       return XmlWalker.each(list, new Each() {
+            @Override
+            public boolean on(Element elem) throws Exception {
+                if(!skip(elem, elp)){
+                    return onEach.on(elem);
+                }
+                return true;
+            }
+        });
+//		Node node = null;
+//		for (int i = 0, len = list.getLength(); i < len; ++i) {
+//			node = list.item(i);
+//			if (node instanceof Element && !skip((Element) node, elp)) {
+//				if (onEach.on((Element) node)) {
+//					return (Element) node;
+//				}
+//			}
+//		}
+//		return null;
 	}
 }

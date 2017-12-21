@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 /// <reference path="jqgrid/vector.ts" />
 ///<reference path="jqgrid/jqassist.ts"/>
 String.prototype["getWidth"] = function (fontSize) {
@@ -33,6 +38,7 @@ var Util;
         return max;
     }
     Util.getUIWidth = getUIWidth;
+    var ErrorCode;
     (function (ErrorCode) {
         ErrorCode[ErrorCode["OK"] = 0] = "OK";
         ErrorCode[ErrorCode["DATABASE_EXCEPTION"] = 1] = "DATABASE_EXCEPTION";
@@ -40,8 +46,7 @@ var Util;
         ErrorCode[ErrorCode["PREMARY_KEY_NULL"] = 3] = "PREMARY_KEY_NULL";
         ErrorCode[ErrorCode["HAVE_NO_RIGHT"] = 4] = "HAVE_NO_RIGHT";
         ErrorCode[ErrorCode["PRICELIB_JCYCLJG_IMPORT_ERROR"] = 5] = "PRICELIB_JCYCLJG_IMPORT_ERROR";
-    })(Util.ErrorCode || (Util.ErrorCode = {}));
-    var ErrorCode = Util.ErrorCode;
+    })(ErrorCode = Util.ErrorCode || (Util.ErrorCode = {}));
     function createTable(gridName, gridCtrl) {
         var nodes = [];
         for (var i = 0; i < gridCtrl.header.length; ++i) {
@@ -113,7 +118,8 @@ var Util;
                             }
                         });
                     }
-                } });
+                }
+            });
         }
         else if ("text" == header.type) {
             node = JQTable.Node.create({
@@ -122,7 +128,8 @@ var Util;
                 isReadOnly: readOnly,
                 isNumber: false,
                 editType: "text",
-                isSortable: sortable });
+                isSortable: sortable
+            });
         }
         else if ("hidden" == header.type) {
             node = null; //JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
@@ -164,7 +171,8 @@ var Util;
                 align: align,
                 width: header.width,
                 isReadOnly: readOnly,
-                isSortable: sortable });
+                isSortable: sortable
+            });
         }
         if (header.sub != undefined) {
             for (var i = 0; i < header.sub.length; ++i) {
@@ -212,13 +220,13 @@ var Util;
             return handler;
         };
         return AbstractFormatHandler;
-    })();
+    }());
     var FormatIntHandler = (function (_super) {
         __extends(FormatIntHandler, _super);
         function FormatIntHandler(zbs, cols) {
             if (zbs === void 0) { zbs = []; }
             if (cols === void 0) { cols = []; }
-            _super.call(this, zbs, cols);
+            return _super.call(this, zbs, cols) || this;
         }
         FormatIntHandler.prototype.handle = function (zb, col, val) {
             if (this.match(zb, col)) {
@@ -229,14 +237,14 @@ var Util;
             }
         };
         return FormatIntHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatIntHandler = FormatIntHandler;
     var FormatCurrencyHandler = (function (_super) {
         __extends(FormatCurrencyHandler, _super);
         function FormatCurrencyHandler(zbs, cols) {
             if (zbs === void 0) { zbs = []; }
             if (cols === void 0) { cols = []; }
-            _super.call(this, zbs, cols);
+            return _super.call(this, zbs, cols) || this;
         }
         FormatCurrencyHandler.prototype.handle = function (zb, col, val) {
             if (this.match(zb, col)) {
@@ -247,14 +255,14 @@ var Util;
             }
         };
         return FormatCurrencyHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatCurrencyHandler = FormatCurrencyHandler;
     var FormatPercentHandler = (function (_super) {
         __extends(FormatPercentHandler, _super);
         function FormatPercentHandler(zbs, cols) {
             if (zbs === void 0) { zbs = []; }
             if (cols === void 0) { cols = []; }
-            _super.call(this, zbs, cols);
+            return _super.call(this, zbs, cols) || this;
         }
         FormatPercentHandler.prototype.handle = function (zb, col, val) {
             if (this.match(zb, col)) {
@@ -265,14 +273,14 @@ var Util;
             }
         };
         return FormatPercentHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatPercentHandler = FormatPercentHandler;
     var FormatPercentSignalHandler = (function (_super) {
         __extends(FormatPercentSignalHandler, _super);
         function FormatPercentSignalHandler(zbs, cols) {
             if (zbs === void 0) { zbs = []; }
             if (cols === void 0) { cols = []; }
-            _super.call(this, zbs, cols);
+            return _super.call(this, zbs, cols) || this;
         }
         FormatPercentSignalHandler.prototype.handle = function (zb, col, val) {
             if (this.match(zb, col)) {
@@ -283,7 +291,7 @@ var Util;
             }
         };
         return FormatPercentSignalHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatPercentSignalHandler = FormatPercentSignalHandler;
     var FormatFordotHandler = (function (_super) {
         __extends(FormatFordotHandler, _super);
@@ -291,8 +299,9 @@ var Util;
             if (dotCount === void 0) { dotCount = 1; }
             if (zbs === void 0) { zbs = []; }
             if (cols === void 0) { cols = []; }
-            _super.call(this, zbs, cols);
-            this.mDotCount = dotCount;
+            var _this = _super.call(this, zbs, cols) || this;
+            _this.mDotCount = dotCount;
+            return _this;
         }
         FormatFordotHandler.prototype.handle = function (zb, col, val) {
             if (this.match(zb, col)) {
@@ -303,7 +312,7 @@ var Util;
             }
         };
         return FormatFordotHandler;
-    })(AbstractFormatHandler);
+    }(AbstractFormatHandler));
     Util.FormatFordotHandler = FormatFordotHandler;
     var ZBStatus = (function () {
         function ZBStatus() {
@@ -317,8 +326,9 @@ var Util;
         ZBStatus.INTER_APPROVED_1 = "内部一级已审核";
         ZBStatus.INTER_APPROVED_2 = "内部二级已审核";
         return ZBStatus;
-    })();
+    }());
     Util.ZBStatus = ZBStatus;
+    var IndiStatus;
     (function (IndiStatus) {
         IndiStatus[IndiStatus["NONE"] = 0] = "NONE";
         IndiStatus[IndiStatus["APPROVED"] = 1] = "APPROVED";
@@ -329,16 +339,16 @@ var Util;
         IndiStatus[IndiStatus["INTER_APPROVED_1"] = 6] = "INTER_APPROVED_1";
         IndiStatus[IndiStatus["INTER_APPROVED_2"] = 7] = "INTER_APPROVED_2";
         IndiStatus[IndiStatus["INTER_APPROVED_3"] = 8] = "INTER_APPROVED_3"; //("内部三级已审核");
-    })(Util.IndiStatus || (Util.IndiStatus = {}));
-    var IndiStatus = Util.IndiStatus;
+    })(IndiStatus = Util.IndiStatus || (Util.IndiStatus = {}));
+    var ZBType;
     (function (ZBType) {
         ZBType[ZBType["QNJH"] = 0] = "QNJH";
         ZBType[ZBType["YDJDMJH"] = 1] = "YDJDMJH";
         ZBType[ZBType["BY20YJ"] = 2] = "BY20YJ";
         ZBType[ZBType["BY28YJ"] = 3] = "BY28YJ";
         ZBType[ZBType["BYSJ"] = 4] = "BYSJ";
-    })(Util.ZBType || (Util.ZBType = {}));
-    var ZBType = Util.ZBType;
+    })(ZBType = Util.ZBType || (Util.ZBType = {}));
+    var CompanyType;
     (function (CompanyType) {
         CompanyType[CompanyType["BB"] = 0] = "BB";
         CompanyType[CompanyType["BBXSGS"] = 1] = "BBXSGS";
@@ -525,8 +535,7 @@ var Util;
         CompanyType[CompanyType["RSGS"] = 180] = "RSGS";
         CompanyType[CompanyType["PDCY"] = 181] = "PDCY";
         CompanyType[CompanyType["ALL"] = 1000] = "ALL";
-    })(Util.CompanyType || (Util.CompanyType = {}));
-    var CompanyType = Util.CompanyType;
+    })(CompanyType = Util.CompanyType || (Util.CompanyType = {}));
     $.ajaxSetup({ cache: false });
     //    export function parse(jsstr: string): any {
     //        var jsonValue;
@@ -581,7 +590,7 @@ var Util;
             return this;
         };
         return Promise;
-    })();
+    }());
     Util.Promise = Promise;
     function isIframe() {
         return !window.invalidate && window.parent.invalidate;
@@ -694,7 +703,7 @@ var Util;
             return promise;
         };
         return Ajax;
-    })();
+    }());
     Util.Ajax = Ajax;
     function formatData(outputData, inputData, precentList, specialsjzhCols, formatStartColumn) {
         if (formatStartColumn === void 0) { formatStartColumn = 1; }

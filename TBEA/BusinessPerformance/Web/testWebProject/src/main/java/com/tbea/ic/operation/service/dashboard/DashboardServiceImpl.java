@@ -73,7 +73,7 @@ public class DashboardServiceImpl implements DashboardService {
 			CompanyType.XLC,
 			CompanyType.DLGS
 	};
-	
+
 //	private static List<Integer> qyztzb = new ArrayList<Integer>();
 //	static {
 //		qyztzb.add(GSZB.HTQYE48.value());

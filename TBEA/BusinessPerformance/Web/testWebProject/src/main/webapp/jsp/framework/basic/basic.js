@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 /// <reference path="../../jqgrid/jqassist.ts" />
 /// <reference path="../../util.ts" />
 /// <reference path="../../dateSelector.ts" />
@@ -19,8 +24,9 @@ var framework;
         var BasicFrameView = (function (_super) {
             __extends(BasicFrameView, _super);
             function BasicFrameView() {
-                _super.apply(this, arguments);
-                this.mNodesAll = [];
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mNodesAll = [];
+                return _this;
             }
             BasicFrameView.prototype.register = function (name, plugin) {
                 var data = { id: this.mNodesAll.length, value: name, plugin: plugin };
@@ -152,7 +158,7 @@ var framework;
                 });
             };
             return BasicFrameView;
-        })(basic.FrameView);
+        }(basic.FrameView));
         basic.BasicFrameView = BasicFrameView;
     })(basic = framework.basic || (framework.basic = {}));
 })(framework || (framework = {}));

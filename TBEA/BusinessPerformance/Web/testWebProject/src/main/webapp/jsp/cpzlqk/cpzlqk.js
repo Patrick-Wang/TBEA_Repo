@@ -2,11 +2,16 @@
 ///<reference path="../framework/basic/basicShow.ts"/>
 ///<reference path="cpzlqkdef.ts"/>
 ///<reference path="../components/dateSelectorProxy.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var cpzlqk;
 (function (cpzlqk) {
     var router = framework.router;
@@ -14,11 +19,12 @@ var cpzlqk;
     var CpzlqkFrameView = (function (_super) {
         __extends(CpzlqkFrameView, _super);
         function CpzlqkFrameView() {
-            _super.apply(this, arguments);
-            this.isCompanySupported = false;
-            this.mAjaxApprove = new Util.Ajax("doApprove.do", false);
-            this.mAjaxYclApprove = new Util.Ajax("../report/yclhglqktjZlDoApprove.do", false);
-            this.mAjaxAuth = new Util.Ajax("auth.do", false);
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.isCompanySupported = false;
+            _this.mAjaxApprove = new Util.Ajax("doApprove.do", false);
+            _this.mAjaxYclApprove = new Util.Ajax("../report/yclhglqktjZlDoApprove.do", false);
+            _this.mAjaxAuth = new Util.Ajax("auth.do", false);
+            return _this;
         }
         CpzlqkFrameView.prototype.checkCompanyCount = function (comps) {
             if (comps == undefined) {
@@ -158,6 +164,7 @@ var cpzlqk;
                         }, dtNow, false, false);
                         this.mDtSec = dsp;
                         router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_YD_SELECTED);
+                        //  }
                     }
                     else {
                         //if ( this.mYdjdType ==  YDJDType.YD || this.mYdjdType == undefined){
@@ -174,6 +181,7 @@ var cpzlqk;
                         }, dtNow, false, true);
                         this.mDtSec = dsp;
                         router.to(this.plugin(node)).send(cpzlqk.Event.ZLFE_JD_SELECTED);
+                        // }
                     }
                 }
             }
@@ -417,13 +425,14 @@ var cpzlqk;
             }
         };
         return CpzlqkFrameView;
-    })(framework.basic.ShowFrameView);
+    }(framework.basic.ShowFrameView));
     var ZlPluginView = (function (_super) {
         __extends(ZlPluginView, _super);
         function ZlPluginView() {
-            _super.apply(this, arguments);
-            this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
-            this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.mCommentSubmit = new Util.Ajax("../report/zlfxSubmit.do", false);
+            _this.mCommentGet = new Util.Ajax("../report/zlfxUpdate.do", false);
+            return _this;
         }
         ZlPluginView.prototype.onEvent = function (e) {
             switch (e.id) {
@@ -445,7 +454,7 @@ var cpzlqk;
             return _super.prototype.onEvent.call(this, e);
         };
         return ZlPluginView;
-    })(framework.basic.ShowPluginView);
+    }(framework.basic.ShowPluginView));
     cpzlqk.ZlPluginView = ZlPluginView;
     var ins = new CpzlqkFrameView();
 })(cpzlqk || (cpzlqk = {}));

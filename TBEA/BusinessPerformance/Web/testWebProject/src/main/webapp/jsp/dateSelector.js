@@ -64,6 +64,7 @@ var Util;
                 this.mEndDate.day = undefined;
                 this.mStartDate.day = undefined;
                 this.mEndDate.month = 3 * (parseInt((this.mEndDate.month - 1) / 3 + '') + 1);
+                // this.mEndDate = addMonth(this.mEndDate, -((this.mEndDate.month % 3));
             }
             else {
                 this.mAsSeasion = false;
@@ -81,6 +82,7 @@ var Util;
             }
             if (this.mAsSeasion) {
                 this.mStartDate.month = 3 * (parseInt((this.mStartDate.month - 1) / 3 + '') + 1);
+                //addMonth(this.mStartDate, -(this.mStartDate.month % 3));
             }
             $("#" + divId).append('<table id="' + this.mCtrlId + '" cellspacing="0" cellpadding="0"><tr></tr></table>');
             this.updateYear(this.mCurDate.year);
@@ -355,6 +357,6 @@ var Util;
             return { year: this.mCurDate.year, month: this.mCurDate.month, day: this.mCurDate.day };
         };
         return DateSelector;
-    })();
+    }());
     Util.DateSelector = DateSelector;
 })(Util || (Util = {}));

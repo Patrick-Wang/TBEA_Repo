@@ -181,6 +181,6 @@ var Util;
             return sEndNode;
         };
         return DateSeasonSelector;
-    })();
+    }());
     Util.DateSeasonSelector = DateSeasonSelector;
 })(Util || (Util = {}));

@@ -23,7 +23,7 @@ var entry_template;
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     function find(data, id) {
         for (var i = 0; i < data.length; ++i) {
             if (data[i][0] == id) {
@@ -331,6 +331,7 @@ var entry_template;
                         return;
                     }
                 }
+                //}
             }
             this.mSubmit.post({
                 year: date.year,
@@ -384,6 +385,7 @@ var entry_template;
                         return;
                     }
                 }
+                //}
             }
             this.mSubmitToDeputy.post({
                 year: date.year,
@@ -703,6 +705,6 @@ var entry_template;
         };
         View.instance = new View();
         return View;
-    })();
+    }());
     entry_template.View = View;
 })(entry_template || (entry_template = {}));

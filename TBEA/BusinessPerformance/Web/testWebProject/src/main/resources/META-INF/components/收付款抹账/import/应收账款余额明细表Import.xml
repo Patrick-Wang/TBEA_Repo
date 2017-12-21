@@ -22,9 +22,9 @@
         </sql>
         <merge data="${data}" table="fireceivable">
             <set>
-                <custname ref="0" type="string"/>
-                <compname ref="1" type="string"/>
-                <amount ref="2" type="double"/>
+                <custname ref="1" type="string" test="${this != null}"/>
+                <compname ref="0" type="string" test="${this != null}"/>
+                <amount ref="2" type="double" test="${this != null}"/>
                 <fiyear value="${cal.year}" type="int"/>
                 <fimonth value="${cal.month}" type="int"/>
                 <_src type="string" value="${src}"/>

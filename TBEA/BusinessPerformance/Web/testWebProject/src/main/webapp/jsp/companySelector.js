@@ -8,7 +8,7 @@ var Util;
             this.selectedText = '# 个项目公司被选中';
         }
         return ICompanySelectorOption;
-    })();
+    }());
     Util.ICompanySelectorOption = ICompanySelectorOption;
     var CompanySelector = (function () {
         function CompanySelector(multi, divId, comps, firstComp, opt) {
@@ -99,6 +99,9 @@ var Util;
                     // noneSelectedText: "请选择月份",
                     selectedList: 1
                 });
+                //                if (sel.multiselect("getChecked").length > 1) {
+                //                    width = text.getWidth(13) + 25;
+                //                }
             }
             else {
                 sel.multiselect({
@@ -184,6 +187,6 @@ var Util;
             return ret;
         };
         return CompanySelector;
-    })();
+    }());
     Util.CompanySelector = CompanySelector;
 })(Util || (Util = {}));

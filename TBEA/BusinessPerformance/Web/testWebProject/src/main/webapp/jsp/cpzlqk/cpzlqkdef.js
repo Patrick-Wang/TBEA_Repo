@@ -25,18 +25,18 @@ var plugin;
 })(plugin || (plugin = {}));
 var cpzlqk;
 (function (cpzlqk) {
+    var PageType;
     (function (PageType) {
         PageType[PageType["NONE"] = 0] = "NONE";
         PageType[PageType["APPROVE"] = 1] = "APPROVE";
         PageType[PageType["ENTRY"] = 2] = "ENTRY";
         PageType[PageType["SHOW"] = 3] = "SHOW";
-    })(cpzlqk.PageType || (cpzlqk.PageType = {}));
-    var PageType = cpzlqk.PageType;
+    })(PageType = cpzlqk.PageType || (cpzlqk.PageType = {}));
+    var YDJDType;
     (function (YDJDType) {
         YDJDType[YDJDType["YD"] = 0] = "YD";
         YDJDType[YDJDType["JD"] = 1] = "JD";
-    })(cpzlqk.YDJDType || (cpzlqk.YDJDType = {}));
-    var YDJDType = cpzlqk.YDJDType;
+    })(YDJDType = cpzlqk.YDJDType || (cpzlqk.YDJDType = {}));
     var FrameEvent = framework.basic.FrameEvent;
     var Event;
     (function (Event) {
@@ -56,10 +56,10 @@ var cpzlqk;
         Event.ZLFE_COMMENT_DENY = FrameEvent.lastEvent();
         Event.ZLFE_APPROVEAUTH_UPDATED = FrameEvent.lastEvent();
     })(Event = cpzlqk.Event || (cpzlqk.Event = {}));
+    var NwbzlType;
     (function (NwbzlType) {
         NwbzlType[NwbzlType["ZT"] = 0] = "ZT";
         NwbzlType[NwbzlType["SJZL"] = 1] = "SJZL";
         NwbzlType[NwbzlType["SCZZ"] = 2] = "SCZZ";
-    })(cpzlqk.NwbzlType || (cpzlqk.NwbzlType = {}));
-    var NwbzlType = cpzlqk.NwbzlType;
+    })(NwbzlType = cpzlqk.NwbzlType || (cpzlqk.NwbzlType = {}));
 })(cpzlqk || (cpzlqk = {}));

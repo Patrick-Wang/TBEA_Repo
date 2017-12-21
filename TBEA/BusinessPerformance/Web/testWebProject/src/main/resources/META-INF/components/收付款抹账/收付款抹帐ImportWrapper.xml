@@ -24,7 +24,7 @@
         <context key="cal" value="${request.date.asCalendar}"/>
         <callservice id="48D8504E91873F9B81A7EF0C7FD1AFE8ExportServ"/>
         <ExcelTemplate id="excelTemplate" sheet="收付款抹账"/>
-        <list id="title" type="string">往来单位名称, 类型,公司名称,金额,年份,月份</list>
+        <list id="title" type="string">往来单位名称,公司名称,类型,金额,年份,月份</list>
         <formatter id="fmtData">
             <NumberFormatter reservedCount="2">
                 <DefaultMatcher cols="3"/>
@@ -106,8 +106,8 @@
             SELECT
                   row_number() over(order by (select 0)) AS ROWNUM
                   ,cusupyname as 往来单位名称
-                  ,case [tag1] when 1 then '应收' when 0 then '应付' else 'others' end as '类型'
                   ,compname as 公司名称
+                  ,case [tag1] when 1 then '应收' when 0 then '应付' else 'others' end as '类型'
                   ,amount as 金额
                   ,fiyear as 年度
                   ,fimonth as 月份

@@ -1,9 +1,9 @@
 package com.xml.frame.report.component;
 
+import com.frame.script.el.ElContext;
 import org.w3c.dom.Element;
 
 import com.frame.script.el.ELParser;
-import com.frame.script.el.ELParser.ElContext;
 import com.xml.frame.report.component.entity.Context;
 import com.xml.frame.report.component.manager.ComponentManager;
 
