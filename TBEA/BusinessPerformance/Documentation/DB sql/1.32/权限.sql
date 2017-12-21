@@ -58,3 +58,4 @@ SET IDENTITY_INSERT [dbo].[auth_instruction] OFF
 
 EXEC	addAuth	'130182',	103	,	''
 EXEC	addAuth	'155165',	103	,	''
+EXEC	addAuth	'503098',	103	,	''
