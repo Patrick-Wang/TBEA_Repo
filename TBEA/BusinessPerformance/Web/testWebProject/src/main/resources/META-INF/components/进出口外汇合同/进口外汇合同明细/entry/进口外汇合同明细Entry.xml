@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="991BBF8F796F1CD4451D7CA119E764E5ENTRYJSP">
-        <response name="framework/templates/singleDateReport/entry" type="jsp">
+        <response name="framework/templates/cwwh/entry" type="jsp">
             <map key="updateUrl" value="991BBF8F796F1CD4451D7CA119E764E5EntryUpdateClr"/>
             <map key="submitUrl" value="991BBF8F796F1CD4451D7CA119E764E5EntrySubmitClr"/>
         </response>
@@ -73,6 +73,7 @@
                 </item>
                 <item>
                     <name>待付合同金额</name>
+                    <readOnly>true</readOnly>
                 </item>
                 <item>
                     <name>预计${cal.monthAfter[1].month}月付款金额</name>
@@ -109,6 +110,9 @@
             <shrinkToFit>false</shrinkToFit>
             <pager>none</pager>
             <data>${fmtServ.result}</data>
+            <f1>6</f1>
+            <f2>9</f2>
+            <dest>13</dest>
         </response>
     </controller>
     <controller id="991BBF8F796F1CD4451D7CA119E764E5EntryFmtClr">

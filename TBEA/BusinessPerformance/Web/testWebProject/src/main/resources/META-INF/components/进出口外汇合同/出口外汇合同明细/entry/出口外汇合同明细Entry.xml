@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="E9170B6930092F54471CD717CC5FABF7ENTRYJSP">
-        <response name="framework/templates/singleDateReport/entry" type="jsp">
+        <response name="framework/templates/cwwh/entry" type="jsp">
             <map key="updateUrl" value="E9170B6930092F54471CD717CC5FABF7EntryUpdateClr"/>
             <map key="submitUrl" value="E9170B6930092F54471CD717CC5FABF7EntrySubmitClr"/>
         </response>
@@ -77,6 +77,10 @@
                     <type>text</type>
                 </item>
                 <item>
+                    <name>未回款金额</name>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
                     <name>预计${cal.nextMonth.month}月回款金额</name>
                 </item>
                 <item>
@@ -114,6 +118,9 @@
             <shrinkToFit>false</shrinkToFit>
             <data>${fmtServ.result}</data>
             <pager>none</pager>
+            <f1>7</f1>
+            <f2>10</f2>
+            <dest>14</dest>
         </response>
     </controller>
     <controller id="E9170B6930092F54471CD717CC5FABF7EntryFmtClr">
@@ -206,10 +213,10 @@
                 <cashCollectionAmount ref="12" type="double"/>
                 <moneyType ref="13" type="string"/>
                 <cashCollectionType ref="14" type="string"/>
-                <predictCashCollectionLeftAmount ref="15" type="double"/>
-                <predictCashCollectionAmount ref="16" type="double"/>
-                <predictCashCollectionDate ref="17" type="date"/>
-                <predictCashCollectionType ref="18" type="string"/>
+                <CashCollectionLeftAmount ref="15" type="double"/>
+                <predictCashCollectionAmountN1 ref="16" type="double"/>
+                <predictCashCollectionAmountN2 ref="17" type="date"/>
+                <predictCashCollectionAmountN3 ref="18" type="string"/>
                 <operationAmount ref="19" type="double"/>
                 <transactionType ref="20" type="string"/>
                 <lockPrice ref="21" type="double"/>

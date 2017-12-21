@@ -43,91 +43,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="EntryController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/entry/EntryController.java">
+      <file leaf-file-name="进口外汇合同明细Entry.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/entry/进口外汇合同明细Entry.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="299" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="299" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApproveController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/approve/ApproveController.java">
+      <file leaf-file-name="进口外汇合同明细EntryWrapper.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细EntryWrapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="45" column="23" lean-forward="true" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
+            <state relative-caret-position="-299">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApproveServiceImpl.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/approve/ApproveServiceImpl.java">
+      <file leaf-file-name="entry.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/framework/templates/singleDateReport/entry.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="763" column="13" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="770" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CompanySelection.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/CompanySelection.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="264" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DateSelection.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/DateSelection.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1110">
-              <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="POIUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/POIUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CpzlqkServlet.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/cpzlqk/CpzlqkServlet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="662" column="9" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="666" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="entry_template.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/entry_template.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-525">
-              <caret line="10" column="33" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="301" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/entry_template.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="37" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="786" selection-end-column="1" />
+            <state relative-caret-position="195">
+              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -135,19 +75,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dateSelector.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/dateSelector.ts">
+      <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/entry_template.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="5" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="411" selection-end-column="1" />
+            <state relative-caret-position="200">
+              <caret line="688" column="59" lean-forward="false" selection-start-line="688" selection-start-column="32" selection-end-line="688" selection-end-column="59" />
               <folding>
-                <marker date="1486084441827" expanded="true" signature="6935:6948" ph="..." />
-                <marker date="1486084441827" expanded="true" signature="7005:7015" ph="..." />
-                <marker date="1486084441827" expanded="true" signature="8521:8534" ph="..." />
-                <marker date="1486084441827" expanded="true" signature="8595:8605" ph="..." />
-                <marker date="1486084441827" expanded="true" signature="11203:11216" ph="..." />
-                <marker date="1486084441827" expanded="true" signature="11277:11287" ph="..." />
+                <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="出口外汇合同明细Entry.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/entry/出口外汇合同明细Entry.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="220" column="48" lean-forward="false" selection-start-line="220" selection-start-column="48" selection-end-line="220" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="出口外汇合同明细EntryWrapper.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/出口外汇合同明细EntryWrapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="23" column="48" lean-forward="false" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="出口外汇合同明细Show.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/show/出口外汇合同明细Show.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1575">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -164,15 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>nctest</find>
-      <find>zbfx</find>
-      <find>schedule</find>
-      <find>grid-date</find>
-      <find>getDate</find>
-      <find>exportdt</find>
-      <find>util.js</find>
-      <find>ajax</find>
-      <find>Ajax.</find>
       <find>exportForm</find>
       <find>predictPaymentDate</find>
       <find>paymentTime</find>
@@ -194,6 +150,15 @@
       <find>leftTree</find>
       <find>特变电工</find>
       <find>tbea</find>
+      <find>singleDate</find>
+      <find>addFormuls</find>
+      <find>single</find>
+      <find>CashCollectionLeftAmount</find>
+      <find>predictCashCollectionAmount</find>
+      <find>predictCashCollectionAmountN1</find>
+      <find>date</find>
+      <find>jsp</find>
+      <find>dateReport</find>
     </findStrings>
     <replaceStrings>
       <replace>!=</replace>
@@ -213,10 +178,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/report/pom.xml" />
-        <option value="$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/component/entity/WebResponse.java" />
-        <option value="$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/js/saiku/views/SaveQueryEx.js" />
-        <option value="$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/resources/components/test.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/三单对比/import.xml" />
         <option value="$PROJECT_DIR$/../../../../BIDesigner/BIDesigner/src/main/webapp/index.html" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/自定义报表/自定义报表.xml" />
@@ -241,10 +202,7 @@
         <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/nc/NCController.java" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细ShowWrapper.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/出口外汇合同明细ShowWrapper.xml" />
-        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/出口外汇合同明细EntryWrapper.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/show/出口外汇合同明细Show.xml" />
-        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/entry/出口外汇合同明细Entry.xml" />
-        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/entry/进口外汇合同明细Entry.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/show/进口外汇合同明细Show.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/components/import_data_mz.jsp" />
@@ -264,6 +222,13 @@
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/import/应收账款余额明细表Import.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/dashboard/DashboardServiceImpl.java" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/收付款抹账/收付款抹帐ImportWrapper.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/framework/templates/cwwh/entry.jsp" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/entry/进口外汇合同明细Entry.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/cwwh/entry.jsp" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/cwwh/entry.ts" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/出口外汇合同明细EntryWrapper.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/entry/出口外汇合同明细Entry.xml" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细EntryWrapper.xml" />
       </list>
     </option>
   </component>
@@ -424,7 +389,7 @@
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -432,8 +397,8 @@
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -441,9 +406,9 @@
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -451,10 +416,10 @@
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="ic" type="cbb8eebc:String" user="ic" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -462,11 +427,11 @@
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="ic" type="cbb8eebc:String" user="ic" />
-              <item name="operation" type="cbb8eebc:String" user="operation" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
+              <item name="出口外汇合同明细" type="cbb8eebc:String" user="出口外汇合同明细" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -474,12 +439,11 @@
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="ic" type="cbb8eebc:String" user="ic" />
-              <item name="operation" type="cbb8eebc:String" user="operation" />
-              <item name="controller" type="cbb8eebc:String" user="controller" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
+              <item name="进口外汇合同明细" type="cbb8eebc:String" user="进口外汇合同明细" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -487,28 +451,103 @@
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="ic" type="cbb8eebc:String" user="ic" />
-              <item name="operation" type="cbb8eebc:String" user="operation" />
-              <item name="controller" type="cbb8eebc:String" user="controller" />
-              <item name="servlet" type="cbb8eebc:String" user="servlet" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-              <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="ic" type="cbb8eebc:String" user="ic" />
-              <item name="operation" type="cbb8eebc:String" user="operation" />
-              <item name="controller" type="cbb8eebc:String" user="controller" />
-              <item name="servlet" type="cbb8eebc:String" user="servlet" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
+              <item name="进口外汇合同明细" type="cbb8eebc:String" user="进口外汇合同明细" />
               <item name="entry" type="cbb8eebc:String" user="entry" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+              <item name="pages" type="cbb8eebc:String" user="pages" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+              <item name="pages" type="cbb8eebc:String" user="pages" />
+              <item name="framework" type="cbb8eebc:String" user="framework" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+              <item name="pages" type="cbb8eebc:String" user="pages" />
+              <item name="framework" type="cbb8eebc:String" user="framework" />
+              <item name="templates" type="cbb8eebc:String" user="templates" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+              <item name="pages" type="cbb8eebc:String" user="pages" />
+              <item name="framework" type="cbb8eebc:String" user="framework" />
+              <item name="templates" type="cbb8eebc:String" user="templates" />
+              <item name="cwwh" type="cbb8eebc:String" user="cwwh" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="webapp" type="cbb8eebc:String" user="webapp" />
+              <item name="jsp" type="cbb8eebc:String" user="jsp" />
+              <item name="ui2" type="cbb8eebc:String" user="ui2" />
+              <item name="pages" type="cbb8eebc:String" user="pages" />
+              <item name="framework" type="cbb8eebc:String" user="framework" />
+              <item name="templates" type="cbb8eebc:String" user="templates" />
+              <item name="singleDateReport" type="cbb8eebc:String" user="singleDateReport" />
             </path>
           </expand>
           <select />
@@ -615,11 +654,11 @@
       <recent name="com.xml.frame.report.interpreter" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\ui2\pages\framework\templates\cwwh" />
+      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\framework\templates\cwwh" />
+      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\framework\templates\singleDateReport" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components" />
       <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components\抹账" />
-      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\webapp\jsp\ui2\pages\components" />
-      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components\进出口外汇合同" />
-      <recent name="C:\Users\Floyd\Documents\GitHub\TBEA_Repo\TBEA\BusinessPerformance\Web\testWebProject\src\main\resources\META-INF\components\进出口外汇合同\import" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -910,12 +949,12 @@
       <workItem from="1513649268564" duration="7934000" />
       <workItem from="1513665645892" duration="638000" />
       <workItem from="1513667992548" duration="1551000" />
-      <workItem from="1513817828974" duration="9898000" />
+      <workItem from="1513817828974" duration="13401000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157305000" />
+    <option name="totallyTimeSpent" value="160808000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -930,7 +969,7 @@
     <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3919598" sideWeight="0.33282906" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.49078727" sideWeight="0.33282906" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39865997" sideWeight="0.4697428" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -940,7 +979,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3919598" sideWeight="0.66717094" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.49078727" sideWeight="0.66717094" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3752094" sideWeight="0.36611196" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -951,7 +990,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.4969743" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.42284417" sideWeight="0.46496814" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36611196" sideWeight="0.46496814" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.4969743" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28971255" sideWeight="0.52380955" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2160804" sideWeight="0.49394855" order="1" side_tool="false" content_ui="tabs" />
@@ -967,6 +1006,11 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/cwwh/entry.js" />
+      </list>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -978,116 +1022,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/el/src/main/java/com/frame/script/el/PackingMap.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/util/xml/XmlUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="63" column="20" lean-forward="true" selection-start-line="63" selection-start-column="20" selection-end-line="63" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/el/src/main/java/com/frame/script/el/ELExpression.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="316" column="5" lean-forward="true" selection-start-line="316" selection-start-column="5" selection-end-line="316" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1300#1301#0" expanded="false" />
-            <element signature="e#1326#1327#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/CommonMethod.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/CompanyNCCode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/ZBStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/ZBType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="12" lean-forward="false" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/DateHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/ErrorCode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="12" lean-forward="false" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/FormulaClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/FormulaServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/Company15Code.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/Formula.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/util/excel/HeaderCenterFormatterHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -1247,7 +1181,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="false" />
-            <marker date="1513827515653" expanded="true" signature="201:313" ph="{...}" />
+            <marker date="1513836916391" expanded="true" signature="201:313" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -1294,7 +1228,7 @@
         <state relative-caret-position="-116">
           <caret line="57" column="0" lean-forward="true" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1330,10 +1264,10 @@
         <state relative-caret-position="-421">
           <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding>
-            <element signature="e#1977#1978#0" expanded="true" />
-            <element signature="e#2007#2008#0" expanded="true" />
-            <element signature="e#2064#2065#0" expanded="true" />
-            <element signature="e#2092#2093#0" expanded="true" />
+            <element signature="e#1977#1978#0" expanded="false" />
+            <element signature="e#2007#2008#0" expanded="false" />
+            <element signature="e#2064#2065#0" expanded="false" />
+            <element signature="e#2092#2093#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1381,9 +1315,9 @@
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/entry_template.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="37" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="786" selection-end-column="1" />
+          <caret line="10" column="37" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="786" selection-end-column="1" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1391,7 +1325,7 @@
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/dateSelector.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
-          <caret line="13" column="5" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="411" selection-end-column="1" />
+          <caret line="13" column="5" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="411" selection-end-column="1" />
           <folding>
             <marker date="1486084441827" expanded="true" signature="6935:6948" ph="..." />
             <marker date="1486084441827" expanded="true" signature="7005:7015" ph="..." />
@@ -1406,7 +1340,7 @@
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/entry/EntryController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="206">
-          <caret line="299" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="299" selection-end-column="0" />
+          <caret line="299" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="299" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1414,15 +1348,127 @@
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/approve/ApproveController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
-          <caret line="45" column="23" lean-forward="true" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
+          <caret line="45" column="23" lean-forward="false" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/approve/ApproveServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="763" column="13" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="770" selection-end-column="0" />
+        <state relative-caret-position="227">
+          <caret line="766" column="22" lean-forward="false" selection-start-line="766" selection-start-column="22" selection-end-line="766" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/framework/templates/singleDateReport/entry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/framework/templates/cwwh/entry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/framework/templates/cwwh/entry.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="67" column="76" lean-forward="true" selection-start-line="67" selection-start-column="76" selection-end-line="67" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/entry_template.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="688" column="59" lean-forward="false" selection-start-line="688" selection-start-column="32" selection-end-line="688" selection-end-column="59" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/cwwh/entry1.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="201" column="0" lean-forward="false" selection-start-line="201" selection-start-column="0" selection-end-line="210" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/cwwh/entry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/singleDateReport/entry.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/cwwh/entry.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="104" column="42" lean-forward="true" selection-start-line="104" selection-start-column="42" selection-end-line="104" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/show/出口外汇合同明细Show.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1575">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/entry/出口外汇合同明细Entry.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="220" column="48" lean-forward="false" selection-start-line="220" selection-start-column="48" selection-end-line="220" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/出口外汇合同明细/出口外汇合同明细EntryWrapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="23" column="48" lean-forward="false" selection-start-line="23" selection-start-column="44" selection-end-line="23" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/entry/进口外汇合同明细Entry.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细EntryWrapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-299">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

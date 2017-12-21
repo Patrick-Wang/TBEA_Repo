@@ -24,7 +24,7 @@
             <context key="cnames" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
         </if>
         <callservice id="D502EC08D6FB66F4F3B05B3E9B014133CCServ"></callservice>
-        <response name="framework/templates/dateReport/entry" type="jsp">
+        <response name="framework/templates/cwwh/entry" type="jsp">
             <map key="updateUrl" value="D502EC08D6FB66F4F3B05B3E9B014133EntryUpdateWrapperClr"/>
             <map key="submitUrl" value="D502EC08D6FB66F4F3B05B3E9B014133EntrySubmitWrapperClr"/>
             <map key="nodeData" value="${dataNodeFactory[cc.col[0]][cc.col[1]].asJson}"/>
