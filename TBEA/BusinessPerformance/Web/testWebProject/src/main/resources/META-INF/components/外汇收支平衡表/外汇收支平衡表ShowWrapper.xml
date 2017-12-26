@@ -33,11 +33,11 @@
         <context key="item" value="${request.item.asInt}"/>
         <context key="currency" value="${session['cur_export'][request.item2.asInt]}"/>
         <if test="${item == 0}">
-            <context key="dwmc" value="${sysAuth.cnames[104]}"></context>
-            <if test="${sysAuth.has[106]}">
+            <context key="dwmc" value="${sysAuth.cnames[96]}"></context>
+            <if test="${sysAuth.has[98]}">
                 <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（采购中心）']}"></context>
             </if>
-            <if test="${sysAuth.has[107]}">
+            <if test="${sysAuth.has[99]}">
                 <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（资金中心）']}"></context>
             </if>
             <callcontroller id="CB9B0FFFCDA845E1765EC1860CE2D1EAUpdateClr"/>
@@ -47,11 +47,11 @@
         <context key="item" value="${request.item.asInt}"/>
         <context key="currency" value="${session['cur_export'][request.item2.asInt]}"/>
         <if test="${item == 0}">
-            <context key="dwmc" value="${sysAuth.cnames[102]}"></context>
-            <if test="${sysAuth.has[106]}">
+            <context key="dwmc" value="${sysAuth.cnames[96]}"></context>
+            <if test="${sysAuth.has[98]}">
                 <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（采购中心）']}"></context>
             </if>
-            <if test="${sysAuth.has[107]}">
+            <if test="${sysAuth.has[99]}">
                 <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（资金中心）']}"></context>
             </if>
             <callcontroller id="CB9B0FFFCDA845E1765EC1860CE2D1EAExportClr"/>
