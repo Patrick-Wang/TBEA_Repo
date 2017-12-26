@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAIMPORTJSP">
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="CB9B0FFFCDA845E1765EC1860CE2D1EAImportClr"/>
+        </response>
+    </controller>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAImportClr">
+        <context key="data" value="${request.upfile.asExcel}"/>
+        <context key="src" value="${session.account.name} Excel 导入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="CB9B0FFFCDA845E1765EC1860CE2D1EAImportServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="CB9B0FFFCDA845E1765EC1860CE2D1EAImportServ" transaction="transactionManager">
+        <merge data="${data}" table="foreign_exchange_budget">
+            <set>
+                <dwmc ref="0" type="string"/>
+                <bz ref="1" type="string"/>
+                <yhzh ref="2" type="double"/>
+                <sczj ref="3" type="double"/>
+                <xj1 ref="4" type="double"/>
+                <dq ref="5" type="double"/>
+                <tz ref="6" type="double"/>
+                <xj2 ref="7" type="double"/>
+                <hj ref="8" type="double"/>
+                <N ref="9" type="double"/>
+                <N1 ref="10" type="double"/>
+                <N2 ref="11" type="double"/>
+                <shxj ref="12" type="double"/>
+                <T1zf ref="13" type="double"/>
+                <ghbl ref="14" type="double"/>
+                <hdk ref="15" type="double"/>
+                <xyz ref="16" type="double"/>
+                <fhxj ref="17" type="double"/>
+                <whqkje ref="18" type="double"/>
+                <yshje ref="19" type="double"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

@@ -65,6 +65,17 @@ var framework;
                     this.mTableAssist.addFormula(form);
                     return this.mTableAssist;
                 };
+                EntryView.prototype.updateTable = function () {
+                    if (this.resp.data.length > 0) {
+                        $("#table").show();
+                        $("#warning-nodata").hide();
+                        _super.prototype.updateTable.call(this);
+                    }
+                    else {
+                        $("#table").hide();
+                        $("#warning-nodata").show();
+                    }
+                };
                 return EntryView;
             }(framework.templates.singleDateReport.EntryView));
             dateReport.EntryView = EntryView;

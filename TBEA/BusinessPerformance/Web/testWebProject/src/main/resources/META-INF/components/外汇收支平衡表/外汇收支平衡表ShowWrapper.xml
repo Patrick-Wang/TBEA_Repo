@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+
+    <service id="9569BB9CEF88B0ADDFF9A7FCA0B46FA6Filter" transaction="transactionManager">
+        <sql id="currency" export="true">
+            select
+                distinct name
+            from
+                foreign_exchange_currency
+        </sql>
+        <list id="currency" type="string">
+            <item insert="0">全部币种</item>
+        </list>
+        <list id="currIds" export="true">
+            <item from="0" to="${currency.size - 1}"></item>
+        </list>
+    </service>
+
+    <controller id="9569BB9CEF88B0ADDFF9A7FCA0B46FA6SWJ">
+        <list id="ids" type="int">0</list>
+        <list id="vals" type="string">外汇收支平衡表</list>
+        <callservice id="9569BB9CEF88B0ADDFF9A7FCA0B46FA6Filter"></callservice>
+        <context key="tmp" value="${session.put['cur_export'][currency]}"></context>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="9569BB9CEF88B0ADDFF9A7FCA0B46FA6UpdateWrapperClr"/>
+            <map key="exportUrl" value="9569BB9CEF88B0ADDFF9A7FCA0B46FA6ExportWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="nodeData2" value="${dataNodeFactory[currIds][currency].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="9569BB9CEF88B0ADDFF9A7FCA0B46FA6UpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <context key="currency" value="${session['cur_export'][request.item2.asInt]}"/>
+        <if test="${item == 0}">
+            <context key="dwmc" value="${sysAuth.cnames[104]}"></context>
+            <if test="${sysAuth.has[106]}">
+                <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（采购中心）']}"></context>
+            </if>
+            <if test="${sysAuth.has[107]}">
+                <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（资金中心）']}"></context>
+            </if>
+            <callcontroller id="CB9B0FFFCDA845E1765EC1860CE2D1EAUpdateClr"/>
+        </if>
+    </controller>
+    <controller id="9569BB9CEF88B0ADDFF9A7FCA0B46FA6ExportWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <context key="currency" value="${session['cur_export'][request.item2.asInt]}"/>
+        <if test="${item == 0}">
+            <context key="dwmc" value="${sysAuth.cnames[102]}"></context>
+            <if test="${sysAuth.has[106]}">
+                <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（采购中心）']}"></context>
+            </if>
+            <if test="${sysAuth.has[107]}">
+                <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（资金中心）']}"></context>
+            </if>
+            <callcontroller id="CB9B0FFFCDA845E1765EC1860CE2D1EAExportClr"/>
+        </if>
+    </controller>
+</components>

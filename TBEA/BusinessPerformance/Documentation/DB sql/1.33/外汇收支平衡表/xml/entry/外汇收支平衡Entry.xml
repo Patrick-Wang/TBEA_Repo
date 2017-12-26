@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAENTRYJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryUpdateClr"/>
+            <map key="submitUrl" value="CB9B0FFFCDA845E1765EC1860CE2D1EAEntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryUpdateServ"/>
+        <callcontroller id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>币种</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>银行账户</name>
+                </item>
+                <item>
+                    <name>上存资金</name>
+                </item>
+                <item>
+                    <name>小计</name>
+                </item>
+                <item>
+                    <name>定期</name>
+                </item>
+                <item>
+                    <name>通知</name>
+                </item>
+                <item>
+                    <name>小计</name>
+                </item>
+                <item>
+                    <name>合计</name>
+                </item>
+                <item>
+                    <name>N月</name>
+                </item>
+                <item>
+                    <name>N1月</name>
+                </item>
+                <item>
+                    <name>N2月</name>
+                </item>
+                <item>
+                    <name>收汇小计</name>
+                </item>
+                <item>
+                    <name>TT支付</name>
+                </item>
+                <item>
+                    <name>归还保理</name>
+                </item>
+                <item>
+                    <name>还贷款</name>
+                </item>
+                <item>
+                    <name>信用证</name>
+                </item>
+                <item>
+                    <name>付汇小计</name>
+                </item>
+                <item>
+                    <name>外汇缺口金额</name>
+                </item>
+                <item>
+                    <name>已锁汇金额</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryUpdateServ" transaction="transactionManager">
+        <sql id="data">select 
+	id,
+	dwmc,
+	bz,
+	yhzh,
+	sczj,
+	xj1,
+	dq,
+	tz,
+	xj2,
+	hj,
+	N,
+	N1,
+	N2,
+	shxj,
+	T1zf,
+	ghbl,
+	hdk,
+	xyz,
+	fhxj,
+	whqkje,
+	yshje
+from foreign_exchange_budget</sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+        </table>
+    </service>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="foreign_exchange_budget">
+            <where>
+                <id ref="0" type="int"/>
+            </where>
+            <set>
+                <dwmc ref="1" type="string"/>
+                <bz ref="2" type="string"/>
+                <yhzh ref="3" type="double"/>
+                <sczj ref="4" type="double"/>
+                <xj1 ref="5" type="double"/>
+                <dq ref="6" type="double"/>
+                <tz ref="7" type="double"/>
+                <xj2 ref="8" type="double"/>
+                <hj ref="9" type="double"/>
+                <N ref="10" type="double"/>
+                <N1 ref="11" type="double"/>
+                <N2 ref="12" type="double"/>
+                <shxj ref="13" type="double"/>
+                <T1zf ref="14" type="double"/>
+                <ghbl ref="15" type="double"/>
+                <hdk ref="16" type="double"/>
+                <xyz ref="17" type="double"/>
+                <fhxj ref="18" type="double"/>
+                <whqkje ref="19" type="double"/>
+                <yshje ref="20" type="double"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

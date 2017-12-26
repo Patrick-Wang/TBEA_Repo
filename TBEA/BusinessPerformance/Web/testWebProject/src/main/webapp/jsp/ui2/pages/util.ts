@@ -86,6 +86,8 @@ module Util {
         type:string;
         readOnly:string;
         options:string[];
+        default:string;
+        width:number;
         sub:Header[];
         align:string;
         sortable:string;
@@ -244,7 +246,9 @@ module Util {
                 isReadOnly:readOnly,
                 isNumber:false,
                 editType:"text",
-                isSortable : sortable});
+                isSortable : sortable,
+                default:header.default
+            });
         }else if ("hidden" == header.type){
             node = null;//JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
         }else if ("select" == header.type){
@@ -257,7 +261,8 @@ module Util {
                 isSortable : sortable,
                 options: {
                     value: header.options
-                }
+                },
+                default : header.default
             });
         }else if ("searchSelect" == header.type){
             node = JQTable.Node.create({
@@ -274,7 +279,8 @@ module Util {
                             language: "zh-CN"
                         });
                     }
-                }
+                },
+                default:header.default
             });
         }else{
             node = JQTable.Node.create({
@@ -282,7 +288,8 @@ module Util {
                 align : align,
                 width : header.width,
                 isReadOnly:readOnly,
-                isSortable : sortable});
+                isSortable : sortable,
+                default:header.default});
         }
 
         if (header.sub != undefined) {

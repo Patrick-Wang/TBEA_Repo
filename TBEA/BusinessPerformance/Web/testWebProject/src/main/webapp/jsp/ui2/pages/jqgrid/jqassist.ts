@@ -392,6 +392,7 @@ module JQTable {
         //add by hzdqzy
         isSortable?: boolean;
         sorttype?: string
+        default?:string
     }
 
     export class Node {
@@ -576,6 +577,10 @@ module JQTable {
             return this.mOpts.sorttype;
         }
 
+        public defaultText():any{
+            return this.mOpts.default;
+        }
+
         //---------------------------------------------------------------------
     }
 
@@ -583,6 +588,17 @@ module JQTable {
         private mRow:number;
         private mCol:number;
         private mGrid:any;
+        private mRid:string;
+
+        public static create(rid:string, col:number):Cell{
+            let retCell = new Cell(undefined, col);
+            retCell.setRid(rid);
+            return retCell;
+        }
+
+        private setRid(rid:string){
+            this.mRid = rid;
+        }
 
         constructor(row:number, col:number) {
             this.mRow = row;
@@ -594,11 +610,20 @@ module JQTable {
         }
 
         public getVal() {
-            return this.mGrid.jqGrid("getCell", this.mGrid[0].p.data[this.mRow].id, this.mCol);
+            if (this.mRid != undefined){
+                return this.mGrid.jqGrid("getCell", this.mRid, this.mCol);
+            } else if (this.mGrid[0].p.data.length > this.mRow){
+                return this.mGrid.jqGrid("getCell", this.mGrid[0].p.data[this.mRow].id, this.mCol);
+            }
+            return undefined;
         }
 
         public setVal(val) {
-            return this.mGrid.jqGrid("setCell", this.mGrid[0].p.data[this.mRow].id, this.mCol, val, undefined, undefined, true);
+            if (this.mRid != undefined){
+                return this.mGrid.jqGrid("setCell", this.mRid, this.mCol, val, undefined, undefined, true);
+            } else if (this.mGrid[0].p.data.length > this.mRow) {
+                return this.mGrid.jqGrid("setCell", this.mGrid[0].p.data[this.mRow].id, this.mCol, val, undefined, undefined, true);
+            }
         }
 
         public row():number {
@@ -610,12 +635,17 @@ module JQTable {
         }
     }
 
-    export class Formula {
+    export interface IFormula{
+        update(): boolean;
+        setGrid(grid:any):void;
+    }
+
+    export class Formula implements IFormula{
         private mDestCell:Cell;
         private mSrcCellarray:Cell[];
         private mFormula:(dest:Cell, srcCells:Cell[]) => number;
 
-        constructor(destCell:Cell, srcCellarray:Cell[], formula:(dest:Cell, srcCells:Cell[]) => number) {
+        constructor(destCell:Cell, srcCellarray:Cell[], formula:(dest:Cell, srcCells:Cell[]) => any) {
             this.mDestCell = destCell;
             this.mSrcCellarray = srcCellarray;
             this.mFormula = formula;
@@ -650,6 +680,47 @@ module JQTable {
         }
     }
 
+    class DefaultTextFormula implements IFormula{
+        grid : any;
+        col : number;
+        defaultText : string;
+        colIndex : string;
+        constructor(col:number, colIndex:string, defaultText){
+            this.col = col;
+            this.defaultText = defaultText;
+            this.colIndex = colIndex;
+        }
+
+        update(): boolean {
+            let fs : IFormula[] = [];
+            for (let i = 0; i < this.grid[0].p.data.length; ++i){
+                fs.push(this.collectFormulas(i));
+            }
+
+            for (let i = 0; i < fs.length; ++i){
+                fs[i].setGrid(this.grid);
+                fs[i].update();
+            }
+            return false;
+        }
+
+        private collectFormulas(i:number):IFormula{
+            return new Formula(
+                new Cell(i, this.col),
+                [new Cell(i, this.col)],
+                (dest : Cell, srcs : Cell[])=>{
+                    if (this.grid[0].p.data[i][this.colIndex] == undefined){
+                        return this.defaultText;
+                    }
+                    return dest.getVal();
+                });
+        }
+
+        setGrid(grid: any): void {
+            this.grid = grid;
+        }
+    }
+
     export class JQGridAssistant {
         private completeList:Array<() => void> = [];
         private selectedList:Array<(newRow:number, newCol:number) => void> = [];
@@ -657,7 +728,7 @@ module JQTable {
         private mGridName:string;
         private mColModel = [];
         private mResizeList = [];
-        private mFormula:Formula[] = [];
+        private mFormula:IFormula[] = [];
         private mOnMergedRows:(iCol:number, iRowStart:number, ilen:number) => void;
         private mOnMergedColums:(col:number, row:number) => void;
         private mOnMergedTitles:(iColStart:number, iCount:number) => void;
@@ -672,6 +743,8 @@ module JQTable {
             if (!this.mTitle[this.mTitle.length - 1]){
             	this.mTitle.splice(this.mTitle.length - 1, 1);
             }
+
+
             for (var i = 0; i < this.mTitle.length; ++i) {
                 //this.mTitle[i].mOpts.id = this.mGridName + this.mTitle[i].mOpts.id;
                 nodes = this.mTitle[i].leaves();
@@ -693,6 +766,10 @@ module JQTable {
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
                     });
+
+                    if (nodes[j].defaultText()){
+                        this.addFormula(new DefaultTextFormula(this.mColModel.length - 1, colId, nodes[j].defaultText()));
+                    }
 
                     switch (nodes[j].align()) {
                         case TextAlign.Left:
@@ -725,7 +802,7 @@ module JQTable {
 
         public getAllData():Array<string[]> {
             var grid = $("#" + this.mGridName + "");
-            grid[0].p.data
+            //grid[0].p.data
             var ids = grid.jqGrid('getDataIDs');
             var data:Array<string[]> = [];
             for (var i = 0; i < grid[0].p.data.length; ++i) {
@@ -993,11 +1070,22 @@ module JQTable {
             return rows;
         }
 
+        public getRawRowData(id){
+            var grid = $("#" + this.mGridName + "");
+            for (let i = 0; i < grid[0].p.data.length; ++i){
+                if (grid[0].p.data[i].id == id){
+                    return grid[0].p.data[i];
+                }
+            }
+            return undefined;
+        }
+
         public getChangedData() {
             var grid = $("#" + this.mGridName + "");
             var data:Array<string[]> = [];
             for (var i = 0; i < this.mEditedRows.length; ++i){
-                var rdata = grid.getRowData(this.mEditedRows[i]);
+
+                var rdata = this.getRawRowData(this.mEditedRows[i]);
                 var row = [this.mEditedRows[i]];
                 for (var j = 0; j < this.mColModel.length; ++j){
                     let val = rdata[this.mColModel[j].index];
@@ -1178,11 +1266,13 @@ module JQTable {
             }
         }
 
-        public addFormula(formula:Formula):void {
+        public addFormula(formula:IFormula):void {
             formula.setGrid($("#" + this.mGridName));
             if (this.mFormula.length == 0) {
                 this.completeList.push(() => {
-                    this.invokeFormula();
+                    if (this.getDataCount() > 0){
+                        this.invokeFormula();
+                    }
                 });
             }
             this.mFormula.push(formula);

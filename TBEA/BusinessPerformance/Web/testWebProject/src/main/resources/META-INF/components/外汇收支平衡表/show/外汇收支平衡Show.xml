@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EASHOWCLR">
+        <response name="framework/templates/singleDateReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map key="updateUrl" value="CB9B0FFFCDA845E1765EC1860CE2D1EAUpdateClr"/>
+            <map key="exportUrl" value="CB9B0FFFCDA845E1765EC1860CE2D1EAExportClr"/>
+        </response>
+    </controller>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="CB9B0FFFCDA845E1765EC1860CE2D1EAShowServ"/>
+        <callcontroller id="CB9B0FFFCDA845E1765EC1860CE2D1EAFmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>币种</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>外汇存款明细</name>
+                    <sub type="array">
+                        <item>
+                            <name>银行账户</name>
+                        </item>
+                        <item>
+                            <name>上存资金</name>
+                        </item>
+                        <item>
+                            <name>小计</name>
+                        </item>
+                        <item>
+                            <name>定期</name>
+                        </item>
+                        <item>
+                            <name>通知</name>
+                        </item>
+                        <item>
+                            <name>小计</name>
+                        </item>
+                        <item>
+                            <name>合计</name>
+                        </item>
+                    </sub>
+                </item>
+                <item>
+                    <name>预计收汇金额</name>
+                    <sub type="array">
+
+                        <item>
+                            <name>${cal.monthAfter[1].month}月</name>
+                        </item>
+                        <item>
+                            <name>${cal.monthAfter[2].month}月</name>
+                        </item>
+                        <item>
+                            <name>${cal.monthAfter[3].month}月</name>
+                        </item>
+                        <item>
+                            <name>收汇小计</name>
+                        </item>
+                    </sub>
+                </item>
+
+                <item>
+                    <name>
+                        ${cal.monthAfter[1].year}年${cal.monthAfter[1].month}月-${cal.monthAfter[3].year}年${cal.monthAfter[3].month}月付汇需求
+                    </name>
+                    <sub type="array">
+                        <item>
+                            <name>TT支付</name>
+                        </item>
+                        <item>
+                            <name>归还保理</name>
+                        </item>
+                        <item>
+                            <name>还贷款</name>
+                        </item>
+                        <item>
+                            <name>信用证</name>
+                        </item>
+                        <item>
+                            <name>付汇小计</name>
+                        </item>
+                    </sub>
+                </item>
+                <item>
+                    <name>外汇缺口金额</name>
+                </item>
+                <item>
+                    <name>已锁汇金额</name>
+                </item>
+            </header>
+            <pager>none</pager>
+            <mergeCols type="array">
+                <item>
+                    <col>0</col>
+                </item>
+            </mergeCols>
+            <mergeRows type="array">
+                <item>
+                    <col>0</col>
+                </item>
+            </mergeRows>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAExportClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="CB9B0FFFCDA845E1765EC1860CE2D1EAShowServ"/>
+        <callcontroller id="CB9B0FFFCDA845E1765EC1860CE2D1EAFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="外汇收支平衡表"/>
+        <context key="sfh" value="${cal.monthAfter[1].year}年${cal.monthAfter[1].month}月-${cal.monthAfter[3].year}年${cal.monthAfter[3].month}月付汇需求"></context>
+        <list id="title" type="string">
+            单位名称,币种,外汇存款明细,外汇存款明细,外汇存款明细,外汇存款明细,外汇存款明细,外汇存款明细,外汇存款明细,
+            预计收汇金额,预计收汇金额,预计收汇金额,预计收汇金额,
+            ${sfh},${sfh},${sfh},${sfh},${sfh},
+            外汇缺口金额,已锁汇金额
+        </list>
+        <list id="title1" type="string">
+            单位名称,币种,银行账户,上存资金,小计,定期,通知,小计,合计,${cal.monthAfter[1].month}月,${cal.monthAfter[2].month}月,${cal.monthAfter[3].month}月,收汇小计,TT支付,归还保理,还贷款,信用证,付汇小计,外汇缺口金额,已锁汇金额
+        </list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                    <title ref="title1"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelMergeFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <MergeRegion x="0" y="0" width="${title1.size}" height="2"/>
+                <MergeRegion x="0" y="2" width="1" height="${data1.size}"/>
+                <MergeRegion x="0" y="${data1.size + 2}" width="2" height="${data2.size}"/>
+            </ExcelMergeFormatter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0,1"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="2"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="2"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="${request.date.asCalendar.monthFormat}外汇收支平衡表.xls" ref="excelTemplate" serv="fmtServ"
+                  type="excel"/>
+    </controller>
+    <service id="CB9B0FFFCDA845E1765EC1860CE2D1EAShowServ" transaction="transactionManager">
+        <sql id="data1" export="true"><![CDATA[
+        select
+            dwmc,
+            bz,
+            yhzh,
+            sczj,
+            xj1,
+            dq,
+            tz,
+            xj2,
+            hj,
+            N,
+            N1,
+            N2,
+            shxj,
+            T1zf,
+            ghbl,
+            hdk,
+            xyz,
+            fhxj,
+            whqkje,
+            yshje
+        from foreign_exchange_budget
+        where
+            nf = ${cal.year} and
+            yf = ${cal.month} and
+            dwmc in ${dwmc} and
+            (${currency} = '全部币种' or bz = ${currency})
+        order by
+            dwmc
+        ]]>
+        </sql>
+        <sql id="data2" export="true"><![CDATA[
+        select
+            bz bz1,
+            bz bz2,
+            sum(yhzh) s1,
+            sum(sczj) s2,
+            sum(xj1) s3,
+            sum(dq) s4,
+            sum(tz) s5,
+            sum(xj2) s6,
+            sum(hj) s7,
+            sum(N) s8,
+            sum(N1) s9,
+            sum(N2) s10,
+            sum(shxj) s11,
+            sum(T1zf) s12,
+            sum(ghbl) s13,
+            sum(hdk) s14,
+            sum(xyz) s15,
+            sum(fhxj) s16,
+            sum(whqkje) s17,
+            sum(yshje) s18
+        from foreign_exchange_budget
+        where
+            nf = ${cal.year} and
+            yf = ${cal.month} and
+            dwmc in ${dwmc} and
+            (${currency} = '全部币种' or bz = ${currency})
+        group by
+            bz
+        ]]>
+        </sql>
+
+
+        <context key="data" value="${list.new.concat[data1].concat[data2]}"></context>
+        <list id="ids">
+            <item from="0" to="${data.size - 1}"></item>
+        </list>
+        <table export="true" id="result" rowIds="ids" table="${data}">
+        </table>
+    </service>
+</components>

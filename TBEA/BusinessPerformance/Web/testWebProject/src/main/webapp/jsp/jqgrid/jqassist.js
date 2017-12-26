@@ -802,7 +802,9 @@ var JQTable;
             formula.setGrid($("#" + this.mGridName));
             if (this.mFormula.length == 0) {
                 this.completeList.push(function () {
-                    _this.invokeFormula();
+                    if (_this.getDataCount() > 0) {
+                        _this.invokeFormula();
+                    }
                 });
             }
             this.mFormula.push(formula);

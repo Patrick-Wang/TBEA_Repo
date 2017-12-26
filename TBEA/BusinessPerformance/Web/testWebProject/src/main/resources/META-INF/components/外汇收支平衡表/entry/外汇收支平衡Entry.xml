@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAENTRYJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryUpdateClr"/>
+            <map key="submitUrl" value="CB9B0FFFCDA845E1765EC1860CE2D1EAEntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryUpdateServ"/>
+        <callcontroller id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                    <default>${dwmc}</default>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>币种</name>
+                    <type>searchSelect</type>
+                    <options>${bzs}</options>
+                </item>
+                <item>
+                    <name>外汇存款明细</name>
+                    <sub type="array">
+                        <item>
+                            <name>银行账户</name>
+                        </item>
+                        <item>
+                            <name>上存资金</name>
+                        </item>
+                        <item>
+                            <name>小计</name>
+                            <readOnly>true</readOnly>
+                        </item>
+                        <item>
+                            <name>定期</name>
+                        </item>
+                        <item>
+                            <name>通知</name>
+                        </item>
+                        <item>
+                            <name>小计</name>
+                            <readOnly>true</readOnly>
+                        </item>
+                        <item>
+                            <name>合计</name>
+                            <readOnly>true</readOnly>
+                        </item>
+                    </sub>
+                </item>
+                <item>
+                    <name>预计收汇金额</name>
+                    <sub type="array">
+
+                        <item>
+                            <name>${cal.monthAfter[1].month}月</name>
+                        </item>
+                        <item>
+                            <name>${cal.monthAfter[2].month}月</name>
+                        </item>
+                        <item>
+                            <name>${cal.monthAfter[3].month}月</name>
+                        </item>
+                        <item>
+                            <name>收汇小计</name>
+                            <readOnly>true</readOnly>
+                        </item>
+                    </sub>
+                </item>
+
+                <item>
+                    <name>
+                        ${cal.monthAfter[1].year}年${cal.monthAfter[1].month}月-${cal.monthAfter[3].year}年${cal.monthAfter[3].month}月付汇需求
+                    </name>
+                    <sub type="array">
+                        <item>
+                            <name>TT支付</name>
+                        </item>
+                        <item>
+                            <name>归还保理</name>
+                        </item>
+                        <item>
+                            <name>还贷款</name>
+                        </item>
+                        <item>
+                            <name>信用证</name>
+                        </item>
+                        <item>
+                            <name>付汇小计</name>
+                            <readOnly>true</readOnly>
+                        </item>
+                    </sub>
+                </item>
+                <item>
+                    <name>外汇缺口金额</name>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>已锁汇金额</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntryUpdateServ" transaction="transactionManager">
+        <sql id="bzs" export="true">
+            select name from foreign_exchange_currency
+        </sql>
+
+        <sql id="data"><![CDATA[
+            select
+                id,
+                dwmc,
+                bz,
+                yhzh,
+                sczj,
+                xj1,
+                dq,
+                tz,
+                xj2,
+                hj,
+                N,
+                N1,
+                N2,
+                shxj,
+                T1zf,
+                ghbl,
+                hdk,
+                xyz,
+                fhxj,
+                whqkje,
+                yshje
+            from foreign_exchange_budget
+            where
+                nf = ${cal.year} and
+                yf = ${cal.month} and
+                dwmc = ${dwmc}
+        ]]></sql>
+        <list id="ids" sql="data" value="0"/>
+        <table export="true" id="result" rowIds="ids" table="${data.rmCol[0]}">
+        </table>
+    </service>
+    <controller id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="CB9B0FFFCDA845E1765EC1860CE2D1EAEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="foreign_exchange_budget">
+            <where>
+                <id ref="0" type="int"/>
+            </where>
+            <set>
+                <dwmc ref="1" type="string"/>
+                <bz ref="2" type="string"/>
+                <yhzh ref="3" type="double"/>
+                <sczj ref="4" type="double"/>
+                <xj1 ref="5" type="double"/>
+                <dq ref="6" type="double"/>
+                <tz ref="7" type="double"/>
+                <xj2 ref="8" type="double"/>
+                <hj ref="9" type="double"/>
+                <N ref="10" type="double"/>
+                <N1 ref="11" type="double"/>
+                <N2 ref="12" type="double"/>
+                <shxj ref="13" type="double"/>
+                <T1zf ref="14" type="double"/>
+                <ghbl ref="15" type="double"/>
+                <hdk ref="16" type="double"/>
+                <xyz ref="17" type="double"/>
+                <fhxj ref="18" type="double"/>
+                <whqkje ref="19" type="double"/>
+                <yshje ref="20" type="double"/>
+                <nf type="int" value="${cal.year}"></nf>
+                <yf type="int" value="${cal.month}"></yf>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

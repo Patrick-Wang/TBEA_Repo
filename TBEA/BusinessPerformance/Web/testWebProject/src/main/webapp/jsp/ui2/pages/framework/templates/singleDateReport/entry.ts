@@ -245,7 +245,7 @@ module framework.templates.singleDateReport {
         }
 
         submit(date:Util.Date): void{
-            this.mAjaxSubmit.get(
+            this.mAjaxSubmit.post(
                 $.extend(this.getParams(this.getUDate()), {
                     data : JSON.stringify(this.onLoadSubmitData())
                 }))

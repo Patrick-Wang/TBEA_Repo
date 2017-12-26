@@ -184,7 +184,8 @@ var Util;
                 isReadOnly: readOnly,
                 isNumber: false,
                 editType: "text",
-                isSortable: sortable
+                isSortable: sortable,
+                default: header.default
             });
         }
         else if ("hidden" == header.type) {
@@ -200,7 +201,8 @@ var Util;
                 isSortable: sortable,
                 options: {
                     value: header.options
-                }
+                },
+                default: header.default
             });
         }
         else if ("searchSelect" == header.type) {
@@ -218,7 +220,8 @@ var Util;
                             language: "zh-CN"
                         });
                     }
-                }
+                },
+                default: header.default
             });
         }
         else {
@@ -227,7 +230,8 @@ var Util;
                 align: align,
                 width: header.width,
                 isReadOnly: readOnly,
-                isSortable: sortable
+                isSortable: sortable,
+                default: header.default
             });
         }
         if (header.sub != undefined) {

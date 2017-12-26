@@ -6,6 +6,14 @@ EXEC	addAuth	'130182',	99	,	'1,2,3,301,4,5,6,9,10,11,12'
 EXEC	addAuth	'130182',	100	,	'1,2,3,301,4,5,6,9,10,11,12'
 EXEC	addAuth	'130182',	101	,	'1,2,3,301,4,5,6,9,10,11,12'
 
+EXEC	addAuth	'155165',	96	,	'1,2,3,301,4,5,6,9,10,11,12'
+EXEC	addAuth	'155165',	97	,	'1,2,3,301,4,5,6,9,10,11,12'
+EXEC	addAuth	'155165',	102	,	'1,2,3,301,4,5,6,9,10,11,12'
+EXEC	addAuth	'155165',	98	,	'1,2,3,301,4,5,6,9,10,11,12'
+EXEC	addAuth	'155165',	99	,	'1,2,3,301,4,5,6,9,10,11,12'
+EXEC	addAuth	'155165',	100	,	'1,2,3,301,4,5,6,9,10,11,12'
+EXEC	addAuth	'155165',	101	,	'1,2,3,301,4,5,6,9,10,11,12'
+
 EXEC	addAuth	'322309',	96	,	'1'
 EXEC	addAuth	'322309',	97	,	'1'
 EXEC	addAuth	'322309',	102	,	'1'
@@ -52,7 +60,7 @@ EXEC	addAuth	'363560',	98	,	''
 
 
 SET IDENTITY_INSERT [dbo].[auth_instruction] ON
-INSERT INTO [dbo].[auth_instruction] (id, [instruction]) VALUES (103, '首付款抹账')
+INSERT INTO [dbo].[auth_instruction] (id, [instruction]) VALUES (103, '收付款抹账')
 SET IDENTITY_INSERT [dbo].[auth_instruction] OFF
 
 

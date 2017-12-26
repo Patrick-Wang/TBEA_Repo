@@ -903,7 +903,9 @@ module JQTable {
             formula.setGrid($("#" + this.mGridName));
             if (this.mFormula.length == 0) {
                 this.completeList.push(() => {
-                   this.invokeFormula();
+                    if (this.getDataCount() > 0){
+                        this.invokeFormula();
+                    }
                 });
             }
             this.mFormula.push(formula);

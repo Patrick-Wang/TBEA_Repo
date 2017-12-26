@@ -63,5 +63,16 @@ module framework.templates.dateReport {
 
             return this.mTableAssist;
         }
+
+        updateTable():void {
+            if(this.resp.data.length > 0){
+                $("#table").show();
+                $("#warning-nodata").hide();
+                super.updateTable();
+            }else{
+                $("#table").hide();
+                $("#warning-nodata").show();
+            }
+        }
     }
 }

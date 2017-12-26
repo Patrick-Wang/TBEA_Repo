@@ -226,7 +226,7 @@ var framework;
                     return this.mTableAssist.getChangedData();
                 };
                 EntryView.prototype.submit = function (date) {
-                    this.mAjaxSubmit.get($.extend(this.getParams(this.getUDate()), {
+                    this.mAjaxSubmit.post($.extend(this.getParams(this.getUDate()), {
                         data: JSON.stringify(this.onLoadSubmitData())
                     }))
                         .then(function (resp) {

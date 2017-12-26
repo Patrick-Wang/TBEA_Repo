@@ -150,7 +150,7 @@
     <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/basic/basicdef.js"></script>
     <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/basic/basic.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/singleDateReport/entry.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/cwwh/entry.js"></script>
+    <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/whsz/entry.js"></script>
 <%@include file="../../../../ie8-b.jsp"%>
 </head>
 <!-- /Head -->
@@ -195,7 +195,6 @@
 						<div class="col-lg-12 col-sm-12 col-xs-12">
 							<div class="well">
 								<div id="table"></div>
-                                <div id="warning-nodata" style="display:hidden">暂时没有数据</div>
 							</div>
 						</div>
 					</div>

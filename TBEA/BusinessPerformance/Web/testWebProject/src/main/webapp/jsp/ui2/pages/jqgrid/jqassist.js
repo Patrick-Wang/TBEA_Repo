@@ -515,6 +515,9 @@ var JQTable;
         Node.prototype.sorttype = function () {
             return this.mOpts.sorttype;
         };
+        Node.prototype.defaultText = function () {
+            return this.mOpts.default;
+        };
         return Node;
     }());
     JQTable.Node = Node;
@@ -523,14 +526,33 @@ var JQTable;
             this.mRow = row;
             this.mCol = col;
         }
+        Cell.create = function (rid, col) {
+            var retCell = new Cell(undefined, col);
+            retCell.setRid(rid);
+            return retCell;
+        };
+        Cell.prototype.setRid = function (rid) {
+            this.mRid = rid;
+        };
         Cell.prototype.setGrid = function (grid) {
             this.mGrid = grid;
         };
         Cell.prototype.getVal = function () {
-            return this.mGrid.jqGrid("getCell", this.mGrid[0].p.data[this.mRow].id, this.mCol);
+            if (this.mRid != undefined) {
+                return this.mGrid.jqGrid("getCell", this.mRid, this.mCol);
+            }
+            else if (this.mGrid[0].p.data.length > this.mRow) {
+                return this.mGrid.jqGrid("getCell", this.mGrid[0].p.data[this.mRow].id, this.mCol);
+            }
+            return undefined;
         };
         Cell.prototype.setVal = function (val) {
-            return this.mGrid.jqGrid("setCell", this.mGrid[0].p.data[this.mRow].id, this.mCol, val, undefined, undefined, true);
+            if (this.mRid != undefined) {
+                return this.mGrid.jqGrid("setCell", this.mRid, this.mCol, val, undefined, undefined, true);
+            }
+            else if (this.mGrid[0].p.data.length > this.mRow) {
+                return this.mGrid.jqGrid("setCell", this.mGrid[0].p.data[this.mRow].id, this.mCol, val, undefined, undefined, true);
+            }
         };
         Cell.prototype.row = function () {
             return this.mRow;
@@ -578,6 +600,37 @@ var JQTable;
         return Formula;
     }());
     JQTable.Formula = Formula;
+    var DefaultTextFormula = (function () {
+        function DefaultTextFormula(col, colIndex, defaultText) {
+            this.col = col;
+            this.defaultText = defaultText;
+            this.colIndex = colIndex;
+        }
+        DefaultTextFormula.prototype.update = function () {
+            var fs = [];
+            for (var i = 0; i < this.grid[0].p.data.length; ++i) {
+                fs.push(this.collectFormulas(i));
+            }
+            for (var i = 0; i < fs.length; ++i) {
+                fs[i].setGrid(this.grid);
+                fs[i].update();
+            }
+            return false;
+        };
+        DefaultTextFormula.prototype.collectFormulas = function (i) {
+            var _this = this;
+            return new Formula(new Cell(i, this.col), [new Cell(i, this.col)], function (dest, srcs) {
+                if (_this.grid[0].p.data[i][_this.colIndex] == undefined) {
+                    return _this.defaultText;
+                }
+                return dest.getVal();
+            });
+        };
+        DefaultTextFormula.prototype.setGrid = function (grid) {
+            this.grid = grid;
+        };
+        return DefaultTextFormula;
+    }());
     var JQGridAssistant = (function () {
         function JQGridAssistant(titleNodes, gridName) {
             this.completeList = [];
@@ -613,6 +666,9 @@ var JQTable;
                             return 'id=\'' + cm.name + rowId + "\'";
                         }
                     });
+                    if (nodes[j].defaultText()) {
+                        this.addFormula(new DefaultTextFormula(this.mColModel.length - 1, colId, nodes[j].defaultText()));
+                    }
                     switch (nodes[j].align()) {
                         case TextAlign.Left:
                             this.mColModel[this.mColModel.length - 1].align = 'left';
@@ -640,7 +696,7 @@ var JQTable;
         };
         JQGridAssistant.prototype.getAllData = function () {
             var grid = $("#" + this.mGridName + "");
-            grid[0].p.data;
+            //grid[0].p.data
             var ids = grid.jqGrid('getDataIDs');
             var data = [];
             for (var i = 0; i < grid[0].p.data.length; ++i) {
@@ -892,11 +948,20 @@ var JQTable;
             }
             return rows;
         };
+        JQGridAssistant.prototype.getRawRowData = function (id) {
+            var grid = $("#" + this.mGridName + "");
+            for (var i = 0; i < grid[0].p.data.length; ++i) {
+                if (grid[0].p.data[i].id == id) {
+                    return grid[0].p.data[i];
+                }
+            }
+            return undefined;
+        };
         JQGridAssistant.prototype.getChangedData = function () {
             var grid = $("#" + this.mGridName + "");
             var data = [];
             for (var i = 0; i < this.mEditedRows.length; ++i) {
-                var rdata = grid.getRowData(this.mEditedRows[i]);
+                var rdata = this.getRawRowData(this.mEditedRows[i]);
                 var row = [this.mEditedRows[i]];
                 for (var j = 0; j < this.mColModel.length; ++j) {
                     var val = rdata[this.mColModel[j].index];
@@ -1071,7 +1136,9 @@ var JQTable;
             formula.setGrid($("#" + this.mGridName));
             if (this.mFormula.length == 0) {
                 this.completeList.push(function () {
-                    _this.invokeFormula();
+                    if (_this.getDataCount() > 0) {
+                        _this.invokeFormula();
+                    }
                 });
             }
             this.mFormula.push(formula);
