@@ -168,6 +168,10 @@ var framework;
                             }
                         }
                     }
+                    var pager = "#" + this.jqgridName() + "pager";
+                    if (this.resp.pager == 'none' || this.resp.pager == undefined) {
+                        pager = undefined;
+                    }
                     this.mTableAssist.create({
                         data: this.resp.data,
                         datatype: "local",
@@ -177,8 +181,9 @@ var framework;
                         height: '100%',
                         width: $("#" + this.opt.host).width(),
                         shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
-                        rowNum: 2000,
-                        autoScroll: true
+                        rowNum: pager ? 15 : 2000,
+                        autoScroll: true,
+                        pager: pager
                     });
                     this.adjustSize();
                 };

@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="../../route/route.ts"/>
 ///<reference path="../../basic/basicdef.ts"/>
 ///<reference path="../../basic/basicShow.ts"/>
@@ -22,7 +27,7 @@ var framework;
             var ShowView = (function (_super) {
                 __extends(ShowView, _super);
                 function ShowView() {
-                    _super.apply(this, arguments);
+                    return _super !== null && _super.apply(this, arguments) || this;
                 }
                 ShowView.prototype.renderItemSelector = function (itemId) {
                     var sels = $("#" + itemId + " select");
@@ -115,7 +120,8 @@ var framework;
                         height: this.resp.data.length > 25 ? 550 : '100%',
                         width: this.resp.width == undefined ? 1200 : this.resp.width,
                         shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
-                        autoScroll: true
+                        autoScroll: true,
+                        pager: (this.resp.pager == 'none' || this.resp.pager == undefined) ? undefined : "#" + pagername
                     }));
                 };
                 ShowView.prototype.exportExcel = function (date, id) {
@@ -123,7 +129,7 @@ var framework;
                     $("#" + id)[0].submit();
                 };
                 return ShowView;
-            })(framework.templates.singleDateReport.ShowView);
+            }(framework.templates.singleDateReport.ShowView));
             dateReport.ShowView = ShowView;
         })(dateReport = templates.dateReport || (templates.dateReport = {}));
     })(templates = framework.templates || (framework.templates = {}));

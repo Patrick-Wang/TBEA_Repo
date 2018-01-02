@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="E854333332B737FBBB14A55210FC995BSHOWCLR">
+        <response name="framework/templates/singleDateReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map key="pager" value="pager"/>
+            <map key="updateUrl" value="E854333332B737FBBB14A55210FC995BUpdateClr"/>
+            <map key="exportUrl" value="E854333332B737FBBB14A55210FC995BExportClr"/>
+        </response>
+    </controller>
+    <controller id="E854333332B737FBBB14A55210FC995BUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="pgNum" value="${request.pgNum.asInt}"/>
+        <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <callservice id="E854333332B737FBBB14A55210FC995BShowServ"/>
+        <callcontroller id="E854333332B737FBBB14A55210FC995BFmtClr"/>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>业务种类</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>经办日</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>即期汇率</name>
+                </item>
+                <item>
+                    <name>卖出币种</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>卖出金额 </name>
+                </item>
+                <item>
+                    <name>买入币种</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>买入金额 </name>
+                </item>
+                <item>
+                    <name>银行</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}${dataCount[0]}</data>
+            <dateCount/>
+        </response>
+    </controller>
+    <controller id="E854333332B737FBBB14A55210FC995BFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="3,5,7,8"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <controller id="E854333332B737FBBB14A55210FC995BExportClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="E854333332B737FBBB14A55210FC995BShowServ"/>
+        <callcontroller id="E854333332B737FBBB14A55210FC995BFmtClr"/>
+        <ExcelTemplate id="excelTemplate" sheet="即期结售汇业务"/>
+        <list id="title" type="string">单位名称,业务种类,经办日,即期汇率,卖出币种,卖出金额 ,买入币种,买入金额 ,银行</list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="1"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="${request.date.asString}即期结售汇业务.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
+    </controller>
+    <service id="E854333332B737FBBB14A55210FC995BShowServ" transaction="transactionManager">
+        <sql export="true" id="dataCount">
+select count(*) from exchange_settlement_immediate
+</sql>
+        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}">
+select 
+	id,
+	dwmc,
+	ywzl,
+	CONVERT(varchar(20),jbr, 23) tmp2,
+	jqhl,
+	mcbz,
+	mcje,
+	mrbz,
+	mrje,
+	yh
+from exchange_settlement_immediate
+</sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+        </table>
+    </service>
+</components>

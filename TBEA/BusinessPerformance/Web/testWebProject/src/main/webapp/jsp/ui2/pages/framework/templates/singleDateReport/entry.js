@@ -226,12 +226,14 @@ var framework;
                     return this.mTableAssist.getChangedData();
                 };
                 EntryView.prototype.submit = function (date) {
+                    var _this = this;
                     this.mAjaxSubmit.post($.extend(this.getParams(this.getUDate()), {
                         data: JSON.stringify(this.onLoadSubmitData())
                     }))
                         .then(function (resp) {
                         if (Util.ErrorCode.OK == resp.errorCode) {
                             Util.Toast.success("提交 成功");
+                            _this.update(_this.getUDate());
                         }
                         else {
                             Util.Toast.failed(resp.message);

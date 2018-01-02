@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="64EBE83612425900EE5DFED8A902E8FASWJ">
+        <context key="cnames" value="${sysAuth.cnames[96]}"></context>
+        <if test="${sysAuth.has[98]}">
+            <context key="tmp" value="${cnames.push['特变电工股份有限公司（采购中心）']}"></context>
+        </if>
+        <if test="${sysAuth.has[99]}">
+            <context key="tmp" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
+        </if>
+        <list id="cids">
+            <item from="0" to="${cnames.size - 1}"></item>
+        </list>
+        <context key="tmp" value="${session.put['cnames_export'][cnames]}"></context>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="64EBE83612425900EE5DFED8A902E8FAUpdateWrapperClr"/>
+            <map key="exportUrl" value="64EBE83612425900EE5DFED8A902E8FAExportWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[cids][cnames].asJson}"/>
+            <map key="nodate" value="true"/>
+        </response>
+    </controller>
+    <controller id="64EBE83612425900EE5DFED8A902E8FAUpdateWrapperClr">
+        <context key="dwmc" value="${session['cnames_export'][request.item.asInt]}"/>
+        <callcontroller id="7C949791A9295926D76100AF3602506AUpdateClr"/>
+    </controller>
+    <controller id="64EBE83612425900EE5DFED8A902E8FAExportWrapperClr">
+        <context key="dwmc" value="${session['cnames_export'][request.item.asInt]}"/>
+            <callcontroller id="7C949791A9295926D76100AF3602506AExportClr"/>
+    </controller>
+</components>

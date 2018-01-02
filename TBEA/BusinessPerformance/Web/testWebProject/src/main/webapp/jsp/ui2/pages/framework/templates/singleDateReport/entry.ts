@@ -252,6 +252,7 @@ module framework.templates.singleDateReport {
             .then((resp:Util.IResponse) => {
                 if (Util.ErrorCode.OK == resp.errorCode) {
                     Util.Toast.success("提交 成功");
+                    this.update(this.getUDate());
                 } else {
                     Util.Toast.failed(resp.message);
                 }

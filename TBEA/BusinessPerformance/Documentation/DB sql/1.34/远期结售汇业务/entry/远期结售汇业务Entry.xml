@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="7C949791A9295926D76100AF3602506AENTRYJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="7C949791A9295926D76100AF3602506AEntryUpdateClr"/>
+            <map key="submitUrl" value="7C949791A9295926D76100AF3602506AEntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="7C949791A9295926D76100AF3602506AEntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="7C949791A9295926D76100AF3602506AEntryUpdateServ"/>
+        <callcontroller id="7C949791A9295926D76100AF3602506AEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>业务种类</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>经办日</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>即期汇率</name>
+                </item>
+                <item>
+                    <name>卖出币种</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>卖出金额 </name>
+                </item>
+                <item>
+                    <name>锁定汇率</name>
+                </item>
+                <item>
+                    <name>买入币种</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>买入金额 </name>
+                </item>
+                <item>
+                    <name>交割日即期汇率</name>
+                </item>
+                <item>
+                    <name>交割日</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>交割情况</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>汇兑损益</name>
+                </item>
+                <item>
+                    <name>银行</name>
+                    <type>text</type>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="7C949791A9295926D76100AF3602506AEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="4,6,7,9,10,13"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="7C949791A9295926D76100AF3602506AEntryUpdateServ" transaction="transactionManager">
+        <sql id="data">select 
+	id,
+	dwmc,
+	ywzl,
+	CONVERT(varchar(20),jbr, 23) tmp2,
+	jqhl,
+	mcbz,
+	mcje,
+	sdhl,
+	mrbz,
+	mrje,
+	jgrjqhl,
+	CONVERT(varchar(20),jgr, 23) tmp10,
+	jgqk,
+	hdsy,
+	yh
+from exchange_settlement_forward</sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+        </table>
+    </service>
+    <controller id="7C949791A9295926D76100AF3602506AEntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="7C949791A9295926D76100AF3602506AEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="7C949791A9295926D76100AF3602506AEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="exchange_settlement_forward">
+            <where>
+                <id ref="0" type="int"/>
+            </where>
+            <set>
+                <dwmc ref="1" type="string"/>
+                <ywzl ref="2" type="string"/>
+                <jbr ref="3" type="date"/>
+                <jqhl ref="4" type="double"/>
+                <mcbz ref="5" type="string"/>
+                <mcje ref="6" type="double"/>
+                <sdhl ref="7" type="double"/>
+                <mrbz ref="8" type="string"/>
+                <mrje ref="9" type="double"/>
+                <jgrjqhl ref="10" type="double"/>
+                <jgr ref="11" type="date"/>
+                <jgqk ref="12" type="string"/>
+                <hdsy ref="13" type="double"/>
+                <yh ref="14" type="string"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="E854333332B737FBBB14A55210FC995BENTRYJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="E854333332B737FBBB14A55210FC995BEntryUpdateClr"/>
+            <map key="submitUrl" value="E854333332B737FBBB14A55210FC995BEntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="E854333332B737FBBB14A55210FC995BEntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="E854333332B737FBBB14A55210FC995BEntryUpdateServ"/>
+        <callcontroller id="E854333332B737FBBB14A55210FC995BEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>业务种类</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>经办日</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>即期汇率</name>
+                </item>
+                <item>
+                    <name>卖出币种</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>卖出金额 </name>
+                </item>
+                <item>
+                    <name>买入币种</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>买入金额 </name>
+                </item>
+                <item>
+                    <name>银行</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="E854333332B737FBBB14A55210FC995BEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="4,6,8,9"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="E854333332B737FBBB14A55210FC995BEntryUpdateServ" transaction="transactionManager">
+        <sql id="data">select 
+	id,
+	dwmc,
+	ywzl,
+	CONVERT(varchar(20),jbr, 23) tmp2,
+	jqhl,
+	mcbz,
+	mcje,
+	mrbz,
+	mrje,
+	yh
+from exchange_settlement_immediate</sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+        </table>
+    </service>
+    <controller id="E854333332B737FBBB14A55210FC995BEntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="E854333332B737FBBB14A55210FC995BEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="E854333332B737FBBB14A55210FC995BEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="exchange_settlement_immediate">
+            <where>
+                <id ref="0" type="int"/>
+            </where>
+            <set>
+                <dwmc ref="1" type="string"/>
+                <ywzl ref="2" type="string"/>
+                <jbr ref="3" type="date"/>
+                <jqhl ref="4" type="double"/>
+                <mcbz ref="5" type="string"/>
+                <mcje ref="6" type="double"/>
+                <mrbz ref="7" type="string"/>
+                <mrje ref="8" type="double"/>
+                <yh ref="9" type="double"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

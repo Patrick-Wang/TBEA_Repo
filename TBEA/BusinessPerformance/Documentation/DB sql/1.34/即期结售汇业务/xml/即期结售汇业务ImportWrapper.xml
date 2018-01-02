@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="50E1A0738E3CC48ECF5E06CC38B0B76CIWJ">
+        <list id="ids" type="int">0</list>
+        <list id="vals" type="string">即期结售汇业务</list>
+        <response name="components/import_data" type="jsp">
+            <map key="importUrl" value="50E1A0738E3CC48ECF5E06CC38B0B76CImportWrapper"/>
+            <map key="itemNodes" value="${dataNodeFactory[ids][vals].asJson}"/>
+        </response>
+    </controller>
+    <controller id="50E1A0738E3CC48ECF5E06CC38B0B76CImportWrapper">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="E854333332B737FBBB14A55210FC995BImportClr"/>
+        </if>
+    </controller>
+</components>
