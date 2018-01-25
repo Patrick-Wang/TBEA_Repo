@@ -4,11 +4,16 @@
 /// <reference path="../wlyddqkdef.ts" />
 ///<reference path="../../messageBox.ts"/>
 ///<reference path="../wlyddqkEntry.ts"/>
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var ylfxwlyddmlspcs;
 (function (ylfxwlyddmlspcs) {
     var wlyddmlspcsEntry;
@@ -33,14 +38,15 @@ var ylfxwlyddmlspcs;
                 return new JQTable.JQGridAssistant(titleNodes, gridName);
             };
             return JQGridAssistantFactory;
-        })();
+        }());
         var WlyddmlspcsEntryView = (function (_super) {
             __extends(WlyddmlspcsEntryView, _super);
             function WlyddmlspcsEntryView() {
-                _super.apply(this, arguments);
-                this.mAjaxUpdate = new Util.Ajax("wlyddmlspcs/entry/update.do", false);
-                this.mAjaxSave = new Util.Ajax("wlyddmlspcs/entry/save.do", false);
-                this.mAjaxSubmit = new Util.Ajax("wlyddmlspcs/entry/submit.do", false);
+                var _this = _super !== null && _super.apply(this, arguments) || this;
+                _this.mAjaxUpdate = new Util.Ajax("wlyddmlspcs/entry/update.do", false);
+                _this.mAjaxSave = new Util.Ajax("wlyddmlspcs/entry/save.do", false);
+                _this.mAjaxSubmit = new Util.Ajax("wlyddmlspcs/entry/submit.do", false);
+                return _this;
             }
             WlyddmlspcsEntryView.newInstance = function () {
                 return new WlyddmlspcsEntryView();
@@ -80,6 +86,10 @@ var ylfxwlyddmlspcs;
                     for (var j = 0; j < allData[i].length - 2; ++j) {
                         submitData[i].push(allData[i][j + 2]);
                         submitData[i][j] = submitData[i][j].replace(new RegExp(' ', 'g'), '');
+                        //if ("" == submitData[i][j]){
+                        //    Util.MessageBox.tip("有空内容 无法提交")
+                        //    return;
+                        //}
                     }
                 }
                 this.mAjaxSubmit.post({
@@ -174,7 +184,7 @@ var ylfxwlyddmlspcs;
                 }));
             };
             return WlyddmlspcsEntryView;
-        })(wlyddqk.BaseEntryPluginView);
+        }(wlyddqk.BaseEntryPluginView));
         wlyddmlspcsEntry.pluginView = WlyddmlspcsEntryView.newInstance();
     })(wlyddmlspcsEntry = ylfxwlyddmlspcs.wlyddmlspcsEntry || (ylfxwlyddmlspcs.wlyddmlspcsEntry = {}));
 })(ylfxwlyddmlspcs || (ylfxwlyddmlspcs = {}));

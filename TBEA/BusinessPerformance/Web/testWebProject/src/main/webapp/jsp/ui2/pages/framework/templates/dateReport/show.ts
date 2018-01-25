@@ -27,6 +27,7 @@ module framework.templates.dateReport {
     class ItemShowView extends framework.templates.singleDateReport.ShowView{
         unitedSelector : Util.UnitedSelector;
         unitedSelector2 : Util.UnitedSelector;
+        unitedSelectors : Util.UnitedSelector
         doubleHeader : boolean = false;
 
         onInitialize(opt:ShowOption):void{

@@ -50,7 +50,7 @@
                 </item>
             </header>
             <data>${fmtServ.result}</data>
-            <pager>pager</pager>
+            <dataCount>${dataCount[0]}</dataCount>
         </response>
     </controller>
     <controller id="E854333332B737FBBB14A55210FC995BFmtClr">
@@ -92,21 +92,39 @@
     </controller>
     <service id="E854333332B737FBBB14A55210FC995BShowServ" transaction="transactionManager">
 
-        <sql id="data">
-select 
-	id,
-	dwmc,
-	ywzl,
-	CONVERT(varchar(20),jbr, 23) tmp2,
-	jqhl,
-	mcbz,
-	mcje,
-	mrbz,
-	mrje,
-	yh
-from exchange_settlement_immediate
-            where dwmc = ${dwmc}
-</sql>
+        <sql id="dataCount" export="true"><![CDATA[
+            select
+                count(*) c
+            from exchange_settlement_immediate
+            where
+                (${dwmc} is null or dwmc = ${dwmc}) and
+                (${bsType} is null or ywzl = ${bsType}) and
+                (${currencySell} is null or mcbz = ${currencySell}) and
+                (${currencyBuy} is null or mrbz = ${currencyBuy}) and
+                (${bank} is null or yh like ${'%bank%'})
+        ]]></sql>
+        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
+            select
+                id,
+                dwmc,
+                ywzl,
+                CONVERT(varchar(20),jbr, 23) tmp2,
+                jqhl,
+                mcbz,
+                mcje,
+                mrbz,
+                mrje,
+                yh
+            from exchange_settlement_immediate
+            where
+                (${dwmc} is null or dwmc = ${dwmc}) and
+                (${bsType} is null or ywzl = ${bsType}) and
+                (${currencySell} is null or mcbz = ${currencySell}) and
+                (${currencyBuy} is null or mrbz = ${currencyBuy}) and
+                (${bank} is null or yh like ${'%bank%'})
+            order by
+                jbr asc
+        ]]></sql>
         <list id="ids" sql="data" value="0"/>
         <context key="counter" value="${counterFactory.newCounter}"/>
         <table export="true" id="result" rowIds="ids">

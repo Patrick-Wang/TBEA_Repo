@@ -1,0 +1,156 @@
+html, body{
+    font-family: "Microsoft YaHei";
+}
+
+
+.page-breadcrumbs {
+    height: 28px;
+    min-height: 28px;
+    line-height: 28px;
+    padding-top: 1px;
+}
+
+
+.search-area{
+    width:100%;
+    background:white;
+    padding-top:10px;
+    padding-bottom: 10px;
+    padding-left:30px;
+    padding-right:30px;
+}
+
+.option-area .bootstrap-select{
+    margin : 3px 5px 3px 5px;
+}
+
+.option-area .btn-search{
+    margin : 3px 0px 3px 0px;
+}
+
+.btn-custom-sz {
+    width:105px;
+    /*padding: 0 10px;*/
+    font-size: 12px;
+}
+
+.btn{
+    border-radius: 0px;
+}
+
+.bootstrap-select .dropdown-menu{
+    border : none !important;
+}
+
+.search-area .search-item-lov{
+    width:220px;
+    float:left;
+}
+.search-area .search-item-lov button{
+    height: 28px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+
+
+.search-item-lov > select{
+    width : 100%;
+    height: 25px;
+    padding-top:0px;
+    padding-bottom:0px;
+}
+
+.option-area .search-item-period{
+    width:220px;
+    float:left;
+}
+
+.option-area .search-item-period > input{
+   height:28px;
+}
+
+.option-area .search-item-date {
+    width:220px;
+    float:left;
+}
+
+.option-area .search-item-date > input{
+    height:28px;
+}
+
+.option-area .search-item-input > input{
+    height:28px;
+    width:220px;
+    padding-left: 10px;
+}
+
+.option-area .search-item-input{
+}
+
+.option-area .search-label{
+    height:28px;
+    line-height: 28px;
+    text-align: left;
+    float:left;
+    width:150px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+}
+
+.option-area table{
+    border:0;
+    cellspacing:0;
+    cellpadding:0;
+    width:100%;
+}
+
+.option-area table .th1, .option-area table .th3{
+    width : 15%;
+}
+
+.option-area table .th2, .option-area table .th4{
+    width : 25%;
+}
+.option-area table .th5{
+    width : 20%;
+}
+
+.option-area .cux-btn-group-fun{
+    margin : 12px 0px 3px 0px;
+}
+
+.opt-btn{
+    height: 28px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.option-area .btn-export{
+    margin-right:20px;
+}
+
+.option-area .btn-collect{
+    margin-right:20px;
+}
+
+.option-area .btn-search{
+    margin-right:14px;
+}
+
+.option-area .btn-reset{
+    margin-right:14px;
+}
+
+.well{
+    padding-top:8px;
+    padding-bottom:5px;
+}
+
+.search-label-warning{
+    color:red;
+    font-size:8px;
+    padding-left:5px;
+    font-style:normal;
+}

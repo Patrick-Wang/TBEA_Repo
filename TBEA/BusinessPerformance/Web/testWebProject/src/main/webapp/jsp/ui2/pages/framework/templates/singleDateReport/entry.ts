@@ -163,7 +163,7 @@ module framework.templates.singleDateReport {
             var parent = $("#" + this.opt.host);
             var pagername = this.jqgridName() + "pager";
             parent.empty();
-            parent.append("<table id='"+ this.jqgridName() +"'><div id='" + pagername + "'></table>");
+            parent.append('<table id="'+ this.jqgridName() +'"></table><div id="' + pagername + '"></div>');
             this.mTableAssist = Util.createTable(this.jqgridName(), this.resp);
             return this.mTableAssist;
         }

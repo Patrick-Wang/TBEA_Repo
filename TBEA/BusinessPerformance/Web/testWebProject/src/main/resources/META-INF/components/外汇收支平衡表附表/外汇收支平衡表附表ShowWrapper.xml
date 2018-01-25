@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="FAB719DB827A05373457CA993A90AD77SWJ">
+        <callservice id="9569BB9CEF88B0ADDFF9A7FCA0B46FA6Filter"></callservice>
+        <context key="tmp" value="${session.put['cur_export'][currency]}"></context>
+        <list id="ids" type="int">0,1,2,3</list>
+        <list id="vals" type="string">内部户资金情况,银行账户资金,定期,通知</list>
+        <context key="dwmc" value="${sysAuth.cnames[96]}"></context>
+        <if test="${sysAuth.has[98]}">
+            <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（采购中心）']}"></context>
+        </if>
+        <if test="${sysAuth.has[99]}">
+            <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（资金中心）']}"></context>
+        </if>
+        <context key="tmp" value="${session.put['_whszphdwmc'][dwmc]}"></context>
+        <list id="dwids" type="int">
+            <item from="0" to="${dwmc - 1}"></item>
+        </list>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="FAB719DB827A05373457CA993A90AD77UpdateWrapperClr"/>
+            <map key="exportUrl" value="FAB719DB827A05373457CA993A90AD77ExportWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="nodeData2" value="${dataNodeFactory[currIds][currency].asJson}"/>
+            <map key="nodeData3" value="${dataNodeFactory[dwids][dwmc].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="FAB719DB827A05373457CA993A90AD77UpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <context key="currency" value="${session['cur_export'][request.item2.asInt]}"/>
+        <context key="dwmc" value="${session['_whszphdwmc'][request.item3.asInt]}"></context>
+        <if test="${item == 0}">
+            <callcontroller id="015AFF2FCA3E707D02B33FF81B2E2FC5UpdateClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="B1DA842A8AA3DF302AC88719CA01F3F0UpdateClr"/>
+        </elseif>
+        <elseif test="${item == 2}">
+            <callcontroller id="DFACC9455915B729F31C0CDB06BA274FUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 3}">
+            <callcontroller id="8B9772AAEC2F5FA85576447DEADDB6AFUpdateClr"/>
+        </elseif>
+    </controller>
+    <controller id="FAB719DB827A05373457CA993A90AD77ExportWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <context key="currency" value="${session['cur_export'][request.item2.asInt]}"/>
+
+        <context key="dwmc" value="${session['_whszphdwmc'][request.item3.asInt]}"></context>
+        <if test="${item == 0}">
+            <callcontroller id="015AFF2FCA3E707D02B33FF81B2E2FC5ExportClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="B1DA842A8AA3DF302AC88719CA01F3F0ExportClr"/>
+        </elseif>
+        <elseif test="${item == 2}">
+            <callcontroller id="DFACC9455915B729F31C0CDB06BA274FExportClr"/>
+        </elseif>
+        <elseif test="${item == 3}">
+            <callcontroller id="8B9772AAEC2F5FA85576447DEADDB6AFExportClr"/>
+        </elseif>
+    </controller>
+</components>

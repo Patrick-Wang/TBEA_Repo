@@ -205,6 +205,11 @@
 
                 </div>
             </div>
+            <div  style="float: left;margin-right:10px">
+                <div id="im3">
+
+                </div>
+            </div>
             <input id="updateBtn" type="button" value="更新" style="float: left; width: 80px; margin-left: 10px;"
                    onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_UPDATE)" />
         </td>
@@ -228,8 +233,10 @@
     var orgTitle='${title}';
     var nd = '${nodeData}';
     var nd2 = '${nodeData2}';
+    var nd3 = '${nodeData3}';
     var ind = nd == '' ? undefined : JSON.parse(nd);
     var ind2 = nd2 == '' ? undefined : JSON.parse(nd2);
+    var ind3 = nd3 == '' ? undefined : JSON.parse(nd3);
 
 	if ("true" == '${nodate}'){
 	    $("#dt").hide();
@@ -284,6 +291,8 @@
             itemNodes: ind,
             itemId2:"im2",
             itemNodes2: ind2
+            itemId3:"im3",
+            itemNodes3: ind3
         });
         $("#exportButton")
             .css("height", "23px")

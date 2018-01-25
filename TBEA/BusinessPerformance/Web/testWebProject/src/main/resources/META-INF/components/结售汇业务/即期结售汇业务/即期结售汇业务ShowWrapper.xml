@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="50E1A0738E3CC48ECF5E06CC38B0B76CSWJ">
-        <list id="ids" type="int">0</list>
-        <list id="vals" type="string">即期结售汇业务</list>
+        <if test="${'session._currency' == 'null'}">
+            <callservice id="7C949791A9295926D76100AF3602506AGetCurrencyServ"></callservice>
+        </if>
+
         <context key="cnames" value="${sysAuth.cnames[96]}"></context>
         <if test="${sysAuth.has[98]}">
             <context key="tmp" value="${cnames.push['特变电工股份有限公司（采购中心）']}"></context>
@@ -9,26 +11,76 @@
         <if test="${sysAuth.has[99]}">
             <context key="tmp" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
         </if>
-        <list id="cids">
-            <item from="0" to="${cnames.size - 1}"></item>
-        </list>
         <context key="tmp" value="${session.put['cnames_export'][cnames]}"></context>
-        <response name="framework/templates/dateReport/show" type="jsp">
+        <response name="framework/templates/flexView/flexView" type="jsp">
             <map key="updateUrl" value="50E1A0738E3CC48ECF5E06CC38B0B76CUpdateWrapperClr"/>
             <map key="exportUrl" value="50E1A0738E3CC48ECF5E06CC38B0B76CExportWrapperClr"/>
-            <map key="nodeData" value="${dataNodeFactory[cids][cnames].asJson}"/>
-            <map key="nodate" value="true"/>
+            <map key="pager" value="true"/>
+            <map key="options"><![CDATA[
+                [
+                    {
+                        "param" : "comp",
+                        "name": "公司名称",
+                        "type":"lov",
+                        "lov":{
+                            "option": ${list.new.push[cnames].push[cnames].transpose.asJson}
+                        }
+                    },
+                    {
+                        "param" : "bsType",
+                        "name": "业务种类",
+                        "type":"lov",
+                        "lov":{
+                            "option": [["结汇", "结汇"], ["售汇", "售汇"]]
+                        }
+                    },
+                    {
+                        "param" : "currencySell",
+                        "name": "卖出币种",
+                        "type":"lov",
+                        "lov":{
+                            "option": ${session._currency.asJson}
+                        }
+                    },
+                    {
+                        "param" : "currencyBuy",
+                        "name": "买入币种",
+                        "type":"lov",
+                        "lov":{
+                            "option": ${session._currency.asJson}
+                        }
+                    },
+                    {
+                        "param" : "bank",
+                        "name": "银行",
+                        "type":"input"
+                    }
+                ]
+            ]]></map>
         </response>
     </controller>
     <controller id="50E1A0738E3CC48ECF5E06CC38B0B76CUpdateWrapperClr">
-        <context key="dwmc" value="${session['cnames_export'][request.item.asInt]}"/>
-
+        <context key="pgNum" value="${request.pgNum.asInt}"/>
+        <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <context key="dwmc" value="${request.comp.asString}"/>
+        <context key="cond" value="${request.cond.asString}"/>
+        <context key="currencySell" value="${request.currencySell.asString}"/>
+        <context key="currencyBuy" value="${request.currencyBuy.asString}"/>
+        <context key="bsType" value="${request.bsType.asString}"/>
+        <context key="bank" value="${request.bank.asString}"/>
             <callcontroller id="E854333332B737FBBB14A55210FC995BUpdateClr"/>
 
     </controller>
     <controller id="50E1A0738E3CC48ECF5E06CC38B0B76CExportWrapperClr">
-        <context key="dwmc" value="${session['cnames_export'][request.item.asInt]}"/>
-            <callcontroller id="E854333332B737FBBB14A55210FC995BExportClr"/>
+        <context key="pgNum" value="${request.pgNum.asInt}"/>
+        <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <context key="dwmc" value="${request.comp.asString}"/>
+        <context key="cond" value="${request.cond.asString}"/>
+        <context key="currencySell" value="${request.currencySell.asString}"/>
+        <context key="currencyBuy" value="${request.currencyBuy.asString}"/>
+        <context key="bsType" value="${request.bsType.asString}"/>
+        <context key="bank" value="${request.bank.asString}"/>
+        <callcontroller id="E854333332B737FBBB14A55210FC995BExportClr"/>
 
     </controller>
 </components>

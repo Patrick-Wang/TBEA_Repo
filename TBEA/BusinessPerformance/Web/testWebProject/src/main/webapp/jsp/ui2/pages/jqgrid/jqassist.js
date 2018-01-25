@@ -516,7 +516,7 @@ var JQTable;
             return this.mOpts.sorttype;
         };
         Node.prototype.defaultText = function () {
-            return this.mOpts.default;
+            return this.mOpts.defaultText;
         };
         return Node;
     }());

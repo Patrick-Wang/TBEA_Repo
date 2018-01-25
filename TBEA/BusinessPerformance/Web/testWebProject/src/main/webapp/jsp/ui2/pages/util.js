@@ -185,13 +185,22 @@ var Util;
                 isNumber: false,
                 editType: "text",
                 isSortable: sortable,
-                default: header.default
+                defaultText: header['default']
             });
         }
         else if ("hidden" == header.type) {
             node = null; //JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
         }
         else if ("select" == header.type) {
+            var vals = "";
+            for (var i = 0; i < header.options.length; ++i) {
+                if (i < header.options.length - 1) {
+                    vals += header.options[i] + ':' + header.options[i] + ';';
+                }
+                else {
+                    vals += header.options[i] + ':' + header.options[i];
+                }
+            }
             node = JQTable.Node.create({
                 name: header.name,
                 align: align,
@@ -200,12 +209,21 @@ var Util;
                 editType: "select",
                 isSortable: sortable,
                 options: {
-                    value: header.options
+                    value: vals
                 },
-                default: header.default
+                defaultText: header['default']
             });
         }
         else if ("searchSelect" == header.type) {
+            var vals = "";
+            for (var i = 0; i < header.options.length; ++i) {
+                if (i < header.options.length - 1) {
+                    vals += header.options[i] + ':' + header.options[i] + ';';
+                }
+                else {
+                    vals += header.options[i] + ':' + header.options[i];
+                }
+            }
             node = JQTable.Node.create({
                 name: header.name,
                 align: align,
@@ -214,14 +232,14 @@ var Util;
                 editType: "select",
                 isSortable: sortable,
                 options: {
-                    value: header.options,
+                    value: vals,
                     dataInit: function (element) {
                         $(element).select2({
                             language: "zh-CN"
                         });
                     }
                 },
-                default: header.default
+                defaultText: header['default']
             });
         }
         else {
@@ -231,13 +249,13 @@ var Util;
                 width: header.width,
                 isReadOnly: readOnly,
                 isSortable: sortable,
-                default: header.default
+                defaultText: header['default']
             });
         }
         if (header.sub != undefined) {
-            for (var i = 0; i < header.sub.length; ++i) {
-                if (header.sub[i].type != 'hidden') {
-                    node.append(Util.parseHeader(header.sub[i]));
+            for (var i_1 = 0; i_1 < header.sub.length; ++i_1) {
+                if (header.sub[i_1].type != 'hidden') {
+                    node.append(Util.parseHeader(header.sub[i_1]));
                 }
             }
         }

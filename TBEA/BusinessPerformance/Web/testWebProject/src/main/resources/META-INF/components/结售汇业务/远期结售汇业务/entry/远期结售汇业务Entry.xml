@@ -21,7 +21,8 @@
                 </item>
                 <item>
                     <name>业务种类</name>
-                    <type>text</type>
+                    <type>searchSelect</type>
+                    <options>["结汇","售汇"]</options>
                 </item>
                 <item>
                     <name>经办日</name>
@@ -58,7 +59,8 @@
                 </item>
                 <item>
                     <name>交割情况</name>
-                    <type>text</type>
+                    <type>searchSelect</type>
+                    <options>["已交割", "未到期"]</options>
                 </item>
                 <item>
                     <name>汇兑损益</name>

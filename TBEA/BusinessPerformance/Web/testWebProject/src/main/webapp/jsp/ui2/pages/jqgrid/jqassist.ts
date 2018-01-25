@@ -391,8 +391,8 @@ module JQTable {
         hidden?:boolean;
         //add by hzdqzy
         isSortable?: boolean;
-        sorttype?: string
-        default?:string
+        sorttype?: string;
+        defaultText?: string;
     }
 
     export class Node {
@@ -578,7 +578,7 @@ module JQTable {
         }
 
         public defaultText():any{
-            return this.mOpts.default;
+            return this.mOpts.defaultText;
         }
 
         //---------------------------------------------------------------------
@@ -1657,7 +1657,6 @@ module JQTable {
                     beforeEditCell(id, nm, tmp, iRow, iCol);
                     this.selected(iRow, iCol);
                 };
-
             }
             else {
                 option.beforeEditCell = (id:any, nm:any, tmp:any, iRow:any, iCol:any) => {

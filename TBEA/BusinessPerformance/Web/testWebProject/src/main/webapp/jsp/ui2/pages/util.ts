@@ -247,11 +247,19 @@ module Util {
                 isNumber:false,
                 editType:"text",
                 isSortable : sortable,
-                default:header.default
+                defaultText:header['default']
             });
         }else if ("hidden" == header.type){
             node = null;//JQTable.Node.create({name : header.name, align : align, isReadOnly:readOnly,isNumber:false,editType:"text", hidden:true});
         }else if ("select" == header.type){
+            let vals:string = "";
+            for (var i = 0; i < header.options.length; ++i) {
+                if (i < header.options.length - 1) {
+                    vals += header.options[i] + ':' + header.options[i] + ';';
+                } else {
+                    vals += header.options[i] + ':' + header.options[i];
+                }
+            }
             node = JQTable.Node.create({
                 name : header.name,
                 align : align,
@@ -260,11 +268,19 @@ module Util {
                 editType: "select",
                 isSortable : sortable,
                 options: {
-                    value: header.options
+                    value: vals
                 },
-                default : header.default
+                defaultText : header['default']
             });
         }else if ("searchSelect" == header.type){
+            let vals:string = "";
+            for (var i = 0; i < header.options.length; ++i) {
+                if (i < header.options.length - 1) {
+                    vals += header.options[i] + ':' + header.options[i] + ';';
+                } else {
+                    vals += header.options[i] + ':' + header.options[i];
+                }
+            }
             node = JQTable.Node.create({
                 name: header.name,
                 align: align,
@@ -273,14 +289,14 @@ module Util {
                 editType: "select",
                 isSortable: sortable,
                 options: {
-                    value: header.options ,
+                    value: vals,
                     dataInit: function (element) {
                         $(element).select2({
                             language: "zh-CN"
                         });
                     }
                 },
-                default:header.default
+                defaultText:header['default']
             });
         }else{
             node = JQTable.Node.create({
@@ -289,7 +305,7 @@ module Util {
                 width : header.width,
                 isReadOnly:readOnly,
                 isSortable : sortable,
-                default:header.default});
+                defaultText:header['default']});
         }
 
         if (header.sub != undefined) {

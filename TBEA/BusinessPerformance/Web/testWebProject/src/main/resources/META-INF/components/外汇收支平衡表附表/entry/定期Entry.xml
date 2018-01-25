@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="DFACC9455915B729F31C0CDB06BA274FENTRYJSP">
+        <response name="framework/templates/singleDateReport/entry" type="jsp">
+            <map key="updateUrl" value="DFACC9455915B729F31C0CDB06BA274FEntryUpdateClr"/>
+            <map key="submitUrl" value="DFACC9455915B729F31C0CDB06BA274FEntrySubmitClr"/>
+        </response>
+    </controller>
+    <controller id="DFACC9455915B729F31C0CDB06BA274FEntryUpdateClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <callservice id="DFACC9455915B729F31C0CDB06BA274FEntryUpdateServ"/>
+        <callcontroller id="DFACC9455915B729F31C0CDB06BA274FEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位名称</name>
+                    <type>text</type>
+                    <default>${dwmc}</default>
+                    <readOnly>true</readOnly>
+                </item>
+                <item>
+                    <name>银行</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>开户地</name>
+                    <type>text</type>
+                </item>
+                <item>
+                    <name>币种</name>
+                    <type>searchSelect</type>
+                    <options>${bzs}</options>
+                </item>
+                <item>
+                    <name>利率%</name>
+                </item>
+                <item>
+                    <name>起息日</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>到期日</name>
+                    <type>date</type>
+                </item>
+                <item>
+                    <name>利息</name>
+                </item>
+                <item>
+                    <name>金额</name>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+        </response>
+    </controller>
+    <controller id="DFACC9455915B729F31C0CDB06BA274FEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="5,8,9"/>
+            </NumberFormatter>
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+    <service id="DFACC9455915B729F31C0CDB06BA274FEntryUpdateServ" transaction="transactionManager">
+        <sql id="bzs" export="true">
+            select name from foreign_exchange_currency
+        </sql>
+        <sql id="data"><![CDATA[
+            select
+                id,
+                dwmc,
+                yh,
+                khd,
+                bz,
+                ll,
+                CONVERT(varchar(20),qxr, 23) tmp7,
+                CONVERT(varchar(20),dqr, 23) tmp8,
+                lx,
+                je
+            from account_fond_fixed
+            where
+                nf = ${cal.year} and
+                yf = ${cal.month}
+            ]]></sql>
+        <list id="ids" sql="data" value="0"/>
+        <context key="counter" value="${counterFactory.newCounter}"/>
+        <table export="true" id="result" rowIds="ids">
+            <list sql="data" type="string" value="${counter.reset[1].val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="string" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="date" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+            <list sql="data" type="double" value="${counter.next.val}"/>
+        </table>
+    </service>
+    <controller id="DFACC9455915B729F31C0CDB06BA274FEntrySubmitClr">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <context key="src" value="${session.account.name} 录入"/>
+        <context key="time" value="${calendar.current.secondFormat}"/>
+        <callservice id="DFACC9455915B729F31C0CDB06BA274FEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="DFACC9455915B729F31C0CDB06BA274FEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="account_fond_fixed">
+            <where>
+                <id ref="0" type="int"/>
+            </where>
+            <set>
+                <nf value="${cal.year}" type="int"/>
+                <yf value="${cal.month}" type="int"/>
+                <dwmc ref="1" type="string"/>
+                <yh ref="2" type="string"/>
+                <khd ref="3" type="string"/>
+                <bz ref="4" type="string"/>
+                <ll ref="5" type="double"/>
+                <qxr ref="6" type="date"/>
+                <dqr ref="7" type="date"/>
+                <lx ref="8" type="double"/>
+                <je ref="9" type="double"/>
+                <_src type="string" value="${src}"/>
+                <_time type="date" value="${time}"/>
+            </set>
+        </merge>
+    </service>
+</components>

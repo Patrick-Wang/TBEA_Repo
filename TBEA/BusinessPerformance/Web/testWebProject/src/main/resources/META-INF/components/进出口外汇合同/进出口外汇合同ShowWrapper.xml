@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="B60D4AAC5CB0C71C5F807D2F68E9F535SWJ">
+        <context key="cnames" value="${sysAuth.cnames[96]}"></context>
+        <if test="${sysAuth.has[98]}">
+            <context key="cnames" value="${cnames.push['特变电工股份有限公司（采购中心）']}"></context>
+        </if>
+        <if test="${sysAuth.has[99]}">
+            <context key="cnames" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
+        </if>
+        <if test="${cnames.size > 1}">
+            <list id="cnames" type="string">
+                <item insert="0">全部</item>
+            </list>
+        </if>
+        <list id="cids">
+            <item from="0" to="${cnames.size - 1}"></item>
+        </list>
+        <context key="tmp" value="${session.put['cnames_import_jck'][cnames]}"></context>
+        <list id="ids" type="int">0,1</list>
+        <list id="vals" type="string">进口外汇合同,出口外汇合同</list>
+        <response name="framework/templates/dateReport/show" type="jsp">
+            <map key="updateUrl" value="B60D4AAC5CB0C71C5F807D2F68E9F535UpdateWrapperClr"/>
+            <map key="exportUrl" value="B60D4AAC5CB0C71C5F807D2F68E9F535ExportWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="nodeData2" value="${dataNodeFactory[cids][cnames].asJson}"/>
+            <map key="nodate" value="true"/>
+        </response>
+    </controller>
+    <controller id="B60D4AAC5CB0C71C5F807D2F68E9F535UpdateWrapperClr">
+
+        <context key="item" value="${request.item.asInt}"/>
+
+        <context key="dwmc" value="${session['cnames_import_jck'][request.item2.asInt]}"/>
+        <if test="${item == 0}">
+            <callcontroller id="B6433EB172F2E2533CF75BB9767C9588UpdateClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="03592CA737B3E3319931BEECE7E0089FUpdateClr"/>
+        </elseif>
+    </controller>
+    <controller id="B60D4AAC5CB0C71C5F807D2F68E9F535ExportWrapperClr">
+
+
+        <context key="dwmc" value="${session['cnames_import_jck'][request.item2.asInt]}"/>
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="B6433EB172F2E2533CF75BB9767C9588ExportClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="03592CA737B3E3319931BEECE7E0089FExportClr"/>
+        </elseif>
+    </controller>
+</components>

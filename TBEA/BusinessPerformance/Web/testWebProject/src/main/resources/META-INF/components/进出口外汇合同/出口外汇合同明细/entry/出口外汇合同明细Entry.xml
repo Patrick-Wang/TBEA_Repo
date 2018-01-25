@@ -180,7 +180,7 @@
 
     <service id="E9170B6930092F54471CD717CC5FABF7EntryUpdateServ" transaction="transactionManager">
         <callservice id="E9170B6930092F54471CD717CC5FABF7EntryFindServ"></callservice>
-        <if test="${data.isEmpty}">
+        <if test="${data.isEmpty} &amp;&amp; (item != 0)">
             <sql><![CDATA[
                 insert into foreign_exchange_export_contract_detail
                     (exportContractId, year, month)

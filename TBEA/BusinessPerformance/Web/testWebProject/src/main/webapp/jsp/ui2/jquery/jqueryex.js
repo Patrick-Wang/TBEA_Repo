@@ -1,5 +1,6 @@
 (function(){
     var _old_jq_resize = $.fn.resize;
+
     var _old_jq_removeClass = $.fn.removeClass;
     var _un_resize_list__ = [];
 
@@ -159,7 +160,6 @@
             }
             return $(this);
         }
-
         //eResize : function(onResize){
         //    var _this = $(this);
         //    var oldSize = [];

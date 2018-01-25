@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><components>
+    <controller id="FAB719DB827A05373457CA993A90AD77EWJ">
+        <list id="ids" type="int">0,1,2,3</list>
+        <list id="vals" type="string">内部户资金情况,银行账户资金,定期,通知</list>
+        <response name="framework/templates/whszfb/entry" type="jsp">
+            <map key="updateUrl" value="FAB719DB827A05373457CA993A90AD77EntryUpdateWrapperClr"/>
+            <map key="submitUrl" value="FAB719DB827A05373457CA993A90AD77EntrySubmitWrapperClr"/>
+            <map key="nodeData" value="${dataNodeFactory[ids][vals].asJson}"/>
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+        </response>
+    </controller>
+    <controller id="FAB719DB827A05373457CA993A90AD77EntryUpdateWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <context key="dwmc" value="${sysAuth.cnames[102]}"></context>
+        <if test="${sysAuth.has[100]}">
+            <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（采购中心）']}"></context>
+        </if>
+        <if test="${sysAuth.has[101]}">
+            <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（资金中心）']}"></context>
+        </if>
+        <context key="dwmc" value="${dwmc[0]}"/>
+        <if test="${item == 0}">
+            <callcontroller id="015AFF2FCA3E707D02B33FF81B2E2FC5EntryUpdateClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="B1DA842A8AA3DF302AC88719CA01F3F0EntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 2}">
+            <callcontroller id="DFACC9455915B729F31C0CDB06BA274FEntryUpdateClr"/>
+        </elseif>
+        <elseif test="${item == 3}">
+            <callcontroller id="8B9772AAEC2F5FA85576447DEADDB6AFEntryUpdateClr"/>
+        </elseif>
+    </controller>
+    <controller id="FAB719DB827A05373457CA993A90AD77EntrySubmitWrapperClr">
+        <context key="item" value="${request.item.asInt}"/>
+        <if test="${item == 0}">
+            <callcontroller id="015AFF2FCA3E707D02B33FF81B2E2FC5EntrySubmitClr"/>
+        </if>
+        <elseif test="${item == 1}">
+            <callcontroller id="B1DA842A8AA3DF302AC88719CA01F3F0EntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 2}">
+            <callcontroller id="DFACC9455915B729F31C0CDB06BA274FEntrySubmitClr"/>
+        </elseif>
+        <elseif test="${item == 3}">
+            <callcontroller id="8B9772AAEC2F5FA85576447DEADDB6AFEntrySubmitClr"/>
+        </elseif>
+    </controller>
+</components>

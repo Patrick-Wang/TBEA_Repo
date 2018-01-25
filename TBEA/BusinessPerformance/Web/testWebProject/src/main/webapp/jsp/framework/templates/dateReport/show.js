@@ -59,10 +59,17 @@ var framework;
                     this.renderItemSelector(opt.itemId);
                     if (opt.itemNodes2 != undefined) {
                         this.unitedSelector2 = new Util.UnitedSelector(opt.itemNodes2, opt.itemId2);
-                        this.unitedSelector.change(function () {
+                        this.unitedSelector2.change(function () {
                             _this.renderItemSelector(opt.itemId2);
                         });
                         this.renderItemSelector(opt.itemId2);
+                    }
+                    if (opt.itemNodes3 != undefined) {
+                        this.unitedSelector3 = new Util.UnitedSelector(opt.itemNodes3, opt.itemId3);
+                        this.unitedSelector3.change(function () {
+                            _this.renderItemSelector(opt.itemId3);
+                        });
+                        this.renderItemSelector(opt.itemId3);
                     }
                     _super.prototype.onInitialize.call(this, opt);
                 };
@@ -70,7 +77,8 @@ var framework;
                     return {
                         date: this.getDate(date),
                         item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id,
-                        item2: this.unitedSelector2 != undefined ? this.unitedSelector2.getDataNode(this.unitedSelector2.getPath()).data.id : undefined
+                        item2: this.unitedSelector2 != undefined ? this.unitedSelector2.getDataNode(this.unitedSelector2.getPath()).data.id : undefined,
+                        item3: this.unitedSelector3 != undefined ? this.unitedSelector3.getDataNode(this.unitedSelector3.getPath()).data.id : undefined
                     };
                 };
                 ShowView.prototype.getDate = function (date) {
@@ -120,8 +128,7 @@ var framework;
                         height: this.resp.data.length > 25 ? 550 : '100%',
                         width: this.resp.width == undefined ? 1200 : this.resp.width,
                         shrinkToFit: this.resp.shrinkToFit == "false" ? false : true,
-                        autoScroll: true,
-                        pager: (this.resp.pager == 'none' || this.resp.pager == undefined) ? undefined : "#" + pagername
+                        autoScroll: true
                     }));
                 };
                 ShowView.prototype.exportExcel = function (date, id) {

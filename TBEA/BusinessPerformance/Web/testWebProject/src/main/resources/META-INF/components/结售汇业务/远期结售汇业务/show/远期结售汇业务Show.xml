@@ -68,7 +68,7 @@
                 </item>
             </header>
             <data>${fmtServ.result}</data>
-            <pager>pager</pager>
+            <dataCount>${dataCount[0]}</dataCount>
         </response>
     </controller>
     <controller id="7C949791A9295926D76100AF3602506AFmtClr">
@@ -109,26 +109,46 @@
         <response name="${calendar.current.format}远期结售汇业务.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="7C949791A9295926D76100AF3602506AShowServ" transaction="transactionManager">
-        <sql id="data">
-select 
-	id,
-	dwmc,
-	ywzl,
-	CONVERT(varchar(20),jbr, 23) tmp2,
-	jqhl,
-	mcbz,
-	mcje,
-	sdhl,
-	mrbz,
-	mrje,
-	jgrjqhl,
-	CONVERT(varchar(20),jgr, 23) tmp10,
-	jgqk,
-	hdsy,
-	yh
-from exchange_settlement_forward
-            where dwmc = ${dwmc}
-</sql>
+        <sql id="dataCount" export="true"><![CDATA[
+            select
+                count(*) c
+            from exchange_settlement_forward
+            where
+                (${dwmc} is null or dwmc = ${dwmc}) and
+                (${cond} is null or jgqk = ${cond}) and
+                (${bsType} is null or ywzl = ${bsType}) and
+                (${currencySell} is null or mcbz = ${currencySell}) and
+                (${currencyBuy} is null or mrbz = ${currencyBuy}) and
+                (${bank} is null or yh like ${'%bank%'})
+        ]]></sql>
+        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
+            select
+                id,
+                dwmc,
+                ywzl,
+                CONVERT(varchar(20),jbr, 23) tmp2,
+                jqhl,
+                mcbz,
+                mcje,
+                sdhl,
+                mrbz,
+                mrje,
+                jgrjqhl,
+                CONVERT(varchar(20),jgr, 23) tmp10,
+                jgqk,
+                hdsy,
+                yh
+            from exchange_settlement_forward
+            where
+                (${dwmc} is null or dwmc = ${dwmc}) and
+                (${cond} is null or jgqk = ${cond}) and
+                (${bsType} is null or ywzl = ${bsType}) and
+                (${currencySell} is null or mcbz = ${currencySell}) and
+                (${currencyBuy} is null or mrbz = ${currencyBuy}) and
+                (${bank} is null or yh like ${'%bank%'})
+            order by
+                jgr asc
+        ]]></sql>
         <list id="ids" sql="data" value="0"/>
         <context key="counter" value="${counterFactory.newCounter}"/>
         <table export="true" id="result" rowIds="ids">

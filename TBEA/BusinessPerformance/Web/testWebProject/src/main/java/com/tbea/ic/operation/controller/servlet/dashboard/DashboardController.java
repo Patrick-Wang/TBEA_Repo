@@ -217,7 +217,7 @@ public class DashboardController {
 	}
 	
 	private String getNumber(String val){
-		if ("null".equals(val)){
+		if ("null".equals(val) || val == null){
 			return "--";
 		}
 		return String.format("%.2f",  Double.valueOf(val));		
