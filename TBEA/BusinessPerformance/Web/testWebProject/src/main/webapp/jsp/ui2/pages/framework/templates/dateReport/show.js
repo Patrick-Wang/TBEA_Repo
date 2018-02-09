@@ -45,7 +45,7 @@ var framework;
                     var item2Hidden = false;
                     if (opt.itemNodes2 != undefined) {
                         this.unitedSelector2 = new Util.UnitedSelector(opt.itemNodes2, opt.itemId2);
-                        this.unitedSelector.change(function () {
+                        this.unitedSelector2.change(function () {
                             _this.adjustHeader();
                         });
                         if (opt.itemNodes2.length == 1) {
@@ -53,12 +53,23 @@ var framework;
                             item2Hidden = true;
                         }
                     }
+                    var item3Hidden = false;
+                    if (opt.itemNodes3 != undefined) {
+                        this.unitedSelector3 = new Util.UnitedSelector(opt.itemNodes3, opt.itemId3);
+                        this.unitedSelector3.change(function () {
+                            _this.adjustHeader();
+                        });
+                        if (opt.itemNodes3.length == 1) {
+                            $("#" + opt.itemId3).hide();
+                            item3Hidden = true;
+                        }
+                    }
                     if (opt.searchlist == 'true') {
                         $("#" + opt.itemId + " select").select2({
                             language: "zh-CN"
                         });
                     }
-                    if (item2Hidden && itemHidden && $("#" + opt.dtId).hasClass("hidden")) {
+                    if (item2Hidden && itemHidden && item3Hidden && $("#" + opt.dtId).hasClass("hidden")) {
                         $("#sels").hide();
                         $("#" + opt.dtId).hide();
                     }
@@ -71,7 +82,8 @@ var framework;
                     return {
                         date: this.getDate(date),
                         item: this.unitedSelector.getDataNode(this.unitedSelector.getPath()).data.id,
-                        item2: this.unitedSelector2 ? this.unitedSelector2.getDataNode(this.unitedSelector2.getPath()).data.id : undefined
+                        item2: this.unitedSelector2 ? this.unitedSelector2.getDataNode(this.unitedSelector2.getPath()).data.id : undefined,
+                        item3: this.unitedSelector3 ? this.unitedSelector3.getDataNode(this.unitedSelector3.getPath()).data.id : undefined
                     };
                 };
                 ItemShowView.prototype.adjustHeader = function () {

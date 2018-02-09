@@ -156,7 +156,7 @@
     <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/basic/basic.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/basic/basicShow.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/singleDateReport/show.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/dateReport/show.js?ver=1.0"></script>
+    <script src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/templates/dateReport/show.js?ver=2.0"></script>
 <%@include file="../../../../ie8-b.jsp"%>
 </head>
 <!-- /Head -->
@@ -187,6 +187,7 @@
 						<div id="sels" class="pull-left">
 							<div id="item-sel1" class="pull-left"></div>
 							<div id="item-sel2" class="pull-left"></div>
+							<div id="item-sel3" class="pull-left"></div>
 						</div>
 						<div id="grid-update" class="btn btn-default"
 							onclick="framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.templates.singleDateReport.FE_UPDATE)">
@@ -256,8 +257,10 @@
 
 	        var nd = '${nodeData}';
 	        var nd2 = '${nodeData2}';
+            var nd3 = '${nodeData3}';
 	        var ind = nd == '' ? undefined : JSON.parse(nd);
 	        var ind2 = nd2 == '' ? undefined : JSON.parse(nd2);
+            var ind3 = nd3 == '' ? undefined : JSON.parse(nd3);
 	        
 	        framework.router.to(framework.templates.singleDateReport.FRAME_ID).send(framework.basic.FrameEvent.FE_INIT_EVENT,{
 	            dtId:"grid-date",
@@ -274,7 +277,9 @@
 	            itemNodes: ind,
 				searchlist: '${searchlist}',
 	            itemId2:"item-sel2",
-	            itemNodes2: ind2
+	            itemNodes2: ind2,
+                itemId3:"item-sel3",
+                itemNodes3: ind3
 	        });
 		});
 	</script>
