@@ -15,10 +15,23 @@
 		</listener-class>
 	</listener>
 
+    <listener>
+        <listener-class>com.xml.frame.report.util.ContextLoadListener
+        </listener-class>
+    </listener>
+
+
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>BusinessManagement</param-value>
+		<param-value>web.root</param-value>
 	</context-param>
+
+    <context-param>
+        <param-name>analysis_engine_server</param-name>
+        <param-value>http://localhost:8081</param-value>
+    </context-param>
+
+
 
 	<!-- 配置加载log4j.xml文件路径 --> 
 	<context-param> 

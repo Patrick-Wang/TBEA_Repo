@@ -295,12 +295,18 @@ namespace home {
                         });
                         nt = nt.getParent();
                     }
-                    let url = "breads=" + JSON.stringify(breadcrumbNode);
-                    if (node.data.url.indexOf("?") > 0) {
-                        url = encodeURI(node.data.url + "&" + url);
-                    } else {
-                        url = encodeURI(node.data.url + "?" + url);
+                    let url = null;
+                    if (node.data.url.indexOf("http://") == 0 || node.data.url.indexOf("https://") == 0 ){
+                        url = encodeURI(node.data.url);
+                    }else{
+                        let url = "breads=" + JSON.stringify(breadcrumbNode);
+                        if (node.data.url.indexOf("?") > 0) {
+                            url = encodeURI(node.data.url + "&" + url);
+                        } else {
+                            url = encodeURI(node.data.url + "?" + url);
+                        }
                     }
+
 
                     $("#tabContent").append(
                         '<iframe frameborder="0" src=\'' + url + '\' ' +

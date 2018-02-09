@@ -1,11 +1,6 @@
 package com.tbea.ic.operation.controller.servlet.dashboard;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -31,13 +26,14 @@ public class SessionManager implements HttpSessionListener {
 	
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {
+
 		HttpSession session = event.getSession();
 		synchronized (listeners) {
 			Iterator<OnSessionChangedListener> it = listeners.iterator();
 	        while (it.hasNext()){
 	        	try{
 	        		it.next().onCreated(session);
-	        	}catch(Exception e){
+	        	}catch(Exception e2){
 	        		
 	        	}
 	        }
@@ -56,7 +52,6 @@ public class SessionManager implements HttpSessionListener {
 	        	}catch(Exception e){
 	        		
 	        	}
-	        	
 	        }
 	    }
 		onlineSessions.remove(session.getId());

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="defineReportClr">
         <context key="token" value="${request.token.asString}"/>
-        <if test="${'SAIKU3' == 'token'}">
+        <if test="${'ANALYSISENGINE' == 'token'}">
             <context key="name" value="${request.name.asString}"/>
             <context key="file" value="${request.file.asString}"/>
             <context key="server" value="${request.server.asString}"/>
@@ -35,7 +35,7 @@
             </sql>
             <context key="code" value="${item[0][0]}"></context>
             <sql>
-                insert into navigator_positive_auth (itemId, authId) values (${code}, 3)
+                insert into navigator_positive_auth (itemId, authId) values (${code}, 0)
             </sql>
         </if>
         <else>

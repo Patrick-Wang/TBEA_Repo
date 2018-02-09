@@ -103,9 +103,14 @@ public abstract class AbstractXmlComponent implements Component, ElContext {
 	public Object getVar(String key){
 		if (local.contains(key)){
 			return local.get(key);
-		}else{
+		}else if(global.contains(key)){
 			return global.get(key);
+		}else{
+			if (key != null && !"".equals(key) && System.getProperties().containsKey(key)){
+				return System.getProperty(key);
+			}
 		}
+		return null;
 	}
 	
 	@Override
