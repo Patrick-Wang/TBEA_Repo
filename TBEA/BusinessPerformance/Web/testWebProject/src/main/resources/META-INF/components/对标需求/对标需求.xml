@@ -148,7 +148,7 @@ dwid = ${orgs.BMDBOrganization.ids[CompanyType.NDGS.ordinal]}</sql>
    <list type="double" sql="xtnydbxqs" value="1" skip="${!compTypes.contains[CompanyType.XTNYGS]}"/>
    <list type="double" sql="tcnydbxqs" value="1" skip="${!compTypes.contains[CompanyType.TCNY]}"/>
    <list type="double" sql="xnydbxqs" value="1" skip="${!compTypes.contains[CompanyType.XNYGS]}"/>
-   <list type="double" sql="jchdbxqs" value="1" skip="${!compTypes.contains[CompanyType.JCKGS_JYDW]}"/>
+   <list type="double" sql="jckdbxqs" value="1" skip="${!compTypes.contains[CompanyType.JCKGS_JYDW]}"/>
    <list type="double" sql="gjgcdbxqs" value="1" skip="${!compTypes.contains[CompanyType.GJGCGS_GFGS]}"/>
    <list type="double" sql="zhdbxqs" value="1" skip="${!compTypes.contains[CompanyType.ZHGS]}"/>
    <list type="double" sql="nddbxqs" value="1" skip="${!compTypes.contains[CompanyType.NDGS]}"/>

@@ -264,12 +264,18 @@ var home;
                         });
                         nt = nt.getParent();
                     }
-                    var url = "breads=" + JSON.stringify(breadcrumbNode);
-                    if (node.data.url.indexOf("?") > 0) {
-                        url = encodeURI(node.data.url + "&" + url);
+                    var url = null;
+                    if (node.data.url.indexOf("http://") == 0 || node.data.url.indexOf("https://") == 0) {
+                        url = encodeURI(node.data.url);
                     }
                     else {
-                        url = encodeURI(node.data.url + "?" + url);
+                        url = "breads=" + JSON.stringify(breadcrumbNode);
+                        if (node.data.url.indexOf("?") > 0) {
+                            url = encodeURI(node.data.url + "&" + url);
+                        }
+                        else {
+                            url = encodeURI(node.data.url + "?" + url);
+                        }
                     }
                     $("#tabContent").append('<iframe frameborder="0" src=\'' + url + '\' ' +
                         'name="' + node.data.id + "tab" + '" ' +

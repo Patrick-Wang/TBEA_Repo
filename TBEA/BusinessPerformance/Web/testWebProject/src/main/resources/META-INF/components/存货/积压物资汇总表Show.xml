@@ -28,7 +28,7 @@ where
 	is_overstock = '是' and
 	jydw = ${compId}
 		</sql>
-  <list export="true" id="r1" type="double" sql="s1" value="1" clear="true">
+  <list export="true" id="r1" type="double" sql="sr1" value="1" clear="true">
    <item insert="0">${sr1Frist[0]}</item>
   </list>
   <sql id="sr2" order="nys" by="0" colcount="2">select 
@@ -49,7 +49,7 @@ group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
 		</sql>
-  <list export="true" id="r2" type="double" sql="s2" value="1" clear="true"/>
+  <list export="true" id="r2" type="double" sql="sr2" value="1" clear="true"/>
   <sql id="sr3" order="nys" by="0" colcount="2">select 
 	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[3].year} 
 		then 0
@@ -68,7 +68,7 @@ group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
 		</sql>
-  <list export="true" id="r3" type="double" sql="s3" value="1" clear="true"/>
+  <list export="true" id="r3" type="double" sql="sr3" value="1" clear="true"/>
   <sql id="sr4" order="nys" by="0" colcount="2">select 
 	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[2].year} 
 		then 0
@@ -87,7 +87,7 @@ group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
 		</sql>
-  <list export="true" id="r4" type="double" sql="s4" value="1" clear="true"/>
+  <list export="true" id="r4" type="double" sql="sr4" value="1" clear="true"/>
   <sql id="sr5" order="nys" by="0" colcount="2">select 
 	(case when DATEPART(yy, storage_date) = ${cal.yearBefore[1].year} 
 		then 0
@@ -106,7 +106,7 @@ group by
 	DATEPART(yy,storage_date),
 	DATEPART(mm,storage_date)
 		</sql>
-  <list export="true" id="r5" type="double" sql="s5" value="1" clear="true"/>
+  <list export="true" id="r5" type="double" sql="sr5" value="1" clear="true"/>
  </service>
  <service id="servKcjywzBcp">
   <list id="yfs" type="int">
@@ -307,7 +307,7 @@ group by
 		</sql>
   <list export="true" id="r4" type="double" sql="s4" value="1" clear="true"/>
   <sql id="sr5" order="nys" by="0" colcount="2">select 
-	(case when DATEPART(yy, complete_date) = ${cal.yearBefore[1].year} 
+	(case when DATEPART(yy, complete_date) = ${cal.yearBefore[1].year}
 		then 0
 	else 
 		DATEPART(mm, complete_date)	

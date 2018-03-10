@@ -6,7 +6,7 @@
             <context key="file" value="${request.file.asString}"/>
             <context key="server" value="${request.server.asString}"/>
             <context key="auths" value="${request.auths.asString}"/>
-            <context key="url" value="${server}?file=${file}&amp;type=open"/>
+            <context key="url" value="jsp/ui2/table.jsp?file=${file}&amp;type=open&amp;url=${server}"/>
             <callservice id="defineReportServ"/>
             <response type="json">
                 <errorCode>${code}</errorCode>
@@ -21,6 +21,19 @@
         </else>
 
     </controller>
+
+    <controller id="redirectTo">
+            <context key="url" value="${request.url.asString}"/>
+            <http id="resp"
+                  type="redirect"
+                  request="${request}"
+                  response="${response}"
+                  url="${url}">
+            <noHeader>Set-Cookie</noHeader>
+        </http>
+    </controller>
+
+
     <service id="defineReportServ" transaction="transactionManager">
         <sql id="item">
             select id from navigator_item where url = ${url}

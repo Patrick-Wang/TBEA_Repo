@@ -1,30 +1,25 @@
 package com.xml.frame.report.util;
 
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import java.util.Enumeration;
 
-public class ContextLoadListener implements HttpSessionListener {
+public class ContextLoadListener implements ServletContextListener {
 
-		private boolean isInited = false;
-	
-	@Override
-	public void sessionCreated(HttpSessionEvent event) {
-	    if (!isInited){
-            isInited = true;
-            Enumeration<String> e = event.getSession().getServletContext().getInitParameterNames();
-            while (e.hasMoreElements()){
-                String name = e.nextElement();
-                if (name != null && !"".equals(name)){
-                    System.setProperty(name,event.getSession().getServletContext().getInitParameter(name));
-               }
+    @Override
+    public void contextInitialized(ServletContextEvent servletContextEvent) {
+
+        Enumeration<String> e = servletContextEvent.getServletContext().getInitParameterNames();
+        while (e.hasMoreElements()){
+            String name = e.nextElement();
+            if (name != null && !"".equals(name)){
+                System.setProperty(name,servletContextEvent.getServletContext().getInitParameter(name));
             }
         }
-	}
+    }
 
-	@Override
-	public void sessionDestroyed(HttpSessionEvent event) {
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
-	}
-
+    }
 }

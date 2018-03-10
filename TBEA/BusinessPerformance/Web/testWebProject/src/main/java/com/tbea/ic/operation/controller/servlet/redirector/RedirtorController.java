@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value = "redirector")
 public class RedirtorController {
-	
+
 	@RequestMapping(value = {"redirect.do"}, method = RequestMethod.GET)
 	public ModelAndView redirect(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {

@@ -299,7 +299,7 @@ namespace home {
                     if (node.data.url.indexOf("http://") == 0 || node.data.url.indexOf("https://") == 0 ){
                         url = encodeURI(node.data.url);
                     }else{
-                        let url = "breads=" + JSON.stringify(breadcrumbNode);
+                        url = "breads=" + JSON.stringify(breadcrumbNode);
                         if (node.data.url.indexOf("?") > 0) {
                             url = encodeURI(node.data.url + "&" + url);
                         } else {

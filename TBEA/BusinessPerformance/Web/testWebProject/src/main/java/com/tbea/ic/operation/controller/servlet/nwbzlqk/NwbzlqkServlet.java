@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tbea.ic.operation.service.report.HBWebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -206,4 +207,37 @@ public class NwbzlqkServlet {
 		List<Integer> auths = extendAuthService.getAuths(account, company);
 		return JSONArray.fromObject(auths).toString().getBytes("utf-8");
 	}
+
+    @RequestMapping(value = {"testhbnbzlqk"})
+    public  @ResponseBody byte[] testHb(HttpServletRequest request,
+                                HttpServletResponse response) throws UnsupportedEncodingException {
+        Date d = DateSelection.getDate(request);
+        HBWebService hws = new HBWebService();
+        List<String> cols = new ArrayList<String>();
+        cols.add("company_name");
+cols.add("issue_happen_date");
+cols.add("product_type");
+cols.add("production_num");
+cols.add("production_model");
+cols.add("issue_type");
+cols.add("sub_issue_type");
+cols.add("category_code");
+cols.add("material_quality_phenomenon");
+cols.add("detail");
+cols.add("material_happen_phase");
+cols.add("material_count");
+cols.add("measurement_units");
+cols.add("suppier_id");
+cols.add("suppier");
+cols.add("issue_process");
+cols.add("responsibility_department");
+cols.add("material_treatment_measure");
+cols.add("onsite_treatmen_measure");
+cols.add("onsite_treatment_result");
+cols.add("causa_analysis");
+cols.add("assessment");
+cols.add("filling_personnel");
+        hws.getHBNbzlqk(cols);
+      return "OK".getBytes("utf-8");
+    }
 }

@@ -110,7 +110,7 @@ public class HttpXmlInterpreter implements XmlInterpreter {
 								   List<Pair<String, String>> hs,
 								   List<Pair<String, String>> ps,
 								   ByteArrayOutputStream os) throws Exception {
-		String url = e.getAttribute("url");
+		String url = XmlUtil.getString(e.getAttribute("url"), elp);
 		Element headers = XmlWalker.child(e, "headers");
 		if (null != headers){
 			XmlElWalker.eachChildren(headers, elp, new Loop(){
