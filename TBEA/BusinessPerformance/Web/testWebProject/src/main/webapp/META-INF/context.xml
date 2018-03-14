@@ -1,48 +1,48 @@
 <Context sessionCookieName="TBEA_JSESSIONID">
 	<Resource name="jdbc/my_test_db" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433; DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433; DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
 	<Resource name="jdbc/yszk_db" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433; DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433; DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/dbNc" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433;DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/dbDl" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433;DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/dbXl" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433;DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/dbSb" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433;DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/dbTb" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433;DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/dbXb" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433;DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 	<Resource name="jdbc/dbLl" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433;DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433;DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
@@ -86,7 +86,7 @@
 	<!-- 连接Test数据库 -->
 	<Resource name="jdbc/dbXb" auth="Container" type="javax.sql.DataSource"
 		username="sa" password="yszk_test_SERVER" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-		url="jdbc:sqlserver://192.168.31.126:1433; DatabaseName=operating_management"
+		url="jdbc:sqlserver://192.168.31.149:1433; DatabaseName=operating_management"
 		initialSize="35" maxActive="70" maxIdle="10" validationQuery="select 1"
 		removeAbandoned="true" removeAbandonedTimeout="60000" logAbandoned="true" />
 
