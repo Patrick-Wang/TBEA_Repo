@@ -34,15 +34,17 @@
         <jekxl name="将二矿销量"/>
         <nltkxl name="南露天矿销量"/>
         <otherxl name='其他销量'/>
-        <n1 name="南矿大中块"/>
-        <n2 name="南矿三八块"/>
-        <n3 name="南矿其他"/>
-        <n4 name="南矿末煤"/>
+        <n1 name="南矿大块"/>
+		<n2 name="南矿中块"/>
+        <n3 name="南矿三八块"/>
+        <n4 name="南矿其他"/>
+        <n5 name="南矿末煤"/>
 
-        <j1 name="二矿大中块"/>
-        <j2 name="二矿三八块"/>
-        <j3 name="二矿其他"/>
-        <j4 name="二矿末煤"/>
+        <j1 name="二矿大块"/>
+		<j2 name="二矿中块"/>
+        <j3 name="二矿三八块"/>
+        <j4 name="二矿其他"/>
+        <j5 name="二矿末煤"/>
 
         <zh1 name="产量-发电量（万度）"/>
         <zh2 name="产量-电子铝箔（吨）"/>
@@ -74,11 +76,11 @@
         <ydny3 name="集成服务业务（含工程和检测修试）签约"/>
 
     </indicators>
-    <share indi="nltkxl,n1,n2,n3,n4" type="月实际,20预计,28预计,月计划,年计划">
+    <share indi="nltkxl,n1,n2,n3,n4,n5" type="月实际,20预计,28预计,月计划,年计划">
         <company id="7"/>
         <company id="701"/>
     </share>
-    <share indi="jekxl,j1,j2,j3,j4" type="月实际,20预计,28预计,月计划,年计划">
+    <share indi="jekxl,j1,j2,j3,j4,j5" type="月实际,20预计,28预计,月计划,年计划">
         <company id="7"/>
         <company id="702"/>
     </share>
