@@ -84,8 +84,10 @@ public class Company {
 	 * @param subCompanys the subCompanys to set
 	 */
 	public Company append(Company subCompany) {
-		subCompanies.add(subCompany);
-		subCompany.setParentCompany(this);
+	    if (subCompany != null) {
+            subCompanies.add(subCompany);
+            subCompany.setParentCompany(this);
+        }
 		return this;
 	}
 

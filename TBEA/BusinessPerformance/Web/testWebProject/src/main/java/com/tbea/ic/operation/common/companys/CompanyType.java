@@ -189,8 +189,27 @@ public enum CompanyType {
 	PDCY			("配电产业"),
 	
 	//融资业务
-	JGCGZX			("机关采购中心")	;
+	JGCGZX			("机关采购中心"),
 	//TCNY_and_XJNY	("天池能源+新疆能源公司");
+
+    //20180320 新增公司
+//        605特变电工（德缆）电缆事业部
+//        606特变电工（德缆）国际工程公司
+//        707北一电厂
+//        1009新疆新特新能建材有限公司
+//        1010新疆新特能源物流有限公司
+//        1317新疆众和金源镁业公司
+//        208 特变电工湖南电气有限公司
+//        209特变电工衡阳变压器公司众业分公司
+    TBDGDLDLSYB ("特变电工（德缆）电缆事业部"),
+    TBDGDLGJGCGS ("特变电工（德缆）国际工程公司"),
+    BYDC ("北一电厂"),
+    XJXTXNJCGS ("新疆新特新能建材有限公司"),
+    XJXTNYWLGS ("新疆新特能源物流有限公司"),
+    XJZHJYMYGS ("新疆众和金源镁业公司"),
+    TBDGHNDQYXGS ("特变电工湖南电气有限公司"),
+    TBDGHYBYQGSZHFGS ("特变电工衡阳变压器公司众业分公司");
+
 	private String value;
 
 	CompanyType(String value) {
