@@ -2,8 +2,12 @@
  <service id="servGnqyTbmxImportEntry" transaction="transactionManager">
   <context key="counter" value="${counterFactory.newCounter}"/>
   <merge data="${data}" table="domestic_market_tbmx">
+  <where>
+				<serial_no type="string" ref="0" />
+   </where>
    <set>
-	<comp_name	type="string"	ref="${counter.reset[0].val}"			/>
+    <serial_no type="string" ref="${counter.reset[0].val}"  test="${this != null}"/>
+	<comp_name	type="string"	ref="${counter.next.val}" test="${this != null}"/>
 	<bid_no	type="string"	ref="${counter.next.val}"                   />
 	<pro_no	type="string"	ref="${counter.next.val}"                   />
 	<auth_no	type="string"	ref="${counter.next.val}"               />
