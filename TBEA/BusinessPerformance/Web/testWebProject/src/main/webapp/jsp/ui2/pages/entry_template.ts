@@ -808,7 +808,7 @@ module entry_template {
                         cells.push(cel);
                     }
                 }
-                if (!isRate || cells.length == 0) {
+                if (cells.length == 0) {
                     return [];
                 }
 
