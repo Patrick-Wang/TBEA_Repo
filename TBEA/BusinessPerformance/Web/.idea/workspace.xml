@@ -43,170 +43,73 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="EntryServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/entry/EntryServiceImpl.java">
+      <file leaf-file-name="context.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3179">
-              <caret line="246" column="0" lean-forward="false" selection-start-line="246" selection-start-column="0" selection-end-line="246" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="14" column="53" lean-forward="false" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ZBListenerAggregator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/entry/ZBListenerAggregator.java">
+      <file leaf-file-name="CpzlqkServlet.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/cpzlqk/CpzlqkServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="76" column="4" lean-forward="false" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="4" />
+            <state relative-caret-position="196">
+              <caret line="146" column="43" lean-forward="true" selection-start-line="146" selection-start-column="43" selection-end-line="146" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExtendAuthorityService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/extendauthority/ExtendAuthorityService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExtendAuthorityServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/extendauthority/ExtendAuthorityServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="264">
+              <caret line="45" column="9" lean-forward="true" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CompanySelection.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/CompanySelection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="197" column="29" lean-forward="false" selection-start-line="197" selection-start-column="29" selection-end-line="197" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MergeXmlInterpreter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/MergeXmlInterpreter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="701" column="0" lean-forward="true" selection-start-line="701" selection-start-column="0" selection-end-line="701" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <marker date="1521778990100" expanded="true" signature="10873:10962" ph="select missi... missingValue" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="approve_template.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/approve_template.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <marker date="1521708148437" expanded="true" signature="248:26323" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="2809:10374" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="4532:10339" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="9378:9413" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="9378:9431" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="9677:10297" ph="{&quot;datatype&quot;: &quot;local&quot;...}" />
-                <marker date="1521708148437" expanded="true" signature="9695:9765" ph="//..." />
-                <marker date="1521708148437" expanded="true" signature="9967:10067" ph="//..." />
-                <marker date="1521708148437" expanded="true" signature="10412:19785" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="10446:10486" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="10545:10870" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="10625:10836" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="10751:10822" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="10932:11674" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="11090:11441" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="11186:11252" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="11327:11427" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="11507:11555" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="11591:11640" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="11783:12112" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="11865:12078" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="11993:12064" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="12164:12206" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="12216:12350" ph="//..." />
-                <marker date="1521708148437" expanded="true" signature="12422:12804" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="12491:12622" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="12659:12794" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="12892:19752" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="13032:13261" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="13079:13245" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="13140:13227" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="13299:13358" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="13533:13619" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="13686:13950" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="13754:13936" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="14084:15494" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="14131:15478" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="14196:15460" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="14274:14738" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="14440:14658" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="14768:15156" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="14853:15058" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="15241:15351" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="15581:15718" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="15634:15704" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="15772:18726" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="15840:18712" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="15889:18598" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="15941:16048" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="16110:16221" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="16342:16452" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="16545:16662" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="16727:16840" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="16932:17404" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="17103:17224" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="17258:17378" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="18321:18434" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="18464:18576" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="18624:18694" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="19090:19710" ph="{&quot;datatype&quot;: &quot;local&quot;...}" />
-                <marker date="1521708148437" expanded="true" signature="19108:19178" ph="//..." />
-                <marker date="1521708148437" expanded="true" signature="19410:19510" ph="//..." />
-                <marker date="1521708148437" expanded="true" signature="19818:26283" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="19844:20045" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="20085:20130" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="20185:21695" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="20278:20446" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="20511:20676" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="20694:20838" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="20961:21132" ph="//..." />
-                <marker date="1521708148437" expanded="true" signature="21237:21622" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="21280:21363" ph="..." />
-                <marker date="1521708148437" expanded="true" signature="21523:21608" ph="..." />
-                <marker date="1521708148437" expanded="true" signature="21743:23405" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="21924:23316" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="22049:22120" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="22308:23300" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="22396:22481" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="22507:22650" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="22696:22783" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="22809:22954" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="23023:23104" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="23130:23282" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="23334:23395" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="23454:24342" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="23634:24253" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="23673:23874" ph="{&quot;year&quot;: date.year...}" />
-                <marker date="1521708148437" expanded="true" signature="23897:24237" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="23936:24115" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="24141:24219" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="24271:24332" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="24389:25270" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="24567:25181" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="24604:24805" ph="{&quot;year&quot;: date.year...}" />
-                <marker date="1521708148437" expanded="true" signature="24828:25165" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="24867:25044" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="25070:25147" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="25199:25260" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="25321:26219" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="25448:26138" ph="{...}" />
-                <marker date="1521708148437" expanded="true" signature="25488:25570" ph="..." />
-                <marker date="1521708148437" expanded="true" signature="25612:25702" ph="..." />
-                <marker date="1521708148437" expanded="true" signature="25743:25844" ph="..." />
-                <marker date="1521708148437" expanded="true" signature="25885:25986" ph="..." />
-                <marker date="1521708148437" expanded="true" signature="26025:26124" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="approve_template.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/approve_template.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4153">
-              <caret line="216" column="79" lean-forward="false" selection-start-line="216" selection-start-column="79" selection-end-line="216" selection-end-column="79" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="approve_template.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/approve_template.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7904">
-              <caret line="31" column="73" lean-forward="false" selection-start-line="31" selection-start-column="73" selection-end-line="31" selection-end-column="73" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="entry_template.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/entry_template.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="810" column="20" lean-forward="false" selection-start-line="810" selection-start-column="20" selection-end-line="810" selection-end-column="20" />
+            <state relative-caret-position="129">
+              <caret line="803" column="34" lean-forward="false" selection-start-line="803" selection-start-column="28" selection-end-line="803" selection-end-column="34" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -214,41 +117,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EntryController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/entry/EntryController.java">
+      <file leaf-file-name="ExtendAuthority.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/model/entity/ExtendAuthority.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="149" column="76" lean-forward="true" selection-start-line="149" selection-start-column="76" selection-end-line="149" selection-end-column="76" />
+            <state relative-caret-position="238">
+              <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RelationUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/indi/relation/RelationUtil.java">
+      <file leaf-file-name="HandlerMethodInvoker.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.1.0.RELEASE/spring-web-4.1.0.RELEASE-sources.jar!/org/springframework/web/bind/annotation/support/HandlerMethodInvoker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="697">
-              <caret line="62" column="26" lean-forward="false" selection-start-line="62" selection-start-column="26" selection-end-line="62" selection-end-column="26" />
+            <state relative-caret-position="119">
+              <caret line="183" column="0" lean-forward="false" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ZBXXDaoImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/model/dao/jygk/zbxx/ZBXXDaoImpl.java">
+      <file leaf-file-name="DispatcherServlet.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.0.RELEASE/spring-webmvc-4.1.0.RELEASE-sources.jar!/org/springframework/web/servlet/DispatcherServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="33" column="89" lean-forward="false" selection-start-line="33" selection-start-column="55" selection-end-line="33" selection-end-column="89" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XmlWalker.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/src/main/java/com/util/tools/xml/XmlWalker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1207">
-              <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+            <state relative-caret-position="119">
+              <caret line="952" column="0" lean-forward="false" selection-start-line="952" selection-start-column="0" selection-end-line="952" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -266,10 +159,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>servScjbUpdate</find>
-      <find>qyzbwcqkUpdate</find>
-      <find>servQyzbwcqk</find>
-      <find>dwids</find>
       <find>njhMixedAcc</find>
       <find>servQyzbwcqkQuery</find>
       <find>&lt;log ref=&quot;WEBSERVICE&quot; level=&quot;debug&quot;&gt;${calendar.current.time/1000 - start.time/1000}&lt;/log&gt;</find>
@@ -296,6 +185,10 @@
       <find>n1</find>
       <find>xny1</find>
       <find>parseSum</find>
+      <find>isRage</find>
+      <find>mFilter</find>
+      <find>'</find>
+      <find>isRate</find>
     </findStrings>
     <replaceStrings>
       <replace>!=</replace>
@@ -328,8 +221,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/whszfb/entry.ts" />
-        <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/singleDateReport/entry.ts" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/singleDateReport/entry.js" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/util.ts" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/framework/templates/whszfb/entry.jsp" />
@@ -379,6 +270,8 @@
         <option value="$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/指标关联.xml" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/approve_template.ts" />
         <option value="$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/entry_template.ts" />
+        <option value="$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/extendauthority/ExtendAuthorityServiceImpl.java" />
+        <option value="$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/MergeXmlInterpreter.java" />
       </list>
     </option>
   </component>
@@ -442,7 +335,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="y" value="42" />
     <option name="width" value="1366" />
@@ -512,6 +405,91 @@
           <expand>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="xml" type="cbb8eebc:String" user="xml" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="xml" type="cbb8eebc:String" user="xml" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="xml" type="cbb8eebc:String" user="xml" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="java" type="cbb8eebc:String" user="java" />
+              <item name="com" type="cbb8eebc:String" user="com" />
+              <item name="xml" type="cbb8eebc:String" user="xml" />
+              <item name="frame" type="cbb8eebc:String" user="frame" />
+              <item name="report" type="cbb8eebc:String" user="report" />
+              <item name="interpreter" type="cbb8eebc:String" user="interpreter" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
             </path>
             <path>
@@ -615,14 +593,95 @@
               <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
               <item name="src" type="cbb8eebc:String" user="src" />
               <item name="main" type="cbb8eebc:String" user="main" />
-              <item name="java" type="cbb8eebc:String" user="java" />
-              <item name="com" type="cbb8eebc:String" user="com" />
-              <item name="tbea" type="cbb8eebc:String" user="tbea" />
-              <item name="ic" type="cbb8eebc:String" user="ic" />
-              <item name="operation" type="cbb8eebc:String" user="operation" />
-              <item name="controller" type="cbb8eebc:String" user="controller" />
-              <item name="servlet" type="cbb8eebc:String" user="servlet" />
-              <item name="entry" type="cbb8eebc:String" user="entry" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="质量分析报告" type="cbb8eebc:String" user="质量分析报告" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="质量模快" type="cbb8eebc:String" user="质量模快" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="质量模快" type="cbb8eebc:String" user="质量模快" />
+              <item name="内外部质量问题" type="cbb8eebc:String" user="内外部质量问题" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="质量模快" type="cbb8eebc:String" user="质量模快" />
+              <item name="原材料合格率情况统计表" type="cbb8eebc:String" user="原材料合格率情况统计表" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="质量模快" type="cbb8eebc:String" user="质量模快" />
+              <item name="质量分析" type="cbb8eebc:String" user="质量分析" />
+            </path>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="testWebProject" type="cbb8eebc:String" user="testWebProject" />
+              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="main" type="cbb8eebc:String" user="main" />
+              <item name="resources" type="cbb8eebc:String" user="resources" />
+              <item name="META-INF" type="cbb8eebc:String" user="META-INF" />
+              <item name="components" type="cbb8eebc:String" user="components" />
+              <item name="进出口外汇合同" type="cbb8eebc:String" user="进出口外汇合同" />
             </path>
             <path>
               <item name="Root" type="cbb8eebc:String" user="Root" />
@@ -740,7 +799,7 @@
     <property name="project.structure.proportion" value="0.1510658" />
     <property name="project.structure.side.proportion" value="0.31986898" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="SearchEverywhereHistoryKey" value="export&#9;FILE&#9;file://C:/Users/Floyd/Documents/GitHub/TBEA_Repo/TBEA/BusinessPerformance/Web/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细EntryWrapper.xml" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/GitHub/TBEA_Repo/TBEA/BusinessPerformance/Web/report/src/main/java/com/xml/frame/report/interpreter/FieldSql.java&#10;export&#9;FILE&#9;file://C:/Users/Floyd/Documents/GitHub/TBEA_Repo/TBEA/BusinessPerformance/Web/testWebProject/src/main/resources/META-INF/components/进出口外汇合同/进口外汇合同明细/进口外汇合同明细EntryWrapper.xml" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -1116,12 +1175,12 @@
       <workItem from="1521442909148" duration="29000" />
       <workItem from="1521471760123" duration="7592000" />
       <workItem from="1521690491481" duration="3129000" />
-      <workItem from="1521708099842" duration="1159000" />
+      <workItem from="1521708099842" duration="6729000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="397621000" />
+    <option name="totallyTimeSpent" value="403191000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1133,7 +1192,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1456" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1147,8 +1206,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47995666" sideWeight="0.6359275" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4791386" sideWeight="0.6359275" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37281293" sideWeight="0.33495146" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1157,7 +1217,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7386935" sideWeight="0.7965204" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.49426934" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.54689866" sideWeight="0.46496814" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35100287" sideWeight="0.46496814" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.4969743" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28971255" sideWeight="0.52380955" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1166,7 +1226,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37281293" sideWeight="0.33495146" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2160804" sideWeight="0.49394855" order="1" side_tool="false" content_ui="tabs" />
@@ -1245,8 +1304,33 @@
           <properties />
           <option name="timeStamp" value="109" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/cpzlqk/CpzlqkServlet.java</url>
+          <line>96</line>
+          <properties />
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/cpzlqk/CpzlqkServlet.java</url>
+          <line>173</line>
+          <properties />
+          <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/extendauthority/ExtendAuthorityServiceImpl.java</url>
+          <line>139</line>
+          <properties />
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="val.toString().contains(&quot;'&quot;)" language="JAVA" />
+          <url>file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/MergeXmlInterpreter.java</url>
+          <line>369</line>
+          <properties />
+          <option name="timeStamp" value="123" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="114" />
+      <option name="time" value="125" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory">
@@ -1259,84 +1343,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/市场部/签约指标对比/各市场对比.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="53" column="10" lean-forward="false" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/市场部/重点产品签约/entry.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/市场部/行业签约/entry.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="7" lean-forward="false" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/国内市场项目签约/国内市场项目签约Excel导入Wrapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="8" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/国内市场项目签约/合同明细Excel导入.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/国内市场项目签约/投标明细Excel导入.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/国内市场项目签约/项目明细Excel导入.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="27" column="10" lean-forward="false" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/util/excel/exception/DateCellException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="6" column="36" lean-forward="false" selection-start-line="6" selection-start-column="36" selection-end-line="6" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/util/excel/ExcelUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="42" column="48" lean-forward="false" selection-start-line="42" selection-start-column="48" selection-end-line="42" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/存货/半成品统计Excel导入.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="34" column="9" lean-forward="false" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/dashboard/test/dashboard.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1785">
-          <caret line="18" column="19" lean-forward="false" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/dashboard/dashboard.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-5406">
@@ -1449,13 +1455,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/companys/CompanyManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="25" column="25" lean-forward="false" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/companys/VirtualJYZBOrganization.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -1474,13 +1473,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="6" lean-forward="false" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/companys/VirtualCYOrganization.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="43" lean-forward="true" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
         </state>
       </provider>
     </entry>
@@ -1519,14 +1511,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="12" column="16" lean-forward="true" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="72" lean-forward="false" selection-start-line="7" selection-start-column="4" selection-end-line="46" selection-end-column="84" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1600,7 +1584,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
             <marker date="1521708148437" expanded="true" signature="248:26323" ph="{...}" />
             <marker date="1521708148437" expanded="true" signature="2809:10374" ph="{...}" />
             <marker date="1521708148437" expanded="true" signature="4532:10339" ph="{...}" />
@@ -1734,13 +1718,130 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/resources/META-INF/components/质量模快/原材料合格率情况统计表/show.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1173">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/cpzlqk/cpycssbhgwtmx/pdcpycssbhgwtmx/PdcpycssbhgwtmxServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1496">
+          <caret line="72" column="80" lean-forward="false" selection-start-line="72" selection-start-column="76" selection-end-line="72" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/companys/CompanyManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="31" column="38" lean-forward="true" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+          <folding>
+            <element signature="e#1155#1156#0" expanded="false" />
+            <element signature="e#1178#1179#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/companys/VirtualCYOrganization.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="16" lean-forward="false" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.0.RELEASE/spring-webmvc-4.1.0.RELEASE-sources.jar!/org/springframework/web/servlet/DispatcherServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="952" column="0" lean-forward="false" selection-start-line="952" selection-start-column="0" selection-end-line="952" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.1.0.RELEASE/spring-web-4.1.0.RELEASE-sources.jar!/org/springframework/web/bind/annotation/support/HandlerMethodInvoker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="183" column="0" lean-forward="false" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/extendauthority/ExtendAuthorityService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/model/entity/ExtendAuthority.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="49" column="19" lean-forward="false" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/controller/servlet/cpzlqk/CpzlqkServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="146" column="43" lean-forward="true" selection-start-line="146" selection-start-column="43" selection-end-line="146" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/service/extendauthority/ExtendAuthorityServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="45" column="9" lean-forward="true" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/java/com/tbea/ic/operation/common/CompanySelection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="197" column="29" lean-forward="false" selection-start-line="197" selection-start-column="29" selection-end-line="197" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/FieldSql.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-771">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/report/src/main/java/com/xml/frame/report/interpreter/MergeXmlInterpreter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="701" column="0" lean-forward="true" selection-start-line="701" selection-start-column="0" selection-end-line="701" selection-end-column="0" />
+          <folding>
+            <marker date="1521778990100" expanded="true" signature="10873:10962" ph="select missi... missingValue" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/jsp/ui2/pages/entry_template.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="810" column="20" lean-forward="false" selection-start-line="810" selection-start-column="20" selection-end-line="810" selection-end-column="20" />
+        <state relative-caret-position="129">
+          <caret line="803" column="34" lean-forward="false" selection-start-line="803" selection-start-column="28" selection-end-line="803" selection-end-column="34" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testWebProject/src/main/webapp/META-INF/context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="53" lean-forward="false" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+          <folding />
         </state>
       </provider>
     </entry>

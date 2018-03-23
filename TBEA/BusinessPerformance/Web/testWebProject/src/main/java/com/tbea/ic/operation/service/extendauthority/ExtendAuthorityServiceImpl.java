@@ -39,7 +39,10 @@ public class ExtendAuthorityServiceImpl implements ExtendAuthorityService {
 		List<Company> comps = new ArrayList<Company>();
 		List<ExtendAuthority> auths = extendAuthDao.getAuthority(account, authType.ordinal());
 		for (int i = 0; i < auths.size(); ++i){
-			comps.add(companyManager.getBMDBOrganization().getCompanyById(auths.get(i).getDwxx().getId()));
+		    Company comp = companyManager.getBMDBOrganization().getCompanyById(auths.get(i).getDwxx().getId());
+		    if (null != comp){
+                comps.add(comp);
+            }
 		}
 		return comps;
 	}

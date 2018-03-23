@@ -172,7 +172,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 
 		Integer from = XmlUtil.getIntAttr(e, "from", elp, null);
 		Integer to = XmlUtil.getIntAttr(e, "to", elp, null);
-		
+
 		Object dataObj = null;
 		if ("true".equalsIgnoreCase(XmlUtil.getAttr(e, "nodata"))) {
 			JSONArray ja = new JSONArray();
@@ -366,7 +366,8 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 		case TypeUtil.SQLDATE:
 			Object val = fs.getValue();
 			if (null != val) {
-				ret = "'" + val + "'";
+
+				ret = "'" + val.toString().replaceAll("'", "''") + "'";
 			}
 			break;
 		}
@@ -421,7 +422,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 				case TypeUtil.SQLDATE:
 					Object val = result.get(0);
 					if (null != val) {
-						ret = "'" + result.get(0) + "'";
+						ret = "'" + result.get(0).toString().replaceAll("'", "''") + "'";
 					}
 					break;
 				}
@@ -451,7 +452,7 @@ public class MergeXmlInterpreter implements XmlInterpreter {
 			if (!(row.get(ref) instanceof JSONNull)) {
 				String s = row.getString(ref);
 				if (!s.isEmpty()) {
-					ret = "'" + s + "'";
+					ret = "'" + s.replaceAll("'", "''") + "'";
 				}
 			}
 			break;
