@@ -14,7 +14,7 @@
  <controller id="gnscxmqywrapperImportJsp">
   <list id="ids" type="int">1,2,3</list>
   <list id="vals" type="string">
-	合同明细,投标明晰,项目明细
+	合同明细,投标明细,项目明细
   </list>
   <response type="jsp" name="components/import_data">
    <map key="importUrl" value="gnscxmqywrapperImport"/>

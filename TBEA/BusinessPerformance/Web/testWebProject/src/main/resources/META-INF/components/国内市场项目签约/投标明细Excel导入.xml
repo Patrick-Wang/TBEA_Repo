@@ -53,7 +53,7 @@
   <response type="jsp" name="components/import_data">
    <map key="importUrl" value="gnqyTbmxImport"/>
    <map map="${authMgr[72]}"/>
-   <map key="title" value="投标明晰导入"/>
+   <map key="title" value="投标明细导入"/>
   </response>
  </controller>
 </components>

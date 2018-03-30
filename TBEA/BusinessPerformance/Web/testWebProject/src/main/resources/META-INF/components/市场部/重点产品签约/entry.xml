@@ -63,7 +63,7 @@ where
   <callservice id="servScqyEntryUpdate"/>
   <formatter id="data">
    <EmptyFormatter>
-    <DefaultMatcher cols="1"/>
+    <DefaultMatcher cols="0, 1"/>
    </EmptyFormatter>
    <NumberFormatter reservedCount="1"/>
   </formatter>

@@ -204,13 +204,13 @@ module approve_template {
 
 
             var maxLength = 0;
-            for (var i: any = 0; i < tmpData.length; ++i) {
+            for (let i: any = 0; i < tmpData.length; ++i) {
                 if (maxLength < tmpData[i].length) {
                     maxLength = tmpData[i].length;
                 }
             }
 
-            for (var i: any = 0; i < tmpData.length; ++i) {
+            for (let i: any = 0; i < tmpData.length; ++i) {
                 for (var j = 2; j < maxLength; ++j) {
                     if (j < tmpData[i].length) {
                         if (title[j - 1] == '人数') {
