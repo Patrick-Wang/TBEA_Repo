@@ -508,7 +508,7 @@
 
 					accept:{
 					    title: 'excel',
-					    extensions: 'xls,xlsx',
+					    extensions: 'xls,xlsx,csv',
 					    mimeTypes: 'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 					},
 					duplicate : true,
