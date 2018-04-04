@@ -148,7 +148,7 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/ui2/pages/framework/route/route.js"></script>
 <script
-	src="${pageContext.request.contextPath}/jsp/ui2/pages/entry_template.js"></script>
+	src="${pageContext.request.contextPath}/jsp/ui2/pages/entry_template.js?ver=1.0"></script>
 <%@include file="../ie8-b.jsp"%>
 </head>
 <!-- /Head -->

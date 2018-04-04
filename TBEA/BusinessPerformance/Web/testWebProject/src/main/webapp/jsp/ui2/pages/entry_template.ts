@@ -659,10 +659,10 @@ module entry_template {
                     }
                 }
 
-                let cells = this.parseZbxx48();
-                if (cells.length > 0){
-                    disabledCell = disabledCell.concat(cells);
-                }
+                // let cells = this.parseZbxx48();
+                // if (cells.length > 0){
+                //     disabledCell = disabledCell.concat(cells);
+                // }
             }else{
                 for (let i = 0; i < this.mZbxxs.length; ++i){
                     let zbxx : Zbxx = this.mZbxxs[i];
@@ -836,57 +836,57 @@ module entry_template {
             return dsts;
         }
 
-        private parseZbxx48():Cell[] {
-            let dsts:Cell[] = [];
-            let row = find(this.mTableData, 48);
-            if (row >= 0) {
-                return [];
-            }
-
-
-            for (let i = 1; i < this.mTableData[0].length - 1; ++i) {
-                let cells:any = [];
-                let cellTmp = new Cell(find(this.mTableData, 290), 1);
-                if (cellTmp.row() >= 0) {
-                    cells.push(cellTmp);
-                }
-                cellTmp = new Cell(find(this.mTableData, 299), 1);
-                if (cellTmp.row() >= 0) {
-                    cells.push(cellTmp);
-                }
-                cellTmp = new Cell(find(this.mTableData, 304), 1);
-                if (cellTmp.row() >= 0) {
-                    cells.push(cellTmp);
-                }
-
-                if (cells.length == 0) {
-                    return [];
-                }
-
-                let dst = new Cell(row, 1);
-                dsts.push(dst);
-                let form:Formula = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=> {
-                    let sum:any;
-                    for (let i = 0; i < srcs.length; ++i) {
-                        let val = srcs[i].getVal();
-                        if ("" != val) {
-                            if (sum == undefined) {
-                                sum = parseFloat(val);
-                            } else {
-                                sum += parseFloat(val);
-                            }
-                        }
-                    }
-                    if (sum != undefined) {
-                        sum = sum.toFixed(4);
-                    }
-                    return sum;
-
-                });
-                this.mTableAssist.addFormula(form);
-            }
-            return dsts;
-        }
+        // private parseZbxx48():Cell[] {
+        //     let dsts:Cell[] = [];
+        //     let row = find(this.mTableData, 48);
+        //     if (row >= 0) {
+        //         return [];
+        //     }
+        //
+        //
+        //     for (let i = 1; i < this.mTableData[0].length - 1; ++i) {
+        //         let cells:any = [];
+        //         let cellTmp = new Cell(find(this.mTableData, 290), 1);
+        //         if (cellTmp.row() >= 0) {
+        //             cells.push(cellTmp);
+        //         }
+        //         cellTmp = new Cell(find(this.mTableData, 299), 1);
+        //         if (cellTmp.row() >= 0) {
+        //             cells.push(cellTmp);
+        //         }
+        //         cellTmp = new Cell(find(this.mTableData, 304), 1);
+        //         if (cellTmp.row() >= 0) {
+        //             cells.push(cellTmp);
+        //         }
+        //
+        //         if (cells.length == 0) {
+        //             return [];
+        //         }
+        //
+        //         let dst = new Cell(row, 1);
+        //         dsts.push(dst);
+        //         let form:Formula = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=> {
+        //             let sum:any;
+        //             for (let i = 0; i < srcs.length; ++i) {
+        //                 let val = srcs[i].getVal();
+        //                 if ("" != val) {
+        //                     if (sum == undefined) {
+        //                         sum = parseFloat(val);
+        //                     } else {
+        //                         sum += parseFloat(val);
+        //                     }
+        //                 }
+        //             }
+        //             if (sum != undefined) {
+        //                 sum = sum.toFixed(4);
+        //             }
+        //             return sum;
+        //
+        //         });
+        //         this.mTableAssist.addFormula(form);
+        //     }
+        //     return dsts;
+        // }
 
 
         private checkSum(submitData:any, col:number): Zbxx[] {

@@ -559,10 +559,10 @@ var entry_template;
                     if (row >= 0) {
                         var sums = [];
                         for (var j_1 = 0; j_1 < zbxx.children.length; ++j_1) {
-                            var cells_1 = this.parseZbxx(zbxx.children[j_1]);
-                            if (cells_1.length > 0) {
-                                disabledCell = disabledCell.concat(cells_1);
-                                sums = sums.concat(cells_1);
+                            var cells = this.parseZbxx(zbxx.children[j_1]);
+                            if (cells.length > 0) {
+                                disabledCell = disabledCell.concat(cells);
+                                sums = sums.concat(cells);
                             }
                         }
                         if (sums.length > 0 && zbxx.id == 48) {
@@ -598,10 +598,10 @@ var entry_template;
                         }
                     }
                 }
-                var cells = this.parseZbxx48();
-                if (cells.length > 0) {
-                    disabledCell = disabledCell.concat(cells);
-                }
+                // let cells = this.parseZbxx48();
+                // if (cells.length > 0){
+                //     disabledCell = disabledCell.concat(cells);
+                // }
             }
             else {
                 for (var i_7 = 0; i_7 < this.mZbxxs.length; ++i_7) {
@@ -769,53 +769,57 @@ var entry_template;
             }
             return dsts;
         };
-        EntryView.prototype.parseZbxx48 = function () {
-            var dsts = [];
-            var row = find(this.mTableData, 48);
-            if (row >= 0) {
-                return [];
-            }
-            for (var i = 1; i < this.mTableData[0].length - 1; ++i) {
-                var cells = [];
-                var cellTmp = new Cell(find(this.mTableData, 290), 1);
-                if (cellTmp.row() >= 0) {
-                    cells.push(cellTmp);
-                }
-                cellTmp = new Cell(find(this.mTableData, 299), 1);
-                if (cellTmp.row() >= 0) {
-                    cells.push(cellTmp);
-                }
-                cellTmp = new Cell(find(this.mTableData, 304), 1);
-                if (cellTmp.row() >= 0) {
-                    cells.push(cellTmp);
-                }
-                if (cells.length == 0) {
-                    return [];
-                }
-                var dst = new Cell(row, 1);
-                dsts.push(dst);
-                var form = new Formula(dst, cells, function (dest, srcs) {
-                    var sum;
-                    for (var i_11 = 0; i_11 < srcs.length; ++i_11) {
-                        var val = srcs[i_11].getVal();
-                        if ("" != val) {
-                            if (sum == undefined) {
-                                sum = parseFloat(val);
-                            }
-                            else {
-                                sum += parseFloat(val);
-                            }
-                        }
-                    }
-                    if (sum != undefined) {
-                        sum = sum.toFixed(4);
-                    }
-                    return sum;
-                });
-                this.mTableAssist.addFormula(form);
-            }
-            return dsts;
-        };
+        // private parseZbxx48():Cell[] {
+        //     let dsts:Cell[] = [];
+        //     let row = find(this.mTableData, 48);
+        //     if (row >= 0) {
+        //         return [];
+        //     }
+        //
+        //
+        //     for (let i = 1; i < this.mTableData[0].length - 1; ++i) {
+        //         let cells:any = [];
+        //         let cellTmp = new Cell(find(this.mTableData, 290), 1);
+        //         if (cellTmp.row() >= 0) {
+        //             cells.push(cellTmp);
+        //         }
+        //         cellTmp = new Cell(find(this.mTableData, 299), 1);
+        //         if (cellTmp.row() >= 0) {
+        //             cells.push(cellTmp);
+        //         }
+        //         cellTmp = new Cell(find(this.mTableData, 304), 1);
+        //         if (cellTmp.row() >= 0) {
+        //             cells.push(cellTmp);
+        //         }
+        //
+        //         if (cells.length == 0) {
+        //             return [];
+        //         }
+        //
+        //         let dst = new Cell(row, 1);
+        //         dsts.push(dst);
+        //         let form:Formula = new Formula(dst, cells, (dest:Cell, srcs:Cell[])=> {
+        //             let sum:any;
+        //             for (let i = 0; i < srcs.length; ++i) {
+        //                 let val = srcs[i].getVal();
+        //                 if ("" != val) {
+        //                     if (sum == undefined) {
+        //                         sum = parseFloat(val);
+        //                     } else {
+        //                         sum += parseFloat(val);
+        //                     }
+        //                 }
+        //             }
+        //             if (sum != undefined) {
+        //                 sum = sum.toFixed(4);
+        //             }
+        //             return sum;
+        //
+        //         });
+        //         this.mTableAssist.addFormula(form);
+        //     }
+        //     return dsts;
+        // }
         EntryView.prototype.checkSum = function (submitData, col) {
             var zbxxs = [];
             var zbxx;
