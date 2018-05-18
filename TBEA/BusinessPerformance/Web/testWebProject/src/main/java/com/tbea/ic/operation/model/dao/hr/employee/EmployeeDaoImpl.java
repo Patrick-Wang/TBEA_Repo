@@ -24,7 +24,7 @@ public class EmployeeDaoImpl   extends AbstractReadWriteDaoImpl<Employee> implem
 
 	@Override
 	public Employee getByCode(String code) {
-		Query q = this.getEntityManager().createQuery("from Employee where code=:code");
+		Query q = this.getEntityManager().createQuery("from Employee where workNum =:code");
 		q.setParameter("code", code);
 		List ret = q.getResultList();
 		if (ret.isEmpty()){
