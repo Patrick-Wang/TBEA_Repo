@@ -5,7 +5,7 @@
 var yszkgb;
 (function (yszkgb) {
     var router = framework.router;
-    var FrameView = (function () {
+    var FrameView = /** @class */ (function () {
         function FrameView() {
             this.mNodes = [];
             router.register(this);

@@ -52,7 +52,7 @@ var Util;
         return dCur.year + "-" + dCur.month + "-" + (dCur.day == undefined ? 1 : dCur.day);
     }
     Util.date2Str = date2Str;
-    var DateSelector = (function () {
+    var DateSelector = /** @class */ (function () {
         function DateSelector(start, end, divId, asSeason) {
             if (asSeason === void 0) { asSeason = false; }
             this.mDateCache = {};

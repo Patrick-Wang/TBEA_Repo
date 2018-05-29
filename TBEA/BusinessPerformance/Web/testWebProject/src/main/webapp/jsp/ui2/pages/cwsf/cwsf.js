@@ -16,7 +16,7 @@ var cwsf;
 (function (cwsf) {
     var router = framework.router;
     var FrameEvent = framework.basic.FrameEvent;
-    var CwsfShowView = (function (_super) {
+    var CwsfShowView = /** @class */ (function (_super) {
         __extends(CwsfShowView, _super);
         function CwsfShowView() {
             return _super !== null && _super.apply(this, arguments) || this;

@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var tbbzjqk;
 (function (tbbzjqk) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, month) {
@@ -16,7 +16,7 @@ var tbbzjqk;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
             this.mData = [];

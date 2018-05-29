@@ -5,7 +5,7 @@
 /// <reference path="bglx_selector.ts" />
 var jygk_zzy_ch_yclch;
 (function (jygk_zzy_ch_yclch) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, date) {
@@ -20,7 +20,7 @@ var jygk_zzy_ch_yclch;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readview.do", false);
         }

@@ -29,7 +29,7 @@ var Util;
     Util.MSG_INIT = 1;
     Util.MSG_UPDATE = 2;
     Util.MSG_REG = 3;
-    var Breadcrumb = (function () {
+    var Breadcrumb = /** @class */ (function () {
         function Breadcrumb() {
         }
         Breadcrumb.render = function (breads) {
@@ -271,7 +271,7 @@ var Util;
         return -1;
     }
     Util.indexOf = indexOf;
-    var AbstractFormatHandler = (function () {
+    var AbstractFormatHandler = /** @class */ (function () {
         function AbstractFormatHandler(zbs, cols) {
             this.mZbs = zbs;
             this.mCols = cols;
@@ -299,7 +299,7 @@ var Util;
         };
         return AbstractFormatHandler;
     }());
-    var FormatIntHandler = (function (_super) {
+    var FormatIntHandler = /** @class */ (function (_super) {
         __extends(FormatIntHandler, _super);
         function FormatIntHandler(zbs, cols) {
             if (zbs === void 0) { zbs = []; }
@@ -317,7 +317,7 @@ var Util;
         return FormatIntHandler;
     }(AbstractFormatHandler));
     Util.FormatIntHandler = FormatIntHandler;
-    var FormatCurrencyHandler = (function (_super) {
+    var FormatCurrencyHandler = /** @class */ (function (_super) {
         __extends(FormatCurrencyHandler, _super);
         function FormatCurrencyHandler(zbs, cols) {
             if (zbs === void 0) { zbs = []; }
@@ -335,7 +335,7 @@ var Util;
         return FormatCurrencyHandler;
     }(AbstractFormatHandler));
     Util.FormatCurrencyHandler = FormatCurrencyHandler;
-    var FormatPercentHandler = (function (_super) {
+    var FormatPercentHandler = /** @class */ (function (_super) {
         __extends(FormatPercentHandler, _super);
         function FormatPercentHandler(zbs, cols) {
             if (zbs === void 0) { zbs = []; }
@@ -353,7 +353,7 @@ var Util;
         return FormatPercentHandler;
     }(AbstractFormatHandler));
     Util.FormatPercentHandler = FormatPercentHandler;
-    var FormatPercentSignalHandler = (function (_super) {
+    var FormatPercentSignalHandler = /** @class */ (function (_super) {
         __extends(FormatPercentSignalHandler, _super);
         function FormatPercentSignalHandler(zbs, cols) {
             if (zbs === void 0) { zbs = []; }
@@ -371,7 +371,7 @@ var Util;
         return FormatPercentSignalHandler;
     }(AbstractFormatHandler));
     Util.FormatPercentSignalHandler = FormatPercentSignalHandler;
-    var FormatFordotHandler = (function (_super) {
+    var FormatFordotHandler = /** @class */ (function (_super) {
         __extends(FormatFordotHandler, _super);
         function FormatFordotHandler(dotCount, zbs, cols) {
             if (dotCount === void 0) { dotCount = 1; }
@@ -392,7 +392,7 @@ var Util;
         return FormatFordotHandler;
     }(AbstractFormatHandler));
     Util.FormatFordotHandler = FormatFordotHandler;
-    var ZBStatus = (function () {
+    var ZBStatus = /** @class */ (function () {
         function ZBStatus() {
         }
         ZBStatus.NONE = "NONE";
@@ -643,7 +643,7 @@ var Util;
     //        }
     //        return s;
     //    }
-    var Promise = (function () {
+    var Promise = /** @class */ (function () {
         function Promise() {
             this.mSuccessList = [];
             this.mFailedList = [];
@@ -685,7 +685,7 @@ var Util;
         }
     }
     Util.loadCssFile = loadCssFile;
-    var Ajax = (function () {
+    var Ajax = /** @class */ (function () {
         function Ajax(baseUrl, useCache) {
             if (useCache === void 0) { useCache = true; }
             this.mCache = {};
@@ -818,6 +818,7 @@ var Util;
         ];
         var formaterChain = new Util.FormatPercentHandler([], precentList.toArray());
         formaterChain.next(new Util.FormatIntHandler(['人数', '制造业人数', '工程、修试业务人数', '物流贸易人数']))
+            //.next(new Util.FormatPercentSignalHandler(['净资产收益率(%)']))
             .next(new Util.FormatPercentHandler(['净资产收益率(%)', '三项费用率(%)', '销售利润率(%)', '负债率', '制造业三项费用率', '工程、修试业务三项费用率', '物流贸易三项费用率']))
             .next(new Util.FormatFordotHandler(1, ['人均利润', '人均收入', '精铝块13项元素和值（ppm）']))
             .next(new Util.FormatFordotHandler(2, ['标煤单耗（g/度）', '厂用电率（%）'], specialsjzhCols))

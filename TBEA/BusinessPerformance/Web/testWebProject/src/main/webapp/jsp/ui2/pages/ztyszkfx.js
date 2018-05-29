@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var ztyszkfx;
 (function (ztyszkfx) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createCurrentYearNode = function (year) {
@@ -35,7 +35,7 @@ var ztyszkfx;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("ztyszkfx_update.do");
             this.mCompIndex = 0;

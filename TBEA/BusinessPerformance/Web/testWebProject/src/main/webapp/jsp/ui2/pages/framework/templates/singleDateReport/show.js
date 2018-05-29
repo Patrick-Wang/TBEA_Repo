@@ -28,7 +28,7 @@ var framework;
                 return new ShowView();
             }
             singleDateReport.create = create;
-            var ShowView = (function (_super) {
+            var ShowView = /** @class */ (function (_super) {
                 __extends(ShowView, _super);
                 function ShowView() {
                     return _super !== null && _super.apply(this, arguments) || this;

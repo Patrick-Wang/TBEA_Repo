@@ -108,7 +108,7 @@ var home;
         else if (data.id == "closeCurrent") {
             topTab.triggerClickClose(activeTab.id);
         }
-        else if (data.id == "closeAll") {
+        else if (data.id == "closeAll") { //close all
             var tabs = topTab.getTabs();
             var tabCopy = [];
             for (var i = 0; i < tabs.length; ++i) {
@@ -118,7 +118,7 @@ var home;
                 topTab.triggerClickClose(tabCopy[i].id);
             }
         }
-        else if (data.id == "closeOther") {
+        else if (data.id == "closeOther") { //close other
             var tabs = topTab.getTabs();
             var tabCopy = [];
             for (var i = 0; i < tabs.length; ++i) {
@@ -361,15 +361,15 @@ var home;
                 React.createElement("form", { role: "form" },
                     React.createElement("div", { className: "form-group" },
                         React.createElement("span", { className: "input-icon icon-right" },
-                            React.createElement("input", { type: "password", className: "form-control", id: "oldPsw", placeholder: "原始密码" }),
+                            React.createElement("input", { type: "password", className: "form-control", id: "oldPsw", placeholder: "\u539F\u59CB\u5BC6\u7801" }),
                             React.createElement("i", { className: "fa fa-lock circular" }))),
                     React.createElement("div", { className: "form-group" },
                         React.createElement("span", { className: "input-icon icon-right" },
-                            React.createElement("input", { type: "password", className: "form-control", id: "newPsw", placeholder: "新密码" }),
+                            React.createElement("input", { type: "password", className: "form-control", id: "newPsw", placeholder: "\u65B0\u5BC6\u7801" }),
                             React.createElement("i", { className: "fa fa-lock circular" }))),
                     React.createElement("div", { className: "form-group" },
                         React.createElement("span", { className: "input-icon icon-right" },
-                            React.createElement("input", { type: "password", className: "form-control", id: "confPsw", placeholder: "确认密码" }),
+                            React.createElement("input", { type: "password", className: "form-control", id: "confPsw", placeholder: "\u786E\u8BA4\u5BC6\u7801" }),
                             React.createElement("i", { className: "fa fa-lock circular" }))),
                     React.createElement("div", { className: "alert alert-danger fade in", id: "warning", style: { display: 'none' } }))))));
     $("#btnResetPassword").on("click", function () {

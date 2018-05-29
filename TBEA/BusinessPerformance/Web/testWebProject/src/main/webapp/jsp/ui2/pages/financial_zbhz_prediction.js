@@ -79,7 +79,7 @@ var financial_zbhz_prediciton;
         ThirdMonthZb[ThirdMonthZb["xjdtbzf"] = 24] = "xjdtbzf";
     })(ThirdMonthZb || (ThirdMonthZb = {}));
     ;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, gridStyle) {
@@ -177,7 +177,7 @@ var financial_zbhz_prediciton;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("/BusinessManagement/ydzb/financial_zbhz_prediction_update.do");

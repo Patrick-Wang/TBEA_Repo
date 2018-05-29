@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var yqkqsbh;
 (function (yqkqsbh) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -17,7 +17,7 @@ var yqkqsbh;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("yqkbhqs_update.do");
             this.mComp = Util.CompanyType.SBGS;

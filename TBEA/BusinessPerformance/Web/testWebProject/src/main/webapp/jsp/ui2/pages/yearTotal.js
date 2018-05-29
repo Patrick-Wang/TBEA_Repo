@@ -5,7 +5,7 @@
 /// <reference path="util.ts" />
 var yearTotal;
 (function (yearTotal) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -23,7 +23,7 @@ var yearTotal;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
         }

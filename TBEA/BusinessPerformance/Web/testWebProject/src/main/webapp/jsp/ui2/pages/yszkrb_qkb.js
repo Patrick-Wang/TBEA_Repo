@@ -1,7 +1,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
 var yszkrb_qkb;
 (function (yszkrb_qkb) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -25,7 +25,7 @@ var yszkrb_qkb;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
         }
         View.newInstance = function () {

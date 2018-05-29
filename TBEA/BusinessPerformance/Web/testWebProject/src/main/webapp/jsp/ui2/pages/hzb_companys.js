@@ -45,7 +45,7 @@ var hzb_companys;
         HbZb[HbZb["ndqntq"] = 15] = "ndqntq";
         HbZb[HbZb["ndtbzf"] = 16] = "ndtbzf";
     })(HbZb || (HbZb = {}));
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -73,7 +73,7 @@ var hzb_companys;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("/BusinessManagement/ydzb/hzb_companys_update.do");

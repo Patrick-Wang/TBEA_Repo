@@ -1,7 +1,7 @@
 /// <reference path="util.ts" />
 var Util;
 (function (Util) {
-    var Toast = (function () {
+    var Toast = /** @class */ (function () {
         function Toast() {
         }
         Toast.success = function (msg, closeAble) {
@@ -19,7 +19,7 @@ var Util;
         return Toast;
     }());
     Util.Toast = Toast;
-    var MessageBox = (function () {
+    var MessageBox = /** @class */ (function () {
         function MessageBox() {
         }
         MessageBox.getContainer = function () {

@@ -21,7 +21,7 @@ var sddb;
         SDDBEvent.FE_SHOWTIME = FrameEvent.lastEvent();
         SDDBEvent.FE_HIDETIME = FrameEvent.lastEvent();
     })(SDDBEvent = sddb.SDDBEvent || (sddb.SDDBEvent = {}));
-    var SddbShowView = (function (_super) {
+    var SddbShowView = /** @class */ (function (_super) {
         __extends(SddbShowView, _super);
         function SddbShowView() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -83,6 +83,8 @@ var sddb;
                 items.push(opts[j].text);
             }
             $(sels)
+                //.css("width", Math.max(Util.getUIWidth(items), 80))
+                //.css("height", "20px")
                 .select2({
                 language: "zh-CN"
             });

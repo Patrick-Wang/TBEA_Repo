@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var cb_zx_xl;
 (function (cb_zx_xl) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createSubNode = function (parent) {
@@ -46,7 +46,7 @@ var cb_zx_xl;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
         }
         View.newInstance = function () {

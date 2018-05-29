@@ -39,7 +39,7 @@ var hzb_zbhz;
         ZtId[ZtId["ndtbzf"] = 15] = "ndtbzf";
     })(ZtId || (ZtId = {}));
     ;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createSrqyTable = function (gridName) {
@@ -84,7 +84,7 @@ var hzb_zbhz;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("hzb_zbhz_update.do");

@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var cpzlqk;
 (function (cpzlqk) {
-    var CpzlqkEntryFrameView = (function (_super) {
+    var CpzlqkEntryFrameView = /** @class */ (function (_super) {
         __extends(CpzlqkEntryFrameView, _super);
         function CpzlqkEntryFrameView() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -36,7 +36,7 @@ var cpzlqk;
         };
         return CpzlqkEntryFrameView;
     }(framework.basic.EntryFrameView));
-    var ZlEntryPluginView = (function (_super) {
+    var ZlEntryPluginView = /** @class */ (function (_super) {
         __extends(ZlEntryPluginView, _super);
         function ZlEntryPluginView() {
             return _super !== null && _super.apply(this, arguments) || this;

@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var zbhz_overview;
 (function (zbhz_overview) {
-    var YDZBDataSet = (function () {
+    var YDZBDataSet = /** @class */ (function () {
         function YDZBDataSet(comId, yd, jd, nd, ydtb, jdtb) {
             this.companyId = Util.CompanyType.JT;
             this.companyId = comId;
@@ -32,7 +32,7 @@ var zbhz_overview;
         };
         return YDZBDataSet;
     }());
-    var DataSetManager = (function () {
+    var DataSetManager = /** @class */ (function () {
         function DataSetManager(zbid) {
             this.dataSetMap = {};
             this.mZbid = zbid;
@@ -70,7 +70,7 @@ var zbhz_overview;
         ChartType[ChartType["YDTQ"] = 3] = "YDTQ";
         ChartType[ChartType["JDTQ"] = 4] = "JDTQ";
     })(ChartType || (ChartType = {}));
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mSelectCy = true;
             this.mCy = Util.CompanyType.JT;

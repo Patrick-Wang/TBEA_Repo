@@ -1,7 +1,7 @@
 ///<reference path="treeNode.ts"/>
 var tree;
 (function (tree_1) {
-    var Tree = (function () {
+    var Tree = /** @class */ (function () {
         function Tree(id) {
             this.extractedNodes = [];
             this.treeId = id;

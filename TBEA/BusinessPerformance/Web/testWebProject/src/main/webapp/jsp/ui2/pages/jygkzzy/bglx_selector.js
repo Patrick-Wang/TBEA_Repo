@@ -1,7 +1,7 @@
 /// <reference path="../util.ts" />
 var Util;
 (function (Util) {
-    var BglxSelector = (function () {
+    var BglxSelector = /** @class */ (function () {
         function BglxSelector(mCtrlId, curbglx, view, isByq, isXl) {
             var _this = this;
             this.mCtrlId = mCtrlId;
@@ -75,7 +75,7 @@ var Util;
         return BglxSelector;
     }());
     Util.BglxSelector = BglxSelector;
-    var BglxViewSelector = (function () {
+    var BglxViewSelector = /** @class */ (function () {
         function BglxViewSelector(mCtrlId, curbglx, isByq, isXl, isSbdcy) {
             var _this = this;
             this.mCtrlId = mCtrlId;

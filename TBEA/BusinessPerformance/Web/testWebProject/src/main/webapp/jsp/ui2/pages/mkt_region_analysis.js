@@ -18,7 +18,7 @@ var mkt_region_analysis;
         RegionZb[RegionZb["zbltbzf"] = 11] = "zbltbzf";
         RegionZb[RegionZb["qyjetbzf"] = 12] = "qyjetbzf";
     })(RegionZb || (RegionZb = {}));
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createRegionIndexTable = function (gridName, year, startMonth, endMonth) {
@@ -53,7 +53,7 @@ var mkt_region_analysis;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mSelCompanys = [];
         }

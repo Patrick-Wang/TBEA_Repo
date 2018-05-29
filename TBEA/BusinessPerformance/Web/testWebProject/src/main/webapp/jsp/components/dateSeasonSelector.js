@@ -47,7 +47,7 @@ var Util;
             },
             subNodes: months
         }];
-    var DateSeasonSelector = (function () {
+    var DateSeasonSelector = /** @class */ (function () {
         function DateSeasonSelector(start, end, now, id) {
             var _this = this;
             var seasonStart = parseInt("" + (start.month - 1) / 3);

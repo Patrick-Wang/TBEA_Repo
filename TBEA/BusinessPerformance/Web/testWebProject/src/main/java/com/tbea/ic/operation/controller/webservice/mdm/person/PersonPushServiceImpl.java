@@ -9,6 +9,8 @@ import javax.jws.WebService;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import net.sf.json.JSONArray;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.w3c.dom.Document;
@@ -67,8 +69,11 @@ public class PersonPushServiceImpl implements PersonPushService {
 	
 	@Override
 	public MDMResponse push(String batch, List<Employee> employees) {
-		employeeService.saveEmployee(batch, employees);
+        LoggerFactory.getLogger("WEBSERVICE").info("MDM push " + JSONArray.fromObject(employees).toString());
+
+        employeeService.saveEmployee(batch, employees);
 		MDMResponse resp = new MDMResponse();
+        LoggerFactory.getLogger("WEBSERVICE").info("MDM push " + JSONArray.fromObject(employees).toString());
 		resp.setCode("S");
 		resp.setDesc("成功");
 		resp.setBatchNo(batch);
@@ -83,7 +88,4 @@ public class PersonPushServiceImpl implements PersonPushService {
 		resp.setRecords(records);
 		return resp;
 	}
-
-	
-
-} 
+}

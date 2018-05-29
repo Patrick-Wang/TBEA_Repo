@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var xl_fkfstj;
 (function (xl_fkfstj) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createSubNode = function (parent, fixedWidth) {
@@ -64,7 +64,7 @@ var xl_fkfstj;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("xlfkfstj_update.do");
             this.mComp = Util.CompanyType.SBGS;

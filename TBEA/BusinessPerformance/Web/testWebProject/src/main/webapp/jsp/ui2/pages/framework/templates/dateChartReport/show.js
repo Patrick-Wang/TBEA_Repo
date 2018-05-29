@@ -28,7 +28,7 @@ var framework;
                 return new SimpleShowView();
             }
             dateChartReport.create = create;
-            var SimpleShowView = (function (_super) {
+            var SimpleShowView = /** @class */ (function (_super) {
                 __extends(SimpleShowView, _super);
                 function SimpleShowView() {
                     return _super !== null && _super.apply(this, arguments) || this;

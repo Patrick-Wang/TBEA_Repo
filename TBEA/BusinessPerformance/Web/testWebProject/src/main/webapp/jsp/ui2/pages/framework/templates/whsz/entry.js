@@ -25,7 +25,7 @@ var framework;
                 return new EntryView();
             }
             dateReport.createInstance = createInstance;
-            var EntryView = (function (_super) {
+            var EntryView = /** @class */ (function (_super) {
                 __extends(EntryView, _super);
                 function EntryView() {
                     return _super !== null && _super.apply(this, arguments) || this;
@@ -49,7 +49,7 @@ var framework;
                 };
                 EntryView.prototype.createJqassist = function () {
                     _super.prototype.createJqassist.call(this);
-                    var MyFormula = (function () {
+                    var MyFormula = /** @class */ (function () {
                         function MyFormula() {
                         }
                         MyFormula.prototype.update = function () {

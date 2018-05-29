@@ -165,7 +165,7 @@ public class DzwzgbServlet {
 	}
 	
 	//每月3到五号零点触发
-	@Scheduled(cron="0 0 0 6-7 * ?")
+	@Scheduled(cron="0 0 3 * * ?")
 	public void scheduleImport(){
 		Calendar cal = Calendar.getInstance();
 		System.out.println(cal.getTime().toLocaleString() + "dzwzgb import data from 15db");

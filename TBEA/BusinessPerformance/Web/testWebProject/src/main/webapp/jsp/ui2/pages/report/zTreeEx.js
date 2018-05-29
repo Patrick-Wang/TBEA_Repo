@@ -3,7 +3,7 @@
  */
 var zTreeEx;
 (function (zTreeEx) {
-    var RightMenu = (function () {
+    var RightMenu = /** @class */ (function () {
         function RightMenu(setting) {
             this.setting = setting;
         }

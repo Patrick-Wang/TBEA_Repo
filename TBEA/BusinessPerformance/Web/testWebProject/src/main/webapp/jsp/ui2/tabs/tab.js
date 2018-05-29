@@ -1,6 +1,6 @@
 var tab;
 (function (tab_1) {
-    var Tab = (function () {
+    var Tab = /** @class */ (function () {
         function Tab(id) {
             var _this = this;
             this.more = [];

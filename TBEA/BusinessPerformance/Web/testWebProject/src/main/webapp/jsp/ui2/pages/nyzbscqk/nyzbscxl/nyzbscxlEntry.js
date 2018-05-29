@@ -24,7 +24,7 @@ var nyzbscqk;
     var nyzbscxlEntry;
     (function (nyzbscxlEntry) {
         var TextAlign = JQTable.TextAlign;
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
@@ -36,7 +36,7 @@ var nyzbscqk;
             };
             return JQGridAssistantFactory;
         }());
-        var EntryView = (function (_super) {
+        var EntryView = /** @class */ (function (_super) {
             __extends(EntryView, _super);
             function EntryView() {
                 var _this = _super !== null && _super.apply(this, arguments) || this;

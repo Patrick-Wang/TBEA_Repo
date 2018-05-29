@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var cb_wg_byq;
 (function (cb_wg_byq) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createSubNode = function (parent) {
@@ -73,7 +73,7 @@ var cb_wg_byq;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             //		private mfdwData : string[];
             //		private mgwData : string[];

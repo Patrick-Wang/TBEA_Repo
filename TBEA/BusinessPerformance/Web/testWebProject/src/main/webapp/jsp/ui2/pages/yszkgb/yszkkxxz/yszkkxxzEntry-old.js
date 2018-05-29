@@ -19,7 +19,7 @@ var yszkgb;
     var yszkkxxzEntry;
     (function (yszkkxxzEntry) {
         var TextAlign = JQTable.TextAlign;
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
@@ -37,7 +37,7 @@ var yszkgb;
             };
             return JQGridAssistantFactory;
         }());
-        var YszkkxxzEntryView = (function (_super) {
+        var YszkkxxzEntryView = /** @class */ (function (_super) {
             __extends(YszkkxxzEntryView, _super);
             function YszkkxxzEntryView() {
                 var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -203,8 +203,8 @@ var yszkgb;
                     //                    }
                 }));
                 $('html').bind('click', function (e) {
-                    if (lastsel != "") {
-                        if ($(e.target).closest("#" + name).length == 0) {
+                    if (lastsel != "") { //if a row is selected for edit
+                        if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row
                             //  $("#" + name).jqGrid('saveRow', lastsel);
                             $("#" + name).jqGrid("saveCell", lastsel, lastcell);
                             //$("#" + name).resetSelection();

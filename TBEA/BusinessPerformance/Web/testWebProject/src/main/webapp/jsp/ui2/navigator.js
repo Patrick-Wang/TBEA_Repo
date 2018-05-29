@@ -43,7 +43,7 @@ function createNode(value, url, icon, iconOpen) {
 }
 var navi;
 (function (navi) {
-    var Builder = (function () {
+    var Builder = /** @class */ (function () {
         function Builder() {
             this.builders = {};
         }

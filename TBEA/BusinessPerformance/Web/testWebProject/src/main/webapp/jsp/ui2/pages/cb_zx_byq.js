@@ -3,7 +3,7 @@
 /// <reference path="companySelector.ts" />
 var cb_zx_byq;
 (function (cb_zx_byq) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createSubNode = function (parent) {
@@ -62,7 +62,7 @@ var cb_zx_byq;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zx_update.do");
             this.mComp = Util.CompanyType.SBGS;

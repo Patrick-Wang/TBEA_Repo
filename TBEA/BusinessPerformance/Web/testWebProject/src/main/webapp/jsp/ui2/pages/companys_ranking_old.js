@@ -82,7 +82,7 @@ var RANKINGTYPE71;
 ;
 var companys_ranking1;
 (function (companys_ranking1) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, RankingType) {
@@ -168,7 +168,7 @@ var companys_ranking1;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("companys_ranking_update.do");

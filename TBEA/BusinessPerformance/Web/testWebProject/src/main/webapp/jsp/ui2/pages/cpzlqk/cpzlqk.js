@@ -16,7 +16,7 @@ var cpzlqk;
 (function (cpzlqk) {
     var router = framework.router;
     var FrameEvent = framework.basic.FrameEvent;
-    var CpzlqkFrameView = (function (_super) {
+    var CpzlqkFrameView = /** @class */ (function (_super) {
         __extends(CpzlqkFrameView, _super);
         function CpzlqkFrameView() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -386,7 +386,7 @@ var cpzlqk;
             $(".comment-area").show();
             $("#commentText").val(comment.comment);
             $("#commentText").attr("readonly", "readonly");
-            if (pageType == cpzlqk.PageType.APPROVE) {
+            if (pageType == cpzlqk.PageType.APPROVE) { //approve
                 if (zt == Util.IndiStatus.SUBMITTED) {
                     if ($("#approveComment1").is(":visible")) {
                     }
@@ -448,7 +448,7 @@ var cpzlqk;
                     $(".comment-area").hide();
                 }
             }
-            else if (pageType == cpzlqk.PageType.ENTRY) {
+            else if (pageType == cpzlqk.PageType.ENTRY) { //submit
                 $("#approveComment").hide();
                 $("#approveComment1").hide();
                 $("#approveComment2").hide();
@@ -458,7 +458,7 @@ var cpzlqk;
                     $(".comment-area").hide();
                 }
             }
-            else if (pageType == cpzlqk.PageType.SHOW) {
+            else if (pageType == cpzlqk.PageType.SHOW) { //show
                 $("#approveComment").hide();
                 $("#approveComment1").hide();
                 $("#approveComment2").hide();
@@ -489,7 +489,7 @@ var cpzlqk;
         };
         return CpzlqkFrameView;
     }(framework.basic.ShowFrameView));
-    var ZlPluginView = (function (_super) {
+    var ZlPluginView = /** @class */ (function (_super) {
         __extends(ZlPluginView, _super);
         function ZlPluginView() {
             var _this = _super !== null && _super.apply(this, arguments) || this;

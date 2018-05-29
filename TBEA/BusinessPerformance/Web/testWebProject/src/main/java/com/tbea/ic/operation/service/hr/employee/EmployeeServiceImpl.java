@@ -3,6 +3,8 @@ package com.tbea.ic.operation.service.hr.employee;
 import java.util.Calendar;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +29,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 			if(employee != null){
 				employees.get(i).setId(employee.getId());
 			}
-			employeeDao.merge(employees.get(i));
+            LoggerFactory.getLogger("WEBSERVICE").info("MDM push merge " + JSONArray.fromObject(employees.get(i)).toString());
+
+            employeeDao.merge(employees.get(i));
 		}
 		return true;
 	}

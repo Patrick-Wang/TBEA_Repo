@@ -3,7 +3,7 @@
 ///<reference path="yszkgb.ts"/>
 var yszkgb;
 (function (yszkgb) {
-    var BasePluginView = (function () {
+    var BasePluginView = /** @class */ (function () {
         function BasePluginView(id) {
             this.mId = id;
             framework.router.register(this);
@@ -50,7 +50,7 @@ var yszkgb;
         return BasePluginView;
     }());
     yszkgb.BasePluginView = BasePluginView;
-    var BaseEntryPluginView = (function () {
+    var BaseEntryPluginView = /** @class */ (function () {
         function BaseEntryPluginView(id) {
             this.mId = id;
             framework.router.register(this);

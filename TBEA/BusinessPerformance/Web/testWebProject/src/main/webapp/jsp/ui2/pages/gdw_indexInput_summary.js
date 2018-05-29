@@ -5,7 +5,7 @@
 var gdw_indexinput_summary;
 (function (gdw_indexinput_summary) {
     var router = framework.router;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -18,7 +18,7 @@ var gdw_indexinput_summary;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("/BusinessManagement/dashboard/status_update.do");

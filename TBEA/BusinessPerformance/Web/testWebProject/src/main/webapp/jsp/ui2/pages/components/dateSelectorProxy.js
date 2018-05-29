@@ -3,7 +3,7 @@
 ///<reference path="SeasonAccSelector.ts"/>
 var Util;
 (function (Util) {
-    var DateSelectorProxy = (function () {
+    var DateSelectorProxy = /** @class */ (function () {
         function DateSelectorProxy(divId, dtStart, dtEnd, dtNow, asSeason, asSeasonAcc, jdName) {
             if (asSeason === void 0) { asSeason = false; }
             if (asSeasonAcc === void 0) { asSeasonAcc = false; }

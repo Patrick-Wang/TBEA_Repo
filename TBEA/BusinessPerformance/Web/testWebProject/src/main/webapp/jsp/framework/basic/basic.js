@@ -21,7 +21,7 @@ var framework;
     var basic;
     (function (basic) {
         var router = framework.router;
-        var BasicFrameView = (function (_super) {
+        var BasicFrameView = /** @class */ (function (_super) {
             __extends(BasicFrameView, _super);
             function BasicFrameView() {
                 var _this = _super !== null && _super.apply(this, arguments) || this;

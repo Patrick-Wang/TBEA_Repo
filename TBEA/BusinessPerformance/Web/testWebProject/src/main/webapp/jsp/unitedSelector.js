@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var Util;
 (function (Util) {
-    var DataNode = (function () {
+    var DataNode = /** @class */ (function () {
         function DataNode(data) {
             this.subNodes = [];
             this.data = data;
@@ -141,7 +141,7 @@ var Util;
         return DataNode;
     }());
     Util.DataNode = DataNode;
-    var UnitedSelector = (function () {
+    var UnitedSelector = /** @class */ (function () {
         function UnitedSelector(data, ctrlId, path) {
             this.mRoot = new DataNode(null);
             this.mPath = [];

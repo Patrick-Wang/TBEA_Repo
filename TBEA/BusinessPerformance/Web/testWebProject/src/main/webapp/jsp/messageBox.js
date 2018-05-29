@@ -1,7 +1,7 @@
 /// <reference path="util.ts" />
 var Util;
 (function (Util) {
-    var MessageBox = (function () {
+    var MessageBox = /** @class */ (function () {
         function MessageBox() {
         }
         MessageBox.getContainer = function () {

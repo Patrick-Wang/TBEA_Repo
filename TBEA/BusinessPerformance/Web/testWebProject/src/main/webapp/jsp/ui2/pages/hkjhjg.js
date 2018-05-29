@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var hkjhjg;
 (function (hkjhjg) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createJGTable = function (gridName) {
@@ -45,7 +45,7 @@ var hkjhjg;
         HKJHType[HKJHType["ZT"] = 1] = "ZT";
         HKJHType[HKJHType["XZ"] = 2] = "XZ";
     })(HKJHType || (HKJHType = {}));
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
             this.mDataSet = new Util.Ajax("hkjhjg_update.do");

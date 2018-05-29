@@ -6,7 +6,7 @@
 ///<reference path="../../messageBox.ts"/>
 var jcycljg;
 (function (jcycljg) {
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mNodes = [];
         }

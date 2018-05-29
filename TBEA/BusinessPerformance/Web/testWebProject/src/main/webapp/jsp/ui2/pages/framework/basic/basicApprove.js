@@ -21,7 +21,7 @@ var framework;
     var basic;
     (function (basic) {
         var router = framework.router;
-        var ApproveFrameView = (function (_super) {
+        var ApproveFrameView = /** @class */ (function (_super) {
             __extends(ApproveFrameView, _super);
             function ApproveFrameView() {
                 return _super !== null && _super.apply(this, arguments) || this;

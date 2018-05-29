@@ -21,7 +21,7 @@ var mkt_bid_analysis;
         Bid4IndustryZb[Bid4IndustryZb["qnzndbl"] = 14] = "qnzndbl";
         Bid4IndustryZb[Bid4IndustryZb["tbzz"] = 15] = "tbzz";
     })(Bid4IndustryZb || (Bid4IndustryZb = {}));
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createBidTable4Industry = function (gridName) {
@@ -76,7 +76,7 @@ var mkt_bid_analysis;
     company.byqcy = ["沈变", "衡变", "新变", "天变"];
     company.xlcy = ["鲁缆", "新缆", "德缆"];
     company.all = ["沈变", "衡变", "新变", "天变", "鲁缆", "新缆", "德缆"];
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mSelCompanys = [];
         }

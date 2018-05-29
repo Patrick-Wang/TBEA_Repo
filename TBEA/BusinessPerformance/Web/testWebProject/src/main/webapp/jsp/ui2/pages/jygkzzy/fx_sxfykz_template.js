@@ -5,7 +5,7 @@
 /// <reference path="bglx_selector.ts" />
 var fx_sxfykz;
 (function (fx_sxfykz) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, year) {
@@ -39,7 +39,7 @@ var fx_sxfykz;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readview.do", false);
         }

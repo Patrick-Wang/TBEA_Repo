@@ -2,7 +2,7 @@
 ///<reference path="../dateSelector.ts"/>
 var Util;
 (function (Util) {
-    var SeasonAccSelector = (function () {
+    var SeasonAccSelector = /** @class */ (function () {
         function SeasonAccSelector(start, end, now, id, jdName) {
             var _this = this;
             var dates = this.getYears(start, end);

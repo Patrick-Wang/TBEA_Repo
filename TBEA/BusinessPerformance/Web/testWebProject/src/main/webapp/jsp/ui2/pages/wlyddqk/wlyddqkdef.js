@@ -13,7 +13,7 @@ var wlyddqk;
         WlyddType[WlyddType["YLFX_WLYMLSP_XL_CPFL"] = 15] = "YLFX_WLYMLSP_XL_CPFL";
         WlyddType[WlyddType["YLFX_WLYMLSP_BYQ_ZZY"] = 16] = "YLFX_WLYMLSP_BYQ_ZZY";
     })(WlyddType = wlyddqk.WlyddType || (wlyddqk.WlyddType = {}));
-    var BasePluginView = (function () {
+    var BasePluginView = /** @class */ (function () {
         function BasePluginView() {
         }
         BasePluginView.prototype.init = function (opt) {
@@ -57,7 +57,7 @@ var wlyddqk;
         return BasePluginView;
     }());
     wlyddqk.BasePluginView = BasePluginView;
-    var TypeViewProxy = (function () {
+    var TypeViewProxy = /** @class */ (function () {
         function TypeViewProxy(stub, type) {
             this.mStub = stub;
             this.mType = type;
@@ -92,7 +92,7 @@ var wlyddqk;
         return TypeViewProxy;
     }());
     wlyddqk.TypeViewProxy = TypeViewProxy;
-    var BaseEntryPluginView = (function () {
+    var BaseEntryPluginView = /** @class */ (function () {
         function BaseEntryPluginView() {
         }
         BaseEntryPluginView.prototype.setOnReadOnlyChangeListener = function (callBack) {
@@ -145,7 +145,7 @@ var wlyddqk;
         return BaseEntryPluginView;
     }());
     wlyddqk.BaseEntryPluginView = BaseEntryPluginView;
-    var TypeEntryViewProxy = (function () {
+    var TypeEntryViewProxy = /** @class */ (function () {
         function TypeEntryViewProxy(stub, type) {
             this.mStub = stub;
             this.mType = type;

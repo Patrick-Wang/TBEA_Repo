@@ -7,7 +7,7 @@ var framework;
                 return ++idBase;
             };
         })(9988392);
-        var Router = (function () {
+        var Router = /** @class */ (function () {
             function Router() {
                 this.mEndpoints = {};
                 this.mEplist = [];

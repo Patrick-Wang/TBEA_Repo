@@ -85,7 +85,7 @@ var RANKINGTYPE7;
 var companys_ranking;
 (function (companys_ranking) {
     var router = framework.router;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, RankingType) {
@@ -171,7 +171,7 @@ var companys_ranking;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("/BusinessManagement/ydzbRanking/companys_ranking_update.do");

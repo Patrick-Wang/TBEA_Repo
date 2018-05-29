@@ -9,7 +9,7 @@ var report;
     (function (Message) {
         Message.MSG_INIT = framework.route.nextId();
     })(Message = report.Message || (report.Message = {}));
-    var Console = (function () {
+    var Console = /** @class */ (function () {
         function Console() {
             framework.router.register(this);
         }

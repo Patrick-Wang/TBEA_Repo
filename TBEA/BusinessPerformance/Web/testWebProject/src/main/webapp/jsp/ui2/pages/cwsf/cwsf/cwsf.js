@@ -23,7 +23,7 @@ var cwsf;
 (function (cwsf) {
     var sddb;
     (function (sddb) {
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, headers) {
@@ -38,7 +38,7 @@ var cwsf;
             };
             return JQGridAssistantFactory;
         }());
-        var ShowView = (function (_super) {
+        var ShowView = /** @class */ (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 return _super !== null && _super.apply(this, arguments) || this;

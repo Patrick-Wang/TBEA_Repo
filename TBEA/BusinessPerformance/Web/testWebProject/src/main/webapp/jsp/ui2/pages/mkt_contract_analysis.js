@@ -17,7 +17,7 @@ var mkt_contract_analysis;
         ContractZb[ContractZb["qnzndbl"] = 9] = "qnzndbl";
         ContractZb[ContractZb["htzz"] = 10] = "htzz";
     })(ContractZb || (ContractZb = {}));
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createContractTable4Industry = function (gridName) {
@@ -58,7 +58,7 @@ var mkt_contract_analysis;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mSelCompanys = [];
         }

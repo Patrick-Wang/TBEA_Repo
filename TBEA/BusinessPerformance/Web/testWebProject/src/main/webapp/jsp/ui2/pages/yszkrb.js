@@ -3,7 +3,7 @@
 var yszkrb;
 (function (yszkrb) {
     var router = framework.router;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -19,7 +19,7 @@ var yszkrb;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/dailyReport/yszk_submit.do");
             this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/dailyReport/yszk_update.do", false);

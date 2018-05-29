@@ -7,7 +7,7 @@
 ///<reference path="../companySelector.ts"/>
 var wlyddqk;
 (function (wlyddqk) {
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mNodesAll = [];
         }

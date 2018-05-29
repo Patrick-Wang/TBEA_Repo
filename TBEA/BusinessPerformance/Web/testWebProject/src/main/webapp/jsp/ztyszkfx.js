@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var ztyszkfx;
 (function (ztyszkfx) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createCurrentYearNode = function (year) {
@@ -34,8 +34,8 @@ var ztyszkfx;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
-    var View = (function () {
+    }());
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("ztyszkfx_update.do");
             this.mCompIndex = 0;
@@ -90,7 +90,7 @@ var ztyszkfx;
                     data: legend
                 },
                 toolbox: {
-                    show: true
+                    show: true,
                 },
                 calculable: false,
                 xAxis: [
@@ -180,10 +180,10 @@ var ztyszkfx;
                 height: '100%',
                 width: 1300,
                 shrinkToFit: true,
-                autoScroll: true
+                autoScroll: true,
             }));
         };
         return View;
-    })();
+    }());
     ztyszkfx.View = View;
 })(ztyszkfx || (ztyszkfx = {}));

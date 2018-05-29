@@ -22,14 +22,14 @@ public class Employee extends AbstractReadWriteEntity implements Serializable {
 	String	workNum	;
 	String	name	;
     String	postCode	;
-	String	sax	;
+	String	sex	;
 	String	companyCode	;
 	String	companyName	;
 	String  operationUnitCode;
     String  operationUnitName;
 	String	departCode	;
 	String	departName	;
-	String  post;
+    String  position;
     String	isInPost	;
     String	employeeCategoryCode	;
     String	employeeCategory	;
@@ -37,8 +37,25 @@ public class Employee extends AbstractReadWriteEntity implements Serializable {
     String mdmCode;
     String mdmDataUuid;
     String approveTime;
-	String mdmBatch;
+    String updateOrAdd;
+    String mdmBatch;
 	Long updateTime;
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getUpdateOrAdd() {
+        return updateOrAdd;
+    }
+
+    public void setUpdateOrAdd(String updateOrAdd) {
+        this.updateOrAdd = updateOrAdd;
+    }
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -71,12 +88,12 @@ public class Employee extends AbstractReadWriteEntity implements Serializable {
         this.postCode = postCode;
     }
 
-    public String getSax() {
-        return sax;
+    public String getSex() {
+        return sex;
     }
 
-    public void setSax(String sax) {
-        this.sax = sax;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getCompanyCode() {
@@ -125,14 +142,6 @@ public class Employee extends AbstractReadWriteEntity implements Serializable {
 
     public void setDepartName(String departName) {
         this.departName = departName;
-    }
-
-    public String getPost() {
-        return post;
-    }
-
-    public void setPost(String post) {
-        post = post;
     }
 
     public String getIsInPost() {

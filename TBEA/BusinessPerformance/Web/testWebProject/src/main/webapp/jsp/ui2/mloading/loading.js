@@ -1,6 +1,6 @@
 var Util;
 (function (Util) {
-    var Loading = (function () {
+    var Loading = /** @class */ (function () {
         function Loading() {
         }
         Loading.init = function () {

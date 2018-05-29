@@ -3,7 +3,7 @@
 var role_mgr;
 (function (role_mgr) {
     var router = framework.router;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, dataInit) {
@@ -29,7 +29,7 @@ var role_mgr;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             router.register(this);
         }
@@ -60,7 +60,9 @@ var role_mgr;
             for (var i = 0; i < opt.auths.length; ++i) {
                 sel.append('<option value="' + opt.auths[i][0] + '">' + opt.auths[i][1] + '</option>');
             }
-            $('#auth-sel .selectpicker').selectpicker({});
+            $('#auth-sel .selectpicker').selectpicker({
+            // style: 'btn-info'
+            });
             $("#grid-update").on('click', function () {
                 _this.updateUI();
             });
@@ -89,7 +91,9 @@ var role_mgr;
             for (var i = 0; i < this.mOpt.roles.length; ++i) {
                 sel.append('<option value="' + this.mOpt.roles[i][0] + '">' + this.mOpt.roles[i][1] + '</option>');
             }
-            $('#role-sel .selectpicker').selectpicker({});
+            $('#role-sel .selectpicker').selectpicker({
+            // style: 'btn-info'
+            });
         };
         SimpleView.prototype.adjustHeader = function () {
             $("#headerHost").removeCss("width");
@@ -437,19 +441,25 @@ var role_mgr;
             for (var i = 0; i < this.mOpt.roles.length; ++i) {
                 sel.append('<option value="' + this.mOpt.roles[i][0] + '">' + this.mOpt.roles[i][1] + '</option>');
             }
-            $('#roleName .selectpicker').selectpicker({});
+            $('#roleName .selectpicker').selectpicker({
+            // style: 'btn-info'
+            });
             $("#authName").append('<select class="selectpicker" data-live-search="true"  title="权限"></select>');
             var sel = $("#authName select");
             for (var i = 0; i < this.mOpt.auths.length; ++i) {
                 sel.append('<option value="' + this.mOpt.auths[i][0] + '">' + this.mOpt.auths[i][1] + '</option>');
             }
-            $('#authName .selectpicker').selectpicker({});
+            $('#authName .selectpicker').selectpicker({
+            // style: 'btn-info'
+            });
             $("#compName").append('<select class="selectpicker" multiple data-live-search="true"  title="公司"></select>');
             var sel = $("#compName select");
             for (var i = 0; i < this.mOpt.comps.length; ++i) {
                 sel.append('<option value="' + this.mOpt.comps[i][0] + '">' + this.mOpt.comps[i][1] + '</option>');
             }
-            $('#compName .selectpicker').selectpicker({});
+            $('#compName .selectpicker').selectpicker({
+            // style: 'btn-info'
+            });
             $(".role_drop>div").css("width", "100%");
         };
         SimpleView.ins = new SimpleView();

@@ -8,7 +8,7 @@ var search;
         ret += (sub % base > 0) ? 1 : 0;
         return ret;
     }
-    var TablePanel = (function () {
+    var TablePanel = /** @class */ (function () {
         function TablePanel() {
             var _this = this;
             this.pgSize = 5;
@@ -92,7 +92,7 @@ var search;
         };
         return TablePanel;
     }());
-    var SearchPanel = (function () {
+    var SearchPanel = /** @class */ (function () {
         function SearchPanel(tablePanel) {
             this.tablePanel = tablePanel;
             this.buildSearchItems();

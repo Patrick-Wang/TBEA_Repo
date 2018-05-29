@@ -22,7 +22,7 @@ var yszkrb_view;
         YSZKColumnId[YSZKColumnId["JZZMYE"] = 12] = "JZZMYE";
     })(YSZKColumnId || (YSZKColumnId = {}));
     ;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -46,7 +46,7 @@ var yszkrb_view;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("/BusinessManagement/yszkrb/yszk_update.do");

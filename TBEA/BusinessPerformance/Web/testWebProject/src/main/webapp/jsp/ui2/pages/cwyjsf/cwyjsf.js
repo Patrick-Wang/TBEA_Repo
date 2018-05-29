@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 var cwyjsf;
 (function (cwyjsf) {
     var router = framework.router;
-    var CwyjsfFrameView = (function (_super) {
+    var CwyjsfFrameView = /** @class */ (function (_super) {
         __extends(CwyjsfFrameView, _super);
         function CwyjsfFrameView() {
             return _super !== null && _super.apply(this, arguments) || this;

@@ -18,7 +18,7 @@ var jcycljg;
         DisplayType[DisplayType["TABLE"] = 0] = "TABLE";
         DisplayType[DisplayType["CHART"] = 1] = "CHART";
     })(DisplayType = jcycljg.DisplayType || (jcycljg.DisplayType = {}));
-    var BasePluginView = (function () {
+    var BasePluginView = /** @class */ (function () {
         function BasePluginView() {
         }
         //mDispType : DisplayType;

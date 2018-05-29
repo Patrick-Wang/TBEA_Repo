@@ -25,7 +25,7 @@ var sddb;
     (function (sddb) {
         var router = framework.router;
         var FRAME_ID = framework.basic.endpoint.FRAME_ID;
-        var ShowView = (function (_super) {
+        var ShowView = /** @class */ (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 return _super !== null && _super.apply(this, arguments) || this;

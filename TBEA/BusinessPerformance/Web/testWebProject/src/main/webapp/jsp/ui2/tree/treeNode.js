@@ -1,6 +1,6 @@
 var tree;
 (function (tree) {
-    var TreeNode = (function () {
+    var TreeNode = /** @class */ (function () {
         function TreeNode(data) {
             this.subNodes = [];
             this.data = data;

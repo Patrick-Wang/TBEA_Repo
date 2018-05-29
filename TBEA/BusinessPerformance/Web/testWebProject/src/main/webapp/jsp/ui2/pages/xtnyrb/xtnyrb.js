@@ -15,7 +15,7 @@ var xtnyzb;
     framework.templates.singleDateReport.createInstance = function () {
         return new XtnyzbShowView();
     };
-    var XtnyzbShowView = (function (_super) {
+    var XtnyzbShowView = /** @class */ (function (_super) {
         __extends(XtnyzbShowView, _super);
         function XtnyzbShowView() {
             return _super !== null && _super.apply(this, arguments) || this;

@@ -24,7 +24,7 @@ var framework;
                     return new GCYZBView();
                 }
                 gcyzb.createInstance = createInstance;
-                var GCYZBView = (function (_super) {
+                var GCYZBView = /** @class */ (function (_super) {
                     __extends(GCYZBView, _super);
                     function GCYZBView() {
                         return _super !== null && _super.apply(this, arguments) || this;

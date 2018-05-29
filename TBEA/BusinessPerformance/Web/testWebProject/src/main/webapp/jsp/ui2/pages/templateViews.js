@@ -3,7 +3,7 @@
 /// <reference path="dateSelector.ts" />
 var template;
 (function (template) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createFlatTable = function (gridName, title) {
@@ -22,7 +22,7 @@ var template;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("url");
         }

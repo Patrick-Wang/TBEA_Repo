@@ -24,7 +24,7 @@ var gcy_zbhz;
         DwZb[DwZb["ndtbzf"] = 14] = "ndtbzf";
     })(DwZb || (DwZb = {}));
     ;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -53,7 +53,7 @@ var gcy_zbhz;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("/BusinessManagement/ydzb/gcy_zbhz_update.do");

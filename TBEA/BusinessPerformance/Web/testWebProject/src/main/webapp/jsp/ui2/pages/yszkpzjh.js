@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var yszkpzjh;
 (function (yszkpzjh) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createYSPZ1 = function (gridName) {
@@ -47,7 +47,7 @@ var yszkpzjh;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mComp = Util.CompanyType.SBGS;
             this.mDataSet = new Util.Ajax("yszkpzjh_update.do");

@@ -5,16 +5,18 @@
 /// <reference path="bglx_selector.ts" />
 var jygk_zzy_cc_kglyddcbqk;
 (function (jygk_zzy_cc_kglyddcbqk) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, date) {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("单位", "dwid", true, JQTable.TextAlign.Left),
                 new JQTable.Node("月产出能力", "yscnl")
+                    //  .append(new JQTable.Node("", "yscnl1")
                     .append(new JQTable.Node("产值", "yccnlcz"))
                     .append(new JQTable.Node("产量", "yccnlcl")),
                 new JQTable.Node("所有可供履约订单总量", "yy")
+                    //                    .append(new JQTable.Node("", "yy1")
                     .append(new JQTable.Node("产值", "kglyddzcz"))
                     .append(new JQTable.Node("产量", "kglyddzcl")),
                 //                new JQTable.Node("可供履约订单（不含税）", "yd")
@@ -46,16 +48,18 @@ var jygk_zzy_cc_kglyddcbqk;
                     .append(new JQTable.Node("产量", "n6cl"))
                     .append(new JQTable.Node("产能发挥率", "n6fhl")),
                 new JQTable.Node("n+6月以后可供履约订单", "hyd")
+                    //                    .append(new JQTable.Node("", "hyd1")
                     .append(new JQTable.Node("产值", "n6hcz"))
                     .append(new JQTable.Node("产量", "n6hcl")),
                 new JQTable.Node("交货期待定", "dd")
+                    //                    .append(new JQTable.Node("", "dd1")
                     .append(new JQTable.Node("产值", "ddcl"))
                     .append(new JQTable.Node("产量", "ddcz"))
             ], gridName);
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("readviewbyq.do", false);
         }

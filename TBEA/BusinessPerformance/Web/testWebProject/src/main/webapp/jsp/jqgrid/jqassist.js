@@ -176,18 +176,19 @@ var JQTable;
             return "jq_" + (++idBase) + "_node";
         };
     })(2000);
-    var Node = (function () {
+    var Node = /** @class */ (function () {
         function Node(name, id, isReadOnly, align, width, editType, options, isNumber, 
-            //add by hzdqzy
-            isSortable, sorttype) {
+        //add by hzdqzy
+        isSortable, sorttype) {
             if (isReadOnly === void 0) { isReadOnly = true; }
             if (align === void 0) { align = TextAlign.Right; }
             if (width === void 0) { width = 0; }
             if (editType === void 0) { editType = undefined; }
             if (options === void 0) { options = undefined; }
             if (isNumber === void 0) { isNumber = true; }
+            if (isSortable === void 0) { 
             //add by hzdqzy
-            if (isSortable === void 0) { isSortable = false; }
+            isSortable = false; }
             if (sorttype === void 0) { sorttype = undefined; }
             this.mChilds = [];
             this.mParent = null;
@@ -339,7 +340,7 @@ var JQTable;
         return Node;
     }());
     JQTable.Node = Node;
-    var Cell = (function () {
+    var Cell = /** @class */ (function () {
         function Cell(row, col) {
             this.mRow = row;
             this.mCol = col;
@@ -362,7 +363,7 @@ var JQTable;
         return Cell;
     }());
     JQTable.Cell = Cell;
-    var Formula = (function () {
+    var Formula = /** @class */ (function () {
         function Formula(destCell, srcCellarray, formula) {
             this.mDestCell = destCell;
             this.mSrcCellarray = srcCellarray;
@@ -399,7 +400,7 @@ var JQTable;
         return Formula;
     }());
     JQTable.Formula = Formula;
-    var JQGridAssistant = (function () {
+    var JQGridAssistant = /** @class */ (function () {
         function JQGridAssistant(titleNodes, gridName) {
             this.completeList = [];
             this.selectedList = [];
@@ -1020,7 +1021,7 @@ var JQTable;
                 }
             };
             $('html').bind('click', function (e) {
-                if (lastsel != "") {
+                if (lastsel != "") { //if a row is selected for edit
                     if ($(e.target).closest("#" + _this.mGridName).length == 0) {
                         //and the click is outside of the grid //save the row being edited and unselect the row
                         //  $("#" + name).jqGrid('saveRow', lastsel);
@@ -1039,7 +1040,7 @@ var JQTable;
                     grid.jqGrid('navGrid', pagername, {
                         del: true, add: true, edit: false, refresh: false, search: false,
                         addfunc: function () {
-                            if (lastsel != "") {
+                            if (lastsel != "") { //if a row is selected for edit
                                 grid.jqGrid("saveCell", lastsel, lastcell);
                                 lastsel = "";
                             }
@@ -1049,7 +1050,7 @@ var JQTable;
                             grid.addRowData(rid, rdata, 'last');
                             var curPg = _this.getCurrentPageNumber();
                             var lastRowPg = parseInt("" + (_this.getDataCount() - 1) / rowNum) + 1;
-                            if (curPg != lastRowPg) {
+                            if (curPg != lastRowPg) { //当前页已经填满，切换到最后一页
                                 _this.navigateToPage(lastRowPg);
                             }
                             setTimeout(function () {
@@ -1059,7 +1060,7 @@ var JQTable;
                             }, 100);
                         },
                         delfunc: function (rowid) {
-                            if (lastsel != "") {
+                            if (lastsel != "") { //if a row is selected for edit
                                 grid.jqGrid("saveCell", lastsel, lastcell);
                                 lastsel = "";
                             }
@@ -1081,7 +1082,7 @@ var JQTable;
                             var curPg = _this.getCurrentPageNumber();
                             var lastRowPg = parseInt("" + (dataCount - 1) / rowNum) + 1;
                             var curSelId = null;
-                            if (curPg > lastRowPg) {
+                            if (curPg > lastRowPg) { //最后一页数据已经全部被删除，切换到最新的last page
                                 _this.navigateToPage(lastRowPg);
                                 ids = grid.jqGrid('getDataIDs');
                                 curSelId = ids.length - 1;

@@ -2,7 +2,7 @@
 /// <reference path="jqgrid/jqassist.ts" />
 var mkt_view_data;
 (function (mkt_view_data) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createBidTable = function (gridName) {
@@ -88,7 +88,7 @@ var mkt_view_data;
         ErrorCode[ErrorCode["PREMARY_KEY_CONFILICT"] = 2] = "PREMARY_KEY_CONFILICT";
         ErrorCode[ErrorCode["PREMARY_KEY_NULL"] = 3] = "PREMARY_KEY_NULL";
     })(ErrorCode || (ErrorCode = {}));
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
         }
         View.newInstance = function () {

@@ -45,7 +45,7 @@ var year_total;
         HbZb[HbZb["ndqntq"] = 15] = "ndqntq";
         HbZb[HbZb["ndtbzf"] = 16] = "ndtbzf";
     })(HbZb || (HbZb = {}));
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -97,7 +97,7 @@ var year_total;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("hzb_companys_update.do");

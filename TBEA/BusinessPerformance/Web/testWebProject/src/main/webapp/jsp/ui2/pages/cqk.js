@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var cqk;
 (function (cqk) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, year) {
@@ -17,7 +17,7 @@ var cqk;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.currentSelected = 0;
             this.mComp = Util.CompanyType.SBGS;

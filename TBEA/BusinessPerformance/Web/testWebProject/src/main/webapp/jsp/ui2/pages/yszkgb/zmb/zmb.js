@@ -16,7 +16,7 @@ var yszkgb;
 (function (yszkgb) {
     var zmb;
     (function (zmb) {
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
@@ -28,7 +28,7 @@ var yszkgb;
             };
             return JQGridAssistantFactory;
         }());
-        var SimpleView = (function (_super) {
+        var SimpleView = /** @class */ (function (_super) {
             __extends(SimpleView, _super);
             function SimpleView(id) {
                 var _this = _super.call(this, id) || this;

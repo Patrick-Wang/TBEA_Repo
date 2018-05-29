@@ -3,7 +3,7 @@
 var user_mgr;
 (function (user_mgr) {
     var router = framework.router;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName, dataInit) {
@@ -25,7 +25,7 @@ var user_mgr;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             this.mData = [];
             router.register(this);
@@ -74,7 +74,9 @@ var user_mgr;
             for (var i = 0; i < this.mOpt.users.length; ++i) {
                 sel.append('<option value="' + this.mOpt.users[i][0] + '">' + this.mOpt.users[i][1] + '</option>');
             }
-            $('#user-sel .selectpicker').selectpicker({});
+            $('#user-sel .selectpicker').selectpicker({
+            // style: 'btn-info'
+            });
         };
         SimpleView.prototype.adjustHeader = function () {
             $("#headerHost").removeCss("width");

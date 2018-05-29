@@ -7,7 +7,7 @@ var entry_template;
     var router = framework.router;
     var Cell = JQTable.Cell;
     var Formula = JQTable.Formula;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createFlatTable = function (gridName, title, statusList) {
@@ -32,7 +32,7 @@ var entry_template;
         }
         return -1;
     }
-    var EntryView = (function () {
+    var EntryView = /** @class */ (function () {
         function EntryView() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("/BusinessManagement/entry/zb_update.do", false);

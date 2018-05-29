@@ -2,7 +2,7 @@
 /// <reference path="unitedSelector.ts" />
 var Util;
 (function (Util) {
-    var ICompanySelectorOption = (function () {
+    var ICompanySelectorOption = /** @class */ (function () {
         function ICompanySelectorOption() {
             this.noneSelectedText = '项目公司';
             this.selectedText = '# 个项目公司被选中';
@@ -10,7 +10,7 @@ var Util;
         return ICompanySelectorOption;
     }());
     Util.ICompanySelectorOption = ICompanySelectorOption;
-    var CompanySelector = (function () {
+    var CompanySelector = /** @class */ (function () {
         function CompanySelector(multi, divId, comps, firstComp, opt) {
             var _this = this;
             this.mOpt = {

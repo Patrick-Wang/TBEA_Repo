@@ -16,7 +16,7 @@ var jcycljg;
 (function (jcycljg) {
     var ggp;
     (function (ggp) {
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
@@ -36,7 +36,7 @@ var jcycljg;
             };
             return JQGridAssistantFactory;
         }());
-        var GgpView = (function (_super) {
+        var GgpView = /** @class */ (function (_super) {
             __extends(GgpView, _super);
             function GgpView() {
                 var _this = _super !== null && _super.apply(this, arguments) || this;

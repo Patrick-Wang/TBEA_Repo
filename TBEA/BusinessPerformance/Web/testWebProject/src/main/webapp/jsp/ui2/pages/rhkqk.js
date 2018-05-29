@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var rhkqk;
 (function (rhkqk) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -26,7 +26,7 @@ var rhkqk;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("rhkqk_update.do");

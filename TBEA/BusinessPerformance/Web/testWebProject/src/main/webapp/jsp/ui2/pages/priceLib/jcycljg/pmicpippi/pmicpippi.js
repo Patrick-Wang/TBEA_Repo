@@ -16,7 +16,7 @@ var jcycljg;
 (function (jcycljg) {
     var pmicpippi;
     (function (pmicpippi) {
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName) {
@@ -29,7 +29,7 @@ var jcycljg;
             };
             return JQGridAssistantFactory;
         }());
-        var PmiCpiPpiView = (function (_super) {
+        var PmiCpiPpiView = /** @class */ (function (_super) {
             __extends(PmiCpiPpiView, _super);
             function PmiCpiPpiView() {
                 var _this = _super !== null && _super.apply(this, arguments) || this;

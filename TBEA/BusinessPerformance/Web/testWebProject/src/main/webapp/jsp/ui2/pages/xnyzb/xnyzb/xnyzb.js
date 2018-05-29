@@ -22,7 +22,7 @@ var xnyzb;
 (function (xnyzb_1) {
     var xnyzb;
     (function (xnyzb) {
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, headers) {
@@ -37,7 +37,7 @@ var xnyzb;
             };
             return JQGridAssistantFactory;
         }());
-        var ShowView = (function (_super) {
+        var ShowView = /** @class */ (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 return _super !== null && _super.apply(this, arguments) || this;

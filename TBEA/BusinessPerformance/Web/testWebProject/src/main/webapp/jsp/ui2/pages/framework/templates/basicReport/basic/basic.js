@@ -22,7 +22,7 @@ var basicReport;
 (function (basicReport) {
     var basic;
     (function (basic) {
-        var ShowView = (function (_super) {
+        var ShowView = /** @class */ (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 var _this = _super !== null && _super.apply(this, arguments) || this;

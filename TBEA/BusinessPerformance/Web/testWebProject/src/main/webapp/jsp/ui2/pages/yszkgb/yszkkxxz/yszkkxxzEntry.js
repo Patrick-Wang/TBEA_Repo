@@ -20,7 +20,7 @@ var yszkgb;
     (function (yszkkxxz) {
         var TextAlign = JQTable.TextAlign;
         var BaseEntryPluginView = yszkgb.BaseEntryPluginView;
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, readOnly) {
@@ -38,7 +38,7 @@ var yszkgb;
             };
             return JQGridAssistantFactory;
         }());
-        var SimplePluginEntryView = (function (_super) {
+        var SimplePluginEntryView = /** @class */ (function (_super) {
             __extends(SimplePluginEntryView, _super);
             function SimplePluginEntryView(id) {
                 var _this = _super.call(this, id) || this;

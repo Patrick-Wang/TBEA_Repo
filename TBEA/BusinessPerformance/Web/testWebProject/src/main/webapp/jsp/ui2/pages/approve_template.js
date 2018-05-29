@@ -5,7 +5,7 @@
 ///<reference path="messageBox.ts"/>
 var approve_template;
 (function (approve_template) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createFlatTable = function (gridName, title) {
@@ -72,7 +72,7 @@ var approve_template;
             return dataNew;
         }
     }
-    var QNJHSubView = (function () {
+    var QNJHSubView = /** @class */ (function () {
         function QNJHSubView(opt) {
             this.mOpt = opt;
         }
@@ -240,7 +240,7 @@ var approve_template;
         };
         return QNJHSubView;
     }());
-    var YDSubView = (function () {
+    var YDSubView = /** @class */ (function () {
         function YDSubView(opt) {
             this.mOpt = opt;
         }
@@ -449,7 +449,7 @@ var approve_template;
         };
         return YDSubView;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("/BusinessManagement/approve/zb_update.do", false);
             this.mUnapprove = new Util.Ajax("/BusinessManagement/approve/zb_unapprove.do");

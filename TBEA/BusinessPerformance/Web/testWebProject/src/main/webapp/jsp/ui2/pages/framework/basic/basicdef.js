@@ -52,7 +52,7 @@ var framework;
             FrameEvent.FE_ADJUST_SZIE = FrameEvent.lastEvent();
             FrameEvent.FE_ADJUST_HEADER = FrameEvent.lastEvent();
         })(FrameEvent = basic.FrameEvent || (basic.FrameEvent = {}));
-        var BasicEndpoint = (function () {
+        var BasicEndpoint = /** @class */ (function () {
             function BasicEndpoint() {
                 framework.router.register(this);
             }
@@ -67,7 +67,7 @@ var framework;
             return BasicEndpoint;
         }());
         basic.BasicEndpoint = BasicEndpoint;
-        var FrameView = (function (_super) {
+        var FrameView = /** @class */ (function (_super) {
             __extends(FrameView, _super);
             function FrameView() {
                 return _super !== null && _super.apply(this, arguments) || this;
@@ -89,7 +89,7 @@ var framework;
             return FrameView;
         }(BasicEndpoint));
         basic.FrameView = FrameView;
-        var BasePluginView = (function (_super) {
+        var BasePluginView = /** @class */ (function (_super) {
             __extends(BasePluginView, _super);
             function BasePluginView() {
                 return _super !== null && _super.apply(this, arguments) || this;
@@ -149,7 +149,7 @@ var framework;
             return BasePluginView;
         }(BasicEndpoint));
         basic.BasePluginView = BasePluginView;
-        var ShowPluginView = (function (_super) {
+        var ShowPluginView = /** @class */ (function (_super) {
             __extends(ShowPluginView, _super);
             function ShowPluginView() {
                 return _super !== null && _super.apply(this, arguments) || this;
@@ -185,7 +185,7 @@ var framework;
             return ShowPluginView;
         }(BasePluginView));
         basic.ShowPluginView = ShowPluginView;
-        var EntryPluginView = (function (_super) {
+        var EntryPluginView = /** @class */ (function (_super) {
             __extends(EntryPluginView, _super);
             function EntryPluginView() {
                 return _super !== null && _super.apply(this, arguments) || this;
@@ -219,7 +219,7 @@ var framework;
             return EntryPluginView;
         }(BasePluginView));
         basic.EntryPluginView = EntryPluginView;
-        var ApprovePluginView = (function (_super) {
+        var ApprovePluginView = /** @class */ (function (_super) {
             __extends(ApprovePluginView, _super);
             function ApprovePluginView() {
                 return _super !== null && _super.apply(this, arguments) || this;
@@ -249,7 +249,7 @@ var framework;
             return ApprovePluginView;
         }(BasePluginView));
         basic.ApprovePluginView = ApprovePluginView;
-        var EndpointProxy = (function () {
+        var EndpointProxy = /** @class */ (function () {
             function EndpointProxy(id, stub) {
                 this.mId = id;
                 this.mStub = stub;

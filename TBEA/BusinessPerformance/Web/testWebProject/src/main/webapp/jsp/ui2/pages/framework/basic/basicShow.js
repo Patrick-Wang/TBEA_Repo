@@ -26,7 +26,7 @@ var framework;
         (function (FrameEvent) {
             FrameEvent.FE_EXPORTEXCEL = FrameEvent.lastEvent();
         })(FrameEvent = basic.FrameEvent || (basic.FrameEvent = {}));
-        var ShowFrameView = (function (_super) {
+        var ShowFrameView = /** @class */ (function (_super) {
             __extends(ShowFrameView, _super);
             function ShowFrameView() {
                 return _super !== null && _super.apply(this, arguments) || this;

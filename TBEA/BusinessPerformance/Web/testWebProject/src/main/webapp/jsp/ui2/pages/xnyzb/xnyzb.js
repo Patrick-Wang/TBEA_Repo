@@ -14,7 +14,7 @@ var xnyzb;
 (function (xnyzb) {
     var router = framework.router;
     var FrameEvent = framework.basic.FrameEvent;
-    var XnyzbShowView = (function (_super) {
+    var XnyzbShowView = /** @class */ (function (_super) {
         __extends(XnyzbShowView, _super);
         function XnyzbShowView() {
             return _super !== null && _super.apply(this, arguments) || this;

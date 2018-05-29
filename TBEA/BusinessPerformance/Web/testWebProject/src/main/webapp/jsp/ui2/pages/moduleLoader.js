@@ -62,7 +62,7 @@ var ModuleLoader;
         }
         return -1;
     }
-    var Listener = (function () {
+    var Listener = /** @class */ (function () {
         function Listener(url) {
             var _this = this;
             this.mCompletes = [];
@@ -127,9 +127,9 @@ var ModuleLoader;
     }
     ModuleLoader.require = require;
     function GetHttpRequest() {
-        if (XMLHttpRequest)
+        if (XMLHttpRequest) // Gecko 
             return new XMLHttpRequest();
-        else if (ActiveXObject)
+        else if (ActiveXObject) // IE 
             return new ActiveXObject("Microsoft.XMLHTTP");
     }
     function load(url) {

@@ -26,7 +26,7 @@ var cbfx;
     (function (dmcbfx) {
         var TextAlign = JQTable.TextAlign;
         var EndpointProxy = framework.basic.EndpointProxy;
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             //吨煤成本分析表
@@ -67,7 +67,7 @@ var cbfx;
             };
             return JQGridAssistantFactory;
         }());
-        var ShowView = (function (_super) {
+        var ShowView = /** @class */ (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 var _this = _super !== null && _super.apply(this, arguments) || this;

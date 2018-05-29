@@ -26,7 +26,7 @@ var nwbzlqk;
     (function (xkysazzlwt) {
         var TextAlign = JQTable.TextAlign;
         var Node = JQTable.Node;
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createZtTable = function (gridName, ydjd) {
@@ -45,7 +45,7 @@ var nwbzlqk;
             };
             return JQGridAssistantFactory;
         }());
-        var ShowView = (function (_super) {
+        var ShowView = /** @class */ (function (_super) {
             __extends(ShowView, _super);
             function ShowView() {
                 var _this = _super !== null && _super.apply(this, arguments) || this;

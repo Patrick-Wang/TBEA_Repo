@@ -16,7 +16,7 @@ var hzbNC_zbhz;
         ZtId[ZtId["ndtbzf"] = 6] = "ndtbzf";
     })(ZtId || (ZtId = {}));
     ;
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -32,7 +32,7 @@ var hzbNC_zbhz;
         };
         return JQGridAssistantFactory;
     }());
-    var SimpleView = (function () {
+    var SimpleView = /** @class */ (function () {
         function SimpleView() {
             this.mData = [];
             this.mDataSet = new Util.Ajax("/BusinessManagement/NCzb/AllCompanysNC_overview_update.do");

@@ -2,7 +2,7 @@
 /// <reference path="util.ts" />
 var byq_fkfstj;
 (function (byq_fkfstj) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createSubNode = function (parent) {
@@ -51,7 +51,7 @@ var byq_fkfstj;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mComp = Util.CompanyType.SBGS;
         }

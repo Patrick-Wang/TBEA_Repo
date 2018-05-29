@@ -17,7 +17,7 @@ var wlyddqk;
     var wlyddmlspcs;
     (function (wlyddmlspcs) {
         var TextAlign = JQTable.TextAlign;
-        var JQGridAssistantFactory = (function () {
+        var JQGridAssistantFactory = /** @class */ (function () {
             function JQGridAssistantFactory() {
             }
             JQGridAssistantFactory.createTable = function (gridName, date) {
@@ -44,7 +44,7 @@ var wlyddqk;
             };
             return JQGridAssistantFactory;
         }());
-        var WLYDDMLSPCSView = (function (_super) {
+        var WLYDDMLSPCSView = /** @class */ (function (_super) {
             __extends(WLYDDMLSPCSView, _super);
             function WLYDDMLSPCSView() {
                 var _this = _super !== null && _super.apply(this, arguments) || this;

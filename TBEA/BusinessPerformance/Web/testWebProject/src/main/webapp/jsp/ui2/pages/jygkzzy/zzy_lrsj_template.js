@@ -5,7 +5,7 @@
 /// <reference path="bglx_selector.ts" />
 var zzy_lrsj_template;
 (function (zzy_lrsj_template) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createFlatTable = function (gridName, title) {
@@ -22,7 +22,7 @@ var zzy_lrsj_template;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
             this.mDataSet = new Util.Ajax("zb_update.do", false);
             this.mSave = new Util.Ajax("zb_save.do");
@@ -250,9 +250,11 @@ var zzy_lrsj_template;
                     this.mTableAssist = new JQTable.JQGridAssistant([
                         new JQTable.Node("单位", "dwid", true, JQTable.TextAlign.Left),
                         new JQTable.Node("月产出能力", "yscnl")
+                            //  .append(new JQTable.Node("", "yscnl1")
                             .append(new JQTable.Node("产值", "yccnlcz", false))
                             .append(new JQTable.Node("产量", "yccnlcl", false)),
                         new JQTable.Node("所有可供履约订单总量", "yy")
+                            //                    .append(new JQTable.Node("", "yy1")
                             .append(new JQTable.Node("产值", "kglyddzcz", false))
                             .append(new JQTable.Node("产量", "kglyddzcl", false)),
                         new JQTable.Node("可供履约订单（不含税）", "yd")
@@ -278,9 +280,11 @@ var zzy_lrsj_template;
                             .append(new JQTable.Node("产值", "n6cz", false))
                             .append(new JQTable.Node("产量", "n6cl", false))),
                         new JQTable.Node("n+6月以后可供履约订单", "hyd")
+                            //                    .append(new JQTable.Node("", "hyd1")
                             .append(new JQTable.Node("产值", "n6hcz", false))
                             .append(new JQTable.Node("产量", "n6hcl", false)),
                         new JQTable.Node("交货期待定", "dd")
+                            //                    .append(new JQTable.Node("", "dd1")
                             .append(new JQTable.Node("产值", "ddcl", false))
                             .append(new JQTable.Node("产量", "ddcz", false))
                     ], name);
@@ -443,8 +447,8 @@ var zzy_lrsj_template;
                 //                    } 
             }));
             $('html').bind('click', function (e) {
-                if (lastsel != "") {
-                    if ($(e.target).closest("#" + name).length == 0) {
+                if (lastsel != "") { //if a row is selected for edit 
+                    if ($(e.target).closest("#" + name).length == 0) { //and the click is outside of the grid //save the row being edited and unselect the row  
                         //  $("#" + name).jqGrid('saveRow', lastsel); 
                         $("#" + name).jqGrid("saveCell", lastsel, lastcell);
                         //$("#" + name).resetSelection(); 

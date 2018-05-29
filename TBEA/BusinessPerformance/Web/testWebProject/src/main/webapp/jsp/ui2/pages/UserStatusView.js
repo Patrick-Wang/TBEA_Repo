@@ -3,7 +3,7 @@
 /// <reference path="dateSelector.ts" />
 var userStatus;
 (function (userStatus) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createFlatTable = function (gridName, title) {
@@ -15,7 +15,7 @@ var userStatus;
         };
         return JQGridAssistantFactory;
     }());
-    var View = (function () {
+    var View = /** @class */ (function () {
         function View() {
         }
         View.getInstance = function () {

@@ -24,7 +24,7 @@ var framework;
                 return new ItemShowView();
             }
             dateReport.create = create;
-            var ItemShowView = (function (_super) {
+            var ItemShowView = /** @class */ (function (_super) {
                 __extends(ItemShowView, _super);
                 function ItemShowView() {
                     var _this = _super !== null && _super.apply(this, arguments) || this;

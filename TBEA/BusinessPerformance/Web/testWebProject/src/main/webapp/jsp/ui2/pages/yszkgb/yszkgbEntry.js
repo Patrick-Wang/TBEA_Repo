@@ -5,7 +5,7 @@
 var yszkgb;
 (function (yszkgb) {
     var router = framework.router;
-    var EntryView = (function () {
+    var EntryView = /** @class */ (function () {
         function EntryView() {
             this.mNodes = [];
             router.register(this);

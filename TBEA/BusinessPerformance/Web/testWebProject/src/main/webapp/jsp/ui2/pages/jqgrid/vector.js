@@ -1,6 +1,6 @@
 var std;
 (function (std) {
-    var vector = (function () {
+    var vector = /** @class */ (function () {
         function vector() {
             this.mContainer = [];
         }

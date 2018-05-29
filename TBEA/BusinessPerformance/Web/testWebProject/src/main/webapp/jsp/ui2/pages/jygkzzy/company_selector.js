@@ -1,7 +1,7 @@
 /// <reference path="../util.ts" />
 var Util;
 (function (Util) {
-    var CompanySelectorZzy = (function () {
+    var CompanySelectorZzy = /** @class */ (function () {
         function CompanySelectorZzy(mCtrlId, dwxxs, isSbdcy, viewType) {
             this.mCtrlId = mCtrlId;
             this.companyId = mCtrlId + "Id";

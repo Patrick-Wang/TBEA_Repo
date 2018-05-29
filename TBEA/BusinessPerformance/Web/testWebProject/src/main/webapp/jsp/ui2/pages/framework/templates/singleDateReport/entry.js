@@ -24,7 +24,7 @@ var framework;
                 return new EntryView();
             }
             singleDateReport.createInstance = createInstance;
-            var EntryView = (function (_super) {
+            var EntryView = /** @class */ (function (_super) {
                 __extends(EntryView, _super);
                 function EntryView() {
                     return _super !== null && _super.apply(this, arguments) || this;

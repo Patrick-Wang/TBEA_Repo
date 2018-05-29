@@ -24,7 +24,7 @@ var framework;
                 return new ApproveView();
             }
             dateReport.createInstance = createInstance;
-            var ApproveView = (function (_super) {
+            var ApproveView = /** @class */ (function (_super) {
                 __extends(ApproveView, _super);
                 function ApproveView() {
                     return _super !== null && _super.apply(this, arguments) || this;
