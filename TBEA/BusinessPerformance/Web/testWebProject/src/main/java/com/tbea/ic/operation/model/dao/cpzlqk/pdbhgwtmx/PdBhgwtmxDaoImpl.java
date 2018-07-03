@@ -32,17 +32,17 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	@Override
 	public List<PdBhgwtmxEntity> getByYd(Date d,  List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("from PdBhgwtmxEntity where nf = :nf and yf = :yf and zt in :zt");
+        Query q = getEntityManager().createQuery("from PdBhgwtmxEntity where nf = :nf and yf = :yf");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		return q.getResultList();
 	}
 
 	@Override
 	public List<PdBhgwtmxEntity> getByJd(Date d,  List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("from PdBhgwtmxEntity where nf = :nf and  yf <= :yf and yf >= :jdstart and zt in :zt");
+        Query q = getEntityManager().createQuery("from PdBhgwtmxEntity where nf = :nf and  yf <= :yf and yf >= :jdstart");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		Integer jdStart = 1;
@@ -51,16 +51,16 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
         }
         
 		q.setParameter("jdstart", jdStart);
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		return q.getResultList();
 	}
 	@Override
 	public List<Object[]> getByYdFb(Date d,  List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from PdBhgwtmxEntity where nf = :nf and yf = :yf  and zt in :zt group by dwid, bhglb.id order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from PdBhgwtmxEntity where nf = :nf and yf = :yf  group by dwid, bhglb.id order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -68,10 +68,10 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	@Override
 	public List<Object[]> getByYdFbHj(Date d,  List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, count(*) from PdBhgwtmxEntity where nf = :nf and yf = :yf  and zt in :zt group by dwid order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, count(*) from PdBhgwtmxEntity where nf = :nf and yf = :yf  group by dwid order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -79,7 +79,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	@Override
 	public List<Object[]> getByJdFb(Date d,  List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from PdBhgwtmxEntity where nf = :nf and  yf <= :yf and yf >= :jdstart and zt in :zt group by dwid, bhglb.id order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from PdBhgwtmxEntity where nf = :nf and  yf <= :yf and yf >= :jdstart group by dwid, bhglb.id order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		Integer jdStart = 1;
@@ -88,7 +88,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
         }
         
 		q.setParameter("jdstart", jdStart);
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -96,7 +96,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	@Override
 	public List<Object[]> getByJdFbHj(Date d,  List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, count(*) from PdBhgwtmxEntity where nf = :nf and  yf <= :yf and yf >= :jdstart and zt in :zt group by dwid order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, count(*) from PdBhgwtmxEntity where nf = :nf and  yf <= :yf and yf >= :jdstart group by dwid order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		Integer jdStart = 1;
@@ -105,7 +105,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
         }
         
 		q.setParameter("jdstart", jdStart);
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -141,11 +141,11 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	public List<PdBhgwtmxEntity> getByYd(Date d,  Company company,
 			List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("from PdBhgwtmxEntity where dwid=:dwid and nf = :nf and yf = :yf and zt in :zt");
+        Query q = getEntityManager().createQuery("from PdBhgwtmxEntity where dwid=:dwid and nf = :nf and yf = :yf ");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		return q.getResultList();
 	}
 
@@ -153,7 +153,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	public List<PdBhgwtmxEntity> getByJd(Date d,  Company company,
 			List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("from PdBhgwtmxEntity where dwid=:dwid and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt in :zt");
+        Query q = getEntityManager().createQuery("from PdBhgwtmxEntity where dwid=:dwid and  nf = :nf and  yf <= :yf and yf >= :jdstart");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
@@ -163,7 +163,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
         }
         
 		q.setParameter("jdstart", jdStart);
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		return q.getResultList();
 	}
 
@@ -171,11 +171,11 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	public List<Object[]> getByYdFb(Date d,  Company company,
 			List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from PdBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf  and zt in :zt group by dwid, bhglb.id order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from PdBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf  group by dwid, bhglb.id order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -184,11 +184,11 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	public List<Object[]> getByYdFbHj(Date d,  Company company,
 			List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, count(*) from PdBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf  and zt in :zt group by dwid order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, count(*) from PdBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf  group by dwid order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -197,7 +197,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	public List<Object[]> getByJdFb(Date d,  Company company,
 			List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from PdBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt in :zt group by dwid, bhglb.id order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from PdBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart group by dwid, bhglb.id order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
@@ -207,7 +207,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
         }
         
 		q.setParameter("jdstart", jdStart);
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -216,7 +216,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
 	public List<Object[]> getByJdFbHj(Date d, Company company,
 			List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("select dwid, count(*) from PdBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt in :zt group by dwid order by dwid");
+        Query q = getEntityManager().createQuery("select dwid, count(*) from PdBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart group by dwid order by dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
@@ -226,7 +226,7 @@ public class PdBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<PdBhgwtmxEntity> 
         }
         
 		q.setParameter("jdstart", jdStart);
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}

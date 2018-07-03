@@ -114,6 +114,8 @@
                 count(*) c
             from exchange_settlement_forward
             where
+                (${dstart} is null or (jbr is not null and DATEDIFF(dd, jbr, ${dstart}) <= 0)) and
+                (${dend} is null or (jbr is not null and DATEDIFF(dd, jbr, ${dend}) >= 0)) and
                 (${dwmc} is null or dwmc = ${dwmc}) and
                 (${cond} is null or jgqk = ${cond}) and
                 (${bsType} is null or ywzl = ${bsType}) and
@@ -140,6 +142,8 @@
                 yh
             from exchange_settlement_forward
             where
+                (${dstart} is null or (jbr is not null and DATEDIFF(day, jbr, ${dstart}) <= 0)) and
+                (${dend} is null or (jbr is not null and DATEDIFF(day, jbr, ${dend}) >= 0)) and
                 (${dwmc} is null or dwmc = ${dwmc}) and
                 (${cond} is null or jgqk = ${cond}) and
                 (${bsType} is null or ywzl = ${bsType}) and

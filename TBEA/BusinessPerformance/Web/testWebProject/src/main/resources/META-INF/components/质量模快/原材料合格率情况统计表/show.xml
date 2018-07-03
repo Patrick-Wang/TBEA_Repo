@@ -13,8 +13,7 @@ where
  CLDL.cy=${cy} and
  YCL.nf=${cal.year} and
  YCL.yf=${cal.month} and
- YCL.dwid in ${companies} and
- YCL.zt in ${zt}
+ YCL.dwid in ${companies}
 group by
  CLDL.id</sql>
   <sql id="hjljz" order="ids" by="0" export="true">select
@@ -30,8 +29,7 @@ where
  CLDL.cy=${cy} and
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid in ${companies} and
- YCL.zt in ${zt}
+ YCL.dwid in ${companies}
 group by
  CLDL.id</sql>
  </service>
@@ -49,8 +47,8 @@ where
  CLDL.cy=${cy} and
  YCL.nf=${cal.year} and
  YCL.yf=${cal.month} and
- YCL.dwid=${compId} and
- YCL.zt in ${zt}</sql>
+ YCL.dwid=${compId}
+  </sql>
   <sql id="ljz" order="ids" by="0" export="true">select
  CLDL.id,
  sum(YCL.hgs) as newHgs,
@@ -64,8 +62,7 @@ where
  CLDL.cy=${cy} and
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid=${compId} and
- YCL.zt in ${zt}
+ YCL.dwid=${compId}
 group by
  CLDL.id</sql>
  </service>
@@ -1227,8 +1224,7 @@ where
  CLDL.cy=${cy} and
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.months[1].date}) &lt;= 0 and 
  dateDiff(mm, dateadd(mm, YCL.yf - 1, dateadd(yy, YCL.nf -1900 ,'1900-1-1')), ${cal.date}) &gt;= 0 and 
- YCL.dwid in ${dwids} and 
- YCL.zt in ${zt}
+ YCL.dwid in ${dwids}
 group by
  YCL.nf,
  YCL.yf

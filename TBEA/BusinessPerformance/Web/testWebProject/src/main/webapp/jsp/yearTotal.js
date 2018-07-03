@@ -1,11 +1,6 @@
-/**
- * Created by Floyd on 2016/3/28.
- */
-/// <reference path="jqgrid/jqassist.ts" />
-/// <reference path="util.ts" />
 var yearTotal;
 (function (yearTotal) {
-    var JQGridAssistantFactory = (function () {
+    var JQGridAssistantFactory = /** @class */ (function () {
         function JQGridAssistantFactory() {
         }
         JQGridAssistantFactory.createTable = function (gridName) {
@@ -22,8 +17,8 @@ var yearTotal;
             ], gridName);
         };
         return JQGridAssistantFactory;
-    })();
-    var View = (function () {
+    }());
+    var View = /** @class */ (function () {
         function View() {
             this.mComp = Util.CompanyType.HBGS;
         }
@@ -94,7 +89,7 @@ var yearTotal;
             }));
         };
         return View;
-    })();
+    }());
     yearTotal.View = View;
 })(yearTotal || (yearTotal = {}));
 var view = yearTotal.View.newInstance();

@@ -51,6 +51,21 @@
                         }
                     },
                     {
+                        "param" : "start,end",
+                        "name": "经办日",
+                        "type":"period",
+                        "period":{
+                            "start": {
+                                "type":"date",
+                                "init":"${calendar.current.format}"
+                            },
+                            "end": {
+                                "type":"date",
+                                "init":"${calendar.current.format}"
+                            }
+                        }
+                    },
+                    {
                         "param" : "bank",
                         "name": "银行",
                         "type":"input"
@@ -68,7 +83,9 @@
         <context key="currencyBuy" value="${request.currencyBuy.asString}"/>
         <context key="bsType" value="${request.bsType.asString}"/>
         <context key="bank" value="${request.bank.asString}"/>
-            <callcontroller id="E854333332B737FBBB14A55210FC995BUpdateClr"/>
+        <context key="dstart" value="${request.start.asCalendar.date}"/>
+        <context key="dend" value="${request.end.asCalendar.date}"/>
+        <callcontroller id="E854333332B737FBBB14A55210FC995BUpdateClr"/>
 
     </controller>
     <controller id="50E1A0738E3CC48ECF5E06CC38B0B76CExportWrapperClr">

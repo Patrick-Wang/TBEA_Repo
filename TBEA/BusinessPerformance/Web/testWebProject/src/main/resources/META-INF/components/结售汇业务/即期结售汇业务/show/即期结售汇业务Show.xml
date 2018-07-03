@@ -97,6 +97,8 @@
                 count(*) c
             from exchange_settlement_immediate
             where
+                (${dstart} is null or (jbr is not null and DATEDIFF(dd, jbr, ${dstart}) <= 0)) and
+                (${dend} is null or (jbr is not null and DATEDIFF(dd, jbr, ${dend}) >= 0)) and
                 (${dwmc} is null or dwmc = ${dwmc}) and
                 (${bsType} is null or ywzl = ${bsType}) and
                 (${currencySell} is null or mcbz = ${currencySell}) and
@@ -117,6 +119,8 @@
                 yh
             from exchange_settlement_immediate
             where
+                (${dstart} is null or (jbr is not null and DATEDIFF(dd, jbr, ${dstart}) <= 0)) and
+                (${dend} is null or (jbr is not null and DATEDIFF(dd, jbr, ${dend}) >= 0)) and
                 (${dwmc} is null or dwmc = ${dwmc}) and
                 (${bsType} is null or ywzl = ${bsType}) and
                 (${currencySell} is null or mcbz = ${currencySell}) and

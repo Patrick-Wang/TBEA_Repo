@@ -289,8 +289,7 @@
             hr_employee_v
          where
             isInPost = 'Y' and
-            leaveDate is null and
-            category = '正式员工' and
+            employeeCategory = '正式员工' and
             dwmc <> '其它'
          group by
             dwmc
@@ -303,8 +302,7 @@
             hr_employee_v
          where
             isInPost = 'Y' and
-            leaveDate is null and
-            category = '劳务派遣' and
+            employeeCategory = '劳务派遣' and
             dwmc <> '其它'
          group by
             dwmc

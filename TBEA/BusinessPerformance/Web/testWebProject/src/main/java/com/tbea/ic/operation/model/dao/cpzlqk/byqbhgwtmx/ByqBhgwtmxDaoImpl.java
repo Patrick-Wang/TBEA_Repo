@@ -157,12 +157,11 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 	public List<ByqBhgwtmxEntity> getByYd(Date d,  Company company, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
        // Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where dwid=:dwid and nf = :nf and yf = :yf and zt=:zt");
-        String sql = "from ByqBhgwtmxEntity where dwid=:dwid and nf = :nf and yf = :yf and zt in :zt";
+        String sql = "from ByqBhgwtmxEntity where dwid=:dwid and nf = :nf and yf = :yf ";
 		Query q = getEntityManager().createQuery(sql);
         q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
-		q.setParameter("zt", zts);
 		return q.getResultList();
 	}
 
@@ -170,7 +169,7 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 	public List<ByqBhgwtmxEntity> getByJd(Date d,  Company company, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
         //Query q = getEntityManager().createQuery("from ByqBhgwtmxEntity where dwid=:dwid and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt=:zt");
-        String sql = "from ByqBhgwtmxEntity where dwid=:dwid and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt in :zt";
+        String sql = "from ByqBhgwtmxEntity where dwid=:dwid and  nf = :nf and  yf <= :yf and yf >= :jdstart";
 		Query q = getEntityManager().createQuery(sql);
         q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
@@ -181,7 +180,6 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
         }
         
 		q.setParameter("jdstart", jdStart);
-		q.setParameter("zt", zts);
 		return q.getResultList();
 	}
 
@@ -189,14 +187,14 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 	public List<Object[]> getByYdFb(Date d,  Company company, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
         //Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf  and zt=:zt group by dwid, bhglb.id order by dwid");
-        String sql = "select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf  and zt in :zt group by dwid, bhglb.id order by dwid";
+        String sql = "select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf  group by dwid, bhglb.id order by dwid";
 		Query q = getEntityManager().createQuery(sql);
 
         
         q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -205,13 +203,13 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 	public List<Object[]> getByYdFbHj(Date d,  Company company, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
         //Query q = getEntityManager().createQuery("select dwid, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf  and zt=:zt group by dwid order by dwid");
-        String sql = "select dwid, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf  and zt in :zt group by dwid order by dwid";
+        String sql = "select dwid, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and yf = :yf group by dwid order by dwid";
 
 		Query q = getEntityManager().createQuery(sql);
         q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
 		q.setParameter("dwid", company.getId());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -220,7 +218,7 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 	public List<Object[]> getByJdFb(Date d,  Company company, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
         //Query q = getEntityManager().createQuery("select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt=:zt group by dwid, bhglb.id order by dwid");
-        String sql = "select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt in :zt group by dwid, bhglb.id order by dwid";
+        String sql = "select dwid, bhglb.id, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart group by dwid, bhglb.id order by dwid";
 		Query q = getEntityManager().createQuery(sql);
         
         q.setParameter("nf", ec.getYear());
@@ -232,7 +230,7 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
         }
         
 		q.setParameter("jdstart", jdStart);
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}
@@ -241,7 +239,7 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
 	public List<Object[]> getByJdFbHj(Date d, Company company, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
         //Query q = getEntityManager().createQuery("select dwid, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt=:zt group by dwid order by dwid");
-        String sql ="select dwid, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart and zt in :zt group by dwid order by dwid";
+        String sql ="select dwid, count(*) from ByqBhgwtmxEntity where dwid=:dwid  and  nf = :nf and  yf <= :yf and yf >= :jdstart group by dwid order by dwid";
 		Query q = getEntityManager().createQuery(sql);
         
         q.setParameter("nf", ec.getYear());
@@ -253,7 +251,7 @@ public class ByqBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<ByqBhgwtmxEntity
         }
         
 		q.setParameter("jdstart", jdStart);
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		List<Object[]> result = q.getResultList();
 		return result;
 	}

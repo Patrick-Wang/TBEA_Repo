@@ -117,7 +117,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	        
 	        String sql = null;
 //			if (zt != ZBStatus.NONE){
-				sql ="from ZltjjgEntity where zt in :zt and nf = :nf and dwid = :dwid";
+				sql ="from ZltjjgEntity where nf = :nf and dwid = :dwid";
 //			}else{
 //				sql ="from ZltjjgEntity where nf = :nf and dwid = :dwid";
 //			}
@@ -125,7 +125,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			q.setParameter("nf", ec.getYear());
 			q.setParameter("dwid", company.getId());
 //			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zts);
+//				q.setParameter("zt", zts);
 //			}
 			dateTotal = q.getResultList();
 		}
@@ -150,7 +150,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	       // Query q = getEntityManager().createQuery("from ZltjjgEntity where zt in :zt and nf = :nf and yf = :yf and dwid in :dwid");
 	        String sql = null;
 //			if (zt != ZBStatus.NONE){
-				sql ="from ZltjjgEntity where zt in :zt and nf = :nf and yf = :yf and dwid in :dwid";
+				sql ="from ZltjjgEntity where nf = :nf and yf = :yf and dwid in :dwid";
 //			}else{
 //				sql ="from ZltjjgEntity where nf = :nf and yf = :yf and dwid in :dwid";
 //			}
@@ -159,7 +159,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
 //			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zts);
+//				q.setParameter("zt", zts);
 //			}
 			byDate = q.getResultList();
 		}
@@ -176,7 +176,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	        //Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and  nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid");
 	        String sql = null;
 //			if (zt != ZBStatus.NONE){
-				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and  nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid";
+				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid";
 //			}else{
 //				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwid group by dwid, cpid";
 //			}
@@ -185,7 +185,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
 //			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zts);
+//				q.setParameter("zt", zts);
 //			}
 			List<Object[]> ret = q.getResultList();
 			yearAcc = new ArrayList<ZltjjgEntity>();
@@ -214,7 +214,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	       // Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid");
 	        String sql = null;
 //			if (zt != ZBStatus.NONE){
-				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid";
+				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid";
 //			}else{
 //				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwid group by dwid, cpid";
 //			}
@@ -230,7 +230,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
 //			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zts);
+//				q.setParameter("zt", zts);
 //			}
 			List<Object[]> ret = q.getResultList();
 			if (!ret.isEmpty()){
@@ -258,7 +258,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	        //Query q = getEntityManager().createQuery("select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid");
 	        String sql = null;
 //			if (zt != ZBStatus.NONE){
-				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where zt in :zt and nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid";
+				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid";
 //			}else{
 //				sql ="select dwid, cpid, sum(bhgs) as bhgs, sum(zs) as zs from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwid group by dwid, cpid";
 //			}
@@ -273,7 +273,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwid", comps);
 //			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zts);
+//				q.setParameter("zt", zts);
 //			}
 			List<Object[]> ret = q.getResultList();
 			if (!ret.isEmpty()){
@@ -315,7 +315,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	      //  Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt  in :zt and nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid");
 	        String sql = null;
 //			if (zt != ZBStatus.NONE){
-				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt  in :zt and nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid";
+				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid";
 //			}else{
 //				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= 1 and yf <= :yf  and dwid in :dwids group by cpid";
 //			}
@@ -324,7 +324,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwids", ids);
 //			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zts);
+//				q.setParameter("zt", zts);
 //			}
 			List<Object[]> ret = q.getResultList();
 			for (Object[] row : ret){
@@ -356,7 +356,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	        //Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt  in :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid");
 	        String sql = null;
 //			if (zt != ZBStatus.NONE){
-				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where zt  in :zt and nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid";
+				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid";
 //			}else{
 //				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf and dwid in :dwids group by cpid";
 //			}
@@ -372,7 +372,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwids", ids);
 //			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zts);
+//				q.setParameter("zt", zts);
 //			}
 			List<Object[]> ret = q.getResultList();
 			for (Object[] row : ret){
@@ -405,7 +405,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	        //Query q = getEntityManager().createQuery("select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids and zt  in :zt group by cpid");
 	        String sql = null;
 //			if (zt != ZBStatus.NONE){
-				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids and zt  in :zt group by cpid";
+				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids group by cpid";
 //			}else{
 //				sql ="select sum(bhgs) as bhgs, sum(zs) as zs, cpid from ZltjjgEntity where nf = :nf and yf >= :jdstart and yf <= :yf  and dwid in :dwids group by cpid";
 //			}
@@ -420,7 +420,7 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 			q.setParameter("yf", ec.getMonth());
 			q.setParameter("dwids", ids);
 //			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zts);
+//				q.setParameter("zt", zts);
 //			}
 			List<Object[]> ret = q.getResultList();
 			for (Object[] row : ret){
@@ -448,14 +448,14 @@ public class ZltjjgDaoCacheProxy  implements ZltjjgDao {
 	        //Query q = getEntityManager().createQuery("from ZltjjgEntity where zt in :zt and nf = :nf and dwid in :dwids");
 	        String sql = null;
 //			if (zt != ZBStatus.NONE){
-				sql ="from ZltjjgEntity where zt in :zt and nf = :nf and dwid in :dwids";
+				sql ="from ZltjjgEntity where nf = :nf and dwid in :dwids";
 //			}else{
 //				sql ="from ZltjjgEntity where nf = :nf and dwid in :dwids";
 //			}
 			Query q = getEntityManager().createQuery(sql);
 	        q.setParameter("nf", ec.getYear());
 //			if (zt != ZBStatus.NONE){
-				q.setParameter("zt", zts);
+//				q.setParameter("zt", zts);
 //			}
 			q.setParameter("dwids", ids);
 			dateTotal = q.getResultList();

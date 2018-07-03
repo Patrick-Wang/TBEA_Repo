@@ -1,9 +1,3 @@
-///<reference path="../unitedSelector.ts"/>
-///<reference path="../dateSelector.ts"/>
-///<reference path="../../js/jquery/jquery.d.ts"/>
-/**
- * Created by Floyd on 2016/7/19.
- */
 var Util;
 (function (Util) {
     var SeasonAccSelector = /** @class */ (function () {
@@ -37,8 +31,8 @@ var Util;
             $("#" + id).append("<div style='float:left' id='" + id + "year'></div>");
             $("#" + id).append("<div style='float:left' id='" + id + "season'></div>");
             var lastYear = now.year;
-            this.yearSelector = new Util.UnitedSelector(dates, id + "year", [now.year - start.year]);
-            this.seasonSelector = new Util.UnitedSelector(seasons, id + "season", [seasonNow]);
+            this.yearSelector = new UnitedSelector(dates, id + "year", [now.year - start.year]);
+            this.seasonSelector = new UnitedSelector(seasons, id + "season", [seasonNow]);
             $("#" + id + " select").css("width", "100px");
             this.yearSelector.change(function (sel, depth) {
                 sel = _this.yearSelector.getSelect();

@@ -32,10 +32,10 @@ public class XlBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<XlBhgwtmxEntity> 
 	@Override
 	public List<XlBhgwtmxEntity> getByDate(Date d, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("from XlBhgwtmxEntity where nf = :nf and yf = :yf and zt in :zt");
+        Query q = getEntityManager().createQuery("from XlBhgwtmxEntity where nf = :nf and yf = :yf");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		return q.getResultList();
 	}
 
@@ -68,10 +68,10 @@ public class XlBhgwtmxDaoImpl extends AbstractReadWriteDaoImpl<XlBhgwtmxEntity> 
 	@Override
 	public List<XlBhgwtmxEntity> getByDate(Date d, Company company, List<Integer> zts) {
 		EasyCalendar ec = new EasyCalendar(d);
-        Query q = getEntityManager().createQuery("from XlBhgwtmxEntity where zt in :zt and nf = :nf and  yf = :yf and dwid = :dwid");
+        Query q = getEntityManager().createQuery("from XlBhgwtmxEntity where nf = :nf and  yf = :yf and dwid = :dwid");
 		q.setParameter("nf", ec.getYear());
 		q.setParameter("yf", ec.getMonth());
-		q.setParameter("zt", zts);
+//		q.setParameter("zt", zts);
 		q.setParameter("dwid", company.getId());
 		return q.getResultList();
 	}

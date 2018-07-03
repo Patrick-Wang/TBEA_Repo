@@ -1,9 +1,6 @@
-/**
- * Created by Floyd on 2016/7/27.
- */
 var zTreeEx;
 (function (zTreeEx) {
-    var RightMenu = (function () {
+    var RightMenu = /** @class */ (function () {
         function RightMenu(setting) {
             this.setting = setting;
         }
@@ -69,7 +66,7 @@ var zTreeEx;
             $('#ztreeEx_rMenu_div').hide();
         };
         return RightMenu;
-    })();
+    }());
     function init(elem, setting, nodes) {
         var rm = new RightMenu(setting);
         return $.fn.zTree.init(elem, rm.getSetting(), nodes);

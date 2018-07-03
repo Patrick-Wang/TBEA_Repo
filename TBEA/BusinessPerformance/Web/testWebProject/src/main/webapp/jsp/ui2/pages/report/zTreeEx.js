@@ -1,6 +1,3 @@
-/**
- * Created by Floyd on 2016/7/27.
- */
 var zTreeEx;
 (function (zTreeEx) {
     var RightMenu = /** @class */ (function () {

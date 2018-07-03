@@ -1,7 +1,3 @@
-/**
- * Created by Floyd on 2016/7/27.
- */
-
 module zTreeEx{
 
     interface TreeNodeEx{
