@@ -114,6 +114,7 @@ module Util {
         shrinkToFit:string;
         step:string;
         count:string;
+        multiselect:boolean;
         colorKey:string;
     }
 

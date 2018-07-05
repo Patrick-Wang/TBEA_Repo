@@ -76,11 +76,11 @@ html, body{
 }
 
 .option-area .search-item-date > input{
-    height:28px;
+    height:25px;
 }
 
 .option-area .search-item-input > input{
-    height:28px;
+    height:25px;
     width:220px;
     padding-left: 10px;
 }

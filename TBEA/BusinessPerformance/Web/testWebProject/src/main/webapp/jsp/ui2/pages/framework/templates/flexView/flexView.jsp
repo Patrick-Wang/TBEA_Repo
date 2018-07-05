@@ -51,7 +51,18 @@
     <script
             src="${pageContext.request.contextPath}/jsp/ui2/assets/js/skins.min.js"></script>
 
+    <!--Beyond styles-->
+    <link
+            href="${pageContext.request.contextPath}/jsp/ui2/assets/css/beyond.css"
+            rel="stylesheet" />
+    <!--Beyond Scripts-->
 
+    <script src="${pageContext.request.contextPath}/jsp/ui2/assets/js/toastr/toastr.js"></script>
+    <script
+            src="${pageContext.request.contextPath}/jsp/ui2/assets/js/beyond.min.js"></script>
+    <script
+            src="${pageContext.request.contextPath}/jsp/ui2/pages/messageBox.js"
+            type="text/javascript"></script>
     <!-- jquery ui -->
     <!-- jquery ui gray -->
     <link rel="stylesheet" type="text/css"
@@ -175,6 +186,10 @@
                 <i class="fa fa-search"> </i>查找</button>
             <button class="btn btn-default btn-custom-sz btn-reset opt-btn" onclick="search.searchPanel.onClickReset()">
                 <i class="fa fa-refresh"> </i>重置</button>
+            <button class="hidden submitBtn btn btn-default btn-custom-sz btn-reset opt-btn" onclick="search.searchPanel.onClickSubmit()">
+                <i class="fa fa-upload"> </i>提交</button>
+            <button class="hidden delBtn btn btn-default btn-custom-sz btn-reset opt-btn" onclick="search.searchPanel.onClickDel()">
+                <i class="fa fa-trash"> </i>删除</button>
             <button class="btn btn-default btn-custom-sz btn-export opt-btn" onclick="search.searchPanel.onClickExport()">
                 <i class="fa fa-file-excel-o"> </i>导出</button>
         </div>
@@ -198,14 +213,16 @@
 </body>
 <script src="${pageContext.request.contextPath}/jsp/ui2/plugins/layui/layui.all.js"></script>
 <script>
-
-    var printUrl = '${printUrl}';
+    function getUrl(url){
+        return url ? url + '.do' : undefined;
+    }
     var context = {
-        pager: '${pager}' == 'true',
         options: JSON.parse('${options}'),
-        updateUrl: '${updateUrl}.do',
-        exportUrl: '${exportUrl}.do',
-        printUrl: printUrl ? printUrl + ".do" : "",
+        updateUrl: getUrl('${updateUrl}'),
+        exportUrl: getUrl('${exportUrl}'),
+        submitUrl: getUrl('${submitUrl}'),
+        delUrl: getUrl('${delUrl}'),
+        printUrl: getUrl('${printUrl}'),
         baseUrl: '${pageContext.request.contextPath}/',
         isFavorite : ${isFavorite ? "true" : "false"}
     }

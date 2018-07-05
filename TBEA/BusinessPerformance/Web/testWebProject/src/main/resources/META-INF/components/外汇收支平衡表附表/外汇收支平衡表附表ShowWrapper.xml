@@ -11,9 +11,12 @@
         <if test="${sysAuth.has[99]}">
             <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（资金中心）']}"></context>
         </if>
+        <list id="dwmc" type="string">
+            <item insert="0">全部</item>
+        </list>
         <context key="tmp" value="${session.put['_whszphdwmc'][dwmc]}"></context>
         <list id="dwids" type="int">
-            <item from="0" to="${dwmc - 1}"></item>
+            <item from="0" to="${dwmc.size - 1}"></item>
         </list>
         <response name="framework/templates/dateReport/show" type="jsp">
             <map key="updateUrl" value="FAB719DB827A05373457CA993A90AD77UpdateWrapperClr"/>
@@ -28,7 +31,12 @@
     <controller id="FAB719DB827A05373457CA993A90AD77UpdateWrapperClr">
         <context key="item" value="${request.item.asInt}"/>
         <context key="currency" value="${session['cur_export'][request.item2.asInt]}"/>
-        <context key="dwmc" value="${session['_whszphdwmc'][request.item3.asInt]}"></context>
+        <if test="${request.item3.asInt == 0}">
+            <context key="dwmc" value="${session['_whszphdwmc']}"></context>
+        </if>
+        <else>
+            <context key="dwmc" value="${session['_whszphdwmc'][request.item3.asInt].packAsList}"></context>
+        </else>
         <if test="${item == 0}">
             <callcontroller id="015AFF2FCA3E707D02B33FF81B2E2FC5UpdateClr"/>
         </if>

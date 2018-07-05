@@ -38,7 +38,15 @@ public class ContextXmlInterpreter implements XmlInterpreter {
 						component.global(key, component.getVar(value));
 					}
 				}
-			}
+			}else{
+                String value = null;
+                if (e.hasAttribute("value")){
+                    value = e.getAttribute("value");
+                }else{
+                    value = XmlUtil.getText(e);
+                }
+                XmlUtil.parseELText(value, new ELParser(component));
+            }
 			
 		
 			return true;

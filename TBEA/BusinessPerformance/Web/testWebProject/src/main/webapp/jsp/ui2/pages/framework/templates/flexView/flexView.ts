@@ -18,6 +18,7 @@ module search {
         direct: string;
         option: string[];
         url: string;
+        noall?:boolean;
     }
 
     interface Input{
@@ -36,10 +37,11 @@ module search {
     }
 
     interface Context {
-        pager: boolean;
         options: Option[];
         updateUrl: string;
         exportUrl: string;
+        submitUrl: string;
+        delUrl: string;
         printUrl: string;
         baseUrl: string;
         isFavorite: boolean;
@@ -110,9 +112,19 @@ module search {
         updateTable(gridCtrl, dataOpt) {
             $("#table").empty();
             $("#table").append('<table id="table-jq"></table><div id="pager"></div>');
+            let editable = !!context.submitUrl || !! context.delUrl;
+            for (var i = 0; i < gridCtrl.header.length; ++i){
+                if (!gridCtrl.header[i].readOnly){
+                    gridCtrl.header[i].readOnly = 'true';
+                }else if (gridCtrl.header[i].readOnly == 'false') {
+
+                }
+            }
+
             this.tableAssist = Util.createTable("table-jq", gridCtrl)
             this.tableAssist.create({
-                assistData: gridCtrl.data,
+                assistData: !editable ? gridCtrl.data : undefined,
+                assistDataWithId: !editable ? undefined : gridCtrl.data,
                 assistTotal: roundDiv(gridCtrl.dataCount, this.pgSize),
                 assistRecords: gridCtrl.dataCount,
                 assistPagedata: (postdata) => {
@@ -123,11 +135,17 @@ module search {
                         data: dataOpt,
                         success: (data: any) => {
                             let dataNew = JSON.parse(data);
-                            this.tableAssist.addData(
-                                roundDiv(dataNew.dataCount, this.pgSize),
-                                postdata.page,
-                                dataNew.dataCount,
-                                dataNew.data, undefined);
+                            if (editable){
+                                this.tableAssist.addData(
+                                    roundDiv(dataNew.dataCount, this.pgSize),
+                                    postdata.page,
+                                    dataNew.dataCount, undefined, dataNew.data);
+                            }else{
+                                this.tableAssist.addData(
+                                    roundDiv(dataNew.dataCount, this.pgSize),
+                                    postdata.page,
+                                    dataNew.dataCount, dataNew.data, undefined);
+                            }
 
                         },
                         error: (XMLHttpRequest, textStatus, errorThrown) => {
@@ -136,24 +154,29 @@ module search {
                     });
 
                 },
-                cellEdit: false,
+                cellEdit: true,
                 cellsubmit: 'clientArray',
-                multiselect: !!context.printUrl,
+                multiselect: !!gridCtrl.multiselect,
                 drag: false,
                 resize: false,
                 height: '100%',
                 shrinkToFit: (gridCtrl.shrinkToFit == undefined) ? "true" : gridCtrl.shrinkToFit,
-                assistEditable: false,
+                assistEditable: true,
+                nopagerbutton:true,
                 autoScroll: true,
                 rowNum: this.pgSize,
                 viewrecords: true,
-                pager: context.pager ? "#pager" : undefined
+                pager: !!gridCtrl.pager ? "#pager" : undefined
             });
             this.adjustSize();
         }
 
         getSelRows(){
             return this.tableAssist ? this.tableAssist.getCheckedRowIds() : undefined;
+        }
+
+        getEditRows(){
+            return this.tableAssist ? this.tableAssist.getChangedData() : undefined;
         }
     }
 
@@ -164,6 +187,7 @@ module search {
 
         constructor(tablePanel: TablePanel) {
             this.tablePanel = tablePanel;
+
             this.buildSearchItems();
             this.tablePanel.updatePgSize();
         }
@@ -195,7 +219,7 @@ module search {
             firstDiv.next().append(
                 '<div class="search-item-lov">' +
                 '<select id="_' + opt.param + '" class="selectpicker" data-live-search="true">' +
-                '<option value="all" style="color:darkgray"> </option>' +
+                (opt.lov.noall ? '' : '<option value="all" style="color:darkgray"> </option>') +
                 '</select>' +
                 '</div>');
 
@@ -322,6 +346,9 @@ module search {
                 trigger: 'click',
                 //showBottom: false,
                 change: (value, date, endDate) => {
+                    this.setNow(opt.date, date);
+                },
+                done: (value, date, endDate) => {
                     this.setNow(opt.date, date);
                 }
             });
@@ -505,6 +532,7 @@ module search {
                     this.buildInput(rowMap, context.options[i]);
                 }
             }
+
             $(".option-area").removeClass("hidden");
         }
 
@@ -594,6 +622,32 @@ module search {
             }
         }
 
+        onClickDel() {
+            let ids = this.tablePanel.getSelRows();
+            if (ids && ids.length > 0){
+                var dataOpt = this.getSearchOption();
+                dataOpt.ids = JSON.stringify(ids);
+
+                $.ajax({
+                    type: "POST",
+                    url: encodeURI(context.delUrl),
+                    data: dataOpt,
+                    success: (data: any) => {
+
+                        Util.Toast.success("删除 成功");
+                        this.onClickSearch();
+
+                    },
+                    error: (XMLHttpRequest, textStatus, errorThrown) => {
+                        //promise.failed(textStatus);
+                    }
+                });
+            }else{
+
+                Util.Toast.success("请选择数据");
+            }
+        }
+
         onClickReset() {
             for (let i = 0; i < context.options.length; ++i) {
                 if (!context.options[i].type ||
@@ -609,6 +663,35 @@ module search {
                     $("#_" + context.options[i].param).val("");
                 }
             }
+        }
+
+        onClickSubmit() {
+            let rows : any = this.tablePanel.getEditRows();
+            if (rows && rows.length > 0){
+                var dataOpt = this.getSearchOption();
+                dataOpt.data = JSON.stringify(rows);
+
+                $.ajax({
+                    type: "POST",
+                    url: encodeURI(context.submitUrl),
+                    data: dataOpt,
+                    success: (data: any) => {
+
+                        Util.Toast.success("保存 成功");
+                        // this.onClickSearch();
+
+                    },
+                    error: (XMLHttpRequest, textStatus, errorThrown) => {
+                        //promise.failed(textStatus);
+                    }
+                });
+
+            }else{
+
+                Util.Toast.success("数据无变化");
+            }
+
+
         }
 
         onClickCollect() {
@@ -647,6 +730,13 @@ module search {
     }
 
     export let searchPanel: SearchPanel = null;
+
+    if (!!context.delUrl){
+        $(".delBtn").removeClass("hidden");
+    }
+    if (!!context.submitUrl){
+        $(".submitBtn").removeClass("hidden");
+    }
 
     layui.config({
         base: context.baseUrl + 'jsp/plugins/layui/lay/modules/'

@@ -31,6 +31,9 @@
         <if test="${sysAuth.has[99]}">
             <context key="tmp" value="${cnames.push['特变电工股份有限公司（资金中心）']}"></context>
         </if>
+        <list id="cnames" type="string">
+            <item insert="0">全部</item>
+        </list>
         <list id="cids">
             <item from="0" to="${cnames.size - 1}"></item>
         </list>
@@ -48,7 +51,12 @@
     </controller>
     <controller id="51480AEBDE770C9A1AB0824BF8685B66UpdateWrapperClr">
         <context key="item" value="${session['cur_export'][request.item2.asInt]}"/>
-        <context key="dwmc" value="${session['cnames_export'][request.item.asInt]}"/>
+        <if test="${request.item.asInt == 0}">
+            <context key="dwmc" value="${session['cnames_export']}"/>
+        </if>
+        <else>
+            <context key="dwmc" value="${session['cnames_export'][request.item.asInt].packAsList}"/>
+        </else>
         <callcontroller id="E9170B6930092F54471CD717CC5FABF7UpdateClr"/>
     </controller>
     <controller id="51480AEBDE770C9A1AB0824BF8685B66ExportWrapperClr">

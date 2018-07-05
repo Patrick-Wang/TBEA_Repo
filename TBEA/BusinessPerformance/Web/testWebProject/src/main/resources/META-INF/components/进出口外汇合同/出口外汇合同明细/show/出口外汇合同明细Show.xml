@@ -213,7 +213,7 @@
                 feecd.exportContractId = feic.id and
                 year = ${cal.year} and
                 month = ${cal.month} and
-                ltrim(rtrim(feic.companyName)) = ${dwmc} and
+                ltrim(rtrim(feic.companyName)) in ${dwmc} and
                 (${item} = '全部币种' or currency = ${item})
             ]]></sql>
         <list id="ids" sql="data" value="0"/>

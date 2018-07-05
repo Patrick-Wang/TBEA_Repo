@@ -49,6 +49,7 @@
                     <name>银行</name>
                 </item>
             </header>
+            <pager>true</pager>
             <data>${fmtServ.result}</data>
             <dataCount>${dataCount[0]}</dataCount>
         </response>

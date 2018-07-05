@@ -5,11 +5,11 @@
         </sql>
     </service>
     <controller id="64EBE83612425900EE5DFED8A902E8FASWJ">
-        <if test="${'session._currency' == 'null'}">
+        <if test="${session._currency == null}">
             <callservice id="7C949791A9295926D76100AF3602506AGetCurrencyServ"></callservice>
+            <context value="${session.put['_currency'][currency]}"></context>
         </if>
 
-        <context key="tmp" value="${session.put['_currency'][currency]}"></context>
 
         <context key="cnames" value="${sysAuth.cnames[96]}"></context>
         <if test="${sysAuth.has[98]}">
@@ -22,7 +22,6 @@
         <response name="framework/templates/flexView/flexView" type="jsp">
             <map key="updateUrl" value="64EBE83612425900EE5DFED8A902E8FAUpdateWrapperClr"/>
             <map key="exportUrl" value="64EBE83612425900EE5DFED8A902E8FAExportWrapperClr"/>
-            <map key="pager" value="true"/>
             <map key="options"><![CDATA[
                 [
                     {
@@ -74,7 +73,7 @@
                         "period":{
                             "start": {
                                 "type":"date",
-                                "init":"${calendar.current.format}"
+                                "init":"${calendar.current.lastMonth.format}"
                             },
                             "end": {
                                 "type":"date",
@@ -86,6 +85,21 @@
                         "param" : "bank",
                         "name": "银行",
                         "type":"input"
+                    },
+                    {
+                        "param" : "jstart,jend",
+                        "name": "交割日",
+                        "type":"period",
+                        "period":{
+                            "start": {
+                                "type":"date",
+                                "init":"${calendar.current.lastMonth.format}"
+                            },
+                            "end": {
+                                "type":"date",
+                                "init":"${calendar.current.format}"
+                            }
+                        }
                     }
                 ]
             ]]></map>
@@ -102,6 +116,8 @@
         <context key="bank" value="${request.bank.asString}"/>
         <context key="dstart" value="${request.start.asCalendar.date}"/>
         <context key="dend" value="${request.end.asCalendar.date}"/>
+        <context key="jdstart" value="${request.jstart.asCalendar.date}"/>
+        <context key="jdend" value="${request.jend.asCalendar.date}"/>
 
         <!--<if test="${start != null}">-->
             <!--<context key="dstart" value="${request.start.asCalendar.date}"/>-->

@@ -1,188 +1,336 @@
 <components>
- <service id="servGnscxmqyTbmx" transaction="transactionManager">
-  <sql id="data" logger="REPORT-FRAME">select 
-	comp_name,
-	bid_no	,
-	pro_no	,
-	auth_no	,
-	project_department	,
-	bid_month ,
-	Convert(varchar(10),bid_date,120) bd,
-	industry	,
-	system	,
-	region	,
-	pro_name	,
-	owner_comp	,
-	model	,
-	voltage_level	,
-	bid_amount	,
-	bid_capacity	,
-	bid_price	,
-	win_bid_compw	,
-	win_bid_price	,
-	cause	,
-	finally_date,
-	status	,
-	is_need_summary	,
-	specific_bid_comp	,
-	person_in_charge
-from 	
-	domestic_market_tbmx
-where
-	jydw = ${compId}
-</sql>
- <list id="ids" type="int">
-   <item from="1" to="${data.size}"/>
-  </list>
- <context value="${counterFactory.newCounter}" key="counter"/>
-  <table id="result" rowIds="ids" export="true">
-   <list sql="data" value="${counter.reset[0].val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-   <list sql="data" value="${counter.next.val}"/>
-  </table>
- </service>
- <controller id="servFmtterGnscxmqyTbmx">
-  <formatter id="fmtData" export="true">
-  <NumberFormatter reservedCount="0">
-   	<DefaultMatcher cols="5"/>
-   </NumberFormatter>
-   <NumberFormatter reservedCount="1">
-   	<DefaultMatcher cols="14,15,16,18"/>
-   </NumberFormatter>
-   <EmptyFormatter>
-   </EmptyFormatter>
-  </formatter>
- </controller>
- <controller id="gnscxmqyTbmxUpdate">
-  <context key="cal" value="${request.date.asCalendar}"/>
-  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
-  <callservice id="servGnscxmqyTbmx"/>
-  <callcontroller id="servFmtterGnscxmqyTbmx"/>
-  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
-   <formatter ref="fmtData"/>
-  </formatterServer>
-  <response type="json">
-   <header type="array">
-	<item><name>	单位	</name></item>
-<item><name>	投标编号	</name></item>
-<item><name>	项目信息编号	</name></item>
-<item><name>	授权编号	</name></item>
-<item><name>	办事办或项目部	</name></item>
-<item><name>	投标月份	</name></item>
-<item><name>	投标日期	</name></item>
-<item><name>	所属行业	</name></item>
-<item><name>	所属系统	</name></item>
-<item><name>	项目所在区域	</name></item>
-<item><name>	项目名称	</name></item>
-<item><name>	业主单位	</name></item>
-<item><name>	型号	</name></item>
-<item><name>	电压等级	</name></item>
-<item><name>	投标数量（数字）	</name></item>
-<item><name>	投标容量（数字）(kVA)	</name></item>
-<item><name>	投标价格（数字）	</name></item>
-<item><name>	中标厂家	</name></item>
-<item><name>	中标价格（数字）	</name></item>
-<item><name>	中标或未中标原因分析	</name></item>
-<item><name>	定标月份	</name></item>
-<item><name>	状态	</name></item>
-<item><name>	是否反馈投标总结	</name></item>
-<item><name>	具体投标单位	</name></item>
-<item><name>	负责人	</name></item>
+    <service id="servGnscxmqyTbmx" transaction="transactionManager">
+        <sql id="dataCount" export="true"><![CDATA[
+        select count(*)
+        from
+            domestic_market_tbmx
+        where
+            (${cal.date} is null or datediff(mm, bid_date, ${cal.date}) = 0)
+            and (${person} is null or person_in_charge like ${'%person%'})
+            and (${proj} is null or pro_name like ${'%proj%'})
+            and (${status} is null or status = ${status})
+            and (
+                (${compId} is null and jydw in (${sysAuth.cids[71]})) or
+                (${compId} is not null and jydw = ${compId})
+            )
+     ]]></sql>
 
-   </header>
-   <shrinkToFit>false</shrinkToFit>
-   <width>1300</width>
-   <data>${fmtServ.result}</data>
-  </response>
- </controller>
- <controller id="gnscxmqyTbmxExport">
-  <context key="cal" value="${request.date.asCalendar}"/>
-  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
-  <callservice id="servGnscxmqyTbmx"/>
-  <callcontroller id="servFmtterGnscxmqyTbmx" inline="true"/>
-  <ExcelTemplate id="excelTemplate" sheet="投标明细"/>
-  <list id="title" type="string">
-	单位	,
-投标编号	,
-项目信息编号	,
-授权编号	,
-办事办或项目部	,
-投标月份	,
-投标日期	,
-所属行业	,
-所属系统	,
-项目所在区域	,
-项目名称	,
-业主单位	,
-型号	,
-电压等级	,
-投标数量（数字）	,
-投标容量（数字）(kVA)	,
-投标价格（数字）	,
-中标厂家	,
-中标价格（数字）	,
-中标或未中标原因分析	,
-定标月份	,
-状态	,
-是否反馈投标总结	,
-具体投标单位	,
-负责人	
-	</list>
-  <formatter id="excel">
-   <ExcelTitleFilter>
-    <ExcelTemplate ref="excelTemplate"/>
-    <Offset row="0" col="0"/>
-    <titles>
-     <title ref="title"/>
-    </titles>
-   </ExcelTitleFilter>
-   <ExcelHeaderCenterFormatter>
-    <DefaultMatcher cols="0"/>
-    <ExcelTemplate ref="excelTemplate"/>
-    <Offset row="1" col="0"/>
-   </ExcelHeaderCenterFormatter>
-   <ExcelOffsetFormatter>
-    <ExcelTemplate ref="excelTemplate"/>
-    <Offset row="1" col="0"/>
-   </ExcelOffsetFormatter>
-  </formatter>
-  <formatterServer id="fmtServ" table="${result.matrixNoIds}">
-   <formatter ref="fmtData"/>
-   <formatter ref="excel"/>
-  </formatterServer>
-  <response type="excel" ref="excelTemplate" name="${request.date.asString}投标明细.xls" serv="fmtServ"/>
- </controller> 
- <controller id="gnscxmqyTbmx">
-  <response type="jsp" name="framework/templates/dateReport/show">
-  <map key="nodate" value="true"/>
-   <map map="${authMgr[71]}"/>
-    <map key="year" value="${calendar.current.year}"/>
-   <map key="month" value="${calendar.current.month}"/>
-   <map key="updateUrl" value="gnscxmqyTbmxUpdate"/>
-   <map key="exportUrl" value="gnscxmqyTbmxExport"/>
-   <map key="title" value="投标明细"/>
-  </response>
- </controller>
+
+        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}" logger="REPORT-FRAME"><![CDATA[
+    select
+        id,
+        comp_name,
+        bid_no	,
+        pro_no	,
+        auth_no	,
+        project_department	,
+        bid_month ,
+        Convert(varchar(10),bid_date,120) bd,
+        industry	,
+        system	,
+        region	,
+        pro_name	,
+        owner_comp	,
+        model	,
+        voltage_level	,
+        bid_amount	,
+        bid_capacity	,
+        bid_price	,
+        win_bid_compw	,
+        win_bid_price	,
+        cause	,
+        finally_date,
+        status	,
+        is_need_summary	,
+        specific_bid_comp	,
+        person_in_charge
+    from
+        domestic_market_tbmx
+    where
+          (${cal.date} is null or datediff(mm, bid_date, ${cal.date}) = 0)
+          and (${person} is null or person_in_charge like ${'%person%'})
+          and (${proj} is null or pro_name like ${'%proj%'})
+          and (${status} is null or status = ${status})
+          and (
+            (${compId} is null and jydw in (${sysAuth.cids[71]})) or
+            (${compId} is not null and jydw = ${compId})
+            )
+]]></sql>
+        <context key="ids" value="${data.col[0]}"/>
+        <context value="${counterFactory.newCounter}" key="counter"/>
+        <table id="result" rowIds="ids" export="true">
+            <list sql="data" value="${counter.reset[1].val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+            <list sql="data" value="${counter.next.val}"/>
+        </table>
+    </service>
+    <controller id="servFmtterGnscxmqyTbmx">
+        <formatter id="fmtData" export="true">
+            <NumberFormatter reservedCount="0">
+                <DefaultMatcher cols="6"/>
+            </NumberFormatter>
+            <NumberFormatter reservedCount="1">
+                <DefaultMatcher cols="15,16,17,19"/>
+            </NumberFormatter>
+            <EmptyFormatter>
+            </EmptyFormatter>
+        </formatter>
+    </controller>
+    <controller id="gnscxmqyTbmxUpdate">
+        <context key="pgNum" value="${request.pgNum.asInt}"/>
+        <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="compId" value="${request.comp.asInt}"/>
+        <context key="status" value="${request.status.asString}"/>
+        <context key="person" value="${request.person.asString}"/>
+        <context key="proj" value="${request.proj.asString}"/>
+        <callservice id="servGnscxmqyTbmx"/>
+        <callcontroller id="servFmtterGnscxmqyTbmx"/>
+        <formatterServer id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>单位</name>
+                </item>
+                <item>
+                    <name>投标编号</name>
+                </item>
+                <item>
+                    <name>项目信息编号</name>
+                </item>
+                <item>
+                    <name>授权编号</name>
+                </item>
+                <item>
+                    <name>办事办或项目部</name>
+                </item>
+                <item>
+                    <name>投标月份</name>
+                </item>
+                <item>
+                    <name>投标日期</name>
+                </item>
+                <item>
+                    <name>所属行业</name>
+                </item>
+                <item>
+                    <name>所属系统</name>
+                </item>
+                <item>
+                    <name>项目所在区域</name>
+                </item>
+                <item>
+                    <name>项目名称</name>
+                </item>
+                <item>
+                    <name>业主单位</name>
+                </item>
+                <item>
+                    <name>型号</name>
+                </item>
+                <item>
+                    <name>电压等级</name>
+                </item>
+                <item>
+                    <name>投标数量（数字）</name>
+                </item>
+                <item>
+                    <name>投标容量（数字）(kVA)</name>
+                </item>
+                <item>
+                    <name>投标价格（数字）</name>
+                </item>
+                <item>
+                    <name>中标厂家</name>
+                </item>
+                <item>
+                    <name>中标价格（数字）</name>
+                </item>
+                <item>
+                    <name>中标或未中标原因分析</name>
+                    <type>text</type>
+                    <readOnly>false</readOnly>
+                </item>
+                <item>
+                    <name>定标月份</name>
+                </item>
+                <item>
+                    <name>状态</name>
+                    <type>select</type>
+                    <readOnly>false</readOnly>
+                    <options type="array">未定标,中标,未出结果,失标,弃标
+                    </options>
+                </item>
+                <item>
+                    <name>是否反馈投标总结</name>
+                </item>
+                <item>
+                    <name>具体投标单位</name>
+                </item>
+                <item>
+                    <name>负责人</name>
+                </item>
+            </header>
+            <pager>true</pager>
+            <shrinkToFit>false</shrinkToFit>
+            <width>1300</width>
+            <data>${fmtServ.result}</data>
+            <dataCount>${dataCount[0]}</dataCount>
+        </response>
+    </controller>
+    <service id="servGnscxmqyTbmxSubmit"  transaction="transactionManager">
+        <merge data="data" table="domestic_market_tbmx">
+            <where>
+                <id type="int" ref="0"/>
+            </where>
+            <set>
+                <status type="string" ref="22"/>
+                <cause type="string" ref="20"/>
+            </set>
+        </merge>
+    </service>
+    <controller id="gnscxmqyTbmxSubmit">
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <callservice id="servGnscxmqyTbmxSubmit"></callservice>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <controller id="gnscxmqyTbmxExport">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="compId" value="${request.comp.asInt}"/>
+        <context key="status" value="${request.status.asString}"/>
+        <context key="person" value="${request.person.asString}"/>
+        <context key="proj" value="${request.proj.asString}"/>
+        <callservice id="servGnscxmqyTbmx"/>
+        <callcontroller id="servFmtterGnscxmqyTbmx" inline="true"/>
+        <ExcelTemplate id="excelTemplate" sheet="投标明细"/>
+        <list id="title" type="string">ID,
+            单位 ,
+            投标编号 ,
+            项目信息编号 ,
+            授权编号 ,
+            办事办或项目部 ,
+            投标月份 ,
+            投标日期 ,
+            所属行业 ,
+            所属系统 ,
+            项目所在区域 ,
+            项目名称 ,
+            业主单位 ,
+            型号 ,
+            电压等级 ,
+            投标数量（数字） ,
+            投标容量（数字）(kVA) ,
+            投标价格（数字） ,
+            中标厂家 ,
+            中标价格（数字） ,
+            中标或未中标原因分析 ,
+            定标月份 ,
+            状态 ,
+            是否反馈投标总结 ,
+            具体投标单位 ,
+            负责人
+        </list>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset row="0" col="0"/>
+                <titles>
+                    <title ref="title"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset row="1" col="0"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset row="1" col="0"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response type="excel" ref="excelTemplate" name="${calendar.current.format}投标明细.xls" serv="fmtServ"/>
+    </controller>
+    <controller id="gnscxmqyTbmx">
+        <response name="framework/templates/flexView/flexView" type="jsp">
+            <map key="options"><![CDATA[
+                [
+                    {
+                        "param" : "comp",
+                        "name": "公司名称",
+                        "type":"lov",
+                        "lov":{
+                            "option": ${list.new.push[sysAuth.cids[71]].push[sysAuth.cnames[71]].transpose.asJson}
+                        }
+                    },
+                    {
+                        "param" : "date",
+                        "name": "投标日期",
+                        "type":"date",
+                        "date":{
+                            "type":"month",
+                            "init":"${calendar.current.monthFormat}"
+                        }
+                    },
+                    {
+                        "param" : "status",
+                        "name": "状态",
+                        "type":"lov",
+                        "lov":{
+                            "option": [
+                            ["未定标", "未定标"],
+                            ["中标", "中标"],
+                            ["未出结果", "未出结果"],
+                            ["失标", "失标"],
+                            ["弃标", "弃标"]]
+                        }
+                    },
+                    {
+                        "param" : "person",
+                        "name": "负责人",
+                        "type":"input"
+                    },
+                    {
+                        "param" : "proj",
+                        "name": "项目名称",
+                        "type":"input"
+                    }
+                ]
+            ]]></map>
+            <map key="updateUrl" value="gnscxmqyTbmxUpdate"/>
+            <map key="exportUrl" value="gnscxmqyTbmxExport"/>
+            <map key="submitUrl" value="gnscxmqyTbmxSubmit"/>
+            <map key="title" value="投标明细"/>
+        </response>
+    </controller>
 </components>

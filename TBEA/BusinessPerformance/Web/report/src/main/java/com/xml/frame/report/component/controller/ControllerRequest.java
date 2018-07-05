@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -42,7 +43,8 @@ public class ControllerRequest extends PropMap{
 				String val = req.getParameter(paraName);
 				return JSONArray.fromObject(val);
 			}catch(Exception e){
-				e.printStackTrace();
+//				e.printStackTrace();
+                LoggerFactory.getLogger("REPORT-APPENDER").warn("paraName : " + paraName + "  " + e.getMessage());
 			}
 			return null;
 		}
@@ -57,8 +59,9 @@ public class ControllerRequest extends PropMap{
 				}
 				return ret;
 			}catch(Exception e){
-				e.printStackTrace();
-			}
+//				e.printStackTrace();
+                LoggerFactory.getLogger("REPORT-APPENDER").warn("paraName : " + paraName + "  " + e.getMessage());
+            }
 			return null;
 
 		}
@@ -68,8 +71,10 @@ public class ControllerRequest extends PropMap{
 				String val = req.getParameter(paraName);
 				return JSONObject.fromObject(val);
 			}catch(Exception e){
-				e.printStackTrace();
-			}
+//				e.printStackTrace();
+                LoggerFactory.getLogger("REPORT-APPENDER").warn("paraName : " + paraName + "  " + e.getMessage());
+
+            }
 			return null;
 
 		}
@@ -79,8 +84,10 @@ public class ControllerRequest extends PropMap{
 				String val = req.getParameter(paraName);
 				return new EasyCalendar(Date.valueOf((String) val));
 			}catch(Exception e){
-				e.printStackTrace();
-			}
+//				e.printStackTrace();
+                LoggerFactory.getLogger("REPORT-APPENDER").warn("paraName : " + paraName + "  " + e.getMessage());
+
+            }
 			return null;
 
 		}
@@ -90,8 +97,10 @@ public class ControllerRequest extends PropMap{
 				String val = req.getParameter(paraName);
 				return Integer.valueOf((String) val);
 			}catch(Exception e){
-				e.printStackTrace();
-			}
+//				e.printStackTrace();
+                LoggerFactory.getLogger("REPORT-APPENDER").warn("paraName : " + paraName + "  " + e.getMessage());
+
+            }
 			return null;
 
 		}
@@ -111,7 +120,9 @@ public class ControllerRequest extends PropMap{
 				throw new Exception(paraName + " cannot be cast to map");
 			}catch(Exception e){
 				e.printStackTrace();
-			}
+                LoggerFactory.getLogger("REPORT-APPENDER").warn("paraName : " + paraName + "  " + e.getMessage());
+
+            }
 			return null;
 
 		}

@@ -1077,7 +1077,7 @@ module JQTable {
                     return grid[0].p.data[i];
                 }
             }
-            return undefined;
+            return grid.jqGrid('getRowData', id);
         }
 
         public getChangedData() {

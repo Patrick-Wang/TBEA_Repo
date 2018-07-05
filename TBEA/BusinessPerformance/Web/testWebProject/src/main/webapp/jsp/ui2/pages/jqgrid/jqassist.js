@@ -956,7 +956,7 @@ var JQTable;
                     return grid[0].p.data[i];
                 }
             }
-            return undefined;
+            return grid.jqGrid('getRowData', id);
         };
         JQGridAssistant.prototype.getChangedData = function () {
             var grid = $("#" + this.mGridName + "");

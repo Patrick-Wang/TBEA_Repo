@@ -112,7 +112,7 @@
             where
                 nf = ${cal.year} and
                 yf = ${cal.month} and
-                dwmc  = ${dwmc} and
+                dwmc  in ${dwmc} and
                 ('全部币种' = ${currency} or bz = ${currency})
             ]]></sql>
         <list id="ids" sql="data" value="0"/>

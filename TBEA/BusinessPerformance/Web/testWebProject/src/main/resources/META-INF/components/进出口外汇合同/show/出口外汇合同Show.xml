@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><components>
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
     <controller id="03592CA737B3E3319931BEECE7E0089FSHOWCLR">
         <response name="framework/templates/singleDateReport/show" type="jsp">
             <map key="year" value="${calendar.current.year}"/>
@@ -11,7 +12,7 @@
         <context key="cal" value="${request.date.asCalendar}"/>
         <callservice id="03592CA737B3E3319931BEECE7E0089FShowServ"/>
         <callcontroller id="03592CA737B3E3319931BEECE7E0089FFmtClr"/>
-        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+        <formatterServer id="fmtServ" table="${result.matrix}">
             <formatter ref="fmtData"/>
         </formatterServer>
         <response type="json">
@@ -37,7 +38,7 @@
                     <type>text</type>
                 </item>
                 <item>
-                    <name>币种 </name>
+                    <name>币种</name>
                     <type>text</type>
                 </item>
                 <item>
@@ -45,7 +46,7 @@
                     <type>text</type>
                 </item>
                 <item>
-                    <name>合同金额 </name>
+                    <name>合同金额</name>
                 </item>
                 <item>
                     <name>签订合同起始日</name>
@@ -55,16 +56,31 @@
                     <name>签订合同汇率</name>
                 </item>
             </header>
+            <pager>true</pager>
+            <multiselect>true</multiselect>
             <data>${fmtServ.result}</data>
+            <dataCount>${dataCount[0]}</dataCount>
+        </response>
+    </controller>
+    <service id="03592CA737B3E3319931BEECE7E0089FDelServ" transaction="transactionManager">
+        <sql>
+            delete from foreign_exchange_export_contract where id in ${ids}
+        </sql>
+    </service>
+    <controller id="03592CA737B3E3319931BEECE7E0089FDelClr">
+        <callservice id="03592CA737B3E3319931BEECE7E0089FDelServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
         </response>
     </controller>
     <controller id="03592CA737B3E3319931BEECE7E0089FFmtClr">
         <formatter export="true" id="fmtData">
             <NumberFormatter reservedCount="2">
-                <DefaultMatcher cols="7"/>
+                <DefaultMatcher cols="8"/>
             </NumberFormatter>
             <NumberFormatter reservedCount="4">
-                <DefaultMatcher cols="9"/>
+                <DefaultMatcher cols="10"/>
             </NumberFormatter>
             <EmptyFormatter/>
         </formatter>
@@ -74,7 +90,7 @@
         <callservice id="03592CA737B3E3319931BEECE7E0089FShowServ"/>
         <callcontroller id="03592CA737B3E3319931BEECE7E0089FFmtClr"/>
         <ExcelTemplate id="excelTemplate" sheet="出口外汇合同"/>
-        <list id="title" type="string">单位名称,合同编号,项目名称,对方单位名称,所在国家,币种 ,收款银行,合同金额 ,签订合同起始日,签订合同汇率</list>
+        <list id="title" type="string">ID,单位名称,合同编号,项目名称,对方单位名称,所在国家,币种 ,收款银行,合同金额 ,签订合同起始日,签订合同汇率</list>
         <formatter id="excel">
             <ExcelTitleFilter>
                 <ExcelTemplate ref="excelTemplate"/>
@@ -93,26 +109,24 @@
                 <Offset col="0" row="1"/>
             </ExcelOffsetFormatter>
         </formatter>
-        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+        <formatterServer id="fmtServ" table="${result.matrix}">
             <formatter ref="fmtData"/>
             <formatter ref="excel"/>
         </formatterServer>
         <response name="出口外汇合同.xls" ref="excelTemplate" serv="fmtServ" type="excel"/>
     </controller>
     <service id="03592CA737B3E3319931BEECE7E0089FShowServ" transaction="transactionManager">
-     <if test="${'dwmc' == '全部'}">
-         <context key="dwmc" value="${sysAuth.cnames[96]}"></context>
-         <if test="${sysAuth.has[98]}">
-             <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（采购中心）']}"></context>
-         </if>
-         <if test="${sysAuth.has[99]}">
-             <context key="dwmc" value="${dwmc.push['特变电工股份有限公司（资金中心）']}"></context>
-         </if>
-     </if>
-        <else>
-            <context key="dwmc" value="${dwmc.packAsList}"></context>
-        </else>
-       <sql id="data">
+
+        <sql id="dataCount" export="true"><![CDATA[
+            select
+                count(id)
+            from foreign_exchange_export_contract
+            where
+               (${dwmc} is null and companyName in (${cnames})) or
+               (${dwmc} is not null and companyName = ${dwmc}) and
+            (${bz} is null or currency like ${'%bz%'})
+]]></sql>
+        <sql id="data" pgNum="${pgNum}" pgSize="${pgSize}"><![CDATA[
 select 
 	id,
 	companyName,
@@ -126,8 +140,10 @@ select
 	CONVERT(varchar(20),startDate, 23) tmp8,
 	exchangeRate
 from foreign_exchange_export_contract
-            where companyName in ${dwmc}
-</sql>
+            where
+           (${dwmc} is null and companyName in (${cnames})) or
+           (${dwmc} is not null and companyName = ${dwmc})
+]]></sql>
         <list id="ids" sql="data" value="0"/>
         <context key="counter" value="${counterFactory.newCounter}"/>
         <table export="true" id="result" rowIds="ids">

@@ -67,6 +67,7 @@
                     <type>text</type>
                 </item>
             </header>
+            <pager>true</pager>
             <data>${fmtServ.result}</data>
             <dataCount>${dataCount[0]}</dataCount>
         </response>
@@ -116,6 +117,8 @@
             where
                 (${dstart} is null or (jbr is not null and DATEDIFF(dd, jbr, ${dstart}) <= 0)) and
                 (${dend} is null or (jbr is not null and DATEDIFF(dd, jbr, ${dend}) >= 0)) and
+                (${jdstart} is null or (jgr is not null and DATEDIFF(dd, jgr, ${jdstart}) <= 0)) and
+                (${jdend} is null or (jgr is not null and DATEDIFF(dd, jgr, ${jdend}) >= 0)) and
                 (${dwmc} is null or dwmc = ${dwmc}) and
                 (${cond} is null or jgqk = ${cond}) and
                 (${bsType} is null or ywzl = ${bsType}) and
@@ -144,6 +147,8 @@
             where
                 (${dstart} is null or (jbr is not null and DATEDIFF(day, jbr, ${dstart}) <= 0)) and
                 (${dend} is null or (jbr is not null and DATEDIFF(day, jbr, ${dend}) >= 0)) and
+                (${jdstart} is null or (jgr is not null and DATEDIFF(dd, jgr, ${jdstart}) <= 0)) and
+                (${jdend} is null or (jgr is not null and DATEDIFF(dd, jgr, ${jdend}) >= 0)) and
                 (${dwmc} is null or dwmc = ${dwmc}) and
                 (${cond} is null or jgqk = ${cond}) and
                 (${bsType} is null or ywzl = ${bsType}) and

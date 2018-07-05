@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><components>
     <controller id="50E1A0738E3CC48ECF5E06CC38B0B76CSWJ">
-        <if test="${'session._currency' == 'null'}">
+        <if test="${session._currency == null}">
             <callservice id="7C949791A9295926D76100AF3602506AGetCurrencyServ"></callservice>
+            <context value="${session.put['_currency'][currency]}"></context>
         </if>
 
         <context key="cnames" value="${sysAuth.cnames[96]}"></context>
@@ -15,7 +16,6 @@
         <response name="framework/templates/flexView/flexView" type="jsp">
             <map key="updateUrl" value="50E1A0738E3CC48ECF5E06CC38B0B76CUpdateWrapperClr"/>
             <map key="exportUrl" value="50E1A0738E3CC48ECF5E06CC38B0B76CExportWrapperClr"/>
-            <map key="pager" value="true"/>
             <map key="options"><![CDATA[
                 [
                     {
@@ -57,7 +57,7 @@
                         "period":{
                             "start": {
                                 "type":"date",
-                                "init":"${calendar.current.format}"
+                                "init":"${calendar.current.lastMonth.format}"
                             },
                             "end": {
                                 "type":"date",

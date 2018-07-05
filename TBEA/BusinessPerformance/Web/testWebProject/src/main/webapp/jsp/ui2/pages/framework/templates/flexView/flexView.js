@@ -52,9 +52,18 @@ var search;
             var _this = this;
             $("#table").empty();
             $("#table").append('<table id="table-jq"></table><div id="pager"></div>');
+            var editable = !!context.submitUrl || !!context.delUrl;
+            for (var i = 0; i < gridCtrl.header.length; ++i) {
+                if (!gridCtrl.header[i].readOnly) {
+                    gridCtrl.header[i].readOnly = 'true';
+                }
+                else if (gridCtrl.header[i].readOnly == 'false') {
+                }
+            }
             this.tableAssist = Util.createTable("table-jq", gridCtrl);
             this.tableAssist.create({
-                assistData: gridCtrl.data,
+                assistData: !editable ? gridCtrl.data : undefined,
+                assistDataWithId: !editable ? undefined : gridCtrl.data,
                 assistTotal: roundDiv(gridCtrl.dataCount, this.pgSize),
                 assistRecords: gridCtrl.dataCount,
                 assistPagedata: function (postdata) {
@@ -65,30 +74,39 @@ var search;
                         data: dataOpt,
                         success: function (data) {
                             var dataNew = JSON.parse(data);
-                            _this.tableAssist.addData(roundDiv(dataNew.dataCount, _this.pgSize), postdata.page, dataNew.dataCount, dataNew.data, undefined);
+                            if (editable) {
+                                _this.tableAssist.addData(roundDiv(dataNew.dataCount, _this.pgSize), postdata.page, dataNew.dataCount, undefined, dataNew.data);
+                            }
+                            else {
+                                _this.tableAssist.addData(roundDiv(dataNew.dataCount, _this.pgSize), postdata.page, dataNew.dataCount, dataNew.data, undefined);
+                            }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             //promise.failed(textStatus);
                         }
                     });
                 },
-                cellEdit: false,
+                cellEdit: true,
                 cellsubmit: 'clientArray',
-                multiselect: !!context.printUrl,
+                multiselect: !!gridCtrl.multiselect,
                 drag: false,
                 resize: false,
                 height: '100%',
                 shrinkToFit: (gridCtrl.shrinkToFit == undefined) ? "true" : gridCtrl.shrinkToFit,
-                assistEditable: false,
+                assistEditable: true,
+                nopagerbutton: true,
                 autoScroll: true,
                 rowNum: this.pgSize,
                 viewrecords: true,
-                pager: context.pager ? "#pager" : undefined
+                pager: !!gridCtrl.pager ? "#pager" : undefined
             });
             this.adjustSize();
         };
         TablePanel.prototype.getSelRows = function () {
             return this.tableAssist ? this.tableAssist.getCheckedRowIds() : undefined;
+        };
+        TablePanel.prototype.getEditRows = function () {
+            return this.tableAssist ? this.tableAssist.getChangedData() : undefined;
         };
         return TablePanel;
     }());
@@ -123,7 +141,7 @@ var search;
             firstDiv.append('<span class="search-label">' + opt.name + '</span>');
             firstDiv.next().append('<div class="search-item-lov">' +
                 '<select id="_' + opt.param + '" class="selectpicker" data-live-search="true">' +
-                '<option value="all" style="color:darkgray"> </option>' +
+                (opt.lov.noall ? '' : '<option value="all" style="color:darkgray"> </option>') +
                 '</select>' +
                 '</div>');
             var sel = rowMap.searchArea.find('#_' + opt.param);
@@ -254,6 +272,9 @@ var search;
                 trigger: 'click',
                 //showBottom: false,
                 change: function (value, date, endDate) {
+                    _this.setNow(opt.date, date);
+                },
+                done: function (value, date, endDate) {
                     _this.setNow(opt.date, date);
                 }
             });
@@ -507,6 +528,29 @@ var search;
                 $("#exportForm")[0].submit();
             }
         };
+        SearchPanel.prototype.onClickDel = function () {
+            var _this = this;
+            var ids = this.tablePanel.getSelRows();
+            if (ids && ids.length > 0) {
+                var dataOpt = this.getSearchOption();
+                dataOpt.ids = JSON.stringify(ids);
+                $.ajax({
+                    type: "POST",
+                    url: encodeURI(context.delUrl),
+                    data: dataOpt,
+                    success: function (data) {
+                        Util.Toast.success("删除 成功");
+                        _this.onClickSearch();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        //promise.failed(textStatus);
+                    }
+                });
+            }
+            else {
+                Util.Toast.success("请选择数据");
+            }
+        };
         SearchPanel.prototype.onClickReset = function () {
             for (var i = 0; i < context.options.length; ++i) {
                 if (!context.options[i].type ||
@@ -524,6 +568,28 @@ var search;
                 else if (context.options[i].type == 'input') {
                     $("#_" + context.options[i].param).val("");
                 }
+            }
+        };
+        SearchPanel.prototype.onClickSubmit = function () {
+            var rows = this.tablePanel.getEditRows();
+            if (rows && rows.length > 0) {
+                var dataOpt = this.getSearchOption();
+                dataOpt.data = JSON.stringify(rows);
+                $.ajax({
+                    type: "POST",
+                    url: encodeURI(context.submitUrl),
+                    data: dataOpt,
+                    success: function (data) {
+                        Util.Toast.success("保存 成功");
+                        // this.onClickSearch();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        //promise.failed(textStatus);
+                    }
+                });
+            }
+            else {
+                Util.Toast.success("数据无变化");
             }
         };
         SearchPanel.prototype.onClickCollect = function () {
@@ -564,6 +630,12 @@ var search;
         return SearchPanel;
     }());
     search.searchPanel = null;
+    if (!!context.delUrl) {
+        $(".delBtn").removeClass("hidden");
+    }
+    if (!!context.submitUrl) {
+        $(".submitBtn").removeClass("hidden");
+    }
     layui.config({
         base: context.baseUrl + 'jsp/plugins/layui/lay/modules/'
     }).use(['laydate', 'element'], function () {

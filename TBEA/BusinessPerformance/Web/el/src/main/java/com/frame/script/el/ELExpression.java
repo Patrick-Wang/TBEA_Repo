@@ -224,7 +224,7 @@ public class ELExpression {
                 obj = jse.eval(expressTmp);
             } catch (ScriptException e) {
                 obj = null;
-                e.printStackTrace();
+//                e.printStackTrace();
             }
             if (null != obj &&
                     !TypeUtil.isDouble(obj.getClass()) &&
