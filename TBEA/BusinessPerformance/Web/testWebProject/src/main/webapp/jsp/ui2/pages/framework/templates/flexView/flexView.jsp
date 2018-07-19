@@ -190,7 +190,7 @@
                 <i class="fa fa-upload"> </i>提交</button>
             <button class="hidden delBtn btn btn-default btn-custom-sz btn-reset opt-btn" onclick="search.searchPanel.onClickDel()">
                 <i class="fa fa-trash"> </i>删除</button>
-            <button class="btn btn-default btn-custom-sz btn-export opt-btn" onclick="search.searchPanel.onClickExport()">
+            <button class="exportBtn btn btn-default btn-custom-sz btn-export opt-btn" onclick="search.searchPanel.onClickExport()">
                 <i class="fa fa-file-excel-o"> </i>导出</button>
         </div>
     </div>

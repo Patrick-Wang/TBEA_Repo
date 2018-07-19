@@ -636,7 +636,7 @@ module JQTable {
     }
 
     export interface IFormula{
-        update(): boolean;
+        update(editCell:any, col:any): boolean;
         setGrid(grid:any):void;
     }
 
@@ -662,7 +662,7 @@ module JQTable {
             }
         }
 
-        public update():boolean {
+        public update(editCell:any, col:any):boolean {
             let newVal:any = this.mFormula(this.mDestCell, this.mSrcCellarray);
             let oldVal = this.mDestCell.getVal();
             if (oldVal == "" && (newVal == undefined || newVal == null || newVal == "")) {
@@ -691,7 +691,7 @@ module JQTable {
             this.colIndex = colIndex;
         }
 
-        update(): boolean {
+        update(editCell:any, col:any): boolean {
             let fs : IFormula[] = [];
             for (let i = 0; i < this.grid[0].p.data.length; ++i){
                 fs.push(this.collectFormulas(i));
@@ -699,7 +699,7 @@ module JQTable {
 
             for (let i = 0; i < fs.length; ++i){
                 fs[i].setGrid(this.grid);
-                fs[i].update();
+                fs[i].update(editCell, col);
             }
             return false;
         }
@@ -1254,15 +1254,15 @@ module JQTable {
             }
         }
 
-        private invokeFormula(depth:number = 0) {
+        private invokeFormula(editCell:any = undefined, col:any = undefined, depth:number = 0) {
             let changed:boolean = false;
             for (var i = 0; i < this.mFormula.length; i++) {
-                if (this.mFormula[i].update()) {
+                if (this.mFormula[i].update(editCell, col)) {
                     changed = true;
                 }
             }
             if (changed && depth < 10) {
-                this.invokeFormula(++depth);
+                this.invokeFormula(editCell, col, ++depth);
             }
         }
 
@@ -1463,18 +1463,19 @@ module JQTable {
                     }
                 },
 
-                afterSaveCell: () => {
+                afterSaveCell: (id, nm, tmp, iRow, iCol) => {
                     //$(".btn").attr("disabled", false).off('click', prevBtn);
                   //  $("input").attr("disabled", false);
                     if (option.assistPostEdit){
                         option.assistPostEdit();
                     }
                     let ids:string[] = grid.jqGrid('getDataIDs');
+                    let editCell = ids[lastsel - 1];
                     if (Util.indexOf(this.mEditedRows, ids[lastsel - 1]) < 0) {
                         this.mEditedRows.push(ids[lastsel - 1]);
                     }
                     lastsel = "";
-                    this.invokeFormula();
+                    this.invokeFormula(id, iCol);
                 },
 
                 afterRestoreCell: () => {

@@ -162,7 +162,7 @@ module search {
                 height: '100%',
                 shrinkToFit: (gridCtrl.shrinkToFit == undefined) ? "true" : gridCtrl.shrinkToFit,
                 assistEditable: true,
-                nopagerbutton:true,
+                nopagerbutton:!("true" == gridCtrl.pagerButton),
                 autoScroll: true,
                 rowNum: this.pgSize,
                 viewrecords: true,
@@ -736,6 +736,9 @@ module search {
     }
     if (!!context.submitUrl){
         $(".submitBtn").removeClass("hidden");
+    }
+    if (!context.exportUrl){
+        $(".exportBtn").addClass("hidden");
     }
 
     layui.config({

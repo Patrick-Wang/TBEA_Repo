@@ -129,4 +129,161 @@ public class YSZKRBAccFactory {
 			}
 		});
 	}
+	/*************************************以*****下*****是*****新*****的******************************************************/
+
+	// 应收账款指标
+	public IAccumulator getYszkzbAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getYszkzb(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 回款计划
+	public IAccumulator getHkjhAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getHkjh(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 确保款项
+	public IAccumulator getQbkxAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getQbkx(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 争取款项
+	public IAccumulator getZqkxAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getZqkx(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 上月应收余额
+	public IAccumulator getSyysyeAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getSyysye(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 今日新增应收账款
+	public IAccumulator getJrxzyszkAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getJrxzyszk(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 本月累计新增应收
+	public IAccumulator getByljxzysAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getByljxzys(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 今日回款
+	public IAccumulator getJrhkNewAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getJrhkNew(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 累计回款
+	public IAccumulator getLjhkAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getLjhk(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 回款完成率
+	public IAccumulator getHkwclAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getHkwcl(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 累计可降应收回款
+	public IAccumulator getLjkjyshkAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getLjkjyshk(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 今日应收账款余额
+	public IAccumulator getJryszkyeAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getJryszkye(lrDate, companies));
+				return result;
+			}
+		};
+	}
+
+	// 应收账款完成率
+	public IAccumulator getYszkwclAcc(Date lrDate) {
+		return new IAccumulator() {
+			@Override
+			public List<Double> compute(int col, Date start, Date end, List<Integer> zbs, List<Company> companies) {
+				List<Double> result = new ArrayList<Double>();
+				result.add(ysdailyDao.getYszkwcl(lrDate, companies));
+				return result;
+			}
+		};
+	}
 }

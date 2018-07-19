@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.tbea.ic.operation.model.entity.Yszkrb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,6 +91,65 @@ public class DailyReportServiceImpl implements DailyReportService{
 		return code;
 	}
 
+	/**
+	 * 录入提交操作
+	 * @param account
+	 * @param date
+	 * @param jData
+	 * @return
+	 */
+	@Override
+	public ErrorCode submitYszkLr(Account account, Date date, JSONArray jData) {
+		List<ExtendAuthority> eas = extendAuthDao.getAuthority(account, ExtendAuthority.AuthType.YSZKDailyReportEntry.ordinal());
+		ErrorCode code = ErrorCode.OK;
+		for(int i = 0; i < jData.size(); i++){
+			if("".equals(jData.getString(i)) || jData.getString(i) == null){
+				return ErrorCode.NULL_STRING;
+			}
+		}
+		if (!eas.isEmpty()){
+			ExtendAuthority ea = eas.get(0);
+			DWXX dwxx = ea.getDwxx();
+			Yszkrb ys = ysdailyDao.getYsdailyRB(date, dwxx);
+			if(ys == null){
+				ys = new Yszkrb();
+				String[] dateStrArr = date.toString().split("-");
+				int lrnf = Integer.parseInt(dateStrArr[0]);
+				int lryf = Integer.parseInt(dateStrArr[1]);
+				int lrrq = Integer.parseInt(dateStrArr[2]);
+				ys.setLrnf(lrnf);
+				ys.setLryf(lryf);
+				ys.setLrrq(lrrq);
+				ys.setDwID(dwxx.getId());
+			}
+			ys.setYszkzb(Util.toDouble(jData.getString(0)));
+			ys.setHkjh(Util.toDouble(jData.getString(1)));
+			ys.setQbkx(Util.toDouble(jData.getString(2)));
+			ys.setZqkx(Util.toDouble(jData.getString(3)));
+			ys.setSyysye(Util.toDouble(jData.getString(4)));
+			ys.setJrxzyszk(Util.toDouble(jData.getString(5)));
+			ys.setJrhk(Util.toDouble(jData.getString(6)));
+			ys.setLjkjyshk(Util.toDouble(jData.getString(7)));
+			ysdailyDao.merge(ys);
+
+			List<Yszkrb> yszkrbList = ysdailyDao.getYszkrbCountByNfYf(date,dwxx);
+			if(!yszkrbList.isEmpty()){
+				for(int i = 0; i < yszkrbList.size(); i++){
+					Yszkrb y = yszkrbList.get(i);
+					y.setYszkzb(Util.toDouble(jData.getString(0)));
+					y.setHkjh(Util.toDouble(jData.getString(1)));
+					y.setQbkx(Util.toDouble(jData.getString(2)));
+					y.setZqkx(Util.toDouble(jData.getString(3)));
+					y.setSyysye(Util.toDouble(jData.getString(4)));
+					ysdailyDao.merge(y);
+				}
+			}
+		}else{
+			code = ErrorCode.HAVE_NO_RIGHT;
+		}
+		return code;
+	}
+
 	@Override
 	public List<String[]> getYszkData(Account account, Date date) {
 		List<String[]> result = new ArrayList<String[]>();
@@ -108,6 +168,36 @@ public class DailyReportServiceImpl implements DailyReportService{
 				result.get(0)[4] = "" + daily.getQbbcMoney();
 				result.get(0)[5] = "" + daily.getZqbcMoney();
 				result.get(0)[6] = "" + daily.getBalanceAccount();
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * 得到已经录入的月录入项
+	 * @param account
+	 * @param date
+	 * @return
+	 */
+	@Override
+	public List<String[]> getYszkLRData(Account account, Date date) {
+		List<String[]> result = new ArrayList<String[]>();
+		result.add(new String[8]);
+		List<ExtendAuthority> eas = extendAuthDao.getAuthority(account, 1);
+		if (!eas.isEmpty()){
+			ExtendAuthority ea = eas.get(0);
+			DWXX dwxx = ea.getDwxx();
+			Yszkrb ys = ysdailyDao.getYsdailyRBLy(date, dwxx);
+			if (null != ys)
+			{
+				result.get(0)[0] = "" + ys.getYszkzb();
+				result.get(0)[1] = "" + ys.getHkjh();
+				result.get(0)[2] = "" + ys.getQbkx();
+				result.get(0)[3] = "" + ys.getZqkx();
+				result.get(0)[4] = "" + ys.getSyysye();
+				result.get(0)[5] = "" + ys.getJrxzyszk();
+				result.get(0)[6] = "" + ys.getJrhk();
+				result.get(0)[7] = "" + ys.getLjkjyshk();
 			}
 		}
 		return result;

@@ -299,7 +299,7 @@
                         "type":"date",
                         "date":{
                             "type":"month",
-                            "init":"${calendar.current.monthFormat}"
+                            "init":""
                         }
                     },
                     {

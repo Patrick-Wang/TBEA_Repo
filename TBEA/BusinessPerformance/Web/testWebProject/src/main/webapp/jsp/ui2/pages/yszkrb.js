@@ -8,21 +8,22 @@ var yszkrb;
         }
         JQGridAssistantFactory.createTable = function (gridName) {
             return new JQTable.JQGridAssistant([
-                new JQTable.Node("集团下达月度资金回笼指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("各单位自行制定的回款计划", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("今日回款", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("已回款中可降应收的回款金额", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("确保办出", "t5", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("争取办出", "t6", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
-                new JQTable.Node("截止月底应收账款账面余额", "t7", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
+                new JQTable.Node("应收账款指标", "t1", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("回款计划", "t2", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("其中：确保款项", "t3", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("争取款项", "t4", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("上月应收余额", "t5", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("今日新增应收账款", "t6", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("今日回款", "t7", false, JQTable.TextAlign.Left, 0, undefined, undefined, false),
+                new JQTable.Node("累计可降应收回款", "t8", false, JQTable.TextAlign.Left, 0, undefined, undefined, false)
             ], gridName);
         };
         return JQGridAssistantFactory;
     }());
     var SimpleView = /** @class */ (function () {
         function SimpleView() {
-            this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/dailyReport/yszk_submit.do");
-            this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/dailyReport/yszk_update.do", false);
+            this.mAjaxSubmit = new Util.Ajax("/BusinessManagement/dailyReport/yszklr_submit.do");
+            this.mAjaxUpdate = new Util.Ajax("/BusinessManagement/dailyReport/yszklr_update.do", false);
             this.mStopBtn = false;
             router.register(this);
         }
@@ -126,6 +127,9 @@ var yszkrb;
             })).then(function (resp) {
                 if (Util.ErrorCode.OK == resp.errorCode) {
                     Util.Toast.success("提交 成功");
+                }
+                else if (Util.ErrorCode.NULL_STRING == resp.errorCode) {
+                    Util.Toast.success("有未录入项！");
                 }
                 else {
                     Util.Toast.failed(resp.message);

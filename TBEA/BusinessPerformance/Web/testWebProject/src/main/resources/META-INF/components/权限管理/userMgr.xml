@@ -1,8 +1,18 @@
 <components>
  <service id="servGetUserNames" transaction="transactionManager">
-  <sql id="userNames" export="true">
-			select id, name	from jygk_account order by id
-		</sql>
+  <sql id="userNames" export="true"><![CDATA[
+     		select
+				ja.id,
+				case when hr.name is null then ja.name
+				else ja.name + '(' + hr.name + ')' end n2
+			from
+                jygk_account ja left join hr_employee hr on ja.name = hr.workNum
+			where
+			    ja.deprecated = 0 and
+			    (hr.isInPost is null or hr.isInPost = 'Y')
+			order by
+				ja.id
+		]]></sql>
  </service>
  <service id="servGetRoleNames" transaction="transactionManager">
   <sql id="roleNames" export="true">
@@ -10,20 +20,21 @@
 		</sql>
  </service>
  <service id="servGetUserRoles" transaction="transactionManager">
-  <sql id="userRoles" export="true">
+  <sql id="userRoles" export="true"><![CDATA[
 			select 
-				ja.id, 
-				name, 
+				ja.id,
+				ja.name n1,
+				hr.name n2,
 				roles = stuff((select ',' +  r.roleName from user_roles ur left join roles r on ur.roleId = r.id  where userId = ja.ID for XML path('')), 1 , 1 , '') 
 			from
-				user_roles ur full join jygk_account ja on ja.id = ur.userId 
+                jygk_account ja left join hr_employee hr on ja.name = hr.workNum
 			where
-				1 = ${(uids.size == 1 &amp;&amp;  uids[0] == -1) ? 1 :0 } or ja.id in ${uids}
-			group by 
-				ja.name, ja.ID
+			    ja.deprecated = 0 and
+			    (hr.isInPost is null or hr.isInPost = 'Y') and
+				(1 = ${(uids.size == 1 &&  uids[0] == -1) ? 1 :0 } or ja.id in (${uids}))
 			order by
 				ja.id
-		</sql>
+    ]]></sql>
  </service>
  <service id="servSubmitUserRoles" transaction="transactionManager">
  <sql>

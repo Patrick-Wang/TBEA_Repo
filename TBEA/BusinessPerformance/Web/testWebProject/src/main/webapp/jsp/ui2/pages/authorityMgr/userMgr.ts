@@ -13,7 +13,12 @@ module user_mgr {
         public static createTable(gridName:string, dataInit:any):JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 JQTable.Node.create({
-                    name: "用户名",
+                    name: "用户",
+                    align: JQTable.TextAlign.Left,
+                    width: 150
+                }),
+                JQTable.Node.create({
+                    name: "姓名",
                     align: JQTable.TextAlign.Left,
                     width: 150
                 }),

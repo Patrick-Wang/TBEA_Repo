@@ -17,20 +17,19 @@ module yszkrb_view {
         public static createTable(gridName: string): JQTable.JQGridAssistant {
             return new JQTable.JQGridAssistant([
                 new JQTable.Node("单位", "t0", true, JQTable.TextAlign.Left),
-                new JQTable.Node("集团下达月度资金回笼指标", "t1"),
-                new JQTable.Node("各单位自行制定的回款计划", "t2"),
-                new JQTable.Node("今日回款", "t3"),
-                new JQTable.Node("月累计（截止今日）", "t4"),
-                new JQTable.Node("资金回笼指标完成", "t5"),
-                new JQTable.Node("回款计划完成率", "t6"),
-                new JQTable.Node("已回款中可降应收的回款金额", "t7"),
-                new JQTable.Node("目前-月底回款计划", "t8")
-                    .append(new JQTable.Node("确保办出", "t81"))
-                    .append(new JQTable.Node("争取办出", "t82"))
-                    .append(new JQTable.Node("两者合计", "t83")),
-                new JQTable.Node("全月确保", "t9"),
-                new JQTable.Node("预计全月计划完成率", "t10"),
-                new JQTable.Node("截止月底应收账款账面余额", "t11")
+                new JQTable.Node("应收账款指标", "t1"),
+                new JQTable.Node("回款计划", "t2"),
+                new JQTable.Node("其中：确保款项", "t3"),
+                new JQTable.Node("争取款项", "t4"),
+                new JQTable.Node("上月应收余额", "t5"),
+                new JQTable.Node("今日新增应收账款", "t6"),
+                new JQTable.Node("本月累计新增应收", "t7"),
+                new JQTable.Node("今日回款", "t8"),
+                new JQTable.Node("累计回款", "t9"),
+                new JQTable.Node("回款完成率", "t10"),
+                new JQTable.Node("累计可降应收回款", "t11"),
+                new JQTable.Node("今日应收账款余额", "t12"),
+                new JQTable.Node("应收账款完成率", "t13"),
 
             ], gridName);
         }
@@ -67,7 +66,7 @@ module yszkrb_view {
 
         private mData:Array<string[]> = [];
         private tableAssist:JQTable.JQGridAssistant;
-        private mDataSet:Util.Ajax = new Util.Ajax("/BusinessManagement/yszkrb/yszk_update.do");
+        private mDataSet:Util.Ajax = new Util.Ajax("/BusinessManagement/yszkrb/yszkrb_update.do");
         private mOpt: IViewOption;
         
         public init(opt:any):void {
@@ -175,9 +174,10 @@ module yszkrb_view {
             var outputData: string[][] = [];
             var data = [[]];
             if (this.mData.length == 1){
-                Util.formatData(outputData, this.mData, this.initPercentList(), [], 1);
+                data = this.mData;
+                /*Util.formatData(outputData, this.mData, this.initPercentList(), [], 0);*/
             }else{
-                Util.formatData(outputData, this.mData, this.initPercentList(), [], 0);
+                /*Util.formatData(outputData, this.mData, this.initPercentList(), [], 0);*/
                 data = [
                     ["沈变公司"],
                     ["衡变公司"],
@@ -199,12 +199,14 @@ module yszkrb_view {
                     ["众和公司"],
                     ["集团合计"]
                 ];
+                for(var i = 0; i < this.mData.length; i++){
+                    for(var j = 0; j < this.mData[i].length; j++){
+                        data[i][j+1] = this.mData[i][j];
+                    }
+                }
             }
 
-            var row = [];
-            for (var i = 0; i < outputData.length; ++i) {
-                row = [].concat(outputData[i]);
-                data[i] = data[i].concat(row);
+            for (var i = 0; i < data.length; ++i) {
                 if (data[i][0].lastIndexOf("计") >= 0) {
                     this.tableAssist.setRowBgColor(i, 183, 222, 232);
                 }

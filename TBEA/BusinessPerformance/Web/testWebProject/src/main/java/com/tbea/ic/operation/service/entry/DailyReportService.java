@@ -14,7 +14,24 @@ public interface DailyReportService {
 
 	ErrorCode submitYszk(Account account, Date date, JSONArray jData);
 
+	/**
+	 * 录入提交操作
+	 * @param account
+	 * @param date
+	 * @param jData
+	 * @return
+	 */
+	ErrorCode submitYszkLr(Account account, Date date, JSONArray jData);
+
 	List<String[]> getYszkData(Account account, Date date);
+
+	/**
+	 * 得到已经录入的月录入项
+	 * @param account
+	 * @param date
+	 * @return
+	 */
+	List<String[]> getYszkLRData(Account account, Date date);
 
 	boolean hasJYAnalysisEntryAuthority(Account account);
 

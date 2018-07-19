@@ -18,7 +18,7 @@ public abstract class AbstractFormatter implements FormatterHandler {
 
 
 	protected boolean isInvalid(String val){
-		return val == null || "null".equals(val) || "--".equals(val) || val.isEmpty();
+		return val == null || "null".equals(val) || val.isEmpty();
 	}
 	
 

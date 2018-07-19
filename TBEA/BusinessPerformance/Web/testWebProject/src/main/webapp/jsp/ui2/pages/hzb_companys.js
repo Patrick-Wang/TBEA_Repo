@@ -160,6 +160,79 @@ var hzb_companys;
         };
         SimpleView.prototype.adjustSize = function () {
             var jqgrid = this.jqgrid();
+            var jqgridArrObj = jqgrid.jqGrid("getRowData");
+            for (var i = 0; i < jqgridArrObj.length; i++) {
+                var rowData = jqgridArrObj[i];
+                if (rowData.zb == "利润总额" || rowData.zb == "销售收入" || rowData.zb == "合同签约额" || rowData.zb == "经营性净现金流" || rowData.zb == "制造业不含税产值") {
+                    if (rowData.yd_y3 == "--") {
+                    }
+                    else if (parseFloat(rowData.yd_y3) >= 60 && parseFloat(rowData.yd_y3) < 80) {
+                        $("#yd_y3" + (i + 1)).css("background-color", "yellow");
+                    }
+                    else if (parseFloat(rowData.yd_y3) < 60) {
+                        $("#yd_y3" + (i + 1)).css("background-color", "red");
+                    }
+                    if (rowData.nd_n2 == "--") {
+                    }
+                    else if (parseFloat(rowData.nd_n2) >= 60 && parseFloat(rowData.nd_n2) < 80) {
+                        $("#nd_n2" + (i + 1)).css("background-color", "yellow");
+                    }
+                    else if (parseFloat(rowData.nd_n2) < 60) {
+                        $("#nd_n2" + (i + 1)).css("background-color", "red");
+                    }
+                }
+                else if (rowData.zb == "应收账款" || rowData.zb == "存货") {
+                    if (rowData.yd_y3 == "--") {
+                    }
+                    else if (parseFloat(rowData.yd_y3) > 110 && parseFloat(rowData.yd_y3) <= 120) {
+                        $("#yd_y3" + (i + 1)).css("background-color", "yellow");
+                    }
+                    else if (parseFloat(rowData.yd_y3) > 120) {
+                        $("#yd_y3" + (i + 1)).css("background-color", "red");
+                    }
+                    if (rowData.nd_n2 == "--") {
+                    }
+                    else if (parseFloat(rowData.nd_n2) > 110 && parseFloat(rowData.nd_n2) <= 120) {
+                        $("#nd_n2" + (i + 1)).css("background-color", "yellow");
+                    }
+                    else if (parseFloat(rowData.nd_n2) > 120) {
+                        $("#nd_n2" + (i + 1)).css("background-color", "red");
+                    }
+                }
+                /*if(rowData.zb.indexOf("应收") > -1 || rowData.zb.indexOf("存货") > -1){
+                    if(rowData.yd_y3 == "--"){
+
+                    }else if(parseFloat(rowData.yd_y3) > 110 && parseFloat(rowData.yd_y3) <= 120){
+                        $("#yd_y3" + (i+1)).css("background-color", "yellow");
+                    }else if(parseFloat(rowData.yd_y3) > 120){
+                        $("#yd_y3" + (i+1)).css("background-color", "red");
+                    }
+                    if(rowData.nd_n2 == "--"){
+
+                    }else if(parseFloat(rowData.nd_n2) > 110 && parseFloat(rowData.nd_n2) <= 120){
+                        $("#nd_n2" + (i+1)).css("background-color", "yellow");
+                    }else if(parseFloat(rowData.nd_n2) > 120){
+                        $("#nd_n2" + (i+1)).css("background-color", "red");
+                    }
+                }else if(rowData.zb == "积压物资"){
+
+                }else{
+                    if(rowData.yd_y3 == "--"){
+
+                    }else if(parseFloat(rowData.yd_y3) >= 60 && parseFloat(rowData.yd_y3) < 80){
+                        $("#yd_y3" + (i+1)).css("background-color", "yellow");
+                    }else if(parseFloat(rowData.yd_y3) < 60){
+                        $("#yd_y3" + (i+1)).css("background-color", "red");
+                    }
+                    if(rowData.nd_n2 == "--"){
+
+                    }else if(parseFloat(rowData.nd_n2) >= 60 && parseFloat(rowData.nd_n2) < 80){
+                        $("#nd_n2" + (i+1)).css("background-color", "yellow");
+                    }else if(parseFloat(rowData.nd_n2) < 60){
+                        $("#nd_n2" + (i+1)).css("background-color", "red");
+                    }
+                }*/
+            }
             if ($("#" + this.mOpt.tableId).width() != $("#" + this.mOpt.tableId).children().eq(0).width()) {
                 jqgrid.setGridWidth($("#" + this.mOpt.tableId).width());
             }

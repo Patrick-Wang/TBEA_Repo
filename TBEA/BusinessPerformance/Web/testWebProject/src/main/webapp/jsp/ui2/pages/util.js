@@ -84,6 +84,32 @@ var Util;
         ErrorCode[ErrorCode["HAVE_NO_RIGHT"] = 4] = "HAVE_NO_RIGHT";
         ErrorCode[ErrorCode["PRICELIB_JCYCLJG_IMPORT_ERROR"] = 5] = "PRICELIB_JCYCLJG_IMPORT_ERROR";
     })(ErrorCode = Util.ErrorCode || (Util.ErrorCode = {}));
+    var RelationFormual = /** @class */ (function () {
+        function RelationFormual(rel) {
+            this.rel = rel;
+        }
+        RelationFormual.prototype.setGrid = function (grid) {
+            this.grid = grid;
+        };
+        RelationFormual.prototype.update = function (editCell, col) {
+            if (col == this.rel.ids[0]) {
+                var data = this.grid.getCell(editCell, this.rel.ids[0]);
+                for (var i = 0; i < this.rel.values.length; ++i) {
+                    if (this.rel.values[i][0] == data) {
+                        for (var j = 1; j < this.rel.ids.length; ++j) {
+                            var dataDest = this.grid.getCell(editCell, this.rel.ids[j]);
+                            if (!dataDest) {
+                                this.grid.setCell(editCell, this.rel.ids[j], this.rel.values[i][j]);
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            return false;
+        };
+        return RelationFormual;
+    }());
     function createTable(gridName, gridCtrl) {
         var nodes = [];
         for (var i = 0; i < gridCtrl.header.length; ++i) {
@@ -122,6 +148,13 @@ var Util;
             for (var i = 0; i < gridCtrl.mergeCols.length; ++i) {
                 if (gridCtrl.mergeCols[i].col != undefined) {
                     tableAssist.mergeColum(parseInt(gridCtrl.mergeCols[i].col));
+                }
+            }
+        }
+        if (gridCtrl.relations) {
+            for (var i = 0; i < gridCtrl.relations.length; ++i) {
+                if (gridCtrl.relations[i].values.length > 0) {
+                    tableAssist.addFormula(new RelationFormual(gridCtrl.relations[i]));
                 }
             }
         }

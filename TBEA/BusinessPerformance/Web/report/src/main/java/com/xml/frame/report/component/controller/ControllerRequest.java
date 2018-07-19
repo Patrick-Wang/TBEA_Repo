@@ -41,7 +41,9 @@ public class ControllerRequest extends PropMap{
 		public JSONArray asJsonArray(){
 			try{
 				String val = req.getParameter(paraName);
-				return JSONArray.fromObject(val);
+				if (null != val){
+                    return JSONArray.fromObject(val);
+                }
 			}catch(Exception e){
 //				e.printStackTrace();
                 LoggerFactory.getLogger("REPORT-APPENDER").warn("paraName : " + paraName + "  " + e.getMessage());
@@ -52,12 +54,14 @@ public class ControllerRequest extends PropMap{
 		public List asList(){
 			try{
 				String val = req.getParameter(paraName);
-				JSONArray arr = JSONArray.fromObject(val);
-				List ret = new ArrayList();
-				for (int i = 0; i < arr.size(); ++i){
-					ret.add(arr.get(i));
-				}
-				return ret;
+				if (null != val){
+                    JSONArray arr = JSONArray.fromObject(val);
+                    List ret = new ArrayList();
+                    for (int i = 0; i < arr.size(); ++i){
+                        ret.add(arr.get(i));
+                    }
+                    return ret;
+                }
 			}catch(Exception e){
 //				e.printStackTrace();
                 LoggerFactory.getLogger("REPORT-APPENDER").warn("paraName : " + paraName + "  " + e.getMessage());
@@ -69,7 +73,9 @@ public class ControllerRequest extends PropMap{
 		public JSONObject asJsonObject(){
 			try{
 				String val = req.getParameter(paraName);
-				return JSONObject.fromObject(val);
+				if (null != val) {
+                    return JSONObject.fromObject(val);
+                }
 			}catch(Exception e){
 //				e.printStackTrace();
                 LoggerFactory.getLogger("REPORT-APPENDER").warn("paraName : " + paraName + "  " + e.getMessage());

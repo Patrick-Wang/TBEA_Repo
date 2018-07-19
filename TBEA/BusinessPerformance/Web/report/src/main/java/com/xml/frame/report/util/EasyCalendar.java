@@ -45,7 +45,11 @@ public class EasyCalendar {
 		cache.put(key, val);
 		return val;
 	}
-	
+
+	public EasyCalendar from(String time){
+	    return new EasyCalendar(Date.valueOf(time));
+    }
+
  	public EasyCalendar getCurrent(){
 		return new EasyCalendar();
 	}
@@ -488,5 +492,53 @@ public class EasyCalendar {
 		cache.clear();
 		this.cal.setTime(d);
 	}
-	
+
+
+    public boolean lt(EasyCalendar ec, String type){
+	    long time1 = this.getTime();
+        long time2 = ec.getTime();
+        int accuracy = 1;
+        if ("month".equals(type)){
+            if (this.getYear() < ec.getYear()){
+                return true;
+            }
+            if (this.getYear() == ec.getYear()){
+                return this.getMonth() < ec.getMonth();
+            }
+            return false;
+        } else if ("day".equals(type)){
+            accuracy = 1000 * 60 * 60 * 24;
+        } else if ("hour".equals(type)){
+            accuracy = 1000 * 60 * 60;
+        } else if ("min".equals(type)){
+            accuracy = 1000 * 60;
+        } else if ("sec".equals(type)){
+            accuracy = 1000;
+        }
+        return (time1 / accuracy) < (time2 / accuracy);
+    }
+
+    public boolean eq(EasyCalendar ec, String type){
+        long time1 = this.getTime();
+        long time2 = ec.getTime();
+        int accuracy = 1;
+        if ("month".equals(type)){
+            return this.getYear() == ec.getYear() &&
+                    this.getMonth() == ec.getMonth();
+        } else if ("day".equals(type)){
+            accuracy = 1000 * 60 * 60 * 24;
+        } else if ("hour".equals(type)){
+            accuracy = 1000 * 60 * 60;
+        } else if ("min".equals(type)){
+            accuracy = 1000 * 60;
+        } else if ("sec".equals(type)){
+            accuracy = 1000;
+        }
+        return (time1 / accuracy) == (time2 / accuracy);
+    }
+
+    public boolean gt(EasyCalendar ec, String type){
+        return !lt(ec, type) && !eq(ec, type);
+    }
+
 }

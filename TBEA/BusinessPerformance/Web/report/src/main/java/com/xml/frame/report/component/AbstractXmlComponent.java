@@ -38,8 +38,8 @@ public abstract class AbstractXmlComponent implements Component, ElContext {
 	
 	@Override
 	public void storeObject(String key, Object obj){
-		local.put(key, obj);
-	}
+        local.put(key, obj);
+    }
 	
 	@Override
 	public String getId() {

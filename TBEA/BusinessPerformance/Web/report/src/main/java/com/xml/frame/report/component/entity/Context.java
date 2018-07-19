@@ -1,6 +1,7 @@
 package com.xml.frame.report.component.entity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Context {
@@ -30,4 +31,19 @@ public class Context {
 	public Object remove(String key){
 		return objMap.remove(key);
 	}
+
+	public Context clone(){
+	    Context c = new Context();
+	    for(String key : objMap.keySet()){
+	        c.put(key, objMap.get(key));
+        }
+        return c;
+    }
+
+    public Context merge(Context c){
+        for(String key : c.objMap.keySet()){
+            objMap.put(key, c.objMap.get(key));
+        }
+        return this;
+    }
 }

@@ -1,77 +1,451 @@
 <components>
- <controller id="operDwmcByIdClr">
-  <if test="${compId == 1}">
-   <context key="dwmc" value="沈变"/>
-   <context key="isByq" value="${true}"/>
-  </if>
-  <elseif test="${compId == 2}">
-   <context key="dwmc" value="衡变"/>
-   <context key="isByq" value="${true}"/>
-  </elseif>
-  <elseif test="${compId == 3}">
-   <context key="dwmc" value="新变"/>
-   <context key="isByq" value="${true}"/>
-  </elseif>
-  <elseif test="${compId == 301}">
-   <context key="dwmc" value="天变"/>
-   <context key="isByq" value="${true}"/>
-  </elseif>
-  <elseif test="${compId == 4}">
-   <context key="dwmc" value="鲁缆"/>
-   <context key="isByq" value="${false}"/>
-  </elseif>
-  <elseif test="${compId == 5}">
-   <context key="dwmc" value="新缆"/>
-   <context key="isByq" value="${false}"/>
-  </elseif>
-  <elseif test="${compId == 6}">
-   <context key="dwmc" value="德缆"/>
-   <context key="isByq" value="${false}"/>
-  </elseif>
- </controller>
- <controller id="operWorkReportShowClr">
-  <response name="workReport/show" type="jsp">
-   <map key="year" value="${calendar.current.year}"/>
-   <map key="month" value="${calendar.current.month}"/>
-   <map map="${authMgr[95]}"/>
-   <map key="updateUrl" value="operWorkReportUpdateClr"/>
-   <map key="exportUrl" value="operWorkReportDownloadClr"/>
-  </response>
- </controller>
- <controller id="operWorkReportUpdateClr">
-  <context key="cal" value="${request.date.asCalendar}"/>
-  <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
-  <context key="token" value="${compId}_${cal.year}_${cal.month}"/>
-  <context key="tokenTag" value="${token}Tag"/>
-  <if test="${session[tokenTag] == null}">
-   <context key="comps" value="${orgs.BMDBOrganization.companiesByIds[compId.packAsList]}"/>
-   <callcontroller id="operDwmcByIdClr"/>
-   <if test="${isByq}">
-    <callcontroller id="operWorkReportByqClr"/>
-   </if>
-   <else>
-    <callcontroller id="operWorkReportXlClr"/>
-   </else>
-   <context key="dateKey" value="${token}Date"/>
-   <context key="dwmcKey" value="${token}Dwmc"/>
-   <context key="tmp" value="${session.put[token][word]}"/>
-   <context key="tmp" value="${session.put[tokenTag]['true']}"/>
-   <context key="tmp" value="${session.put[dateKey][cal]}"/>
-   <context key="tmp" value="${session.put[dwmcKey][dwmc]}"/>
-   <context key="tmp" value="${session.timeout[token][600]}"/>
-   <context key="tmp" value="${session.timeout[dateKey][600]}"/>
-   <context key="tmp" value="${session.timeout[dwmcKey][600]}"/>
-   <context key="tmp" value="${session.timeout[tokenTag][600]}"/>
-  </if>
-  <response type="json">
-   <token>${token}</token>
-  </response>
- </controller>
- <controller id="operWorkReportDownloadClr">
-  <context key="token" value="${request.token.asString}"/>
-  <context key="dateKey" value="${token}Date"/>
-  <context key="dwmcKey" value="${token}Dwmc"/>
-  <context key="word" value="${session[token]}"/>
-  <response type="word" name="${session[dwmcKey]}${session[dateKey].year}年${session[dateKey].month}月经营工作分析材料.docx" ref="word"/>
- </controller>
+    <controller id="operDwmcByIdClr">
+        <if test="${compId == 1}">
+            <context key="dwmc" value="沈变"/>
+            <context key="isByq" value="${true}"/>
+        </if>
+        <elseif test="${compId == 2}">
+            <context key="dwmc" value="衡变"/>
+            <context key="isByq" value="${true}"/>
+        </elseif>
+        <elseif test="${compId == 3}">
+            <context key="dwmc" value="新变"/>
+            <context key="isByq" value="${true}"/>
+        </elseif>
+        <elseif test="${compId == 301}">
+            <context key="dwmc" value="天变"/>
+            <context key="isByq" value="${true}"/>
+        </elseif>
+        <elseif test="${compId == 4}">
+            <context key="dwmc" value="鲁缆"/>
+            <context key="isByq" value="${false}"/>
+        </elseif>
+        <elseif test="${compId == 5}">
+            <context key="dwmc" value="新缆"/>
+            <context key="isByq" value="${false}"/>
+        </elseif>
+        <elseif test="${compId == 6}">
+            <context key="dwmc" value="德缆"/>
+            <context key="isByq" value="${false}"/>
+        </elseif>
+    </controller>
+
+    <controller id="operShuju">
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+
+        <context key="token" value="${compId}_${cal.year}_${cal.month}"/>
+        <context key="tokenTag" value="${token}Tag"/>
+        <if test="${session[tokenTag] == null}">
+
+            <context key="comps" value="${orgs.BMDBOrganization.companiesByIds[compId.packAsList]}"/>
+            <context key="calStart" value="${cal.lastYear}" export="false"/>
+
+            <list id="zbs" type="int">1,
+                195,
+                196,
+                197,
+                198,
+                199,
+                6,
+                7,
+                12,
+                16,
+                253
+            </list>
+            <list id="zbs_yw" type="int">6, 7, 12, 16, 253, 57,308,311,313,316</list>
+            <list id="zbs_hkfs" type="int">57, 214, 215, 216</list>
+            <list id="zbs_bhqs" type="int">295</list>
+            <list id="zbs_qsbd" type="int">
+                221,
+                224,
+                227,
+                6
+            </list>
+            <loop from="0" to="12">
+                <list id="vScrollheaderRow" clear="true" type="string">
+                    <item>${calStart.year &lt; cal.year ? '上年度' : '本年度'}</item>
+                    <item>${calStart.month}月</item>
+                </list>
+                <list id="vScrollHeader" type="object" export="true">
+                    <item>${vScrollheaderRow}</item>
+                </list>
+                <list id="scrollHeader" type="string" export="true">
+                    <item>${calStart.year}年${calStart.month}月</item>
+                </list>
+                <list id="dataTmp" type="string" clear="true">
+                    <item concat="${accFactory.sjAcc.compute[0][calStart.date][calStart.date][zbs][comps]}"/>
+                </list>
+                <list id="data" type="object">
+                    <item>${dataTmp}</item>
+                </list>
+                <list id="data_xjl" type="object">
+                    <item>${wrs.jyxxjlYdsj[compId][calStart.date]}</item>
+                </list>
+                <list id="yszkzlbhBodyData" type="object">
+                    <item>${wrs.yszkzlbhDy[compId][calStart.date][0]}</item>
+                </list>
+                <list id="yszkkxxzBodyData" type="object">
+                    <item>${wrs.yszkKxxzDy[compId][calStart.date][0]}</item>
+                </list>
+                <list id="yszkyqysysBodyData" type="object">
+                    <item>${wrs.yszkYqysDy[compId][calStart.date][0]}</item>
+                </list>
+                <list id="yszkyjtzBodyData" type="object">
+                    <item>${wrs.yszkYjtzDy[compId][calStart.date][0]}</item>
+                </list>
+                <list id="chzlBodyData" type="object">
+                    <item>${wrs.chzljgDy[compId][calStart.date][0]}</item>
+                </list>
+                <list id="chxzBodyData" type="object">
+                    <item>${wrs.chxzDy[compId][calStart.date][0]}</item>
+                </list>
+                <list id="hkqkBodyData" type="object" export="false">
+                    <item>${accFactory.sjAcc.compute[0][calStart.date][calStart.date][zbs_yw][comps]}</item>
+                </list>
+                <list id="hkfsqkBodyData" type="object" export="false">
+                    <item>${accFactory.sjAcc.compute[0][calStart.date][calStart.date][zbs_hkfs][comps]}</item>
+                </list>
+                <list id="djqyData" type="object">
+                    <item>${accFactory.sjAcc.compute[0][calStart.date][calStart.date][zbs_bhqs][comps]}</item>
+                </list>
+
+                <list id="dataTmp_qsbd" type="double" clear="true">
+                    <item concat="${accFactory.sjAcc.compute[0][calStart.date][calStart.date][zbs_qsbd][comps]}"/>
+                    <item isNull="true"/>
+                    <item isNull="true"/>
+                </list>
+
+                <list id="dataTmp_qsbd" type="double">
+                    <item insert="3" isNull="true"/>
+                </list>
+
+                <list id="data_qsbd" type="object">
+                    <item>${dataTmp_qsbd}</item>
+                </list>
+
+
+                <context key="calStart" value="${calStart.nextMonth}" export="false"/>
+            </loop>
+
+            <list id="ids">
+                <item from="0" to="${data.size - 1 + 3}"/>
+            </list>
+            <table id="tbData" rowIds="ids">
+                <col list="${data[0]}"/>
+                <col list="${data[1]}"/>
+                <col list="${data[2]}"/>
+                <col list="${data[3]}"/>
+                <col list="${data[4]}"/>
+                <col list="${data[5]}"/>
+                <col list="${data[6]}"/>
+                <col list="${data[7]}"/>
+                <col list="${data[8]}"/>
+                <col list="${data[9]}"/>
+                <col list="${data[10]}"/>
+                <col list="${data[11]}"/>
+                <col list="${data[12]}"/>
+                <divRow toRow="11">
+                    <subRow>0</subRow>
+                    <baseRow>6</baseRow>
+                </divRow>
+                <divRow toRow="12">
+                    <subRow>1</subRow>
+                    <baseRow>7</baseRow>
+                </divRow>
+                <divRow toRow="13">
+                    <subRow>2</subRow>
+                    <baseRow>7</baseRow>
+                </divRow>
+                <divRow toRow="14">
+                    <subRow>3</subRow>
+                    <baseRow>9</baseRow>
+                </divRow>
+                <divRow toRow="15">
+                    <subRow>5</subRow>
+                    <baseRow>10</baseRow>
+                </divRow>
+            </table>
+            <formatter id="fmtData">
+                <EmptyFormatter>
+                    <DefaultMatcher rows="0,1"/>
+                </EmptyFormatter>
+                <PercentFormatter reservedCount="1">
+                    <DefaultMatcher rows="11,12,13,14,15"/>
+                </PercentFormatter>
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ" table="${tbData.matrixNoIds}">
+                <formatter ref="fmtData"/>
+            </formatterServer>
+            <context id="lrsr" key="lrsr" value="${wrs.lrsrzb[compId][cal.date]}"/>
+            <context id="zbsj" key="zbsj" value="${vScrollHeader.transpose}"/>
+            <context id="bhqs_lr" key="bhqs_lr" value="${fmtServ.result}"/>
+            <list id="ids_xjl" type="int">
+                <item from="0" to="${data_xjl[0].size - 1}"/>
+            </list>
+            <table id="tbData_xjl" rowIds="ids_xjl">
+                <col list="${data_xjl[0]}"/>
+                <col list="${data_xjl[1]}"/>
+                <col list="${data_xjl[2]}"/>
+                <col list="${data_xjl[3]}"/>
+                <col list="${data_xjl[4]}"/>
+                <col list="${data_xjl[5]}"/>
+                <col list="${data_xjl[6]}"/>
+                <col list="${data_xjl[7]}"/>
+                <col list="${data_xjl[8]}"/>
+                <col list="${data_xjl[9]}"/>
+                <col list="${data_xjl[10]}"/>
+                <col list="${data_xjl[11]}"/>
+                <col list="${data_xjl[12]}"/>
+            </table>
+            <formatter id="fmtData_xjl">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_xjl" table="${tbData_xjl.matrixNoIds}">
+                <formatter ref="fmtData_xjl"/>
+            </formatterServer>
+            <context id="xjl_lrlc" key="xjl_lrlc" value="${fmtServ_xjl.result}"/>
+            <formatter id="fmtData_yszk">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_yszk" table="${yszkzlbhBodyData}">
+                <formatter ref="fmtData_yszk"/>
+            </formatterServer>
+            <context id="yszk_zl" key="yszk_zl" value="${fmtServ_yszk.result}"/>
+            <formatter id="fmtData_yqkzx">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_yqkzx" table="${yszkkxxzBodyData}">
+                <formatter ref="fmtData_yqkzx"/>
+            </formatterServer>
+            <context id="yqkzx_yqwd" key="yqkzx_yqwd" value="${fmtServ_yqkzx.result}"/>
+            <formatter id="fmtData_yqk">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_yqk" table="${yszkyqysysBodyData}">
+                <formatter ref="fmtData_yqk"/>
+            </formatterServer>
+            <context id="yqk_ys" key="yqk_ys" value="${fmtServ_yqk.result}"/>
+            <formatter id="fmtData_sj">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_sj" table="${yszkyjtzBodyData}">
+                <formatter ref="fmtData_sj"/>
+            </formatterServer>
+            <context id="yszk_sj" key="yszk_sj" value="${fmtServ_sj.result}"/>
+            <formatter id="fmtData_ch">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_ch" table="${chzlBodyData}">
+                <formatter ref="fmtData_ch"/>
+            </formatterServer>
+            <context id="ch_zlbh" key="ch_zlbh" value="${fmtServ_ch.result}"/>
+            <formatter id="fmtData_xz">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_xz" table="${chxzBodyData}">
+                <formatter ref="fmtData_xz"/>
+            </formatterServer>
+            <context id="ch_xz" key="ch_xz" value="${fmtServ_xz.result}"/>
+            <table id="tbData_yw" rowIds="zbs_yw">
+                <col list="${hkqkBodyData[0]}"/>
+                <col list="${hkqkBodyData[1]}"/>
+                <col list="${hkqkBodyData[2]}"/>
+                <col list="${hkqkBodyData[3]}"/>
+                <col list="${hkqkBodyData[4]}"/>
+                <col list="${hkqkBodyData[5]}"/>
+                <col list="${hkqkBodyData[6]}"/>
+                <col list="${hkqkBodyData[7]}"/>
+                <col list="${hkqkBodyData[8]}"/>
+                <col list="${hkqkBodyData[9]}"/>
+                <col list="${hkqkBodyData[10]}"/>
+                <col list="${hkqkBodyData[11]}"/>
+                <col list="${hkqkBodyData[12]}"/>
+            </table>
+            <formatter id="fmtData_yw">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_yw" table="${tbData_yw.matrixNoIds}">
+                <formatter ref="fmtData_yw"/>
+            </formatterServer>
+            <context id="zjhl_yw" key="zjhl_yw" value="${fmtServ_yw.result}"/>
+            <formatter id="fmtData_hkfs">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_hkfs" table="${hkfsqkBodyData.transpose}">
+                <formatter ref="fmtData_hkfs"/>
+            </formatterServer>
+            <context id="zjhl_hkfs" key="zjhl_hkfs" value="${fmtServ_hkfs.result}"/>
+            <formatter id="fmtData_bhqs">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_bhqs" table="${djqyData.transpose}">
+                <formatter ref="fmtData_bhqs"/>
+            </formatterServer>
+            <context id="djqy_bhqs" key="djqy_bhqs" value="${fmtServ_bhqs.result}"/>
+            <context key="data_scqs" value="${wrs.xfscqy[compId][cal.date]}" export="false"/>
+            <context key="gnqyhyqyHeader" value="${data_scqs.col[0]}"></context>
+            <formatter id="fmtData_scqs">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_scqs" table="${data_scqs.rmCol[0]}">
+                <formatter ref="fmtData_scqs"/>
+            </formatterServer>
+            <context id="qyqk_scqs" key="qyqk_scqs" value="${fmtServ_scqs.result}"/>
+            <context key="data_kV" value="${wrs.ByqXfcpqy[compId][cal.date]}" export="false"/>
+            <context key="gnqycpqyHeader" value="${data_kV.col[0]}"></context>
+            <formatter id="fmtData_kV">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_kV" table="${data_kV.rmCol[0]}">
+                <formatter ref="fmtData_kV"/>
+            </formatterServer>
+            <context id="cyqy_kV" key="cyqy_kV" value="${fmtServ_kV.result}"/>
+            <list id="ids_qsbd">
+                <item from="0" to="6"/>
+            </list>
+            <table id="tbDataSxfybdqs" rowIds="ids_qsbd" table="${data_qsbd.transpose}">
+                <sumRow toRow="3">
+                    <inRows>0,1,2</inRows>
+                </sumRow>
+                <copyRow from="4" to="5"/>
+                <divRow toRow="6">
+                    <subRow>3</subRow>
+                    <baseRow>5</baseRow>
+                </divRow>
+            </table>
+            <formatter id="fmtData_qsbd">
+                <PercentFormatter reservedCount="1">
+                    <DefaultMatcher rows="6"/>
+                </PercentFormatter>
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_qsbd" table="${tbDataSxfybdqs.matrixNoIds}">
+                <formatter ref="fmtData_qsbd"/>
+            </formatterServer>
+            <context id="fyzk_qsbd" key="fyzk_qsbd" value="${fmtServ_qsbd.result}"/>
+            <context key="data_wcqk" value="${wrs.ByqCzwcqk[compId][cal.date]}" export="false"/>
+            <context key="czwcqkHeader" value="${data_wcqk.col[0]}"/>
+            <formatter id="fmtData_wcqk">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_wcqk" table="${data_wcqk.rmCol[0]}">
+                <formatter ref="fmtData_wcqk"/>
+            </formatterServer>
+            <context id="czzb_wcqk" key="czzb_wcqk" value="${fmtServ_wcqk.result}"/>
+            <context key="data_tly" value="${wrs.xlTlyl[compId][cal.date].rmCol[0]}" export="false"/>
+            <formatter id="fmtData_tly">
+                <NumberFormatter reservedCount="1"/>
+            </formatter>
+            <formatterServer id="fmtServ_tly" table="${data_tly}">
+                <formatter ref="fmtData_tly"/>
+            </formatterServer>
+            <context key="qz_tlyl" value="${fmtServ_tly.result}"/>
+
+            <response type="json">
+                <lrsr>${lrsr}</lrsr>
+                <zbsj>${zbsj}</zbsj>
+                <bhqs_lr>${bhqs_lr}</bhqs_lr>
+                <xjl_lrlc>${xjl_lrlc}</xjl_lrlc>
+                <yszk_zl>${yszk_zl}</yszk_zl>
+                <yqkzx_yqwd>${yqkzx_yqwd}</yqkzx_yqwd>
+                <yqk_ys>${yqk_ys}</yqk_ys>
+                <yszk_sj>${yszk_sj}</yszk_sj>
+                <ch_zlbh>${ch_zlbh}</ch_zlbh>
+                <ch_xz>${ch_xz}</ch_xz>
+                <zjhl_yw>${zjhl_yw}</zjhl_yw>
+                <zjhl_hkfs>${zjhl_hkfs}</zjhl_hkfs>
+                <djqy_bhqs>${djqy_bhqs}</djqy_bhqs>
+                <qyqk_scqs>${qyqk_scqs}</qyqk_scqs>
+                <cyqy_kV>${cyqy_kV}</cyqy_kV>
+                <czzb_wcqk>${czzb_wcqk}</czzb_wcqk>
+                <fyzk_qsbd>${fyzk_qsbd}</fyzk_qsbd>
+                <qz_tlyl>${qz_tlyl}</qz_tlyl>
+            </response>
+        </if>
+    </controller>
+
+    <controller id="operWorkReportShowClr">
+        <response name="workReport/show" type="jsp">
+            <map key="year" value="${calendar.current.year}"/>
+            <map key="month" value="${calendar.current.month}"/>
+            <map map="${authMgr[95]}"/>
+            <map key="dataUrl" value="operShuju"/>
+            <map key="updateUrl" value="operWorkReportUpdateClr"/>
+            <map key="exportUrl" value="operWorkReportDownloadClr"/>
+        </response>
+    </controller>
+    <controller id="operWorkReportUpdateClr">
+
+        <context key="cal" value="${request.date.asCalendar}"/>
+        <context key="compId" value="${orgs.BMDBOrganization.ids[request.item.asInt]}"/>
+        <context key="token" value="${compId}_${cal.year}_${cal.month}"/>
+        <context key="tokenTag" value="${token}Tag"/>
+
+        <if test="${session[tokenTag] == null}">
+            <callcontroller id="allpng"/>
+            <context key="comps" value="${orgs.BMDBOrganization.companiesByIds[compId.packAsList]}"/>
+
+            <context key="lrzb" value="${request.lrzb.asString}"/>
+            <context key="srzb" value="${request.srzb.asString}"/>
+            <context key="bhqs_lr" value="${request.bhqs_lr.asString}"/>
+            <context key="bhqs_sr" value="${request.bhqs_sr.asString}"/>
+            <context key="bhqs_xslr" value="${request.bhqs_xslr.asString}"/>
+            <context key="xjl_lr" value="${request.xjl_lr.asString}"/>
+            <context key="xjl_lc" value="${request.xjl_lc.asString}"/>
+            <context key="yszk_zl" value="${request.yszk_zl.asString}"/>
+            <context key="yqk_zt" value="${request.yqk_zt.asString}"/>
+            <context key="yqk_zx" value="${request.yqk_zx.asString}"/>
+            <context key="yqk_ys" value="${request.yqk_ys.asString}"/>
+            <context key="yszk_zmye" value="${request.yszk_zmye.asString}"/>
+            <context key="yszk_sxzb" value="${request.yszk_sxzb.asString}"/>
+            <context key="ch_zlbh" value="${request.ch_zlbh.asString}"/>
+            <context key="ch_xz" value="${request.ch_xz.asString}"/>
+            <context key="zjhl_yw" value="${request.zjhl_yw.asString}"/>
+            <context key="zjhl_hkfs" value="${request.zjhl_hkfs.asString}"/>
+            <context key="djqy_bhqs" value="${request.djqy_bhqs.asString}"/>
+            <context key="qyqk_scqs" value="${request.qyqk_scqs.asString}"/>
+            <context key="cyqy_kV" value="${request.cyqy_kV.asString}"/>
+            <context key="cyqy_cp" value="${request.cyqy_cp.asString}"/>
+            <context key="czzb_wcqk" value="${request.czzb_wcqk.asString}"/>
+            <context key="fyzk_qsbd" value="${request.fyzk_qsbd.asString}"/>
+            <context key="qz_tlyl" value="${request.qz_tlyl.asString}"/>
+
+
+            <callcontroller id="operDwmcByIdClr"/>
+            <if test="${isByq}">
+                <callcontroller id="operWorkReportByqClr"/>
+            </if>
+            <else>
+                <callcontroller id="operWorkReportXlClr"/>
+            </else>
+            <context key="dateKey" value="${token}Date"/>
+            <context key="dwmcKey" value="${token}Dwmc"/>
+            <context key="tmp" value="${session.put[token][word]}"/>
+            <context key="tmp" value="${session.put[tokenTag]['true']}"/>
+            <context key="tmp" value="${session.put[dateKey][cal]}"/>
+            <context key="tmp" value="${session.put[dwmcKey][dwmc]}"/>
+            <context key="tmp" value="${session.timeout[token][600]}"/>
+            <context key="tmp" value="${session.timeout[dateKey][600]}"/>
+            <context key="tmp" value="${session.timeout[dwmcKey][600]}"/>
+            <context key="tmp" value="${session.timeout[tokenTag][600]}"/>
+        </if>
+        <response type="json">
+            <token>${token}</token>
+        </response>
+    </controller>
+    <controller id="operWorkReportDownloadClr">
+        <context key="token" value="${request.token.asString}"/>
+        <context key="dateKey" value="${token}Date"/>
+        <context key="dwmcKey" value="${token}Dwmc"/>
+        <context key="word" value="${session[token]}"/>
+        <response type="word" name="${session[dwmcKey]}${session[dateKey].year}年${session[dateKey].month}月经营工作分析材料.docx"
+                  ref="word"/>
+    </controller>
+
+    <controller id="allpng">
+        <context key="lrzb" value="${request.lrzb.asString}"/>
+    </controller>
+
 </components>

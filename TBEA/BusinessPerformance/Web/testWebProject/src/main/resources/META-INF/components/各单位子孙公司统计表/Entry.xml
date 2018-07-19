@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components>
+    <controller id="gdwzsgstjEntryClrJsp">
+        <response name="framework/templates/flexView/flexView" type="jsp">
+            <map key="updateUrl" value="gdwzsgstjEntryUpdateClr"/>
+            <map key="exportUrl" value="gdwzsgstjEntryExportClr"/>
+            <map key="submitUrl" value="gdwzsgstjEntrySubmitClr"/>
+            <map key="options"><![CDATA[
+                [
+                    {
+                        "param" : "year",
+                        "name": "年份",
+                        "type":"date",
+                        "date":{
+                            "type": "year",
+                            "init": "${calendar.current.year}"
+                        }
+                    },{
+                        "param" : "yearPeriod",
+                        "name": "统计时间段",
+                        "type":"lov",
+                        "lov":{
+                            "option": [["上半年","上半年"],["下半年","下半年"]]
+                        }
+
+                    }
+                ]
+            ]]></map>
+        </response>
+    </controller>
+    <controller id="gdwzsgstjEntryExportClr">
+        <context key="cal" value="${request.year.asCalendar}"/>
+        <context key="yearPeriod" value="${request.yearPeriod.asString}"/>
+        <callservice id="gdwzsgstjEntryUpdateServ"/>
+        <callcontroller id="gdwzsgstjEntryFmtClr"/>
+        <list id="title" type="string">
+            统计时间段,
+            一级单位名称,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            二级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            三级子公司,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）,
+            参股公司（持股比例低于50%，不并表的公司）
+        </list>
+        <list id="title1" type="string">
+            统计时间段 ,
+            一级单位名称 ,
+            名称 ,
+            是否独立注册 ,
+            注册时间 ,
+            注册地 ,
+            法定代表人 ,
+            股本结构（请写明股东及持股比例） ,
+            初始注册资本金（万元） ,
+            本年新增注册资本（万元） ,
+            实缴资本（万元） ,
+            销售收入（万元） ,
+            利润总额（万元） ,
+            ${var y = cal.year; y == null?'':y;}年期末总资产（万元） ,
+            人数 ,
+            业务内容 ,
+            下年度是否开展业务 ,
+            名称 ,
+            是否独立注册 ,
+            注册时间 ,
+            注册地 ,
+            法定代表人 ,
+            股本结构（请写明股东及持股比例） ,
+            初始注册资本金（万元） ,
+            本年新增注册资本（万元） ,
+            实缴资本（万元） ,
+            销售收入（万元） ,
+            利润总额（万元） ,
+            ${var y = cal.year; y == null?'':y;}年期末总资产（万元） ,
+            人数 ,
+            业务内容 ,
+            下年度是否开展业务 ,
+            名称 ,
+            注册时间 ,
+            注册地 ,
+            法定代表人 ,
+            股本结构（请写明股东及持股比例） ,
+            初始注册资本金（万元） ,
+            本年新增注册资本（万元） ,
+            实缴资本（万元） ,
+            总资产（万元） ,
+            净资产（万元） ,
+            营业收入（万元） ,
+            净利润（万元）
+        </list>
+        <ExcelTemplate id="excelTemplate" sheet="各单位分子、孙公司统计表"/>
+        <formatter id="excel">
+            <ExcelTitleFilter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="0"/>
+                <titles>
+                    <title ref="title"/>
+                    <title ref="title1"/>
+                </titles>
+            </ExcelTitleFilter>
+            <ExcelMergeFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <MergeRegion x="0" y="0" width="${title1.size}" height="2"/>
+            </ExcelMergeFormatter>
+            <ExcelHeaderCenterFormatter>
+                <DefaultMatcher cols="0,1"/>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="2"/>
+            </ExcelHeaderCenterFormatter>
+            <ExcelOffsetFormatter>
+                <ExcelTemplate ref="excelTemplate"/>
+                <Offset col="0" row="2"/>
+            </ExcelOffsetFormatter>
+        </formatter>
+        <formatterServer id="fmtServ" table="${result.matrixNoIds}">
+            <formatter ref="fmtData"/>
+            <formatter ref="excel"/>
+        </formatterServer>
+        <response name="各单位分子、孙公司统计表.xls" ref="excelTemplate" serv="fmtServ"
+                  type="excel"/>
+    </controller>
+    <controller id="gdwzsgstjEntryUpdateClr">
+        <context key="cal" value="${request.year.asCalendar}"/>
+        <context key="yearPeriod" value="${request.yearPeriod.asString}"/>
+        <context key="pgNum" value="${request.pgNum.asInt}"/>
+        <context key="pgSize" value="${request.pgSize.asInt}"/>
+        <callservice id="gdwzsgstjEntryUpdateServ"/>
+        <callcontroller id="gdwzsgstjEntryFmtClr"/>
+        <formatterServer acceptNullAs="" id="fmtServ" table="${result.matrix}">
+            <formatter ref="fmtData"/>
+        </formatterServer>
+        <response type="json">
+            <header type="array">
+                <item>
+                    <name>统计时间段</name>
+                    <type>select</type>
+                    <options>["上半年","下半年"]</options>
+                    <readOnly>false</readOnly>
+                </item>
+                <item>
+                    <name>一级单位名称</name>
+                    <type>select</type>
+                    <options>${sysAuth.cnames[105]}</options>
+                    <readOnly>false</readOnly>
+                </item>
+                <item>
+                    <name>二级子公司</name>
+                    <sub type="array">
+                        <item>
+                            <name>名称</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>是否独立注册</name>
+                            <readOnly>false</readOnly>
+                            <type>select</type>
+                            <options>["是","否"]</options>
+                        </item>
+                        <item>
+                            <name>注册时间</name>
+                            <readOnly>false</readOnly>
+                            <type>date</type>
+                        </item>
+                        <item>
+                            <name>注册地</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>法定代表人</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>股本结构（请写明股东及持股比例）</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>初始注册资本金（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>本年新增注册资本（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>实缴资本（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>销售收入（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>利润总额（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>${var y = cal.year; y == null?'':y;}年期末总资产（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>人数</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>业务内容</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>下年度是否开展业务</name>
+                            <readOnly>false</readOnly>
+                            <type>select</type>
+                            <options>["是","否"]</options>
+                        </item>
+                    </sub>
+                </item>
+                <item>
+                    <name>三级子公司</name>
+                    <sub type="array">
+                        <item>
+                            <name>名称</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>是否独立注册</name>
+                            <readOnly>false</readOnly>
+                            <type>select</type>
+                            <options>["是","否"]</options>
+                        </item>
+                        <item>
+                            <name>注册时间</name>
+                            <readOnly>false</readOnly>
+                            <type>date</type>
+                        </item>
+                        <item>
+                            <name>注册地</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>法定代表人</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>股本结构（请写明股东及持股比例）</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>初始注册资本金（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>本年新增注册资本（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>实缴资本（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>销售收入（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>利润总额（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>${var y = cal.year; y == null?'':y;}年期末总资产（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>人数</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>业务内容</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>下年度是否开展业务</name>
+                            <type>select</type>
+                            <options>["是","否"]</options>
+                        </item>
+                    </sub>
+                </item>
+                <item>
+                    <name>参股公司（持股比例低于50%，不并表的公司）</name>
+                    <sub type="array">
+                        <item>
+                            <name>名称</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>注册时间</name>
+                            <readOnly>false</readOnly>
+                            <type>date</type>
+                        </item>
+                        <item>
+                            <name>注册地</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>法定代表人</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>股本结构（请写明股东及持股比例）</name>
+                            <readOnly>false</readOnly>
+                            <type>text</type>
+                        </item>
+                        <item>
+                            <name>初始注册资本金（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>本年新增注册资本（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>实缴资本（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>总资产（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>净资产（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>营业收入（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                        <item>
+                            <name>净利润（万元）</name>
+                            <readOnly>false</readOnly>
+                        </item>
+                    </sub>
+                </item>
+            </header>
+            <data>${fmtServ.result}</data>
+            <dataCount>${dataCount[0]}</dataCount>
+            <pager>true</pager>
+            <pagerButton>true</pagerButton>
+            <relations type="jarray"><![CDATA[
+                [
+                    {
+                        ids : [2, 3, 4, 5, 6, 7, 8],
+                        values : ${mapper1.asJson}
+                    },
+                    {
+                        ids : [17, 18, 19, 20, 21, 22, 23],
+                        values : ${mapper2.asJson}
+                    }
+                ]
+            ]]></relations>
+        </response>
+    </controller>
+    <controller id="gdwzsgstjEntryFmtClr">
+        <formatter export="true" id="fmtData">
+            <EmptyFormatter/>
+        </formatter>
+    </controller>
+
+
+    <service id="gdwzsgstjEntryUpdateServ" transaction="transactionManager">
+        <sql id="dataCount" export="true"><![CDATA[
+             select
+                count(id)
+             from
+                company_equity_relationship
+             where
+                (${cal.year} is null or year = ${cal.year}) and
+                first_level_company in (${sysAuth.cnames[105]}) and
+                (${yearPeriod} is null or ${yearPeriod} = period_of_time)
+        ]]></sql>
+        <sql id="data" pgNum="${pgNum}" pgSize="pgSize"><![CDATA[
+             select
+                id,
+                period_of_time,
+                first_level_company,
+                second_level_company	,
+                is_reg_independence_s	,
+                registration_time_s	,
+                registration_area_s	,
+                business_entity_s	,
+                capital_structure_s	,
+                initial_registered_capital_s	,
+                added_capital_s	,
+                real_payment_s	,
+                income_s	,
+                profit_s	,
+                total_assets_s	,
+                staff_number_s	,
+                business_content_s	,
+                is_still_work_s	,
+                third_level_company	,
+                is_reg_independence_t	,
+                registration_time_t	,
+                registration_area_t	,
+                business_entity_t	,
+                capital_structure_t	,
+                initial_registered_capital_t	,
+                added_capital_t	,
+                real_payment_t	,
+                income_t	,
+                profit_t	,
+                total_assets_t	,
+                staff_number_t	,
+                business_content_t	,
+                is_still_work_t	,
+                participation_company	,
+                registration_time_p	,
+                registration_area_p	,
+                business_entity_p	,
+                capital_structure_p	,
+                initial_registered_capital_p	,
+                added_capital_p	,
+                real_payment_p	,
+                total_assets_p	,
+                net_assets_p	,
+                income_p	,
+                profit_p
+             from
+                company_equity_relationship
+             where
+                (${cal.year} is null or year = ${cal.year}) and
+                first_level_company in (${sysAuth.cnames[105]}) and
+                (${yearPeriod} is null or ${yearPeriod} = period_of_time)
+        ]]></sql>
+
+        <sql id="mapper1" export="true"><![CDATA[
+             select
+                second_level_company	,
+                is_reg_independence_s	,
+                CONVERT(varchar(20),registration_time_s, 23) dt,
+                registration_area_s	,
+                business_entity_s	,
+                capital_structure_s	,
+                initial_registered_capital_s
+             from
+                company_equity_relationship a
+             where
+                a.id = (select max(b.id) from company_equity_relationship b where a.second_level_company = b.second_level_company)
+                and a.second_level_company is not null
+        ]]></sql>
+
+
+        <sql id="mapper2" export="true"><![CDATA[
+             select
+                third_level_company	,
+                is_reg_independence_t	,
+                CONVERT(varchar(20),registration_time_t, 23) dt,
+                registration_area_t	,
+                business_entity_t	,
+                capital_structure_t	,
+                initial_registered_capital_t
+             from
+                company_equity_relationship a
+             where
+                a.id = (select max(b.id) from company_equity_relationship b where a.third_level_company = b.third_level_company)
+                and a.third_level_company is not null
+        ]]></sql>
+
+        <list id="ids" sql="data" value="0"/>
+        <table export="true" id="result" rowIds="ids" table="${data.rmCol[0]}">
+        </table>
+    </service>
+    <controller id="gdwzsgstjEntrySubmitClr">
+        <context key="cal" value="${request.year.asCalendar}"/>
+        <context key="data" value="${request.data.asJsonArray}"/>
+        <callservice id="gdwzsgstjEntrySubmitServ"/>
+        <response type="json">
+            <errorCode>0</errorCode>
+            <message>OK</message>
+        </response>
+    </controller>
+    <service id="gdwzsgstjEntrySubmitServ" transaction="transactionManager">
+        <merge data="${data}" table="company_equity_relationship">
+            <where>
+                <id ref="0" type="int"/>
+                <year value="${cal.year}" type="int"></year>
+            </where>
+            <set>
+                <period_of_time ref="1" type="string"/>
+                <first_level_company ref="2" type="string" test="${this != null}"/>
+                <second_level_company ref="3" type="string"/>
+                <is_reg_independence_s ref="4" type="string"/>
+                <registration_time_s ref="5" type="date"/>
+                <registration_area_s ref="6" type="string"/>
+                <business_entity_s ref="7" type="string"/>
+                <capital_structure_s ref="8" type="string"/>
+                <initial_registered_capital_s ref="9" type="double"/>
+                <added_capital_s ref="10" type="double"/>
+                <real_payment_s ref="11" type="double"/>
+                <income_s ref="12" type="double"/>
+                <profit_s ref="13" type="double"/>
+                <total_assets_s ref="14" type="double"/>
+                <staff_number_s ref="15" type="string"/>
+                <business_content_s ref="16" type="string"/>
+                <is_still_work_s ref="17" type="string"/>
+                <third_level_company ref="18" type="string"/>
+                <is_reg_independence_t ref="19" type="string"/>
+                <registration_time_t ref="20" type="date"/>
+                <registration_area_t ref="21" type="string"/>
+                <business_entity_t ref="22" type="string"/>
+                <capital_structure_t ref="23" type="string"/>
+                <initial_registered_capital_t ref="24" type="double"/>
+                <added_capital_t ref="25" type="double"/>
+                <real_payment_t ref="26" type="double"/>
+                <income_t ref="27" type="double"/>
+                <profit_t ref="28" type="double"/>
+                <total_assets_t ref="29" type="double"/>
+                <staff_number_t ref="30" type="string"/>
+                <business_content_t ref="31" type="string"/>
+                <is_still_work_t ref="32" type="string"/>
+                <participation_company ref="33" type="string"/>
+                <registration_time_p ref="34" type="date"/>
+                <registration_area_p ref="35" type="string"/>
+                <business_entity_p ref="36" type="string"/>
+                <capital_structure_p ref="37" type="string"/>
+                <initial_registered_capital_p ref="38" type="double"/>
+                <added_capital_p ref="39" type="double"/>
+                <real_payment_p ref="40" type="double"/>
+                <total_assets_p ref="41" type="double"/>
+                <net_assets_p ref="42" type="double"/>
+                <income_p ref="43" type="double"/>
+                <profit_p ref="44" type="double"/>
+                <year value="${cal.year}" type="int"></year>
+            </set>
+        </merge>
+    </service>
+</components>

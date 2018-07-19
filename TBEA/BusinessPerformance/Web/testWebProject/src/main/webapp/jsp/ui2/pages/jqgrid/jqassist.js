@@ -579,7 +579,7 @@ var JQTable;
                 this.mSrcCellarray[i].setGrid(grid);
             }
         };
-        Formula.prototype.update = function () {
+        Formula.prototype.update = function (editCell, col) {
             var newVal = this.mFormula(this.mDestCell, this.mSrcCellarray);
             var oldVal = this.mDestCell.getVal();
             if (oldVal == "" && (newVal == undefined || newVal == null || newVal == "")) {
@@ -607,14 +607,14 @@ var JQTable;
             this.defaultText = defaultText;
             this.colIndex = colIndex;
         }
-        DefaultTextFormula.prototype.update = function () {
+        DefaultTextFormula.prototype.update = function (editCell, col) {
             var fs = [];
             for (var i = 0; i < this.grid[0].p.data.length; ++i) {
                 fs.push(this.collectFormulas(i));
             }
             for (var i = 0; i < fs.length; ++i) {
                 fs[i].setGrid(this.grid);
-                fs[i].update();
+                fs[i].update(editCell, col);
             }
             return false;
         };
@@ -1120,16 +1120,18 @@ var JQTable;
                 this.selectedList[i](row, col);
             }
         };
-        JQGridAssistant.prototype.invokeFormula = function (depth) {
+        JQGridAssistant.prototype.invokeFormula = function (editCell, col, depth) {
+            if (editCell === void 0) { editCell = undefined; }
+            if (col === void 0) { col = undefined; }
             if (depth === void 0) { depth = 0; }
             var changed = false;
             for (var i = 0; i < this.mFormula.length; i++) {
-                if (this.mFormula[i].update()) {
+                if (this.mFormula[i].update(editCell, col)) {
                     changed = true;
                 }
             }
             if (changed && depth < 10) {
-                this.invokeFormula(++depth);
+                this.invokeFormula(editCell, col, ++depth);
             }
         };
         JQGridAssistant.prototype.addFormula = function (formula) {
@@ -1316,18 +1318,19 @@ var JQTable;
                         }
                     }
                 },
-                afterSaveCell: function () {
+                afterSaveCell: function (id, nm, tmp, iRow, iCol) {
                     //$(".btn").attr("disabled", false).off('click', prevBtn);
                     //  $("input").attr("disabled", false);
                     if (option.assistPostEdit) {
                         option.assistPostEdit();
                     }
                     var ids = grid.jqGrid('getDataIDs');
+                    var editCell = ids[lastsel - 1];
                     if (Util.indexOf(_this.mEditedRows, ids[lastsel - 1]) < 0) {
                         _this.mEditedRows.push(ids[lastsel - 1]);
                     }
                     lastsel = "";
-                    _this.invokeFormula();
+                    _this.invokeFormula(id, iCol);
                 },
                 afterRestoreCell: function () {
                     //$(".btn").attr("disabled", false).off('click', prevBtn);

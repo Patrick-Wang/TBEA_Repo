@@ -53,6 +53,24 @@ public class DailyReportController {
 		ErrorCode code = dailyReportService.submitYszk(account, date, jData);
 		return Util.response(code);
 	}
+
+	/**
+	 * 录入提交操作，返回是否成功
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "yszklr_submit.do")
+	public @ResponseBody byte[] submitYszkLr(HttpServletRequest request,
+										   HttpServletResponse response) throws UnsupportedEncodingException {
+		Account account = SessionManager.getAccount(request.getSession());
+		Date date = DateSelection.getDate(request);
+		String data = request.getParameter("data");
+		JSONArray jData = JSONArray.fromObject(data);
+		ErrorCode code = dailyReportService.submitYszkLr(account, date, jData);
+		return Util.response(code);
+	}
 	
 	@RequestMapping(value = "yszk_update.do")
 	public @ResponseBody byte[] getYszkUpdate(HttpServletRequest request,
@@ -60,6 +78,22 @@ public class DailyReportController {
 		Account account = SessionManager.getAccount(request.getSession());
 		Date date = DateSelection.getDate(request);
 		List<String[]> data = dailyReportService.getYszkData(account, date);
+		return JSONArray.fromObject(data).toString().replace("null", "\"\"").getBytes("utf-8");
+	}
+
+	/**
+	 * 要进行录入操作时检查此月是否有录入过，如果有便将每月录入项显示出来
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "yszklr_update.do")
+	public @ResponseBody byte[] getYszklrUpdate(HttpServletRequest request,
+											  HttpServletResponse response) throws UnsupportedEncodingException {
+		Account account = SessionManager.getAccount(request.getSession());
+		Date date = DateSelection.getDate(request);
+		List<String[]> data = dailyReportService.getYszkLRData(account, date);
 		return JSONArray.fromObject(data).toString().replace("null", "\"\"").getBytes("utf-8");
 	}
 }

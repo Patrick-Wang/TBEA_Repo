@@ -9,7 +9,12 @@ var user_mgr;
         JQGridAssistantFactory.createTable = function (gridName, dataInit) {
             return new JQTable.JQGridAssistant([
                 JQTable.Node.create({
-                    name: "用户名",
+                    name: "用户",
+                    align: JQTable.TextAlign.Left,
+                    width: 150
+                }),
+                JQTable.Node.create({
+                    name: "姓名",
                     align: JQTable.TextAlign.Left,
                     width: 150
                 }),
